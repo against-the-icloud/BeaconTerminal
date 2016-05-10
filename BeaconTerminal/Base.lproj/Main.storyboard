@@ -444,7 +444,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ww8-25-Al3" userLabel="SectionOne">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bc_left_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="a2u-G3-ZW5" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bc_left_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="a2u-G3-ZW5">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="87" id="Oa3-o1-ip3"/>
@@ -652,12 +652,6 @@
                                         <exclude reference="OPw-wA-Zeg"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="1wc-uG-AAi"/>
-                                        <exclude reference="P2d-E6-LY4"/>
-                                        <exclude reference="CQy-Pn-ycD"/>
-                                        <exclude reference="bUb-B4-U2Q"/>
-                                        <exclude reference="c0f-8Z-K0g"/>
-                                        <exclude reference="sXJ-3m-oRo"/>
                                         <exclude reference="3cH-jm-0qi"/>
                                         <exclude reference="ReO-hz-5bv"/>
                                         <exclude reference="VKE-x3-37a"/>
@@ -668,6 +662,12 @@
                                         <exclude reference="QaA-yS-8My"/>
                                         <exclude reference="YH0-sK-uei"/>
                                         <exclude reference="dsn-c0-cUK"/>
+                                        <exclude reference="CQy-Pn-ycD"/>
+                                        <exclude reference="bUb-B4-U2Q"/>
+                                        <exclude reference="c0f-8Z-K0g"/>
+                                        <exclude reference="sXJ-3m-oRo"/>
+                                        <exclude reference="1wc-uG-AAi"/>
+                                        <exclude reference="P2d-E6-LY4"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
@@ -678,12 +678,6 @@
                                         <include reference="OPw-wA-Zeg"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="1wc-uG-AAi"/>
-                                        <include reference="P2d-E6-LY4"/>
-                                        <include reference="CQy-Pn-ycD"/>
-                                        <exclude reference="bUb-B4-U2Q"/>
-                                        <include reference="c0f-8Z-K0g"/>
-                                        <include reference="sXJ-3m-oRo"/>
                                         <exclude reference="3cH-jm-0qi"/>
                                         <include reference="ReO-hz-5bv"/>
                                         <include reference="VKE-x3-37a"/>
@@ -694,6 +688,12 @@
                                         <exclude reference="QaA-yS-8My"/>
                                         <include reference="YH0-sK-uei"/>
                                         <include reference="dsn-c0-cUK"/>
+                                        <include reference="CQy-Pn-ycD"/>
+                                        <exclude reference="bUb-B4-U2Q"/>
+                                        <include reference="c0f-8Z-K0g"/>
+                                        <include reference="sXJ-3m-oRo"/>
+                                        <include reference="1wc-uG-AAi"/>
+                                        <include reference="P2d-E6-LY4"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -778,6 +778,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPadPro"/>
                     <connections>
                         <outlet property="scannerView" destination="FJW-SH-Hth" id="FVw-AX-bw5"/>
+                        <outlet property="statusLabel" destination="4Yj-fB-Jjk" id="yY3-G1-b5z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MrM-WY-Wae" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -801,7 +802,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FI0-bz-tlc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="443.25" y="469.875"/>
+            <point key="canvasLocation" x="1147" y="612.5"/>
         </scene>
     </scenes>
     <resources>

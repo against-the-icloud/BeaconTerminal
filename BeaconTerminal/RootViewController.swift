@@ -5,14 +5,14 @@
 import UIKit
 import SwiftState
 
-enum ScanningState: StateType {
-    case Initial, Stopped, Scanning, Connecting, Error
-}
-
-struct ErrorMessage {
-    let title: String
-    let message: String
-}
+//enum ScanningState: StateType {
+//    case Initial, Stopped, Scanning, Connecting, Error
+//}
+//
+//struct ErrorMessage {
+//    let title: String
+//    let message: String
+//}
 
 /**
  This is the initial view controller that scans for beacons, and kicks off the configuration process if it detects that a beacon has been held in the immediate vicinity to the phone.

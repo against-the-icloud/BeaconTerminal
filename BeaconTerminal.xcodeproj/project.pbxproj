@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7023313C1CDEEAD100FEB94B /* TEST.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7023313B1CDEEAD100FEB94B /* TEST.storyboard */; };
+		702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCA3A1CE1A527000B6EDE /* BeaconID.swift */; };
 		70310CD91CDFA7FB0018CCF7 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70310CD81CDFA7FB0018CCF7 /* ScannerViewController.swift */; };
 		70310CDB1CDFD9070018CCF7 /* LFTPulseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70310CDA1CDFD9070018CCF7 /* LFTPulseAnimation.swift */; };
 		7052DB3A1CCDDC7100E1A397 /* ChameleonShorthand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7052DB391CCDDC7100E1A397 /* ChameleonShorthand.swift */; };
-		7088D3301CCC978C001776C9 /* BlueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088D32C1CCC978C001776C9 /* BlueViewController.swift */; };
 		7088D3311CCC978C001776C9 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088D32D1CCC978C001776C9 /* RootController.swift */; };
-		7088D3321CCC978C001776C9 /* AppToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088D32E1CCC978C001776C9 /* AppToolbarController.swift */; };
-		7088D3331CCC978C001776C9 /* GreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088D32F1CCC978C001776C9 /* GreenViewController.swift */; };
 		709080601CE0455800AF1F97 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090805F1CE0455800AF1F97 /* LoadingView.swift */; };
 		70920D001CD50BEE001B582F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70920CFF1CD50BEE001B582F /* User.swift */; };
 		70920D061CD52C3C001B582F /* Habitat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70920D051CD52C3C001B582F /* Habitat.swift */; };
@@ -100,15 +97,12 @@
 
 /* Begin PBXFileReference section */
 		0AD7664F28962B5E18C38B95 /* Pods-BeaconTerminal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.release.xcconfig"; sourceTree = "<group>"; };
-		7023313B1CDEEAD100FEB94B /* TEST.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TEST.storyboard; sourceTree = "<group>"; };
+		702DCA3A1CE1A527000B6EDE /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
 		70310CD81CDFA7FB0018CCF7 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		70310CDA1CDFD9070018CCF7 /* LFTPulseAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LFTPulseAnimation.swift; sourceTree = "<group>"; };
 		7052DB341CCDDB2400E1A397 /* Chameleon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chameleon.framework; path = Carthage/Build/iOS/Chameleon.framework; sourceTree = "<group>"; };
 		7052DB391CCDDC7100E1A397 /* ChameleonShorthand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChameleonShorthand.swift; sourceTree = "<group>"; };
-		7088D32C1CCC978C001776C9 /* BlueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueViewController.swift; sourceTree = "<group>"; };
 		7088D32D1CCC978C001776C9 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
-		7088D32E1CCC978C001776C9 /* AppToolbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppToolbarController.swift; sourceTree = "<group>"; };
-		7088D32F1CCC978C001776C9 /* GreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenViewController.swift; sourceTree = "<group>"; };
 		7090805F1CE0455800AF1F97 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		70920CFF1CD50BEE001B582F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		70920D051CD52C3C001B582F /* Habitat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Habitat.swift; sourceTree = "<group>"; };
@@ -217,6 +211,7 @@
 		70920D091CD52C4F001B582F /* DataObjects */ = {
 			isa = PBXGroup;
 			children = (
+				702DCA3A1CE1A527000B6EDE /* BeaconID.swift */,
 				70920CFF1CD50BEE001B582F /* User.swift */,
 				70920D0A1CD52C81001B582F /* Configutation.swift */,
 				70920D051CD52C3C001B582F /* Habitat.swift */,
@@ -249,14 +244,10 @@
 		70D04ED31CD0692E00C7C784 /* archive */ = {
 			isa = PBXGroup;
 			children = (
-				7023313B1CDEEAD100FEB94B /* TEST.storyboard */,
 				AE97648E1C22C1BF0058A4DC /* RootViewController.swift */,
 				AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */,
 				AEBAC5B01C34302200FB5566 /* TagsViewController.swift */,
 				AE677F281C35191300836B41 /* PerformSetupViewController.swift */,
-				7088D32E1CCC978C001776C9 /* AppToolbarController.swift */,
-				7088D32C1CCC978C001776C9 /* BlueViewController.swift */,
-				7088D32F1CCC978C001776C9 /* GreenViewController.swift */,
 			);
 			name = archive;
 			path = ..;
@@ -475,7 +466,6 @@
 				70E8F3891CDF037F00B83010 /* woman2.jpg in Resources */,
 				70E8F3811CDF037F00B83010 /* RecentsTableViewCell.xib in Resources */,
 				70E8F37B1CDF037F00B83010 /* man8.jpg in Resources */,
-				7023313C1CDEEAD100FEB94B /* TEST.storyboard in Resources */,
 				70E8F37E1CDF037F00B83010 /* phone_receive.png in Resources */,
 				70E8F37F1CDF037F00B83010 /* phone_send.png in Resources */,
 				70E8F3561CDF036800B83010 /* close.png in Resources */,
@@ -572,15 +562,14 @@
 				AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */,
 				AE97648F1C22C1BF0058A4DC /* RootViewController.swift in Sources */,
 				70310CDB1CDFD9070018CCF7 /* LFTPulseAnimation.swift in Sources */,
+				702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */,
 				AE677F291C35191300836B41 /* PerformSetupViewController.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
 				7088D3311CCC978C001776C9 /* RootController.swift in Sources */,
 				70E8F3871CDF037F00B83010 /* ViewController.swift in Sources */,
 				AEEA894D1C32C90D006378F4 /* ImmediateBeaconDetector.swift in Sources */,
-				7088D3321CCC978C001776C9 /* AppToolbarController.swift in Sources */,
 				70920D061CD52C3C001B582F /* Habitat.swift in Sources */,
 				AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */,
-				7088D3331CCC978C001776C9 /* GreenViewController.swift in Sources */,
 				7052DB3A1CCDDC7100E1A397 /* ChameleonShorthand.swift in Sources */,
 				AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */,
 				AEBAC5B11C34302200FB5566 /* TagsViewController.swift in Sources */,
@@ -592,7 +581,6 @@
 				70310CD91CDFA7FB0018CCF7 /* ScannerViewController.swift in Sources */,
 				70E8F3821CDF037F00B83010 /* RecentsTableViewController.swift in Sources */,
 				709080601CE0455800AF1F97 /* LoadingView.swift in Sources */,
-				7088D3301CCC978C001776C9 /* BlueViewController.swift in Sources */,
 				70920D0B1CD52C81001B582F /* Configutation.swift in Sources */,
 				AE41A6051C44034000DA4533 /* BeaconConfig.swift in Sources */,
 			);

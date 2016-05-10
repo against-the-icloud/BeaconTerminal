@@ -95,10 +95,10 @@ class LoadingView: UIImageView {
         
         for index in 0...(timeArray.count - 1)
         {
-            var scaleAnimation = generateScaleAnimation()
+            let scaleAnimation = generateScaleAnimation()
             scaleAnimation.beginTime = timeArray[index]
             
-            var opacAnimation = generateOpacityAnimation()
+            let opacAnimation = generateOpacityAnimation()
             opacAnimation.beginTime = timeArray[index]
             
             dots![index].addAnimation(scaleAnimation, forKey: "scale")
