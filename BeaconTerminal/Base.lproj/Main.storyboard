@@ -175,25 +175,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7HI-gc-5ZD" userLabel="Toolbar">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GROUP 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmf-h8-k9f">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="192" id="ky3-cF-ifs"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="ky3-cF-ifs"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="ky3-cF-ifs"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="profileIcon" image="ic_question_mark" translatesAutoresizingMaskIntoConstraints="NO" id="vBv-sG-7iJ" userLabel="Profile Icon">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -239,9 +220,11 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CRITTER SCAN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NB-I4-PWr">
                                         <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="231" id="nTs-dc-mmr"/>
+                                            <constraint firstAttribute="width" constant="231" id="nTs-dc-mmr">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="274"/>
+                                            </constraint>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
@@ -255,6 +238,25 @@
                                             </mask>
                                         </variation>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GROUP 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmf-h8-k9f">
+                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="192" id="ky3-cF-ifs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="ky3-cF-ifs"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="ky3-cF-ifs"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6DF" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgo-Jc-pz8">
                                         <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -264,20 +266,28 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="8NB-I4-PWr" firstAttribute="top" secondItem="7HI-gc-5ZD" secondAttribute="top" constant="46" id="6Hf-O1-aZU"/>
+                                    <constraint firstItem="8NB-I4-PWr" firstAttribute="top" secondItem="7HI-gc-5ZD" secondAttribute="top" constant="46" id="6Hf-O1-aZU">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                    </constraint>
                                     <constraint firstItem="lgo-Jc-pz8" firstAttribute="top" secondItem="xmf-h8-k9f" secondAttribute="bottom" constant="1" id="Aon-5c-XkA"/>
-                                    <constraint firstItem="8NB-I4-PWr" firstAttribute="centerY" secondItem="7HI-gc-5ZD" secondAttribute="centerY" id="M7P-4s-Cdi"/>
-                                    <constraint firstAttribute="bottom" secondItem="lgo-Jc-pz8" secondAttribute="bottom" constant="35" id="O0p-xh-1FE"/>
+                                    <constraint firstItem="8NB-I4-PWr" firstAttribute="centerY" secondItem="7HI-gc-5ZD" secondAttribute="centerY" id="M7P-4s-Cdi">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="8.5"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" secondItem="lgo-Jc-pz8" secondAttribute="bottom" constant="35" id="O0p-xh-1FE">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="22"/>
+                                    </constraint>
                                     <constraint firstItem="8NB-I4-PWr" firstAttribute="centerX" secondItem="7HI-gc-5ZD" secondAttribute="centerX" id="Vmx-3T-SyF"/>
                                     <constraint firstItem="vBv-sG-7iJ" firstAttribute="top" secondItem="7HI-gc-5ZD" secondAttribute="top" constant="30" id="XDC-Av-JvZ">
                                         <variation key="heightClass=regular-widthClass=regular" constant="25"/>
                                     </constraint>
                                     <constraint firstAttribute="bottom" secondItem="xmf-h8-k9f" secondAttribute="bottom" constant="58" id="d7Y-Mw-CRE">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="62"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="49"/>
                                     </constraint>
                                     <constraint firstAttribute="trailing" secondItem="vBv-sG-7iJ" secondAttribute="trailing" constant="8" id="hvq-WE-sC3"/>
                                     <constraint firstItem="lgo-Jc-pz8" firstAttribute="trailing" secondItem="xmf-h8-k9f" secondAttribute="trailing" id="mpK-uk-Nl3"/>
-                                    <constraint firstItem="lgo-Jc-pz8" firstAttribute="centerY" secondItem="vBv-sG-7iJ" secondAttribute="centerY" id="rnf-I5-hLL"/>
+                                    <constraint firstItem="lgo-Jc-pz8" firstAttribute="centerY" secondItem="vBv-sG-7iJ" secondAttribute="centerY" id="rnf-I5-hLL">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="13"/>
+                                    </constraint>
                                     <constraint firstItem="lgo-Jc-pz8" firstAttribute="leading" secondItem="xmf-h8-k9f" secondAttribute="leading" id="xVo-9z-uYZ"/>
                                     <constraint firstItem="xmf-h8-k9f" firstAttribute="leading" secondItem="7HI-gc-5ZD" secondAttribute="leadingMargin" id="xYd-Na-p5v">
                                         <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
@@ -285,9 +295,9 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
-                                        <exclude reference="xmf-h8-k9f"/>
                                         <exclude reference="vBv-sG-7iJ"/>
                                         <exclude reference="8NB-I4-PWr"/>
+                                        <exclude reference="xmf-h8-k9f"/>
                                         <exclude reference="lgo-Jc-pz8"/>
                                     </mask>
                                     <mask key="constraints">
@@ -307,9 +317,9 @@
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
                                     <mask key="subviews">
-                                        <include reference="xmf-h8-k9f"/>
                                         <include reference="vBv-sG-7iJ"/>
                                         <include reference="8NB-I4-PWr"/>
+                                        <include reference="xmf-h8-k9f"/>
                                         <include reference="lgo-Jc-pz8"/>
                                     </mask>
                                     <mask key="constraints">

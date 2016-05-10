@@ -41,7 +41,7 @@ class RootController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let scannerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("scannerViewController")
-        
+        scannerViewController!.modalPresentationStyle = .OverFullScreen
         if shouldPresentScanner {
             self.presentViewController(scannerViewController!, animated: true, completion: {
                 self.shouldPresentScanner = false
