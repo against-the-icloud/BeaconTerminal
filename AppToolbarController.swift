@@ -98,8 +98,8 @@ class AppToolbarController: ToolbarController {
 		
 		// Menu button.
 		let menuButton: FlatButton = FlatButton()
-		menuButton.pulseColor = nil
-		menuButton.pulseScale = false
+//		menuButton.pulseColor = nil
+//		menuButton.pulseScale = false
 		menuButton.tintColor = MaterialColor.white
 		menuButton.setImage(image, forState: .Normal)
 		menuButton.setImage(image, forState: .Highlighted)
@@ -112,8 +112,8 @@ class AppToolbarController: ToolbarController {
 		// Search button.
 		image = MaterialIcon.cm.search
 		let searchButton: FlatButton = FlatButton()
-		searchButton.pulseColor = nil
-		searchButton.pulseScale = false
+//		searchButton.pulseColor = nil
+//		searchButton.pulseScale = false
 		searchButton.tintColor = MaterialColor.white
 		searchButton.setImage(image, forState: .Normal)
 		searchButton.setImage(image, forState: .Highlighted)

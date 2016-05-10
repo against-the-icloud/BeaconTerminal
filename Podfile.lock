@@ -2,24 +2,30 @@ PODS:
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
-  - Material (1.39.17)
+  - IBAnimatable (2.2)
+  - Material (1.40.1)
+  - PageMenu (1.2.9)
   - Pulsator (0.1.0)
-  - Realm (0.100.0):
-    - Realm/Headers (= 0.100.0)
-  - Realm/Headers (0.100.0)
-  - RealmSwift (0.100.0):
-    - Realm (= 0.100.0)
+  - Realm (0.101.0):
+    - Realm/Headers (= 0.101.0)
+  - Realm/Headers (0.101.0)
+  - RealmSwift (0.101.0):
+    - Realm (= 0.101.0)
   - Spring (1.0.3)
   - SwiftyJSON (2.3.2)
+  - XCGLogger (3.3)
 
 DEPENDENCIES:
   - ChameleonFramework/Swift
+  - IBAnimatable
   - Material
+  - PageMenu
   - Pulsator
   - Realm
   - RealmSwift
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
   - SwiftyJSON
+  - XCGLogger
 
 EXTERNAL SOURCES:
   Spring:
@@ -33,11 +39,14 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
-  Material: eccc5afdac89e10aa7a635ad34d6c3564387bfd3
+  IBAnimatable: 41ddf0b307ebec241d5dd510f472c51fb7fe519b
+  Material: 3b5fead4a1e70fc925e163aeeb694c784256d0c8
+  PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   Pulsator: da87aa289b30b5e0cc7e03b21d9f2cb58277f601
-  Realm: b13b548e712d28a66678970c45cd245ebb94ba3b
-  RealmSwift: 1bb0ba2ceaa06b65d740b4f91bfa06e3fd1b805c
+  Realm: b21596d6d7e1c054f6fae967d27263d2593ca309
+  RealmSwift: 5247501bcd68b9db3a718cba808e1ce45ba67034
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
 COCOAPODS: 0.39.0

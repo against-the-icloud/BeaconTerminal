@@ -43,8 +43,7 @@ public class MenuView : MaterialPulseView {
 	*/
 	public override func prepareView() {
 		super.prepareView()
-		pulseColor = nil
-		pulseScale = false
+		pulseAnimation = .None
 		clipsToBounds = false
 		backgroundColor = nil
 	}

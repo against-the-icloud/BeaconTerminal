@@ -51,7 +51,7 @@ public class NavigationBar : UINavigationBar {
 	private var rightSpacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
 	
 	/// Reference to the backButton.
-	public private(set) lazy var backButton: FlatButton = FlatButton()
+	public private(set) lazy var backButton: IconButton = IconButton()
 	
 	/**
 	The back button image writes to the backIndicatorImage property and
@@ -340,7 +340,7 @@ public class NavigationBar : UINavigationBar {
 	internal func sizeNavigationItem(item: UINavigationItem) {
 		let h: CGFloat = intrinsicContentSize().height
 		let w: CGFloat = backButton.intrinsicContentSize().width
-		let inset: CGFloat = MaterialDevice.landscape ? item.landscapeInset : item.portraitInset
+		let inset: CGFloat = MaterialDevice.isLandscape ? item.landscapeInset : item.portraitInset
 		
 		// leftControls
 		if let v: Array<UIControl> = item.leftControls {
@@ -396,18 +396,18 @@ public class NavigationBar : UINavigationBar {
 	when subclassing.
 	*/
 	public func prepareView() {
-		barStyle = .Black
+		barStyle = .Default
 		translucent = false
 		backButtonImage = nil
 		backgroundColor = MaterialColor.white
 		depth = .Depth1
 		contentInsetPreset = .Square1
+		contentScaleFactor = MaterialDevice.scale
 		prepareBackButton()
 	}
 	
 	/// Prepares the backButton.
 	internal func prepareBackButton() {
-		backButton.pulseScale = false
 		backButton.pulseColor = MaterialColor.white
 		backButton.setImage(backButtonImage, forState: .Normal)
 		backButton.setImage(backButtonImage, forState: .Highlighted)

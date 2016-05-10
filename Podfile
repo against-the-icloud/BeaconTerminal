@@ -10,4 +10,7 @@ target 'BeaconTerminal' do
     pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
     pod 'RealmSwift'
     pod 'SwiftyJSON'
+    pod 'IBAnimatable'
+    pod 'XCGLogger'
+    pod 'PageMenu'
 end

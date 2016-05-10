@@ -85,19 +85,25 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BeaconTerminal/ChameleonFramework.framework"
+  install_framework "Pods-BeaconTerminal/IBAnimatable.framework"
   install_framework "Pods-BeaconTerminal/Material.framework"
+  install_framework "Pods-BeaconTerminal/PageMenu.framework"
   install_framework "Pods-BeaconTerminal/Pulsator.framework"
   install_framework "Pods-BeaconTerminal/Realm.framework"
   install_framework "Pods-BeaconTerminal/RealmSwift.framework"
   install_framework "Pods-BeaconTerminal/Spring.framework"
   install_framework "Pods-BeaconTerminal/SwiftyJSON.framework"
+  install_framework "Pods-BeaconTerminal/XCGLogger.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-BeaconTerminal/ChameleonFramework.framework"
+  install_framework "Pods-BeaconTerminal/IBAnimatable.framework"
   install_framework "Pods-BeaconTerminal/Material.framework"
+  install_framework "Pods-BeaconTerminal/PageMenu.framework"
   install_framework "Pods-BeaconTerminal/Pulsator.framework"
   install_framework "Pods-BeaconTerminal/Realm.framework"
   install_framework "Pods-BeaconTerminal/RealmSwift.framework"
   install_framework "Pods-BeaconTerminal/Spring.framework"
   install_framework "Pods-BeaconTerminal/SwiftyJSON.framework"
+  install_framework "Pods-BeaconTerminal/XCGLogger.framework"
 fi

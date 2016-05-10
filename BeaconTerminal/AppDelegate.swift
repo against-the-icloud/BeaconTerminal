@@ -2,6 +2,23 @@
 import UIKit
 import RealmSwift
 import SwiftyJSON
+import XCGLogger
+
+let LOG: XCGLogger = {
+    // Setup XCGLogger
+    let LOG = XCGLogger.defaultInstance()
+    LOG.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
+    LOG.xcodeColors = [
+        .Verbose: .lightGrey,
+        .Debug: .red,
+        .Info: .darkGreen,
+        .Warning: .orange,
+        .Error: XCGLogger.XcodeColor(fg: UIColor.redColor(), bg: UIColor.whiteColor()), // Optionally use a UIColor
+        .Severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+    ]
+    return LOG
+}()
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //createDataStructure()
 
         
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        LOG.debug("\(Realm.Configuration.defaultConfiguration.fileURL!)")
         
 
         return true
@@ -112,7 +129,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
    
-        } catch {}
+        } catch {
+//            print("error")
+        }
         
     }
     
