@@ -33,6 +33,21 @@ class ScannerViewController: UIViewController {
     }
     
     func setup() {
+        
+////        if !UIAccessibilityIsReduceTransparencyEnabled() {
+//            self.view.backgroundColor = UIColor.clearColor()
+//            
+//            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+//            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//            
+//            blurEffectView.frame = self.view.bounds
+//            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+//            
+//            self.view.insertSubview(blurEffectView, atIndex: 0)
+////        } else {
+////            //self.view.backgroundColor = UIColor.blackColor()
+////        }
+        
         _border.strokeColor = UIColor.blackColor().CGColor
         _border.fillColor = nil
         _border.lineDashPattern = [4, 4]
