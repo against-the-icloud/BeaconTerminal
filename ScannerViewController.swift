@@ -13,6 +13,8 @@ import Pulsator
 import Spring
 import IBAnimatable
 import SwiftState
+import AVFoundation
+import AudioToolbox
 
 enum ScanningState: StateType {
     case Initial, Stopped, Scanning, Connecting, Error
@@ -36,13 +38,24 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     // MARK: User Interface
     
     
+    
     @IBOutlet weak var scannerView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
+    
+    var tapSound : AVAudioPlayer?
+    var clickSound : AVAudioPlayer?
+    var coinSound : AVAudioPlayer?
     
     let pulsator = Pulsator()
 
     var machine: StateMachine<ScanningState, NoEvent>!
     
+    var tags = [ ["0","#FFC91B"], ["1", "#5A6372"], ["6", "#8975B5"] ]
+    
+    var selectedSpeciesIndex = 0
+
+    // declared system sound here
+    let systemSoundID: SystemSoundID = 1104
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -60,9 +73,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        
+        setupSounds()
+        setupViews()
     }
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -83,8 +97,9 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         _border.frame = scannerView.bounds
     }
     
+
   
-    func setup() {
+    func setupViews() {
         initEstimotes()
         renderViews()
     }
@@ -95,7 +110,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         machine = StateMachine<ScanningState, NoEvent>(state: .Initial) { machine in
             machine.addRoute(.Any => .Scanning) { context in
                 
-                LOG.debug("Scanning for beacons...")
+                print("Scanning for beacons...")
                 
 
 //                self.statusLabel.text = "Scanning for beacons..."
@@ -108,17 +123,26 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             }
             
             machine.addRoute(.Scanning => .Connecting) { context in
-                LOG.debug("Connecting to beacon...")
+                print("Connecting to beacon...")
                 //self.statusLabel.text = "Connecting to beacon..."
                 self.statusLabel.text = "Connecting to critter..."
 
                 self.immediateBeaconDetector.stop()
+                
+                dispatch_on_main {
+                    // Do some UI stuff
+                    AudioServicesPlaySystemSound(1104)
+                    
+                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    
+                    self.coinSound?.play()
+                }
             }
             
             machine.addRoute(.Any => .Stopped) { context in
-                LOG.debug("Scanning stopped....")
+                print("Scanning stopped....")
                 
-                machine <- (.Error, ErrorMessage(title: "There was a problem scanning for beacons", message: "Try starting scanning again. If the problem persists, try turning Bluetooth off, then on again."))
+//                machine <- (.Error, ErrorMessage(title: "There was a problem scanning for beacons", message: "Try starting scanning again. If the problem persists, try turning Bluetooth off, then on again."))
                 
                 self.immediateBeaconDetector.stop()
             }
@@ -129,13 +153,13 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 let alert = UIAlertController(title: errorMessage.title, message: errorMessage.message, preferredStyle: .Alert)
                 let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alert.addAction(action)
-                self.presentViewController(alert, animated: true, completion: nil)
+                //self.presentViewController(alert, animated: true, completion: nil)
                 
                 machine <- .Stopped
             }
             
             machine.addErrorHandler { event, fromState, toState, userInfo in
-                LOG.debug("StateMachine 'error', event = \(event), fromState = \(fromState), toState = \(toState), userInfo = \(userInfo)")
+                print("StateMachine 'error', event = \(event), fromState = \(fromState), toState = \(toState), userInfo = \(userInfo)")
             }
         }
         
@@ -199,6 +223,67 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         immediateBeacon.delegate = nil
         
+        machine <- .Stopped
+        
+//        let sndurl = NSBundle.mainBundle().URLForResource(
+//            "coin", withExtension: "wav")!
+//        var snd : SystemSoundID = 0
+//        AudioServicesCreateSystemSoundID(sndurl, &snd)
+       // AudioServicesPlaySystemSound(1104)
+
+//        AudioServicesPlaySystemSoundWithCompletion(systemSoundID) {
+//            AudioServicesDisposeSystemSoundID(self.systemSoundID)
+//        }
+        
+//        coinSound?.volume = 1.0
+//        coinSound?.prepareToPlay()
+        dispatch_on_main {
+            // Do some UI stuff
+            AudioServicesPlaySystemSound(1104)
+
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+
+            self.coinSound?.play()
+        }
+        
+        
+        
+        
+        print("FOUND STOPPED")
+        //self.immediateBeacon.disconnect()
+//        print"tags \(immediateBeacon.settings?.deviceInfo.tags.getValue())")
+//        
+//        let tags = immediateBeacon.settings?.deviceInfo.tags.getValue()
+//        
+//        var hexColor = ""
+//        var index = 0
+//        for tag in tags! {
+//            
+//            if tag.containsString("#") {
+//                hexColor = tag
+//            } else {
+//                index = Int(tag)!
+//            }
+//            print"\(tag)")
+//        }
+        
+        //let beaconDetail = BeaconID(index: index, hexColor: hexColor)
+        
+        let beaconDetail = BeaconID(index: 6, hexColor: "#897585")
+        
+        print(beaconDetail.asSimpleDescription)
+        
+//        let realm = getAppDelegate().realm
+//        
+//        let critters = realm?.objects(Critter)
+//        //let critters = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
+//        
+//        //print("critters \(critters)")
+//        
+//        let c = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
+//        
+//        print("found \(c)")
+
         //performSegueWithIdentifier("ShowBeaconSetup", sender: self)
     }
     
@@ -221,5 +306,70 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             machine <- (.Error, ErrorMessage(title: "Beacon disconnected while connecting", message: "Try again. If the problem persists, try restarting Bluetooth. If that doesn't help either, set this beacon aside and try another one."))
         }
         
+    }
+    
+    // MARK: Segue
+    
+    @IBAction func unwindToMainView(segue: UIStoryboardSegue) {
+        let rootViewController = segue.sourceViewController as! RootController
+        
+        rootViewController.updateViewCritter(0)
+        
+
+    }
+    
+    @IBAction func closeButton(sender: FabButton) {
+        //self.tapSound?.play()
+        LOG.debug("Scanner View Close Button Tapped")
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            self.machine <- .Stopped
+            
+            if self.immediateBeaconDetector != nil {
+                self.immediateBeaconDetector.stop()
+                if self.immediateBeacon != nil {
+                    self.immediateBeacon.disconnect()
+                }
+            }
+            
+            self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: nil)
+
+            
+        })
+        
+    }
+    
+    // MARK: Sound Effects
+    
+    func setupSounds() {
+        if let clickSound = self.setupAudioPlayerWithFile("click", type:"wav") {
+            self.clickSound = clickSound
+        }
+        if let coinSound = self.setupAudioPlayerWithFile("coin", type:"wav") {
+            self.coinSound = coinSound
+        }
+        if let tapSound = self.setupAudioPlayerWithFile("tap", type:"wav") {
+            self.tapSound = tapSound
+        }
+    }
+    
+    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
+        //1
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+        let url = NSURL.fileURLWithPath(path!)
+        
+        //2
+        var audioPlayer:AVAudioPlayer?
+        
+        // 3
+        do {
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.volume = 1.0
+        } catch {
+            print("Player not available")
+        }
+        
+        return audioPlayer
     }
 }

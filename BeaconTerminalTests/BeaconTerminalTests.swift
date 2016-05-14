@@ -29,50 +29,50 @@ class BeaconTerminalTests: XCTestCase {
     
     func testHabitatCreate() {
         
-        let path = NSBundle.mainBundle().pathForResource("wallcology_configuration", ofType: "json")
-        let jsonData = NSData(contentsOfFile:path!)
-        let json = JSON(data: jsonData!)
-        //print(json["habitats"])
-        
-        //            "name": "Habitat 1",
-        //            "index": 0,
-        //            "temperature": 0,
-        //            "pipelength": 0,
-        //            "brickarea": 0
-        
-        if let habitats = json["habitats"].array {
-            
-            var i = 0
-            for item in habitats {
-                
-                let habitat = Habitat()
-                
-                //habitat.id = i
-                
-                if let temp = item["temperature"].int {
-                    habitat.temperature = temp
-                }
-                
-                if let pl = item["pipelength"].int {
-                    habitat.pipelength = pl
-                }
-                
-                if let ba = item["brickarea"].int {
-                    habitat.brickarea = ba
-                }
-                
-                if let name = item["name"].string {
-                    habitat.name = name
-                }
-                
-                // Save your object
-                realm!.beginWrite()
-                realm!.add(habitat)
-                try! realm!.commitWrite()
-                
-                i += 0
-            }
-        }
+//        let path = NSBundle.mainBundle().pathForResource("wallcology_configuration", ofType: "json")
+//        let jsonData = NSData(contentsOfFile:path!)
+//        let json = JSON(data: jsonData!)
+//        //print(json["habitats"])
+//        
+//        //            "name": "Habitat 1",
+//        //            "index": 0,
+//        //            "temperature": 0,
+//        //            "pipelength": 0,
+//        //            "brickarea": 0
+//        
+//        if let habitats = json["habitats"].array {
+//            
+//            var i = 0
+//            for item in habitats {
+//                
+//                let habitat = Habitat()
+//                
+//                //habitat.id = i
+//                
+//                if let temp = item["temperature"].int {
+//                    habitat.temperature = temp
+//                }
+//                
+//                if let pl = item["pipelength"].int {
+//                    habitat.pipelength = pl
+//                }
+//                
+//                if let ba = item["brickarea"].int {
+//                    habitat.brickarea = ba
+//                }
+//                
+//                if let name = item["name"].string {
+//                    habitat.name = name
+//                }
+//                
+//                // Save your object
+//                realm!.beginWrite()
+//                realm!.add(habitat)
+//                try! realm!.commitWrite()
+//                
+//                i += 0
+//            }
+//        }
 
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
