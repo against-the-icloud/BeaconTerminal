@@ -4,6 +4,7 @@ import Material
 import RealmSwift
 import SwiftyJSON
 import XCGLogger
+import RAMAnimatedTabBarController
 
 let LOG: XCGLogger = {
     // Setup XCGLogger
@@ -34,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var realm: Realm?
+    var tabController : RAMAnimatedTabBarController? = nil
     
     var beaconIDs =  [
         BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: MaterialColor.pink.base),
@@ -43,9 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
-        
-       
-        
+        tabController = self.window!.rootViewController as? RAMAnimatedTabBarController
+
+
+
         do {
             try NSFileManager.defaultManager().removeItemAtURL(Realm.Configuration.defaultConfiguration.fileURL!)
             

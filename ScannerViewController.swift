@@ -47,13 +47,13 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     var coinSound : AVAudioPlayer?
     
     let pulsator = Pulsator()
-
+    
     var machine: StateMachine<ScanningState, NoEvent>!
     
     var tags = [ ["0","#FFC91B"], ["1", "#5A6372"], ["6", "#8975B5"] ]
     
     var selectedSpeciesIndex = 0
-
+    
     // declared system sound here
     let systemSoundID: SystemSoundID = 1104
     
@@ -97,8 +97,8 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         _border.frame = scannerView.bounds
     }
     
-
-  
+    
+    
     func setupViews() {
         initEstimotes()
         renderViews()
@@ -112,10 +112,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 
                 print("Scanning for beacons...")
                 
-
-//                self.statusLabel.text = "Scanning for beacons..."
-//                self.restartButton.hidden = true
-//                self.activityIndicator.hidden = false
+                
+                //                self.statusLabel.text = "Scanning for beacons..."
+                //                self.restartButton.hidden = true
+                //                self.activityIndicator.hidden = false
                 
                 self.pulsator.start()
                 
@@ -126,7 +126,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 print("Connecting to beacon...")
                 //self.statusLabel.text = "Connecting to beacon..."
                 self.statusLabel.text = "Connecting to critter..."
-
+                
                 self.immediateBeaconDetector.stop()
                 
                 dispatch_on_main {
@@ -142,7 +142,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             machine.addRoute(.Any => .Stopped) { context in
                 print("Scanning stopped....")
                 
-//                machine <- (.Error, ErrorMessage(title: "There was a problem scanning for beacons", message: "Try starting scanning again. If the problem persists, try turning Bluetooth off, then on again."))
+                //                machine <- (.Error, ErrorMessage(title: "There was a problem scanning for beacons", message: "Try starting scanning again. If the problem persists, try turning Bluetooth off, then on again."))
                 
                 self.immediateBeaconDetector.stop()
             }
@@ -225,24 +225,24 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         machine <- .Stopped
         
-//        let sndurl = NSBundle.mainBundle().URLForResource(
-//            "coin", withExtension: "wav")!
-//        var snd : SystemSoundID = 0
-//        AudioServicesCreateSystemSoundID(sndurl, &snd)
-       // AudioServicesPlaySystemSound(1104)
-
-//        AudioServicesPlaySystemSoundWithCompletion(systemSoundID) {
-//            AudioServicesDisposeSystemSoundID(self.systemSoundID)
-//        }
+        //        let sndurl = NSBundle.mainBundle().URLForResource(
+        //            "coin", withExtension: "wav")!
+        //        var snd : SystemSoundID = 0
+        //        AudioServicesCreateSystemSoundID(sndurl, &snd)
+        // AudioServicesPlaySystemSound(1104)
         
-//        coinSound?.volume = 1.0
-//        coinSound?.prepareToPlay()
+        //        AudioServicesPlaySystemSoundWithCompletion(systemSoundID) {
+        //            AudioServicesDisposeSystemSoundID(self.systemSoundID)
+        //        }
+        
+        //        coinSound?.volume = 1.0
+        //        coinSound?.prepareToPlay()
         dispatch_on_main {
             // Do some UI stuff
             AudioServicesPlaySystemSound(1104)
-
+            
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-
+            
             self.coinSound?.play()
         }
         
@@ -251,21 +251,21 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         print("FOUND STOPPED")
         //self.immediateBeacon.disconnect()
-//        print"tags \(immediateBeacon.settings?.deviceInfo.tags.getValue())")
-//        
-//        let tags = immediateBeacon.settings?.deviceInfo.tags.getValue()
-//        
-//        var hexColor = ""
-//        var index = 0
-//        for tag in tags! {
-//            
-//            if tag.containsString("#") {
-//                hexColor = tag
-//            } else {
-//                index = Int(tag)!
-//            }
-//            print"\(tag)")
-//        }
+        //        print"tags \(immediateBeacon.settings?.deviceInfo.tags.getValue())")
+        //        
+        //        let tags = immediateBeacon.settings?.deviceInfo.tags.getValue()
+        //        
+        //        var hexColor = ""
+        //        var index = 0
+        //        for tag in tags! {
+        //            
+        //            if tag.containsString("#") {
+        //                hexColor = tag
+        //            } else {
+        //                index = Int(tag)!
+        //            }
+        //            print"\(tag)")
+        //        }
         
         //let beaconDetail = BeaconID(index: index, hexColor: hexColor)
         
@@ -273,17 +273,17 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         print(beaconDetail.asSimpleDescription)
         
-//        let realm = getAppDelegate().realm
-//        
-//        let critters = realm?.objects(Critter)
-//        //let critters = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
-//        
-//        //print("critters \(critters)")
-//        
-//        let c = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
-//        
-//        print("found \(c)")
-
+        //        let realm = getAppDelegate().realm
+        //        
+        //        let critters = realm?.objects(Critter)
+        //        //let critters = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
+        //        
+        //        //print("critters \(critters)")
+        //        
+        //        let c = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
+        //        
+        //        print("found \(c)")
+        
         //performSegueWithIdentifier("ShowBeaconSetup", sender: self)
     }
     
@@ -308,15 +308,6 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
     }
     
-    // MARK: Segue
-    
-    @IBAction func unwindToMainView(segue: UIStoryboardSegue) {
-        let rootViewController = segue.sourceViewController as! RootController
-        
-        rootViewController.updateViewCritter(0)
-        
-
-    }
     
     @IBAction func closeButton(sender: FabButton) {
         //self.tapSound?.play()
@@ -332,8 +323,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 }
             }
             
+            LOG.debug("UNWINDE unwindToHereFromScannerView")
+            
             self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: nil)
-
+            
             
         })
         

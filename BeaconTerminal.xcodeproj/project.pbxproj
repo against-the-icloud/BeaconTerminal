@@ -42,6 +42,7 @@
 		AEEA894D1C32C90D006378F4 /* ImmediateBeaconDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEA894C1C32C90D006378F4 /* ImmediateBeaconDetector.swift */; };
 		AEF5B0DD1C29AC7300C90621 /* BeaconSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */; };
 		BC30B0AC304DD1C1C15EC100 /* Pods_BeaconTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D61E9C71B15E1946522BD14 /* Pods_BeaconTerminal.framework */; };
+		C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D118835AC334A93CDE75 /* ToolbarView.swift */; };
 		C0A7DD3F56F4CE40BFE64B09 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,7 @@
 		AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeaconSetupViewController.swift; path = BeaconTerminal/BeaconSetupViewController.swift; sourceTree = "<group>"; };
 		AEFCFAD71C3FBE780036EAB7 /* SwiftState.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftState.framework; path = ../../Carthage/Build/iOS/SwiftState.framework; sourceTree = "<group>"; };
 		C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		C0A7D118835AC334A93CDE75 /* ToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		D2F31E89BBC644DD9E3BD5EE /* Pods-BeaconTerminal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +154,7 @@
 				7088D32D1CCC978C001776C9 /* RootController.swift */,
 				70310CD81CDFA7FB0018CCF7 /* ScannerViewController.swift */,
 				70310CDA1CDFD9070018CCF7 /* LFTPulseAnimation.swift */,
+				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 			);
 			name = Controllers;
 			path = ..;
@@ -493,6 +496,7 @@
 				709080601CE0455800AF1F97 /* LoadingView.swift in Sources */,
 				AE41A6051C44034000DA4533 /* BeaconConfig.swift in Sources */,
 				C0A7DD3F56F4CE40BFE64B09 /* DataManager.swift in Sources */,
+				C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
