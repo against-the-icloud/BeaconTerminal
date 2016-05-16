@@ -12,7 +12,9 @@ target 'BeaconTerminal' do
     pod 'PageMenu'
     pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
     pod 'RAMAnimatedTabBarController'
-
+    pod 'XLPagerTabStrip'
+    pod 'ISRadioButton'
+    
     #db
     pod 'RealmSwift'
     pod 'SwiftyJSON'
@@ -23,4 +25,8 @@ target 'BeaconTerminal' do
 
     # Image loading/caching library
     pod 'HanekeSwift'
+    pod 'ALCameraViewController'
+
+    #util
+    pod 'Sugar'
 end
