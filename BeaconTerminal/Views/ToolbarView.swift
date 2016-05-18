@@ -33,21 +33,41 @@ class ToolbarView: UIView {
     }
 
 
+    func resetToolbarView() {
+        self.addButton.tintColor = UIColor.whiteColor()
+        self.classLabel.textColor = UIColor.whiteColor()
+        self.groupLabel.textColor = UIColor.whiteColor()
+        self.titleLabel.textColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.blackColor()
 
+        getAppDelegate().tabController!.tabBar.barTintColor = UIColor.blackColor()
+        getAppDelegate().tabController!.tabBar.tintColor = UIColor.whiteColor()
+
+        //        getAppDelegate().tabController!.changeSelectedColor(UIColor.redColor(), iconSelectedColor: UIColor.redColor())
+        let items = getAppDelegate().tabController!.tabBar.items as! [RAMAnimatedTabBarItem]
+        for index in 0..<items.count {
+            let item = items[index]
+
+            //            item.animation.textSelectedColor = UIColor.redColor()
+            //            item.animation.iconSelectedColor = UIColor.redColor()
+            item.iconColor = UIColor.whiteColor()
+            item.textColor = UIColor.whiteColor()
+            item.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+
+            if item == getAppDelegate().tabController!.tabBar.selectedItem {
+                item.selectedState()
+            } else {
+                item.deselectAnimation()
+            }
+        }
+
+    }
 
     func updateToolbarColors(baseColor: UIColor, newTextColor: UIColor) {
 
-
-
-
-
-
-       
-
-        
 //        UIApplication.sharedApplication().st
 
-        addButton.tintColor = newTextColor
+        self.addButton.tintColor = newTextColor
         
         LOG.debug(newTextColor.debugDescription)
         
@@ -76,25 +96,12 @@ class ToolbarView: UIView {
             } else {
                 item.deselectAnimation()
             }
-            
-            
-            
         }
-        //
-        //        for tab in tabItems {
-        //            let t = tab
-        //            t.textColor = UIColor.redColor()
-        //
-        //        }
-        //        
-        
-        
-        
-        
-        
     }
 
     func promoteProfileView() {
+        UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self)
+
         UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.profileView)
 
     }
@@ -102,11 +109,23 @@ class ToolbarView: UIView {
     func updateProfileImage(index: Int) {
         
         var fileIndex = ""
-        if index < 10 {
-            fileIndex = "0\(index)"
+        var imageName = ""
+
+        if index == -1 {
+            imageName = "ic_question_mark"
+            self.profileView.contentMode = .ScaleAspectFit
+
         } else {
-            fileIndex = "\(index)"
+            if index < 10 {
+                fileIndex = "0\(index)"
+                imageName = "species_\(fileIndex).png"
+            } else {
+                fileIndex = "\(index)"
+                imageName = "species_\(fileIndex).png"
+            }
+            self.profileView.contentMode = .ScaleAspectFit
         }
+
         
         LOG.debug("INDEX \(fileIndex)")
         
@@ -119,8 +138,8 @@ class ToolbarView: UIView {
         self.profileView.damping = 0.9
         self.profileView.velocity = 1.0
         self.profileView.animateToNext({
-            self.profileView.contentMode = .ScaleAspectFit
-            self.profileView.image = UIImage(named: "species_\(fileIndex).png")
+
+            self.profileView.image = UIImage(named: imageName)
         })
         
     }

@@ -13,6 +13,7 @@ import SwiftyJSON
 class DataManager {
     
     var realm: Realm?
+    var currentSelectedSpecies = 0
     
     static let sharedInstance = DataManager()
     
@@ -109,6 +110,26 @@ class DataManager {
             LOG.debug("error")
         }
         
+    }
+
+    func createVotes(mainCritterIndex: Int) -> List<Vote> {
+
+        let votes = List<Vote>()
+        let randomIndex = Int(arc4random_uniform(10) + 1)
+
+        for index in 0...randomIndex {
+            var random = Int(arc4random_uniform(10) + 1)
+            if random == mainCritterIndex {
+                random = Int(arc4random_uniform(10) + 1)
+            }
+
+            let vote = Vote()
+            vote.versusCritter = realm!.objects(Critter).filter("index = \(random)")[0] as Critter!
+            vote.mainCritter = realm!.objects(Critter).filter("index = \(mainCritterIndex)")[0] as Critter!
+            vote.voteCount = Int(arc4random_uniform(4) + 1)
+            votes.append(vote)
+        }
+        return votes
     }
     
     

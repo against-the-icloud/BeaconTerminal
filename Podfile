@@ -8,8 +8,6 @@ target 'BeaconTerminal' do
     pod 'Material'
     pod 'ChameleonFramework/Swift'
     pod 'Pulsator'
-    pod 'IBAnimatable'
-    pod 'PageMenu'
     pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
     pod 'RAMAnimatedTabBarController'
     pod 'XLPagerTabStrip'
@@ -24,9 +22,6 @@ target 'BeaconTerminal' do
     pod 'SwiftState'
 
     # Image loading/caching library
-    pod 'HanekeSwift'
-    pod 'ALCameraViewController'
-
     #util
     pod 'Sugar'
 end

@@ -82,13 +82,9 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-BeaconTerminal/ALCameraViewController.framework"
   install_framework "Pods-BeaconTerminal/ChameleonFramework.framework"
-  install_framework "Pods-BeaconTerminal/Haneke.framework"
-  install_framework "Pods-BeaconTerminal/IBAnimatable.framework"
   install_framework "Pods-BeaconTerminal/ISRadioButton.framework"
   install_framework "Pods-BeaconTerminal/Material.framework"
-  install_framework "Pods-BeaconTerminal/PageMenu.framework"
   install_framework "Pods-BeaconTerminal/Pulsator.framework"
   install_framework "Pods-BeaconTerminal/RAMAnimatedTabBarController.framework"
   install_framework "Pods-BeaconTerminal/Realm.framework"
@@ -101,13 +97,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BeaconTerminal/XLPagerTabStrip.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-BeaconTerminal/ALCameraViewController.framework"
   install_framework "Pods-BeaconTerminal/ChameleonFramework.framework"
-  install_framework "Pods-BeaconTerminal/Haneke.framework"
-  install_framework "Pods-BeaconTerminal/IBAnimatable.framework"
   install_framework "Pods-BeaconTerminal/ISRadioButton.framework"
   install_framework "Pods-BeaconTerminal/Material.framework"
-  install_framework "Pods-BeaconTerminal/PageMenu.framework"
   install_framework "Pods-BeaconTerminal/Pulsator.framework"
   install_framework "Pods-BeaconTerminal/RAMAnimatedTabBarController.framework"
   install_framework "Pods-BeaconTerminal/Realm.framework"

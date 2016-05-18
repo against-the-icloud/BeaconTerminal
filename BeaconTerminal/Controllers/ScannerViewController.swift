@@ -68,7 +68,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         pulsator.numPulse = 5
         pulsator.radius = scannerView.frame.width/2
         pulsator.animationDuration = 5
-        pulsator.backgroundColor = UIColor.redColor().CGColor
+        pulsator.backgroundColor = MaterialColor.blue.base.CGColor
     }
     
     override func viewDidLoad() {
