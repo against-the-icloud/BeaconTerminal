@@ -48,39 +48,31 @@ public extension UIViewController {
 	}
 }
 
-public class SearchBarController : StatusBarViewController {
-	/// The height of the StatusBar.
-	@IBInspectable public override var heightForStatusBar: CGFloat {
-		get {
-			return searchBar.heightForStatusBar
-		}
-		set(value) {
-			searchBar.heightForStatusBar = value
-		}
-	}
-	
-	/// The height when in Portrait orientation mode.
-	@IBInspectable public override var heightForPortraitOrientation: CGFloat {
-		get {
-			return searchBar.heightForPortraitOrientation
-		}
-		set(value) {
-			searchBar.heightForPortraitOrientation = value
-		}
-	}
-	
-	/// The height when in Landscape orientation mode.
-	@IBInspectable public override var heightForLandscapeOrientation: CGFloat {
-		get {
-			return searchBar.heightForLandscapeOrientation
-		}
-		set(value) {
-			searchBar.heightForLandscapeOrientation = value
-		}
-	}
-	
+public class SearchBarController : BarController {
 	/// Reference to the SearchBar.
-	public private(set) lazy var searchBar: SearchBar = SearchBar()
+	public private(set) var searchBar: SearchBar!
+	
+	public override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		layoutSubviews()
+	}
+	
+	/// Layout subviews.
+	public func layoutSubviews() {
+		if let v: SearchBar = searchBar {
+			v.grid.layoutInset.top = .iPhone == MaterialDevice.type && MaterialDevice.isLandscape ? 0 : 20
+			
+			let h: CGFloat = MaterialDevice.height
+			let w: CGFloat = MaterialDevice.width
+			let p: CGFloat = v.intrinsicContentSize().height + v.grid.layoutInset.top + v.grid.layoutInset.bottom
+			
+			v.width = w + v.grid.layoutInset.left + v.grid.layoutInset.right
+			v.height = p
+			
+			rootViewController.view.frame.origin.y = p
+			rootViewController.view.frame.size.height = h - p
+		}
+	}
 	
 	/**
 	Prepares the view instance when intialized. When subclassing,
@@ -96,7 +88,10 @@ public class SearchBarController : StatusBarViewController {
 	
 	/// Prepares the SearchBar.
 	private func prepareSearchBar() {
-		searchBar.zPosition = 1000
-		view.addSubview(searchBar)
+		if nil == searchBar {
+			searchBar = SearchBar()
+			searchBar.zPosition = 1000
+			view.addSubview(searchBar)
+		}
 	}
 }

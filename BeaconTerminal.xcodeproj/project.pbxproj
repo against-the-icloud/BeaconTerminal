@@ -12,23 +12,35 @@
 		70096C2D1CE8F641008129BA /* VoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70096C271CE8F641008129BA /* VoteCell.xib */; };
 		702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCA3A1CE1A527000B6EDE /* BeaconID.swift */; };
 		70310CD91CDFA7FB0018CCF7 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70310CD81CDFA7FB0018CCF7 /* ScannerViewController.swift */; };
+		7036AF8C1CF78D150063A88F /* ObservationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7036AF8B1CF78D150063A88F /* ObservationView.xib */; };
+		7036AF8E1CF78D3F0063A88F /* ObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036AF8D1CF78D3F0063A88F /* ObservationView.swift */; };
+		7036AF901CF7E6770063A88F /* SpeciesAttributeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7036AF8F1CF7E6770063A88F /* SpeciesAttributeView.xib */; };
+		7036AF921CF7E6A60063A88F /* SpeciesAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036AF911CF7E6A60063A88F /* SpeciesAttributeView.swift */; };
+		7036AFA31CF801050063A88F /* ObservationEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7036AFA21CF801050063A88F /* ObservationEditView.swift */; };
+		7036AFA51CF801AC0063A88F /* ObservationEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7036AFA41CF801AC0063A88F /* ObservationEditView.xib */; };
 		7042041C1CE8E94D00C09FD0 /* ChameleonShorthand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204181CE8E94D00C09FD0 /* ChameleonShorthand.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */; };
-		7088D3311CCC978C001776C9 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088D32D1CCC978C001776C9 /* RootController.swift */; };
+		7088D3311CCC978C001776C9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088D32D1CCC978C001776C9 /* MainViewController.swift */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		70920D161CD59E66001B582F /* BeaconTerminalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70920D151CD59E66001B582F /* BeaconTerminalTests.swift */; };
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
 		70A06DD41CE3F84D008FC11F /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD21CE3F84D008FC11F /* coin.wav */; };
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
+		70C1D3301CEFA07F008425EC /* test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70C1D32F1CEFA07F008425EC /* test.storyboard */; };
+		70C88C8E1CF2B4FC00E936AA /* UINavigationBar+Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */; };
+		70C88CA81CF2B9E900E936AA /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */; };
+		70C88CA91CF2B9E900E936AA /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88CA01CF2B9E900E936AA /* PhotoViewController.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
+		70EA5F981CF237760055CB00 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EA5F971CF237760055CB00 /* ControlPanelViewController.swift */; };
+		70EA5FA71CF24D860055CB00 /* PlaceTerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EA5FA51CF24D860055CB00 /* PlaceTerminalViewController.swift */; };
 		70EF4FFA1CE6135200AC8AD5 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF4FF91CE6135200AC8AD5 /* Record.swift */; };
 		70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3EB1CE652E700A0E752 /* CanvasView.swift */; };
 		70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3ED1CE652ED00A0E752 /* Line.swift */; };
 		70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3EF1CE652F400A0E752 /* MyImageView.swift */; };
 		70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F11CE6530200A0E752 /* ReticleView.swift */; };
-		70F0A3F41CE6531C00A0E752 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* ViewController.swift */; };
+		70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */; };
 		70FB30AE1CE90A30000B7F9D /* CollectionBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70FB30AD1CE90A30000B7F9D /* CollectionBoard.storyboard */; };
 		AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE090D311C747B85009C8468 /* GeoLocator.swift */; };
 		AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6021C3FEBC000DA4533 /* Utilities.swift */; };
@@ -45,9 +57,13 @@
 		AEF5B0DD1C29AC7300C90621 /* BeaconSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */; };
 		C0A7D0850D327703E1595C1E /* ClassContributionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */; };
 		C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D3826273826A0346635F /* PageViewController.swift */; };
+		C0A7D2A5501C0509EF5BB160 /* FrostedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */; };
+		C0A7D3F41E6EC57A48911066 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DE33E79111E09C352EE9 /* DraggableImageView.swift */; };
+		C0A7D9705184C3AF769BC211 /* FrostedSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */; };
 		C0A7D9FA2E80F7384AA80B9F /* TestUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */; };
 		C0A7DA1AF17ED38FEA852617 /* GroupContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */; };
-		C0A7DA4923099ECBB1D27203 /* EcosystemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DDF0FA75DF5AEA5CD6B0 /* EcosystemViewController.swift */; };
+		C0A7DA4923099ECBB1D27203 /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */; };
+		C0A7DA499BE66B0812352287 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0C401151FBAF03A26AB /* AddContributionViewController.swift */; };
 		C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D118835AC334A93CDE75 /* ToolbarView.swift */; };
 		C0A7DD3F56F4CE40BFE64B09 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */; };
 /* End PBXBuildFile section */
@@ -81,11 +97,17 @@
 		70096C271CE8F641008129BA /* VoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoteCell.xib; sourceTree = "<group>"; };
 		702DCA3A1CE1A527000B6EDE /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
 		70310CD81CDFA7FB0018CCF7 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		7036AF8B1CF78D150063A88F /* ObservationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ObservationView.xib; path = Views/ObservationView.xib; sourceTree = "<group>"; };
+		7036AF8D1CF78D3F0063A88F /* ObservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationView.swift; path = Views/ObservationView.swift; sourceTree = "<group>"; };
+		7036AF8F1CF7E6770063A88F /* SpeciesAttributeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpeciesAttributeView.xib; path = StoryBoards/SpeciesAttributeView.xib; sourceTree = "<group>"; };
+		7036AF911CF7E6A60063A88F /* SpeciesAttributeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesAttributeView.swift; path = StoryBoards/SpeciesAttributeView.swift; sourceTree = "<group>"; };
+		7036AFA21CF801050063A88F /* ObservationEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationEditView.swift; path = BeaconTerminal/StoryBoards/ObservationEditView.swift; sourceTree = SOURCE_ROOT; };
+		7036AFA41CF801AC0063A88F /* ObservationEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ObservationEditView.xib; path = Views/ObservationEditView.xib; sourceTree = "<group>"; };
 		704204181CE8E94D00C09FD0 /* ChameleonShorthand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChameleonShorthand.swift; sourceTree = "<group>"; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		7052DB341CCDDB2400E1A397 /* Chameleon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chameleon.framework; path = Carthage/Build/iOS/Chameleon.framework; sourceTree = "<group>"; };
-		7088D32D1CCC978C001776C9 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
+		7088D32D1CCC978C001776C9 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wallcology_configuration.json; sourceTree = "<group>"; };
 		70920D131CD59E66001B582F /* BeaconTerminalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconTerminalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70920D151CD59E66001B582F /* BeaconTerminalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconTerminalTests.swift; sourceTree = "<group>"; };
@@ -93,14 +115,20 @@
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
+		70C1D32F1CEFA07F008425EC /* test.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = test.storyboard; sourceTree = "<group>"; };
+		70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Height.swift"; sourceTree = "<group>"; };
+		70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		70C88CA01CF2B9E900E936AA /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		70EA5F971CF237760055CB00 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
+		70EA5FA51CF24D860055CB00 /* PlaceTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceTerminalViewController.swift; path = ../PlaceTerminalViewController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		70F0A3EB1CE652E700A0E752 /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		70F0A3ED1CE652ED00A0E752 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		70F0A3EF1CE652F400A0E752 /* MyImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView.swift; sourceTree = "<group>"; };
 		70F0A3F11CE6530200A0E752 /* ReticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReticleView.swift; sourceTree = "<group>"; };
-		70F0A3F31CE6531C00A0E752 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadViewController.swift; sourceTree = "<group>"; };
 		70FB30AD1CE90A30000B7F9D /* CollectionBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CollectionBoard.storyboard; path = BeaconTerminal/CollectionBoard.storyboard; sourceTree = SOURCE_ROOT; };
 		AE090D311C747B85009C8468 /* GeoLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoLocator.swift; sourceTree = "<group>"; };
 		AE41A6021C3FEBC000DA4533 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -122,12 +150,16 @@
 		AEFFFBB913E67323F0FADF14 /* Pods-BeaconTerminal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.release.xcconfig"; sourceTree = "<group>"; };
 		B787145121FA155F7F9F01B3 /* Pods-BeaconTerminal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.debug.xcconfig"; sourceTree = "<group>"; };
 		C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		C0A7D0C401151FBAF03A26AB /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7D118835AC334A93CDE75 /* ToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7D3826273826A0346635F /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrostedTabBarController.swift; sourceTree = "<group>"; };
 		C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUITableViewController.swift; sourceTree = "<group>"; };
 		C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassContributionsCollectionViewController.swift; sourceTree = "<group>"; };
-		C0A7DDF0FA75DF5AEA5CD6B0 /* EcosystemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcosystemViewController.swift; sourceTree = "<group>"; };
+		C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
+		C0A7DE33E79111E09C352EE9 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
+		C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrostedSidebar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +198,8 @@
 				704204191CE8E94D00C09FD0 /* LoadingView.swift */,
 				7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */,
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
+				70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */,
+				C0A7DE33E79111E09C352EE9 /* DraggableImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,13 +217,16 @@
 		7088D32B1CCC9720001776C9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7088D32D1CCC978C001776C9 /* RootController.swift */,
+				7088D32D1CCC978C001776C9 /* MainViewController.swift */,
+				70EA5FA51CF24D860055CB00 /* PlaceTerminalViewController.swift */,
+				70EA5F971CF237760055CB00 /* ControlPanelViewController.swift */,
 				70310CD81CDFA7FB0018CCF7 /* ScannerViewController.swift */,
 				C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */,
 				C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */,
 				C0A7D3826273826A0346635F /* PageViewController.swift */,
 				C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */,
-				C0A7DDF0FA75DF5AEA5CD6B0 /* EcosystemViewController.swift */,
+				C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */,
+				C0A7D0C401151FBAF03A26AB /* AddContributionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -241,6 +278,8 @@
 		70E8F3441CDEFDEF00B83010 /* TestInterface */ = {
 			isa = PBXGroup;
 			children = (
+				70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */,
+				70C88CA01CF2B9E900E936AA /* PhotoViewController.swift */,
 				70096C261CE8F641008129BA /* VoteCell.swift */,
 				70096C271CE8F641008129BA /* VoteCell.xib */,
 			);
@@ -254,7 +293,7 @@
 				70F0A3ED1CE652ED00A0E752 /* Line.swift */,
 				70F0A3F11CE6530200A0E752 /* ReticleView.swift */,
 				70F0A3EF1CE652F400A0E752 /* MyImageView.swift */,
-				70F0A3F31CE6531C00A0E752 /* ViewController.swift */,
+				70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */,
 			);
 			path = ScratchPad;
 			sourceTree = "<group>";
@@ -291,16 +330,24 @@
 		AE97648B1C22C1BF0058A4DC /* BeaconTerminal */ = {
 			isa = PBXGroup;
 			children = (
+				7088D32B1CCC9720001776C9 /* Controllers */,
+				C0A7D6C3786F7639560659B2 /* Sidebar */,
 				70F0A3EA1CE6526000A0E752 /* ScratchPad */,
 				70E8F3441CDEFDEF00B83010 /* TestInterface */,
 				70920D091CD52C4F001B582F /* DataObjects */,
 				704204171CE8E8C300C09FD0 /* Views */,
-				7088D32B1CCC9720001776C9 /* Controllers */,
 				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
 				70D04ED31CD0692E00C7C784 /* archive */,
 				AE9764931C22C1BF0058A4DC /* Assets.xcassets */,
-				70FB30AD1CE90A30000B7F9D /* CollectionBoard.storyboard */,
+				7036AF8B1CF78D150063A88F /* ObservationView.xib */,
+				7036AF8D1CF78D3F0063A88F /* ObservationView.swift */,
+				7036AFA21CF801050063A88F /* ObservationEditView.swift */,
+				7036AFA41CF801AC0063A88F /* ObservationEditView.xib */,
 				AE9764901C22C1BF0058A4DC /* Main.storyboard */,
+				70C1D32F1CEFA07F008425EC /* test.storyboard */,
+				70FB30AD1CE90A30000B7F9D /* CollectionBoard.storyboard */,
+				7036AF8F1CF7E6770063A88F /* SpeciesAttributeView.xib */,
+				7036AF911CF7E6A60063A88F /* SpeciesAttributeView.swift */,
 				70920D0C1CD57B3F001B582F /* Support */,
 				AEC0A9391C86F6C700F88936 /* Estimote */,
 			);
@@ -319,6 +366,15 @@
 				AE677F2A1C351CA000836B41 /* EstimoteSDK.framework */,
 			);
 			path = Estimote;
+			sourceTree = "<group>";
+		};
+		C0A7D6C3786F7639560659B2 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */,
+				C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */,
+			);
+			path = Sidebar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,12 +475,16 @@
 				70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */,
 				70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */,
 				70A06DD31CE3F84D008FC11F /* click.wav in Resources */,
+				7036AFA51CF801AC0063A88F /* ObservationEditView.xib in Resources */,
 				AE9764941C22C1BF0058A4DC /* Assets.xcassets in Resources */,
 				70A06DD41CE3F84D008FC11F /* coin.wav in Resources */,
 				70A06DD61CE3FB54008FC11F /* tap.wav in Resources */,
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
+				7036AF8C1CF78D150063A88F /* ObservationView.xib in Resources */,
+				70C1D3301CEFA07F008425EC /* test.storyboard in Resources */,
 				70096C2D1CE8F641008129BA /* VoteCell.xib in Resources */,
 				AE9764921C22C1BF0058A4DC /* Main.storyboard in Resources */,
+				7036AF901CF7E6770063A88F /* SpeciesAttributeView.xib in Resources */,
 				70FB30AE1CE90A30000B7F9D /* CollectionBoard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,19 +582,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F0A3F41CE6531C00A0E752 /* ViewController.swift in Sources */,
+				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
 				AEF5B0DD1C29AC7300C90621 /* BeaconSetupViewController.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
+				70EA5F981CF237760055CB00 /* ControlPanelViewController.swift in Sources */,
+				7036AF8E1CF78D3F0063A88F /* ObservationView.swift in Sources */,
 				AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */,
+				70C88C8E1CF2B4FC00E936AA /* UINavigationBar+Height.swift in Sources */,
 				702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */,
+				70C88CA81CF2B9E900E936AA /* VideoViewController.swift in Sources */,
 				AE677F291C35191300836B41 /* PerformSetupViewController.swift in Sources */,
 				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
 				70096C2C1CE8F641008129BA /* VoteCell.swift in Sources */,
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
-				7088D3311CCC978C001776C9 /* RootController.swift in Sources */,
+				7088D3311CCC978C001776C9 /* MainViewController.swift in Sources */,
 				AEEA894D1C32C90D006378F4 /* ImmediateBeaconDetector.swift in Sources */,
 				AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */,
+				70EA5FA71CF24D860055CB00 /* PlaceTerminalViewController.swift in Sources */,
+				70C88CA91CF2B9E900E936AA /* PhotoViewController.swift in Sources */,
 				AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */,
 				7042041C1CE8E94D00C09FD0 /* ChameleonShorthand.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
@@ -544,14 +610,20 @@
 				AED961761C71EBA000697B6D /* RSSINormalization.swift in Sources */,
 				7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */,
 				70310CD91CDFA7FB0018CCF7 /* ScannerViewController.swift in Sources */,
+				7036AF921CF7E6A60063A88F /* SpeciesAttributeView.swift in Sources */,
 				AE41A6051C44034000DA4533 /* BeaconConfig.swift in Sources */,
 				C0A7DD3F56F4CE40BFE64B09 /* DataManager.swift in Sources */,
 				C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */,
 				C0A7DA1AF17ED38FEA852617 /* GroupContributionViewController.swift in Sources */,
+				7036AFA31CF801050063A88F /* ObservationEditView.swift in Sources */,
 				C0A7D0850D327703E1595C1E /* ClassContributionsCollectionViewController.swift in Sources */,
 				C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */,
 				C0A7D9FA2E80F7384AA80B9F /* TestUITableViewController.swift in Sources */,
-				C0A7DA4923099ECBB1D27203 /* EcosystemViewController.swift in Sources */,
+				C0A7DA4923099ECBB1D27203 /* SideViewController.swift in Sources */,
+				C0A7D2A5501C0509EF5BB160 /* FrostedTabBarController.swift in Sources */,
+				C0A7D9705184C3AF769BC211 /* FrostedSidebar.swift in Sources */,
+				C0A7DA499BE66B0812352287 /* AddContributionViewController.swift in Sources */,
+				C0A7D3F41E6EC57A48911066 /* DraggableImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

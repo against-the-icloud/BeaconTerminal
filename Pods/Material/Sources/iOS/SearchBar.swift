@@ -30,7 +30,7 @@
 
 import UIKit
 
-public class SearchBar : StatusBarView {
+public class SearchBar : BarView {
 	/// The UITextField for the searchBar.
 	public private(set) var textField: UITextField!
 	
@@ -71,23 +71,18 @@ public class SearchBar : StatusBarView {
 	@IBInspectable public var placeholder: String? {
 		didSet {
 			if let v: String = placeholder {
-				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderTextColor])
+				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
 			}
 		}
 	}
 	
 	/// Placeholder textColor.
-	@IBInspectable public var placeholderTextColor: UIColor = MaterialColor.darkText.others {
+	@IBInspectable public var placeholderColor: UIColor = MaterialColor.darkText.others {
 		didSet {
 			if let v: String = placeholder {
-				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderTextColor])
+				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
 			}
 		}
-	}
-	
-	/// A convenience initializer.
-	public convenience init() {
-		self.init(frame: CGRectZero)
 	}
 	
 	public override func layoutSubviews() {
@@ -96,6 +91,33 @@ public class SearchBar : StatusBarView {
 			textField.frame = contentView.bounds
 			layoutClearButton()
 		}
+	}
+	
+	/**
+	An initializer that initializes the object with a NSCoder object.
+	- Parameter aDecoder: A NSCoder instance.
+	*/
+	public required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
+	
+	/**
+	An initializer that initializes the object with a CGRect object.
+	If AutoLayout is used, it is better to initilize the instance
+	using the init() initializer.
+	- Parameter frame: A CGRect instance.
+	*/
+	public override init(frame: CGRect) {
+		super.init(frame: frame)
+	}
+	
+	/**
+	A convenience initializer with parameter settings.
+	- Parameter leftControls: An Array of UIControls that go on the left side.
+	- Parameter rightControls: An Array of UIControls that go on the right side.
+	*/
+	public override init(leftControls: Array<UIControl>? = nil, rightControls: Array<UIControl>? = nil) {
+		super.init(leftControls: leftControls, rightControls: rightControls)
 	}
 	
 	/**
@@ -111,18 +133,25 @@ public class SearchBar : StatusBarView {
 		prepareClearButton()
 	}
 	
+	/// Layout the clearButton.
+	public func layoutClearButton() {
+		let h: CGFloat = textField.frame.height
+		clearButton.frame = CGRectMake(textField.frame.width - h, 0, h, h)
+	}
+	
 	/// Clears the textField text.
 	internal func handleClearButton() {
-		textField.text = ""
+		textField.text = nil
 	}
 	
 	/// Prepares the textField.
 	private func prepareTextField() {
 		textField = UITextField()
-		textField.font = RobotoFont.regularWithSize(20)
+		textField.contentScaleFactor = MaterialDevice.scale
+		textField.font = RobotoFont.regularWithSize(17)
 		textField.backgroundColor = MaterialColor.clear
 		textField.clearButtonMode = .WhileEditing
-		tintColor = placeholderTextColor
+		tintColor = placeholderColor
 		textColor = MaterialColor.darkText.primary
 		placeholder = "Search"
 		contentView.addSubview(textField)
@@ -133,18 +162,12 @@ public class SearchBar : StatusBarView {
 		let image: UIImage? = MaterialIcon.cm.close
 		clearButton = IconButton()
 		clearButton.contentEdgeInsets = UIEdgeInsetsZero
-		clearButton.tintColor = placeholderTextColor
+		clearButton.tintColor = placeholderColor
 		clearButton.setImage(image, forState: .Normal)
 		clearButton.setImage(image, forState: .Highlighted)
 		clearButtonAutoHandleEnabled = true
 		textField.clearButtonMode = .Never
 		textField.rightViewMode = .WhileEditing
 		textField.rightView = clearButton
-	}
-	
-	/// Layout the clearButton.
-	private func layoutClearButton() {
-		let h: CGFloat = textField.frame.height
-		clearButton.frame = CGRectMake(textField.frame.width - h, 0, h, h)
 	}
 }

@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import SwiftyJSON
+import UIKit
 
 class DataManager {
     
@@ -114,21 +115,29 @@ class DataManager {
 
     func createVotes(mainCritterIndex: Int) -> List<Vote> {
 
+
+        var usedCritterIndexes = [Int]()
         let votes = List<Vote>()
         let randomIndex = Int(arc4random_uniform(10) + 1)
 
-        for index in 0...randomIndex {
-            var random = Int(arc4random_uniform(10) + 1)
-            if random == mainCritterIndex {
-                random = Int(arc4random_uniform(10) + 1)
+        usedCritterIndexes.append(mainCritterIndex)
+
+        for _ in 0...randomIndex {
+            var randomCritterIndex = Int(arc4random_uniform(11) + 1) - 1
+
+            while usedCritterIndexes.contains(randomCritterIndex) == true {
+                randomCritterIndex = Int(arc4random_uniform(11) + 1) - 1
             }
 
+            usedCritterIndexes.append(randomCritterIndex)
+
             let vote = Vote()
-            vote.versusCritter = realm!.objects(Critter).filter("index = \(random)")[0] as Critter!
+            vote.versusCritter = realm!.objects(Critter).filter("index = \(randomCritterIndex)")[0] as Critter!
             vote.mainCritter = realm!.objects(Critter).filter("index = \(mainCritterIndex)")[0] as Critter!
             vote.voteCount = Int(arc4random_uniform(4) + 1)
             votes.append(vote)
         }
+        LOG.debug("VOTES \(votes)")
         return votes
     }
     
@@ -145,6 +154,22 @@ class DataManager {
         try! realm!.commitWrite()
     }
 
+    func generateImageFileNameFromIndex(index: Int) -> String {
+        var imageName = ""
+        if index < 10 {
+            
+            imageName = "species_0\(index).png"
+        } else {
+            
+            imageName = "species_\(index).png"
+        }
+        return imageName
+    }
+
+    func generateImageForSpecies(index: Int) -> UIImage? {
+        let imageName = generateImageFileNameFromIndex(index)
+        return UIImage(named: imageName)
+    }
 
     
     

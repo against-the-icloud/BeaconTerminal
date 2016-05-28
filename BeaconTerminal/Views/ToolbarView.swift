@@ -40,26 +40,26 @@ class ToolbarView: UIView {
         self.titleLabel.textColor = UIColor.whiteColor()
         self.backgroundColor = UIColor.blackColor()
 
-        getAppDelegate().tabController!.tabBar.barTintColor = UIColor.blackColor()
-        getAppDelegate().tabController!.tabBar.tintColor = UIColor.whiteColor()
-
-        //        getAppDelegate().tabController!.changeSelectedColor(UIColor.redColor(), iconSelectedColor: UIColor.redColor())
-        let items = getAppDelegate().tabController!.tabBar.items as! [RAMAnimatedTabBarItem]
-        for index in 0..<items.count {
-            let item = items[index]
-
-            //            item.animation.textSelectedColor = UIColor.redColor()
-            //            item.animation.iconSelectedColor = UIColor.redColor()
-            item.iconColor = UIColor.whiteColor()
-            item.textColor = UIColor.whiteColor()
-            item.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-
-            if item == getAppDelegate().tabController!.tabBar.selectedItem {
-                item.selectedState()
-            } else {
-                item.deselectAnimation()
-            }
-        }
+//        getAppDelegate().tabController!.tabBar.barTintColor = UIColor.blackColor()
+//        getAppDelegate().tabController!.tabBar.tintColor = UIColor.whiteColor()
+//
+//        //        getAppDelegate().tabController!.changeSelectedColor(UIColor.redColor(), iconSelectedColor: UIColor.redColor())
+//        let items = getAppDelegate().tabController!.tabBar.items as! [RAMAnimatedTabBarItem]
+//        for index in 0..<items.count {
+//            let item = items[index]
+//
+//            //            item.animation.textSelectedColor = UIColor.redColor()
+//            //            item.animation.iconSelectedColor = UIColor.redColor()
+//            item.iconColor = UIColor.whiteColor()
+//            item.textColor = UIColor.whiteColor()
+//            item.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+//
+//            if item == getAppDelegate().tabController!.tabBar.selectedItem {
+//                item.selectedState()
+//            } else {
+//                item.deselectAnimation()
+//            }
+//        }
 
     }
 
@@ -67,7 +67,7 @@ class ToolbarView: UIView {
 
 //        UIApplication.sharedApplication().st
 
-        self.addButton.tintColor = newTextColor
+        //self.addButton.tintColor = newTextColor
         
         LOG.debug(newTextColor.debugDescription)
         
@@ -77,26 +77,26 @@ class ToolbarView: UIView {
         //        self.profileView.backgroundColor = newTextColor
         self.backgroundColor = baseColor
         
-        getAppDelegate().tabController!.tabBar.barTintColor = baseColor
-        getAppDelegate().tabController!.tabBar.tintColor = UIColor.blackColor()
-        
-        //        getAppDelegate().tabController!.changeSelectedColor(UIColor.redColor(), iconSelectedColor: UIColor.redColor())
-        let items = getAppDelegate().tabController!.tabBar.items as! [RAMAnimatedTabBarItem]
-        for index in 0..<items.count {
-            let item = items[index]
-            
-            //            item.animation.textSelectedColor = UIColor.redColor()
-            //            item.animation.iconSelectedColor = UIColor.redColor()
-            item.iconColor = newTextColor
-            item.textColor = newTextColor
-            item.setTitleColor(newTextColor, forState: .Normal)
-
-            if item == getAppDelegate().tabController!.tabBar.selectedItem {
-                item.selectedState()
-            } else {
-                item.deselectAnimation()
-            }
-        }
+//        getAppDelegate().tabController!.tabBar.barTintColor = baseColor
+//        getAppDelegate().tabController!.tabBar.tintColor = UIColor.blackColor()
+//        
+//        //        getAppDelegate().tabController!.changeSelectedColor(UIColor.redColor(), iconSelectedColor: UIColor.redColor())
+//        let items = getAppDelegate().tabController!.tabBar.items as! [RAMAnimatedTabBarItem]
+//        for index in 0..<items.count {
+//            let item = items[index]
+//            
+//            //            item.animation.textSelectedColor = UIColor.redColor()
+//            //            item.animation.iconSelectedColor = UIColor.redColor()
+//            item.iconColor = newTextColor
+//            item.textColor = newTextColor
+//            item.setTitleColor(newTextColor, forState: .Normal)
+//
+//            if item == getAppDelegate().tabController!.tabBar.selectedItem {
+//                item.selectedState()
+//            } else {
+//                item.deselectAnimation()
+//            }
+//        }
     }
 
     func promoteProfileView() {
@@ -113,7 +113,7 @@ class ToolbarView: UIView {
 
         if index == -1 {
             imageName = "ic_question_mark"
-            self.profileView.contentMode = .ScaleAspectFit
+            self.profileView.contentMode = .Center
 
         } else {
             if index < 10 {
@@ -123,7 +123,6 @@ class ToolbarView: UIView {
                 fileIndex = "\(index)"
                 imageName = "species_\(fileIndex).png"
             }
-            self.profileView.contentMode = .ScaleAspectFit
         }
 
         
@@ -140,6 +139,8 @@ class ToolbarView: UIView {
         self.profileView.animateToNext({
 
             self.profileView.image = UIImage(named: imageName)
+            self.profileView.contentMode = .ScaleAspectFit
+
         })
         
     }

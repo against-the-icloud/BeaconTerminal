@@ -1,1340 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Group Contribution View Controller-->
-        <scene sceneID="vlB-Kc-9el">
-            <objects>
-                <viewController storyboardIdentifier="groupContributionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OIw-Vk-MWs" customClass="GroupContributionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Nvf-d3-KQr"/>
-                        <viewControllerLayoutGuide type="bottom" id="Gxu-j8-KcG"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="xwF-Lw-9YE">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="825"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="ujD-1N-bqj">
-                                <rect key="frame" x="116" y="-6" width="1700" height="170"/>
-                                <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_00" translatesAutoresizingMaskIntoConstraints="NO" id="K9h-0v-v6M">
-                                        <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="u9s-UP-CdC"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="u9s-UP-CdC"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="u9s-UP-CdC"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_01" translatesAutoresizingMaskIntoConstraints="NO" id="UDz-RJ-XQA">
-                                        <rect key="frame" x="170" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="Mbr-fE-GGX"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Mbr-fE-GGX"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="Mbr-fE-GGX"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_02" translatesAutoresizingMaskIntoConstraints="NO" id="bfj-dM-fTo">
-                                        <rect key="frame" x="340" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="XsH-9N-sma"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="XsH-9N-sma"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="XsH-9N-sma"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_04" translatesAutoresizingMaskIntoConstraints="NO" id="Tgr-RT-WOe">
-                                        <rect key="frame" x="510" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="R6d-16-V3A"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="R6d-16-V3A"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="R6d-16-V3A"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_05" translatesAutoresizingMaskIntoConstraints="NO" id="hMH-6J-xPj">
-                                        <rect key="frame" x="680" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="aJI-A1-VfZ"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="aJI-A1-VfZ"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="aJI-A1-VfZ"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_06" translatesAutoresizingMaskIntoConstraints="NO" id="4mr-4I-jPF">
-                                        <rect key="frame" x="850" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="K6H-lg-KLr"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="K6H-lg-KLr"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="K6H-lg-KLr"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_08" translatesAutoresizingMaskIntoConstraints="NO" id="fuR-VH-N5H">
-                                        <rect key="frame" x="1020" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="UoW-hR-BkG"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="UoW-hR-BkG"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="UoW-hR-BkG"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_07" translatesAutoresizingMaskIntoConstraints="NO" id="DKh-8f-rph">
-                                        <rect key="frame" x="1190" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="Bsg-fV-P9G"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Bsg-fV-P9G"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="Bsg-fV-P9G"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_09" translatesAutoresizingMaskIntoConstraints="NO" id="zag-pO-gjt">
-                                        <rect key="frame" x="1360" y="0.0" width="170" height="170"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="MjV-9c-IYC"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="MjV-9c-IYC"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="MjV-9c-IYC"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="species_10" translatesAutoresizingMaskIntoConstraints="NO" id="d5s-9g-rJS">
-                                        <rect key="frame" x="1530" y="0.0" width="170" height="170"/>
-                                    </imageView>
-                                </subviews>
-                            </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9Y-Da-YdZ">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THINGS X EATS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TPi-pv-47z">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="31" id="IpM-IK-yvp"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="IpM-IK-yvp"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular">
-                                            <mask key="constraints">
-                                                <include reference="IpM-IK-yvp"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="getsEatenView" translatesAutoresizingMaskIntoConstraints="NO" id="Xor-Sh-51x" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                <color key="value" red="0.11181893199682236" green="0.1118365004658699" blue="0.1118125319480896" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THINGS THAT EAT X" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-PU-pnI">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="eatsView" translatesAutoresizingMaskIntoConstraints="NO" id="C1b-7Q-4Dh" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <view contentMode="scaleToFill" restorationIdentifier="coDependentView" translatesAutoresizingMaskIntoConstraints="NO" id="S3Q-fY-6OV" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X IS CO-DEPENDENT ON" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7A7-zi-5T7">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="competesWith" translatesAutoresizingMaskIntoConstraints="NO" id="RM0-BX-sXp" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X COMPETES WITH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlx-ux-Fh8">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="qlx-ux-Fh8" firstAttribute="leading" secondItem="RM0-BX-sXp" secondAttribute="leading" id="0Hy-zw-Itu"/>
-                                    <constraint firstItem="Xor-Sh-51x" firstAttribute="trailing" secondItem="C1b-7Q-4Dh" secondAttribute="trailing" id="0j7-pt-20J"/>
-                                    <constraint firstItem="TPi-pv-47z" firstAttribute="baseline" secondItem="7A7-zi-5T7" secondAttribute="baseline" id="2bq-Kn-27T"/>
-                                    <constraint firstItem="Pzd-PU-pnI" firstAttribute="leading" secondItem="Xor-Sh-51x" secondAttribute="leading" id="4B5-X6-qRV"/>
-                                    <constraint firstItem="qlx-ux-Fh8" firstAttribute="baseline" secondItem="Pzd-PU-pnI" secondAttribute="baseline" id="4Xy-m8-PEU">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
-                                    </constraint>
-                                    <constraint firstAttribute="bottom" secondItem="Xor-Sh-51x" secondAttribute="bottom" constant="14" id="5ea-30-jPs"/>
-                                    <constraint firstAttribute="trailing" secondItem="C1b-7Q-4Dh" secondAttribute="trailing" constant="346" id="6Qg-No-gwR"/>
-                                    <constraint firstItem="S3Q-fY-6OV" firstAttribute="leading" secondItem="C1b-7Q-4Dh" secondAttribute="trailing" constant="8" symbolic="YES" id="9tp-hS-BhK"/>
-                                    <constraint firstItem="qlx-ux-Fh8" firstAttribute="trailing" secondItem="RM0-BX-sXp" secondAttribute="trailing" id="AaT-za-Mr8"/>
-                                    <constraint firstItem="S3Q-fY-6OV" firstAttribute="trailing" secondItem="7A7-zi-5T7" secondAttribute="trailing" id="Abg-xf-7Ck"/>
-                                    <constraint firstItem="S3Q-fY-6OV" firstAttribute="trailing" secondItem="RM0-BX-sXp" secondAttribute="trailing" id="BjV-DP-NAp"/>
-                                    <constraint firstItem="TPi-pv-47z" firstAttribute="firstBaseline" secondItem="7A7-zi-5T7" secondAttribute="firstBaseline" id="F8c-QY-aA8"/>
-                                    <constraint firstItem="Xor-Sh-51x" firstAttribute="top" secondItem="RM0-BX-sXp" secondAttribute="top" id="H0E-6S-xWO"/>
-                                    <constraint firstItem="S3Q-fY-6OV" firstAttribute="top" secondItem="7A7-zi-5T7" secondAttribute="bottom" id="IMT-1G-MMK"/>
-                                    <constraint firstAttribute="trailing" secondItem="S3Q-fY-6OV" secondAttribute="trailing" constant="18" id="ITb-1L-lFi"/>
-                                    <constraint firstItem="Xor-Sh-51x" firstAttribute="top" secondItem="Pzd-PU-pnI" secondAttribute="bottom" id="Qg3-31-L3G">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="6"/>
-                                    </constraint>
-                                    <constraint firstItem="TPi-pv-47z" firstAttribute="trailing" secondItem="C1b-7Q-4Dh" secondAttribute="trailing" id="UP4-Iz-Sen"/>
-                                    <constraint firstItem="S3Q-fY-6OV" firstAttribute="leading" secondItem="RM0-BX-sXp" secondAttribute="leading" id="YRG-G5-Kit"/>
-                                    <constraint firstItem="qlx-ux-Fh8" firstAttribute="firstBaseline" secondItem="Pzd-PU-pnI" secondAttribute="firstBaseline" id="Ye7-My-sXf">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
-                                    </constraint>
-                                    <constraint firstItem="Xor-Sh-51x" firstAttribute="leading" secondItem="C1b-7Q-4Dh" secondAttribute="leading" id="Z7g-Pp-9pM"/>
-                                    <constraint firstItem="Xor-Sh-51x" firstAttribute="bottom" secondItem="RM0-BX-sXp" secondAttribute="bottom" id="aWT-VY-46O"/>
-                                    <constraint firstItem="Pzd-PU-pnI" firstAttribute="trailing" secondItem="Xor-Sh-51x" secondAttribute="trailing" id="cDx-t8-D9S"/>
-                                    <constraint firstItem="C1b-7Q-4Dh" firstAttribute="top" secondItem="e9Y-Da-YdZ" secondAttribute="top" constant="31" id="dd5-qN-XS6"/>
-                                    <constraint firstAttribute="bottom" secondItem="S3Q-fY-6OV" secondAttribute="bottom" constant="338" id="ioQ-4n-rki"/>
-                                    <constraint firstItem="7A7-zi-5T7" firstAttribute="leading" secondItem="C1b-7Q-4Dh" secondAttribute="trailing" constant="8" symbolic="YES" id="nDh-Wl-Oa8"/>
-                                    <constraint firstItem="Xor-Sh-51x" firstAttribute="top" secondItem="e9Y-Da-YdZ" secondAttribute="top" constant="356" id="pBo-lJ-NlC"/>
-                                    <constraint firstAttribute="bottom" secondItem="C1b-7Q-4Dh" secondAttribute="bottom" constant="339" id="qz6-3q-nBd"/>
-                                    <constraint firstItem="Pzd-PU-pnI" firstAttribute="top" secondItem="C1b-7Q-4Dh" secondAttribute="bottom" constant="17" id="vCc-G7-47k">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="8"/>
-                                    </constraint>
-                                    <constraint firstItem="C1b-7Q-4Dh" firstAttribute="leading" secondItem="e9Y-Da-YdZ" secondAttribute="leadingMargin" id="xQb-XZ-7qt"/>
-                                    <constraint firstItem="TPi-pv-47z" firstAttribute="leading" secondItem="C1b-7Q-4Dh" secondAttribute="leading" id="xUJ-4u-HpY"/>
-                                    <constraint firstItem="S3Q-fY-6OV" firstAttribute="top" secondItem="e9Y-Da-YdZ" secondAttribute="top" constant="32" id="zSo-nn-bB6"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="TPi-pv-47z"/>
-                                        <exclude reference="Xor-Sh-51x"/>
-                                        <exclude reference="Pzd-PU-pnI"/>
-                                        <exclude reference="C1b-7Q-4Dh"/>
-                                        <exclude reference="S3Q-fY-6OV"/>
-                                        <exclude reference="7A7-zi-5T7"/>
-                                        <exclude reference="RM0-BX-sXp"/>
-                                        <exclude reference="qlx-ux-Fh8"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <exclude reference="nDh-Wl-Oa8"/>
-                                        <exclude reference="4B5-X6-qRV"/>
-                                        <exclude reference="cDx-t8-D9S"/>
-                                        <exclude reference="vCc-G7-47k"/>
-                                        <exclude reference="2bq-Kn-27T"/>
-                                        <exclude reference="F8c-QY-aA8"/>
-                                        <exclude reference="UP4-Iz-Sen"/>
-                                        <exclude reference="xUJ-4u-HpY"/>
-                                        <exclude reference="0Hy-zw-Itu"/>
-                                        <exclude reference="4Xy-m8-PEU"/>
-                                        <exclude reference="AaT-za-Mr8"/>
-                                        <exclude reference="Ye7-My-sXf"/>
-                                        <exclude reference="6Qg-No-gwR"/>
-                                        <exclude reference="dd5-qN-XS6"/>
-                                        <exclude reference="qz6-3q-nBd"/>
-                                        <exclude reference="xQb-XZ-7qt"/>
-                                        <exclude reference="9tp-hS-BhK"/>
-                                        <exclude reference="Abg-xf-7Ck"/>
-                                        <exclude reference="BjV-DP-NAp"/>
-                                        <exclude reference="IMT-1G-MMK"/>
-                                        <exclude reference="ITb-1L-lFi"/>
-                                        <exclude reference="YRG-G5-Kit"/>
-                                        <exclude reference="ioQ-4n-rki"/>
-                                        <exclude reference="zSo-nn-bB6"/>
-                                        <exclude reference="0j7-pt-20J"/>
-                                        <exclude reference="5ea-30-jPs"/>
-                                        <exclude reference="H0E-6S-xWO"/>
-                                        <exclude reference="Qg3-31-L3G"/>
-                                        <exclude reference="Z7g-Pp-9pM"/>
-                                        <exclude reference="aWT-VY-46O"/>
-                                        <exclude reference="pBo-lJ-NlC"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <mask key="subviews">
-                                        <include reference="TPi-pv-47z"/>
-                                        <include reference="Xor-Sh-51x"/>
-                                        <include reference="Pzd-PU-pnI"/>
-                                        <include reference="C1b-7Q-4Dh"/>
-                                        <include reference="S3Q-fY-6OV"/>
-                                        <include reference="7A7-zi-5T7"/>
-                                        <include reference="RM0-BX-sXp"/>
-                                        <include reference="qlx-ux-Fh8"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <include reference="nDh-Wl-Oa8"/>
-                                        <include reference="4B5-X6-qRV"/>
-                                        <include reference="cDx-t8-D9S"/>
-                                        <include reference="vCc-G7-47k"/>
-                                        <include reference="2bq-Kn-27T"/>
-                                        <include reference="F8c-QY-aA8"/>
-                                        <include reference="UP4-Iz-Sen"/>
-                                        <include reference="xUJ-4u-HpY"/>
-                                        <include reference="0Hy-zw-Itu"/>
-                                        <include reference="4Xy-m8-PEU"/>
-                                        <include reference="AaT-za-Mr8"/>
-                                        <include reference="Ye7-My-sXf"/>
-                                        <include reference="6Qg-No-gwR"/>
-                                        <include reference="dd5-qN-XS6"/>
-                                        <include reference="qz6-3q-nBd"/>
-                                        <include reference="xQb-XZ-7qt"/>
-                                        <include reference="9tp-hS-BhK"/>
-                                        <include reference="Abg-xf-7Ck"/>
-                                        <include reference="BjV-DP-NAp"/>
-                                        <include reference="IMT-1G-MMK"/>
-                                        <include reference="ITb-1L-lFi"/>
-                                        <include reference="YRG-G5-Kit"/>
-                                        <include reference="ioQ-4n-rki"/>
-                                        <include reference="zSo-nn-bB6"/>
-                                        <include reference="0j7-pt-20J"/>
-                                        <include reference="5ea-30-jPs"/>
-                                        <include reference="H0E-6S-xWO"/>
-                                        <include reference="Qg3-31-L3G"/>
-                                        <include reference="Z7g-Pp-9pM"/>
-                                        <include reference="aWT-VY-46O"/>
-                                        <include reference="pBo-lJ-NlC"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Fy-EH-rVW">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TROPHIC LEVEL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpE-4r-C1A">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="33" y="0.0" width="240" height="31"/>
-                                        </variation>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="trophicLevelView" translatesAutoresizingMaskIntoConstraints="NO" id="Hxp-xg-kv2" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EoC-lo-cJb" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Not ready to report"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="0.0" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rqe-6N-SU4" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <state key="normal" title="Herbivore"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="58" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKO-pJ-VQR" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Predator"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="87" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmJ-BX-loU" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Resource"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="29" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.74099999666213989" green="0.7643999457359314" blue="0.77999997138977051" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="subviews">
-                                                <exclude reference="EoC-lo-cJb"/>
-                                                <exclude reference="rqe-6N-SU4"/>
-                                                <exclude reference="rKO-pJ-VQR"/>
-                                                <exclude reference="bmJ-BX-loU"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="33" y="29" width="240" height="117"/>
-                                            <mask key="subviews">
-                                                <include reference="EoC-lo-cJb"/>
-                                                <include reference="rqe-6N-SU4"/>
-                                                <include reference="rKO-pJ-VQR"/>
-                                                <include reference="bmJ-BX-loU"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <view contentMode="scaleToFill" restorationIdentifier="behaviorsView" translatesAutoresizingMaskIntoConstraints="NO" id="6oo-sb-khM" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iu8-ie-J3z" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Not ready to report"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="0.0" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmK-wp-Shx" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Flight"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="29" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B9c-16-qWo" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Pursuit"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="58" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRV-SF-10w" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Neither"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="87" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.74099999666213989" green="0.7643999457359314" blue="0.77999997138977051" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="subviews">
-                                                <exclude reference="Iu8-ie-J3z"/>
-                                                <exclude reference="hmK-wp-Shx"/>
-                                                <exclude reference="B9c-16-qWo"/>
-                                                <exclude reference="iRV-SF-10w"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="33" y="208" width="240" height="117"/>
-                                            <mask key="subviews">
-                                                <include reference="Iu8-ie-J3z"/>
-                                                <include reference="hmK-wp-Shx"/>
-                                                <include reference="B9c-16-qWo"/>
-                                                <include reference="iRV-SF-10w"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PREDATION RESISTANCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-Mu-53n">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="33" y="353" width="240" height="31"/>
-                                        </variation>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="predationResistenceView" translatesAutoresizingMaskIntoConstraints="NO" id="rWh-Ch-Flh" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDp-iK-gjT" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Not ready to report"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="0.0" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dRo-X1-qUZ" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Flight"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="29" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a54-qR-56G" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Pursuit"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="58" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfB-OG-uNh" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Neither"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="87" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.74099999666213989" green="0.7643999457359314" blue="0.77999997138977051" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="subviews">
-                                                <exclude reference="hDp-iK-gjT"/>
-                                                <exclude reference="dRo-X1-qUZ"/>
-                                                <exclude reference="a54-qR-56G"/>
-                                                <exclude reference="PfB-OG-uNh"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="33" y="384" width="240" height="117"/>
-                                            <mask key="subviews">
-                                                <include reference="hDp-iK-gjT"/>
-                                                <include reference="dRo-X1-qUZ"/>
-                                                <include reference="a54-qR-56G"/>
-                                                <include reference="PfB-OG-uNh"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEHAVIORS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHj-pN-Bps">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="33" y="177" width="240" height="31"/>
-                                        </variation>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEAT SENSITIVITY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFE-Pf-qR6">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="312" y="0.0" width="240" height="31"/>
-                                        </variation>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="heatSensitivityView" translatesAutoresizingMaskIntoConstraints="NO" id="HcH-oy-yNF" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jB1-rg-Grx" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Not ready to report"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="0.0" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhq-GV-gpZ" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <state key="normal" title="Herbivore"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="58" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6pP-3r-Vhl" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Predator"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="87" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chN-fh-khX" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Resource"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="29" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.74099999666213989" green="0.7643999457359314" blue="0.77999997138977051" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="subviews">
-                                                <exclude reference="jB1-rg-Grx"/>
-                                                <exclude reference="bhq-GV-gpZ"/>
-                                                <exclude reference="6pP-3r-Vhl"/>
-                                                <exclude reference="chN-fh-khX"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="312" y="29" width="240" height="117"/>
-                                            <mask key="subviews">
-                                                <include reference="jB1-rg-Grx"/>
-                                                <include reference="bhq-GV-gpZ"/>
-                                                <include reference="6pP-3r-Vhl"/>
-                                                <include reference="chN-fh-khX"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <view contentMode="scaleToFill" restorationIdentifier="humiditySensitivityView" translatesAutoresizingMaskIntoConstraints="NO" id="t78-cz-4ff" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FfY-ih-bFZ" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Not ready to report"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="8" width="223" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rcM-WG-6th" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Not sensitive to humidity"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="66" width="223" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUo-uB-oHo" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Sensitive to humidity"/>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="37" width="223" height="30"/>
-                                                </variation>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="subviews">
-                                                <exclude reference="FfY-ih-bFZ"/>
-                                                <exclude reference="rcM-WG-6th"/>
-                                                <exclude reference="OUo-uB-oHo"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="312" y="208" width="240" height="117"/>
-                                            <mask key="subviews">
-                                                <include reference="FfY-ih-bFZ"/>
-                                                <include reference="rcM-WG-6th"/>
-                                                <include reference="OUo-uB-oHo"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HABITAT PREFERENCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jFh-qA-fqk">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="312" y="353" width="240" height="31"/>
-                                        </variation>
-                                    </label>
-                                    <view contentMode="scaleToFill" restorationIdentifier="habitatPreferenceView" translatesAutoresizingMaskIntoConstraints="NO" id="m8t-sk-a1E" customClass="SpringView" customModule="Spring">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPz-rH-2Ey" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Aluminum"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="iconSquare" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="0.0" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGb-nN-bAs" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Brick"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="iconSquare" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="29" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jk-9Z-or9" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Plaster"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="iconSquare" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="58" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWI-Wq-gXp" customClass="ISRadioButton" customModule="ISRadioButton">
-                                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <state key="normal" title="Wood"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="iconSquare" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                                    <rect key="frame" x="17" y="87" width="180" height="30"/>
-                                                </variation>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.74099999666213989" green="0.7643999457359314" blue="0.77999997138977051" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="default">
-                                            <mask key="subviews">
-                                                <exclude reference="QPz-rH-2Ey"/>
-                                                <exclude reference="GGb-nN-bAs"/>
-                                                <exclude reference="0Jk-9Z-or9"/>
-                                                <exclude reference="XWI-Wq-gXp"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="312" y="384" width="240" height="117"/>
-                                            <mask key="subviews">
-                                                <include reference="QPz-rH-2Ey"/>
-                                                <include reference="GGb-nN-bAs"/>
-                                                <include reference="0Jk-9Z-or9"/>
-                                                <include reference="XWI-Wq-gXp"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HUMIDITY SENSITIVITY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8lv-BZ-N9G">
-                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="312" y="177" width="240" height="31"/>
-                                        </variation>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="TpE-4r-C1A"/>
-                                        <exclude reference="Hxp-xg-kv2"/>
-                                        <exclude reference="6oo-sb-khM"/>
-                                        <exclude reference="Imj-Mu-53n"/>
-                                        <exclude reference="rWh-Ch-Flh"/>
-                                        <exclude reference="rHj-pN-Bps"/>
-                                        <exclude reference="AFE-Pf-qR6"/>
-                                        <exclude reference="HcH-oy-yNF"/>
-                                        <exclude reference="t78-cz-4ff"/>
-                                        <exclude reference="jFh-qA-fqk"/>
-                                        <exclude reference="m8t-sk-a1E"/>
-                                        <exclude reference="8lv-BZ-N9G"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <mask key="subviews">
-                                        <include reference="TpE-4r-C1A"/>
-                                        <include reference="Hxp-xg-kv2"/>
-                                        <include reference="6oo-sb-khM"/>
-                                        <include reference="Imj-Mu-53n"/>
-                                        <include reference="rWh-Ch-Flh"/>
-                                        <include reference="rHj-pN-Bps"/>
-                                        <include reference="AFE-Pf-qR6"/>
-                                        <include reference="HcH-oy-yNF"/>
-                                        <include reference="t78-cz-4ff"/>
-                                        <include reference="jFh-qA-fqk"/>
-                                        <include reference="m8t-sk-a1E"/>
-                                        <include reference="8lv-BZ-N9G"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="e9Y-Da-YdZ" firstAttribute="leading" secondItem="xwF-Lw-9YE" secondAttribute="leadingMargin" constant="-5" id="3Dx-6R-own"/>
-                            <constraint firstItem="e9Y-Da-YdZ" firstAttribute="top" secondItem="7Fy-EH-rVW" secondAttribute="top" id="GA7-1z-sEj"/>
-                            <constraint firstItem="ujD-1N-bqj" firstAttribute="leading" secondItem="xwF-Lw-9YE" secondAttribute="leading" constant="183" id="HCV-eb-had"/>
-                            <constraint firstAttribute="trailing" secondItem="e9Y-Da-YdZ" secondAttribute="trailing" constant="677" id="Hvy-B9-RtL"/>
-                            <constraint firstItem="Gxu-j8-KcG" firstAttribute="top" secondItem="e9Y-Da-YdZ" secondAttribute="bottom" constant="8" symbolic="YES" id="Sb8-uu-eAA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7Fy-EH-rVW" secondAttribute="trailing" constant="-16" id="TlQ-W2-7kO">
-                                <variation key="heightClass=regular-widthClass=regular" constant="-8"/>
-                            </constraint>
-                            <constraint firstItem="ujD-1N-bqj" firstAttribute="centerX" secondItem="xwF-Lw-9YE" secondAttribute="centerX" id="Wfl-JS-CAT"/>
-                            <constraint firstItem="7Fy-EH-rVW" firstAttribute="bottom" secondItem="Gxu-j8-KcG" secondAttribute="top" id="a5C-l1-Es0">
-                                <variation key="heightClass=regular-widthClass=regular" constant="-8"/>
-                            </constraint>
-                            <constraint firstItem="7Fy-EH-rVW" firstAttribute="leading" secondItem="xwF-Lw-9YE" secondAttribute="leading" constant="688" id="hef-PB-zFO"/>
-                            <constraint firstItem="ujD-1N-bqj" firstAttribute="top" secondItem="Nvf-d3-KQr" secondAttribute="bottom" id="lOl-My-0cm"/>
-                            <constraint firstItem="e9Y-Da-YdZ" firstAttribute="top" secondItem="Nvf-d3-KQr" secondAttribute="bottom" constant="167" id="yoi-Ch-DUM"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="e9Y-Da-YdZ"/>
-                                <exclude reference="7Fy-EH-rVW"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="TlQ-W2-7kO"/>
-                                <exclude reference="a5C-l1-Es0"/>
-                                <exclude reference="hef-PB-zFO"/>
-                                <exclude reference="3Dx-6R-own"/>
-                                <exclude reference="GA7-1z-sEj"/>
-                                <exclude reference="Hvy-B9-RtL"/>
-                                <exclude reference="yoi-Ch-DUM"/>
-                                <exclude reference="HCV-eb-had"/>
-                                <exclude reference="Wfl-JS-CAT"/>
-                                <exclude reference="lOl-My-0cm"/>
-                                <exclude reference="Sb8-uu-eAA"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=regular">
-                            <mask key="subviews">
-                                <include reference="e9Y-Da-YdZ"/>
-                                <include reference="7Fy-EH-rVW"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="TlQ-W2-7kO"/>
-                                <include reference="a5C-l1-Es0"/>
-                                <include reference="hef-PB-zFO"/>
-                                <include reference="3Dx-6R-own"/>
-                                <include reference="GA7-1z-sEj"/>
-                                <include reference="Hvy-B9-RtL"/>
-                                <include reference="yoi-Ch-DUM"/>
-                                <include reference="HCV-eb-had"/>
-                                <include reference="Wfl-JS-CAT"/>
-                                <include reference="lOl-My-0cm"/>
-                                <include reference="Sb8-uu-eAA"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1366" height="825"/>
-                    <connections>
-                        <outlet property="coDependentView" destination="S3Q-fY-6OV" id="c5H-Fk-3yJ"/>
-                        <outlet property="competesWith" destination="RM0-BX-sXp" id="kco-SN-O9p"/>
-                        <outlet property="eatsView" destination="C1b-7Q-4Dh" id="Drq-hF-y54"/>
-                        <outlet property="getsEatenView" destination="Xor-Sh-51x" id="NAa-bn-tn3"/>
-                    </connections>
-                </viewController>
-                <stackView opaque="NO" contentMode="scaleToFill" id="Lt8-Sb-NwL">
-                    <rect key="frame" x="50" y="172" width="372" height="297"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duu-GJ-b4a">
-                            <rect key="frame" x="0.0" y="0.0" width="40" height="297"/>
-                            <attributedString key="attributedText">
-                                <fragment content="X EATS">
-                                    <attributes>
-                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="17" name="HelveticaNeue"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <view contentMode="scaleToFill" misplaced="YES" restorationIdentifier="eatsView" translatesAutoresizingMaskIntoConstraints="NO" id="nGj-k4-tpu" userLabel="EatsView" customClass="SpringView" customModule="Spring">
-                            <rect key="frame" x="40" y="0.0" width="332" height="297"/>
-                            <subviews>
-                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="raz-OZ-3DZ">
-                                    <rect key="frame" x="269" y="221" width="100" height="100"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="fcQ-RB-we2"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="fcQ-RB-we2"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <mask key="constraints">
-                                            <include reference="fcQ-RB-we2"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
-                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ANL-G6-cS2">
-                                    <rect key="frame" x="269" y="221" width="100" height="100"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="hEb-nL-GK7"/>
-                                        <constraint firstAttribute="height" constant="100" id="tnm-oF-3YP"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="hEb-nL-GK7"/>
-                                            <exclude reference="tnm-oF-3YP"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <mask key="constraints">
-                                            <include reference="hEb-nL-GK7"/>
-                                            <include reference="tnm-oF-3YP"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
-                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OzX-Fd-aR8">
-                                    <rect key="frame" x="269" y="221" width="100" height="100"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="4hY-Yl-pmS"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="4hY-Yl-pmS"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <mask key="constraints">
-                                            <include reference="4hY-Yl-pmS"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
-                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ypy-oN-SIO">
-                                    <rect key="frame" x="269" y="221" width="100" height="100"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="hAC-rJ-hdf"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="hAC-rJ-hdf"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <mask key="constraints">
-                                            <include reference="hAC-rJ-hdf"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
-                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9mY-QC-Dq5">
-                                    <rect key="frame" x="269" y="221" width="100" height="100"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="Vik-dr-CEz"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="Vik-dr-CEz"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <mask key="constraints">
-                                            <include reference="Vik-dr-CEz"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
-                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fY2-GB-aFK">
-                                    <rect key="frame" x="269" y="221" width="100" height="100"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="KDZ-Iq-QK6"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="KDZ-Iq-QK6"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="heightClass=regular-widthClass=regular">
-                                        <mask key="constraints">
-                                            <include reference="KDZ-Iq-QK6"/>
-                                        </mask>
-                                    </variation>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="ANL-G6-cS2" firstAttribute="bottom" secondItem="OzX-Fd-aR8" secondAttribute="bottom" id="36V-Xa-hMZ"/>
-                                <constraint firstItem="ANL-G6-cS2" firstAttribute="leading" secondItem="nGj-k4-tpu" secondAttribute="leadingMargin" id="5zo-0W-pO8"/>
-                                <constraint firstItem="OzX-Fd-aR8" firstAttribute="leading" secondItem="ANL-G6-cS2" secondAttribute="trailing" constant="8" symbolic="YES" id="BQg-dV-3Ry"/>
-                                <constraint firstItem="ANL-G6-cS2" firstAttribute="top" secondItem="OzX-Fd-aR8" secondAttribute="top" id="Dfm-Fs-eYv"/>
-                                <constraint firstItem="ypy-oN-SIO" firstAttribute="leading" secondItem="OzX-Fd-aR8" secondAttribute="trailing" constant="8" symbolic="YES" id="FUN-Bc-wjC"/>
-                                <constraint firstItem="raz-OZ-3DZ" firstAttribute="top" secondItem="9mY-QC-Dq5" secondAttribute="top" id="OWT-aM-mHs"/>
-                                <constraint firstAttribute="bottom" secondItem="raz-OZ-3DZ" secondAttribute="bottom" constant="10" id="Oen-hk-n1x"/>
-                                <constraint firstItem="ANL-G6-cS2" firstAttribute="leading" secondItem="raz-OZ-3DZ" secondAttribute="leading" id="QIN-FS-G3f"/>
-                                <constraint firstItem="OzX-Fd-aR8" firstAttribute="bottom" secondItem="ypy-oN-SIO" secondAttribute="bottom" id="TdT-k4-N7r"/>
-                                <constraint firstItem="OzX-Fd-aR8" firstAttribute="leading" secondItem="9mY-QC-Dq5" secondAttribute="leading" id="V9I-wF-fqc"/>
-                                <constraint firstItem="raz-OZ-3DZ" firstAttribute="top" secondItem="ANL-G6-cS2" secondAttribute="bottom" constant="1" id="lFb-mO-WEP"/>
-                                <constraint firstItem="9mY-QC-Dq5" firstAttribute="bottom" secondItem="fY2-GB-aFK" secondAttribute="bottom" id="oHs-M4-1gm"/>
-                                <constraint firstItem="OzX-Fd-aR8" firstAttribute="top" secondItem="ypy-oN-SIO" secondAttribute="top" id="uUN-Gh-nFf"/>
-                                <constraint firstItem="ANL-G6-cS2" firstAttribute="top" secondItem="nGj-k4-tpu" secondAttribute="topMargin" id="uwq-an-7qN"/>
-                                <constraint firstItem="ypy-oN-SIO" firstAttribute="leading" secondItem="fY2-GB-aFK" secondAttribute="leading" id="vv7-pp-ySK"/>
-                                <constraint firstItem="9mY-QC-Dq5" firstAttribute="top" secondItem="fY2-GB-aFK" secondAttribute="top" id="xcN-Re-etr"/>
-                                <constraint firstItem="raz-OZ-3DZ" firstAttribute="bottom" secondItem="9mY-QC-Dq5" secondAttribute="bottom" id="xwP-bo-djO"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="5"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                    <real key="value" value="2"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                    <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                    <color key="value" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                    <size key="value" width="1" height="1"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
-                            </userDefinedRuntimeAttributes>
-                            <variation key="default">
-                                <mask key="subviews">
-                                    <exclude reference="raz-OZ-3DZ"/>
-                                    <exclude reference="ANL-G6-cS2"/>
-                                    <exclude reference="OzX-Fd-aR8"/>
-                                    <exclude reference="ypy-oN-SIO"/>
-                                    <exclude reference="9mY-QC-Dq5"/>
-                                    <exclude reference="fY2-GB-aFK"/>
-                                </mask>
-                                <mask key="constraints">
-                                    <exclude reference="oHs-M4-1gm"/>
-                                    <exclude reference="xcN-Re-etr"/>
-                                    <exclude reference="36V-Xa-hMZ"/>
-                                    <exclude reference="5zo-0W-pO8"/>
-                                    <exclude reference="Dfm-Fs-eYv"/>
-                                    <exclude reference="QIN-FS-G3f"/>
-                                    <exclude reference="uwq-an-7qN"/>
-                                    <exclude reference="BQg-dV-3Ry"/>
-                                    <exclude reference="TdT-k4-N7r"/>
-                                    <exclude reference="V9I-wF-fqc"/>
-                                    <exclude reference="uUN-Gh-nFf"/>
-                                    <exclude reference="OWT-aM-mHs"/>
-                                    <exclude reference="Oen-hk-n1x"/>
-                                    <exclude reference="lFb-mO-WEP"/>
-                                    <exclude reference="xwP-bo-djO"/>
-                                    <exclude reference="FUN-Bc-wjC"/>
-                                    <exclude reference="vv7-pp-ySK"/>
-                                </mask>
-                            </variation>
-                            <variation key="heightClass=regular-widthClass=regular">
-                                <mask key="subviews">
-                                    <include reference="raz-OZ-3DZ"/>
-                                    <include reference="ANL-G6-cS2"/>
-                                    <include reference="OzX-Fd-aR8"/>
-                                    <include reference="ypy-oN-SIO"/>
-                                    <include reference="9mY-QC-Dq5"/>
-                                    <include reference="fY2-GB-aFK"/>
-                                </mask>
-                                <mask key="constraints">
-                                    <include reference="oHs-M4-1gm"/>
-                                    <include reference="xcN-Re-etr"/>
-                                    <include reference="36V-Xa-hMZ"/>
-                                    <include reference="5zo-0W-pO8"/>
-                                    <include reference="Dfm-Fs-eYv"/>
-                                    <include reference="QIN-FS-G3f"/>
-                                    <include reference="uwq-an-7qN"/>
-                                    <include reference="BQg-dV-3Ry"/>
-                                    <include reference="TdT-k4-N7r"/>
-                                    <include reference="V9I-wF-fqc"/>
-                                    <include reference="uUN-Gh-nFf"/>
-                                    <include reference="OWT-aM-mHs"/>
-                                    <include reference="Oen-hk-n1x"/>
-                                    <include reference="lFb-mO-WEP"/>
-                                    <include reference="xwP-bo-djO"/>
-                                    <include reference="FUN-Bc-wjC"/>
-                                    <include reference="vv7-pp-ySK"/>
-                                </mask>
-                            </variation>
-                        </view>
-                    </subviews>
-                    <variation key="heightClass=regular-widthClass=regular" axis="vertical"/>
-                </stackView>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5Zi-Yk-9B3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1774.5" y="-2540.625"/>
-        </scene>
-        <!--Class Contributions Collection View Controller-->
-        <scene sceneID="rYM-ha-dcU">
-            <objects>
-                <viewController storyboardIdentifier="classContributionsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wGE-5o-nBr" customClass="ClassContributionsCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <containerView key="view" opaque="NO" contentMode="scaleToFill" id="eVk-BW-IHC">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <segue destination="say-3Y-IaY" kind="embed" id="1G9-D8-avT"/>
-                        </connections>
-                    </containerView>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPadPro"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RTF-7f-mTI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="72" y="-2412"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="QM9-Ab-neC">
-            <objects>
-                <navigationController storyboardIdentifier="collectionNavigationController" navigationBarHidden="YES" id="say-3Y-IaY" sceneMemberID="viewController">
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPadPro"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uAt-xJ-WVt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="hxm-x6-L5n" kind="relationship" relationship="rootViewController" id="QoN-Fs-Ki0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3dd-HJ-LZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="85" y="-1086"/>
-        </scene>
         <!--Class Contributions Collection View Controller-->
         <scene sceneID="5ts-a6-Qm5">
             <objects>
                 <collectionViewController storyboardIdentifier="voteCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hxm-x6-L5n" customClass="ClassContributionsCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="eWN-Lk-lQz">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="825"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.99215686270000003" green="0.71372549019999998" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="mMa-vj-XUn">
-                            <size key="itemSize" width="323" height="330"/>
+                        <color key="backgroundColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="0.0" id="mMa-vj-XUn">
+                            <size key="itemSize" width="270" height="412"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="voteCell" reuseIdentifier="voteCell" id="zSN-G5-8yF" customClass="VoteCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="270" height="412"/>
+                                <rect key="frame" x="2" y="2" width="270" height="412"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="270" height="412"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <size key="customSize" width="270" height="412"/>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -1347,24 +40,318 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1366" height="825"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPadPro"/>
                 </collectionViewController>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_00" id="CtU-pv-j2I">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="pjn-ae-1Yq">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                            <color key="value" cocoaTouchSystemColor="darkTextColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" id="JUm-Fu-Lsn">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                            <color key="value" cocoaTouchSystemColor="darkTextColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" id="rU4-mN-dWe">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="250"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                            <color key="value" cocoaTouchSystemColor="darkTextColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MUTUAL WITH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7xV-yz-eAh">
+                    <rect key="frame" x="0.0" y="0.0" width="164" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRODUCER FOR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KlZ-bj-KN2">
+                    <rect key="frame" x="0.0" y="0.0" width="179" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7mH-qz-W2u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="98" y="200"/>
+            <point key="canvasLocation" x="-1759" y="-1956.5"/>
+        </scene>
+        <!--Add Contribution View Controller-->
+        <scene sceneID="dHw-h8-8uT">
+            <objects>
+                <viewController storyboardIdentifier="addContributionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dcn-if-Lyk" customClass="AddContributionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bxe-HC-G4h"/>
+                        <viewControllerLayoutGuide type="bottom" id="bJo-lY-31C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Hr-cd-ooO">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="574"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Z7-Ft-qg2" customClass="ObservationEditView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="574"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeIn"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQd-Oa-moE" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="388" height="286"/>
+                                <gestureRecognizers/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="dropTargetText" value="EATS"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="PRODUCER"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeOut"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeOut"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vOm-gE-RzT" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="388" y="0.0" width="388" height="286"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="dropTargetText" value="EATS"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="MUTUAL WITH"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeOut"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeOut"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view tag="3" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LUs-rI-PkX" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="388" y="286" width="388" height="286"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="dropTargetText" value="EATS"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="COMPLETES WITH"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeOut"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeOut"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOK-cr-djL" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="286" width="388" height="286"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="dropTargetText" value="EATS"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="CONSUMER OF"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeOut"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeOut"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TROPIC LEVEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPy-Zt-wvZ">
+                                <rect key="frame" x="784" y="8" width="114" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Resource" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prf-fE-Ftp">
+                                <rect key="frame" x="806" y="37" width="72" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Herbivore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erz-8T-c7l">
+                                <rect key="frame" x="806" y="66" width="75" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NOT READY TO REPORT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sb-w6-pzE">
+                                <rect key="frame" x="806" y="124" width="189" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Predator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbl-cX-Urk">
+                                <rect key="frame" x="806" y="95" width="67" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1000" height="574"/>
+                    <connections>
+                        <outlet property="observationEditView" destination="3Z7-Ft-qg2" id="eyP-TD-uYF"/>
+                        <outletCollection property="dropViews" destination="CQd-Oa-moE" collectionClass="NSMutableArray" id="mMS-jw-oyI"/>
+                        <outletCollection property="dropViews" destination="vOm-gE-RzT" collectionClass="NSMutableArray" id="pru-PX-0Et"/>
+                        <outletCollection property="dropViews" destination="LUs-rI-PkX" collectionClass="NSMutableArray" id="vRa-Jp-Go2"/>
+                        <outletCollection property="dropViews" destination="kOK-cr-djL" collectionClass="NSMutableArray" id="r23-gB-9vm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ie5-Qe-h6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2117" y="2"/>
+        </scene>
+        <!--DOUBLE-->
+        <scene sceneID="j8h-Dr-2WA">
+            <objects>
+                <viewController storyboardIdentifier="doubleViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UxM-Py-Po4" userLabel="DOUBLE" customClass="AddContributionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FwW-2X-dKL"/>
+                        <viewControllerLayoutGuide type="bottom" id="YR3-x8-Dr7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="S5s-xV-NY1">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="574"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_03" translatesAutoresizingMaskIntoConstraints="NO" id="ou3-0z-X36">
+                                <rect key="frame" x="592" y="224" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_04" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-TJ-81z">
+                                <rect key="frame" x="592" y="332" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_04" translatesAutoresizingMaskIntoConstraints="NO" id="x2M-ym-b8k">
+                                <rect key="frame" x="700" y="332" width="100" height="100"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lpd-wc-MMl" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="584" height="432"/>
+                                <color key="backgroundColor" red="0.98431372549999996" green="0.2470588235" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="dropTargetText" value="EATS"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="PRODUCER"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="fadeOut"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeOut"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_00" translatesAutoresizingMaskIntoConstraints="NO" id="BLS-vX-3e1">
+                                <rect key="frame" x="592" y="8" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_00" translatesAutoresizingMaskIntoConstraints="NO" id="p3f-Pk-T1i">
+                                <rect key="frame" x="700" y="8" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_01" translatesAutoresizingMaskIntoConstraints="NO" id="WDU-eN-qUE">
+                                <rect key="frame" x="592" y="116" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_01" translatesAutoresizingMaskIntoConstraints="NO" id="ZR0-ma-Aqa">
+                                <rect key="frame" x="700" y="116" width="100" height="100"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_03" translatesAutoresizingMaskIntoConstraints="NO" id="O2y-av-AcP">
+                                <rect key="frame" x="700" y="224" width="100" height="100"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1000" height="574"/>
+                    <connections>
+                        <outletCollection property="dropViews" destination="Lpd-wc-MMl" collectionClass="NSMutableArray" id="M5o-pP-faK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q4Z-lg-hSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2139" y="672"/>
         </scene>
     </scenes>
     <resources>
         <image name="species_00" width="200" height="146"/>
         <image name="species_01" width="170" height="170"/>
-        <image name="species_02" width="170" height="170"/>
+        <image name="species_03" width="170" height="170"/>
         <image name="species_04" width="170" height="170"/>
-        <image name="species_05" width="170" height="170"/>
-        <image name="species_06" width="170" height="170"/>
-        <image name="species_07" width="170" height="170"/>
-        <image name="species_08" width="170" height="170"/>
-        <image name="species_09" width="170" height="170"/>
-        <image name="species_10" width="170" height="170"/>
     </resources>
 </document>

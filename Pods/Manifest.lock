@@ -1,16 +1,18 @@
 PODS:
+  - AccordionTableViewController (0.0.1)
   - ChameleonFramework/Default (2.1.0)
   - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - ISRadioButton (0.1.0)
-  - Material (1.41.1)
-  - Pulsator (0.1.0)
-  - RAMAnimatedTabBarController (1.4.0)
-  - Realm (0.102.1):
-    - Realm/Headers (= 0.102.1)
-  - Realm/Headers (0.102.1)
-  - RealmSwift (0.102.1):
-    - Realm (= 0.102.1)
+  - Material (1.41.4)
+  - MaterialDesignSymbol (1.7)
+  - Popover (0.9.1)
+  - Pulsator (0.1.1)
+  - Realm (1.0.0):
+    - Realm/Headers (= 1.0.0)
+  - Realm/Headers (1.0.0)
+  - RealmSwift (1.0.0):
+    - Realm (= 1.0.0)
   - Spring (1.0.3)
   - Sugar (1.1.1)
   - SwiftState (4.1.0)
@@ -19,11 +21,13 @@ PODS:
   - XLPagerTabStrip (5.0.0)
 
 DEPENDENCIES:
+  - AccordionTableViewController
   - ChameleonFramework/Swift
   - ISRadioButton
   - Material
+  - MaterialDesignSymbol
+  - Popover
   - Pulsator
-  - RAMAnimatedTabBarController
   - RealmSwift
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
   - Sugar
@@ -43,13 +47,15 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
+  AccordionTableViewController: 48b2581d8c49001a55851a3700f0921cfe8a4524
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   ISRadioButton: 5d54cd73c4dc996c69a63c82e91c13433273cf14
-  Material: 441818e40ca8d30a4b83f9795e75a0d8c88ccf97
-  Pulsator: da87aa289b30b5e0cc7e03b21d9f2cb58277f601
-  RAMAnimatedTabBarController: 6f221d7dc647b4266c9e05618c84b5639f190297
-  Realm: 5254be610db3e5024879684717bf038990bb59ec
-  RealmSwift: 3e24e6bcf56d98ccc134f4909e00839b81a659af
+  Material: b477d6daa20aeba2359eb87ec9045e9b4d4358f0
+  MaterialDesignSymbol: 8216d8587ff04b8d0d110a9a02eb53ea94174328
+  Popover: e64ef6d6f6e98c1c5c5aceedf1d1b9e6fd7375d7
+  Pulsator: 9486579ab8eeb0585aedefdc2c688ab589497d9a
+  Realm: e15cd8e7c11d3e576f628ba0b7cb855269b4991c
+  RealmSwift: 3229306d020d96f83b335f87a0dcbf2cef0e6a2b
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
   Sugar: bed396c924fd089feee7c780778cca2a124f580c
   SwiftState: eb4f3ca252feac9ec26235cf4374f91e0560e3a1
@@ -57,4 +63,4 @@ SPEC CHECKSUMS:
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
   XLPagerTabStrip: 87b8b705f9a7178e76a063ffaa2d70045944a965
 
-COCOAPODS: 0.39.0.beta.4
+COCOAPODS: 0.39.0

@@ -24,10 +24,12 @@ class ClassContributionsCollectionViewController: UICollectionViewController, In
 
         self.collectionView!.registerNib(UINib(nibName: "VoteCell", bundle: nil), forCellWithReuseIdentifier: "voteCell")
 
-        self.currentSelectedSpecies = DataManager.sharedInstance.currentSelectedSpecies
-        self.votes = DataManager.sharedInstance.createVotes(self.currentSelectedSpecies)
-        LOG.debug("VOTES \(votes!.count)")
-//        self.collectionView!.registerClass(VoteCell.self, forCellWithReuseIdentifier: "voteCell")
+       //        self.collectionView!.registerClass(VoteCell.self, forCellWithReuseIdentifier: "voteCell")
+        self.refreshVotes()
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     // MARK: - UICollectionView
@@ -37,9 +39,21 @@ class ClassContributionsCollectionViewController: UICollectionViewController, In
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("voteCell", forIndexPath: indexPath) as! VoteCell
 
+        let vote = votes![indexPath.row]
+
+        _ = vote.mainCritter!
+        let versusSpecies = vote.versusCritter!
+
+        //LOG.debug("VERSUS INDEX \(versusSpecies)")
+
+        cell.mainSpeciesImageView.image = UIImage(named: DataManager.sharedInstance.generateImageFileNameFromIndex(currentSelectedSpecies) )
+        cell.versusSpeciesImageView.image = UIImage(named: DataManager.sharedInstance.generateImageFileNameFromIndex(versusSpecies.index) )
+        cell.votesLabel.text = "Votes: \(String(vote.voteCount)) out of 4"
 
         return cell
     }
+
+
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //
@@ -54,6 +68,14 @@ class ClassContributionsCollectionViewController: UICollectionViewController, In
         return votes!.count
     }
     
+    func refreshVotes() {
+        self.currentSelectedSpecies = DataManager.sharedInstance.currentSelectedSpecies
+        self.votes?.removeAll()
+        self.votes = DataManager.sharedInstance.createVotes(self.currentSelectedSpecies)
+        LOG.debug("VOTES \(votes!.count)")
+        self.collectionView?.reloadData()
+
+    }
 
 
     // MARK: - IndicatorInfoProvider

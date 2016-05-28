@@ -101,5 +101,15 @@ extension UIView {
         self.layer.addSublayer(shapeLayer)
 
     }
+    
+
+    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+            return UINib(
+                nibName: nibNamed,
+                bundle: bundle
+                ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+     }
+    
 }
+
 

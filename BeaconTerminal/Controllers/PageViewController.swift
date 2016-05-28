@@ -7,7 +7,7 @@ class PageViewController: ButtonBarPagerTabStripViewController {
     
     @IBOutlet weak var shadowView: UIView!
     let blueInstagramColor = UIColor(red: 37/255.0, green: 111/255.0, blue: 206/255.0, alpha: 1.0)
-    
+    var classContributionsCollectionViewController : ClassContributionsCollectionViewController?
     override func viewDidLoad() {
         // change selected bar color
         settings.style.buttonBarBackgroundColor = .whiteColor()
@@ -36,12 +36,12 @@ class PageViewController: ButtonBarPagerTabStripViewController {
         let storyboard = UIStoryboard(name: "CollectionBoard", bundle: nil)
 
         // [2] Create an instance of the storyboard's initial view controller.
-        let classContributionsCollectionViewController = storyboard.instantiateViewControllerWithIdentifier("voteCollectionViewController") as! ClassContributionsCollectionViewController
+        classContributionsCollectionViewController = storyboard.instantiateViewControllerWithIdentifier("voteCollectionViewController") as? ClassContributionsCollectionViewController
 
         // [3] Display the new view controller.
         let groupContributionViewController = storyboard.instantiateViewControllerWithIdentifier("groupContributionViewController") as! GroupContributionViewController
 
-        return [classContributionsCollectionViewController, groupContributionViewController]
+        return [classContributionsCollectionViewController!, groupContributionViewController]
     }
 
     // MARK: - Custom Action

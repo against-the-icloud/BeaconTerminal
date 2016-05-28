@@ -24,7 +24,7 @@ public class Pulsator: CAReplicatorLayer {
             pulse.backgroundColor = backgroundColor
             let oldAlpha = alpha
             alpha = CGColorGetAlpha(backgroundColor)
-            if animationGroup != nil && alpha != oldAlpha {
+            if alpha != oldAlpha {
                 recreate()
             }
         }
@@ -83,9 +83,7 @@ public class Pulsator: CAReplicatorLayer {
     /// The value of this property should be ranging from @c 0 to @c 1 (exclusive).
     public var keyTimeForHalfOpacity: Float = 0.2 {
         didSet {
-            if animationGroup != nil {
-                recreate()
-            }
+            recreate()
         }
     }
     
@@ -107,12 +105,17 @@ public class Pulsator: CAReplicatorLayer {
     override public init() {
         super.init()
         
-        setuppulse()
+        setupPulse()
         
         instanceDelay = 1
         repeatCount = MAXFLOAT
         backgroundColor = UIColor(
             red: 0, green: 0.455, blue: 0.756, alpha: 0.45).CGColor
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(recreate),
+                                                         name: UIApplicationDidBecomeActiveNotification,
+                                                         object: nil)
     }
     
     override public init(layer: AnyObject) {
@@ -123,10 +126,13 @@ public class Pulsator: CAReplicatorLayer {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     // MARK: - Private Methods
     
-    private func setuppulse() {
+    private func setupPulse() {
         pulse.contentsScale = UIScreen.mainScreen().scale
         pulse.opacity = 0
         addSublayer(pulse)
@@ -168,7 +174,10 @@ public class Pulsator: CAReplicatorLayer {
         instanceDelay = (animationDuration + pulseInterval) / Double(numPulse)
     }
     
-    private func recreate() {
+    // MARK: - Internal Methods
+    
+    internal func recreate() {
+        guard animationGroup != nil else { return }        // Not need to be recreated.
         stop()
         let when = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * double_t(NSEC_PER_SEC)))
         dispatch_after(when, dispatch_get_main_queue()) { () -> Void in
@@ -180,7 +189,7 @@ public class Pulsator: CAReplicatorLayer {
     
     /// Start the animation.
     public func start() {
-        setuppulse()
+        setupPulse()
         setupAnimateionGroup()
         pulse.addAnimation(animationGroup, forKey: kPulsatorAnimationKey)
     }
@@ -203,13 +212,5 @@ public class Pulsator: CAReplicatorLayer {
         if autoRemove {
             removeFromSuperlayer()
         }
-    }
-}
-
-extension UIColor {
-    var components:(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-        return (r,g,b,a)
     }
 }

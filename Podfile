@@ -9,10 +9,12 @@ target 'BeaconTerminal' do
     pod 'ChameleonFramework/Swift'
     pod 'Pulsator'
     pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
-    pod 'RAMAnimatedTabBarController'
     pod 'XLPagerTabStrip'
     pod 'ISRadioButton'
-    
+    pod 'Popover'
+    pod 'MaterialDesignSymbol'
+    pod 'AccordionTableViewController'
+
     #db
     pod 'RealmSwift'
     pod 'SwiftyJSON'
@@ -21,7 +23,6 @@ target 'BeaconTerminal' do
     #state machine
     pod 'SwiftState'
 
-    # Image loading/caching library
     #util
     pod 'Sugar'
 end

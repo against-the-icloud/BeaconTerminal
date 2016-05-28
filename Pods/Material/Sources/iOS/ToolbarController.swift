@@ -64,42 +64,12 @@ public protocol ToolbarControllerDelegate : MaterialDelegate {
 }
 
 @objc(ToolbarController)
-public class ToolbarController : StatusBarViewController {
-	/// The height of the StatusBar.
-	@IBInspectable public override var heightForStatusBar: CGFloat {
-		get {
-			return toolbar.heightForStatusBar
-		}
-		set(value) {
-			toolbar.heightForStatusBar = value
-		}
-	}
-	
-	/// The height when in Portrait orientation mode.
-	@IBInspectable public override var heightForPortraitOrientation: CGFloat {
-		get {
-			return toolbar.heightForPortraitOrientation
-		}
-		set(value) {
-			toolbar.heightForPortraitOrientation = value
-		}
-	}
-	
-	/// The height when in Landscape orientation mode.
-	@IBInspectable public override var heightForLandscapeOrientation: CGFloat {
-		get {
-			return toolbar.heightForLandscapeOrientation
-		}
-		set(value) {
-			toolbar.heightForLandscapeOrientation = value
-		}
-	}
-	
+public class ToolbarController : BarController {
 	/// Internal reference to the floatingViewController.
 	private var internalFloatingViewController: UIViewController?
 	
 	/// Reference to the Toolbar.
-	public private(set) lazy var toolbar: Toolbar = Toolbar()
+	public private(set) var toolbar: Toolbar!
 	
 	/// Delegation handler.
 	public weak var delegate: ToolbarControllerDelegate?
@@ -116,21 +86,27 @@ public class ToolbarController : StatusBarViewController {
 				delegate?.toolbarControllerWillCloseFloatingViewController?(self)
 				internalFloatingViewController = nil
 				UIView.animateWithDuration(0.5,
-					animations: { [unowned self] in
-						v.view.center.y = 2 * self.view.bounds.height
-						self.toolbar.alpha = 1
-						self.rootViewController.view.alpha = 1
-					}) { [unowned self] _ in
-						v.willMoveToParentViewController(nil)
-						v.view.removeFromSuperview()
-						v.removeFromParentViewController()
-						v.view.layer.shouldRasterize = false
-						self.userInteractionEnabled = true
-						self.toolbar.userInteractionEnabled = true
-						dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-							self.delegate?.toolbarControllerDidCloseFloatingViewController?(self)
+					animations: { [weak self] in
+						if let s: ToolbarController = self {
+							v.view.center.y = 2 * s.view.bounds.height
+							s.toolbar.alpha = 1
+							s.rootViewController.view.alpha = 1
 						}
-				}
+					}) { [weak self] _ in
+						if let s: ToolbarController = self {
+							v.willMoveToParentViewController(nil)
+							v.view.removeFromSuperview()
+							v.removeFromParentViewController()
+							v.view.layer.shouldRasterize = false
+							s.userInteractionEnabled = true
+							s.toolbar.userInteractionEnabled = true
+							dispatch_async(dispatch_get_main_queue()) { [weak self] in
+								if let s: ToolbarController = self {
+									s.delegate?.toolbarControllerDidCloseFloatingViewController?(s)
+								}
+							}
+						}
+					}
 			}
 			
 			if let v: UIViewController = value {
@@ -154,18 +130,46 @@ public class ToolbarController : StatusBarViewController {
 				toolbar.userInteractionEnabled = false
 				delegate?.toolbarControllerWillOpenFloatingViewController?(self)
 				UIView.animateWithDuration(0.5,
-					animations: { [unowned self] in
-						v.view.center.y = self.view.bounds.height / 2
-						self.toolbar.alpha = 0.5
-						self.rootViewController.view.alpha = 0.5
-					}) { [unowned self] _ in
-						v.view.layer.shouldRasterize = false
-						self.view.layer.shouldRasterize = false
-						dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-							self.delegate?.toolbarControllerDidOpenFloatingViewController?(self)
+					animations: { [weak self] in
+						if let s: ToolbarController = self {
+							v.view.center.y = s.view.bounds.height / 2
+							s.toolbar.alpha = 0.5
+							s.rootViewController.view.alpha = 0.5
 						}
-				}
+					}) { [weak self] _ in
+						if let s: ToolbarController = self {
+							v.view.layer.shouldRasterize = false
+							s.view.layer.shouldRasterize = false
+							dispatch_async(dispatch_get_main_queue()) { [weak self] in
+								if let s: ToolbarController = self {
+									s.delegate?.toolbarControllerDidOpenFloatingViewController?(s)
+								}
+							}
+						}
+					}
 			}
+		}
+	}
+	
+	public override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		layoutSubviews()
+	}
+	
+	/// Layout subviews.
+	public func layoutSubviews() {
+		if let v: Toolbar = toolbar {
+			v.grid.layoutInset.top = .iPhone == MaterialDevice.type && MaterialDevice.isLandscape ? 0 : 20
+			
+			let h: CGFloat = MaterialDevice.height
+			let w: CGFloat = MaterialDevice.width
+			let p: CGFloat = v.intrinsicContentSize().height + v.grid.layoutInset.top + v.grid.layoutInset.bottom
+			
+			v.width = w + v.grid.layoutInset.left + v.grid.layoutInset.right
+			v.height = p
+			
+			rootViewController.view.frame.origin.y = p
+			rootViewController.view.frame.size.height = h - p
 		}
 	}
 	
@@ -183,7 +187,10 @@ public class ToolbarController : StatusBarViewController {
 	
 	/// Prepares the Toolbar.
 	private func prepareToolbar() {
-		toolbar.zPosition = 1000
-		view.addSubview(toolbar)
+		if nil == toolbar {
+			toolbar = Toolbar()
+			toolbar.zPosition = 1000
+			view.addSubview(toolbar)
+		}
 	}
 }

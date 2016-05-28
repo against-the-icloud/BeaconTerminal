@@ -1,10 +1,8 @@
-
 import UIKit
-import Material
 import RealmSwift
+import Material
 import SwiftyJSON
 import XCGLogger
-import RAMAnimatedTabBarController
 
 let LOG: XCGLogger = {
     // Setup XCGLogger
@@ -35,8 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var realm: Realm?
-    var tabController : RAMAnimatedTabBarController? = nil
-    
+    let bottomNavigationController: BottomNavigationController = BottomNavigationController()
+
+
     var beaconIDs =  [
         BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: MaterialColor.pink.base),
         BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: MaterialColor.yellow.base),
@@ -45,8 +44,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
-        tabController = self.window!.rootViewController as? RAMAnimatedTabBarController
 
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+        let sideViewController = storyboard.instantiateViewControllerWithIdentifier("sideViewController") as! SideViewController
+        let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
+
+
+//        let menuViewController: AppMenuViewController = AppMenuViewController(rootViewController: mainViewController)
+//        menuViewController.edgesForExtendedLayout = .None
+        
+        bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
+        bottomNavigationController.selectedIndex = 0
+        bottomNavigationController.tabBar.tintColor = MaterialColor.white
+        bottomNavigationController.tabBar.backgroundColor = MaterialColor.grey.darken4
+        bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.Automatic
+//        bottomNavigationController.tabBar.itemSpacing = 400.0
+        
+        
+        // Configure the window with the SideNavigationController as the root view controller
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window?.rootViewController = SideNavigationController(rootViewController: bottomNavigationController, leftViewController: sideViewController)
+        window?.makeKeyAndVisible()
 
 
         do {
