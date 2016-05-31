@@ -33,6 +33,10 @@
 		70C88CA91CF2B9E900E936AA /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88CA01CF2B9E900E936AA /* PhotoViewController.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
+		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
+		70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F801CFCF03D006F6997 /* DragViewController.swift */; };
+		70D62F861CFCF03D006F6997 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F821CFCF03D006F6997 /* Utility.swift */; };
+		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
 		70EA5F981CF237760055CB00 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EA5F971CF237760055CB00 /* ControlPanelViewController.swift */; };
 		70EA5FA71CF24D860055CB00 /* PlaceTerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EA5FA51CF24D860055CB00 /* PlaceTerminalViewController.swift */; };
 		70EF4FFA1CE6135200AC8AD5 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF4FF91CE6135200AC8AD5 /* Record.swift */; };
@@ -58,7 +62,6 @@
 		C0A7D0850D327703E1595C1E /* ClassContributionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */; };
 		C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D3826273826A0346635F /* PageViewController.swift */; };
 		C0A7D2A5501C0509EF5BB160 /* FrostedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */; };
-		C0A7D3F41E6EC57A48911066 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DE33E79111E09C352EE9 /* DraggableImageView.swift */; };
 		C0A7D9705184C3AF769BC211 /* FrostedSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */; };
 		C0A7D9FA2E80F7384AA80B9F /* TestUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */; };
 		C0A7DA1AF17ED38FEA852617 /* GroupContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */; };
@@ -121,6 +124,10 @@
 		70C88CA01CF2B9E900E936AA /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
+		70D62F801CFCF03D006F6997 /* DragViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragViewController.swift; sourceTree = "<group>"; };
+		70D62F821CFCF03D006F6997 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
 		70EA5F971CF237760055CB00 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		70EA5FA51CF24D860055CB00 /* PlaceTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceTerminalViewController.swift; path = ../PlaceTerminalViewController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
@@ -158,7 +165,6 @@
 		C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUITableViewController.swift; sourceTree = "<group>"; };
 		C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassContributionsCollectionViewController.swift; sourceTree = "<group>"; };
 		C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
-		C0A7DE33E79111E09C352EE9 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
 		C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrostedSidebar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,7 +205,6 @@
 				7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */,
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */,
-				C0A7DE33E79111E09C352EE9 /* DraggableImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -275,6 +280,17 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		70D62F871CFCF043006F6997 /* DragAndDrop */ = {
+			isa = PBXGroup;
+			children = (
+				70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */,
+				70D62F881CFCF76C006F6997 /* DropTargetView.swift */,
+				70D62F801CFCF03D006F6997 /* DragViewController.swift */,
+				70D62F821CFCF03D006F6997 /* Utility.swift */,
+			);
+			name = DragAndDrop;
+			sourceTree = "<group>";
+		};
 		70E8F3441CDEFDEF00B83010 /* TestInterface */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +355,7 @@
 				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
 				70D04ED31CD0692E00C7C784 /* archive */,
 				AE9764931C22C1BF0058A4DC /* Assets.xcassets */,
+				70D62F871CFCF043006F6997 /* DragAndDrop */,
 				7036AF8B1CF78D150063A88F /* ObservationView.xib */,
 				7036AF8D1CF78D3F0063A88F /* ObservationView.swift */,
 				7036AFA21CF801050063A88F /* ObservationEditView.swift */,
@@ -594,14 +611,17 @@
 				AE677F291C35191300836B41 /* PerformSetupViewController.swift in Sources */,
 				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
 				70096C2C1CE8F641008129BA /* VoteCell.swift in Sources */,
+				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
 				7088D3311CCC978C001776C9 /* MainViewController.swift in Sources */,
+				70D62F861CFCF03D006F6997 /* Utility.swift in Sources */,
 				AEEA894D1C32C90D006378F4 /* ImmediateBeaconDetector.swift in Sources */,
 				AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */,
 				70EA5FA71CF24D860055CB00 /* PlaceTerminalViewController.swift in Sources */,
 				70C88CA91CF2B9E900E936AA /* PhotoViewController.swift in Sources */,
 				AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */,
+				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				7042041C1CE8E94D00C09FD0 /* ChameleonShorthand.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
 				70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */,
@@ -622,8 +642,8 @@
 				C0A7DA4923099ECBB1D27203 /* SideViewController.swift in Sources */,
 				C0A7D2A5501C0509EF5BB160 /* FrostedTabBarController.swift in Sources */,
 				C0A7D9705184C3AF769BC211 /* FrostedSidebar.swift in Sources */,
+				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
 				C0A7DA499BE66B0812352287 /* AddContributionViewController.swift in Sources */,
-				C0A7D3F41E6EC57A48911066 /* DraggableImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1511,18 +1511,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybn-aR-XV9" customClass="CanvasView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" restorationIdentifier="toolbarView" translatesAutoresizingMaskIntoConstraints="NO" id="ZzL-dJ-or6" userLabel="ToolbarView">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yv4-If-SQs">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="110"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_00" translatesAutoresizingMaskIntoConstraints="NO" id="v3f-EZ-1cJ">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_00" translatesAutoresizingMaskIntoConstraints="NO" id="v3f-EZ-1cJ" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="Jbd-59-QKw"/>
                                                     <constraint firstAttribute="width" constant="70" id="P0H-57-0oY"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="Jbd-59-QKw"/>
@@ -1536,12 +1550,22 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_01" translatesAutoresizingMaskIntoConstraints="NO" id="KiZ-rS-YhS">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_01" translatesAutoresizingMaskIntoConstraints="NO" id="KiZ-rS-YhS" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="160-hI-Xcc"/>
                                                     <constraint firstAttribute="width" constant="70" id="U1a-Zn-jCo"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="160-hI-Xcc"/>
@@ -1555,12 +1579,22 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_02" translatesAutoresizingMaskIntoConstraints="NO" id="nRN-i5-jHe">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_02" translatesAutoresizingMaskIntoConstraints="NO" id="nRN-i5-jHe" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="M3x-zn-Z2W"/>
                                                     <constraint firstAttribute="height" constant="70" id="af0-xd-pgK"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="M3x-zn-Z2W"/>
@@ -1574,12 +1608,22 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_03" translatesAutoresizingMaskIntoConstraints="NO" id="Oxw-lN-KRL">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_03" translatesAutoresizingMaskIntoConstraints="NO" id="Oxw-lN-KRL" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="AZ0-fX-L6o"/>
                                                     <constraint firstAttribute="width" constant="70" id="Mdh-7W-SYG"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="AZ0-fX-L6o"/>
@@ -1593,7 +1637,7 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_04" translatesAutoresizingMaskIntoConstraints="NO" id="osN-cu-NCt">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_04" translatesAutoresizingMaskIntoConstraints="NO" id="osN-cu-NCt" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="24R-B4-qPe"/>
@@ -1603,6 +1647,16 @@
                                                     <constraint firstAttribute="width" constant="60" id="PTe-pv-j0X"/>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="170" id="SAf-tB-L9X"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="24R-B4-qPe"/>
@@ -1624,7 +1678,7 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_05" translatesAutoresizingMaskIntoConstraints="NO" id="uzF-uw-CGZ">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_05" translatesAutoresizingMaskIntoConstraints="NO" id="uzF-uw-CGZ" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="A4D-OY-IQQ"/>
@@ -1632,6 +1686,16 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="Ghc-mx-lFU"/>
                                                     <constraint firstAttribute="height" constant="70" id="aUq-Bz-6pi"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="A4D-OY-IQQ"/>
@@ -1649,12 +1713,22 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_06" translatesAutoresizingMaskIntoConstraints="NO" id="MSe-dd-4ps">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_06" translatesAutoresizingMaskIntoConstraints="NO" id="MSe-dd-4ps" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="TYO-ge-mjn"/>
                                                     <constraint firstAttribute="width" constant="70" id="cEc-L6-Wel"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="TYO-ge-mjn"/>
@@ -1668,7 +1742,7 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_07" translatesAutoresizingMaskIntoConstraints="NO" id="nPp-qQ-RvV">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_07" translatesAutoresizingMaskIntoConstraints="NO" id="nPp-qQ-RvV" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="70" id="63p-lk-m13"/>
@@ -1679,6 +1753,16 @@
                                                         <variation key="heightClass=regular-widthClass=regular" constant="70"/>
                                                     </constraint>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="63p-lk-m13"/>
@@ -1698,7 +1782,7 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_08" translatesAutoresizingMaskIntoConstraints="NO" id="5Xr-oN-0TX">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_08" translatesAutoresizingMaskIntoConstraints="NO" id="5Xr-oN-0TX" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="9u7-4c-cU1"/>
@@ -1709,6 +1793,16 @@
                                                         <variation key="heightClass=regular-widthClass=regular" constant="70"/>
                                                     </constraint>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="9u7-4c-cU1"/>
@@ -1728,7 +1822,7 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_09" translatesAutoresizingMaskIntoConstraints="NO" id="lVi-PC-DZd">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_09" translatesAutoresizingMaskIntoConstraints="NO" id="lVi-PC-DZd" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="HNl-cc-WgC"/>
@@ -1739,6 +1833,16 @@
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="70" id="XUI-GQ-GmJ"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="wWo-aT-3Tp"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="HNl-cc-WgC"/>
@@ -1758,12 +1862,22 @@
                                                     </mask>
                                                 </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_10" translatesAutoresizingMaskIntoConstraints="NO" id="5np-n8-fPn">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_10" translatesAutoresizingMaskIntoConstraints="NO" id="5np-n8-fPn" customClass="DraggableImageView" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="70" id="IWh-V6-nCh"/>
                                                     <constraint firstAttribute="width" constant="70" id="YQM-ye-Gb9"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragAlpha">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="dragScaleFactor">
+                                                        <real key="value" value="1.3"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldCopy" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldSnapBack" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="IWh-V6-nCh"/>
@@ -1798,6 +1912,9 @@
                                                 <include reference="EXP-6g-N7F"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="clearView:" destination="ltJ-6y-lYV" eventType="touchUpInside" id="Z2X-KI-xOe"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1852,8 +1969,13 @@
                             <constraint firstItem="ZzL-dJ-or6" firstAttribute="top" secondItem="UBP-kf-6G9" secondAttribute="bottom" id="25L-dB-6kE">
                                 <variation key="heightClass=regular-widthClass=regular" constant="-20"/>
                             </constraint>
+                            <constraint firstItem="ybn-aR-XV9" firstAttribute="leading" secondItem="ZzL-dJ-or6" secondAttribute="leading" id="5om-dU-LGt"/>
                             <constraint firstItem="ZzL-dJ-or6" firstAttribute="leading" secondItem="zo7-vQ-0C7" secondAttribute="leading" id="7dW-xX-6fd"/>
+                            <constraint firstItem="ybn-aR-XV9" firstAttribute="trailing" secondItem="ZzL-dJ-or6" secondAttribute="trailing" id="Dre-B8-D75"/>
                             <constraint firstItem="kZX-2Z-aam" firstAttribute="top" secondItem="ZzL-dJ-or6" secondAttribute="bottom" constant="924" id="H5J-bQ-GRL"/>
+                            <constraint firstItem="ybn-aR-XV9" firstAttribute="top" secondItem="ZzL-dJ-or6" secondAttribute="bottom" id="OOr-nf-q38">
+                                <variation key="heightClass=regular-widthClass=regular" constant="-80"/>
+                            </constraint>
                             <constraint firstItem="ZzL-dJ-or6" firstAttribute="top" secondItem="UBP-kf-6G9" secondAttribute="bottom" id="TPK-3j-t2m"/>
                             <constraint firstItem="ZzL-dJ-or6" firstAttribute="leading" secondItem="zo7-vQ-0C7" secondAttribute="leadingMargin" id="Vk6-TY-fYV"/>
                             <constraint firstItem="ZzL-dJ-or6" firstAttribute="leading" secondItem="zo7-vQ-0C7" secondAttribute="leading" id="YuA-dv-fTl"/>
@@ -1862,12 +1984,14 @@
                                 <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="ZzL-dJ-or6" secondAttribute="trailing" id="hH9-Bp-r3j"/>
+                            <constraint firstItem="ybn-aR-XV9" firstAttribute="bottom" secondItem="kZX-2Z-aam" secondAttribute="top" id="lcU-Hn-emQ"/>
                             <constraint firstItem="kZX-2Z-aam" firstAttribute="top" secondItem="ZzL-dJ-or6" secondAttribute="bottom" constant="924" id="vdz-51-QXW">
                                 <variation key="heightClass=regular-widthClass=regular" constant="924"/>
                             </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="ybn-aR-XV9"/>
                                 <exclude reference="ZzL-dJ-or6"/>
                             </mask>
                             <mask key="constraints">
@@ -1882,10 +2006,15 @@
                                 <exclude reference="g5y-A4-ave"/>
                                 <exclude reference="h3t-nd-fgQ"/>
                                 <exclude reference="hH9-Bp-r3j"/>
+                                <exclude reference="5om-dU-LGt"/>
+                                <exclude reference="Dre-B8-D75"/>
+                                <exclude reference="OOr-nf-q38"/>
+                                <exclude reference="lcU-Hn-emQ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="subviews">
+                                <include reference="ybn-aR-XV9"/>
                                 <include reference="ZzL-dJ-or6"/>
                             </mask>
                             <mask key="constraints">
@@ -1900,6 +2029,10 @@
                                 <exclude reference="g5y-A4-ave"/>
                                 <exclude reference="h3t-nd-fgQ"/>
                                 <exclude reference="hH9-Bp-r3j"/>
+                                <include reference="5om-dU-LGt"/>
+                                <include reference="Dre-B8-D75"/>
+                                <include reference="OOr-nf-q38"/>
+                                <include reference="lcU-Hn-emQ"/>
                             </mask>
                         </variation>
                     </view>
@@ -1907,6 +2040,13 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPadPro"/>
+                    <connections>
+                        <outlet property="drawingCanvasView" destination="ybn-aR-XV9" id="xOw-7z-BOr"/>
+                        <outletCollection property="draggableImageViews" destination="v3f-EZ-1cJ" collectionClass="NSMutableArray" id="Ma3-EF-S9q"/>
+                        <outletCollection property="draggableImageViews" destination="KiZ-rS-YhS" collectionClass="NSMutableArray" id="hwq-hb-ytU"/>
+                        <outletCollection property="draggableImageViews" destination="nRN-i5-jHe" collectionClass="NSMutableArray" id="5fX-Bp-wIG"/>
+                        <outletCollection property="draggableImageViews" destination="Oxw-lN-KRL" collectionClass="NSMutableArray" id="FGf-8b-j4N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kci-wT-0Ao" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

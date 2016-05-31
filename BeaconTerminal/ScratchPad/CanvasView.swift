@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CanvasView: UIView {
+class CanvasView: DropTargetView {
     // MARK: Properties
     
     let isPredictionEnabled = UIDevice.currentDevice().userInterfaceIdiom == .Pad
