@@ -15,6 +15,7 @@ class ScratchPadViewController: UIViewController {
     
     @IBOutlet weak var drawingCanvasView: CanvasView!
     
+    @IBOutlet weak var toolbarView: UIView!
     @IBOutlet var draggableImageViews: [DraggableImageView]!
     
     // MARK: Properties
@@ -54,6 +55,9 @@ class ScratchPadViewController: UIViewController {
         for dview in draggableImageViews {
             dview.delegate = self
         }
+        
+        self.view.sendSubviewToBack(drawingCanvasView)
+        self.view.bringSubviewToFront(toolbarView)
     }
     
     // MARK: Touch Handling
@@ -174,30 +178,18 @@ class ScratchPadViewController: UIViewController {
 
 extension ScratchPadViewController: DraggableViewDelegate {
     
-    func onDroppedToTarget(sender: DraggableImageView, targets: [UIView]) {
-        LOG.debug("\(sender) \(targets)")
-        
-        sender.borderColor = UIColor.clearColor()
+    func onDroppedToTarget(sender: DraggableImageView) {
+        LOG.debug("dropped! \(sender.tag)")
+        sender.shouldSnapBack = false
+        sender.shouldCopy = false
     }
     
     func enteringZone(sender: DraggableImageView, targets: [UIView]) {
-        
-                if !targets.isEmpty {
-            for zone in targets {
-                zone.backgroundColor = UIColor.brownColor()
-            }
-        }
+
     }
     
     func exitingZone(sender: DraggableImageView, targets: [UIView]) {
-        
-        self.drawingCanvasView.backgroundColor = UIColor ( red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0 )
 
-        if !targets.isEmpty {
-            for zone in targets {
-                zone.backgroundColor = UIColor.brownColor()
-            }
-        }
     }
 }
 

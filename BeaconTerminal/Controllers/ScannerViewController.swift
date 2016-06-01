@@ -11,7 +11,6 @@ import UIKit
 import Material
 import Pulsator
 import Spring
-import IBAnimatable
 import SwiftState
 import AVFoundation
 import AudioToolbox

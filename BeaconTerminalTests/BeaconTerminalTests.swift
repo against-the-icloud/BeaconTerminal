@@ -7,17 +7,13 @@
 //
 
 import XCTest
-import RealmSwift
-import SwiftyJSON
 
 class BeaconTerminalTests: XCTestCase {
     
-    var realm: Realm?
 
     
     override func setUp() {
         super.setUp()
-        realm = try! Realm() // Create realm pointing to default file
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     

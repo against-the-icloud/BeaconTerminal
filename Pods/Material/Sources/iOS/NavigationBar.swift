@@ -423,7 +423,7 @@ public class NavigationBar : UINavigationBar {
 	when subclassing.
 	*/
 	public func prepareView() {
-		barStyle = .Default
+		barStyle = .Black
 		translucent = false
 		depth = .Depth1
 		spacingPreset = .Spacing1
@@ -447,7 +447,7 @@ public class NavigationBar : UINavigationBar {
 		} else {
 			item.titleLabel.text = item.title
 		}
-		item.hidesBackButton = true
+		item.hidesBackButton = false
 		item.setHidesBackButton(true, animated: false)
 	}
 	

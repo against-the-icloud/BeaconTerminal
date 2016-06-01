@@ -16,7 +16,7 @@ install_framework()
     local source="$1"
   fi
 
-  local destination="${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
+  local destination="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
 
   if [ -L "${source}" ]; then
       echo "Symlinked..."
@@ -59,8 +59,8 @@ code_sign_if_enabled() {
   if [ -n "${EXPANDED_CODE_SIGN_IDENTITY}" -a "${CODE_SIGNING_REQUIRED}" != "NO" -a "${CODE_SIGNING_ALLOWED}" != "NO" ]; then
     # Use the current code_sign_identitiy
     echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"$1\""
-    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements "$1"
+    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements \"$1\""
+    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} ${OTHER_CODE_SIGN_FLAGS} --preserve-metadata=identifier,entitlements "$1"
   fi
 }
 
@@ -84,36 +84,36 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-BeaconTerminal/AccordionTableViewController.framework"
-  install_framework "Pods-BeaconTerminal/ChameleonFramework.framework"
-  install_framework "Pods-BeaconTerminal/ISRadioButton.framework"
-  install_framework "Pods-BeaconTerminal/Material.framework"
-  install_framework "Pods-BeaconTerminal/MaterialDesignSymbol.framework"
-  install_framework "Pods-BeaconTerminal/Popover.framework"
-  install_framework "Pods-BeaconTerminal/Pulsator.framework"
-  install_framework "Pods-BeaconTerminal/Realm.framework"
-  install_framework "Pods-BeaconTerminal/RealmSwift.framework"
-  install_framework "Pods-BeaconTerminal/Spring.framework"
-  install_framework "Pods-BeaconTerminal/Sugar.framework"
-  install_framework "Pods-BeaconTerminal/SwiftState.framework"
-  install_framework "Pods-BeaconTerminal/SwiftyJSON.framework"
-  install_framework "Pods-BeaconTerminal/XCGLogger.framework"
-  install_framework "Pods-BeaconTerminal/XLPagerTabStrip.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AccordionTableViewController/AccordionTableViewController.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/ChameleonFramework/ChameleonFramework.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/ISRadioButton/ISRadioButton.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Material/Material.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/MaterialDesignSymbol/MaterialDesignSymbol.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Popover/Popover.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Pulsator/Pulsator.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Realm/Realm.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/RealmSwift/RealmSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Spring/Spring.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Sugar/Sugar.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftState/SwiftState.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XCGLogger/XCGLogger.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XLPagerTabStrip/XLPagerTabStrip.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-BeaconTerminal/AccordionTableViewController.framework"
-  install_framework "Pods-BeaconTerminal/ChameleonFramework.framework"
-  install_framework "Pods-BeaconTerminal/ISRadioButton.framework"
-  install_framework "Pods-BeaconTerminal/Material.framework"
-  install_framework "Pods-BeaconTerminal/MaterialDesignSymbol.framework"
-  install_framework "Pods-BeaconTerminal/Popover.framework"
-  install_framework "Pods-BeaconTerminal/Pulsator.framework"
-  install_framework "Pods-BeaconTerminal/Realm.framework"
-  install_framework "Pods-BeaconTerminal/RealmSwift.framework"
-  install_framework "Pods-BeaconTerminal/Spring.framework"
-  install_framework "Pods-BeaconTerminal/Sugar.framework"
-  install_framework "Pods-BeaconTerminal/SwiftState.framework"
-  install_framework "Pods-BeaconTerminal/SwiftyJSON.framework"
-  install_framework "Pods-BeaconTerminal/XCGLogger.framework"
-  install_framework "Pods-BeaconTerminal/XLPagerTabStrip.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AccordionTableViewController/AccordionTableViewController.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/ChameleonFramework/ChameleonFramework.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/ISRadioButton/ISRadioButton.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Material/Material.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/MaterialDesignSymbol/MaterialDesignSymbol.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Popover/Popover.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Pulsator/Pulsator.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Realm/Realm.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/RealmSwift/RealmSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Spring/Spring.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Sugar/Sugar.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftState/SwiftState.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyJSON/SwiftyJSON.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XCGLogger/XCGLogger.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XLPagerTabStrip/XLPagerTabStrip.framework"
 fi

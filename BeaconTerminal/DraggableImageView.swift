@@ -8,10 +8,9 @@
 
 import Foundation
 import UIKit
-import SwiftState
 
 protocol DraggableViewDelegate {
-    func onDroppedToTarget(sender: DraggableImageView, targets: [UIView])
+    func onDroppedToTarget(sender: DraggableImageView)
     
     func enteringZone(sender: DraggableImageView, targets: [UIView])
     func exitingZone(sender: DraggableImageView, targets: [UIView])
@@ -19,10 +18,6 @@ protocol DraggableViewDelegate {
 
 protocol DropTargetProtocol {
 
-}
-
-enum DraggingState: StateType {
-    case Initial, Started, Dragging,InDropZone, OutDropZone, EnteredDropZone, ExitedDropZone, Stopped,Error
 }
 
 // scenario 1: copy duplicate with snapback
@@ -73,44 +68,6 @@ class DraggableImageView: UIImageView {
     
 
 
-    func pointInside(sender:UIGestureRecognizer) -> Bool {
-
-        let parentView = self.superview
-//        let location = sender.locationInView(parentView)
-    
-        
-        
-        let p:CGPoint = sender.locationInView(parentView)
-        
-        if let hitTestView = getAppDelegate().window?.hitTest(p, withEvent: nil) {
-            if ((hitTestView as? DropTargetView) != nil) {
-                if(CGRectIntersectsRect(hitTestView.frame, self.currentView!.frame)){
-                    if enteredZones.contains(hitTestView) {
-                        //highlight dropzone
-                        //already there
-                        LOG.debug("IN DA ZONE ---- ZONE ARRAY ENTER \(self.enteredZones.count)")
-                    } else {
-                        //new entry
-                        LOG.debug("FOUND NEW ZONE")
-                        enteredZones.append(hitTestView)
-                    }
-                    delegate?.enteringZone(self.currentView!, targets: enteredZones)
-                    return true
-                }
-            } else {
-                LOG.debug("EXTING ZONE ---- ZONE ARRAY ENTER \(self.enteredZones.count)")
-                delegate?.exitingZone(self.currentView!, targets: enteredZones)
-                enteredZones.removeAll()
-                return false
-            }
-        } else {
-            //nothing
-        }
-    
-   
-        return false
-    }
-
 
     func responseToPanGesture(sender: UIPanGestureRecognizer){
 
@@ -122,8 +79,9 @@ class DraggableImageView: UIImageView {
                 self.currentView!.userInteractionEnabled = true
                 self.currentView!.autoresizingMask = UIViewAutoresizing.None
                 self.currentView!.contentMode = UIViewContentMode.Center
-                self.currentView!.layer.cornerRadius = 5.0
-                self.currentView!.layer.borderWidth = 1.0
+                self.currentView!.layer.cornerRadius = 10.0
+                self.currentView!.layer.borderWidth = 0.0
+                self.currentView!.tintColor = UIColor.blueColor()
                 self.currentView!.delegate = self.delegate
                 self.currentView!.clipsToBounds = true
                 self.currentView!.addSubview(UIImageView(image: scaledImageToSize(self.image!, newSize: self.bounds.size)))
@@ -151,7 +109,7 @@ class DraggableImageView: UIImageView {
 
 
 
-            let translation = sender.translationInView(currentView!.superview!)
+            let translation = sender.translationInView(currentView!.superview)
             self.currentView!.center = CGPointMake(self.currentView!.center.x + translation.x, currentView!.center.y + translation.y)
             sender.setTranslation(CGPointZero, inView: currentView!.superview)
 
@@ -160,14 +118,14 @@ class DraggableImageView: UIImageView {
 
             pointInside(sender)
 
-
+//            LOG.debug("CENTER DRAGGED \(self.currentView!)")
 
         } else if sender.state == UIGestureRecognizerState.Ended{
 
 
             self.superview?.bringSubviewToFront(self.currentView!)
 
-            LOG.debug("is in the Zone: \(pointInside(sender))")
+//            LOG.debug("is in the Zone: \(pointInside(sender))")
 
 
 
@@ -199,7 +157,6 @@ class DraggableImageView: UIImageView {
                     //TURN OFF COPY leave SNAPBACK TO ORIGNAL POSITON
                     self.currentView?.shouldCopy = false
                     self.currentView?.shouldSnapBack = true
-                    self
                     if let startPoint = self.startPoint {
                         self.currentView?.startPoint = startPoint
                     }
@@ -210,7 +167,7 @@ class DraggableImageView: UIImageView {
                     }, completion: {
                         (finished:Bool) in
                         
-                        self.updateListerners()
+                        self.updateDelegates()
                         print("finished: \(finished) COPY")
 
 
@@ -224,9 +181,11 @@ class DraggableImageView: UIImageView {
                 UIView.animateWithDuration(0.4, animations: {
                     self.currentView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
                     self.currentView?.alpha = 1.0
+                    self.currentView?.borderColor = UIColor.clearColor()
+
                 }, completion: {
                     (finished:Bool) in
-                    self.updateListerners()
+                    self.updateDelegates()
                     print("finished: \(finished) MOVE")
 
 
@@ -239,15 +198,69 @@ class DraggableImageView: UIImageView {
 
         }
     }
+
+
+
+    func pointInside(sender:UIGestureRecognizer) -> Bool {
+
+        let parentView = self.superview
+//        let location = sender.locationInView(parentView)
+
+
+
+        let p:CGPoint = sender.locationInView(parentView)
+        //let p:CGPoint = sender.view!.center
+        if let hitTestView = getAppDelegate().window?.hitTest(p, withEvent: nil) {
+//            UIApplication.sharedApplication().keyWindow!.sendSubviewToBack(hitTestView)
+//            UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.currentView!)
+
+
+            if ((hitTestView as? DropTargetView) != nil) {
+                if(CGRectIntersectsRect(hitTestView.frame, self.currentView!.frame) || CGRectContainsPoint(hitTestView.frame,p)){
+                    LOG.debug("IN ZONE COUNT \(enteredZones.count) POINT \(p)")
+                    if enteredZones.contains(hitTestView) {
+                        //highlight dropzone
+                        //already there
+                        //LOG.debug("IN DA ZONE ---- ZONE ARRAY ENTER \(self.enteredZones.count)")
+                    } else {
+                        //new entry
+                        //LOG.debug("FOUND NEW ZONE")
+                        enteredZones.append(hitTestView)
+                    }
+                    delegate?.enteringZone(self.currentView!, targets: enteredZones)
+                    return true
+                }
+            } else {
+                LOG.debug("NOT IN ZONE COUNT \(enteredZones.count) POINT \(p)")
+                if !self.enteredZones.isEmpty {
+                    //LOG.debug("EXTING ZONE ---- ZONE ARRAY ENTER \(self.enteredZones.count)")
+                    delegate?.exitingZone(self.currentView!, targets: enteredZones)
+                    enteredZones.removeAll()
+                }
+
+                return false
+            }
+        } else {
+            //nothing
+            LOG.debug("NOT A HIT")
+        }
+
+
+        return false
+    }
     
-    func updateListerners() {
-//        var targets = [UIView]()
-//        for tag in self.enteredZones {
-//            if let dt = self.getDropTarget(tag) {
-//                targets.append(dt)
-//            }
-//        }
-        self.delegate!.onDroppedToTarget(self.currentView!, targets: enteredZones)
+    func updateDelegates() {
+
+        for zone in enteredZones {
+            //current the point to the target view
+            LOG.debug("CV \(self.currentView!.frame)")
+            let newPoint = self.superview!.convertPoint(self.currentView!.center, toView: zone)
+            zone.addSubview(self.currentView!)
+            self.currentView!.center =  newPoint
+        }
+
+        enteredZones.removeAll()
+        self.delegate!.onDroppedToTarget(self.currentView!)
     }
 
     private func scaledImageToSize(image: UIImage, newSize: CGSize) -> UIImage{

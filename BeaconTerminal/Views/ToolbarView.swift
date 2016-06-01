@@ -6,8 +6,6 @@
 import Foundation
 import UIKit
 import Spring
-import IBAnimatable
-import RAMAnimatedTabBarController
 
 
 class ToolbarView: UIView {

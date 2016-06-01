@@ -80,8 +80,8 @@ class DragViewController: UIViewController {
 
 extension DragViewController: DraggableViewDelegate {
     
-    func onDroppedToTarget(sender: DraggableImageView, targets: [UIView]) {
-        LOG.debug("\(sender) \(targets)")
+    func onDroppedToTarget(sender: DraggableImageView) {
+        LOG.debug("\(sender)")
     }
     
     func enteringZone(sender: DraggableImageView, targets: [UIView]) {

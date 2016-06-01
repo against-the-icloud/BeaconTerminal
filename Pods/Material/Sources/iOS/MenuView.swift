@@ -30,9 +30,16 @@
 
 import UIKit
 
+@objc(MenuViewDelegate)
+public protocol MenuViewDelegate : MaterialDelegate {
+    /// Gets called when the user taps outside menu buttons.
+    optional func menuViewDidTapOutside(menuView: MenuView)
+    
+}
+
 public class MenuView : MaterialPulseView {
 	/// References the Menu instance.
-	public private(set) lazy var menu: Menu = Menu(origin: CGPointZero)
+	public private(set) lazy var menu: Menu = Menu()
 	
 	/**
 	Prepares the view instance when intialized. When subclassing,
@@ -90,12 +97,18 @@ public class MenuView : MaterialPulseView {
         guard !hidden else {
             return nil
         }
+		
 		for v in subviews {
 			let p: CGPoint = v.convertPoint(point, fromView: self)
 			if CGRectContainsPoint(v.bounds, p) {
 				return v.hitTest(p, withEvent: event)
 			}
 		}
+		
+		if menu.opened {
+			(delegate as? MenuViewDelegate)?.menuViewDidTapOutside?(self)
+		}
+		
 		return super.hitTest(point, withEvent: event)
 	}
 }
