@@ -13,9 +13,13 @@ import Spring
 @IBDesignable
 class ObservationView: SpringView {
     
+    
+    
     @IBOutlet weak var viewLabel: UILabel!
     
     @IBOutlet var view: UIView!
+    
+    @IBOutlet weak var tapGesture: SpringView!
     
     @IBOutlet weak var mainSpiecesImage: UIImageView!
     
@@ -24,6 +28,8 @@ class ObservationView: SpringView {
     @IBInspectable var text: String? {
         didSet { viewLabel.text = text }
     }
+    
+    @IBInspectable var observationId: String?    
     
     
     override init(frame: CGRect) {
@@ -46,7 +52,7 @@ class ObservationView: SpringView {
         
         prepareView()
     }
-
+    
     private func prepareView() {
         self.view.bringSubviewToFront(self.mainSpiecesImage)
     }
@@ -59,3 +65,4 @@ class ObservationView: SpringView {
         return nibView
     }
 }
+

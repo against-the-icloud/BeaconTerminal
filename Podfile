@@ -11,8 +11,6 @@ target 'BeaconTerminal' do
     pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
     pod 'XLPagerTabStrip'
     pod 'ISRadioButton'
-    pod 'Popover'
-    pod 'MaterialDesignSymbol'
     pod 'AccordionTableViewController'
 
     #db

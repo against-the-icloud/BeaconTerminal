@@ -37,28 +37,6 @@ class ToolbarView: UIView {
         self.groupLabel.textColor = UIColor.whiteColor()
         self.titleLabel.textColor = UIColor.whiteColor()
         self.backgroundColor = UIColor.blackColor()
-
-//        getAppDelegate().tabController!.tabBar.barTintColor = UIColor.blackColor()
-//        getAppDelegate().tabController!.tabBar.tintColor = UIColor.whiteColor()
-//
-//        //        getAppDelegate().tabController!.changeSelectedColor(UIColor.redColor(), iconSelectedColor: UIColor.redColor())
-//        let items = getAppDelegate().tabController!.tabBar.items as! [RAMAnimatedTabBarItem]
-//        for index in 0..<items.count {
-//            let item = items[index]
-//
-//            //            item.animation.textSelectedColor = UIColor.redColor()
-//            //            item.animation.iconSelectedColor = UIColor.redColor()
-//            item.iconColor = UIColor.whiteColor()
-//            item.textColor = UIColor.whiteColor()
-//            item.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-//
-//            if item == getAppDelegate().tabController!.tabBar.selectedItem {
-//                item.selectedState()
-//            } else {
-//                item.deselectAnimation()
-//            }
-//        }
-
     }
 
     func updateToolbarColors(baseColor: UIColor, newTextColor: UIColor) {

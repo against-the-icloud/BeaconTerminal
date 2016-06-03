@@ -48,13 +48,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+        mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
+
         let sideViewController = storyboard.instantiateViewControllerWithIdentifier("sideViewController") as! SideViewController
         let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
 
 
 //        let menuViewController: AppMenuViewController = AppMenuViewController(rootViewController: mainViewController)
 //        menuViewController.edgesForExtendedLayout = .None
-        
+
         bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
         bottomNavigationController.selectedIndex = 0
         bottomNavigationController.tabBar.tintColor = MaterialColor.white
@@ -67,6 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = SideNavigationController(rootViewController: bottomNavigationController, leftViewController: sideViewController)
         window?.makeKeyAndVisible()
+
+
 
 
         do {

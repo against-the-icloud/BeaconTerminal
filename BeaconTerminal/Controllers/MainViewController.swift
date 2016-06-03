@@ -1,14 +1,19 @@
 import UIKit
 import ChameleonFramework
 import Photos
-import Popover
 import Pulsator
 import Spring
 import Material
-import MaterialDesignSymbol
 import MobileCoreServices
+import SwiftState
 
+enum ApplicationState: StateType {
+    case START, PLACE_TERMINAL, PLACE_GROUP, OBJECT_GROUP
+}
 
+enum ToolType: String {
+    case PHOTO_LIB, CAMERA, SCREENSHOT, SCANNER, TRASH
+}
 
 class MainViewController: UIViewController, UINavigationControllerDelegate {
 
@@ -18,10 +23,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var hasTabbar = false
     var hasScanButton = false
 
-    @IBOutlet weak var menuView: MenuView!
-
-    @IBOutlet weak var bottomTabBar: BottomTabBar!
-    @IBOutlet weak var scanButton: FabButton!
     var statusBarColor: UIStatusBarStyle = UIStatusBarStyle.LightContent
 
     let imagePicker = UIImagePickerController()
@@ -30,35 +31,100 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var currentlySelectedSpecies = 0
     var pageViewController: PageViewController?
 
+    var machine: StateMachine<ApplicationState, NoEvent>!
+
+
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
+    @IBOutlet weak var speciesMenuView: MenuView!
+
+    @IBOutlet weak var toolsMenuView: MenuView!
+
+
     // MARK: UI
     @IBOutlet weak var toolbarView: ToolbarView!
-    @IBOutlet weak var contributionsView: UIView!
+
+    var scanButton: FabButton?
+
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        prepareTabBarItem()
+        initStateMachine()
     }
 
     // MARK: UIVIEWCONTROLLER METHODS
 
+    func initStateMachine() {
+        machine = StateMachine<ApplicationState, NoEvent>(state: .START) {
+            machine in
+            machine.addRoute(.Any => .START) {
+                context in
+
+                LOG.debug("INITIAL STATE MAINVIEWCONTROLLER")
+                LOG.debug("state \(context.toState)")
+            }
+
+            machine.addRoute(.Any => .PLACE_GROUP) {
+                context in
+                LOG.debug("route \(context.toState)")
+            }
+
+            machine.addRoute(.Any => .PLACE_TERMINAL) {
+                context in
+                LOG.debug("route \(context.toState)")
+            }
+
+            machine.addRoute(.Any => .OBJECT_GROUP) {
+                context in
+                LOG.debug("route \(context.toState)")
+            }
+        }
+        machine <- .START
+    }
+
+    func changeApplicationState(state: ApplicationState) {
+        switch state {
+        case .PLACE_GROUP:
+            machine <- .PLACE_GROUP
+        case .PLACE_TERMINAL:
+            machine <- .PLACE_TERMINAL
+        case .OBJECT_GROUP:
+            machine <- .OBJECT_GROUP
+        default:
+            machine <- .PLACE_GROUP
+        }
+    }
+
+    func doApplicationState() {
+        switch machine.state {
+        case .PLACE_GROUP:
+            self.prepareTabBarItem()
+            self.prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT])
+            self.prepareView()
+            self.prepareToolbar("PLACE GROUP TABLET", hasGroup: true)
+            self.prepareCamera()
+            self.prepareSpeciesMenu()
+        case .PLACE_TERMINAL:
+            self.prepareToolbar("PLACE TERMINAL", hasGroup: false)
+            self.prepareView()
+        case .OBJECT_GROUP:
+            self.prepareTabBarItem()
+            self.prepareToolsMenu([.SCANNER, .PHOTO_LIB, .CAMERA, .SCREENSHOT])
+            self.prepareToolbar("PLACE OBJECT GROUP", hasGroup: true)
+            self.prepareView()
+            self.prepareCamera()
+            self.prepareSpeciesMenu()
+        default:
+            print("")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupMenu()
-        self.prepareView()
-        self.prepareCamera()
-        self.prepareMenuViewExample()
 
-        //self.prepareTabbar()
-
-
-        //startBackgroundViewAnimation()
-
-
+        self.doApplicationState()
 
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(startPulsor), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
@@ -67,54 +133,17 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     private func prepareTabBarItem() {
         tabBarItem.title = "Species"
 
-        let symbol: MaterialDesignSymbol = MaterialDesignSymbol(text: MaterialDesignIcon.stars24px, size: 25)
+        //let symbol: MaterialDesignSymbol = MaterialDesignSymbol(text: MaterialDesignIcon.stars24px, size: 25)
+
+
+        let iconImage = UIImage(named: "ic_lightbulb_white")!
+
         //symbol.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor())
-        let iconImage: UIImage = symbol.imageWithSize(CGSizeMake(25, 25))
 
         tabBarItem.image = iconImage
         tabBarItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
         tabBarItem.setTitleColor(MaterialColor.white, forState: .Selected)
     }
-
-//    func insertEmptyTabItem(title: String, atIndex: Int) {
-//        let vc = UIViewController()
-//        vc.tabBarItem = UITabBarItem(title: title, image: nil, tag: 0)
-//        vc.tabBarItem.enabled = true
-//        
-//        self.tabBarController?.viewControllers?.insert(vc, atIndex: atIndex)
-//    }
-//    
-//    func addRaisedButton(buttonImage: UIImage?, highlightImage: UIImage?) {
-//        if let buttonImage = buttonImage {
-//            let button = UIButton(type: UIButtonType.Custom)
-//            button.autoresizingMask = [UIViewAutoresizing.FlexibleRightMargin, UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleBottomMargin, UIViewAutoresizing.FlexibleTopMargin]
-//            
-//            button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height)
-//            button.setBackgroundImage(buttonImage, forState: UIControlState.Normal)
-//            button.setBackgroundImage(highlightImage, forState: UIControlState.Highlighted)
-//            
-//            let heightDifference = buttonImage.size.height - (self.tabBarController?.tabBar.frame.size.height)!
-//            
-//            if (heightDifference < 0) {
-//                button.center = (self.tabBarController?.tabBar.center)!
-//            }
-//            else {
-//                var center = self.tabBarController?.tabBar.center
-//                center!.y -= heightDifference / 2.0
-//                
-//                button.center = center!
-//            }
-//            
-//            button.addTarget(self, action: #selector(MainViewController.onRaisedButton(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-//            self.view.addSubview(button)
-//        }
-//    }
-
-//    func onRaisedButton(sender: UIButton!) {
-//            LOG.debug("HELO RAISED")
-//    }
-
-
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -127,22 +156,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             //performSegueWithIdentifier("scannerViewSegue", sender: nil)
             self.shouldPresentScanner = false
             LOG.debug("Presented Scanner")
-            //            self.presentViewController(scannerViewController!, animated: true, completion: {
-            //                self.shouldPresentScanner = false
-            //                LOG.debug("Presented Scanner")
-            //            })
         }
 
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        // Insert empty tab item at center index. In this case we have 5 tabs.
-//        self.insertEmptyTabItem("", atIndex: 2)
-
-        // Raise the center button with image
-
-
     }
 
     override func viewDidLayoutSubviews() {
@@ -154,65 +173,15 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     /// Prepares view.
     private func prepareView() {
         view.backgroundColor = UIColor.whiteColor()
-        if hasScanButton {
-            scanButton.hidden = false
-        } else {
-            scanButton.hidden = true
-        }
     }
 
-
-    func updateViewCritter(index: Int) {
-        LOG.debug("NEW CRITTER")
+    private func prepareToolbar(toolbarTitle: String, hasGroup: Bool) {
+        self.toolbarView.groupLabel.hidden = !hasGroup
+        self.toolbarView.classLabel.hidden = !hasGroup
+        self.toolbarView.titleLabel.text = toolbarTitle
     }
-
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return statusBarColor
-    }
-
-    // MARK: IBAction
-
-    @IBAction func photoAlbumAction(sender: FabButton) {
-
-        self.imagePicker.allowsEditing = true
-        self.imagePicker.sourceType = .PhotoLibrary
-        self.imagePicker.modalPresentationStyle = .Popover
-        presentViewController(imagePicker, animated: true, completion: nil)
-
-        let popPC = self.imagePicker.popoverPresentationController
-
-        popPC!.sourceView = sender
-
-        popPC!.permittedArrowDirections = UIPopoverArrowDirection.Any
-
-
-    }
-
-    @IBAction func cameraAction(sender: AnyObject) {
-        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
-            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
-                imagePicker.allowsEditing = false
-                imagePicker.sourceType = .Camera
-                imagePicker.cameraCaptureMode = .Photo
-                presentViewController(imagePicker, animated: true, completion: {})
-            } else {
-
-            }
-        } else {
-
-        }
-    }
-
 
     func changeSpecies(index: Int) {
-
-//        self.contributionsView.hidden = false
-//        self.contributionsView.setNeedsLayout()
-//        self.contributionsView.setNeedsDisplay()
-
-        //self.startLabel.hidden = true
-
-
 
         var speciesIndex = 0
 
@@ -224,9 +193,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         }
 
         DataManager.sharedInstance.currentSelectedSpecies = speciesIndex
-        pageViewController?.classContributionsCollectionViewController?.currentSelectedSpecies = index
-        pageViewController?.classContributionsCollectionViewController?.refreshVotes()
-        //self.toolbarView.promoteProfileView()
 
         let realmDB = DataManager.sharedInstance.realm
         _ = realmDB?.objects(Critter)
@@ -241,7 +207,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         speciesColor, isFlat: true);
 
 
-        if isLightColor(newTextColor) {
+        if Utility.isLightColor(newTextColor) {
             UIApplication.sharedApplication().statusBarStyle = .LightContent
         } else {
 
@@ -251,8 +217,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
         self.setNeedsStatusBarAppearanceUpdate()
 
-
-
         self.toolbarView.updateToolbarColors(speciesColor, newTextColor: newTextColor)
         self.toolbarView.updateProfileImage(foundCritter.index)
         self.toolbarView.promoteProfileView()
@@ -261,8 +225,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     func resetSpecies() {
-        self.contributionsView.hidden = true
-
         UIApplication.sharedApplication().statusBarStyle = .LightContent
 
         self.setNeedsStatusBarAppearanceUpdate()
@@ -271,43 +233,14 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         self.toolbarView.promoteProfileView()
     }
 
-
-    // MARK: UNWIND SEGUE
-
-    @IBAction func unwindToHereFromScannerView(segue: UIStoryboardSegue) {
-        // And we are back
-        let svc = segue.sourceViewController as! ScannerViewController
-
-        let speciesIndex = svc.selectedSpeciesIndex
-
-        LOG.debug("UNWINDED TO ROOT INDEX \(speciesIndex)")
-        // use svc to get mood, action, and place
-    }
-
-    @IBAction func unwindToHereTestTable(segue: UIStoryboardSegue) {
-        // And we are back
-        let svc = segue.sourceViewController as! TestUITableViewController
-
-        let simulationIndex = svc.simulationIndex
-        let simulationType = svc.simulationType
-        self.simulate(simulationIndex, type: simulationType)
-        LOG.debug("UNWINDED TO SIMULATION TYPE, INDEX \(simulationIndex) :TYPE: \(simulationType)")
-    }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if "pageViewSegue" == segue.identifier {
-            pageViewController = segue.destinationViewController as? PageViewController
-
-        }
-    }
-
+    //
     func simulate(index: Int, type: String) {
 
         if type == "ECOSYSTEM" {
             switch index {
             case 0 ... 3:
                 print("not")
-                //simulateEcosystem(index)
+                    //simulateEcosystem(index)
             case 4:
                 disconnectEcosystem()
             default:
@@ -329,7 +262,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
 
     }
-
 
     func simulateSpecies(index: Int) {
         changeSpecies(index)
@@ -362,49 +294,94 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         }
     }
 
+    // MARK: UNWIND SEGUE
 
+    @IBAction func unwindToHereFromScannerView(segue: UIStoryboardSegue) {
+        // And we are back
+        let svc = segue.sourceViewController as! ScannerViewController
 
-//    func prepareTabbar() {
-//        if hasTabbar {
-//            bottomTabBar.hidden = false
-//            let videoItem: UITabBarItem = UITabBarItem(title: "Video", image: MaterialIcon.cm.videocam, selectedImage: nil)
-//            videoItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
-//            videoItem.setTitleColor(MaterialColor.teal.base, forState: .Selected)
-//
-//            let photoItem: UITabBarItem = UITabBarItem(title: "Photo", image: MaterialIcon.cm.photoCamera, selectedImage: nil)
-//            photoItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
-//            photoItem.setTitleColor(MaterialColor.teal.base, forState: .Selected)
-//
-//            let libraryItem: UITabBarItem = UITabBarItem(title: "Library", image: MaterialIcon.cm.photoLibrary, selectedImage: nil)
-//            libraryItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
-//            libraryItem.setTitleColor(MaterialColor.teal.base, forState: .Selected)
-//
-//            bottomTabBar.setItems([videoItem, photoItem, libraryItem], animated: true)
-//            bottomTabBar.tintColor = MaterialColor.teal.base // Sets the image color when highlighted.
-//            bottomTabBar.itemPositioning = .Automatic // Sets the alignment of the UITabBarItems.
-//            bottomTabBar.selectedItem = videoItem
-//
-//        } else {
-//            bottomTabBar.hidden = true
-//        }
-//    }
+        let speciesIndex = svc.selectedSpeciesIndex
 
-    func isLightColor(color: UIColor) -> Bool {
-        var white: CGFloat = 0.0
-        color.getWhite(&white, alpha: nil)
-
-        var isLight = false
-
-        LOG.debug("WHITE \(white)")
-
-        if white >= 0.5 {
-            isLight = true
-        } else {
-        }
-
-        return isLight
+        LOG.debug("UNWINDED TO ROOT INDEX \(speciesIndex)")
+        // use svc to get mood, action, and place
     }
 
+    @IBAction func unwindToHereTestTable(segue: UIStoryboardSegue) {
+        // And we are back
+        let svc = segue.sourceViewController as! TestUITableViewController
+
+        let simulationIndex = svc.simulationIndex
+        let simulationType = svc.simulationType
+        self.simulate(simulationIndex, type: simulationType)
+        LOG.debug("UNWINDED TO SIMULATION TYPE, INDEX \(simulationIndex) :TYPE: \(simulationType)")
+    }
+
+    // MARK: Actions
+
+    @IBAction func sideMenuAction(sender: UIButton) {
+        sideNavigationController?.toggleLeftView()
+    }
+
+    // MARK: Photo Related
+
+    @IBAction func photoAlbumAction(sender: UIButton) {
+
+        self.imagePicker.allowsEditing = true
+        self.imagePicker.sourceType = .PhotoLibrary
+        self.imagePicker.modalPresentationStyle = .Popover
+        presentViewController(imagePicker, animated: true, completion: nil)
+
+        let popPC = self.imagePicker.popoverPresentationController
+
+        popPC!.sourceView = sender
+
+        popPC!.permittedArrowDirections = UIPopoverArrowDirection.Any
+    }
+
+    @IBAction func cameraAction(sender: UIButton) {
+        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
+            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                imagePicker.allowsEditing = false
+                imagePicker.sourceType = .Camera
+                imagePicker.cameraCaptureMode = .Photo
+                presentViewController(imagePicker, animated: true, completion: {})
+            } else {
+
+            }
+        } else {
+
+        }
+    }
+
+    @IBAction func screenShotAction(sender: UIButton) {
+        if let wnd = self.view {
+
+            var v = UIView(frame: wnd.bounds)
+            v.backgroundColor = UIColor.whiteColor()
+            v.alpha = 1
+
+            wnd.addSubview(v)
+            UIView.animateWithDuration(1, animations: {
+                v.alpha = 0.0
+            }, completion: {
+                (finished: Bool) in
+
+                v.removeFromSuperview()
+                let v = self.view
+                UIGraphicsBeginImageContextWithOptions(v.bounds.size, true, 1.0)
+                v.drawViewHierarchyInRect(v.bounds, afterScreenUpdates: true)
+                let img = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
+            })
+        }
+
+
+    }
+
+    @IBAction func scanAction(sender: UIButton) {
+        self.performSegueWithIdentifier("scannerSegue", sender: sender)
+    }
 
 }
 
@@ -438,14 +415,14 @@ extension MainViewController {
             return false
         case .Denied:
             let alert = UIAlertController(
-            title: "Need Authorization",
+                    title: "Need Authorization",
                     message: "Wouldn't you like to authorize this app " +
                             "to use your Photo library?",
                     preferredStyle: .Alert)
             alert.addAction(UIAlertAction(
-            title: "No", style: .Cancel, handler: nil))
+                    title: "No", style: .Cancel, handler: nil))
             alert.addAction(UIAlertAction(
-            title: "OK", style: .Default, handler: {
+                    title: "OK", style: .Default, handler: {
                 _ in
                 let url = NSURL(string: UIApplicationOpenSettingsURLString)!
                 UIApplication.sharedApplication().openURL(url)
@@ -453,10 +430,6 @@ extension MainViewController {
             self.presentViewController(alert, animated: true, completion: nil)
             return false
         }
-    }
-
-    @IBAction func onBurger() {
-        sideNavigationController?.toggleLeftView()
     }
 
 }
@@ -486,23 +459,37 @@ extension MainViewController: UIImagePickerControllerDelegate {
 
 extension MainViewController {
     /// Handle the menuView touch event.
-    internal func handleMenu() {
-        if menuView.menu.opened {
-            menuView.menu.close()
-            (menuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
+    internal func handleSpeciesMenuSelection() {
+        if speciesMenuView.menu.opened {
+            speciesMenuView.menu.close()
+            (speciesMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
         } else {
-            menuView.menu.open() {
+            speciesMenuView.menu.open() {
                 (v: UIView) in
                 (v as? MaterialButton)?.pulse()
             }
-            (menuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
+            (speciesMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
         }
     }
 
-    internal func handleSpeciesSelect(sender:AnyObject) {
-       LOG.debug("SPECIES SELECT \(sender.tag)")
+    /// Handle the menuView touch event.
+    internal func handleToolsMenuSelection() {
+        if toolsMenuView.menu.opened {
+            toolsMenuView.menu.close()
+            (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
+        } else {
+            toolsMenuView.menu.open() {
+                (v: UIView) in
+                (v as? MaterialButton)?.pulse()
+            }
+            (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
+        }
+    }
 
-        let fb = sender as! FabButton
+    internal func handleSpeciesSelect(sender: FabButton) {
+        LOG.debug("SPECIES SELECT \(sender.tag)")
+
+        let fb = sender
 
         let speciesIndex = sender.tag
 
@@ -510,43 +497,48 @@ extension MainViewController {
 
 
         let storyboard = UIStoryboard(name: "CollectionBoard", bundle: nil)
-        let addContributionViewController = storyboard.instantiateViewControllerWithIdentifier("addContributionViewController") as! AddContributionViewController
-        addContributionViewController.speciesIndex = speciesIndex
-        addContributionViewController.modalPresentationStyle = .Popover
+        let relationshipContributionViewController = storyboard.instantiateViewControllerWithIdentifier("relationshipsContributionViewController") as! RelationshipsContributionViewController
+        relationshipContributionViewController.speciesIndex = speciesIndex
+        relationshipContributionViewController.title = "RELATIONSHIPS"
+
+        let navigationController = UINavigationController(rootViewController: relationshipContributionViewController)
+        navigationController.navigationBar.barTintColor = UIColor.whiteColor()
+        navigationController.navigationBar.shadowColor = UIColor.whiteColor()
+        navigationController.navigationBar.shadowOffset = CGSize(width: 0, height: 0)
+
+//        let img = UIImage()
+//        navigationController.navigationBar.shadowImage = img
+//        navigationController.navigationBar.setBackgroundImage(img, forBarMetrics: UIBarMetrics.Default)
+
+        navigationController.navigationBar.translucent = false
+        navigationController.modalPresentationStyle = .Popover
 
 
-        self.presentViewController(addContributionViewController, animated:true, completion:nil)
-        if let pop = addContributionViewController.popoverPresentationController {
+        self.presentViewController(navigationController, animated: true, completion: nil)
+        if let pop = navigationController.popoverPresentationController {
             pop.sourceView = fb
             pop.sourceRect = fb.bounds
-            addContributionViewController.preferredContentSize = CGSizeMake(1000,588)
+            navigationController.preferredContentSize = CGSizeMake(1000, 625)
         }
     }
 
-
-
-    /// Handle the menuView touch event.
-    @objc(handleButton:)
-    internal func handleButton(button: UIButton) {
-        print("Hit Button \(button)")
-    }
-
     /// Prepares the MenuView example.
-    private func prepareMenuViewExample() {
+    private func prepareSpeciesMenu() {
 
         /// Diameter for FabButtons.
         let diameter: CGFloat = 70.0
 
         /// Diameter for FabButtons.
-        let speciesDiameter: CGFloat = diameter - 10.0
+        let speciesDiameter: CGFloat = diameter - 5.0
 
 
         var buttons = [UIView]()
 
         //create add button
-        let symbol: MaterialDesignSymbol = MaterialDesignSymbol(text: MaterialDesignIcon.add48px, size: 48)
 
-        let image: UIImage = symbol.imageWithSize(CGSizeMake(48, 48)).imageWithRenderingMode(.AlwaysTemplate)
+        var image: UIImage? = UIImage(named: "tb_add_white")!
+        image = image!.resizeToSize(CGSize(width: diameter / 2, height: diameter / 2))
+
 
         let addButton: FabButton = FabButton()
         addButton.depth = .None
@@ -554,20 +546,20 @@ extension MainViewController {
         addButton.tintColor = MaterialColor.white
         addButton.borderColor = MaterialColor.blue.accent3
         addButton.backgroundColor = MaterialColor.green.base
-
+//
         addButton.setImage(image, forState: .Normal)
         addButton.setImage(image, forState: .Highlighted)
 
-        addButton.addTarget(self, action: #selector(handleMenu), forControlEvents: .TouchUpInside)
+        addButton.addTarget(self, action: #selector(handleSpeciesMenuSelection), forControlEvents: .TouchUpInside)
         addButton.width = diameter
         addButton.height = diameter
 
         addButton.shadowColor = MaterialColor.black
         addButton.shadowOpacity = 0.5
-        addButton.shadowOffset =  CGSize(width: 1.0, height: 0.0)
+        addButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
 
 
-        menuView.addSubview(addButton)
+        speciesMenuView.addSubview(addButton)
         buttons.append(addButton)
 
 
@@ -591,32 +583,193 @@ extension MainViewController {
 
             speciesButton.tag = index
             speciesButton.depth = .None
-            //speciesButton.tintColor = MaterialColor.white
-            //speciesButton.borderColor = MaterialColor.black
             speciesButton.backgroundColor = UIColor.clearColor()
 
             speciesButton.setImage(speciesImage, forState: .Normal)
             speciesButton.setImage(speciesImage, forState: .Highlighted)
 
-
-//            speciesButton.shadowColor = MaterialColor.black
-//            speciesButton.shadowOpacity = 1.0
-//            speciesButton.shadowOffset =  CGSize(width: 1.0, height: 0.0)
-
-
             speciesButton.addTarget(self, action: #selector(handleSpeciesSelect), forControlEvents: .TouchUpInside)
-            menuView.addSubview(speciesButton)
+            speciesMenuView.addSubview(speciesButton)
             buttons.append(speciesButton)
         }
 
         // Initialize the menu and setup the configuration options.
-        menuView.menu.direction = .Up
-        menuView.menu.baseSize = CGSizeMake(diameter, diameter)
-        menuView.menu.itemSize = CGSizeMake(speciesDiameter, speciesDiameter)
-        menuView.menu.views = buttons
+        speciesMenuView.menu.direction = .Up
+        speciesMenuView.menu.baseSize = CGSizeMake(diameter, diameter)
+        speciesMenuView.menu.itemSize = CGSizeMake(speciesDiameter, speciesDiameter)
+        speciesMenuView.menu.views = buttons
 
-        view.addSubview(menuView)
-        MaterialLayout.size(view, child: menuView, width: diameter, height: diameter)
-        MaterialLayout.alignFromBottomLeft(view, child: menuView, bottom: 16, left: (view.bounds.width - diameter) / 2)
+        view.addSubview(speciesMenuView)
+    }
+
+    /// Prepares the MenuView example.
+    private func prepareToolsMenu(tools: [ToolType]) {
+
+        /// Diameter for FabButtons.
+        let diameter: CGFloat = 70.0
+
+        /// Diameter for FabButtons.
+        let toolsButtonDiameter: CGFloat = diameter - 5.0
+
+
+        var buttons = [UIView]()
+
+
+        //create add button
+
+        var image: UIImage? = UIImage(named: "tb_tools_wrench_white")!
+
+        image = image!.resizeToSize(CGSize(width: diameter / 2, height: diameter / 2))!
+
+        let toolsButton: FabButton = FabButton()
+        toolsButton.depth = .None
+
+        toolsButton.tintColor = MaterialColor.white
+        toolsButton.borderColor = MaterialColor.blue.accent3
+        toolsButton.backgroundColor = MaterialColor.red.base
+
+        toolsButton.setImage(image, forState: .Normal)
+        toolsButton.setImage(image, forState: .Highlighted)
+
+
+        toolsButton.addTarget(self, action: #selector(handleToolsMenuSelection), forControlEvents: .TouchUpInside)
+        toolsButton.width = diameter
+        toolsButton.height = diameter
+
+        toolsButton.shadowColor = MaterialColor.black
+        toolsButton.shadowOpacity = 0.5
+        toolsButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
+
+        toolsMenuView.addSubview(toolsButton)
+
+        buttons.append(toolsButton)
+
+        for tool in tools {
+            switch tool {
+            case .SCANNER:
+                var image = UIImage(named: "ic_wifi_white")!
+                image = image.resizeToSize(CGSize(width: toolsButtonDiameter / 2, height: toolsButtonDiameter / 2))!
+
+
+                let scanButton: FabButton = FabButton()
+                scanButton.depth = .None
+
+                scanButton.tintColor = MaterialColor.white
+                scanButton.borderColor = MaterialColor.blue.accent3
+                scanButton.backgroundColor = MaterialColor.blue.base
+
+                scanButton.setImage(image, forState: .Normal)
+                scanButton.setImage(image, forState: .Highlighted)
+
+                scanButton.addTarget(self, action: #selector(scanAction), forControlEvents: .TouchUpInside)
+                scanButton.width = diameter
+                scanButton.height = diameter
+
+                scanButton.shadowColor = MaterialColor.black
+                scanButton.shadowOpacity = 0.5
+                scanButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
+
+                toolsMenuView.addSubview(scanButton)
+
+                buttons.append(scanButton)
+            case .CAMERA:
+                var cameraButton: FabButton = FabButton()
+                image = UIImage(named: "tb_camera_white")
+                image = image!.resizeToSize(CGSize(width: toolsButtonDiameter / 2, height: toolsButtonDiameter / 2))!
+
+
+                cameraButton.depth = .None
+
+                cameraButton.tintColor = MaterialColor.white
+                cameraButton.borderColor = MaterialColor.blue.accent3
+                cameraButton.backgroundColor = MaterialColor.blue.base
+
+                cameraButton.setImage(image, forState: .Normal)
+                cameraButton.setImage(image, forState: .Highlighted)
+
+                cameraButton.addTarget(self, action: #selector(cameraAction), forControlEvents: .TouchUpInside)
+                cameraButton.width = diameter
+                cameraButton.height = diameter
+
+                cameraButton.shadowColor = MaterialColor.black
+                cameraButton.shadowOpacity = 0.5
+                cameraButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
+
+                toolsMenuView.addSubview(cameraButton)
+
+                buttons.append(cameraButton)
+            case .PHOTO_LIB:
+                //photolibrary button
+
+                var image = UIImage(named: "tb_photo_library_white")!
+                image = image.resizeToSize(CGSize(width: toolsButtonDiameter / 2, height: toolsButtonDiameter / 2))!
+//
+
+                let photoLibButton: FabButton = FabButton()
+                photoLibButton.depth = .None
+
+                photoLibButton.tintColor = MaterialColor.white
+                photoLibButton.borderColor = MaterialColor.blue.accent3
+                photoLibButton.backgroundColor = MaterialColor.blue.base
+
+                photoLibButton.setImage(image, forState: .Normal)
+                photoLibButton.setImage(image, forState: .Highlighted)
+
+                photoLibButton.addTarget(self, action: #selector(photoAlbumAction), forControlEvents: .TouchUpInside)
+                photoLibButton.width = diameter
+                photoLibButton.height = diameter
+
+                photoLibButton.shadowColor = MaterialColor.black
+                photoLibButton.shadowOpacity = 0.5
+                photoLibButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
+
+                buttons.append(photoLibButton)
+
+
+                toolsMenuView.addSubview(photoLibButton)
+            case .SCREENSHOT:
+                var image = UIImage(named: "ic_flash_on_white")!
+                image = image.resizeToSize(CGSize(width: toolsButtonDiameter / 2, height: toolsButtonDiameter / 2))!
+
+
+                let screenShotButton: FabButton = FabButton()
+
+                screenShotButton.depth = .None
+
+                screenShotButton.tintColor = MaterialColor.white
+                screenShotButton.borderColor = MaterialColor.blue.accent3
+                screenShotButton.backgroundColor = MaterialColor.blue.base
+
+                screenShotButton.setImage(image, forState: .Normal)
+                screenShotButton.setImage(image, forState: .Highlighted)
+
+                screenShotButton.addTarget(self, action: #selector(screenShotAction), forControlEvents: .TouchUpInside)
+                screenShotButton.width = diameter
+                screenShotButton.height = diameter
+
+                screenShotButton.shadowColor = MaterialColor.black
+                screenShotButton.shadowOpacity = 0.5
+                screenShotButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
+
+                toolsMenuView.addSubview(screenShotButton)
+
+                buttons.append(screenShotButton)
+
+
+            case .TRASH:
+                print("not yet")
+            default:
+                print("nothing")
+            }
+        }
+
+        // Initialize the menu and setup the configuration options.
+        toolsMenuView.menu.direction = .Up
+        toolsMenuView.menu.baseSize = CGSizeMake(diameter, diameter)
+        toolsMenuView.menu.itemSize = CGSizeMake(toolsButtonDiameter, toolsButtonDiameter)
+        toolsMenuView.menu.views = buttons
+
+        view.addSubview(toolsMenuView)
+
     }
 }

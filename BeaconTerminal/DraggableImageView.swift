@@ -213,7 +213,8 @@ class DraggableImageView: UIImageView {
         if let hitTestView = getAppDelegate().window?.hitTest(p, withEvent: nil) {
 //            UIApplication.sharedApplication().keyWindow!.sendSubviewToBack(hitTestView)
 //            UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.currentView!)
-
+            LOG.debug("HIT TEST VIEW \(hitTestView.debugDescription)")
+            LOG.debug("PARENT TEST VIEW \(parentView.debugDescription)")
 
             if ((hitTestView as? DropTargetView) != nil) {
                 if(CGRectIntersectsRect(hitTestView.frame, self.currentView!.frame) || CGRectContainsPoint(hitTestView.frame,p)){

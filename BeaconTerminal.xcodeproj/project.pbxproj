@@ -61,12 +61,11 @@
 		AEF5B0DD1C29AC7300C90621 /* BeaconSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */; };
 		C0A7D0850D327703E1595C1E /* ClassContributionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */; };
 		C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D3826273826A0346635F /* PageViewController.swift */; };
-		C0A7D2A5501C0509EF5BB160 /* FrostedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */; };
-		C0A7D9705184C3AF769BC211 /* FrostedSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */; };
+		C0A7D4D672EFAF6D9471DD89 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */; };
 		C0A7D9FA2E80F7384AA80B9F /* TestUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */; };
 		C0A7DA1AF17ED38FEA852617 /* GroupContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */; };
 		C0A7DA4923099ECBB1D27203 /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */; };
-		C0A7DA499BE66B0812352287 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0C401151FBAF03A26AB /* AddContributionViewController.swift */; };
+		C0A7DA499BE66B0812352287 /* RelationshipsContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0C401151FBAF03A26AB /* RelationshipsContributionViewController.swift */; };
 		C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D118835AC334A93CDE75 /* ToolbarView.swift */; };
 		C0A7DD3F56F4CE40BFE64B09 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */; };
 /* End PBXBuildFile section */
@@ -155,15 +154,14 @@
 		AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeaconSetupViewController.swift; path = BeaconTerminal/BeaconSetupViewController.swift; sourceTree = "<group>"; };
 		AEFCFAD71C3FBE780036EAB7 /* SwiftState.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftState.framework; path = ../../Carthage/Build/iOS/SwiftState.framework; sourceTree = "<group>"; };
 		C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		C0A7D0C401151FBAF03A26AB /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
+		C0A7D0C401151FBAF03A26AB /* RelationshipsContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7D118835AC334A93CDE75 /* ToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7D3826273826A0346635F /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
-		C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrostedTabBarController.swift; sourceTree = "<group>"; };
 		C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUITableViewController.swift; sourceTree = "<group>"; };
 		C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassContributionsCollectionViewController.swift; sourceTree = "<group>"; };
+		C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
-		C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrostedSidebar.swift; sourceTree = "<group>"; };
 		E5B7DE7A575C5B681CB84033 /* Pods_BeaconTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF919332762EC76101892149 /* Pods-BeaconTerminal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -240,7 +238,8 @@
 				C0A7D3826273826A0346635F /* PageViewController.swift */,
 				C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */,
 				C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */,
-				C0A7D0C401151FBAF03A26AB /* AddContributionViewController.swift */,
+				C0A7D0C401151FBAF03A26AB /* RelationshipsContributionViewController.swift */,
+				C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -347,7 +346,6 @@
 			isa = PBXGroup;
 			children = (
 				7088D32B1CCC9720001776C9 /* Controllers */,
-				C0A7D6C3786F7639560659B2 /* Sidebar */,
 				70F0A3EA1CE6526000A0E752 /* ScratchPad */,
 				70E8F3441CDEFDEF00B83010 /* TestInterface */,
 				70920D091CD52C4F001B582F /* DataObjects */,
@@ -383,15 +381,6 @@
 				AE677F2A1C351CA000836B41 /* EstimoteSDK.framework */,
 			);
 			path = Estimote;
-			sourceTree = "<group>";
-		};
-		C0A7D6C3786F7639560659B2 /* Sidebar */ = {
-			isa = PBXGroup;
-			children = (
-				C0A7D4613BC35DE54DF5E1A4 /* FrostedTabBarController.swift */,
-				C0A7DF7FE604FBF816458896 /* FrostedSidebar.swift */,
-			);
-			path = Sidebar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -672,10 +661,9 @@
 				C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */,
 				C0A7D9FA2E80F7384AA80B9F /* TestUITableViewController.swift in Sources */,
 				C0A7DA4923099ECBB1D27203 /* SideViewController.swift in Sources */,
-				C0A7D2A5501C0509EF5BB160 /* FrostedTabBarController.swift in Sources */,
-				C0A7D9705184C3AF769BC211 /* FrostedSidebar.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
-				C0A7DA499BE66B0812352287 /* AddContributionViewController.swift in Sources */,
+				C0A7DA499BE66B0812352287 /* RelationshipsContributionViewController.swift in Sources */,
+				C0A7D4D672EFAF6D9471DD89 /* AddContributionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,7 @@ class SideViewController : UITableViewController {
 
     
     override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.redColor()
+        self.view.backgroundColor = UIColor.whiteColor()
     }
     
     /// Select item at row in tableView.
@@ -33,19 +33,17 @@ class SideViewController : UITableViewController {
                 //place group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+                mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
+
                 let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
 
                 let bottomNavigationController: BottomNavigationController = BottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
-                bottomNavigationController.selectedIndex = 1
-                bottomNavigationController.tabBar.tintColor = MaterialColor.red.base
-                bottomNavigationController.tabBar.backgroundColor = MaterialColor.yellow.darken4
+                bottomNavigationController.selectedIndex = 0
+                bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
+                bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
 
-//                getAppDelegate().bottomNavigationController.setViewControllers([mainViewController,scratchPadViewController], animated: true)
-                //remove scan button
-                mainViewController.hasScanButton = false
-                mainViewController.hasTabbar = true
 
                 //sideNavigationController?.closeLeftView()
                 sideNavigationController?.transitionFromRootViewController(bottomNavigationController, duration: 0, options: .TransitionNone, animations: nil, completion: nil)
@@ -59,10 +57,8 @@ class SideViewController : UITableViewController {
             case 1:
                 //place terminal
                 let mainViewController = storyboard!.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
-                
-                //remove scan button
-                mainViewController.hasScanButton = false
-                mainViewController.hasTabbar = false
+                mainViewController.changeApplicationState(ApplicationState.PLACE_TERMINAL)
+
 
                 
                 
@@ -81,6 +77,8 @@ class SideViewController : UITableViewController {
                 //object group tablet
 
                 let mainViewController = storyboard!.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+                mainViewController.changeApplicationState(ApplicationState.OBJECT_GROUP)
+
                 let scratchPadViewController = storyboard!.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
 
 
@@ -92,9 +90,8 @@ class SideViewController : UITableViewController {
                 let bottomNavigationController: BottomNavigationController = BottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
-                bottomNavigationController.selectedIndex = 0
-                bottomNavigationController.tabBar.tintColor = MaterialColor.red.base
-                bottomNavigationController.tabBar.backgroundColor = MaterialColor.grey.darken4
+                bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
+                bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
 
 
                 sideNavigationController?.transitionFromRootViewController(bottomNavigationController,
