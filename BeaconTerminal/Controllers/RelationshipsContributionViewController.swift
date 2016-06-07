@@ -7,13 +7,16 @@ import Material
 
 class RelationshipsContributionViewController: UIViewController {
 
-    var speciesIndex = 0
-
     @IBOutlet var gestureCollection: [UITapGestureRecognizer]!
 
     @IBOutlet var dropViews: [ObservationView]!
     
     @IBOutlet weak var bottomToolbar: UIToolbar!
+
+    var toolMenuDelegate: ToolMenuDelegate?
+    var dropViewIndex = 0
+    var speciesIndex = 0
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -24,9 +27,12 @@ class RelationshipsContributionViewController: UIViewController {
 
     func changeSpecies(speciesIndex: Int) {
         let speciesImage = DataManager.sharedInstance.generateImageForSpecies(speciesIndex)
+        var i = 0
         for dview in dropViews {
             let ob = dview as ObservationView
             ob.mainSpiecesImage.image = speciesImage
+            ob.observationDropView.tag = i
+            i += 1
         }
     }
 
@@ -38,15 +44,17 @@ class RelationshipsContributionViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "addContributionSegue"){
-
+            //navigationItem.backBarButtonItem?.title = ""
             let addContributionViewController = segue.destinationViewController as? AddContributionViewController
                 
                 addContributionViewController?.speciesIndex = speciesIndex
-
+                addContributionViewController?.toolMenuDelegate =  toolMenuDelegate
+                addContributionViewController?.dropViewIndex =  ((sender as? UITapGestureRecognizer)!.view?.tag)!
                 if let gesture = sender as? UIGestureRecognizer {
                     if let observationView = gesture.view as? ObservationView {
-                        if let observationId = observationView.observationId {
+                        if observationView.observationId != nil {
 //                            addContributionViewController!.observationView.text = observationView.viewLabel.text
+                            addContributionViewController!.title = "'\(observationView.viewLabel.text!)' \(self.title!)"
                             addContributionViewController!.observationId = observationView.viewLabel.text
                         }
                     }
@@ -56,6 +64,7 @@ class RelationshipsContributionViewController: UIViewController {
         }
     }
 
+
     // MARK: Views
     override func viewWillAppear(animated: Bool) {
         self.view.layoutIfNeeded()
@@ -63,6 +72,8 @@ class RelationshipsContributionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationItem.backBarButtonItem?.title = ""
+
         changeSpecies(self.speciesIndex)
         //bottomToolbar.clipsToBounds = true
     }

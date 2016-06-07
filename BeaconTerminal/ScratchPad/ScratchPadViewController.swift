@@ -8,7 +8,6 @@
 
 import UIKit
 import Material
-import MaterialDesignSymbol
 
 class ScratchPadViewController: UIViewController {
     
@@ -41,12 +40,13 @@ class ScratchPadViewController: UIViewController {
 //    // MARK: View Life Cycle
     private func prepareTabBarItem() {
         tabBarItem.title = "Scratch Pad"
-        let symbol:MaterialDesignSymbol = MaterialDesignSymbol(text:MaterialDesignIcon.modeEdit24px, size:25)
-        let iconImage:UIImage = symbol.imageWithSize(CGSizeMake(25, 25))
-
+        let iconImage = UIImage(named: "ic_mode_edit_white")!
+        
+        
         tabBarItem.image = iconImage
         tabBarItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
         tabBarItem.setTitleColor(MaterialColor.white, forState: .Selected)
+
     }
 
     override func viewDidLoad() {
@@ -191,5 +191,12 @@ extension ScratchPadViewController: DraggableViewDelegate {
     func exitingZone(sender: DraggableImageView, targets: [UIView]) {
 
     }
+
+    func isDragging(sender: DraggableImageView) {}
+    func onDraggingStarted(sender: DraggableImageView) {}
+    func onSnappedBack(sender: DraggableImageView) {}
+    func onCopied(copiedSender: DraggableImageView) {}
+
+
 }
 

@@ -84,12 +84,11 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/ALCameraViewController/ALCameraViewController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AccordionTableViewController/AccordionTableViewController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ChameleonFramework/ChameleonFramework.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ISRadioButton/ISRadioButton.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Material/Material.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/MaterialDesignSymbol/MaterialDesignSymbol.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Popover/Popover.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Pulsator/Pulsator.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift/RealmSwift.framework"
@@ -101,12 +100,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/XLPagerTabStrip/XLPagerTabStrip.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "$BUILT_PRODUCTS_DIR/ALCameraViewController/ALCameraViewController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AccordionTableViewController/AccordionTableViewController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ChameleonFramework/ChameleonFramework.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ISRadioButton/ISRadioButton.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Material/Material.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/MaterialDesignSymbol/MaterialDesignSymbol.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Popover/Popover.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Pulsator/Pulsator.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift/RealmSwift.framework"

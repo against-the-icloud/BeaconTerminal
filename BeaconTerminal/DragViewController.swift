@@ -99,6 +99,14 @@ extension DragViewController: DraggableViewDelegate {
             }
         }
     }
+
+
+    func isDragging(sender: DraggableImageView) {}
+    func onDraggingStarted(sender: DraggableImageView) {}
+    func onSnappedBack(sender: DraggableImageView) {}
+    func onCopied(copiedSender: DraggableImageView) {}
+
+
 }
 
 

@@ -12,6 +12,7 @@ target 'BeaconTerminal' do
     pod 'XLPagerTabStrip'
     pod 'ISRadioButton'
     pod 'AccordionTableViewController'
+    pod 'ALCameraViewController'
 
     #db
     pod 'RealmSwift'

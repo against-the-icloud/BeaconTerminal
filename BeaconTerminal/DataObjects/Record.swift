@@ -52,6 +52,13 @@ class Critter: Object {
     dynamic var index = 0
     dynamic var last_modified = NSDate()
 
+    func convertHexColor() -> UIColor {
+        if !color.isEmpty {
+            return UIColor.init(hex: self.color)
+        }
+        
+        return UIColor.whiteColor()
+    }
 }
 
 class Vote: Object {
@@ -59,6 +66,8 @@ class Vote: Object {
     dynamic var versusCritter: Critter?
     dynamic var voteCount = 0
     dynamic var id = 0
+    
+
 }
 
 extension Vote {

@@ -34,6 +34,12 @@ import UIKit
 private var MaterialAssociatedObjectNavigationItemKey: UInt8 = 0
 
 public class MaterialAssociatedObjectNavigationItem {
+	/**
+	A boolean indicating whether keys are being observed
+	on the UINavigationItem.
+	*/
+	internal var observed: Bool = false
+	
 	/// Back Button.
 	public var backButton: IconButton?
 	
@@ -103,6 +109,16 @@ public extension UINavigationItem {
 		}
 		set(value) {
 			item.contentView = value
+		}
+	}
+	
+	@nonobjc
+	public var title: String? {
+		get {
+			return titleLabel.text
+		}
+		set(value) {
+			titleLabel.text = value
 		}
 	}
 	

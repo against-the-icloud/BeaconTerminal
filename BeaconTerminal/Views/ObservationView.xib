@@ -7,9 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
             <connections>
-                <outlet property="dropView" destination="87O-LR-YQP" id="geI-UT-5hh"/>
+                <outlet property="imageView" destination="oNX-Dz-ZDG" id="mWL-R8-ciu"/>
                 <outlet property="mainSpiecesImage" destination="MhY-oh-Ln5" id="K4r-YK-INQ"/>
+                <outlet property="observationDropView" destination="87O-LR-YQP" id="RuG-jn-z7j"/>
                 <outlet property="tapGesture" destination="87O-LR-YQP" id="cNg-Go-n2L"/>
+                <outlet property="view" destination="iN0-l3-epB" id="QXk-yL-1cg"/>
                 <outlet property="viewLabel" destination="HC0-ZF-dLa" id="Tu1-Ky-Z5v"/>
             </connections>
         </placeholder>
@@ -42,9 +44,14 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" restorationIdentifier="dropView" translatesAutoresizingMaskIntoConstraints="NO" id="87O-LR-YQP" customClass="DropTargetView" customModule="BeaconTerminal" customModuleProvider="target">
+                <view contentMode="scaleToFill" restorationIdentifier="observationDropView" translatesAutoresizingMaskIntoConstraints="NO" id="87O-LR-YQP" customClass="ObservationDropView" customModule="BeaconTerminal" customModuleProvider="target">
                     <rect key="frame" x="25" y="34" width="363" height="254"/>
-                    <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <subviews>
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oNX-Dz-ZDG">
+                            <rect key="frame" x="0.0" y="0.0" width="363" height="254"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     <gestureRecognizers/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -54,10 +61,10 @@
                             <real key="value" value="2"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                            <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>

@@ -112,6 +112,11 @@ class DataManager {
         }
         
     }
+    
+    func findSpecies(speciesIndex: Int) -> Critter? {
+        let foundCritter = realm!.objects(Critter).filter("index = \(speciesIndex)")[0] as Critter!
+        return foundCritter
+    }
 
     func createVotes(mainCritterIndex: Int) -> List<Vote> {
 

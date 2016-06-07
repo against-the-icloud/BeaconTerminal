@@ -11,7 +11,7 @@ import UIKit
 import Spring
 
 @IBDesignable
-class ObservationView: SpringView {
+class ObservationView: UIView {
     
     
     
@@ -23,11 +23,16 @@ class ObservationView: SpringView {
     
     @IBOutlet weak var mainSpiecesImage: UIImageView!
     
-    @IBOutlet weak var dropView: SpringView!
+  
+    @IBOutlet weak var imageView: UIImageView!
     
     @IBInspectable var text: String? {
         didSet { viewLabel.text = text }
     }
+    
+    @IBInspectable var isEditing: Bool = false
+    
+    @IBOutlet weak var observationDropView: ObservationDropView!
     
     @IBInspectable var observationId: String?    
     
@@ -44,13 +49,35 @@ class ObservationView: SpringView {
     
     private func nibSetup() {        
         self.view = loadViewFromNib()
+       // LOG.debug("bounds \(dropView.bounds) frame \(dropView.frame)")
+
         self.view.frame = bounds
+        self.observationDropView.isEditing = self.isEditing
+        //self.view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        //dropView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        //self.view.frame = bounds
         
-        self.view.translatesAutoresizingMaskIntoConstraints = true
+        //self.view.translatesAutoresizingMaskIntoConstraints = true
+        //self.dropView.translatesAutoresizingMaskIntoConstraints = false
+
         
         self.addSubview(view)
-        
+//        self.drawDashedBorder()
+        //self.layoutIfNeeded()
         prepareView()
+    }
+    
+    override func setNeedsDisplay() {
+        super.setNeedsLayout()
+        clearBorder()
+    }
+
+    func clearBorder() {
+        if isEditing {
+            self.observationDropView.borderWidth = 0.0
+            self.observationDropView.borderColor = UIColor.clearColor()
+            self.observationDropView.shadowColor = UIColor.clearColor()
+        }
     }
     
     private func prepareView() {
