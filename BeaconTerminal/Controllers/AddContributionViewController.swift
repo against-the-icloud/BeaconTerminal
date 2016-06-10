@@ -83,7 +83,7 @@ class AddContributionViewController : UIViewController {
     }
 
     func changeSpecies(speciesIndex: Int) {
-        let speciesImage = DataManager.sharedInstance.generateImageForSpecies(speciesIndex)
+        let speciesImage = DataManager.generateImageForSpecies(speciesIndex)
 
         observationView.mainSpiecesImage.image = speciesImage
         if let  obsId = observationId {

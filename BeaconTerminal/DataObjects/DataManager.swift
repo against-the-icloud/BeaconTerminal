@@ -13,20 +13,20 @@ import UIKit
 
 class DataManager {
     
-    var realm: Realm?
-    var currentSelectedSpecies = 0
-    
-    static let sharedInstance = DataManager()
-    
-    private init(){
-        
-      
-            realm = try! Realm() // Create realm pointing to default file    
-        
-        
-    }
-    
-    func createDataStructure() {
+//    var realm: Realm?
+//    var currentSelectedSpecies = 0
+//
+//    static let sharedInstance = DataManager()
+//
+//    private init(){
+//
+//
+//            realm = try! Realm() // Create realm pointing to default file
+//
+//
+//    }
+
+    class func createDataStructure() {
         
         do {
             let path = NSBundle.mainBundle().pathForResource("wallcology_configuration", ofType: "json")
@@ -112,8 +112,8 @@ class DataManager {
         }
         
     }
-    
-    func findSpecies(speciesIndex: Int) -> Critter? {
+
+    class func findSpecies(speciesIndex: Int) -> Critter? {
         let foundCritter = realm!.objects(Critter).filter("index = \(speciesIndex)")[0] as Critter!
         return foundCritter
     }
@@ -159,7 +159,7 @@ class DataManager {
         try! realm!.commitWrite()
     }
 
-    func generateImageFileNameFromIndex(index: Int) -> String {
+    class func generateImageFileNameFromIndex(index: Int) -> String {
         var imageName = ""
         if index < 10 {
             
@@ -171,8 +171,8 @@ class DataManager {
         return imageName
     }
 
-    func generateImageForSpecies(index: Int) -> UIImage? {
-        let imageName = generateImageFileNameFromIndex(index)
+    class func generateImageForSpecies(index: Int) -> UIImage? {
+        let imageName = self.generateImageFileNameFromIndex(index)
         return UIImage(named: imageName)
     }
 

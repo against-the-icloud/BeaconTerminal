@@ -46,8 +46,8 @@ class ClassContributionsCollectionViewController: UICollectionViewController, In
 
         //LOG.debug("VERSUS INDEX \(versusSpecies)")
 
-        cell.mainSpeciesImageView.image = UIImage(named: DataManager.sharedInstance.generateImageFileNameFromIndex(currentSelectedSpecies) )
-        cell.versusSpeciesImageView.image = UIImage(named: DataManager.sharedInstance.generateImageFileNameFromIndex(versusSpecies.index) )
+        cell.mainSpeciesImageView.image = UIImage(named: DataManager.generateImageFileNameFromIndex(currentSelectedSpecies) )
+        cell.versusSpeciesImageView.image = UIImage(named: DataManager.generateImageFileNameFromIndex(versusSpecies.index) )
         cell.votesLabel.text = "Votes: \(String(vote.voteCount)) out of 4"
 
         return cell
@@ -69,11 +69,11 @@ class ClassContributionsCollectionViewController: UICollectionViewController, In
     }
     
     func refreshVotes() {
-        self.currentSelectedSpecies = DataManager.sharedInstance.currentSelectedSpecies
-        self.votes?.removeAll()
-        self.votes = DataManager.sharedInstance.createVotes(self.currentSelectedSpecies)
-        LOG.debug("VOTES \(votes!.count)")
-        self.collectionView?.reloadData()
+//     refreshVotes   self.currentSelectedSpecies = DataManager.currentSelectedSpecies
+//        self.votes?.removeAll()
+//        self.votes = DataManager.sharedInstance.createVotes(self.currentSelectedSpecies)
+//        LOG.debug("VOTES \(votes!.count)")
+//        self.collectionView?.reloadData()
 
     }
 

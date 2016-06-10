@@ -1,7 +1,6 @@
 import UIKit
 import RealmSwift
 import Material
-import SwiftyJSON
 import XCGLogger
 
 let LOG: XCGLogger = {
@@ -19,6 +18,8 @@ let LOG: XCGLogger = {
     return LOG
 }()
 
+var realm: Realm?
+
 func dispatch_on_main(block: dispatch_block_t) {
     dispatch_async(dispatch_get_main_queue(), block)
 }
@@ -32,7 +33,7 @@ func getAppDelegate() -> AppDelegate {
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var realm: Realm?
+
     let bottomNavigationController: BottomNavigationController = BottomNavigationController()
 
 
@@ -45,7 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
 
-        
+
+        realm = try! Realm() // Create realm pointing to default file
+
+        DataManager.createDataStructure()
+
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
         mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
@@ -59,8 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
         bottomNavigationController.selectedIndex = 0
-        bottomNavigationController.tabBar.tintColor = MaterialColor.white
-        bottomNavigationController.tabBar.backgroundColor = MaterialColor.grey.darken4
+        bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
+        bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
         bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.Automatic
 //        bottomNavigationController.tabBar.itemSpacing = 400.0
         
@@ -80,15 +85,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {}
         
         
-        realm = try! Realm() // Create realm pointing to default file
+
         
         
-        let dataManager = DataManager.sharedInstance
-        dataManager.createDataStructure()
+        //LOG.debug("\(Realm.Configuration.defaultConfiguration.fileURL!)")
+
+        //let allCritters = dataManager.realm!.objects(Critter)
         
-        
-        LOG.debug("\(Realm.Configuration.defaultConfiguration.fileURL!)")
-        
+        //LOG.debug("\(allCritters)")
+
         
         return true
     }

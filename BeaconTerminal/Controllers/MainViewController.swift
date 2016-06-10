@@ -215,9 +215,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             speciesIndex = index
         }
 
-        DataManager.sharedInstance.currentSelectedSpecies = speciesIndex
-
-        let foundCritter = DataManager.sharedInstance.findSpecies(speciesIndex)
+        let foundCritter = DataManager.findSpecies(speciesIndex)
         //
         LOG.debug("\(foundCritter)")
 
@@ -601,7 +599,6 @@ extension MainViewController {
         /// Diameter for FabButtons.
         let speciesDiameter: CGFloat = diameter - 5.0
 
-
         speciesMenuButtons = [UIView]()
 
         //create add button
@@ -669,7 +666,28 @@ extension MainViewController {
         speciesMenuView.menu.itemSize = CGSizeMake(speciesDiameter, speciesDiameter)
         speciesMenuView.menu.views = speciesMenuButtons
 
-        view.addSubview(speciesMenuView)
+
+        //speciesMenuView.center = CGPoint(x: 16, y: 1022)
+
+//        var tabView : (UIView) = self.tabBarController!.view
+//        var btnPoint : CGPoint = recordButton.center;
+//        var btnRect : CGPoint = recordButton.convertPoint(btnPoint, toView: tabView)
+//        self.tabBarController?.view.addSubview(recordButton)
+//        recordButton.frame.origin = btnRect
+
+
+      //  if self.tabBarIsVisible() {
+//            var tabView = self.tabBarController!.view
+//        var btnPoint : CGPoint = speciesMenuView2.center
+//        var btnRect : CGPoint = speciesMenuView2.convertPoint(btnPoint, toView: tabView)
+//        self.tabBarController?.view.addSubview(speciesMenuView2)
+//        speciesMenuView2.frame.origin = btnRect
+
+//        recordButton.frame.origin = btnRect
+//        } else {
+            view.addSubview(speciesMenuView)
+//        }
+
     }
 
     /// Prepares the MenuView example.
@@ -837,7 +855,10 @@ extension MainViewController {
         toolsMenuView.menu.itemSize = CGSizeMake(toolsButtonDiameter, toolsButtonDiameter)
         toolsMenuView.menu.views = toolMenuButtons
 
+        
+
         view.addSubview(toolsMenuView)
+        UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
 
     }
 }

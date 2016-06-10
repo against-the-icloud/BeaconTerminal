@@ -66,7 +66,7 @@ class Vote: Object {
     dynamic var versusCritter: Critter?
     dynamic var voteCount = 0
     dynamic var id = 0
-    
+
 
 }
 
