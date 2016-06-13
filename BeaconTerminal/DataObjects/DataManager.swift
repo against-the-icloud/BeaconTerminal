@@ -33,7 +33,7 @@ class DataManager {
             let jsonData = NSData(contentsOfFile:path!)
             let json = JSON(data: jsonData!)
             
-            let configuration = Configutation()
+            let simulationConfiguration = SimulationConfiguration()
             
             if let habitats = json["habitats"].array {
                 
@@ -60,7 +60,7 @@ class DataManager {
                         habitat.name = name
                     }
                     
-                    configuration.habitats.append(habitat)
+                    simulationConfiguration.habitats.append(habitat)
                     
                     // Persist your data easily
                     try! realm!.write {
@@ -90,7 +90,7 @@ class DataManager {
                     }
                     
                     
-                    configuration.critters.append(critter)
+                    simulationConfiguration.critters.append(critter)
                     
                     // Persist your data easily
                     try! realm!.write {
@@ -101,7 +101,7 @@ class DataManager {
                 
             }
             try! realm!.write {
-                realm!.add(configuration)
+                realm!.add(simulationConfiguration)
             }
             
         } catch {

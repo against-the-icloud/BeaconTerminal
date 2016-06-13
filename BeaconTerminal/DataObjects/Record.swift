@@ -4,6 +4,8 @@ import RealmSwift
 class Artifact: Object {
 
     dynamic var body: String = ""
+    
+    //needs to be an array
     dynamic var author: String = ""
     dynamic var class_name: String = ""
     dynamic var title: String = ""
@@ -20,7 +22,7 @@ class Artifact: Object {
 
 }
 
-class Configutation: Object {
+class SimulationConfiguration: Object {
     dynamic var id: String = ""
     dynamic var last_modified = NSDate()
 

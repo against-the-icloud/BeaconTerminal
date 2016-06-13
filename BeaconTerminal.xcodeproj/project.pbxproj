@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CDAB9CA6AB98323B9536753 /* Pods_BeaconTerminalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E734B869CCDB143D44CE16 /* Pods_BeaconTerminalTests.framework */; };
 		70096C2C1CE8F641008129BA /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70096C261CE8F641008129BA /* VoteCell.swift */; };
 		70096C2D1CE8F641008129BA /* VoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70096C271CE8F641008129BA /* VoteCell.xib */; };
 		702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCA3A1CE1A527000B6EDE /* BeaconID.swift */; };
@@ -30,6 +31,8 @@
 		70A06DD41CE3F84D008FC11F /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD21CE3F84D008FC11F /* coin.wav */; };
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
+		70AE005F1D0F113300C3C61B /* DataModelTestsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */; };
+		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70C1D3301CEFA07F008425EC /* test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70C1D32F1CEFA07F008425EC /* test.storyboard */; };
 		70C88C8E1CF2B4FC00E936AA /* UINavigationBar+Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */; };
 		70C88CA81CF2B9E900E936AA /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */; };
@@ -49,6 +52,7 @@
 		70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F11CE6530200A0E752 /* ReticleView.swift */; };
 		70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */; };
 		70FB30AE1CE90A30000B7F9D /* CollectionBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70FB30AD1CE90A30000B7F9D /* CollectionBoard.storyboard */; };
+		9BF39EF03F55C12CA0001672 /* Pods_BeaconTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D039F049F3495D8F2E26637 /* Pods_BeaconTerminal.framework */; };
 		AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE090D311C747B85009C8468 /* GeoLocator.swift */; };
 		AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6021C3FEBC000DA4533 /* Utilities.swift */; };
 		AE41A6051C44034000DA4533 /* BeaconConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6041C44034000DA4533 /* BeaconConfig.swift */; };
@@ -62,7 +66,6 @@
 		AED961761C71EBA000697B6D /* RSSINormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AED961751C71EBA000697B6D /* RSSINormalization.swift */; };
 		AEEA894D1C32C90D006378F4 /* ImmediateBeaconDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEA894C1C32C90D006378F4 /* ImmediateBeaconDetector.swift */; };
 		AEF5B0DD1C29AC7300C90621 /* BeaconSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF5B0DC1C29AC7300C90621 /* BeaconSetupViewController.swift */; };
-		B0551DDF72A67D4F9149A3F9 /* Pods_BeaconTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73FB731A83A329FEFB9C306C /* Pods_BeaconTerminal.framework */; };
 		C0A7D0850D327703E1595C1E /* ClassContributionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */; };
 		C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D3826273826A0346635F /* PageViewController.swift */; };
 		C0A7D4D672EFAF6D9471DD89 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */; };
@@ -101,6 +104,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B4D0F41A223E8F9F3B0A3EB /* Pods-BeaconTerminal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.release.xcconfig"; sourceTree = "<group>"; };
+		3D039F049F3495D8F2E26637 /* Pods_BeaconTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63195DF9FA6A3FF517A07A57 /* Pods-BeaconTerminal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.debug.xcconfig"; sourceTree = "<group>"; };
 		70096C261CE8F641008129BA /* VoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
 		70096C271CE8F641008129BA /* VoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoteCell.xib; sourceTree = "<group>"; };
 		702DCA3A1CE1A527000B6EDE /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
@@ -127,6 +133,8 @@
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTestsSpec.swift; sourceTree = "<group>"; };
+		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70C1D32F1CEFA07F008425EC /* test.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = test.storyboard; sourceTree = "<group>"; };
 		70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Height.swift"; sourceTree = "<group>"; };
 		70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
@@ -146,7 +154,7 @@
 		70F0A3F11CE6530200A0E752 /* ReticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReticleView.swift; sourceTree = "<group>"; };
 		70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadViewController.swift; sourceTree = "<group>"; };
 		70FB30AD1CE90A30000B7F9D /* CollectionBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CollectionBoard.storyboard; path = BeaconTerminal/CollectionBoard.storyboard; sourceTree = SOURCE_ROOT; };
-		73FB731A83A329FEFB9C306C /* Pods_BeaconTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		866C5278D18BD66E3F477984 /* Pods-BeaconTerminalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminalTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminalTests/Pods-BeaconTerminalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AE090D311C747B85009C8468 /* GeoLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoLocator.swift; sourceTree = "<group>"; };
 		AE41A6021C3FEBC000DA4533 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		AE41A6041C44034000DA4533 /* BeaconConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BeaconConfig.swift; path = BeaconTerminal/BeaconConfig.swift; sourceTree = "<group>"; };
@@ -176,8 +184,8 @@
 		C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassContributionsCollectionViewController.swift; sourceTree = "<group>"; };
 		C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
-		D4FF173643DE6D073BB04E76 /* Pods-BeaconTerminal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.release.xcconfig"; sourceTree = "<group>"; };
-		D9414D5143CCE9B3231AE038 /* Pods-BeaconTerminal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.debug.xcconfig"; sourceTree = "<group>"; };
+		E4E734B869CCDB143D44CE16 /* Pods_BeaconTerminalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F424714E1144D7ED63FFB8C2 /* Pods-BeaconTerminalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminalTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminalTests/Pods-BeaconTerminalTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CDAB9CA6AB98323B9536753 /* Pods_BeaconTerminalTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,29 +202,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE677F2B1C351CA000836B41 /* EstimoteSDK.framework in Frameworks */,
-				B0551DDF72A67D4F9149A3F9 /* Pods_BeaconTerminal.framework in Frameworks */,
+				9BF39EF03F55C12CA0001672 /* Pods_BeaconTerminal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02C120AF4A5E22C4D91DFE67 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				63195DF9FA6A3FF517A07A57 /* Pods-BeaconTerminal.debug.xcconfig */,
+				1B4D0F41A223E8F9F3B0A3EB /* Pods-BeaconTerminal.release.xcconfig */,
+				866C5278D18BD66E3F477984 /* Pods-BeaconTerminalTests.debug.xcconfig */,
+				F424714E1144D7ED63FFB8C2 /* Pods-BeaconTerminalTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		351FCE10601876F58D4A23C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				7052DB341CCDDB2400E1A397 /* Chameleon.framework */,
-				73FB731A83A329FEFB9C306C /* Pods_BeaconTerminal.framework */,
+				3D039F049F3495D8F2E26637 /* Pods_BeaconTerminal.framework */,
+				E4E734B869CCDB143D44CE16 /* Pods_BeaconTerminalTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3A1BDFD03B606314EB1B1972 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D9414D5143CCE9B3231AE038 /* Pods-BeaconTerminal.debug.xcconfig */,
-				D4FF173643DE6D073BB04E76 /* Pods-BeaconTerminal.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		704204171CE8E8C300C09FD0 /* Views */ = {
@@ -270,6 +282,7 @@
 				702DCA3A1CE1A527000B6EDE /* BeaconID.swift */,
 				70EF4FF91CE6135200AC8AD5 /* Record.swift */,
 				C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */,
+				70AE00601D0F14CF00C3C61B /* RealmDataController.swift */,
 			);
 			path = DataObjects;
 			sourceTree = "<group>";
@@ -291,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				70920D151CD59E66001B582F /* BeaconTerminalTests.swift */,
+				70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */,
 				70920D171CD59E66001B582F /* Info.plist */,
 			);
 			path = BeaconTerminalTests;
@@ -350,7 +364,7 @@
 				70920D141CD59E66001B582F /* BeaconTerminalTests */,
 				AE97648A1C22C1BF0058A4DC /* Products */,
 				351FCE10601876F58D4A23C0 /* Frameworks */,
-				3A1BDFD03B606314EB1B1972 /* Pods */,
+				02C120AF4A5E22C4D91DFE67 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -411,9 +425,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70920D1C1CD59E66001B582F /* Build configuration list for PBXNativeTarget "BeaconTerminalTests" */;
 			buildPhases = (
+				2FBD0C305820900786D0D22B /* [CP] Check Pods Manifest.lock */,
 				70920D0F1CD59E66001B582F /* Sources */,
 				70920D101CD59E66001B582F /* Frameworks */,
 				70920D111CD59E66001B582F /* Resources */,
+				A28A6EFB6F53A85C416DCD9E /* [CP] Embed Pods Frameworks */,
+				158A31ED060BF592AA9D1C30 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -429,17 +446,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AE97649B1C22C1BF0058A4DC /* Build configuration list for PBXNativeTarget "BeaconTerminal" */;
 			buildPhases = (
-				80E0DD2A61A73995CC623A10 /* 📦 Check Pods Manifest.lock */,
-				D6EF7029447DC3EE7147C62B /* uD83DuDCE6 Check Pods Manifest.lock */,
+				D6EF7029447DC3EE7147C62B /* [CP] Check Pods Manifest.lock */,
 				AE9764851C22C1BF0058A4DC /* Sources */,
 				AE9764861C22C1BF0058A4DC /* Frameworks */,
 				AE9764871C22C1BF0058A4DC /* Resources */,
 				AEFCFADA1C3FBEA90036EAB7 /* Carthage copy-frameworks */,
 				7052DB381CCDDBEB00E1A397 /* Embed Frameworks */,
-				50D286FD496FE984E4D6B351 /* uD83DuDCE6 Embed Pods Frameworks */,
-				85B49BC250861258E287251E /* uD83DuDCE6 Copy Pods Resources */,
-				A6181055E538A5F1D6B1D229 /* 📦 Embed Pods Frameworks */,
-				6F4C63A3C97A81BEA823BA04 /* 📦 Copy Pods Resources */,
+				50D286FD496FE984E4D6B351 /* [CP] Embed Pods Frameworks */,
+				85B49BC250861258E287251E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -521,44 +535,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		50D286FD496FE984E4D6B351 /* uD83DuDCE6 Embed Pods Frameworks */ = {
+		158A31ED060BF592AA9D1C30 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "uD83DuDCE6 Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminalTests/Pods-BeaconTerminalTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6F4C63A3C97A81BEA823BA04 /* 📦 Copy Pods Resources */ = {
+		2FBD0C305820900786D0D22B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		80E0DD2A61A73995CC623A10 /* 📦 Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,14 +565,29 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		85B49BC250861258E287251E /* uD83DuDCE6 Copy Pods Resources */ = {
+		50D286FD496FE984E4D6B351 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "uD83DuDCE6 Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		85B49BC250861258E287251E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,19 +595,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A6181055E538A5F1D6B1D229 /* 📦 Embed Pods Frameworks */ = {
+		A28A6EFB6F53A85C416DCD9E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminalTests/Pods-BeaconTerminalTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AEFCFADA1C3FBEA90036EAB7 /* Carthage copy-frameworks */ = {
@@ -611,14 +625,14 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		D6EF7029447DC3EE7147C62B /* uD83DuDCE6 Check Pods Manifest.lock */ = {
+		D6EF7029447DC3EE7147C62B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "uD83DuDCE6 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,6 +647,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70AE005F1D0F113300C3C61B /* DataModelTestsSpec.swift in Sources */,
 				70920D161CD59E66001B582F /* BeaconTerminalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +667,7 @@
 				702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */,
 				70C88CA81CF2B9E900E936AA /* VideoViewController.swift in Sources */,
 				AE677F291C35191300836B41 /* PerformSetupViewController.swift in Sources */,
+				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
 				707F6C871D079F5B0018BDEC /* CoverFlowViewController.swift in Sources */,
 				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
 				70096C2C1CE8F641008129BA /* VoteCell.swift in Sources */,
@@ -719,9 +735,11 @@
 /* Begin XCBuildConfiguration section */
 		70920D1A1CD59E66001B582F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 866C5278D18BD66E3F477984 /* Pods-BeaconTerminalTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				DEFINES_MODULE = NO;
 				INFOPLIST_FILE = BeaconTerminalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminalTests;
@@ -732,9 +750,11 @@
 		};
 		70920D1B1CD59E66001B582F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F424714E1144D7ED63FFB8C2 /* Pods-BeaconTerminalTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				DEFINES_MODULE = NO;
 				INFOPLIST_FILE = BeaconTerminalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminalTests;
@@ -763,6 +783,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -808,6 +829,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -828,10 +850,11 @@
 		};
 		AE97649C1C22C1BF0058A4DC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D9414D5143CCE9B3231AE038 /* Pods-BeaconTerminal.debug.xcconfig */;
+			baseConfigurationReference = 63195DF9FA6A3FF517A07A57 /* Pods-BeaconTerminal.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
@@ -850,10 +873,11 @@
 		};
 		AE97649D1C22C1BF0058A4DC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D4FF173643DE6D073BB04E76 /* Pods-BeaconTerminal.release.xcconfig */;
+			baseConfigurationReference = 1B4D0F41A223E8F9F3B0A3EB /* Pods-BeaconTerminal.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",

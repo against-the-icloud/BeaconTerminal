@@ -1,6 +1,12 @@
 platform :ios, '9.3'
 use_frameworks!
-inhibit_all_warnings!
+
+target 'BeaconTerminalTests' do
+  use_frameworks!
+  pod 'Quick'
+  pod 'Nimble'
+  pod 'RealmSwift'
+end
 
 target 'BeaconTerminal' do
 
@@ -18,10 +24,8 @@ target 'BeaconTerminal' do
     pod 'RealmSwift'
     pod 'SwiftyJSON'
     pod 'XCGLogger'
+    pod 'SwiftRandom'
 
     #state machine
     pod 'SwiftState'
-
-    #util
-    pod 'Sugar'
 end

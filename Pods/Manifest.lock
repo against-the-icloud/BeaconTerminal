@@ -6,14 +6,16 @@ PODS:
     - ChameleonFramework/Default
   - ISRadioButton (0.1.0)
   - Material (1.41.8)
+  - Nimble (4.0.1)
   - Pulsator (0.1.1)
-  - Realm (1.0.0):
-    - Realm/Headers (= 1.0.0)
-  - Realm/Headers (1.0.0)
-  - RealmSwift (1.0.0):
-    - Realm (= 1.0.0)
+  - Quick (0.9.2)
+  - Realm (1.0.1):
+    - Realm/Headers (= 1.0.1)
+  - Realm/Headers (1.0.1)
+  - RealmSwift (1.0.1):
+    - Realm (= 1.0.1)
   - Spring (1.0.3)
-  - Sugar (1.1.1)
+  - SwiftRandom (0.1.7)
   - SwiftState (4.1.0)
   - SwiftyJSON (2.3.2)
   - XCGLogger (3.3)
@@ -25,10 +27,12 @@ DEPENDENCIES:
   - ChameleonFramework/Swift
   - ISRadioButton
   - Material
+  - Nimble
   - Pulsator
+  - Quick
   - RealmSwift
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
-  - Sugar
+  - SwiftRandom
   - SwiftState
   - SwiftyJSON
   - XCGLogger
@@ -50,16 +54,18 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   ISRadioButton: 5d54cd73c4dc996c69a63c82e91c13433273cf14
   Material: df01578ac30c9b5aa0b329ce63a2cd51d2cfd158
+  Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
   Pulsator: 9486579ab8eeb0585aedefdc2c688ab589497d9a
-  Realm: e15cd8e7c11d3e576f628ba0b7cb855269b4991c
-  RealmSwift: 3229306d020d96f83b335f87a0dcbf2cef0e6a2b
+  Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
+  Realm: 2e15e39d35b08abb529e212ed5d8af107b5236c8
+  RealmSwift: d73ea2af08c3676dbdd5e4b669651a0f492162a4
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
-  Sugar: bed396c924fd089feee7c780778cca2a124f580c
+  SwiftRandom: a03b68cbcda1b03d0fef5a1b87296f9500b6eac3
   SwiftState: eb4f3ca252feac9ec26235cf4374f91e0560e3a1
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
   XLPagerTabStrip: 87b8b705f9a7178e76a063ffaa2d70045944a965
 
-PODFILE CHECKSUM: c8ee05335d7b36d9a15a7fad35de3b022f9b32fd
+PODFILE CHECKSUM: ff79d7e5910c27ea6254a1e778285cc1e9253e48
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
