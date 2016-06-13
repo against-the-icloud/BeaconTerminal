@@ -13,6 +13,7 @@ import Spring
 class ObservationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var featuredImageView: UIImageView!
     @IBOutlet weak var observationTitleLabel : UILabel!
+    @IBOutlet weak var testLabel : UILabel!
     
     
     @IBOutlet var observationViewsCollection: [ObservationView]!

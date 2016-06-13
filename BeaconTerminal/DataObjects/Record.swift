@@ -9,14 +9,14 @@ class Artifact: Object {
     dynamic var title: String = ""
     dynamic var last_modified = NSDate()
     dynamic var type: String = ""
-    dynamic var id: Int = 0
+//    dynamic var id: String = ""
     dynamic var to_species: Critter?
     dynamic var from_species: Critter?
     dynamic var habitat: Habitat?
 
-    override static func primaryKey() -> String? {
-        return "id"
-    }
+//    override static func primaryKey() -> String? {
+//        return "id"
+//    }
 
 }
 
@@ -28,9 +28,9 @@ class Configutation: Object {
     let critters = List<Critter>()
 
 
-    override static func primaryKey() -> String? {
-        return "id"
-    }
+//    override static func primaryKey() -> String? {
+//        return "id"
+//    }
 }
 
 class Habitat: Object {
@@ -65,7 +65,7 @@ class Vote: Object {
     dynamic var mainCritter: Critter?
     dynamic var versusCritter: Critter?
     dynamic var voteCount = 0
-    dynamic var id = 0
+//    dynamic var id = 0
 
 
 }
@@ -89,7 +89,7 @@ extension Vote {
 
 class User: Object {
 
-    dynamic var id = ""
+//    dynamic var id = ""
     dynamic var username = ""
     dynamic var displayName = ""
     dynamic var tags = ""

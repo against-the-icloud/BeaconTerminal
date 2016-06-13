@@ -29,6 +29,7 @@
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
 		70A06DD41CE3F84D008FC11F /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD21CE3F84D008FC11F /* coin.wav */; };
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
+		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70C1D3301CEFA07F008425EC /* test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70C1D32F1CEFA07F008425EC /* test.storyboard */; };
 		70C88C8E1CF2B4FC00E936AA /* UINavigationBar+Height.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */; };
 		70C88CA81CF2B9E900E936AA /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */; };
@@ -65,11 +66,14 @@
 		C0A7D0850D327703E1595C1E /* ClassContributionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */; };
 		C0A7D1C8299E6F418F8B9623 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D3826273826A0346635F /* PageViewController.swift */; };
 		C0A7D4D672EFAF6D9471DD89 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */; };
+		C0A7D60AE4F034778CDE550F /* ToolMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D6D09424BAE4BED9DD58 /* ToolMenuController.swift */; };
+		C0A7D779E47B16B7754C54D7 /* AppMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D75AECE1A298AAACED1B /* AppMenuController.swift */; };
 		C0A7D9FA2E80F7384AA80B9F /* TestUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */; };
 		C0A7DA1AF17ED38FEA852617 /* GroupContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */; };
 		C0A7DA4923099ECBB1D27203 /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */; };
 		C0A7DA499BE66B0812352287 /* RelationshipsContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0C401151FBAF03A26AB /* RelationshipsContributionViewController.swift */; };
 		C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D118835AC334A93CDE75 /* ToolbarView.swift */; };
+		C0A7DD238A6DBB7D54545466 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D82044C591C20D3758C9 /* AppNavigationController.swift */; };
 		C0A7DD3F56F4CE40BFE64B09 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0220DF8C625D0B5EF1A /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +126,7 @@
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
+		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70C1D32F1CEFA07F008425EC /* test.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = test.storyboard; sourceTree = "<group>"; };
 		70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Height.swift"; sourceTree = "<group>"; };
 		70C88C9F1CF2B9E900E936AA /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +170,9 @@
 		C0A7D12F217D6D10C00A21C9 /* GroupContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7D3826273826A0346635F /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		C0A7D61C8E2AE9918599568A /* TestUITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUITableViewController.swift; sourceTree = "<group>"; };
+		C0A7D6D09424BAE4BED9DD58 /* ToolMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolMenuController.swift; sourceTree = "<group>"; };
+		C0A7D75AECE1A298AAACED1B /* AppMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppMenuController.swift; sourceTree = "<group>"; };
+		C0A7D82044C591C20D3758C9 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		C0A7D8B5B4524581DE7F0445 /* ClassContributionsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassContributionsCollectionViewController.swift; sourceTree = "<group>"; };
 		C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7DDF0FA75DF5AEA5CD6B0 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +226,7 @@
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				70C88C8D1CF2B4FC00E936AA /* UINavigationBar+Height.swift */,
 				7088B0CE1D049A42002BA440 /* ObservationDropView.swift */,
+				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -248,6 +257,9 @@
 				C0A7D93695821E9932BFB92C /* AddContributionViewController.swift */,
 				707F6C861D079F5B0018BDEC /* CoverFlowViewController.swift */,
 				707F6C881D07A2250018BDEC /* ObservationCollectionViewCell.swift */,
+				C0A7D75AECE1A298AAACED1B /* AppMenuController.swift */,
+				C0A7D82044C591C20D3758C9 /* AppNavigationController.swift */,
+				C0A7D6D09424BAE4BED9DD58 /* ToolMenuController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -630,6 +642,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
+				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				AEF5B0DD1C29AC7300C90621 /* BeaconSetupViewController.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				70EA5F981CF237760055CB00 /* ControlPanelViewController.swift in Sources */,
@@ -676,6 +689,9 @@
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
 				C0A7DA499BE66B0812352287 /* RelationshipsContributionViewController.swift in Sources */,
 				C0A7D4D672EFAF6D9471DD89 /* AddContributionViewController.swift in Sources */,
+				C0A7D779E47B16B7754C54D7 /* AppMenuController.swift in Sources */,
+				C0A7DD238A6DBB7D54545466 /* AppNavigationController.swift in Sources */,
+				C0A7D60AE4F034778CDE550F /* ToolMenuController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +840,7 @@
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D COCOAPODS\" -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminal;
 				PRODUCT_NAME = BeaconTerminal;
 				PROVISIONING_PROFILE = "";
@@ -845,6 +862,7 @@
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D COCOAPODS\" -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminal;
 				PRODUCT_NAME = BeaconTerminal;
 				PROVISIONING_PROFILE = "";

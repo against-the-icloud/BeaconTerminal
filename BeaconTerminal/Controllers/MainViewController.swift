@@ -61,13 +61,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    @IBOutlet weak var speciesMenuView: MenuView!
-
-    @IBOutlet weak var toolsMenuView: MenuView!
-
-
     // MARK: UI
     @IBOutlet weak var toolbarView: ToolbarView!
+
+    var toolsMenuView : MenuView = MenuView()
+    var speciesMenuView : MenuView = MenuView()
 
     var scanButton: FabButton?
 
@@ -139,6 +137,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             self.prepareView()
             self.prepareCamera()
             self.prepareSpeciesMenu()
+
         default:
             print("")
         }
@@ -148,6 +147,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
 
         self.doApplicationState()
+
+
 
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(startPulsor), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
@@ -185,6 +186,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.bringSubviewToFront(speciesMenuView)
     }
 
     override func viewDidLayoutSubviews() {
@@ -196,6 +198,9 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     /// Prepares view.
     private func prepareView() {
         view.backgroundColor = UIColor.whiteColor()
+        if blurEffectView != nil {
+            blurEffectView!.removeFromSuperview()
+        }
     }
 
     private func prepareToolbar(toolbarTitle: String, hasGroup: Bool) {
@@ -427,6 +432,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         self.performSegueWithIdentifier("scannerSegue", sender: sender)
     }
 
+
+
 }
 
 
@@ -488,7 +495,7 @@ extension MainViewController: UIPopoverPresentationControllerDelegate {
 extension MainViewController {
 
     /// Handle the menuView touch event.
-    public func handleSpeciesMenuSelection() {
+    internal func handleSpeciesMenuSelection() {
         if speciesMenuView.menu.opened {
             speciesMenuView.menu.close()
             (speciesMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
@@ -502,7 +509,7 @@ extension MainViewController {
     }
 
     /// Handle the menuView touch event.
-    public func handleToolsMenuSelection() {
+    internal func handleToolsMenuSelection() {
         if toolsMenuView.menu.opened {
             toolsMenuView.menu.close()
             (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
@@ -515,7 +522,7 @@ extension MainViewController {
         }
     }
 
-    public func handleSpeciesSelect(sender: FabButton) {
+    internal func handleSpeciesSelect(sender: FabButton) {
         LOG.debug("SPECIES SELECT \(sender.tag)")
 
         let fb = sender
@@ -601,6 +608,7 @@ extension MainViewController {
 
         speciesMenuButtons = [UIView]()
 
+
         //create add button
 
         var image: UIImage? = UIImage(named: "tb_add_white")!
@@ -685,8 +693,14 @@ extension MainViewController {
 
 //        recordButton.frame.origin = btnRect
 //        } else {
+           // speciesMenuView.frame.origin = CGPoint(x: 16, y: 1022)
+            speciesMenuView.zPosition = 0
             view.addSubview(speciesMenuView)
-//        }
+            MaterialLayout.size(view, child: speciesMenuView, width: diameter, height: diameter)
+            MaterialLayout.alignFromBottomLeft(view, child: speciesMenuView, bottom: 50, left: 10)
+//
+//        // Print out the dimensions of the labels.
+//            view.layoutIfNeeded()
 
     }
 
@@ -858,6 +872,9 @@ extension MainViewController {
         
 
         view.addSubview(toolsMenuView)
+
+        MaterialLayout.size(view, child: toolsMenuView, width: diameter, height: diameter)
+        MaterialLayout.alignFromBottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
         UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
 
     }
