@@ -19,7 +19,7 @@ class ObservationCollectionViewCell: UICollectionViewCell {
     @IBOutlet var observationViewsCollection: [ObservationView]!
     @IBOutlet weak var profileImageView: SpringImageView!
     
-    var species: Critter! {
+    var species: Species! {
         didSet {
             updateUI()
         }
@@ -31,7 +31,7 @@ class ObservationCollectionViewCell: UICollectionViewCell {
     
     private func updateUI() {
 
-        let speciesImage = DataManager.generateImageForSpecies(species.index)
+        let speciesImage = RealmDataController.generateImageForSpecies(species.index)
 
         profileImageView.image = speciesImage
         profileImageView.contentMode = .ScaleAspectFit

@@ -26,7 +26,7 @@ class RelationshipsContributionViewController: UIViewController {
     }
 
     func changeSpecies(speciesIndex: Int) {
-        let speciesImage = DataManager.generateImageForSpecies(speciesIndex)
+        let speciesImage = RealmDataController.generateImageForSpecies(speciesIndex)
         var i = 0
         for dview in dropViews {
             let ob = dview as ObservationView

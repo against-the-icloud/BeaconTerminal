@@ -2,6 +2,7 @@ import UIKit
 import RealmSwift
 import Material
 import XCGLogger
+import SwiftyJSON
 
 let LOG: XCGLogger = {
     // Setup XCGLogger
@@ -33,7 +34,7 @@ func getAppDelegate() -> AppDelegate {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var realmDataController : RealmDataController?
     let bottomNavigationController: BottomNavigationController = BottomNavigationController()
 
 
@@ -47,41 +48,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
 
 
-        realm = try! Realm() // Create realm pointing to default file
+        UINavigationBar.appearance().barTintColor = UIColor(red: 234.0/255.0, green: 46.0/255.0, blue: 73.0/255.0, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
 
-        DataManager.createDataStructure()
+        let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
+        try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
 
-        do {
-            try NSFileManager.defaultManager().removeItemAtURL(Realm.Configuration.defaultConfiguration.fileURL!)
+        //realm = try! Realm() // Create realm pointing to default file
 
+        realmDataController = RealmDataController(realm: realm!)
 
-        } catch {
+        if let testGroup = realmDataController?.createTestGroup() {
+            realmDataController?.add(testGroup, shouldUpdate: false)
+
+//            let json = JSON(testGroup.toDictionary())
+//            LOG.debug("\(json)")
         }
+        
+        
+//        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
+//        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+//        let menuController: AppMenuController = AppMenuController(rootViewController: navigationController)
+//        let navigationDrawerController: AppNavigationDrawerController = AppNavigationDrawerController(rootViewController: menuController, leftViewController: AppLeftViewController())
 
-
+    // Create controllers from storyboards
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
     mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
-
     let sideViewController = storyboard.instantiateViewControllerWithIdentifier("sideViewController") as! SideViewController
     let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
-
-//        let speciesViewController: AppMenuController = AppMenuController(rootViewController: mainViewController)
-//        let toolViewController: ToolMenuController = ToolMenuController(rootViewController: mainViewController)
-
-        //menuViewController.edgesForExtendedLayout = .None
+        
+        
+    //tabbar
 
     bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
     bottomNavigationController.selectedIndex = 0
     bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
     bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
     bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.Automatic
-    //        bottomNavigationController.tabBar.itemSpacing = 400.0
+        
+    //create top navigationbar
+    let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+
+    // create drawer
+    let drawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
 
 
     // Configure the window with the SideNavigationController as the root view controller
     window = UIWindow(frame:UIScreen.mainScreen().bounds)
-    window?.rootViewController = SideNavigationController(rootViewController:bottomNavigationController, leftViewController:sideViewController)
+    window?.rootViewController = drawerController
+        
     window?.makeKeyAndVisible()
 
     return true

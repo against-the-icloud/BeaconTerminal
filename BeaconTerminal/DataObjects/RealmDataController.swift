@@ -12,9 +12,6 @@ import SwiftyJSON
 
 class RealmDataController {
     
-    let critterNames = ["SquidWard","Sumbrao","Blob","Busheeks","Terminator","#Imgettindizzy","Purple cabbage","Da rock","Miranda Sings","Spotted Ninjas","Majigger"]
-    
-    
     let realm: Realm!
    
     init(realm: Realm) {
@@ -25,80 +22,159 @@ class RealmDataController {
         self.init(realm: try! Realm())
     }
     
-    func add(realmObject: Object) {
+    func add(realmObject: Object, shouldUpdate: Bool) {
         try! realm.write {
-            self.realm.add(realmObject)
+            self.realm.add(realmObject, update: shouldUpdate)
         }
     }
-    
+
+    func findSpecies(speciesIndex: Int) -> Species? {
+        let foundSpecies = realm!.objects(Species).filter("index = \(speciesIndex)")[0] as Species!
+        return foundSpecies
+    }
+
+    func createTestGroup() -> Group {
+        let simulationConfiguration = createDefaultConfiguration()
+
+        let group = Group()
+        group.id = NSUUID().UUIDString
+        group.groupTitle = Randoms.randomFakeGroupName()
+        group.last_modified = NSDate()
+        group.simulationConfiguration = simulationConfiguration
+
+
+        let teacher = "Jonna Jet"
+        let section = "6DF"
+
+
+        //four members
+        for _ in 0...3 {
+            let member = Member()
+            member.id = NSUUID().UUIDString
+            member.name = Randoms.randomFakeFirstName()
+            member.section = section
+            member.teacher = teacher
+            member.last_modified = NSDate()
+            group.members.append(member)
+        }
+        
+        let ecosystems = group.simulationConfiguration!.ecosystems
+        let species = group.simulationConfiguration!.species
+        
+        for speciesFrom in species {
+           // var makeRelationship : (String, Group) -> List<SpeciesObservation>
+            
+            let makeRelationship = {
+                (relationshipValue: String, targetGroup: Group) -> List<SpeciesObservation> in
+                let obs = List<SpeciesObservation>()
+                let numObs = Int.random(2...5)
+                for _ in 0...numObs {
+                    let x : Species = species[Int.random(0...10)]
+                    let s : SpeciesObservation = self.createSpeciesObservation(speciesFrom, toSpecies: x, relationship: relationshipValue)
+                    //s.authors = targetGroup
+                    s.lastModified = NSDate()
+                    let hIndex = Int.random(0...3)
+                    //LOG.debug("\(hIndex)")
+                    s.ecosystem = ecosystems[hIndex]
+                    s.title = ""
+                    s.note = ""
+                    s.id = NSUUID().UUIDString
+                    obs.append(s)
+                }
+                return obs
+            }
+            
+            group.speciesObservations.appendContentsOf(makeRelationship(SpeciesRelationships.PRODUCER, group))
+            group.speciesObservations.appendContentsOf(makeRelationship(SpeciesRelationships.CONSUMER, group))
+            group.speciesObservations.appendContentsOf(makeRelationship(SpeciesRelationships.COMPLETES, group))
+
+            
+        }
+        return group
+    }
+
+ 
+
+
+
+    func createSpeciesObservation(fromSpecies: Species, toSpecies: Species, relationship: String) -> SpeciesObservation {
+        let speciesObservation = SpeciesObservation()
+        speciesObservation.relationship = relationship
+        speciesObservation.toSpecies = toSpecies
+        speciesObservation.fromSpecies = fromSpecies
+
+        return speciesObservation
+    }
+
     func createDefaultConfiguration() -> SimulationConfiguration {
         let path = NSBundle.mainBundle().pathForResource("wallcology_configuration", ofType: "json")
         let jsonData = NSData(contentsOfFile:path!)
         let json = JSON(data: jsonData!)
         
         let simulationConfiguration = SimulationConfiguration()
+        simulationConfiguration.id = NSUUID().UUIDString
         
-        if let habitats = json["habitats"].array {
+        if let ecosystem = json["ecosystems"].array {
             
-            for (index,item) in habitats.enumerate() {
+            for (index,item) in ecosystem.enumerate() {
                 
-                let habitat = Habitat()
+                let ecosystem = Ecosystem()
                 
-                habitat.habitatNumber = index
+                ecosystem.ecosystemNumber = index
                 
                 if let temp = item["temperature"].int {
-                    habitat.temperature = temp
+                    ecosystem.temperature = temp
                 }
                 
                 if let pl = item["pipelength"].int {
-                    habitat.pipelength = pl
+                    ecosystem.pipelength = pl
                 }
                 
                 if let ba = item["brickarea"].int {
-                    habitat.brickarea = ba
+                    ecosystem.brickarea = ba
                 }
                 
                 if let name = item["name"].string {
-                    habitat.name = name
+                    ecosystem.name = name
                 }
                 
-                simulationConfiguration.habitats.append(habitat)
+                simulationConfiguration.ecosystems.append(ecosystem)
                 
                 // Persist your data easily
-                try! realm!.write {
-                    realm!.add(habitat)
-                }
+//                try! realm!.write {
+//                    realm!.add(ecosystem)
+//                }
                 
             }
         }
         
-        if let critters = json["habitatItems"].array {
+        if let critters = json["ecosystemItems"].array {
             for (index,item) in critters.enumerate() {
                 
-                let critter = Critter()
+                let species = Species()
                 
                 
                 if let index = item["index"].int {
-                    critter.index = index
+                    species.index = index
                 }
                 
                 if let color = item["color"].string {
-                    critter.color = color
+                    species.color = color
                 }
                 
                 if let imgUrl = item["imgUrl"].string {
-                    critter.imgUrl = imgUrl
+                    species.imgUrl = imgUrl
                 }
                 
-                critter.name = critterNames[index]
+                species.name = Randoms.creatureNames()[index]
                 
                 
-                simulationConfiguration.critters.append(critter)
+                simulationConfiguration.species.append(species)
                 
                 // Persist your data easily
-                try! realm!.write {
-                    realm!.add(critter)
-                }
+//                try! realm!.write {
+//                    realm!.add(critter)
+//                }
                 
             }
             
@@ -108,12 +184,26 @@ class RealmDataController {
     }
     
     func createTestConfiguration() {
-        
             try! realm!.write {
                 realm!.add(createDefaultConfiguration())
             }
-            
-     
+    }
+
+    static func generateImageFileNameFromIndex(index: Int) -> String {
+        var imageName = ""
+        if index < 10 {
+
+            imageName = "species_0\(index).png"
+        } else {
+
+            imageName = "species_\(index).png"
+        }
+        return imageName
+    }
+
+    static func generateImageForSpecies(index: Int) -> UIImage? {
+        let imageName = self.generateImageFileNameFromIndex(index)
+        return UIImage(named: imageName)
     }
 
 }

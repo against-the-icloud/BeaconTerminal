@@ -101,8 +101,8 @@ class TempViewController: UIViewController, ImmediateBeaconDetectorDelegate, EST
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let navigationVC = segue.destinationViewController as! UINavigationController
-        let beaconSetupVC = navigationVC.topViewController as! BeaconSetupViewController
-        beaconSetupVC.beacon = immediateBeacon
+       // let beaconSetupVC = navigationVC.topViewController as! BeaconSetupViewController
+        //beaconSetupVC.beacon = immediateBeacon
     }
 
     @IBAction func backToScanning(segue: UIStoryboardSegue) {

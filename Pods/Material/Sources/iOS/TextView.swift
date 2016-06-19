@@ -148,8 +148,6 @@ public class TextView: UITextView {
 		didSet {
 			if shadowPathAutoSizeEnabled {
 				layoutShadowPath()
-			} else {
-				shadowPath = nil
 			}
 		}
 	}
@@ -327,7 +325,7 @@ public class TextView: UITextView {
 	- Parameter textContainer: A NSTextContainer instance.
 	*/
 	public convenience init(textContainer: NSTextContainer?) {
-		self.init(frame: CGRectZero, textContainer: textContainer)
+		self.init(frame: CGRect.zero, textContainer: textContainer)
 	}
 	
 	/** Denitializer. This should never be called unless you know
@@ -340,15 +338,9 @@ public class TextView: UITextView {
 	/// Overriding the layout callback for subviews.
 	public override func layoutSubviews() {
 		super.layoutSubviews()
+		layoutShadowPath()
 		placeholderLabel?.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2
 		titleLabel?.frame.size.width = bounds.width
-	}
-	
-	public override func layoutSublayersOfLayer(layer: CALayer) {
-		super.layoutSublayersOfLayer(layer)
-		if self.layer == layer {
-			layoutShadowPath()
-		}
 	}
 	
 	/**
@@ -409,8 +401,7 @@ public class TextView: UITextView {
 	internal func reloadView() {
 		if let p = placeholderLabel {
 			removeConstraints(constraints)
-			MaterialLayout.alignToParent(self,
-				child: p,
+			layout(p).edges(
 				top: textContainerInset.top,
 				left: textContainerInset.left + textContainer.lineFragmentPadding,
 				bottom: textContainerInset.bottom,

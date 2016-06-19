@@ -64,13 +64,13 @@ class ToolMenuController: MenuController {
 
     override func openMenu(completion: (() -> Void)? = nil) {
         super.openMenu(completion)
-        sideNavigationController?.enabled = false
+        navigationDrawerController?.enabled = false
         (menuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(angle: 45))
     }
 
     override func closeMenu(completion: (() -> Void)? = nil) {
         super.closeMenu(completion)
-        sideNavigationController?.enabled = true
+        navigationDrawerController?.enabled = true
         (menuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(angle: 0))
     }
 
@@ -141,8 +141,8 @@ class ToolMenuController: MenuController {
         menuView.delegate = self
 
         view.addSubview(menuView)
-        MaterialLayout.size(view, child: menuView, width: 80, height: 80)
-        MaterialLayout.alignFromBottomRight(view, child: menuView, bottom: 0, right: 10)
+        Layout.size(view, child: menuView, width: 80, height: 80)
+        Layout.bottomRight(view, child: menuView, bottom: 0, right: 10)
 
         // Print out the dimensions of the labels.
         view.layoutIfNeeded()

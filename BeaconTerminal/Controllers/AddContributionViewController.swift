@@ -6,15 +6,14 @@
 import Foundation
 import UIKit
 import Material
-import ChameleonFramework
 
 class AddContributionViewController : UIViewController {
 
 
     @IBOutlet weak var observationView: ObservationView!
-  
+
     @IBOutlet weak var reasonTextView: TextView!
-    
+
     @IBOutlet weak var imageView1: UIImageView!
     @IBOutlet weak var imageView2: UIImageView!
     @IBOutlet weak var imageView3: UIImageView!
@@ -31,7 +30,7 @@ class AddContributionViewController : UIViewController {
         super.init(coder: aDecoder)
     }
     @IBOutlet weak var reasonOutView: UIView!
-    
+
     // MARK: Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +40,11 @@ class AddContributionViewController : UIViewController {
         _border.strokeColor = UIColor.blackColor().CGColor
         _border.fillColor = nil
         _border.lineDashPattern = [4, 4]
-        
+
         imageView1.layer.addSublayer(_border)
          imageView2.layer.addSublayer(_border)
          imageView3.layer.addSublayer(_border)
-        
+
         observationView.observationDropView.isEditing = true
         var targetPoints = [CGPoint]()
 
@@ -59,9 +58,9 @@ class AddContributionViewController : UIViewController {
         }
         observationView.observationDropView.targetPoints = targetPoints
 //        observationView.observationDropView.clearsContextBeforeDrawing = true
-    
+
     }
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.topItem?.title = ""
@@ -70,11 +69,11 @@ class AddContributionViewController : UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
@@ -83,7 +82,7 @@ class AddContributionViewController : UIViewController {
     }
 
     func changeSpecies(speciesIndex: Int) {
-        let speciesImage = DataManager.generateImageForSpecies(speciesIndex)
+        let speciesImage = RealmDataController.generateImageForSpecies(speciesIndex)
 
         observationView.mainSpiecesImage.image = speciesImage
         if let  obsId = observationId {
@@ -99,10 +98,9 @@ class AddContributionViewController : UIViewController {
             relationshipController?.dropViews[dropViewIndex].imageView.image = self.observationView.observationDropView.captureImage()
         }
     }
-    
+
     func updateSpeciesNoteEditors(speciesIndex: Int, image: UIImage) {
         //let foundSpecies = DataManager.sharedInstance.findSpecies(speciesIndex)
-        let speciesColor = UIColor(averageColorFromImage: image)
 //        let speciesColor = foundSpecies?.convertHexColor()
 //        let lightSpeciesColor = speciesColor?.lightenByPercentage(50.0)
           reasonOutView.borderWidth = 2.0
@@ -130,8 +128,8 @@ extension AddContributionViewController: DraggableViewDelegate {
         let dview = draggableViews[sender.tag]
         dview.highlighted = true
         dview.userInteractionEnabled = false
-        
-        
+
+
         self.updateSpeciesNoteEditors(sender.tag, image: dview.image!)
 
         //self.observationView.observationDropView?.targetPoints.insert(sender.center, atIndex: sender.tag)

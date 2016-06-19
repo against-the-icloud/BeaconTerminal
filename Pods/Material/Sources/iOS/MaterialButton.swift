@@ -192,8 +192,6 @@ public class MaterialButton : UIButton {
 		didSet {
 			if shadowPathAutoSizeEnabled {
 				layoutShadowPath()
-			} else {
-				shadowPath = nil
 			}
 		}
 	}
@@ -337,7 +335,7 @@ public class MaterialButton : UIButton {
 	
 	/// A convenience initializer.
 	public convenience init() {
-		self.init(frame: CGRectZero)
+		self.init(frame: CGRect.zero)
 	}
 	
 	public override func layoutSublayersOfLayer(layer: CALayer) {
@@ -345,8 +343,12 @@ public class MaterialButton : UIButton {
 		if self.layer == layer {
 			layoutShape()
 			layoutVisualLayer()
-			layoutShadowPath()
 		}
+	}
+	
+	public override func layoutSubviews() {
+		super.layoutSubviews()
+		layoutShadowPath()
 	}
 	
 	public override func alignmentRectInsets() -> UIEdgeInsets {

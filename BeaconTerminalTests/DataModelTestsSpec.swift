@@ -20,33 +20,62 @@ class DataModelTestSpec: QuickSpec {
     override func spec() {
         describe("RealmDataController") {
             
-            let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/TestRealm.realm")
 
+//
         
             var dataController: RealmDataController!
             var testRealm : Realm!
-           
-            
-            beforeEach{
-//                try! testRealm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "realm-data-controller-apec"))
+    
+            beforeEach {
+                let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/TestRealm.realm")
                 try! testRealm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+                //try! testRealm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "test-spec"))
                 dataController = RealmDataController(realm: testRealm)
-                LOG.debug("\(Realm.Configuration.defaultConfiguration.fileURL)")
-                
+
+            }
+            afterEach{
+
+                try! testRealm.write {
+                    testRealm.deleteAll()
+                }
             }
             
-//            afterEach {
-//                try! testRealm.write {
-//                    testRealm.deleteAll()
-//                }
+//
+//            it("adds the SimulationConfiguration to the Realm") {
+//                expect(testRealm.objects(SimulationConfiguration).count).to(equal(0))
+//                
+//                let simulationConfiguration = dataController.createDefaultConfiguration()
+//                dataController.add(simulationConfiguration)
+//                
+//                expect(testRealm.objects(SimulationConfiguration).count).to(equal(1))
 //            }
-            it("adds the SimulationConfiguration to the Realm") {
-                expect(testRealm.objects(SimulationConfiguration).count).to(equal(0))
+//            
+//            it("adds observation to realm") {
+//                expect(testRealm.objects(SpeciesObservation).count).to(equal(0))
+//       
+//
+//                let speciesFrom = dataController.findSpecies(0)
+//                let speciesTo = dataController.findSpecies(3)
+//                //SpeciesRelationships.Producer
+//
+//
+//
+//
+//                let speciesObservation = dataController.createSpeciesObservation(speciesTo!,  toSpecies: speciesFrom!, relationship: SpeciesRelationships.PRODUCER)
+//                dataController.add(speciesObservation)
+//                
+//                expect(testRealm.objects(SpeciesObservation).count).to(equal(1))
+//            }
+            
+            it("adds group to realm") {
+                expect(testRealm.objects(Group).count).to(equal(0))
                 
-                let simulationConfiguration = dataController.createDefaultConfiguration()
-                dataController.add(simulationConfiguration)
+                let g = dataController.createTestGroup()
+                dataController.add(g, shouldUpdate: false)
+                LOG.debug( "JSON: \(g.toDictionary())")
                 
-                expect(testRealm.objects(SimulationConfiguration).count).to(equal(1))
+           
+                expect(testRealm.objects(Group).count).to(equal(1))
             }
         }
     }

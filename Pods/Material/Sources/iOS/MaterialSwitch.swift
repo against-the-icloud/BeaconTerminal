@@ -46,6 +46,7 @@ public enum MaterialSwitchSize {
 	case Large
 }
 
+@objc(MaterialSwitchDelegate)
 public protocol MaterialSwitchDelegate {
 	/**
 	A MaterialSwitch delegate method for state changes.
@@ -54,6 +55,7 @@ public protocol MaterialSwitchDelegate {
 	func materialSwitchStateChanged(control: MaterialSwitch)
 }
 
+@objc(MaterialSwitch)
 @IBDesignable
 public class MaterialSwitch : UIControl {
 	/// An internal reference to the switchState public property.
@@ -115,7 +117,7 @@ public class MaterialSwitch : UIControl {
 	}
 	
 	/// An Optional delegation method.
-	public var delegate: MaterialSwitchDelegate?
+	public weak var delegate: MaterialSwitchDelegate?
 	
 	/// Indicates if the animation should bounce.
 	@IBInspectable public var bounceable: Bool = true {
@@ -181,7 +183,7 @@ public class MaterialSwitch : UIControl {
 	}
 	
 	/// Track view reference.
-	public private(set) var trackLayer: MaterialLayer {
+	public private(set) var trackLayer: CAShapeLayer {
 		didSet {
 			prepareTrack()
 		}
@@ -285,7 +287,7 @@ public class MaterialSwitch : UIControl {
 	- Parameter aDecoder: A NSCoder instance.
 	*/
 	public required init?(coder aDecoder: NSCoder) {
-		trackLayer = MaterialLayer()
+		trackLayer = CAShapeLayer()
 		button = FabButton()
 		super.init(coder: aDecoder)
 		prepareTrack()
@@ -303,7 +305,7 @@ public class MaterialSwitch : UIControl {
 	- Parameter frame: A CGRect instance.
 	*/
 	public override init(frame: CGRect) {
-		trackLayer = MaterialLayer()
+		trackLayer = CAShapeLayer()
 		button = FabButton()
 		super.init(frame: frame)
 		prepareTrack()
@@ -320,7 +322,7 @@ public class MaterialSwitch : UIControl {
 	- Parameter size: A MaterialSwitchSize value.
 	*/
 	public init(state: MaterialSwitchState = .Off, style: MaterialSwitchStyle = .Default, size: MaterialSwitchSize = .Default) {
-		trackLayer = MaterialLayer()
+		trackLayer = CAShapeLayer()
 		button = FabButton()
 		super.init(frame: CGRectNull)
 		prepareTrack()
@@ -526,7 +528,7 @@ public class MaterialSwitch : UIControl {
 		let px: CGFloat = (width - w) / 2
 		
 		trackLayer.frame = CGRectMake(px, (height - trackThickness) / 2, w, trackThickness)
-		trackLayer.cornerRadius = min(trackLayer.height, trackLayer.width) / 2
+		trackLayer.cornerRadius = min(trackLayer.frame.height, trackLayer.frame.width) / 2
 		
 		button.frame = CGRectMake(px, (height - buttonDiameter) / 2, buttonDiameter, buttonDiameter)
 		onPosition = width - px - buttonDiameter

@@ -126,7 +126,6 @@ public class ControlView : MaterialView {
 	*/
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		prepareView()
 	}
 	
 	/**
@@ -137,14 +136,12 @@ public class ControlView : MaterialView {
 	*/
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
-		prepareView()
 	}
 	
 	/// Basic initializer.
 	public init() {
-		super.init(frame: CGRectZero)
+		super.init(frame: CGRect.zero)
 		frame.size = intrinsicContentSize()
-		prepareView()
 	}
 	
 	/**
@@ -153,9 +150,8 @@ public class ControlView : MaterialView {
 	- Parameter rightControls: An Array of UIControls that go on the right side.
 	*/
 	public init(leftControls: Array<UIControl>? = nil, rightControls: Array<UIControl>? = nil) {
-		super.init(frame: CGRectZero)
+		super.init(frame: CGRect.zero)
 		frame.size = intrinsicContentSize()
-		prepareView()
 		prepareProperties(leftControls, rightControls: rightControls)
 	}
 	
@@ -218,7 +214,7 @@ public class ControlView : MaterialView {
 	}
 	
 	public override func intrinsicContentSize() -> CGSize {
-		return CGSizeMake(superview?.bounds.width ?? MaterialDevice.width, 44)
+		return CGSizeMake(width, 44)
 	}
 	
 	/**

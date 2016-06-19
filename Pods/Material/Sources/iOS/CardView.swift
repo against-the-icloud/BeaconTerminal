@@ -216,14 +216,14 @@ public class CardView : MaterialPulseView {
 	:name:	init
 	*/
 	public convenience init() {
-		self.init(frame: CGRectZero)
+		self.init(frame: CGRect.zero)
 	}
 	
 	/**
 	:name:	init
 	*/
 	public convenience init?(image: UIImage? = nil, titleLabel: UILabel? = nil, contentView: UIView? = nil, leftButtons: Array<UIButton>? = nil, rightButtons: Array<UIButton>? = nil) {
-		self.init(frame: CGRectZero)
+		self.init(frame: CGRect.zero)
 		prepareProperties(image, titleLabel: titleLabel, contentView: contentView, leftButtons: leftButtons, rightButtons: rightButtons)
 	}
 	
@@ -274,18 +274,14 @@ public class CardView : MaterialPulseView {
 		
 		// title
 		if let v: UILabel = titleLabel {
-			addSubview(v)
-			
 			verticalFormat += "-[titleLabel]"
 			views["titleLabel"] = v
 			
-			MaterialLayout.alignToParentHorizontally(self, child: v, left: contentInset.left + titleLabelInset.left, right: contentInset.right + titleLabelInset.right)
+			layout(v).horizontally(left: contentInset.left + titleLabelInset.left, right: contentInset.right + titleLabelInset.right)
 		}
 		
 		// detail
 		if let v: UIView = contentView {
-			addSubview(v)
-			
 			if nil == titleLabel {
 				metrics["insetTop"] = (metrics["insetTop"] as! CGFloat) + contentViewInset.top
 			} else {
@@ -296,7 +292,7 @@ public class CardView : MaterialPulseView {
 			verticalFormat += "-[contentView]"
 			views["contentView"] = v
 			
-			MaterialLayout.alignToParentHorizontally(self, child: v, left: contentInset.left + contentViewInset.left, right: contentInset.right + contentViewInset.right)
+			layout(v).horizontally(left: contentInset.left + contentViewInset.left, right: contentInset.right + contentViewInset.right)
 		}
 		
 		// leftButtons
@@ -318,13 +314,12 @@ public class CardView : MaterialPulseView {
 					
 					h += "[\(k)]"
 					
-					addSubview(b)
-					MaterialLayout.alignFromBottom(self, child: b, bottom: contentInset.bottom + leftButtonsInset.bottom)
+					layout(b).bottom(contentInset.bottom + leftButtonsInset.bottom)
 					
 					i += 1
 				}
 				
-				addConstraints(MaterialLayout.constraint(h, options: [], metrics: ["left" : contentInset.left + leftButtonsInset.left, "left_right" : leftButtonsInset.left + leftButtonsInset.right], views: d))
+				addConstraints(Layout.constraint(h, options: [], metrics: ["left" : contentInset.left + leftButtonsInset.left, "left_right" : leftButtonsInset.left + leftButtonsInset.right], views: d))
 			}
 		}
 		
@@ -348,13 +343,12 @@ public class CardView : MaterialPulseView {
 						h += "-(right_left)-"
 					}
 					
-					addSubview(b)
-					MaterialLayout.alignFromBottom(self, child: b, bottom: contentInset.bottom + rightButtonsInset.bottom)
+					layout(b).bottom(contentInset.bottom + rightButtonsInset.bottom)
 					
 					i -= 1
 				}
 				
-				addConstraints(MaterialLayout.constraint(h + "|", options: [], metrics: ["right" : contentInset.right + rightButtonsInset.right, "right_left" : rightButtonsInset.right + rightButtonsInset.left], views: d))
+				addConstraints(Layout.constraint(h + "|", options: [], metrics: ["right" : contentInset.right + rightButtonsInset.right, "right_left" : rightButtonsInset.right + rightButtonsInset.left], views: d))
 			}
 		}
 		
@@ -388,7 +382,7 @@ public class CardView : MaterialPulseView {
 		
 		if 0 < views.count {
 			verticalFormat += "-(insetBottom)-|"
-			addConstraints(MaterialLayout.constraint(verticalFormat, options: [], metrics: metrics, views: views))
+			addConstraints(Layout.constraint(verticalFormat, options: [], metrics: metrics, views: views))
 		}
 	}
 	

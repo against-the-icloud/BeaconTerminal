@@ -34,8 +34,8 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         var offsetAdjustment = CGFloat(MAXFLOAT)
-        var horizontalCenter : CGFloat = proposedContentOffset.x + (CGRectGetWidth((self.collectionView?.bounds)!)/2.0)
-        var targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView!.bounds.size.width, self.collectionView!.bounds.size.height)
+        let horizontalCenter : CGFloat = proposedContentOffset.x + (CGRectGetWidth((self.collectionView?.bounds)!)/2.0)
+        let targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView!.bounds.size.width, self.collectionView!.bounds.size.height)
         
         let array = super.layoutAttributesForElementsInRect(targetRect)
         for at in array! {
