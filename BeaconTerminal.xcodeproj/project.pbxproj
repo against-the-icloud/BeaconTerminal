@@ -21,12 +21,19 @@
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE005F1D0F113300C3C61B /* DataModelTestsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
+		70AE97121D201E060002C26F /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; };
+		70AE97151D201E8F0002C26F /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */; };
+		70AE97161D201F4D0002C26F /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */; };
+		70AE97171D201F4D0002C26F /* SimpleMQTTClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		70AE97181D201F4D0002C26F /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; };
+		70AE97191D201F4D0002C26F /* Nutella.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
 		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
 		70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F801CFCF03D006F6997 /* DragViewController.swift */; };
 		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
 		70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */; };
+		70DDD8D21D16656F00E3EA10 /* CoverFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */; };
 		70E8F4151D162C08007DF331 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F4101D162C08007DF331 /* AddContributionViewController.swift */; };
 		70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */; };
 		70E8F41F1D162E27007DF331 /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F41C1D162E27007DF331 /* TempViewController.swift */; };
@@ -51,6 +58,7 @@
 		C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */; };
 		C0A7D4EC3473B789BEB383E0 /* ObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */; };
 		C0A7D653C1E6E9715AC29742 /* ClassContributionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DA0A206E31C4C5DBBF63 /* ClassContributionsCollectionViewController.swift */; };
+		C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */ = {isa = PBXBuildFile; fileRef = C0A7D004FC456D55A564307C /* nutella_config.json */; };
 		C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */; };
 		C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */; };
 		C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D6AC0D72ADF2FA28B555 /* Random.swift */; };
@@ -77,12 +85,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7052DB381CCDDBEB00E1A397 /* Embed Frameworks */ = {
+		70AE971A1D201F4D0002C26F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				70AE97191D201F4D0002C26F /* Nutella.framework in Embed Frameworks */,
+				70AE97171D201F4D0002C26F /* SimpleMQTTClient.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,18 +115,21 @@
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
-		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTestsSpec.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
+		70AE97101D201E060002C26F /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nutella.framework; sourceTree = "<group>"; };
+		70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = BeaconTerminal/Storyboard/SimpleMQTTClient.framework; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
 		70D62F801CFCF03D006F6997 /* DragViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragViewController.swift; sourceTree = "<group>"; };
 		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
 		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CoverFlow.storyboard; sourceTree = "<group>"; };
 		70E8F4101D162C08007DF331 /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
 		70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationDrawerController.swift; sourceTree = "<group>"; };
-		70E8F41C1D162E27007DF331 /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
+		70E8F41C1D162E27007DF331 /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TempViewController.swift; path = ../Controllers/TempViewController.swift; sourceTree = "<group>"; };
 		70E8F4221D163097007DF331 /* ToolMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolMenuController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		70F0A3EB1CE652E700A0E752 /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -138,10 +151,11 @@
 		AEEA894C1C32C90D006378F4 /* ImmediateBeaconDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateBeaconDetector.swift; sourceTree = "<group>"; };
 		AEFCFAD71C3FBE780036EAB7 /* SwiftState.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftState.framework; path = ../../Carthage/Build/iOS/SwiftState.framework; sourceTree = "<group>"; };
 		B907AA5198BE1567E67D07B9 /* Pods-BeaconTerminal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.release.xcconfig"; sourceTree = "<group>"; };
+		C0A7D004FC456D55A564307C /* nutella_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nutella_config.json; sourceTree = "<group>"; };
 		C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideViewController.swift; path = Main/SideViewController.swift; sourceTree = "<group>"; };
 		C0A7D0EA135DC06E087DD472 /* PlaceTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTerminalViewController.swift; sourceTree = "<group>"; };
 		C0A7D118835AC334A93CDE75 /* ToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
-		C0A7D4101EAA4959538C789F /* CollectionBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CollectionBoard.storyboard; sourceTree = "<group>"; };
+		C0A7D4101EAA4959538C789F /* CollectionBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CollectionBoard.storyboard; sourceTree = "<group>"; };
 		C0A7D42A074C04107E1DC615 /* Base */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Base; path = BeaconTerminal/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C0A7D6AC0D72ADF2FA28B555 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +169,7 @@
 		C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowViewController.swift; sourceTree = "<group>"; };
 		C0A7DD502B428D8C60907FED /* GroupContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationView.swift; sourceTree = "<group>"; };
-		C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlPanelViewController.swift; path = Main/ControlPanelViewController.swift; sourceTree = "<group>"; };
+		C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		C321F3D1B300A5AC6FA312BE /* Pods_BeaconTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -164,7 +178,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70AE97121D201E060002C26F /* Nutella.framework in Frameworks */,
 				1C6BDE6E109AC6FF8119AA02 /* Pods_BeaconTerminalTests.framework in Frameworks */,
+				70AE97151D201E8F0002C26F /* SimpleMQTTClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +188,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70AE97181D201F4D0002C26F /* Nutella.framework in Frameworks */,
+				70AE97161D201F4D0002C26F /* SimpleMQTTClient.framework in Frameworks */,
 				AE677F2B1C351CA000836B41 /* EstimoteSDK.framework in Frameworks */,
 				EB487AEFAB92888585DF8ABB /* Pods_BeaconTerminal.framework in Frameworks */,
 			);
@@ -183,10 +201,20 @@
 		351FCE10601876F58D4A23C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */,
+				70AE97101D201E060002C26F /* Nutella.framework */,
 				C321F3D1B300A5AC6FA312BE /* Pods_BeaconTerminal.framework */,
 				1A55C1DD2E42BD776B1E1FA0 /* Pods_BeaconTerminalTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		701380D41D1C7B5400C0EDDB /* SupportFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SupportFrameworks;
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		704204171CE8E8C300C09FD0 /* Views */ = {
@@ -195,7 +223,6 @@
 				704204191CE8E94D00C09FD0 /* LoadingView.swift */,
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				7088B0CE1D049A42002BA440 /* ObservationDropView.swift */,
-				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 				7099CDA11D0F99050037E56C /* Pulsator.swift */,
 			);
 			path = Views;
@@ -230,6 +257,7 @@
 				70920D0D1CD57B54001B582F /* wallcology_configuration.json */,
 				AE9764981C22C1BF0058A4DC /* Info.plist */,
 				AE9764BC1C22F4B80058A4DC /* ObjCBridge.h */,
+				C0A7D004FC456D55A564307C /* nutella_config.json */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -258,7 +286,6 @@
 		70E8F41A1D162CA8007DF331 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */,
 				C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */,
 				70E8F4221D163097007DF331 /* ToolMenuController.swift */,
 				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
@@ -276,7 +303,6 @@
 				C0A7D984C3929AFE51D42EEF /* RelationshipsContributionViewController.swift */,
 				C0A7D87E01F39852F0E3CD5A /* ObservationCollectionViewCell.swift */,
 				70E8F4101D162C08007DF331 /* AddContributionViewController.swift */,
-				70E8F41C1D162E27007DF331 /* TempViewController.swift */,
 			);
 			name = observations;
 			sourceTree = "<group>";
@@ -337,6 +363,7 @@
 				C0A7D5E1CCBC3F9F3D7FF1EF /* util */,
 				C0A7D28976CF55BCDC92A3AB /* Controllers */,
 				C0A7DA0DE8551A81972B225E /* Storyboard */,
+				701380D41D1C7B5400C0EDDB /* SupportFrameworks */,
 			);
 			path = BeaconTerminal;
 			sourceTree = "<group>";
@@ -344,6 +371,7 @@
 		AEC0A9391C86F6C700F88936 /* Estimote */ = {
 			isa = PBXGroup;
 			children = (
+				70E8F41C1D162E27007DF331 /* TempViewController.swift */,
 				AE41A6021C3FEBC000DA4533 /* Utilities.swift */,
 				AED961751C71EBA000697B6D /* RSSINormalization.swift */,
 				AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */,
@@ -399,6 +427,7 @@
 				C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */,
 				C0A7DBFEFFC36CD24627C6C0 /* ObservationView.xib */,
 				C0A7D4101EAA4959538C789F /* CollectionBoard.storyboard */,
+				70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -406,6 +435,7 @@
 		C0A7DAF922A5401E5A9F4885 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */,
 				C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */,
 				C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */,
 				C0A7D0EA135DC06E087DD472 /* PlaceTerminalViewController.swift */,
@@ -416,6 +446,7 @@
 		C0A7DC783C6B08701103D5EF /* Carousel */ = {
 			isa = PBXGroup;
 			children = (
+				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
 			);
 			path = Carousel;
@@ -454,9 +485,9 @@
 				AE9764861C22C1BF0058A4DC /* Frameworks */,
 				AE9764871C22C1BF0058A4DC /* Resources */,
 				AEFCFADA1C3FBEA90036EAB7 /* Carthage copy-frameworks */,
-				7052DB381CCDDBEB00E1A397 /* Embed Frameworks */,
 				50D286FD496FE984E4D6B351 /* [CP] Embed Pods Frameworks */,
 				85B49BC250861258E287251E /* [CP] Copy Pods Resources */,
+				70AE971A1D201F4D0002C26F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -518,6 +549,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70DDD8D21D16656F00E3EA10 /* CoverFlow.storyboard in Resources */,
 				70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */,
 				70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */,
 				70A06DD31CE3F84D008FC11F /* click.wav in Resources */,
@@ -528,6 +560,7 @@
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				C0A7DDA564EC746BEB0408BD /* ObservationView.xib in Resources */,
 				C0A7DEC01C4F8FAA65B0617D /* CollectionBoard.storyboard in Resources */,
+				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +762,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				DEFINES_MODULE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
+				);
 				INFOPLIST_FILE = BeaconTerminalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminalTests;
@@ -744,6 +782,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				DEFINES_MODULE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
+				);
 				INFOPLIST_FILE = BeaconTerminalTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminalTests;
@@ -848,6 +891,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -871,6 +916,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;

@@ -1,0 +1,30 @@
+{ "configs" : [{
+               "id": "localhost",
+               "appId": "wallcology",
+               "runId": "default",
+               "host": "localhost",
+               "componentId": "BeaconTerminal",
+               "resourceId": "BeaconTerminal",
+               "outChannels": [
+                               "echo_out"
+                               ],
+               "inChannels": [
+                              "echo_in"
+                              ]
+               },
+               
+               {
+               "id": "remote",
+               "appId": "wallcology",
+               "runId": "default",
+               "host": "http://ltg.evl.uic.edu",
+               "componentId": "BeaconTerminal",
+               "resourceId": "BeaconTerminal",
+               "outChannels": [
+                               "echo_out"
+                               ],
+               "inChannels": [
+                              "echo_in"
+                              ]
+               }]
+}

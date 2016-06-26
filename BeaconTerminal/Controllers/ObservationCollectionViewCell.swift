@@ -18,6 +18,7 @@ class ObservationCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var observationViewsCollection: [ObservationView]!
     @IBOutlet weak var profileImageView: SpringImageView!
+    @IBOutlet var testTextView: UITextView!
     
     var species: Species! {
         didSet {

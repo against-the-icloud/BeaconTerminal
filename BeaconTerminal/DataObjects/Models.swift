@@ -30,29 +30,73 @@ class Group: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
-
 }
-
-
 
 class SpeciesObservation: Object {
     dynamic var id : String? = nil
-
-    //needs to be an array
-    dynamic var note: String? = nil
-    //dynamic var attachments = [String]()
     dynamic var authors : Group? = nil
-    dynamic var title: String? = nil
-    dynamic var relationship: String = ""
     dynamic var lastModified = NSDate()
-    dynamic var toSpecies: Species?
     dynamic var fromSpecies: Species?
     dynamic var ecosystem: Ecosystem?
+    let relationships = List<Relationship>()
+    let preferences = List<Preference>()
+
 
     override static func primaryKey() -> String? {
         return "id"
     }
 
+}
+
+class Relationship: Object {
+    dynamic var id : String? = nil
+    dynamic var note: String? = nil
+    dynamic var attachments : String? = nil
+    dynamic var authors : Group? = nil
+    dynamic var type: String = ""
+    dynamic var lastModified = NSDate()
+    dynamic var toSpecies: Species?
+    dynamic var ecosystem: Ecosystem?
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+
+}
+
+class Preference: Object {
+    dynamic var id : String? = nil
+    dynamic var note: String? = nil
+    dynamic var value : String? = nil
+    dynamic var attachments : String? = nil
+    dynamic var type: String = ""
+    dynamic var lastModified = NSDate()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+}
+
+class NutellaConfig: Object {
+    dynamic var id : String? = nil
+    dynamic var last_modified = NSDate()
+
+    dynamic var appId: String? = nil
+    dynamic var runId: String? = nil
+    dynamic var host: String? = nil
+    dynamic var componentId: String? = nil
+    dynamic var resourceId: String? = nil
+    let outChannels = List<Channel>()
+    let inChannels = List<Channel>()
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class Channel: Object {
+    dynamic var name: String? = nil
 }
 
 class SimulationConfiguration: Object {

@@ -70,7 +70,7 @@ class DataModelTestSpec: QuickSpec {
             it("adds group to realm") {
                 expect(testRealm.objects(Group).count).to(equal(0))
                 
-                let g = dataController.createTestGroup()
+                let g = dataController.addTestGroup()
                 dataController.add(g, shouldUpdate: false)
                 LOG.debug( "JSON: \(g.toDictionary())")
                 

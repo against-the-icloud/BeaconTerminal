@@ -33,7 +33,7 @@ class RealmDataController {
         return foundSpecies
     }
 
-    func createTestGroup() -> Group {
+    func addTestGroup() -> Group {
         let simulationConfiguration = createDefaultConfiguration()
 
         let group = Group()
@@ -58,52 +58,153 @@ class RealmDataController {
             group.members.append(member)
         }
         
-        let ecosystems = group.simulationConfiguration!.ecosystems
-        let species = group.simulationConfiguration!.species
+        let allEcosystems = group.simulationConfiguration!.ecosystems
+        let allSpecies = group.simulationConfiguration!.species
         
-        for speciesFrom in species {
+        for fromSpecies in allSpecies {
            // var makeRelationship : (String, Group) -> List<SpeciesObservation>
             
-            let makeRelationship = {
-                (relationshipValue: String, targetGroup: Group) -> List<SpeciesObservation> in
-                let obs = List<SpeciesObservation>()
-                let numObs = Int.random(2...5)
-                for _ in 0...numObs {
-                    let x : Species = species[Int.random(0...10)]
-                    let s : SpeciesObservation = self.createSpeciesObservation(speciesFrom, toSpecies: x, relationship: relationshipValue)
-                    //s.authors = targetGroup
-                    s.lastModified = NSDate()
-                    let hIndex = Int.random(0...3)
-                    //LOG.debug("\(hIndex)")
-                    s.ecosystem = ecosystems[hIndex]
-                    s.title = ""
-                    s.note = ""
-                    s.id = NSUUID().UUIDString
-                    obs.append(s)
-                }
-                return obs
-            }
+            let s : SpeciesObservation = createSpeciesObservation(fromSpecies, allSpecies: allSpecies, allEcosystems: allEcosystems)
+          
+                   
+            group.speciesObservations.append(s)
             
-            group.speciesObservations.appendContentsOf(makeRelationship(SpeciesRelationships.PRODUCER, group))
-            group.speciesObservations.appendContentsOf(makeRelationship(SpeciesRelationships.CONSUMER, group))
-            group.speciesObservations.appendContentsOf(makeRelationship(SpeciesRelationships.COMPLETES, group))
-
+    
             
         }
+
+            
         return group
     }
 
- 
-
-
-
-    func createSpeciesObservation(fromSpecies: Species, toSpecies: Species, relationship: String) -> SpeciesObservation {
+    func createSpeciesObservation(fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
-        speciesObservation.relationship = relationship
-        speciesObservation.toSpecies = toSpecies
+        speciesObservation.id = NSUUID().UUIDString
         speciesObservation.fromSpecies = fromSpecies
+        speciesObservation.lastModified = NSDate()
+        let ecosystem = allEcosystems[Int.random(0...3)]
+        speciesObservation.ecosystem = ecosystem
 
+        for i in 0...3 {
+            
+            let relationship = Relationship()
+            relationship.id = NSUUID().UUIDString
+            relationship.toSpecies = allSpecies[Int.random(0...10)]
+            relationship.lastModified = NSDate()
+            relationship.note = "hello"
+            relationship.ecosystem = ecosystem
+            
+            
+            switch i {
+            case 0:
+                relationship.type = SpeciesRelationships.COMPLETES
+            case 1:
+                relationship.type = SpeciesRelationships.PRODUCER
+            case 2:
+                relationship.type = SpeciesRelationships.CONSUMER
+            default:
+                relationship.type = SpeciesRelationships.CONSUMER
+            }
+            
+            speciesObservation.relationships.append(relationship)
+        }
+        
         return speciesObservation
+    }
+    
+    func checkGroups() -> Bool {
+        let foundGroups = realm!.objects(Group)
+        
+        if foundGroups.count == 0 {
+            add(addTestGroup(), shouldUpdate: false)
+            if DEBUG {
+                LOG.debug("Added Groups, not present")
+            }
+            return false
+        }
+        
+        return true
+
+    }
+    
+    func checkNutellaConfigs() -> Bool {
+        let foundConfigs = realm!.objects(NutellaConfig)
+        
+        if foundConfigs.count == 0 {
+            let nutellaConfigs = addNutellaConfigs()
+            for config in nutellaConfigs {
+                add(config, shouldUpdate: false)
+            }
+            if DEBUG {
+                LOG.debug("Added Nutella Configs, not present")
+            }
+            return false
+        }
+        
+        return true
+    }
+
+    func addNutellaConfigs() -> [NutellaConfig] {
+        let path = NSBundle.mainBundle().pathForResource("nutella_config", ofType: "json")
+        let jsonData = NSData(contentsOfFile:path!)
+        let json = JSON(data: jsonData!)
+        
+        var nutellaConfigs = [NutellaConfig]()
+
+        if let configs = json["configs"].array {
+            
+            
+            for (_,item) in configs.enumerate() {
+                let nutellaConfig = NutellaConfig()
+                                
+                if let id = item["id"].string {
+                    nutellaConfig.id = id
+                }
+                
+                if let appId = item["appId"].string {
+                    nutellaConfig.appId = appId
+                }
+                
+                if let runId = item["runId"].string {
+                    nutellaConfig.runId = runId
+                }
+                
+                if let host = item["host"].string {
+                    nutellaConfig.host = host
+                }
+                
+                if let componentId = item["componentId"].string {
+                    nutellaConfig.componentId = componentId
+                }
+                
+                if let resourceId = item["resourceId"].string {
+                    nutellaConfig.resourceId = resourceId
+                }
+                
+                if let outChannels = item["outChannels"].array {
+                    for (_, item) in outChannels.enumerate() {
+                        let channel = Channel()
+                        channel.name = item.string
+                        nutellaConfig.outChannels.append(channel)
+                    }
+                }
+                
+                if let inChannels = item["inChannels"].array {
+                    for (_, item) in inChannels.enumerate() {
+                        let channel = Channel()
+                        channel.name = item.string
+                        nutellaConfig.inChannels.append(channel)
+                        
+                    }
+                }
+                
+                
+                nutellaConfigs.append(nutellaConfig)
+            }
+        }
+        
+
+        return nutellaConfigs
     }
 
     func createDefaultConfiguration() -> SimulationConfiguration {

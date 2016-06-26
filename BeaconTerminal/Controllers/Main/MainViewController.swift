@@ -125,30 +125,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     func prepareViews() {
         switch machine.state {
         case .PLACE_GROUP:
-
             prepareTabBarItem()
-
-
-//            self.prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT])
-//            self.prepareView()
-//            self.prepareToolbar("PLACE GROUP TABLET", hasGroup: true)
-//            self.prepareCamera()
-//            self.prepareSpeciesMenu()
         case .PLACE_TERMINAL:
-
             print()
-
         case .OBJECT_GROUP:
-
-            //prepareNavigationItem("Object - Group Tablet")
             prepareTabBarItem()
-//
-//            self.prepareTabBarItem()
-//            self.prepareToolsMenu([.SCANNER, .PHOTO_LIB, .CAMERA, .SCREENSHOT])
-//            self.prepareView()
-//            self.prepareCamera()
-//            self.prepareSpeciesMenu()
-
         default:
             print("")
         }
@@ -184,7 +165,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             
             let nav = self.navigationController?.navigationBar
             nav?.tintColor = UIColor.whiteColor()
-            nav?.topItem?.titleLabel.textColor = UIColor.redColor()
+            nav?.topItem?.titleLabel.textColor = UIColor.whiteColor()
             nav?.topItem?.titleLabel.text = newNavTitle
         }
             
