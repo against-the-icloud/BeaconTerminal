@@ -59,10 +59,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         setupDB()
         setupNutellaConnection(HOST)
         
-        UINavigationBar.appearance().barTintColor = UIColor(red: 234.0/255.0, green: 46.0/255.0, blue: 73.0/255.0, alpha: 1.0)
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
-        
+        UIView.hr_setToastThemeColor(color: UIColor.grayColor())
+
+//        UINavigationBar.appearance().barTintColor = UIColor(red: 234.0/255.0, green: 46.0/255.0, blue: 73.0/255.0, alpha: 1.0)
+//        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+//        
    
         
         //        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
@@ -152,6 +154,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         }
     }
     
+    func showToast(message: String) {
+        if let presentWindow = UIApplication.sharedApplication().keyWindow {
+                presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop)
+        }
+    }
     
     
     func applicationWillResignActive(application: UIApplication) {
@@ -189,7 +196,11 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter from: The actor name of the client that sent the message.
      */
     func messageReceived(channel: String, message: AnyObject, componentId: String?, resourceId: String?) {
-        print("messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)")
+        if let message = message as? String, componentId = componentId, resourceId = resourceId {
+            let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
+            LOG.debug(s)
+            self.showToast(s)
+        }
     }
     
     /**
@@ -200,8 +211,11 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter response: The dictionary/array/string containing the JSON representation.
      */
     func responseReceived(channelName: String, requestName: String?, response: AnyObject) {
-        print("responseReceived \(channelName) requestName: \(requestName) response: \(response)")
-        
+        if let response = response as? String, requestName = requestName {
+            let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
+            LOG.debug(s)
+            self.showToast(s)
+        }
     }
     
     /**
@@ -211,7 +225,13 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter request: The dictionary/array/string containing the JSON representation of the request.
      */
     func requestReceived(channelName: String, request: AnyObject?, componentId: String?, resourceId: String?) -> AnyObject? {
-        print("responseReceived \(channelName) request: \(request) componentId: \(componentId)")
+        
+        if let request = request as? String, resourceId = resourceId, componentId = componentId {
+            let s = "responseReceived \(channelName) request: \(request) componentId: \(componentId) resourceId: \(resourceId)"
+            LOG.debug(s)
+            self.showToast(s)
+        }
+        
         return nil
     }
 }
