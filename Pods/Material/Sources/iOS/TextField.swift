@@ -477,6 +477,7 @@ public class TextField : UITextField {
 		preparePlaceholderLabel()
 		prepareDetailLabel()
 		prepareTargetHandlers()
+        prepareTextAlignment()
 	}
 	
 	/// Ensures that the components are sized correctly.
@@ -628,4 +629,9 @@ public class TextField : UITextField {
 		addTarget(self, action: #selector(handleEditingDidBegin), forControlEvents: .EditingDidBegin)
 		addTarget(self, action: #selector(handleEditingDidEnd), forControlEvents: .EditingDidEnd)
 	}
+    
+    /// Prepares the textAlignment.
+    private func prepareTextAlignment() {
+        textAlignment = .RightToLeft == UIApplication.sharedApplication().userInterfaceLayoutDirection ? .Right : .Left
+    }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import Spring
+import Material
 
 class ObservationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var featuredImageView: UIImageView!
@@ -16,8 +16,9 @@ class ObservationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var testLabel : UILabel!
     
     
+    
     @IBOutlet var observationViewsCollection: [ObservationView]!
-    @IBOutlet weak var profileImageView: SpringImageView!
+   // @IBOutlet weak var profileImageView: SpringImageView!
     @IBOutlet var testTextView: UITextView!
     
     var species: Species! {
@@ -31,11 +32,13 @@ class ObservationCollectionViewCell: UICollectionViewCell {
     }
     
     private func updateUI() {
+        
+        backgroundColor = UIColor.blueColor()
 
         let speciesImage = RealmDataController.generateImageForSpecies(species.index)
 
-        profileImageView.image = speciesImage
-        profileImageView.contentMode = .ScaleAspectFit
+//        profileImageView.image = speciesImage
+//        profileImageView.contentMode = .ScaleAspectFit
 
         for obView in observationViewsCollection {
             obView.mainSpiecesImage.image = speciesImage
@@ -45,8 +48,19 @@ class ObservationCollectionViewCell: UICollectionViewCell {
     }
 
     override func layoutSubviews() {
+
+
+        //self.addSubview(testView)
         super.layoutSubviews()
         self.layer.cornerRadius = 10.0
         self.clipsToBounds = true
+        
+        //self.backgroundColor = UIColor.blueColor()
+        
+//        let header = UIView(frame: CGRectMake(0, 0, self.bounds.width, 48))
+//        header.backgroundColor = MaterialColor.white
+        
+        //self.addSubview(header)
+        //self.layout.centerHorizontally(header)
     }
 }

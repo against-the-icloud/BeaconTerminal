@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G26a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ObservationView" customModule="BeaconTerminal" customModuleProvider="target">
             <connections>
-                <outlet property="imageView" destination="oNX-Dz-ZDG" id="mWL-R8-ciu"/>
                 <outlet property="mainSpiecesImage" destination="MhY-oh-Ln5" id="K4r-YK-INQ"/>
                 <outlet property="observationDropView" destination="87O-LR-YQP" id="RuG-jn-z7j"/>
                 <outlet property="tapGesture" destination="87O-LR-YQP" id="cNg-Go-n2L"/>
@@ -38,55 +38,57 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC0-ZF-dLa">
-                    <rect key="frame" x="65" y="2" width="283" height="29"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <view contentMode="scaleToFill" restorationIdentifier="observationDropView" translatesAutoresizingMaskIntoConstraints="NO" id="87O-LR-YQP" customClass="ObservationDropView" customModule="BeaconTerminal" customModuleProvider="target">
-                    <rect key="frame" x="25" y="34" width="363" height="254"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EpI-k6-Z7z">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="290"/>
                     <subviews>
-                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oNX-Dz-ZDG">
-                            <rect key="frame" x="0.0" y="0.0" width="363" height="254"/>
-                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HI" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HC0-ZF-dLa">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="390" id="Gch-wT-Zbe"/>
+                                <constraint firstAttribute="height" constant="35" id="ph4-MZ-Amo"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" restorationIdentifier="observationDropView" translatesAutoresizingMaskIntoConstraints="NO" id="87O-LR-YQP" customClass="ObservationDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="35" width="390" height="255"/>
+                            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="390" id="jRv-EM-2Ki"/>
+                                <constraint firstAttribute="height" constant="255" id="zM2-fW-aSq"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                    <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
-                    <gestureRecognizers/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="10"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="2"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                            <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </view>
+                </stackView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="87O-LR-YQP" secondAttribute="bottom" id="34X-ID-ZeG"/>
-                <constraint firstItem="87O-LR-YQP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="3Pa-uW-LOj"/>
-                <constraint firstItem="HC0-ZF-dLa" firstAttribute="centerX" secondItem="87O-LR-YQP" secondAttribute="centerX" id="I6E-aR-TKO"/>
-                <constraint firstAttribute="trailing" secondItem="87O-LR-YQP" secondAttribute="trailing" id="J8b-JN-ELP"/>
-                <constraint firstItem="87O-LR-YQP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="34" id="MIK-HU-m8t"/>
-                <constraint firstItem="MhY-oh-Ln5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="O5d-rx-tfv"/>
-                <constraint firstItem="HC0-ZF-dLa" firstAttribute="leading" secondItem="MhY-oh-Ln5" secondAttribute="trailing" constant="15" id="cTl-A5-e5T"/>
-                <constraint firstItem="MhY-oh-Ln5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gLj-dg-ajK"/>
-                <constraint firstItem="87O-LR-YQP" firstAttribute="top" secondItem="HC0-ZF-dLa" secondAttribute="bottom" constant="3" id="qCI-XP-Ogp"/>
-                <constraint firstItem="HC0-ZF-dLa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="wrE-ap-RDS"/>
+                <constraint firstItem="EpI-k6-Z7z" firstAttribute="leading" secondItem="MhY-oh-Ln5" secondAttribute="leading" id="Hmq-iF-xcx"/>
+                <constraint firstItem="MhY-oh-Ln5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Wwl-GH-c4E"/>
+                <constraint firstItem="MhY-oh-Ln5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="jQA-mR-gMb"/>
+                <constraint firstItem="EpI-k6-Z7z" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rWk-4y-tfT"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="231" y="176"/>
+            <point key="canvasLocation" x="95" y="301"/>
         </view>
     </objects>
     <resources>

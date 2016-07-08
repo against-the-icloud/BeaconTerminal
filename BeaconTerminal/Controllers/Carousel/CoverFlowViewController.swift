@@ -35,7 +35,7 @@ class CoverFlowViewController: UIViewController {
     }
 
     private struct StoryBoard {
-        static let CellIdentifier = "observationCell"
+        static let CellIdentifier = "CoverFlowCell"
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -84,6 +84,10 @@ class CoverFlowViewController: UIViewController {
         
         allSpecies = realm!.objects(Species.self)
         
+        let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
+        
+        collectionView.registerNib(nib, forCellWithReuseIdentifier: "CoverFlowCell")
+        
        // LOG.debug("estimated size \(coverFlowLayout.estimatedItemSize) \(coverFlowLayout.itemSize) ")
         
 //        let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds);
@@ -111,16 +115,16 @@ class CoverFlowViewController: UIViewController {
 
     }
     
-    let INSET : CGFloat = 0.0
+    //let INSET : CGFloat = 0.0
     
     func prepareCollectionViewCells() {
         
         coverFlowLayout.minimumInteritemSpacing = 0.0
         
         //space between cells
-        coverFlowLayout.minimumLineSpacing = 60.0
-        coverFlowLayout.sectionInset = UIEdgeInsetsZero
-        collectionView.contentInset = UIEdgeInsetsMake(INSET, 0.0, INSET, 0.0)
+       //coverFlowLayout.minimumLineSpacing = 60.0
+//        coverFlowLayout.sectionInset = UIEdgeInsetsZero
+//        collectionView.contentInset = UIEdgeInsetsMake(INSET, 0.0, INSET, 0.0)
 
 //        collectionView.contentInset = UIEdgeInsetsZero
         collectionView.scrollIndicatorInsets = UIEdgeInsetsZero;
@@ -166,47 +170,50 @@ class CoverFlowViewController: UIViewController {
 
 }
 
-extension CoverFlowViewController: UICollectionViewDelegate {
-
-
-}
-
-
 
 extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-//        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ObservationCollectionViewCell {
-//            cell.frame = CGRectMake(0, 0, CGRectGetWidth(collectionView.frame), 20);
-//            // SET YOUR CONTENT
-//            cell.layoutIfNeeded()
-//            return cell.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//        } else {
-//            return CGSizeMake(200, 200)
-//        }
-        
-        if let fl = collectionViewLayout as? UICollectionViewFlowLayout {
-            //LOG.debug("FL bound \(self.collectionView.bounds.size) item size \(coverFlowLayout.itemSize) estimated item size \(coverFlowLayout.estimatedItemSize)")
-            
-            //ipad
-            if self.collectionView.bounds.size.width <= 1024 {
-                let newSize = CGSizeMake(self.collectionView.bounds.size.width * 0.7, self.collectionView.bounds.size.height * 0.7)
-                return newSize
-            } else {
-                return fl.itemSize
-            }
-            
-            
- 
-
-            
-            return fl.itemSize
-        }
-        
-         return CGSizeMake(200, 200)
-
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        
+//        
 //
+//        
+////        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ObservationCollectionViewCell {
+////            cell.frame = CGRectMake(0, 0, CGRectGetWidth(collectionView.frame), 20);
+////            // SET YOUR CONTENT
+////            cell.layoutIfNeeded()
+////            return cell.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+////        } else {
+////            return CGSizeMake(200, 200)
+////        }
+//        
+//        if let fl = collectionViewLayout as? UICollectionViewFlowLayout {
+//            
+//            return CGSize(width: coverFlowLayout.itemSize.width, height:coverFlowLayout.itemSize.height * 0.7)
+//            
+//            
+//            LOG.debug("FL bound \(self.collectionView.bounds.size) item size \(coverFlowLayout.itemSize) estimated item size \(coverFlowLayout.estimatedItemSize)")
+//            
+//            //ipad
+//            if self.collectionView.bounds.size.width <= 1024 {
+//                let newSize = CGSizeMake(self.collectionView.bounds.size.width * 0.7, self.collectionView.bounds.size.height * 0.7)
+//                collectionView.contentInset = UIEdgeInsetsMake(INSET, 0.0, 100, 0.0)
+//
+//                return newSize
+//            } else {
+//                return fl.itemSize
+//            }
+//            
+//            
+// 
+//
+//            
+//            return fl.itemSize
+//        }
+//        
+//         return CGSizeMake(200, 200)
+//
+//    }
+////
 
 }
 
@@ -218,8 +225,8 @@ extension CoverFlowViewController: UIScrollViewDelegate {
 
             if let cell = self.collectionView.cellForItemAtIndexPath(p) {
 
-                cell.borderColor = UIColor.clearColor()
-                cell.borderWidth = 0
+                cell.borderColor = UIColor.whiteColor()
+                cell.borderWidth = 2
 
             }
 
@@ -239,8 +246,8 @@ extension CoverFlowViewController: UIScrollViewDelegate {
                         cell.borderColor = UIColor.redColor()
                         cell.borderWidth = 4
                     } else {
-                        cell.borderColor = UIColor.clearColor()
-                        cell.borderWidth = 0
+                        cell.borderColor = UIColor.whiteColor()
+                        cell.borderWidth = 2
                     }
                 }
 
@@ -269,22 +276,22 @@ extension CoverFlowViewController: UICollectionViewDataSource {
    
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StoryBoard.CellIdentifier, forIndexPath: indexPath) as! ObservationCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StoryBoard.CellIdentifier, forIndexPath: indexPath) as! CoverFlowCell
 
         //use index to find species, then use group to find group and the latest entries for that species
 
 
 //        
-//            var test = currentGroup.speciesObservations.filter("toSpecies.index = \(indexPath.row)")
+ //           var test = currentGroup.speciesObservations.filter("toSpecies.index = \(indexPath.row)")
 //            test = (test as? Results<SpeciesObservation>!)!
 //            
-//            var t = "\(indexPath.row)\n"
+            var t = "\(indexPath.row)\n"
 
 //            for v in test {
 //                t += "\n"
 //                t += "toIndex \(v.toSpecies!.index) fromIndex: \(v.toSpecies!.index) relationship: \(v.relationship) \n"
 //            }
-           // cell.testTextView.text = t
+            //cell.testLabel.text = t
         
 
 

@@ -12,6 +12,7 @@ let SIMULATOR = true
 let HOST = "localhost"
 
 let LOG: XCGLogger = {
+    
     // Setup XCGLogger
     let LOG = XCGLogger.defaultInstance()
     LOG.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
@@ -57,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
         setupDB()
-        setupNutellaConnection(HOST)
+        //setupNutellaConnection(HOST)
         
         UIView.hr_setToastThemeColor(color: UIColor.grayColor())
 
@@ -67,10 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
 //        
    
         
-        //        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-        //        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        //        let menuController: AppMenuController = AppMenuController(rootViewController: navigationController)
-        //        let navigationDrawerController: AppNavigationDrawerController = AppNavigationDrawerController(rootViewController: menuController, leftViewController: AppLeftViewController())
         
         // Create controllers from storyboards
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -89,19 +86,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.Automatic
         
         //create top navigationbar
-        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        // create drawer
-        let drawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+        
+        // create drawer
+        
+        let drawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         // Configure the window with the SideNavigationController as the root view controller
         window = UIWindow(frame:UIScreen.mainScreen().bounds)
         window?.rootViewController = drawerController
-        
         window?.makeKeyAndVisible()
         
         return true
     }
+    
+    
+    
     
     func setupDB() {
         

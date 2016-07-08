@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G26a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,82 +14,67 @@
                         <viewControllerLayoutGuide type="bottom" id="Qgx-uj-ZZd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="G9F-7f-rv0">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1018"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="whx-nI-hoe">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.54901960780000003" green="0.54901960780000003" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Bse-Tu-5TX" customClass="CenterCellCollectionViewFlowLayout" customModule="BeaconTerminal" customModuleProvider="target">
-                                    <size key="itemSize" width="1000" height="711"/>
+                                <color key="backgroundColor" red="0.68888300657272339" green="0.71366006135940552" blue="0.73448425531387329" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="e1L-d1-CgI" customClass="CenterCellCollectionViewFlowLayout" customModule="BeaconTerminal" customModuleProvider="target">
+                                    <size key="itemSize" width="800" height="600"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="observationCell" id="jSg-Tn-XCF" customClass="ObservationCollectionViewCell" customModule="BeaconTerminal" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CoverFlowCell" id="jSg-Tn-XCF" customClass="CoverFlowCell" customModule="BeaconTerminal" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="755"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="aI7-7e-e1f">
-                                                    <rect key="frame" x="-20" y="-20" width="1000" height="754"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uEe-rG-2T9">
-                                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                            <color key="backgroundColor" red="0.08235294118" green="0.4941176471" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="1000" id="Or0-iT-eDC"/>
-                                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" identifier="topBarHeight" id="gG0-ms-yF8"/>
-                                                            </constraints>
-                                                            <variation key="default">
-                                                                <mask key="constraints">
-                                                                    <exclude reference="Or0-iT-eDC"/>
-                                                                    <exclude reference="gG0-ms-yF8"/>
-                                                                </mask>
-                                                            </variation>
-                                                            <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
-                                                                <rect key="frame" x="0.0" y="0.0" width="1000" height="75"/>
-                                                                <mask key="constraints">
-                                                                    <include reference="Or0-iT-eDC"/>
-                                                                    <include reference="gG0-ms-yF8"/>
-                                                                </mask>
-                                                            </variation>
-                                                        </view>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" ambiguous="YES" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Bre-Bc-33e">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1000" height="754"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                            <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
-                                                                <rect key="frame" x="0.0" y="75" width="1000" height="679"/>
-                                                            </variation>
-                                                        </textView>
-                                                    </subviews>
-                                                    <variation key="default">
-                                                        <mask key="subviews">
-                                                            <exclude reference="uEe-rG-2T9"/>
-                                                        </mask>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyK-O1-kYh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
+                                                        <rect key="frame" x="379" y="390" width="42" height="21"/>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=regular" axis="vertical" fixedFrame="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="754"/>
-                                                        <mask key="subviews">
-                                                            <include reference="uEe-rG-2T9"/>
-                                                        </mask>
-                                                    </variation>
-                                                </stackView>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.71372549019999998" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <size key="customSize" width="1000" height="755"/>
+                                        <color key="backgroundColor" red="0.81525619240000002" green="0.81525619240000002" blue="0.81525619240000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="cyK-O1-kYh"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <mask key="subviews">
+                                                <include reference="cyK-O1-kYh"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
-                                            <outlet property="testTextView" destination="Bre-Bc-33e" id="AyO-LY-gxv"/>
+                                            <outlet property="testLabel" destination="cyK-O1-kYh" id="x33-9c-S43"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="Dll-oz-FSh" id="tzw-qU-4QL"/>
                                     <outlet property="delegate" destination="Dll-oz-FSh" id="bLA-Zo-Cst"/>
@@ -98,22 +83,25 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="whx-nI-hoe" firstAttribute="leading" secondItem="G9F-7f-rv0" secondAttribute="leading" id="37n-N3-G2c"/>
-                            <constraint firstItem="whx-nI-hoe" firstAttribute="top" secondItem="G9F-7f-rv0" secondAttribute="top" id="7rD-Qm-CuA"/>
-                            <constraint firstAttribute="trailing" secondItem="whx-nI-hoe" secondAttribute="trailing" id="UoW-aS-Xy9"/>
-                            <constraint firstItem="whx-nI-hoe" firstAttribute="bottom" secondItem="Qgx-uj-ZZd" secondAttribute="top" id="XmO-Om-Qdi"/>
-                            <constraint firstItem="Qgx-uj-ZZd" firstAttribute="top" secondItem="whx-nI-hoe" secondAttribute="bottom" id="dIr-eT-imb"/>
+                            <constraint firstItem="whx-nI-hoe" firstAttribute="leading" secondItem="G9F-7f-rv0" secondAttribute="leading" id="3nW-RC-C9T"/>
+                            <constraint firstItem="whx-nI-hoe" firstAttribute="top" secondItem="VB7-5P-fEd" secondAttribute="bottom" id="5KG-Pb-Qqe"/>
+                            <constraint firstAttribute="trailing" secondItem="whx-nI-hoe" secondAttribute="trailing" id="DyF-N1-aMD"/>
+                            <constraint firstAttribute="bottom" secondItem="whx-nI-hoe" secondAttribute="bottom" id="xhZ-g7-J7p"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="whx-nI-hoe"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="dIr-eT-imb"/>
-                                <exclude reference="37n-N3-G2c"/>
-                                <exclude reference="7rD-Qm-CuA"/>
-                                <exclude reference="UoW-aS-Xy9"/>
-                                <exclude reference="XmO-Om-Qdi"/>
+                                <exclude reference="3nW-RC-C9T"/>
+                                <exclude reference="5KG-Pb-Qqe"/>
+                                <exclude reference="DyF-N1-aMD"/>
+                                <exclude reference="xhZ-g7-J7p"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -121,11 +109,10 @@
                                 <include reference="whx-nI-hoe"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="dIr-eT-imb"/>
-                                <include reference="37n-N3-G2c"/>
-                                <include reference="7rD-Qm-CuA"/>
-                                <include reference="UoW-aS-Xy9"/>
-                                <include reference="XmO-Om-Qdi"/>
+                                <include reference="3nW-RC-C9T"/>
+                                <include reference="5KG-Pb-Qqe"/>
+                                <include reference="DyF-N1-aMD"/>
+                                <include reference="xhZ-g7-J7p"/>
                             </mask>
                         </variation>
                     </view>
@@ -134,7 +121,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1366" height="1018"/>
+                    <size key="freeformSize" width="1024" height="768"/>
                     <connections>
                         <outlet property="collectionView" destination="whx-nI-hoe" id="t95-my-Qnq"/>
                     </connections>

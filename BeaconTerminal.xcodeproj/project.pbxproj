@@ -12,6 +12,8 @@
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */; };
 		7088B0CF1D049A42002BA440 /* ObservationDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088B0CE1D049A42002BA440 /* ObservationDropView.swift */; };
+		708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D70631D2EFEF70032F422 /* CoverFlowCell.swift */; };
+		708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708D70651D2F03070032F422 /* CoverFlowCell.xib */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		70920D161CD59E66001B582F /* BeaconTerminalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70920D151CD59E66001B582F /* BeaconTerminalTests.swift */; };
 		7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7099CDA11D0F99050037E56C /* Pulsator.swift */; };
@@ -108,6 +110,8 @@
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Views/UIViewExtensions.swift; sourceTree = "<group>"; };
 		7088B0CE1D049A42002BA440 /* ObservationDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDropView.swift; sourceTree = "<group>"; };
+		708D70631D2EFEF70032F422 /* CoverFlowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowCell.swift; sourceTree = "<group>"; };
+		708D70651D2F03070032F422 /* CoverFlowCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverFlowCell.xib; sourceTree = "<group>"; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wallcology_configuration.json; sourceTree = "<group>"; };
 		70920D131CD59E66001B582F /* BeaconTerminalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconTerminalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70920D151CD59E66001B582F /* BeaconTerminalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconTerminalTests.swift; sourceTree = "<group>"; };
@@ -167,10 +171,10 @@
 		C0A7D984C3929AFE51D42EEF /* RelationshipsContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsContributionViewController.swift; sourceTree = "<group>"; };
 		C0A7DA0A206E31C4C5DBBF63 /* ClassContributionsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassContributionsCollectionViewController.swift; sourceTree = "<group>"; };
 		C0A7DAD61205D9767DB6FF97 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		C0A7DBFEFFC36CD24627C6C0 /* ObservationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObservationView.xib; sourceTree = "<group>"; };
+		C0A7DBFEFFC36CD24627C6C0 /* ObservationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ObservationView.xib; path = ../../Storyboard/ObservationView.xib; sourceTree = "<group>"; };
 		C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowViewController.swift; sourceTree = "<group>"; };
 		C0A7DD502B428D8C60907FED /* GroupContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupContributionViewController.swift; sourceTree = "<group>"; };
-		C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationView.swift; sourceTree = "<group>"; };
+		C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationView.swift; path = ../../Storyboard/ObservationView.swift; sourceTree = "<group>"; };
 		C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		C321F3D1B300A5AC6FA312BE /* Pods_BeaconTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -298,7 +302,7 @@
 			name = Setup;
 			sourceTree = "<group>";
 		};
-		70E8F4211D162FDB007DF331 /* observations */ = {
+		70E8F4211D162FDB007DF331 /* Observations */ = {
 			isa = PBXGroup;
 			children = (
 				C0A7DD502B428D8C60907FED /* GroupContributionViewController.swift */,
@@ -307,7 +311,7 @@
 				C0A7D87E01F39852F0E3CD5A /* ObservationCollectionViewCell.swift */,
 				70E8F4101D162C08007DF331 /* AddContributionViewController.swift */,
 			);
-			name = observations;
+			name = Observations;
 			sourceTree = "<group>";
 		};
 		70F0A3EA1CE6526000A0E752 /* ScratchPad */ = {
@@ -363,7 +367,7 @@
 				70D62F871CFCF043006F6997 /* DragAndDrop */,
 				70920D0C1CD57B3F001B582F /* Support */,
 				AEC0A9391C86F6C700F88936 /* Estimote */,
-				C0A7D5E1CCBC3F9F3D7FF1EF /* util */,
+				C0A7D5E1CCBC3F9F3D7FF1EF /* Util */,
 				C0A7D28976CF55BCDC92A3AB /* Controllers */,
 				C0A7DA0DE8551A81972B225E /* Storyboard */,
 				701380D41D1C7B5400C0EDDB /* SupportFrameworks */,
@@ -399,27 +403,20 @@
 			children = (
 				C0A7DAF922A5401E5A9F4885 /* Main */,
 				70E8F41A1D162CA8007DF331 /* Setup */,
-				70E8F4211D162FDB007DF331 /* observations */,
+				70E8F4211D162FDB007DF331 /* Observations */,
 				C0A7DC783C6B08701103D5EF /* Carousel */,
 				C0A7D0A9DAF73012903BE55B /* Test */,
-				C0A7D32596AB35E9891A2BF8 /* DataModel */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		C0A7D32596AB35E9891A2BF8 /* DataModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataModel;
-			sourceTree = "<group>";
-		};
-		C0A7D5E1CCBC3F9F3D7FF1EF /* util */ = {
+		C0A7D5E1CCBC3F9F3D7FF1EF /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				C0A7DAD61205D9767DB6FF97 /* Util.swift */,
 				C0A7D6AC0D72ADF2FA28B555 /* Random.swift */,
 			);
+			name = Util;
 			path = util;
 			sourceTree = "<group>";
 		};
@@ -427,8 +424,6 @@
 			isa = PBXGroup;
 			children = (
 				C0A7D628C381C03091617459 /* Main.storyboard */,
-				C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */,
-				C0A7DBFEFFC36CD24627C6C0 /* ObservationView.xib */,
 				C0A7D4101EAA4959538C789F /* CollectionBoard.storyboard */,
 				70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */,
 			);
@@ -449,6 +444,10 @@
 		C0A7DC783C6B08701103D5EF /* Carousel */ = {
 			isa = PBXGroup;
 			children = (
+				708D70631D2EFEF70032F422 /* CoverFlowCell.swift */,
+				708D70651D2F03070032F422 /* CoverFlowCell.xib */,
+				C0A7DBFEFFC36CD24627C6C0 /* ObservationView.xib */,
+				C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */,
 				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
 			);
@@ -564,6 +563,7 @@
 				C0A7DDA564EC746BEB0408BD /* ObservationView.xib in Resources */,
 				C0A7DEC01C4F8FAA65B0617D /* CollectionBoard.storyboard in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
+				708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +692,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
+				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
 				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */,
