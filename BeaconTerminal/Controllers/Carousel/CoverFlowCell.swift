@@ -16,7 +16,7 @@ class CoverFlowCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var expandButton: UIButton!
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +25,7 @@ class CoverFlowCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         //LOG.debug(profileView.description)
@@ -40,10 +40,13 @@ class CoverFlowCell: UICollectionViewCell {
         let speciesObservation = speciesObservations[0]
         
         let speciesImage = RealmDataController.generateImageForSpecies(fromSpecies.index)
-
-
+        
+        
         self.profileView.contentMode = .ScaleAspectFit
-
+        
+        
+        
+        
         self.profileView.image = speciesImage
         
     }
