@@ -30,6 +30,7 @@
 		70AE97181D201F4D0002C26F /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; };
 		70AE97191D201F4D0002C26F /* Nutella.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
+		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
 		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
@@ -37,6 +38,7 @@
 		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
 		70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */; };
 		70DDD8D21D16656F00E3EA10 /* CoverFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */; };
+		70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */; };
 		70E8F4151D162C08007DF331 /* AddContributionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F4101D162C08007DF331 /* AddContributionViewController.swift */; };
 		70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */; };
 		70E8F41F1D162E27007DF331 /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F41C1D162E27007DF331 /* TempViewController.swift */; };
@@ -126,6 +128,7 @@
 		70AE97101D201E060002C26F /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nutella.framework; sourceTree = "<group>"; };
 		70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = BeaconTerminal/Storyboard/SimpleMQTTClient.framework; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
+		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
 		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CoverFlow.storyboard; sourceTree = "<group>"; };
+		70E47EA61D32BB70003CD6E2 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		70E8F4101D162C08007DF331 /* AddContributionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContributionViewController.swift; sourceTree = "<group>"; };
 		70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationDrawerController.swift; sourceTree = "<group>"; };
 		70E8F41C1D162E27007DF331 /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TempViewController.swift; path = ../Controllers/TempViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +418,7 @@
 		C0A7D5E1CCBC3F9F3D7FF1EF /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */,
 				C0A7DAD61205D9767DB6FF97 /* Util.swift */,
 				C0A7D6AC0D72ADF2FA28B555 /* Random.swift */,
 			);
@@ -426,6 +432,7 @@
 				C0A7D628C381C03091617459 /* Main.storyboard */,
 				C0A7D4101EAA4959538C789F /* CollectionBoard.storyboard */,
 				70DDD8D11D16656F00E3EA10 /* CoverFlow.storyboard */,
+				70E47EA61D32BB70003CD6E2 /* MyPlayground.playground */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -450,6 +457,7 @@
 				C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */,
 				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
+				70C487461D32A6DF004F103A /* RelationshipsUIView.swift */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -718,11 +726,13 @@
 				AED961761C71EBA000697B6D /* RSSINormalization.swift in Sources */,
 				7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */,
 				C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */,
+				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
 				C0A7DF3A0AF5D1E7897A8763 /* GroupContributionViewController.swift in Sources */,
+				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
 				C0A7D653C1E6E9715AC29742 /* ClassContributionsCollectionViewController.swift in Sources */,
 				C0A7DB72A9C19E4841DC4FEF /* RelationshipsContributionViewController.swift in Sources */,
 				C0A7D2382612310B9C64C933 /* ObservationCollectionViewCell.swift in Sources */,

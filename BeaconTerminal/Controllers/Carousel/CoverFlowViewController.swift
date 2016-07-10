@@ -189,10 +189,10 @@ class CoverFlowViewController: UIViewController {
 extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        if let fl = collectionViewLayout as? UICollectionViewFlowLayout {
-            let aspectRatio: CGFloat = 4.0/3.0
-            
-            LOG.debug("frame \(collectionView.frame) item size \(fl.itemSize)")
+//        if let fl = collectionViewLayout as? UICollectionViewFlowLayout {
+//
+            //4:3 aspect ratio
+//            LOG.debug("frame \(collectionView.frame) item size \(fl.itemSize)")
             
             
             let totalWidth = CGRectGetWidth(collectionView.frame)
@@ -204,7 +204,7 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
             }
             
             
-        }
+//        }
 //
 //            CGRectGetWidth(collectionView.frame)
 //            
@@ -240,7 +240,6 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
 //            
 //        }
         
-       return CGSizeMake(200, 200)
     }
     //
     //
