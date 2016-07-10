@@ -6,7 +6,6 @@ import SwiftyJSON
 import Nutella
 
 let DEBUG = true
-let SIMULATOR = true
 
 // localhost || remote
 let HOST = "localhost"
@@ -26,6 +25,14 @@ let LOG: XCGLogger = {
     ]
     return LOG
 }()
+
+struct Platform {
+    
+    static var isSimulator: Bool {
+        return TARGET_OS_SIMULATOR != 0 // Use this line in Xcode 7 or newer
+    }
+    
+}
 
 var realm: Realm?
 
@@ -57,18 +64,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject:AnyObject]?) -> Bool {
         ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
-        setupDB()
+        prepareDB()
         //setupNutellaConnection(HOST)
+
+        
+        prepareViews()
         
         UIView.hr_setToastThemeColor(color: UIColor.grayColor())
 
-//        UINavigationBar.appearance().barTintColor = UIColor(red: 234.0/255.0, green: 46.0/255.0, blue: 73.0/255.0, alpha: 1.0)
-//        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
-//        
-   
         
         
+        return true
+    }
+    
+    
+    func prepareViews() {
         // Create controllers from storyboards
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
@@ -97,23 +107,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         window = UIWindow(frame:UIScreen.mainScreen().bounds)
         window?.rootViewController = drawerController
         window?.makeKeyAndVisible()
-        
-        return true
     }
     
     
-    
-    
-    func setupDB() {
+    func prepareDB() {
         
-        if SIMULATOR {
+        if Platform.isSimulator {
             let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
             try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         } else {
             //TODO
             //device config
-            let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
-            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+            try! realm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "InMemoryRealm"))
+//            let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
+//            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         }
         
         realmDataController = RealmDataController(realm: realm!)
