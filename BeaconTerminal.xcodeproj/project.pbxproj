@@ -11,6 +11,7 @@
 		702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCA3A1CE1A527000B6EDE /* BeaconID.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */; };
+		7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */; };
 		7088B0CF1D049A42002BA440 /* ObservationDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088B0CE1D049A42002BA440 /* ObservationDropView.swift */; };
 		708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D70631D2EFEF70032F422 /* CoverFlowCell.swift */; };
 		708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708D70651D2F03070032F422 /* CoverFlowCell.xib */; };
@@ -111,6 +112,7 @@
 		702DCA3A1CE1A527000B6EDE /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Views/UIViewExtensions.swift; sourceTree = "<group>"; };
+		7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelationshipDropView.swift; path = BeaconTerminal/Controllers/Carousel/RelationshipDropView.swift; sourceTree = SOURCE_ROOT; };
 		7088B0CE1D049A42002BA440 /* ObservationDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDropView.swift; sourceTree = "<group>"; };
 		708D70631D2EFEF70032F422 /* CoverFlowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowCell.swift; sourceTree = "<group>"; };
 		708D70651D2F03070032F422 /* CoverFlowCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverFlowCell.xib; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				704204191CE8E94D00C09FD0 /* LoadingView.swift */,
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				7088B0CE1D049A42002BA440 /* ObservationDropView.swift */,
+				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
 				7099CDA11D0F99050037E56C /* Pulsator.swift */,
 			);
 			path = Views;
@@ -707,6 +710,7 @@
 				702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */,
 				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
 				70E8F4151D162C08007DF331 /* AddContributionViewController.swift in Sources */,
+				7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */,
 				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
 				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,

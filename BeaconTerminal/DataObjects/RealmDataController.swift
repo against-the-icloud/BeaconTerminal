@@ -97,13 +97,13 @@ class RealmDataController {
             
             switch i {
             case 0:
-                relationship.type = SpeciesRelationships.COMPLETES
+                relationship.relationshipType = SpeciesRelationships.MUTUAL
             case 1:
-                relationship.type = SpeciesRelationships.PRODUCER
+                relationship.relationshipType = SpeciesRelationships.PRODUCER
             case 2:
-                relationship.type = SpeciesRelationships.CONSUMER
+                relationship.relationshipType = SpeciesRelationships.CONSUMER
             default:
-                relationship.type = SpeciesRelationships.CONSUMER
+                relationship.relationshipType = SpeciesRelationships.CONSUMER
             }
             
             speciesObservation.relationships.append(relationship)

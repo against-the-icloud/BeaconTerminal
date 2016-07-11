@@ -43,21 +43,23 @@ class CoverFlowCell: UICollectionViewCell {
         profileView.layer.cornerRadius = rounded
     }
     
-    func prepareCell(speciesObservations: Results<SpeciesObservation>, fromSpecies: Species) {
+    func prepareCell(speciesObservation: SpeciesObservation, fromSpecies: Species) {
         
         self.fromSpecies = fromSpecies
         
-        let speciesObservation = speciesObservations[0]
-        
+    
         let speciesImage = RealmDataController.generateImageForSpecies(fromSpecies.index)
         
         
         self.profileView.contentMode = .ScaleAspectFit
         self.profileView.image = speciesImage
         
+    
         
         for relationshipView in relationshipViews {
             relationshipView.fromSpecies = fromSpecies
+            relationshipView.speciesObservation = speciesObservation
+            
         }
         
     }

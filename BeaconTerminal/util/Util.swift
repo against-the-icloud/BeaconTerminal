@@ -22,6 +22,15 @@ class Util {
 
         return isLight
     }
+    
+    class func generateRandomPoint(maxXValue: UInt32, maxYValue: UInt32) -> CGPoint {
+        let rand_x = CGFloat(arc4random_uniform(maxXValue)) // maxXValue is a variable with your maximum possible x value
+        let rand_y = CGFloat(arc4random_uniform(maxYValue)) // maxYValue is a variable with your maximum possible y value
+        return CGPoint(x: rand_x, y: rand_y)
+
+    }
+    
+ 
 
 }
 

@@ -188,12 +188,7 @@ class CoverFlowViewController: UIViewController {
 
 extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-//        if let fl = collectionViewLayout as? UICollectionViewFlowLayout {
-//
-            //4:3 aspect ratio
-//            LOG.debug("frame \(collectionView.frame) item size \(fl.itemSize)")
-            
+
             
             let totalWidth = CGRectGetWidth(collectionView.frame)
             
@@ -202,88 +197,10 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
             } else {
                 return CGSizeMake(800, 600)
             }
-            
-            
-//        }
-//
-//            CGRectGetWidth(collectionView.frame)
-//            
-//             var numberOfCellsPerRow = Int(CGRectGetWidth(collectionView.frame) / minimumSize)
-//            
-//            // Always use an item count of at least 1
-//            let itemsPerRow = CGFloat(max(3, 1))
-//            
-//            // Calculate the sum of the spacing between cells
-//            let totalSpacing = fl.minimumInteritemSpacing * (itemsPerRow - 1.0)
-//            
-//            // Calculate how wide items should be
-//            newItemSize.width = (collectionView.bounds.size.width - totalSpacing) / itemsPerRow
-//            
-//            // Use the aspect ratio of the current item size to determine how tall the items should be
-//            if fl.itemSize.height > 0 {
-//                let itemAspectRatio = fl.itemSize.width / fl.itemSize.height
-//                newItemSize.height = newItemSize.width / itemAspectRatio
-//            }
-//            
-//            // Set the new item size
-//            //fl.itemSize = newItemSize
-//            //let cellWidth = cellWidthForViewWidth(CGRectGetWidth(collectionView.frame))
-//            
-//            
-//            
-//            //let cellHeight = cellWidth / aspectRatio
-//            
-//            
-////            LOG.debug("cellheight \(cellHeight) cellWidth \(cellWidth) frame \(collectionView.frame) item size \(fl.itemSize)")
-//            
-//            return newItemSize
-//            
-//        }
+
         
     }
-    //
-    //
-    //
-    //        
-    ////        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ObservationCollectionViewCell {
-    ////            cell.frame = CGRectMake(0, 0, CGRectGetWidth(collectionView.frame), 20);
-    ////            // SET YOUR CONTENT
-    ////            cell.layoutIfNeeded()
-    ////            return cell.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-    ////        } else {
-    ////            return CGSizeMake(200, 200)
-    ////        }
-    //        
-    //        if let fl = collectionViewLayout as? UICollectionViewFlowLayout {
-    //            
-    //            return CGSize(width: coverFlowLayout.itemSize.width, height:coverFlowLayout.itemSize.height * 0.7)
-    //            
-    //            
-    //            LOG.debug("FL bound \(self.collectionView.bounds.size) item size \(coverFlowLayout.itemSize) estimated item size \(coverFlowLayout.estimatedItemSize)")
-    //            
-    //            //ipad
-    //            if self.collectionView.bounds.size.width <= 1024 {
-    //                let newSize = CGSizeMake(self.collectionView.bounds.size.width * 0.7, self.collectionView.bounds.size.height * 0.7)
-    //                collectionView.contentInset = UIEdgeInsetsMake(INSET, 0.0, 100, 0.0)
-    //
-    //                return newSize
-    //            } else {
-    //                return fl.itemSize
-    //            }
-    //            
-    //            
-    // 
-    //
-    //            
-    //            return fl.itemSize
-    //        }
-    //        
-    //         return CGSizeMake(200, 200)
-    //
-    //    }
-    ////
-    
-    
+   
 }
 
 extension CoverFlowViewController: UIScrollViewDelegate {
@@ -356,13 +273,15 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             let speciesObservations : Results<SpeciesObservation> = currentGroup.speciesObservations.filter("fromSpecies.index = \(fromSpecies.index)")
             
             if !fromSpecies.name.isEmpty {
-                
                 cell.titleLabel.text = fromSpecies.name
             } else {
                 cell.titleLabel.text = "Species \(indexPath.row)"
             }
         
-            cell.prepareCell(speciesObservations, fromSpecies: fromSpecies)
+            if !speciesObservations.isEmpty {
+                cell.prepareCell(speciesObservations[0], fromSpecies: fromSpecies)
+            }
+            
         }
 
         return cell

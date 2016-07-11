@@ -62,8 +62,6 @@ class ObservationView: UIView {
 
         
         self.addSubview(view)
-//        self.drawDashedBorder()
-        //self.layoutIfNeeded()
         prepareView()
     }
     
