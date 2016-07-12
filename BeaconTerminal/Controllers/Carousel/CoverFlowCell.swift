@@ -38,12 +38,12 @@ class CoverFlowCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //LOG.debug(profileView.description)
-        let rounded : CGFloat = profileView.frame.size.width / 2.0
-        profileView.layer.cornerRadius = rounded
     }
     
     func prepareCell(speciesObservation: SpeciesObservation, fromSpecies: Species) {
+        
+        let rounded : CGFloat = profileView.frame.size.width / 2.0
+        profileView.layer.cornerRadius = rounded
         
         self.fromSpecies = fromSpecies
         

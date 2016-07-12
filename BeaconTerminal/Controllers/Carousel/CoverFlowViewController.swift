@@ -270,7 +270,11 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         if currentGroup.speciesObservations.count > 0 {
             let fromSpecies = self.allSpecies![indexPath.row]
             
+            
             let speciesObservations : Results<SpeciesObservation> = currentGroup.speciesObservations.filter("fromSpecies.index = \(fromSpecies.index)")
+            
+            
+            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
             
             if !fromSpecies.name.isEmpty {
                 cell.titleLabel.text = fromSpecies.name
@@ -279,7 +283,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             }
         
             if !speciesObservations.isEmpty {
-                cell.prepareCell(speciesObservations[0], fromSpecies: fromSpecies)
+                cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
             }
             
         }

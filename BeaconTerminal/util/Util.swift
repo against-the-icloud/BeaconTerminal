@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class Util {
-
+    
     class func classNameAsString(obj: Any) -> String {
         return String(obj.dynamicType).componentsSeparatedByString("__").last!
     }
@@ -10,16 +10,16 @@ class Util {
     class func isLightColor(color: UIColor) -> Bool {
         var white: CGFloat = 0.0
         color.getWhite(&white, alpha: nil)
-
+        
         var isLight = false
-
+        
         LOG.debug("WHITE \(white)")
-
+        
         if white >= 0.5 {
             isLight = true
         } else {
         }
-
+        
         return isLight
     }
     
@@ -27,11 +27,17 @@ class Util {
         let rand_x = CGFloat(arc4random_uniform(maxXValue)) // maxXValue is a variable with your maximum possible x value
         let rand_y = CGFloat(arc4random_uniform(maxYValue)) // maxYValue is a variable with your maximum possible y value
         return CGPoint(x: rand_x, y: rand_y)
-
+        
     }
     
- 
-
+    
+    class func getRandomColor() -> UIColor{
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)    
+    }
+    
 }
 
 
@@ -76,13 +82,13 @@ extension UIView {
         self.drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
         return UIGraphicsGetImageFromCurrentImageContext()
     }
-
+    
     func createBlurForView(style: UIBlurEffectStyle) -> UIView  {
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.bounds
         blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
-
+        
         let wrapperView = UIView(frame: blurEffectView.frame)
         wrapperView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
         wrapperView.addSubview(blurEffectView)
@@ -195,22 +201,22 @@ extension UIView {
 // MARK: UIViewController Extensions
 
 extension UIViewController {
-
+    
     func setTabBarVisible(visible:Bool, duration:NSTimeInterval, animated:Bool) {
-
+        
         //* This cannot be called before viewDidLayoutSubviews(), because the frame is not set before this time
-
+        
         // bail if the current state matches the desired state
         if (tabBarIsVisible() == visible) { return }
-
+        
         // get a frame calculation ready
         let frame = self.tabBarController?.tabBar.frame
         let height = frame?.size.height
         let offsetY = (visible ? -height! : height)
-
+        
         // zero duration means no animation
         let duration:NSTimeInterval = (animated ? 0.5 : 0.0)
-
+        
         //  animate the tabBar
         if frame != nil {
             UIView.animateWithDuration(duration) {
@@ -219,7 +225,7 @@ extension UIViewController {
             }
         }
     }
-
+    
     func tabBarIsVisible() -> Bool {
         return self.tabBarController?.tabBar.frame.origin.y < UIScreen.mainScreen().bounds.height
     }

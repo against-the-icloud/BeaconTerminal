@@ -34,9 +34,6 @@ class RelationshipsUIView: UIView {
     var originPoint: CGPoint = CGPoint(x: 0, y: 0)
     var targetBorderWidth: CGFloat = 2.0
     var targetBorderColor = UIColor.blackColor()
-
-    var draggableViews = [DraggableImageView]()
-    
     
     var fromSpecies : Species?
     
@@ -69,36 +66,43 @@ class RelationshipsUIView: UIView {
         let size : CGFloat = 50.0
        
         dropView.isEditing = true
-        dropView.originPoint = makeAnchorCenter()
+        dropView.anchorCenter = makeAnchorCenter()
+        dropView.ringColor = ringColor()
+        
+        LOG.debug("TYPE: \(relationshipType!)")
+
         if !foundRelationships.isEmpty {
-            for (index, r) in foundRelationships.enumerate() {
+            for (_, r) in foundRelationships.enumerate() {
                 
-                let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
+                //no dups
+                if r.toSpecies?.index != fromSpecies?.index {
+                    
+                    LOG.debug("from \(fromSpecies!.name)-\(fromSpecies!.index)   to \((r.toSpecies!.name))-\(r.toSpecies!.index)")
+                    let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
+                    
+                    
+                    let dView = DraggableSpeciesImageView(frame: CGRectMake(point.x, point.y, size, size))
+                    
+                    dView.shouldSnapBack = false
+                    dView.shouldCopy = false
+                    dView.fromSpecies = fromSpecies
+                    dView.toSpecies = r.toSpecies
+                    dView.doubleArrow = shouldDoubleArrow()
+                    dView.tag = (r.toSpecies?.index)!
+                    
+                    
+                    
+                    let speciesImage = RealmDataController.generateImageForSpecies((r.toSpecies?.index)!)
+                    dView.image = speciesImage
+                    dropView.anchorView = anchorView
+                    anchorView.hidden = false
+                    //anchorView.alpha = 0.5
+
+                    dropView.addDraggableView(dView)
+                }
                 
-                
-                let dView = DraggableImageView(frame: CGRectMake(point.x, point.y, size, size))
-                dView.shouldSnapBack = false
-                dView.shouldCopy = false
-                
-                dView.tag = index
-            
-                
-                let speciesImage = RealmDataController.generateImageForSpecies((r.toSpecies?.index)!)
-                dView.image = speciesImage
-                
-                dView.borderColor = UIColor.whiteColor()
-                dView.borderWidth = 1.0
-             
-                draggableViews.append(dView)
-                dropView.addSubview(dView)
-                
-                dropView.updatePath(dView.tag, pathPoint: dView.center)
-                
-                
-                //LOG.debug("r \(r)")
-            }
-            
-            dropView.setNeedsDisplay()
+              
+            }            
         }
     }
     
@@ -137,12 +141,50 @@ class RelationshipsUIView: UIView {
             return CGPointMake(dropView.frame.width,dropView.frame.height / 2.0)
         case "mutual":
             //left side mid
-            return CGPointMake(dropView.frame.width / 2.0,dropView.frame.height)
+            return CGPointMake(dropView.frame.width / 2.0,dropView.frame.height - 10)
         default:
             //nothing
             print()
         }
         return CGPointMake(0,dropView.frame.height / 2.0)
+    }
+    
+    func shouldDoubleArrow() -> Bool {
+        switch relationshipType! {
+        case "producer":
+            //left side mid
+            return false
+        case "consumer":
+            //left side mid
+            return false
+        case "mutual":
+            //left side mid
+            return true
+        default:
+            //nothing
+            return false
+        }
+        
+    }
+    
+    
+    func ringColor() -> UIColor {
+        switch relationshipType! {
+        case "producer":
+            //left side mid
+            return UIColor.redColor()
+        case "consumer":
+            //left side mid
+            return UIColor.blueColor()
+        case "mutual":
+            //left side mid
+            return UIColor.brownColor()
+        default:
+            //nothing
+            print()
+        }
+        
+        return UIColor.yellowColor()
     }
     
 }

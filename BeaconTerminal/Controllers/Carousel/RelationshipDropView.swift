@@ -11,9 +11,13 @@ import UIKit
 
 class RelationshipDropView: DropTargetView {
 
-    var originPoint: CGPoint = CGPoint(x: 0, y: 0)
-    var targetPoints = [CGPoint]()
+    var anchorCenter: CGPoint = CGPoint(x: 0, y: 0)
     var targetPaths = [Int: UIBezierPath]()
+    var ringColor : UIColor?
+
+
+    var draggableViews = [Int: DraggableSpeciesImageView]()
+    var anchorView : UIView?
 
     var isEditing: Bool = false {
         didSet {
@@ -41,38 +45,171 @@ class RelationshipDropView: DropTargetView {
     func prepareView() {
     }
 
+    func addDraggableView(draggableView: DraggableSpeciesImageView) {
+        
+        let index = draggableView.tag
+        
 
-    func updatePath(index: Int, pathPoint: CGPoint) {
-        if let p = targetPaths[index] {
-            // now val is not nil and the Optional has been unwrapped, so use it
-            p.removeAllPoints()
-            p.lineWidth = lineWidth
-            p.moveToPoint(originPoint)
-            p.addLineToPoint(pathPoint)
+        
+        if draggableViews.indexForKey(index) == nil {
+            // the key exists does not  in the dictionary
+//            draggableView.borderColor = ringColor
+//            draggableView.borderWidth = 4.0
+            self.addSubview(draggableView)
+            self.setNeedsDisplay()
+            draggableViews.updateValue(draggableView, forKey: draggableView.tag)
+            self.updatePath(draggableView.tag, pathPoint: draggableView.center, doubleArrow: draggableView.doubleArrow)
+        }
+        
+
+        
+    }
+
+    func updatePath(index: Int, pathPoint: CGPoint, doubleArrow: Bool) {
+        
+//        
+//        let halfRect = CGRectIntersection(anchorView!.frame, self.frame)
+//        halfRect.offsetBy(dx: 5.0, dy: 5.0)
+//        let x = halfRect.width / 2.0
+//        let y = halfRect.height / 2.0
+        
+        
+        
+        let masterLine = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: pathPoint, tailWidth: 4, headWidth: 8, headLength: 6, doubleArrow: doubleArrow)
+        masterLine.closePath()
+        
+        let dView = draggableViews[index]
+        
+        let newPathPoint : CGPoint = findIntersectionPoint(masterLine, view: dView!)
+        //let newOrigin : CGPoint = findIntersectionPoint(masterLine, view: anchorView!)
+        
+        let newOrigin = findIntersectionRect(masterLine, rect1: anchorView!.frame, rect2: self.frame)
+        //let newOrigin : CGPoint = findIntersectionPoint(masterLine, view: anchorView!)
+        
+        
+        if var p = targetPaths[index] {
+            
+            p = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: newPathPoint, tailWidth: 4, headWidth: 8, headLength: 6, doubleArrow: doubleArrow)
+            
             p.closePath()
+            
+            targetPaths.updateValue(p, forKey: index)
+
         } else {
-            let p = UIBezierPath()
-            p.moveToPoint(originPoint)
-            p.addLineToPoint(pathPoint)
+    
+            
+            
+            var p = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: newPathPoint, tailWidth: 4, headWidth: 8, headLength: 6, doubleArrow: doubleArrow)
             p.closePath()
             targetPaths.updateValue(p, forKey: index)
         }
-//        LOG.debug("PATHS targetPaths")
-//        for (key, value) in targetPaths {
-//            LOG.debug("\n \(key) \(value)")
-//        }
+    }
+
+    func findIntersectionRect(path: UIBezierPath, rect1: CGRect, rect2: CGRect) -> CGPoint {
+        
+        let rect3 = CGRectIntersection(rect1, rect2)
+        
+        //find x
+        
+        let maxY = CGRectGetMaxY(rect3)
+        let minY = CGRectGetMinY(rect3)
+        
+        let maxX = CGRectGetMaxX(rect3)
+        let minX = CGRectGetMinX(rect3)
+        
+        
+        //check left minX constant, maxY interate
+        for y in Int(minY)...Int(maxY) {
+            let testPoint = CGPointMake(minX, CGFloat(y))
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        //check bottom maxY constant, minX interate
+        for x in Int(minX)...Int(maxX) {
+            let testPoint = CGPointMake(CGFloat(x), maxY)
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        //check right maxX constant, minY interate
+        for y in Int(minY)...Int(maxY) {
+            let testPoint = CGPointMake(maxX, CGFloat(y))
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        //check top minY constant, minX interate
+        for x in Int(minX)...Int(maxX) {
+            let testPoint = CGPointMake(CGFloat(x),minY)
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        return CGPointZero
     }
 
 
+    func findIntersectionPoint(path: UIBezierPath, view: UIView) -> CGPoint {
+        
+   
+        
+        //find x
+        
+        let maxY = view.frame.maxY
+        let minY = view.frame.minY
+        
+        let maxX = view.frame.maxX
+        let minX = view.frame.minX
+        
+        
+        //check left minX constant, maxY interate
+        for y in Int(minY)...Int(maxY) {
+            let testPoint = CGPointMake(minX, CGFloat(y))
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        //check bottom maxY constant, minX interate
+        for x in Int(minX)...Int(maxX) {
+            let testPoint = CGPointMake(CGFloat(x), maxY)
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        //check right maxX constant, minY interate
+        for y in Int(minY)...Int(maxY) {
+            let testPoint = CGPointMake(maxX, CGFloat(y))
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        //check top minY constant, minX interate
+        for x in Int(minX)...Int(maxX) {
+            let testPoint = CGPointMake(CGFloat(x),minY)
+            if path.containsPoint(testPoint) {
+                return testPoint
+            }
+        }
+        
+        return CGPointZero
+    }
+    
     override func drawRect(rect: CGRect) {
         let con = UIGraphicsGetCurrentContext()
         CGContextClearRect(con, rect)
         CGContextSetFillColorWithColor(con, self.backgroundColor?.CGColor)
         CGContextFillRect(con, rect)
         if isEditing {
-            LOG.debug("PATHS \(targetPaths)")
             for (_, value) in targetPaths {
-                value.lineWidth = lineWidth
+                //value.lineWidth = lineWidth
                 UIColor.blackColor().setStroke()
                 value.stroke()
             }
