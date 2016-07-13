@@ -58,38 +58,40 @@ class RelationshipDropView: DropTargetView {
             self.addSubview(draggableView)
             self.setNeedsDisplay()
             draggableViews.updateValue(draggableView, forKey: draggableView.tag)
-            self.updatePath(draggableView.tag, pathPoint: draggableView.center, doubleArrow: draggableView.doubleArrow)
+            self.updatePath(draggableView.tag, pathPoint: draggableView.center, doubleArrow: draggableView.doubleArrow, inwardArrow: draggableView.inwardArrow)
         }
         
 
         
     }
 
-    func updatePath(index: Int, pathPoint: CGPoint, doubleArrow: Bool) {
+    func updatePath(index: Int, pathPoint: CGPoint, doubleArrow: Bool, inwardArrow: Bool) {
         
-//        
-//        let halfRect = CGRectIntersection(anchorView!.frame, self.frame)
-//        halfRect.offsetBy(dx: 5.0, dy: 5.0)
-//        let x = halfRect.width / 2.0
-//        let y = halfRect.height / 2.0
+        let headLength : CGFloat = 15.0
+        let headWidth : CGFloat = 8.0
+        let tailWidth : CGFloat = 4.0
+        
+         //var halfRect = CGRectIntersection(anchorView!.frame, self.frame)
+         //let halfRect = (anchorView?.frame.offsetBy(dx: -15.0, dy: -15.0))!
+        
+        //let mOrigin = CGPointMake(halfRect.midX, halfRect.midY)
         
         
-        
-        let masterLine = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: pathPoint, tailWidth: 4, headWidth: 8, headLength: 6, doubleArrow: doubleArrow)
+        let masterLine = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: pathPoint, tailWidth: tailWidth, headWidth: headWidth, headLength: headLength, doubleArrow: doubleArrow, inwardArrow: inwardArrow)
         masterLine.closePath()
         
         let dView = draggableViews[index]
         
-        let newPathPoint : CGPoint = findIntersectionPoint(masterLine, view: dView!)
+        let newPathPoint : CGPoint = findIntersectionPointWithView(masterLine, view: dView!)
         //let newOrigin : CGPoint = findIntersectionPoint(masterLine, view: anchorView!)
         
-        let newOrigin = findIntersectionRect(masterLine, rect1: anchorView!.frame, rect2: self.frame)
-        //let newOrigin : CGPoint = findIntersectionPoint(masterLine, view: anchorView!)
-        
+//        let newOrigin = findIntersectionRect(masterLine, rect1: anchorView!.frame, rect2: self.frame)
+        let newOrigin : CGPoint = findIntersectionPointWithView(masterLine, view: anchorView!)
+        //let newOrigin = findIntersectionPointWithRect(masterLine, rect: halfRect)
         
         if var p = targetPaths[index] {
             
-            p = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: newPathPoint, tailWidth: 4, headWidth: 8, headLength: 6, doubleArrow: doubleArrow)
+            p = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: newPathPoint, tailWidth: tailWidth, headWidth: headWidth, headLength: headLength, doubleArrow: doubleArrow, inwardArrow: inwardArrow)
             
             p.closePath()
             
@@ -99,7 +101,7 @@ class RelationshipDropView: DropTargetView {
     
             
             
-            var p = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: newPathPoint, tailWidth: 4, headWidth: 8, headLength: 6, doubleArrow: doubleArrow)
+            var p = UIBezierPath.bezierPathWithArrowFromPoint(anchorCenter, endPoint: newPathPoint, tailWidth: tailWidth, headWidth: headWidth, headLength: headLength, doubleArrow: doubleArrow, inwardArrow: inwardArrow)
             p.closePath()
             targetPaths.updateValue(p, forKey: index)
         }
@@ -154,17 +156,19 @@ class RelationshipDropView: DropTargetView {
     }
 
 
-    func findIntersectionPoint(path: UIBezierPath, view: UIView) -> CGPoint {
-        
-   
+    func findIntersectionPointWithView(path: UIBezierPath, view: UIView) -> CGPoint {
+        return findIntersectionPointWithRect(path, rect: view.frame)
+    }
+    
+   func findIntersectionPointWithRect(path: UIBezierPath, rect: CGRect) -> CGPoint {
         
         //find x
         
-        let maxY = view.frame.maxY
-        let minY = view.frame.minY
+        let maxY = rect.maxY
+        let minY = rect.minY
         
-        let maxX = view.frame.maxX
-        let minX = view.frame.minX
+        let maxX = rect.maxX
+        let minX = rect.minX
         
         
         //check left minX constant, maxY interate
@@ -208,11 +212,11 @@ class RelationshipDropView: DropTargetView {
         CGContextSetFillColorWithColor(con, self.backgroundColor?.CGColor)
         CGContextFillRect(con, rect)
         if isEditing {
-            for (_, value) in targetPaths {
-                //value.lineWidth = lineWidth
-                UIColor.blackColor().setStroke()
-                value.stroke()
-            }
+//            for (_, value) in targetPaths {
+//                //value.lineWidth = lineWidth
+//                UIColor.blackColor().setStroke()
+//                value.stroke()
+//            }
         } else {
             super.drawRect(rect)
         }

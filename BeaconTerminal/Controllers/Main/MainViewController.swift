@@ -50,6 +50,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var popoverNavigationController: UINavigationController?
 
     var blurEffectView : UIView?
+    
+    let diameter: CGFloat = 75.0
 
     //var relationshipContributionViewController : RelationshipsContributionViewController?
 
@@ -130,6 +132,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             print()
         case .OBJECT_GROUP:
             prepareTabBarItem()
+            prepareSpeciesMenu()
+            prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
         default:
             print("")
         }
@@ -338,9 +342,25 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         // And we are back
         let svc = segue.sourceViewController as! ScannerViewController
 
-        let speciesIndex = svc.selectedSpeciesIndex
+        let speciesBeaconDetail = svc.selectedBeaconDetail
 
-        LOG.debug("UNWINDED TO ROOT INDEX \(speciesIndex)")
+        LOG.debug("UNWINDED TO ROOT INDEX \(speciesBeaconDetail?.asSimpleDescription)")
+        
+        
+        let changeNavigationColor = { (hexColor: String) -> Void in
+            
+            let nav = self.navigationController?.navigationBar
+            nav?.backgroundColor = UIColor(hex: hexColor)
+
+            nav?.tintColor = UIColor.whiteColor()
+            nav?.topItem?.titleLabel.textColor = UIColor.whiteColor()
+        }
+        
+        changeNavigationColor(speciesBeaconDetail!.hexColor)
+        
+//        self.navigationBar.tintColor = MaterialColor.white
+//        self.navigationBar.backgroundColor = UIColor(hex: speciesBeaconDetail!.hexColor)
+        
         // use svc to get mood, action, and place
     }
 
@@ -598,7 +618,7 @@ extension MainViewController {
     private func prepareSpeciesMenu() {
 
         /// Diameter for FabButtons.
-        let diameter: CGFloat = 70.0
+     
 
         /// Diameter for FabButtons.
         let speciesDiameter: CGFloat = diameter - 5.0
@@ -672,6 +692,16 @@ extension MainViewController {
         speciesMenuView.menu.views = speciesMenuButtons
 
 
+        view.addSubview(speciesMenuView)
+        Layout.size(view, child: speciesMenuView, width: diameter, height: diameter)
+        Layout.bottomLeft(view, child: speciesMenuView, bottom: 50, left: 10)
+        
+        speciesMenuView.zPosition = 1000
+
+        
+        //Layout.size(view, child: toolsMenuView, width: diameter, height: diameter)
+        //Layout.bottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
+        //UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
         //speciesMenuView.center = CGPoint(x: 16, y: 1022)
 
 //        var tabView : (UIView) = self.tabBarController!.view
@@ -691,7 +721,6 @@ extension MainViewController {
 //        recordButton.frame.origin = btnRect
 //        } else {
            // speciesMenuView.frame.origin = CGPoint(x: 16, y: 1022)
-            speciesMenuView.zPosition = 0
 //            view.addSubview(speciesMenuView)
 //            Layout.size(view, child: speciesMenuView, width: diameter, height: diameter)
 //            Layout.bottomLeft(view, child: speciesMenuView, bottom: 50, left: 10)
@@ -705,7 +734,7 @@ extension MainViewController {
     private func prepareToolsMenu(tools: [ToolTypes]) {
 
         /// Diameter for FabButtons.
-        let diameter: CGFloat = 70.0
+        
 
         /// Diameter for FabButtons.
         let toolsButtonDiameter: CGFloat = diameter - 5.0
@@ -868,11 +897,11 @@ extension MainViewController {
 
         
 
-        //view.addSubview(toolsMenuView)
+        view.addSubview(toolsMenuView)
 
-        //Layout.size(view, child: toolsMenuView, width: diameter, height: diameter)
-        //Layout.bottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
-        //UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
+        Layout.size(view, child: toolsMenuView, width: diameter, height: diameter)
+        Layout.bottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
+        UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
 
     }
 }

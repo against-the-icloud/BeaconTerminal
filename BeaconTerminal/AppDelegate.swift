@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         // Create controllers from storyboards
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
-        mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
+        mainViewController.changeApplicationState(ApplicationState.OBJECT_GROUP)
         let sideViewController = storyboard.instantiateViewControllerWithIdentifier("sideViewController") as! SideViewController
         let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
         

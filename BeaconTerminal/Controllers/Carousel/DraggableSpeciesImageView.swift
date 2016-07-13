@@ -14,6 +14,7 @@ class DraggableSpeciesImageView : DraggableImageView {
     var toSpecies: Species?
     var fromSpecies: Species?
     var doubleArrow = false
+    var inwardArrow = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)

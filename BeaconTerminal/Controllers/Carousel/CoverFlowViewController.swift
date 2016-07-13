@@ -212,7 +212,7 @@ extension CoverFlowViewController: UIScrollViewDelegate {
             if let cell = self.collectionView.cellForItemAtIndexPath(p) {
                 
                 cell.borderColor = UIColor.whiteColor()
-                cell.borderWidth = 2
+                cell.borderWidth = 1
                 
             }
             
@@ -229,11 +229,11 @@ extension CoverFlowViewController: UIScrollViewDelegate {
                 
                 if let cell = self.collectionView.cellForItemAtIndexPath(p) {
                     if p == centerIndexPath {
-                        cell.borderColor = UIColor.redColor()
-                        cell.borderWidth = 4
+                        cell.borderColor = UIColor.blueColor()
+                        cell.borderWidth = 1
                     } else {
                         cell.borderColor = UIColor.whiteColor()
-                        cell.borderWidth = 2
+                        cell.borderWidth = 1
                     }
                 }
                 

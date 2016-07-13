@@ -48,9 +48,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     
     var machine: StateMachine<ScanningState, NoEvent>!
     
-    var tags = [ ["0","#FFC91B"], ["1", "#5A6372"], ["6", "#8975B5"] ]
+    var tags = [ ["0","#99cc33"], ["1", "#5A6372"], ["6", "#502B6E"] ]
     
     var selectedSpeciesIndex = 0
+    var selectedBeaconDetail : BeaconID?
     
     // declared system sound here
     let systemSoundID: SystemSoundID = 1104
@@ -235,54 +236,55 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         //        coinSound?.volume = 1.0
         //        coinSound?.prepareToPlay()
-        dispatch_on_main {
-            // Do some UI stuff
-            AudioServicesPlaySystemSound(1104)
-            
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            
-            self.coinSound?.play()
-        }
-        
+//        dispatch_on_main {
+//            // Do some UI stuff
+//            AudioServicesPlaySystemSound(1104)
+//            
+//            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//            
+//            self.coinSound?.play()
+//        }
+//        
         
         
         
         print("FOUND STOPPED")
         //self.immediateBeacon.disconnect()
-        //        print"tags \(immediateBeacon.settings?.deviceInfo.tags.getValue())")
-        //        
-        //        let tags = immediateBeacon.settings?.deviceInfo.tags.getValue()
-        //        
-        //        var hexColor = ""
-        //        var index = 0
-        //        for tag in tags! {
-        //            
-        //            if tag.containsString("#") {
-        //                hexColor = tag
-        //            } else {
-        //                index = Int(tag)!
-        //            }
-        //            print"\(tag)")
-        //        }
+                print("tags \(immediateBeacon.settings?.deviceInfo.tags.getValue())")
+                
+                let tags = immediateBeacon.settings?.deviceInfo.tags.getValue()
+                
+                var hexColor = ""
+                var index = 0
+                for tag in tags! {
+                    
+                    if tag.containsString("#") {
+                        hexColor = tag
+                    } else {
+                        index = Int(tag)!
+                        
+                    }
+                    //print("\(tag)")
+                }
         
+        
+       // var tags = [ ["0","#99cc33"], ["1", "#5A6372"], ["6", "#502B6E"] ]
+
+        if index == 0 {
+            hexColor = "#99cc33"
+        } else if index == 6 {
+            hexColor = "#502B6E"
+        }
         //let beaconDetail = BeaconID(index: index, hexColor: hexColor)
         
-        let beaconDetail = BeaconID(index: 6, hexColor: "#897585")
+        selectedBeaconDetail = BeaconID(index: index, hexColor: hexColor)
         
-        print(beaconDetail.asSimpleDescription)
+//        print("\(selectedBeaconDetail!.asSimpleDescription)")
         
-        //        let realm = getAppDelegate().realm
-        //        
-        //        let critters = realm?.objects(Critter)
-        //        //let critters = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
-        //        
-        //        //print("critters \(critters)")
-        //        
-        //        let c = realm?.objects(Critter).filter("index = \(beaconDetail.index)")
-        //        
-        //        print("found \(c)")
+
         
-        //performSegueWithIdentifier("ShowBeaconSetup", sender: self)
+        self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: self)
+
     }
     
     func estDevice(device: ESTDeviceConnectable, didFailConnectionWithError error: NSError) {

@@ -10,9 +10,11 @@ struct BeaconID: Equatable, CustomStringConvertible, Hashable {
     let minor: CLBeaconMinorValue?
     var index: Int = 0
     var beaconColor: UIColor = UIColor.blackColor()
+    var hexColor : String = ""
     
     init(index: Int, hexColor: String) {
         self.index = index
+        self.hexColor = hexColor
         beaconColor = UIColor.redColor()
         self.proximityUUID = nil
         self.major = nil

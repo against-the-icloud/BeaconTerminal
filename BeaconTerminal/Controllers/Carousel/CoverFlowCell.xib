@@ -16,8 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ipv-Hz-G56">
-                        <rect key="frame" x="0.0" y="0.0" width="800" height="300"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ipv-Hz-G56">
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Kw-Xx-TkA" userLabel="header">
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="60"/>
@@ -40,8 +40,8 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tpw-1U-0pq">
-                                                <rect key="frame" x="62" y="12" width="654" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tpw-1U-0pq">
+                                                <rect key="frame" x="62" y="12" width="684" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="aDx-iB-ff7"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="eOP-iz-tim"/>
@@ -50,8 +50,8 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-PT-rXi">
-                                                <rect key="frame" x="724" y="12" width="60" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-PT-rXi">
+                                                <rect key="frame" x="754" y="12" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="dxR-lR-EYs"/>
                                                     <constraint firstAttribute="height" constant="30" id="kbY-pc-FQz"/>
@@ -97,7 +97,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxN-EI-lGo" userLabel="ProducerView" customClass="RelationshipsUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="pDropView" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-va-BdS" userLabel="pDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" restorationIdentifier="pDropView" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-va-BdS" userLabel="pDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="8" width="382" height="216"/>
                                                                 <userGuides>
                                                                     <userLayoutGuide location="109" affinity="minY"/>
@@ -133,7 +133,7 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
-                                                            <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="pAnchorView" translatesAutoresizingMaskIntoConstraints="NO" id="NK7-Mf-Op5" userLabel="pAnchorView">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="pAnchorView" translatesAutoresizingMaskIntoConstraints="NO" id="NK7-Mf-Op5" userLabel="pAnchorView">
                                                                 <rect key="frame" x="2" y="101" width="30" height="30"/>
                                                                 <color key="backgroundColor" red="0.1058823529" green="0.4431372549" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
@@ -176,7 +176,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="obz-SR-o71" userLabel="MutualView" customClass="RelationshipsUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="240" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="mDropView" translatesAutoresizingMaskIntoConstraints="NO" id="05Z-4l-VOk" userLabel="mDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" restorationIdentifier="mDropView" translatesAutoresizingMaskIntoConstraints="NO" id="05Z-4l-VOk" userLabel="mDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="8" width="382" height="216"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -262,7 +262,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMv-ts-cl3" userLabel="ConsumerView" customClass="RelationshipsUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cDropView" translatesAutoresizingMaskIntoConstraints="NO" id="eD7-Za-Vm7" userLabel="cDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" restorationIdentifier="cDropView" translatesAutoresizingMaskIntoConstraints="NO" id="eD7-Za-Vm7" userLabel="cDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
                                                                 <rect key="frame" x="2" y="8" width="382" height="216"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -298,7 +298,7 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
-                                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-8b-sij" userLabel="cAnchorView">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-8b-sij" userLabel="cAnchorView">
                                                                 <rect key="frame" x="368" y="101" width="30" height="30"/>
                                                                 <color key="backgroundColor" red="0.99215686270000003" green="0.71372549019999998" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
@@ -345,9 +345,32 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </view>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" restorationIdentifier="fLabel" text="PREFERENCES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPz-Xy-0eZ" userLabel="fLabel">
+                                                                <rect key="frame" x="235" y="0.0" width="129" height="20"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="129" id="87B-9D-sdq"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </label>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="WPz-Xy-0eZ" secondAttribute="trailing" constant="36" id="1BF-SF-PZt"/>
+                                                            <constraint firstItem="WPz-Xy-0eZ" firstAttribute="top" secondItem="RoT-Ru-e4G" secondAttribute="top" id="PTO-aD-pQE"/>
                                                             <constraint firstItem="HZo-df-jEe" firstAttribute="leading" secondItem="RoT-Ru-e4G" secondAttribute="leading" constant="2" id="QPP-HK-uFZ"/>
                                                             <constraint firstItem="HZo-df-jEe" firstAttribute="top" secondItem="RoT-Ru-e4G" secondAttribute="top" constant="8" id="S56-fc-xQ2"/>
                                                             <constraint firstAttribute="bottom" secondItem="HZo-df-jEe" secondAttribute="bottom" constant="16" id="gwN-tk-fBe"/>

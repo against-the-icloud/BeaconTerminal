@@ -88,6 +88,7 @@ class RelationshipsUIView: UIView {
                     dView.fromSpecies = fromSpecies
                     dView.toSpecies = r.toSpecies
                     dView.doubleArrow = shouldDoubleArrow()
+                    dView.inwardArrow = shouldInwardArrow()
                     dView.tag = (r.toSpecies?.index)!
                     
                     
@@ -96,7 +97,7 @@ class RelationshipsUIView: UIView {
                     dView.image = speciesImage
                     dropView.anchorView = anchorView
                     anchorView.hidden = false
-                    //anchorView.alpha = 0.5
+                    //anchorView.alpha = 0.8
 
                     dropView.addDraggableView(dView)
                 }
@@ -110,9 +111,9 @@ class RelationshipsUIView: UIView {
         //rounded corners
         let cornerRadius = anchorView.frame.width / 2.0
 //        anchorView.layer.borderColor = self.backgroundColor?.CGColor
-        anchorView.layer.borderColor = UIColor.blueColor().CGColor
+        anchorView.layer.borderColor = UIColor ( red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 ).CGColor
 
-        anchorView.layer.borderWidth = 1.0
+        anchorView.layer.borderWidth = 3.0
         anchorView.layer.masksToBounds = true
         anchorView.clipsToBounds = true
         anchorView.layer.cornerRadius = cornerRadius
@@ -156,10 +157,28 @@ class RelationshipsUIView: UIView {
             return false
         case "consumer":
             //left side mid
-            return false
+            return true
         case "mutual":
             //left side mid
             return true
+        default:
+            //nothing
+            return false
+        }
+        
+    }
+    
+    func shouldInwardArrow() -> Bool {
+        switch relationshipType! {
+        case "producer":
+            //left side mid
+            return false
+        case "consumer":
+            //left side mid
+            return true
+        case "mutual":
+            //left side mid
+            return false
         default:
             //nothing
             return false

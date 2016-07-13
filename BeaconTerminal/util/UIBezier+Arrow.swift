@@ -3,7 +3,7 @@ import Foundation
 
 extension UIBezierPath {
     
-    class func getAxisAlignedArrowPoints(inout points: Array<CGPoint>, forLength: CGFloat, tailWidth: CGFloat, headWidth: CGFloat, headLength: CGFloat, doubleArrow: Bool) {
+    class func getAxisAlignedArrowPoints(inout points: Array<CGPoint>, forLength: CGFloat, tailWidth: CGFloat, headWidth: CGFloat, headLength: CGFloat, doubleArrow: Bool, inwardArrow: Bool) {
         
        let tailLength = forLength - headLength
 
@@ -14,9 +14,12 @@ extension UIBezierPath {
         
         
         //arrowhead
-        points.append(CGPointMake(tailLength, headWidth/2))
-        points.append(CGPointMake(forLength, 0))
-        points.append(CGPointMake(tailLength, -headWidth/2))
+        if inwardArrow == false {
+                    points.append(CGPointMake(tailLength, headWidth/2))
+                    points.append(CGPointMake(forLength, 0))
+                    points.append(CGPointMake(tailLength, -headWidth/2))
+        }
+
 
         //left side length
         
@@ -39,7 +42,7 @@ extension UIBezierPath {
     }
     
     
-    class func bezierPathWithArrowFromPoint(startPoint:CGPoint, endPoint: CGPoint, tailWidth: CGFloat, headWidth: CGFloat, headLength: CGFloat, doubleArrow: Bool) -> UIBezierPath {
+    class func bezierPathWithArrowFromPoint(startPoint:CGPoint, endPoint: CGPoint, tailWidth: CGFloat, headWidth: CGFloat, headLength: CGFloat, doubleArrow: Bool, inwardArrow: Bool) -> UIBezierPath {
         
         let xdiff: Float = Float(endPoint.x) - Float(startPoint.x)
         let ydiff: Float = Float(endPoint.y) - Float(startPoint.y)
@@ -49,7 +52,7 @@ extension UIBezierPath {
 
         
         var points = [CGPoint]()
-        self.getAxisAlignedArrowPoints(&points, forLength: CGFloat(length), tailWidth: tailWidth, headWidth: headWidth, headLength: headLength, doubleArrow: doubleArrow)
+        self.getAxisAlignedArrowPoints(&points, forLength: CGFloat(length), tailWidth: tailWidth, headWidth: headWidth, headLength: headLength, doubleArrow: doubleArrow, inwardArrow: inwardArrow)
         
         var transform: CGAffineTransform = self.transformForStartPoint(startPoint, endPoint: endPoint, length:  CGFloat(length))
         
