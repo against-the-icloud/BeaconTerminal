@@ -206,21 +206,6 @@ class RelationshipDropView: DropTargetView {
         return CGPointZero
     }
     
-    override func drawRect(rect: CGRect) {
-        let con = UIGraphicsGetCurrentContext()
-        CGContextClearRect(con, rect)
-        CGContextSetFillColorWithColor(con, self.backgroundColor?.CGColor)
-        CGContextFillRect(con, rect)
-        if isEditing {
-//            for (_, value) in targetPaths {
-//                //value.lineWidth = lineWidth
-//                UIColor.blackColor().setStroke()
-//                value.stroke()
-//            }
-        } else {
-            super.drawRect(rect)
-        }
-    }
 
     // Resizes an input image (self) to a specified size
     func imageView() -> UIImage? {

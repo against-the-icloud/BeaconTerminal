@@ -45,14 +45,14 @@ class CoverFlowViewController: UIViewController {
     
     func setup() {
         //load test group
-        let groups : Results<Group> = (getAppDelegate().realmDataController?.realm.objects(Group))!
+        let groups : Results<Group> = (realmDataController?.realm.objects(Group))!
         if groups.count > 0 {
             currentGroup = groups[groupId]
         }
         
-        notificationToken = getAppDelegate().realmDataController?.realm.addNotificationBlock {
+        notificationToken = realmDataController?.realm.addNotificationBlock {
             notification in
-            let groups : Results<Group> = (getAppDelegate().realmDataController?.realm.objects(Group.self))!
+            let groups : Results<Group> = (realmDataController?.realm.objects(Group.self))!
             if groups.count > 0 {
                 self.currentGroup = groups[self.groupId]
             }

@@ -10,32 +10,36 @@ import Material
 class SideViewController: UITableViewController {
 
 
+    // MARK: View Methods
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
 
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.whiteColor()
     }
 
+    // MARK: table
+    
     /// Select item at row in tableView.
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        LOG.debug("SIDEVIEW CONTROLLER ROW \(indexPath.row)")
-        LOG.debug("SIDEVIEW CONTROLLER SECTION \(indexPath.section)")
+
 
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
+                
+                getAppDelegate().changeSystemStateTo(ApplicationState.PLACE_GROUP)
+                
                 //place group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
-                mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
+                //mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
 
 
                 let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
 
-                let bottomNavigationController: BottomNavigationController = BottomNavigationController()
+                let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
                 bottomNavigationController.selectedIndex = 0
@@ -51,15 +55,18 @@ class SideViewController: UITableViewController {
                         animations: nil,
                         completion: {
                             [weak self] _ in
+                            bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+
                             self?.navigationDrawerController?.closeLeftView()
                         })
             case 1:
                 //place terminal
 
 
+                getAppDelegate().changeSystemStateTo(ApplicationState.PLACE_TERMINAL)
+                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
-                mainViewController.changeApplicationState(ApplicationState.PLACE_TERMINAL)
 
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainViewController)
 
@@ -79,15 +86,17 @@ class SideViewController: UITableViewController {
         } else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
+                
+                getAppDelegate().changeSystemStateTo(ApplicationState.OBJECT_GROUP)
+                
                 //object group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
-                mainViewController.changeApplicationState(ApplicationState.OBJECT_GROUP)
-
+       
 
                 let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
 
-                let bottomNavigationController: BottomNavigationController = BottomNavigationController()
+                let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
                 bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
@@ -103,6 +112,8 @@ class SideViewController: UITableViewController {
                                                                              animations: nil,
                                                                              completion: {
                                                                                 [weak self] _ in
+                                                                                bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+                                                                                
                                                                                 self?.navigationDrawerController?.closeLeftView()
                     })
 

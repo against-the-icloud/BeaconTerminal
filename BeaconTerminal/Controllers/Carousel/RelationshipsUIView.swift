@@ -97,7 +97,7 @@ class RelationshipsUIView: UIView {
                     dView.image = speciesImage
                     dropView.anchorView = anchorView
                     anchorView.hidden = false
-                    //anchorView.alpha = 0.8
+                    anchorView.alpha = 0.5
 
                     dropView.addDraggableView(dView)
                 }

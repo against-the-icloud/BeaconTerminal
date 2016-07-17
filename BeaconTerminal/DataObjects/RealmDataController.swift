@@ -13,7 +13,9 @@ import SwiftyJSON
 class RealmDataController {
     
     let realm: Realm!
-   
+    var currentGroup : Group?
+    var currentSection : String?
+    
     init(realm: Realm) {
         self.realm = realm
     }
@@ -28,11 +30,24 @@ class RealmDataController {
         }
     }
 
-    func findSpecies(speciesIndex: Int) -> Species? {
-        let foundSpecies = realm!.objects(Species).filter("index = \(speciesIndex)")[0] as Species!
-        return foundSpecies
+    // Mark: Group
+    
+    func checkGroups() -> Bool {
+        let foundGroups = realm!.objects(Group)
+        
+        if foundGroups.count == 0 {
+            currentGroup = addTestGroup()
+            add(currentGroup!, shouldUpdate: false)
+            if DEBUG {
+                LOG.debug("Added Groups, not present")
+            }
+            return false
+        }
+        
+        return true
+        
     }
-
+    
     func addTestGroup() -> Group {
         let simulationConfiguration = createDefaultConfiguration()
 
@@ -44,7 +59,7 @@ class RealmDataController {
 
 
         let teacher = "Jonna Jet"
-        let section = "6DF"
+        currentSection = "6DF"
 
 
         //four members
@@ -52,7 +67,7 @@ class RealmDataController {
             let member = Member()
             member.id = NSUUID().UUIDString
             member.name = Randoms.randomFakeFirstName()
-            member.section = section
+            member.section = currentSection
             member.teacher = teacher
             member.last_modified = NSDate()
             group.members.append(member)
@@ -76,7 +91,7 @@ class RealmDataController {
             
         return group
     }
-
+    
     func createSpeciesObservation(fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
         speciesObservation.id = NSUUID().UUIDString
@@ -111,21 +126,9 @@ class RealmDataController {
         
         return speciesObservation
     }
-    
-    func checkGroups() -> Bool {
-        let foundGroups = realm!.objects(Group)
-        
-        if foundGroups.count == 0 {
-            add(addTestGroup(), shouldUpdate: false)
-            if DEBUG {
-                LOG.debug("Added Groups, not present")
-            }
-            return false
-        }
-        
-        return true
 
-    }
+    
+    // Mark: Nutella
     
     func checkNutellaConfigs() -> Bool {
         let foundConfigs = realm!.objects(NutellaConfig)
@@ -207,6 +210,8 @@ class RealmDataController {
         return nutellaConfigs
     }
 
+    // Mark: Configuration
+    
     func createDefaultConfiguration() -> SimulationConfiguration {
         let path = NSBundle.mainBundle().pathForResource("wallcology_configuration", ofType: "json")
         let jsonData = NSData(contentsOfFile:path!)
@@ -288,6 +293,13 @@ class RealmDataController {
             try! realm!.write {
                 realm!.add(createDefaultConfiguration())
             }
+    }
+
+    // Mark: Species
+    
+    func findSpecies(speciesIndex: Int) -> Species? {
+        let foundSpecies = realm!.objects(Species).filter("index = \(speciesIndex)")[0] as Species!
+        return foundSpecies
     }
 
     static func generateImageFileNameFromIndex(index: Int) -> String {

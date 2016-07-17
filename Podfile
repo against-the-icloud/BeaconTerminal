@@ -22,4 +22,5 @@ target 'BeaconTerminal' do
 
     #state machine
     pod 'SwiftState'
+    pod 'Transporter', '~> 2.0.0'
 end

@@ -6,9 +6,9 @@ import MobileCoreServices
 import SwiftState
 //import ALCameraViewController
 
-enum ApplicationState: StateType {
-    case START, PLACE_TERMINAL, PLACE_GROUP, OBJECT_GROUP
-}
+//enum ApplicationState: StateType {
+//    case START, PLACE_TERMINAL, PLACE_GROUP, OBJECT_GROUP
+//}
 
 enum ToolTypes: String {
     case PHOTO_LIB, CAMERA, SCREENSHOT, SCANNER, TRASH
@@ -40,94 +40,117 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var currentlySelectedEcosystem = 0
     var currentlySelectedSpecies = 0
 
-    var machine: StateMachine<ApplicationState, NoEvent>!
+    //var machine: StateMachine<ApplicationState, NoEvent>!
 
     var toolMenuButtons = [UIView]()
     var speciesMenuButtons = [UIView]()
 
-    var passThroughImageView : UIImageView?
+    var passThroughImageView: UIImageView?
     
     var popoverNavigationController: UINavigationController?
 
-    var blurEffectView : UIView?
+    var blurEffectView: UIView?
     
-    let diameter: CGFloat = 75.0
+    var sideMenuButtonDiameter: CGFloat {
+        
+        get {
+            
+            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            let numButtons : CGFloat = 12.0
+            let buttonSpacing : CGFloat = 10.0
+            
+            //button size
+            let buttonSize = (screenHeight - (numButtons * buttonSpacing)) / numButtons
+            
+            return floor(buttonSize)
+        }
+    
+    }
+    
+    var speciesMenuButtonCenter: CGPoint {
+        get {
+            //lower left
+            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            
+            let x: CGFloat = 10
+            let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
+            
+            return CGPointMake(x, y)
+        }
+    }
+    
+    var toolsMenuButtonCenter: CGPoint {
+        get {
+            //lower right
+            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
 
-    //var relationshipContributionViewController : RelationshipsContributionViewController?
-
+            let x: CGFloat = screenWidth - (sideMenuButtonDiameter + 10)
+            let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
+            
+            return CGPointMake(x, y)
+        }
+    }
+    
+    
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
-    // MARK: UI
-    @IBOutlet weak var toolbarView: ToolbarView!
 
     var toolsMenuView : MenuView = MenuView()
     var speciesMenuView : MenuView = MenuView()
 
     var scanButton: FabButton?
 
-
+    // MARK: UIVIEWCONTROLLER METHODS
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+ 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initStateMachine()
     }
-
-    // MARK: UIVIEWCONTROLLER METHODS
-
-    func initStateMachine() {
-        machine = StateMachine<ApplicationState, NoEvent>(state: .START) {
-            machine in
-            machine.addRoute(.Any => .START) {
-                context in
-            }
-
-            machine.addRoute(.Any => .PLACE_GROUP) {
-                context in
-            }
-
-            machine.addRoute(.Any => .PLACE_TERMINAL) {
-                context in
-            }
-
-            machine.addRoute(.Any => .OBJECT_GROUP) {
-                context in
-            }
-
-            machine.addHandler(.Any => .PLACE_GROUP) { context in
-
-                
-//                self.prepareTabBarItem()
-//                self.prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT])
-//                self.prepareView()
-//                self.prepareToolbar("PLACE GROUP TABLET", hasGroup: true)
-//                self.prepareCamera()
-//                self.prepareSpeciesMenu()
-            }
-
-            machine.addHandler(.Any => .PLACE_TERMINAL) { context in
-//                self.setTabBarVisible(false, duration: 0.3, animated: true)
-//                self.prepareView()
-//                self.prepareToolbar("PLACE TERMINAL", hasGroup: false)
-                
-            }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        prepareViews()
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationDrawerController?.enabled = true
+        let scannerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("scannerViewController")
+        scannerViewController!.modalPresentationStyle = .OverFullScreen
+        
+        
+        if shouldPresentScanner {
             
-            machine.addHandler(.Any => .OBJECT_GROUP) { context in
-                //                self.setTabBarVisible(false, duration: 0.3, animated: true)
-                //                self.prepareView()
-                //                self.prepareToolbar("PLACE TERMINAL", hasGroup: false)
-                
-            }
+            //performSegueWithIdentifier("scannerViewSegue", sender: nil)
+            self.shouldPresentScanner = false
+            //            LOG.debug("Presented Scanner")
         }
-        machine <- .START
+        
     }
-
-
+    
+    // MARK: Preparations
+    
+    // check the state of the system and draw that
     func prepareViews() {
-        switch machine.state {
+        let state = getAppDelegate().checkApplicationState()
+        switch state {
         case .PLACE_GROUP:
             prepareTabBarItem()
+            prepareSpeciesMenu()
+            prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
         case .PLACE_TERMINAL:
             print()
         case .OBJECT_GROUP:
@@ -138,55 +161,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             print("")
         }
     }
-
-    func changeApplicationState(state: ApplicationState) {
-        switch state {
-        case .PLACE_GROUP:
-            machine <- .PLACE_GROUP
-        case .PLACE_TERMINAL:
-            machine <- .PLACE_TERMINAL
-        case .OBJECT_GROUP:
-            machine <- .OBJECT_GROUP
-        default:
-            machine <- .PLACE_GROUP
-        }
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        prepareNavigationItem()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.prepareViews()
-    }
     
-    /// Prepares the navigationItem.
-    private func prepareNavigationItem() {
-        
-        let changeNavigationTitle = { (newNavTitle: String) -> Void in
-            
-            let nav = self.navigationController?.navigationBar
-            nav?.tintColor = UIColor.whiteColor()
-            nav?.topItem?.titleLabel.textColor = UIColor.whiteColor()
-            nav?.topItem?.titleLabel.text = newNavTitle
-        }
-            
-        switch machine.state {
-        case .PLACE_GROUP:
-            changeNavigationTitle("Place Condition Group Tablet")
-        case .PLACE_TERMINAL:
-            changeNavigationTitle("Place Condition Terminal Tablet")
-        case .OBJECT_GROUP:
-            changeNavigationTitle("Object Condition Terminal Tablet")
-        default:
-            print("")
-        }
-
-    
-    }
-
     /// Prepare tabBarItem.
     private func prepareTabBarItem() {
         tabBarItem.title = "Species"
@@ -196,109 +171,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         tabBarItem.setTitleColor(MaterialColor.white, forState: .Selected)
     }
 
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        let scannerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("scannerViewController")
-        scannerViewController!.modalPresentationStyle = .OverFullScreen
-
-
-        if shouldPresentScanner {
-
-            //performSegueWithIdentifier("scannerViewSegue", sender: nil)
-            self.shouldPresentScanner = false
-//            LOG.debug("Presented Scanner")
-        }
-
-    }
-
-    func changeSpecies(index: Int) {
-
-        var speciesIndex = 0
-
-        if index == -1 {
-            speciesIndex = Int(arc4random_uniform(10) + 1)
-            LOG.debug("random critter \(speciesIndex)")
-        } else {
-            speciesIndex = index
-        }
-
-        let foundCritter = getAppDelegate().realmDataController?.findSpecies(speciesIndex)
-        //
-        LOG.debug("\(foundCritter)")
-
-        let speciesColor = foundCritter!.convertHexColor()
-
-
-        let newTextColor = UIColor.whiteColor()
-
-
-        if Util.isLightColor(newTextColor) {
-            UIApplication.sharedApplication().statusBarStyle = .LightContent
-        } else {
-
-            UIApplication.sharedApplication().statusBarStyle = .Default
-
-        }
-
-        self.setNeedsStatusBarAppearanceUpdate()
-
-        self.toolbarView.updateToolbarColors(speciesColor, newTextColor: newTextColor)
-        self.toolbarView.updateProfileImage(foundCritter!.index)
-        self.toolbarView.promoteProfileView()
-        //update toolbar and tabbar
-
-    }
-
-    func resetSpecies() {
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
-
-        self.setNeedsStatusBarAppearanceUpdate()
-        self.toolbarView.resetToolbarView()
-        self.toolbarView.updateProfileImage(-1)
-        self.toolbarView.promoteProfileView()
-    }
-
-    //
-    func simulate(index: Int, type: String) {
-
-        if type == "ECOSYSTEM" {
-            switch index {
-            case 0 ... 3:
-                print("not")
-                    //simulateEcosystem(index)
-            case 4:
-                disconnectEcosystem()
-            default:
-                LOG.info("unregonized test choice")
-            }
-
-        } else if type == "SPECIES" {
-            switch index {
-            case 0:
-                simulateSpecies(-1)
-            case 1:
-                disconnectSpecies()
-            case 2 ... 11:
-                simulateSpecies(index - 2)
-            default:
-                LOG.info("unrecongized test choice")
-            }
-        }
-
-
-    }
-
-    func simulateSpecies(index: Int) {
-        changeSpecies(index)
-    }
-
-    func disconnectEcosystem() {
-
-    }
-
-    func disconnectSpecies() {
-        self.resetSpecies()
-    }
 
     func openCamera() {
         if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
@@ -354,6 +226,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
             nav?.tintColor = UIColor.whiteColor()
             nav?.topItem?.titleLabel.textColor = UIColor.whiteColor()
+            
+            self.navigationController?.navigationBar.layer.zPosition = -1;
         }
         
         changeNavigationColor(speciesBeaconDetail!.hexColor)
@@ -370,14 +244,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
         let simulationIndex = svc.simulationIndex
         let simulationType = svc.simulationType
-        self.simulate(simulationIndex, type: simulationType)
+//        self.simulate(simulationIndex, type: simulationType)
         LOG.debug("UNWINDED TO SIMULATION TYPE, INDEX \(simulationIndex) :TYPE: \(simulationType)")
-    }
-
-    // MARK: Actions
-
-    @IBAction func sideMenuAction(sender: UIButton) {
-        navigationDrawerController?.openLeftView()
     }
 
     // MARK: Photo Related
@@ -621,7 +489,7 @@ extension MainViewController {
      
 
         /// Diameter for FabButtons.
-        let speciesDiameter: CGFloat = diameter - 5.0
+        let speciesDiameter: CGFloat = sideMenuButtonDiameter - 5.0
 
         speciesMenuButtons = [UIView]()
 
@@ -629,7 +497,7 @@ extension MainViewController {
         //create add button
 
         var image: UIImage? = UIImage(named: "tb_add_white")!
-        image = image!.resizeToSize(CGSize(width: diameter / 2, height: diameter / 2))
+        image = image!.resizeToSize(CGSize(width: sideMenuButtonDiameter / 2, height: sideMenuButtonDiameter / 2))
 
 
         let addButton: FabButton = FabButton()
@@ -643,12 +511,13 @@ extension MainViewController {
         addButton.setImage(image, forState: .Highlighted)
 
         addButton.addTarget(self, action: #selector(handleSpeciesMenuSelection), forControlEvents: .TouchUpInside)
-        addButton.width = diameter
-        addButton.height = diameter
+        addButton.width = sideMenuButtonDiameter
+        addButton.height = sideMenuButtonDiameter
 
         addButton.shadowColor = MaterialColor.black
         addButton.shadowOpacity = 0.5
         addButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
+        addButton.layer.zPosition = CGFloat(FLT_MAX)
 
 
         speciesMenuView.addSubview(addButton)
@@ -687,47 +556,15 @@ extension MainViewController {
 
         // Initialize the menu and setup the configuration options.
         speciesMenuView.menu.direction = .Up
-        speciesMenuView.menu.baseSize = CGSizeMake(diameter, diameter)
+        speciesMenuView.menu.baseSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
         speciesMenuView.menu.itemSize = CGSizeMake(speciesDiameter, speciesDiameter)
         speciesMenuView.menu.views = speciesMenuButtons
 
 
-        view.addSubview(speciesMenuView)
-        Layout.size(view, child: speciesMenuView, width: diameter, height: diameter)
-        Layout.bottomLeft(view, child: speciesMenuView, bottom: 50, left: 10)
-        
-        speciesMenuView.zPosition = 1000
-
-        
-        //Layout.size(view, child: toolsMenuView, width: diameter, height: diameter)
-        //Layout.bottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
-        //UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
-        //speciesMenuView.center = CGPoint(x: 16, y: 1022)
-
-//        var tabView : (UIView) = self.tabBarController!.view
-//        var btnPoint : CGPoint = recordButton.center;
-//        var btnRect : CGPoint = recordButton.convertPoint(btnPoint, toView: tabView)
-//        self.tabBarController?.view.addSubview(recordButton)
-//        recordButton.frame.origin = btnRect
 
 
-      //  if self.tabBarIsVisible() {
-//            var tabView = self.tabBarController!.view
-//        var btnPoint : CGPoint = speciesMenuView2.center
-//        var btnRect : CGPoint = speciesMenuView2.convertPoint(btnPoint, toView: tabView)
-//        self.tabBarController?.view.addSubview(speciesMenuView2)
-//        speciesMenuView2.frame.origin = btnRect
-
-//        recordButton.frame.origin = btnRect
-//        } else {
-           // speciesMenuView.frame.origin = CGPoint(x: 16, y: 1022)
-//            view.addSubview(speciesMenuView)
-//            Layout.size(view, child: speciesMenuView, width: diameter, height: diameter)
-//            Layout.bottomLeft(view, child: speciesMenuView, bottom: 50, left: 10)
-////
-//        // Print out the dimensions of the labels.
-//            view.layoutIfNeeded()
-
+        speciesMenuView.center = speciesMenuButtonCenter
+        getAppDelegate().window?.addSubview(speciesMenuView)
     }
 
     /// Prepares the MenuView example.
@@ -737,7 +574,7 @@ extension MainViewController {
         
 
         /// Diameter for FabButtons.
-        let toolsButtonDiameter: CGFloat = diameter - 5.0
+        let toolsButtonDiameter: CGFloat = sideMenuButtonDiameter - 5.0
 
 
          toolMenuButtons = [UIView]()
@@ -747,7 +584,7 @@ extension MainViewController {
 
         var image: UIImage? = UIImage(named: "tb_tools_wrench_white")!
 
-        image = image!.resizeToSize(CGSize(width: diameter / 2, height: diameter / 2))!
+        image = image!.resizeToSize(CGSize(width: sideMenuButtonDiameter / 2, height: sideMenuButtonDiameter / 2))!
 
         let toolsButton: FabButton = FabButton()
         toolsButton.depth = .None
@@ -761,8 +598,8 @@ extension MainViewController {
 
 
         toolsButton.addTarget(self, action: #selector(handleToolsMenuSelection), forControlEvents: .TouchUpInside)
-        toolsButton.width = diameter
-        toolsButton.height = diameter
+        toolsButton.width = sideMenuButtonDiameter
+        toolsButton.height = sideMenuButtonDiameter
 
         toolsButton.shadowColor = MaterialColor.black
         toolsButton.shadowOpacity = 0.5
@@ -790,8 +627,8 @@ extension MainViewController {
                 scanButton.setImage(image, forState: .Highlighted)
 
                 scanButton.addTarget(self, action: #selector(scanAction), forControlEvents: .TouchUpInside)
-                scanButton.width = diameter
-                scanButton.height = diameter
+                scanButton.width = sideMenuButtonDiameter
+                scanButton.height = sideMenuButtonDiameter
 
                 scanButton.shadowColor = MaterialColor.black
                 scanButton.shadowOpacity = 0.5
@@ -816,8 +653,8 @@ extension MainViewController {
                 cameraButton.setImage(image, forState: .Highlighted)
 
                 cameraButton.addTarget(self, action: #selector(cameraAction), forControlEvents: .TouchUpInside)
-                cameraButton.width = diameter
-                cameraButton.height = diameter
+                cameraButton.width = sideMenuButtonDiameter
+                cameraButton.height = sideMenuButtonDiameter
 
                 cameraButton.shadowColor = MaterialColor.black
                 cameraButton.shadowOpacity = 0.5
@@ -844,8 +681,8 @@ extension MainViewController {
                 photoLibButton.setImage(image, forState: .Highlighted)
 
                 photoLibButton.addTarget(self, action: #selector(photoAlbumAction), forControlEvents: .TouchUpInside)
-                photoLibButton.width = diameter
-                photoLibButton.height = diameter
+                photoLibButton.width = sideMenuButtonDiameter
+                photoLibButton.height = sideMenuButtonDiameter
 
                 photoLibButton.shadowColor = MaterialColor.black
                 photoLibButton.shadowOpacity = 0.5
@@ -872,8 +709,8 @@ extension MainViewController {
                 screenShotButton.setImage(image, forState: .Highlighted)
 
                 screenShotButton.addTarget(self, action: #selector(screenShotAction), forControlEvents: .TouchUpInside)
-                screenShotButton.width = diameter
-                screenShotButton.height = diameter
+                screenShotButton.width = sideMenuButtonDiameter
+                screenShotButton.height = sideMenuButtonDiameter
 
                 screenShotButton.shadowColor = MaterialColor.black
                 screenShotButton.shadowOpacity = 0.5
@@ -891,17 +728,19 @@ extension MainViewController {
 
         // Initialize the menu and setup the configuration options.
         toolsMenuView.menu.direction = .Up
-        toolsMenuView.menu.baseSize = CGSizeMake(diameter, diameter)
+        toolsMenuView.menu.baseSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
         toolsMenuView.menu.itemSize = CGSizeMake(toolsButtonDiameter, toolsButtonDiameter)
         toolsMenuView.menu.views = toolMenuButtons
 
-        
 
-        view.addSubview(toolsMenuView)
+        toolsMenuView.center = toolsMenuButtonCenter
+        getAppDelegate().window?.addSubview(toolsMenuView)
 
-        Layout.size(view, child: toolsMenuView, width: diameter, height: diameter)
-        Layout.bottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
-        UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
+//        view.addSubview(toolsMenuView)
+//
+//        Layout.size(view, child: toolsMenuView, width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
+//        Layout.bottomRight(view, child: toolsMenuView, bottom: 50, right: 10)
+//        UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(toolsMenuView)
 
     }
 }

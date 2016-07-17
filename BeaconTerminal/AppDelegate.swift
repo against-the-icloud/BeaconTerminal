@@ -4,6 +4,7 @@ import Material
 import XCGLogger
 import SwiftyJSON
 import Nutella
+import Transporter
 
 let DEBUG = true
 
@@ -26,12 +27,38 @@ let LOG: XCGLogger = {
     return LOG
 }()
 
+//state machine
+
+enum ApplicationState {
+    case START
+    case PLACE_TERMINAL
+    case PLACE_GROUP
+    case OBJECT_GROUP
+}
+
+//init states
+let placeTerminalState = State(ApplicationState.PLACE_TERMINAL)
+let placeGroupState = State(ApplicationState.PLACE_GROUP)
+let objectGroupState = State(ApplicationState.OBJECT_GROUP)
+let applicationStateMachine = StateMachine(initialState: placeGroupState, states: [objectGroupState,placeTerminalState])
+//init events
+
+let placeTerminalEvent = Event(name: "PLACE_TERMINAL", sourceValues: [ApplicationState.OBJECT_GROUP, ApplicationState.PLACE_GROUP],
+                               destinationValue: ApplicationState.PLACE_TERMINAL)
+
+let placeGroupEvent = Event(name: "PLACE_GROUP", sourceValues: [ApplicationState.OBJECT_GROUP, ApplicationState.PLACE_TERMINAL], destinationValue: ApplicationState.PLACE_GROUP)
+let objectGroupEvent = Event(name: "OBJECT_GROUP", sourceValues: [ApplicationState.PLACE_GROUP, ApplicationState.PLACE_TERMINAL], destinationValue: ApplicationState.OBJECT_GROUP)
+
+var realmDataController : RealmDataController?
+
+
+
+
+
 struct Platform {
-    
     static var isSimulator: Bool {
         return TARGET_OS_SIMULATOR != 0 // Use this line in Xcode 7 or newer
     }
-    
 }
 
 var realm: Realm?
@@ -49,10 +76,10 @@ func getAppDelegate() -> AppDelegate {
 class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     
     var window: UIWindow?
-    var realmDataController : RealmDataController?
     var nutella: Nutella?
     
-    let bottomNavigationController: BottomNavigationController = BottomNavigationController()
+    let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
+    
     
     
     var beaconIDs = [
@@ -66,12 +93,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         
         prepareDB()
         //setupNutellaConnection(HOST)
-
+        
+        initStateMachine()
         
         prepareViews()
+       
         
         UIView.hr_setToastThemeColor(color: UIColor.grayColor())
-
+        
         
         
         return true
@@ -79,13 +108,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     
     
     func prepareViews() {
-        // Create controllers from storyboards
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
-        mainViewController.changeApplicationState(ApplicationState.OBJECT_GROUP)
         let sideViewController = storyboard.instantiateViewControllerWithIdentifier("sideViewController") as! SideViewController
         let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
         
+        
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+        
+        
+        // create drawer
+        
+        let navigationDrawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         //tabbar
         
@@ -95,18 +130,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
         bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.Automatic
         
-        //create top navigationbar
-        
-        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        
-        // create drawer
-        
-        let drawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
-        
         // Configure the window with the SideNavigationController as the root view controller
         window = UIWindow(frame:UIScreen.mainScreen().bounds)
-        window?.rootViewController = drawerController
+        window?.rootViewController = navigationDrawerController
         window?.makeKeyAndVisible()
+        
+        mainViewController.prepareViews()
     }
     
     
@@ -119,8 +148,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
             //TODO
             //device config
             try! realm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "InMemoryRealm"))
-//            let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
-//            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+            //            let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
+            //            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         }
         
         realmDataController = RealmDataController(realm: realm!)
@@ -148,9 +177,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
             let config = nutellaConfigs[0]
             
             nutella = Nutella(brokerHostname: config.host!,
-                                   appId: config.appId!,
-                                   runId: config.runId!,
-                                   componentId: config.componentId!)
+                              appId: config.appId!,
+                              runId: config.runId!,
+                              componentId: config.componentId!)
             nutella?.netDelegate = self
             nutella?.resourceId = config.resourceId
             
@@ -164,9 +193,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     
     func showToast(message: String) {
         if let presentWindow = UIApplication.sharedApplication().keyWindow {
-                presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop)
+            presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop)
         }
     }
+    
+    // MARK: StateMachine
+    func initStateMachine() {
+        
+        applicationStateMachine.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent])
+        
+        placeTerminalState.didEnterState = { state in self.preparePlaceTerminal() }
+        placeGroupState.didEnterState = { state in self.preparePlaceGroup() }
+        objectGroupState.didEnterState = { state in self.prepareObjectGroup() }
+        
+        //init with group termainal
+        applicationStateMachine.fireEvent(objectGroupEvent)
+    }
+    
+    func changeSystemStateTo(state: ApplicationState) {
+        switch state {
+        case .PLACE_GROUP:
+            applicationStateMachine.fireEvent(placeGroupEvent)
+        case .PLACE_TERMINAL:
+            applicationStateMachine.fireEvent(placeTerminalEvent)
+        case .OBJECT_GROUP:
+            applicationStateMachine.fireEvent(objectGroupEvent)
+        default:
+            break
+        }
+    }
+    
+    func checkApplicationState() -> ApplicationState {
+        return applicationStateMachine.currentState.value
+    }
+    
+    func preparePlaceTerminal() {
+    }
+    
+    func preparePlaceGroup() {
+        bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+        
+    }
+    
+    func prepareObjectGroup() {
+        bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+    }
+    
+    
     
     
     func applicationWillResignActive(application: UIApplication) {

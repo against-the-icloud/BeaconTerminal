@@ -11,6 +11,7 @@
 		702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCA3A1CE1A527000B6EDE /* BeaconID.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */; };
+		705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */; };
 		7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */; };
 		7088B0CF1D049A42002BA440 /* ObservationDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088B0CE1D049A42002BA440 /* ObservationDropView.swift */; };
 		708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D70631D2EFEF70032F422 /* CoverFlowCell.swift */; };
@@ -114,6 +115,7 @@
 		702DCA3A1CE1A527000B6EDE /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
 		7042041B1CE8E94D00C09FD0 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = Views/UIViewExtensions.swift; sourceTree = "<group>"; };
+		705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBottomNavigationController.swift; sourceTree = "<group>"; };
 		7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelationshipDropView.swift; path = BeaconTerminal/Controllers/Carousel/RelationshipDropView.swift; sourceTree = SOURCE_ROOT; };
 		7088B0CE1D049A42002BA440 /* ObservationDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationDropView.swift; sourceTree = "<group>"; };
 		708D70631D2EFEF70032F422 /* CoverFlowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowCell.swift; sourceTree = "<group>"; };
@@ -239,7 +241,6 @@
 			children = (
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				7088B0CE1D049A42002BA440 /* ObservationDropView.swift */,
-				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,6 +308,7 @@
 				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
 				70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */,
 				70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */,
+				705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */,
 			);
 			name = Setup;
 			sourceTree = "<group>";
@@ -466,6 +468,7 @@
 				C0A7DF09BE0BEEFF3C56FC58 /* ObservationView.swift */,
 				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
+				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
 				70C487461D32A6DF004F103A /* RelationshipsUIView.swift */,
 			);
 			path = Carousel;
@@ -738,6 +741,7 @@
 				AED961761C71EBA000697B6D /* RSSINormalization.swift in Sources */,
 				7042041F1CE8E94D00C09FD0 /* UIViewExtensions.swift in Sources */,
 				C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */,
+				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
