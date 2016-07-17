@@ -51,16 +51,19 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     var blurEffectView: UIView?
     
+    
+    let sideMenuButtonSpacing: CGFloat = 10.0
+    
     var sideMenuButtonDiameter: CGFloat {
         
         get {
             
             let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
-            let numButtons : CGFloat = 12.0
-            let buttonSpacing : CGFloat = 10.0
+            let numButtons: CGFloat = 12.0
+            
             
             //button size
-            let buttonSize = (screenHeight - (numButtons * buttonSpacing)) / numButtons
+            let buttonSize = (screenHeight - (numButtons * sideMenuButtonSpacing)) / numButtons
             
             return floor(buttonSize)
         }
@@ -158,7 +161,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             prepareSpeciesMenu()
             prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
         default:
-            print("")
+            break
         }
     }
     
@@ -489,7 +492,7 @@ extension MainViewController {
      
 
         /// Diameter for FabButtons.
-        let speciesDiameter: CGFloat = sideMenuButtonDiameter - 5.0
+        let speciesDiameter: CGFloat = sideMenuButtonDiameter - 1.0
 
         speciesMenuButtons = [UIView]()
 
@@ -556,8 +559,9 @@ extension MainViewController {
 
         // Initialize the menu and setup the configuration options.
         speciesMenuView.menu.direction = .Up
-        speciesMenuView.menu.baseSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
-        speciesMenuView.menu.itemSize = CGSizeMake(speciesDiameter, speciesDiameter)
+        speciesMenuView.menu.spacing = sideMenuButtonSpacing
+        speciesMenuView.menu.baseSize = CGSizeMake(speciesDiameter, speciesDiameter)
+        speciesMenuView.menu.itemSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
         speciesMenuView.menu.views = speciesMenuButtons
 
 
@@ -722,7 +726,7 @@ extension MainViewController {
 
 
             case .TRASH:
-                print("not yet")         
+                break
             }
         }
 

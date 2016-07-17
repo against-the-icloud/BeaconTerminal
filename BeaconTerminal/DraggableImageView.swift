@@ -100,6 +100,8 @@ class DraggableImageView: UIImageView {
 
 
                 self.currentView = sender.view as? DraggableImageView
+                self.startPoint = self.currentView?.center
+
 //                if let startPoint = self.startPoint {
 //                    self.currentView?.center =  startPoint
 //                }
@@ -121,6 +123,34 @@ class DraggableImageView: UIImageView {
             self.currentView!.center = CGPointMake(self.currentView!.center.x + translation.x, currentView!.center.y + translation.y)
             sender.setTranslation(CGPointZero, inView: currentView!.superview)
 
+            
+            //check if it is getting clipped
+            
+            if (!CGRectEqualToRect(CGRectIntersection(self.currentView!.superview!.bounds, self.currentView!.frame), self.currentView!.frame))
+            {
+                //view is partially out of bounds
+                LOG.debug("CLIPPPED")
+                
+                UIView.animateWithDuration(0.4, animations: {
+                    
+                    if let startPoint = self.startPoint {
+                        self.currentView?.center = startPoint
+                    }
+                    
+                    self.currentView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                    self.currentView?.alpha = 1.0
+                    }, completion: {
+                        (finished:Bool) in
+                        //print("finished: \(finished) NOT COPY")
+                        
+                        //self.currentView?.removeFromSuperview()
+                })
+
+                //snap back
+                
+            }
+            
+            
             self.superview?.bringSubviewToFront(self.currentView!)
             UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.currentView!)
 
@@ -236,17 +266,20 @@ class DraggableImageView: UIImageView {
     
     func updateDelegates() {
 
-        for zone in enteredZones {
-            //current the point to the target view
-            //LOG.debug("CV \(self.currentView!.frame)")
-            let newPoint = self.superview!.convertPoint(self.currentView!.center, toView: zone)
-            zone.addSubview(self.currentView!)
-            zone.bringSubviewToFront(self.currentView!)
-            self.currentView!.center =  newPoint
+        if self.delegate != nil {
+            for zone in enteredZones {
+                //convert the point to the target view
+                //LOG.debug("CV \(self.currentView!.frame)")
+                let newPoint = self.superview!.convertPoint(self.currentView!.center, toView: zone)
+                zone.addSubview(self.currentView!)
+                zone.bringSubviewToFront(self.currentView!)
+                self.currentView!.center =  newPoint
+            }
+            
+            enteredZones.removeAll()
+            self.delegate!.onDroppedToTarget(self.currentView!)
         }
 
-        enteredZones.removeAll()
-        self.delegate!.onDroppedToTarget(self.currentView!)
     }
 
     private func scaledImageToSize(image: UIImage, newSize: CGSize) -> UIImage{

@@ -47,19 +47,18 @@ class CoverFlowCell: UICollectionViewCell {
         
         self.fromSpecies = fromSpecies
         
-    
         let speciesImage = RealmDataController.generateImageForSpecies(fromSpecies.index)
-        
         
         self.profileView.contentMode = .ScaleAspectFit
         self.profileView.image = speciesImage
         
-    
-        
+
         for relationshipView in relationshipViews {
-            relationshipView.fromSpecies = fromSpecies
-            relationshipView.speciesObservation = speciesObservation
+            let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter("relationshipType = '\(relationshipView.relationshipType!)'")
             
+            //LOG.debug("found relationships for \(fromSpecies.index) relationships \(foundRelationships)")
+            
+            relationshipView.addRelationship(foundRelationships)
         }
         
     }

@@ -31,7 +31,7 @@ class CoverFlowViewController: UIViewController {
     var species: Results<Species>?
     
     var coverFlowLayout: UICollectionViewFlowLayout {
-        return self.collectionView?.collectionViewLayout as! CenterCellCollectionViewFlowLayout
+        return self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
     }
     
     private struct StoryBoard {
@@ -56,12 +56,13 @@ class CoverFlowViewController: UIViewController {
             if groups.count > 0 {
                 self.currentGroup = groups[self.groupId]
             }
+            LOG.debug("GROUP HAS BEEN UPDATED UI COLLECTION VIEW")
             self.collectionView.reloadData()
         }
     }
     
     
-    func readDBAndUpdateUI() {
+    func readSpeciesAndUpdate() {
         self.allSpecies = realm!.objects(Species.self)
         self.collectionView.reloadData()
     }
@@ -87,48 +88,11 @@ class CoverFlowViewController: UIViewController {
         let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
         
         collectionView.registerNib(nib, forCellWithReuseIdentifier: "CoverFlowCell")
-        
-        // LOG.debug("estimated size \(coverFlowLayout.estimatedItemSize) \(coverFlowLayout.itemSize) ")
-        
-        //        let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds);
-        //        LOG.debug("screen width \(screenWidth) est size \(coverFlowLayout.estimatedItemSize)")
-        //        coverFlowLayout.estimatedItemSize = CGSizeMake(screenWidth - 200.0, 500);
-        
-        //        notificationToken = groups?[0].speciesObservations.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-        //            guard let collectionView = self?.collectionView else { return }
-        //            switch changes {
-        //            case .Initial:
-        //                // Results are now populated and can be accessed without blocking the UI
-        //                collectionView.reloadData()
-        //                break
-        //            case .Update(_, _, let _, _):
-        //                // Query results have changed, so apply them to the UITableView
-        //                //add update methods
-        //                break
-        //            case .Error(let error):
-        //                // An error occurred while opening the Realm file on the background worker thread
-        //                fatalError("\(error)")
-        //                break
-        //            }
-        //        }
-        
-        
     }
     
     //let INSET : CGFloat = 0.0
     
     func prepareCollectionViewCells() {
-        
-//        coverFlowLayout.minimumInteritemSpacing = 0.0
-//        
-//        //space between cells
-//        //coverFlowLayout.minimumLineSpacing = 60.0
-//        //        coverFlowLayout.sectionInset = UIEdgeInsetsZero
-//        //        collectionView.contentInset = UIEdgeInsetsMake(INSET, 0.0, INSET, 0.0)
-//        
-//        //        collectionView.contentInset = UIEdgeInsetsZero
-//        collectionView.scrollIndicatorInsets = UIEdgeInsetsZero;
-        
         coverFlowLayout.minimumInteritemSpacing = 10
         coverFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
@@ -138,7 +102,7 @@ class CoverFlowViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        readDBAndUpdateUI()
+        readSpeciesAndUpdate()
     }
     
     override func viewDidLayoutSubviews() {
@@ -147,10 +111,6 @@ class CoverFlowViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        //LOG.debug("bound \(self.collectionView.bounds.size.width) item size \(coverFlowLayout.itemSize)")
-        //        if coverFlowLayout.itemSize.
-        //        coverFlowLayout.itemSize = CGSizeMake(self.collectionView.bounds.size.width - (coverFlowLayout.minimumLineSpacing*2), 100);
-        
     }
     
     private func findCenterIndexPath() -> NSIndexPath? {
@@ -188,8 +148,6 @@ class CoverFlowViewController: UIViewController {
 
 extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-
-            
             let totalWidth = CGRectGetWidth(collectionView.frame)
             
             if totalWidth > 1024 {
@@ -197,8 +155,6 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
             } else {
                 return CGSizeMake(800, 600)
             }
-
-        
     }
    
 }
@@ -210,7 +166,6 @@ extension CoverFlowViewController: UIScrollViewDelegate {
         for p in paths {
             
             if let cell = self.collectionView.cellForItemAtIndexPath(p) {
-                
                 cell.borderColor = UIColor.whiteColor()
                 cell.borderWidth = 1
                 
@@ -266,6 +221,15 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         
         //use index to find species, then use group to find group and the latest entries for that species
         
+        //initialize the cell
+        
+        cell.relationshipViews.forEach({ (relationshipView: RelationshipsUIView) -> Void in
+            
+            relationshipView.dropView.subviews.forEach({$0.removeFromSuperview()})
+            
+        }) // this gets things done
+        
+        
         
         if currentGroup.speciesObservations.count > 0 {
             let fromSpecies = self.allSpecies![indexPath.row]
@@ -274,7 +238,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             let speciesObservations : Results<SpeciesObservation> = currentGroup.speciesObservations.filter("fromSpecies.index = \(fromSpecies.index)")
             
             
-            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
+//            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
             
             if !fromSpecies.name.isEmpty {
                 cell.titleLabel.text = fromSpecies.name

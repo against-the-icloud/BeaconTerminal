@@ -97,7 +97,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxN-EI-lGo" userLabel="ProducerView" customClass="RelationshipsUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" restorationIdentifier="pDropView" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-va-BdS" userLabel="pDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="pDropView" translatesAutoresizingMaskIntoConstraints="NO" id="upZ-va-BdS" userLabel="pDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="8" width="382" height="216"/>
                                                                 <userGuides>
                                                                     <userLayoutGuide location="109" affinity="minY"/>
@@ -133,33 +133,12 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
-                                                            <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="pAnchorView" translatesAutoresizingMaskIntoConstraints="NO" id="NK7-Mf-Op5" userLabel="pAnchorView">
-                                                                <rect key="frame" x="2" y="101" width="30" height="30"/>
-                                                                <color key="backgroundColor" red="0.1058823529" green="0.4431372549" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="30" id="3Vf-M8-JTs"/>
-                                                                    <constraint firstAttribute="height" constant="30" id="OV8-MD-dnM"/>
-                                                                </constraints>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                        <real key="value" value="0.0"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="0.0"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </view>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstItem="7jt-vK-EpZ" firstAttribute="leading" secondItem="hxN-EI-lGo" secondAttribute="leading" constant="36" id="8fh-tA-ZQE"/>
-                                                            <constraint firstItem="NK7-Mf-Op5" firstAttribute="centerY" secondItem="upZ-va-BdS" secondAttribute="centerY" id="O7u-dp-41D"/>
                                                             <constraint firstAttribute="bottom" secondItem="upZ-va-BdS" secondAttribute="bottom" constant="16" id="Pyb-Es-OIt"/>
                                                             <constraint firstAttribute="trailing" secondItem="upZ-va-BdS" secondAttribute="trailing" constant="2" id="Xx4-z9-LmO"/>
-                                                            <constraint firstItem="NK7-Mf-Op5" firstAttribute="leading" secondItem="hxN-EI-lGo" secondAttribute="leading" constant="2" id="ZhT-Ha-jZr"/>
                                                             <constraint firstItem="upZ-va-BdS" firstAttribute="top" secondItem="hxN-EI-lGo" secondAttribute="top" constant="8" id="cUt-ml-vEv"/>
                                                             <constraint firstItem="7jt-vK-EpZ" firstAttribute="top" secondItem="hxN-EI-lGo" secondAttribute="top" id="dfL-0b-FID"/>
                                                             <constraint firstItem="upZ-va-BdS" firstAttribute="leading" secondItem="hxN-EI-lGo" secondAttribute="leading" constant="16" id="esT-Na-C8j"/>
@@ -168,7 +147,6 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="relationshipType" value="producer"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <outlet property="anchorView" destination="NK7-Mf-Op5" id="S7j-Yt-HdB"/>
                                                             <outlet property="dropView" destination="upZ-va-BdS" id="RjE-p5-CzA"/>
                                                             <outlet property="titleLabel" destination="7jt-vK-EpZ" id="68y-x3-cfR"/>
                                                         </connections>
@@ -176,7 +154,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="obz-SR-o71" userLabel="MutualView" customClass="RelationshipsUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="240" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" restorationIdentifier="mDropView" translatesAutoresizingMaskIntoConstraints="NO" id="05Z-4l-VOk" userLabel="mDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="mDropView" translatesAutoresizingMaskIntoConstraints="NO" id="05Z-4l-VOk" userLabel="mDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
                                                                 <rect key="frame" x="16" y="8" width="382" height="216"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -209,32 +187,11 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
-                                                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="mAnchorView" translatesAutoresizingMaskIntoConstraints="NO" id="sBu-5z-elx" userLabel="mAnchorView">
-                                                                <rect key="frame" x="192" y="208" width="30" height="30"/>
-                                                                <color key="backgroundColor" red="0.1058823529" green="0.4431372549" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="30" id="tyd-8F-naO"/>
-                                                                    <constraint firstAttribute="width" constant="30" id="wgb-hb-thj"/>
-                                                                </constraints>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                        <real key="value" value="0.0"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="0.0"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </view>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstItem="Jbf-UE-b8h" firstAttribute="leading" secondItem="obz-SR-o71" secondAttribute="leading" constant="36" id="4uN-Ms-UBM"/>
-                                                            <constraint firstItem="sBu-5z-elx" firstAttribute="centerX" secondItem="05Z-4l-VOk" secondAttribute="centerX" id="5u9-ZF-z3l"/>
                                                             <constraint firstItem="05Z-4l-VOk" firstAttribute="top" secondItem="obz-SR-o71" secondAttribute="top" constant="8" id="FCb-dv-n9N"/>
-                                                            <constraint firstAttribute="bottom" secondItem="sBu-5z-elx" secondAttribute="bottom" constant="2" id="MGi-lH-D1J"/>
                                                             <constraint firstItem="Jbf-UE-b8h" firstAttribute="top" secondItem="obz-SR-o71" secondAttribute="top" id="N3E-fZ-tKh"/>
                                                             <constraint firstAttribute="bottom" secondItem="05Z-4l-VOk" secondAttribute="bottom" constant="16" id="PuA-Z7-B50"/>
                                                             <constraint firstAttribute="trailing" secondItem="05Z-4l-VOk" secondAttribute="trailing" constant="2" id="WSX-GF-b2V"/>
@@ -244,7 +201,6 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="relationshipType" value="mutual"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <outlet property="anchorView" destination="sBu-5z-elx" id="F1E-IO-0HU"/>
                                                             <outlet property="dropView" destination="05Z-4l-VOk" id="NLm-0L-y9X"/>
                                                             <outlet property="titleLabel" destination="Jbf-UE-b8h" id="W6d-8q-zx7"/>
                                                         </connections>
@@ -262,7 +218,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMv-ts-cl3" userLabel="ConsumerView" customClass="RelationshipsUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" restorationIdentifier="cDropView" translatesAutoresizingMaskIntoConstraints="NO" id="eD7-Za-Vm7" userLabel="cDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cDropView" translatesAutoresizingMaskIntoConstraints="NO" id="eD7-Za-Vm7" userLabel="cDropView" customClass="RelationshipDropView" customModule="BeaconTerminal" customModuleProvider="target">
                                                                 <rect key="frame" x="2" y="8" width="382" height="216"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -298,19 +254,9 @@
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-8b-sij" userLabel="cAnchorView">
-                                                                <rect key="frame" x="368" y="101" width="30" height="30"/>
-                                                                <color key="backgroundColor" red="0.99215686270000003" green="0.71372549019999998" blue="0.050980392159999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="30" id="fYy-Hg-pzu"/>
-                                                                    <constraint firstAttribute="width" constant="30" id="kEc-II-Ma4"/>
-                                                                </constraints>
-                                                            </view>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstItem="uHk-8b-sij" firstAttribute="centerY" secondItem="eD7-Za-Vm7" secondAttribute="centerY" id="7Jv-e7-Ql2"/>
-                                                            <constraint firstAttribute="trailing" secondItem="uHk-8b-sij" secondAttribute="trailing" constant="2" id="CBk-3Y-Ysi"/>
                                                             <constraint firstItem="eD7-Za-Vm7" firstAttribute="leading" secondItem="JMv-ts-cl3" secondAttribute="leading" constant="2" id="HFF-Ft-A1B"/>
                                                             <constraint firstItem="eD7-Za-Vm7" firstAttribute="top" secondItem="JMv-ts-cl3" secondAttribute="top" constant="8" id="Nga-mw-etM"/>
                                                             <constraint firstAttribute="bottom" secondItem="eD7-Za-Vm7" secondAttribute="bottom" constant="16" id="YL5-FI-SIr"/>
@@ -322,7 +268,6 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="relationshipType" value="consumer"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <outlet property="anchorView" destination="uHk-8b-sij" id="S5M-ih-uGr"/>
                                                             <outlet property="dropView" destination="eD7-Za-Vm7" id="ZEc-4O-X2F"/>
                                                             <outlet property="titleLabel" destination="9Pz-G5-gKr" id="fUa-Ga-jss"/>
                                                         </connections>
@@ -330,7 +275,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoT-Ru-e4G" userLabel="PreferencesView">
                                                         <rect key="frame" x="0.0" y="240" width="400" height="240"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZo-df-jEe">
+                                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZo-df-jEe">
                                                                 <rect key="frame" x="2" y="8" width="382" height="216"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <userDefinedRuntimeAttributes>
