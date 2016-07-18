@@ -52,6 +52,7 @@ class RelationshipsUIView: UIView {
             
             dView.shouldSnapBack = false
             dView.shouldCopy = false
+            dView.shouldClipBounds = false
             dView.dragScaleFactor = 1.2
             dView.fromSpecies = fromSpecies
             dView.toSpecies = relationship.toSpecies

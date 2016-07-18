@@ -77,6 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     
     var window: UIWindow?
     var nutella: Nutella?
+    var collectionView: UICollectionView?
     
     let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
     
@@ -135,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         window?.rootViewController = navigationDrawerController
         window?.makeKeyAndVisible()
         
-        mainViewController.prepareViews()
+        //mainViewController.prepareViews()
     }
     
     

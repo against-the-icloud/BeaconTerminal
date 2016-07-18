@@ -26,6 +26,13 @@ class CoverFlowCell: UICollectionViewCell {
     
     @IBOutlet var relationshipViews: [RelationshipsUIView]!
     
+    var isFullscreen : Bool = false {
+        didSet {
+            //previousSize = self.frame
+        }
+    }
+    var previousSize: CGRect?
+    
     var fromSpecies : Species?
     
     override init(frame: CGRect) {

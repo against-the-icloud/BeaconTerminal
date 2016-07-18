@@ -136,11 +136,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         
         
         if shouldPresentScanner {
-            
             //performSegueWithIdentifier("scannerViewSegue", sender: nil)
             self.shouldPresentScanner = false
-            //            LOG.debug("Presented Scanner")
         }
+        
+        prepareMenus()
         
     }
     
@@ -152,14 +152,26 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         switch state {
         case .PLACE_GROUP:
             prepareTabBarItem()
-            prepareSpeciesMenu()
-            prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
         case .PLACE_TERMINAL:
-            print()
+            break
         case .OBJECT_GROUP:
             prepareTabBarItem()
+        default:
+            break
+        }
+    }
+    
+    func prepareMenus() {
+        let state = getAppDelegate().checkApplicationState()
+        switch state {
+        case .PLACE_GROUP:
             prepareSpeciesMenu()
-            prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
+//            prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
+        case .PLACE_TERMINAL:
+            break
+        case .OBJECT_GROUP:
+            prepareSpeciesMenu()
+            //prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
         default:
             break
         }
@@ -522,40 +534,74 @@ extension MainViewController {
         addButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
         addButton.layer.zPosition = CGFloat(FLT_MAX)
 
-
         speciesMenuView.addSubview(addButton)
+        
         speciesMenuButtons.append(addButton)
+        
+        
 
+      
 
-        for index in 0 ... 10 {
+                for index in 0 ... 10 {
+        
+                    var fileIndex = ""
+                    var imageName = ""
+        
+                    if index < 10 {
+                        fileIndex = "0\(index)"
+                        imageName = "species_\(fileIndex).png"
+                    } else {
+                        fileIndex = "\(index)"
+                        imageName = "species_\(fileIndex).png"
+                    }
+        
+                    let speciesImage: UIImage? = UIImage(named: imageName)
+        
+                    let dView = DraggableImageView(frame: CGRectMake(0, 0, speciesDiameter, speciesDiameter))
+                    dView.image = speciesImage
+                    dView.userInteractionEnabled = true
+                    dView.shouldSnapBack = true
+                    dView.shouldCopy = true
+                    dView.shouldClipBounds = false
+                    dView.dragScaleFactor = 1.4
+                    dView.shouldWindow = true
+                    dView.shouldDropOnCell = true
+                 
+                
+                    speciesMenuView.addSubview(dView)
+                    speciesMenuButtons.append(dView)
+                }
+        
 
-            var fileIndex = ""
-            var imageName = ""
-
-            if index < 10 {
-                fileIndex = "0\(index)"
-                imageName = "species_\(fileIndex).png"
-            } else {
-                fileIndex = "\(index)"
-                imageName = "species_\(fileIndex).png"
-            }
-
-            let speciesImage: UIImage? = UIImage(named: imageName)
-
-            //let speciesButton: FabButton = FabButton(frame: CGRectMake(0, 0, diameter, diameter))
-            let speciesButton: FabButton = FabButton()
-
-            speciesButton.tag = index
-            speciesButton.depth = .None
-            speciesButton.backgroundColor = UIColor.clearColor()
-
-            speciesButton.setImage(speciesImage, forState: .Normal)
-            speciesButton.setImage(speciesImage, forState: .Highlighted)
-
-            speciesButton.addTarget(self, action: #selector(handleSpeciesSelect), forControlEvents: .TouchUpInside)
-            speciesMenuView.addSubview(speciesButton)
-            speciesMenuButtons.append(speciesButton)
-        }
+//        for index in 0 ... 10 {
+//
+//            var fileIndex = ""
+//            var imageName = ""
+//
+//            if index < 10 {
+//                fileIndex = "0\(index)"
+//                imageName = "species_\(fileIndex).png"
+//            } else {
+//                fileIndex = "\(index)"
+//                imageName = "species_\(fileIndex).png"
+//            }
+//
+//            let speciesImage: UIImage? = UIImage(named: imageName)
+//
+//            //let speciesButton: FabButton = FabButton(frame: CGRectMake(0, 0, diameter, diameter))
+//            let speciesButton: FabButton = FabButton()
+//
+//            speciesButton.tag = index
+//            speciesButton.depth = .None
+//            speciesButton.backgroundColor = UIColor.clearColor()
+//
+//            speciesButton.setImage(speciesImage, forState: .Normal)
+//            speciesButton.setImage(speciesImage, forState: .Highlighted)
+//
+//            speciesButton.addTarget(self, action: #selector(handleSpeciesSelect), forControlEvents: .TouchUpInside)
+//            speciesMenuView.addSubview(speciesButton)
+//            speciesMenuButtons.append(speciesButton)
+//        }
 
         // Initialize the menu and setup the configuration options.
         speciesMenuView.menu.direction = .Up
@@ -563,6 +609,7 @@ extension MainViewController {
         speciesMenuView.menu.baseSize = CGSizeMake(speciesDiameter, speciesDiameter)
         speciesMenuView.menu.itemSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
         speciesMenuView.menu.views = speciesMenuButtons
+        speciesMenuView.backgroundColor = UIColor.blueColor()
 
 
 

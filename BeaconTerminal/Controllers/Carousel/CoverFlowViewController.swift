@@ -11,6 +11,8 @@ import UIKit
 import Spring
 import RealmSwift
 
+let CORNER_RADIUS = 10.0
+
 class CoverFlowViewController: UIViewController {
     // MARK: IBOutlets
     @IBOutlet weak var collectionView: UICollectionView!
@@ -20,7 +22,8 @@ class CoverFlowViewController: UIViewController {
     var dataArray: [String] = []
     var currentGroup: Group = Group()
     let groupId = 0
-    var allSpecies : Results<Species>?
+    var allSpecies: Results<Species>?
+    var selectedCell: CoverFlowCell?
     
     deinit {
         if notificationToken != nil {
@@ -30,8 +33,12 @@ class CoverFlowViewController: UIViewController {
     
     var species: Results<Species>?
     
+    // Mark: Style properties
+    
+    
+    
     var coverFlowLayout: UICollectionViewFlowLayout {
-        return self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        return self.collectionView?.collectionViewLayout as! CenterCellCollectionViewFlowLayout
     }
     
     private struct StoryBoard {
@@ -59,6 +66,7 @@ class CoverFlowViewController: UIViewController {
             LOG.debug("GROUP HAS BEEN UPDATED UI COLLECTION VIEW")
             self.collectionView.reloadData()
         }
+        
     }
     
     
@@ -88,6 +96,9 @@ class CoverFlowViewController: UIViewController {
         let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
         
         collectionView.registerNib(nib, forCellWithReuseIdentifier: "CoverFlowCell")
+        
+        getAppDelegate().collectionView = collectionView
+        
     }
     
     //let INSET : CGFloat = 0.0
@@ -95,7 +106,7 @@ class CoverFlowViewController: UIViewController {
     func prepareCollectionViewCells() {
         coverFlowLayout.minimumInteritemSpacing = 10
         coverFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        
     }
     
     
@@ -113,7 +124,7 @@ class CoverFlowViewController: UIViewController {
         super.viewWillLayoutSubviews()
     }
     
-    private func findCenterIndexPath() -> NSIndexPath? {
+    func findCenterIndexPath() -> NSIndexPath? {
         let centerPoint = CGPointMake(self.collectionView.center.x + self.collectionView.contentOffset.x,
                                       self.collectionView.center.y + self.collectionView.contentOffset.y);
         if let centerCellIndexPath = self.collectionView.indexPathForItemAtPoint(centerPoint) {
@@ -130,54 +141,17 @@ class CoverFlowViewController: UIViewController {
         return nil
     }
     
-    
-    let minimumSize: CGFloat = 800.0 // A cell's width or height won't ever be smaller than this
-    
-    func cellWidthForViewWidth(viewWidth: CGFloat) -> CGFloat {
-        // Determine the largest number of cells that could possibly fit in a row, based on the cell's minimum size
-        var numberOfCellsPerRow = Int(viewWidth / minimumSize)
-        
-        // Adjust for interitem spacing and section insets
-        let availableWidth = viewWidth - coverFlowLayout.sectionInset.left - coverFlowLayout.sectionInset.right - coverFlowLayout.minimumInteritemSpacing * CGFloat(numberOfCellsPerRow - 1)
-        numberOfCellsPerRow = Int(availableWidth / minimumSize)
-        
-        return availableWidth / CGFloat(numberOfCellsPerRow) // Make this an integral width if desired
-    }
-}
-
-
-extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            let totalWidth = CGRectGetWidth(collectionView.frame)
-            
-            if totalWidth > 1024 {
-                return CGSizeMake(1024, 800)
-            } else {
-                return CGSizeMake(800, 600)
-            }
-    }
-   
-}
-
-extension CoverFlowViewController: UIScrollViewDelegate {
-    
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func makeDraggingCellStyle() {
         let paths = self.collectionView.indexPathsForVisibleItems()
         for p in paths {
-            
             if let cell = self.collectionView.cellForItemAtIndexPath(p) {
                 cell.borderColor = UIColor.whiteColor()
                 cell.borderWidth = 1
-                
             }
-            
-            
         }
-        
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        
+    func makeCenteredCellStyle() {
         if let centerIndexPath = findCenterIndexPath() {
             let paths = self.collectionView.indexPathsForVisibleItems()
             for p in paths {
@@ -197,6 +171,21 @@ extension CoverFlowViewController: UIScrollViewDelegate {
             
         }
     }
+    
+}
+
+
+extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let totalWidth = CGRectGetWidth(collectionView.frame)
+        
+        if totalWidth > 1024 {
+            return CGSizeMake(1024, 800)
+        } else {
+            return CGSizeMake(800, 600)
+        }
+    }
+    
 }
 
 //MARK: UICollectionViewDataSource
@@ -214,6 +203,11 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         return 0
     }
     
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        LOG.debug("SELECTED \(indexPath.item)")
+        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+    }
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -238,21 +232,118 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             let speciesObservations : Results<SpeciesObservation> = currentGroup.speciesObservations.filter("fromSpecies.index = \(fromSpecies.index)")
             
             
-//            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
+            //            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
             
             if !fromSpecies.name.isEmpty {
                 cell.titleLabel.text = fromSpecies.name
             } else {
                 cell.titleLabel.text = "Species \(indexPath.row)"
             }
-        
+            
             if !speciesObservations.isEmpty {
                 cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
+                cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                
             }
             
         }
-
+        
         return cell
+    }
+    
+    func minimizeCell(sender: UIButton) {
+        //remove minimize cell target
+        sender.removeTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), forControlEvents: .TouchUpInside)
+        //add expand cell target
+        sender.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: .TouchUpInside)
+        
+        
+        if let indexPathExpanded = findCenterIndexPath() {
+
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPathExpanded) as! CoverFlowCell
+            LOG.debug("MINI \(cell.titleLabel.text)")
+            makeCenteredCellStyle()
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseIn, animations: ({
+                
+                cell.expandButton.transform = CGAffineTransformRotate(cell.expandButton.transform,CGFloat(M_PI));
+                cell.frame = cell.previousSize!
+                self.collectionView.scrollEnabled = true
+                cell.isFullscreen = false
+                
+                //style
+                cell.cornerRadius = CORNER_RADIUS
+                
+                self.coverFlowLayout.invalidateLayout()
+                self.collectionView.layoutIfNeeded()
+                
+            }), completion: { (finished: Bool) -> Void in
+                print("hey")
+                //show species menu
+            })
+        }
+
+    }
+    
+    
+    func expandCell(sender: UIButton) {
+        //remove expand cell target
+        sender.removeTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: .TouchUpInside)
+        //add minimized cell target
+        sender.addTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), forControlEvents: .TouchUpInside)
+        
+        
+        let point = sender.convertPoint(CGPointZero, toView: collectionView)
+        if let indexPathExpanded = collectionView.indexPathForItemAtPoint(point) {
+            UIView.animateWithDuration(0.5, animations: {
+                
+                self.collectionView.scrollToItemAtIndexPath(indexPathExpanded, atScrollPosition: .CenteredHorizontally, animated: false)
+                
+                }, completion: { (finished: Bool) -> Void in
+                        let cell = self.collectionView.cellForItemAtIndexPath(indexPathExpanded) as! CoverFlowCell
+                        LOG.debug("EXPANDING \(cell.titleLabel.text)")
+                        //collectionView.selectItemAtIndexPath(indexPathExpanded, animated: true, scrollPosition: .CenteredHorizontally)
+                        if !cell.isFullscreen {
+                            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: ({
+                                
+                                cell.expandButton.transform = CGAffineTransformRotate(cell.expandButton.transform,CGFloat(M_PI));
+                                cell.previousSize = cell.frame
+                                cell.frame = self.collectionView.bounds
+                                self.collectionView.scrollEnabled = false
+                                cell.isFullscreen = true
+                                cell.superview?.bringSubviewToFront(cell)
+                                
+                                
+                                //style
+                                cell.cornerRadius = 0
+                                
+                                self.coverFlowLayout.invalidateLayout()
+                                self.collectionView.layoutIfNeeded()
+                                
+                            }), completion: { (finished: Bool) -> Void in
+                                print("hey")
+                                //show species menu
+                            })
+                        }
+                })
+            
+            }
+        }
+}
+
+
+
+extension CoverFlowViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        makeDraggingCellStyle()
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        makeCenteredCellStyle()
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        makeCenteredCellStyle()
     }
 }
 

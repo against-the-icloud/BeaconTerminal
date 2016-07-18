@@ -32,6 +32,8 @@
 		70AE97181D201F4D0002C26F /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; };
 		70AE97191D201F4D0002C26F /* Nutella.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AE97101D201E060002C26F /* Nutella.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
+		70C430901D3BD55F00B2F64F /* SpeciesMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4308F1D3BD55F00B2F64F /* SpeciesMenu.swift */; };
+		70C430921D3BF63700B2F64F /* SpeciesMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C430911D3BF63700B2F64F /* SpeciesMenuController.swift */; };
 		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
@@ -134,6 +136,8 @@
 		70AE97101D201E060002C26F /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nutella.framework; sourceTree = "<group>"; };
 		70AE97131D201E8F0002C26F /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = BeaconTerminal/Storyboard/SimpleMQTTClient.framework; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
+		70C4308F1D3BD55F00B2F64F /* SpeciesMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeciesMenu.swift; sourceTree = "<group>"; };
+		70C430911D3BF63700B2F64F /* SpeciesMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeciesMenuController.swift; sourceTree = "<group>"; };
 		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 		704204171CE8E8C300C09FD0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				70C4308F1D3BD55F00B2F64F /* SpeciesMenu.swift */,
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				7088B0CE1D049A42002BA440 /* ObservationDropView.swift */,
 			);
@@ -309,6 +314,7 @@
 				70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */,
 				70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */,
 				705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */,
+				70C430911D3BF63700B2F64F /* SpeciesMenuController.swift */,
 			);
 			name = Setup;
 			sourceTree = "<group>";
@@ -714,7 +720,9 @@
 				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
 				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
 				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				70C430921D3BF63700B2F64F /* SpeciesMenuController.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
+				70C430901D3BD55F00B2F64F /* SpeciesMenu.swift in Sources */,
 				AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */,
 				702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */,
 				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
