@@ -17,11 +17,12 @@ class DropTargetView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
         if CGRectContainsPoint(self.bounds, point) {
             return true
         }
         return super.pointInside(point, withEvent: event)
     }
+    
 }

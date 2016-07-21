@@ -90,6 +90,7 @@ class DraggableImageView: UIImageView {
 
 
             if self.shouldCopy {
+                self.userInteractionEnabled = false 
                 self.currentView = DraggableImageView(frame: self.frame)
                 self.currentView!.userInteractionEnabled = true
                 self.currentView!.autoresizingMask = UIViewAutoresizing.None
@@ -135,17 +136,27 @@ class DraggableImageView: UIImageView {
             
         } else if sender.state == .Cancelled {
             
-            overlay?.removeFromSuperview()
 
         } else if sender.state == UIGestureRecognizerState.Changed {
 
-            
+        
 
             let translation = sender.translationInView(currentView!.superview)
             self.currentView!.center = CGPointMake(self.currentView!.center.x + translation.x, currentView!.center.y + translation.y)
             sender.setTranslation(CGPointZero, inView: currentView!.superview)
+            
+//            let draggingPoint = sender.locationInView(currentView!)
+//            LOG.debug("dragging Point \(draggingPoint)")
+//            let hitView = currentView!.hitTest(draggingPoint, withEvent: nil)
+//            LOG.debug("hitview \(hitView)")
+//
+//            if hitView!.superview == currentView! {
+//                hitView!.center = draggingPoint
+//                LOG.debug("hit view FOUND \(hitView)")
+//            }
+//            
 
-            LOG.debug("DRAGGING  \(currentView!.center)")
+            //LOG.debug("DRAGGING  \(currentView!.center)")
             
             //check if it is getting clipped
             if shouldClipBounds {
@@ -174,7 +185,7 @@ class DraggableImageView: UIImageView {
                 }
             }
             
-            self.superview?.bringSubviewToFront(self.currentView!)
+            //self.superview?.bringSubviewToFront(self.currentView!)
             UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.currentView!)
 
             //pointInside(sender)

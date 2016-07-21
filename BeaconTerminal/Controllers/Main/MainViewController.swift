@@ -48,7 +48,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var passThroughImageView: UIImageView?
     
     var popoverNavigationController: UINavigationController?
-
+    
     var blurEffectView: UIView?
     
     
@@ -102,7 +102,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     var toolsMenuView : MenuView = MenuView()
-    var speciesMenuView : MenuView = MenuView()
 
     var scanButton: FabButton?
 
@@ -123,11 +122,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         prepareViews()
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         navigationDrawerController?.enabled = true
@@ -140,9 +134,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             self.shouldPresentScanner = false
         }
         
-        prepareMenus()
         
+        prepareMenus()
     }
+    
+    
     
     // MARK: Preparations
     
@@ -166,15 +162,18 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         switch state {
         case .PLACE_GROUP:
             prepareSpeciesMenu()
-//            prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
         case .PLACE_TERMINAL:
             break
         case .OBJECT_GROUP:
-            prepareSpeciesMenu()
-            //prepareToolsMenu([.PHOTO_LIB, .CAMERA, .SCREENSHOT, .SCANNER, .TRASH])
+            prepareSpeciesMenu()        
         default:
             break
         }
+    }
+    
+    func prepareSpeciesMenu() {
+        getAppDelegate().speciesViewController.prepareSpeciesMenu()
+        getAppDelegate().speciesViewController.showMenu()
     }
     
     /// Prepare tabBarItem.
@@ -218,7 +217,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
                 self.setTabBarVisible(true, duration: 0.3, animated: true)
                 self.blurEffectView!.removeFromSuperview()
                 self.blurEffectView = nil
-                self.handleSpeciesMenuSelection()
+                //self.handleSpeciesMenuSelection()
             })
 
         }
@@ -327,6 +326,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
 
     }
+    
 
     @IBAction func scanAction(sender: UIButton) {
         self.performSegueWithIdentifier("scannerSegue", sender: sender)
@@ -395,20 +395,6 @@ extension MainViewController: UIPopoverPresentationControllerDelegate {
 extension MainViewController {
 
     /// Handle the menuView touch event.
-    internal func handleSpeciesMenuSelection() {
-        if speciesMenuView.menu.opened {
-            speciesMenuView.menu.close()
-            (speciesMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
-        } else {
-            speciesMenuView.menu.open() {
-                (v: UIView) in
-                (v as? MaterialButton)?.pulse()
-            }
-            (speciesMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
-        }
-    }
-
-    /// Handle the menuView touch event.
     internal func handleToolsMenuSelection() {
         if toolsMenuView.menu.opened {
             toolsMenuView.menu.close()
@@ -420,202 +406,6 @@ extension MainViewController {
             }
             (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
         }
-    }
-
-    internal func handleSpeciesSelect(sender: FabButton) {
-        LOG.debug("SPECIES SELECT \(sender.tag)")
-
-        let fb = sender
-
-        let speciesIndex = sender.tag
-
-        var allPassthroughViews = [UIView]()
-        allPassthroughViews += self.speciesMenuButtons[0...speciesMenuButtons.count-1]
-        //all species except the + button
-
-        _ = UIScreen.mainScreen().bounds.size
-
-        let createPopover = {
-            (speciesIndex: Int) -> UINavigationController in
-            let storyboard = UIStoryboard(name: "CollectionBoard", bundle: nil)
-            let relationshipContributionViewController = storyboard.instantiateViewControllerWithIdentifier("relationshipsContributionViewController") as? RelationshipsContributionViewController
-            relationshipContributionViewController?.speciesIndex = speciesIndex
-            relationshipContributionViewController?.title = "RELATIONSHIPS"
-            relationshipContributionViewController?.toolMenuDelegate = self
-
-            let navController = UINavigationController(rootViewController: relationshipContributionViewController!)
-            navController.navigationBar.barTintColor = UIColor.whiteColor()
-            navController.navigationBar.shadowColor = UIColor.whiteColor()
-            navController.navigationBar.shadowOffset = CGSize(width: 0, height: 0)
-
-
-            navController.navigationBar.translucent = false
-            navController.modalTransitionStyle = .CrossDissolve
-            navController.modalPresentationStyle = .Popover
-            return navController
-        }
-
-
-        if  blurEffectView == nil {
-            blurEffectView = self.view.createBlurForView(.Light)
-            blurEffectView?.alpha = 0
-            self.view.addSubview(blurEffectView!)
-            self.view.bringSubviewToFront(self.speciesMenuView)
-            self.setTabBarVisible(false, duration: 0.3, animated: true)
-            UIView.animateWithDuration(0.3, animations: {
-                self.blurEffectView?.alpha = 1
-            }, completion: {
-                finished in
-
-                self.popoverNavigationController = createPopover(speciesIndex)
-                self.presentViewController(self.popoverNavigationController!, animated: true, completion: nil)
-
-                if let pop = self.popoverNavigationController!.popoverPresentationController {
-                    pop.sourceView = fb
-                    pop.sourceRect = fb.bounds
-                    pop.delegate = self
-                    pop.passthroughViews = allPassthroughViews
-                    self.popoverNavigationController!.preferredContentSize = CGSizeMake(1000, 625)
-                }
-            })
-        } else {
-
-            self.dismissViewControllerAnimated(true, completion: {
-                self.popoverNavigationController = createPopover(speciesIndex)
-                self.presentViewController(self.popoverNavigationController!, animated: true, completion: nil)
-
-                if let pop = self.popoverNavigationController!.popoverPresentationController {
-                    pop.sourceView = fb
-                    pop.sourceRect = fb.bounds
-                    pop.delegate = self
-                    pop.passthroughViews = allPassthroughViews
-                    self.popoverNavigationController!.preferredContentSize = CGSizeMake(1000, 625)
-                }
-            })
-
-        }
-
-    }
-
-    /// Prepares the MenuView example.
-    private func prepareSpeciesMenu() {
-
-        /// Diameter for FabButtons.
-     
-
-        /// Diameter for FabButtons.
-        let speciesDiameter: CGFloat = sideMenuButtonDiameter - 1.0
-
-        speciesMenuButtons = [UIView]()
-
-
-        //create add button
-
-        var image: UIImage? = UIImage(named: "tb_add_white")!
-        image = image!.resizeToSize(CGSize(width: sideMenuButtonDiameter / 2, height: sideMenuButtonDiameter / 2))
-
-
-        let addButton: FabButton = FabButton()
-        addButton.depth = .None
-
-        addButton.tintColor = MaterialColor.white
-        addButton.borderColor = MaterialColor.blue.accent3
-        addButton.backgroundColor = MaterialColor.green.base
-//
-        addButton.setImage(image, forState: .Normal)
-        addButton.setImage(image, forState: .Highlighted)
-
-        addButton.addTarget(self, action: #selector(handleSpeciesMenuSelection), forControlEvents: .TouchUpInside)
-        addButton.width = sideMenuButtonDiameter
-        addButton.height = sideMenuButtonDiameter
-
-        addButton.shadowColor = MaterialColor.black
-        addButton.shadowOpacity = 0.5
-        addButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
-        addButton.layer.zPosition = CGFloat(FLT_MAX)
-
-        speciesMenuView.addSubview(addButton)
-        
-        speciesMenuButtons.append(addButton)
-        
-        
-
-      
-
-                for index in 0 ... 10 {
-        
-                    var fileIndex = ""
-                    var imageName = ""
-        
-                    if index < 10 {
-                        fileIndex = "0\(index)"
-                        imageName = "species_\(fileIndex).png"
-                    } else {
-                        fileIndex = "\(index)"
-                        imageName = "species_\(fileIndex).png"
-                    }
-        
-                    let speciesImage: UIImage? = UIImage(named: imageName)
-        
-                    let dView = DraggableImageView(frame: CGRectMake(0, 0, speciesDiameter, speciesDiameter))
-                    dView.image = speciesImage
-                    dView.userInteractionEnabled = true
-                    dView.shouldSnapBack = true
-                    dView.shouldCopy = true
-                    dView.shouldClipBounds = false
-                    dView.dragScaleFactor = 1.4
-                    dView.shouldWindow = true
-                    dView.shouldDropOnCell = true
-                 
-                
-                    speciesMenuView.addSubview(dView)
-                    speciesMenuButtons.append(dView)
-                }
-        
-
-//        for index in 0 ... 10 {
-//
-//            var fileIndex = ""
-//            var imageName = ""
-//
-//            if index < 10 {
-//                fileIndex = "0\(index)"
-//                imageName = "species_\(fileIndex).png"
-//            } else {
-//                fileIndex = "\(index)"
-//                imageName = "species_\(fileIndex).png"
-//            }
-//
-//            let speciesImage: UIImage? = UIImage(named: imageName)
-//
-//            //let speciesButton: FabButton = FabButton(frame: CGRectMake(0, 0, diameter, diameter))
-//            let speciesButton: FabButton = FabButton()
-//
-//            speciesButton.tag = index
-//            speciesButton.depth = .None
-//            speciesButton.backgroundColor = UIColor.clearColor()
-//
-//            speciesButton.setImage(speciesImage, forState: .Normal)
-//            speciesButton.setImage(speciesImage, forState: .Highlighted)
-//
-//            speciesButton.addTarget(self, action: #selector(handleSpeciesSelect), forControlEvents: .TouchUpInside)
-//            speciesMenuView.addSubview(speciesButton)
-//            speciesMenuButtons.append(speciesButton)
-//        }
-
-        // Initialize the menu and setup the configuration options.
-        speciesMenuView.menu.direction = .Up
-        speciesMenuView.menu.spacing = sideMenuButtonSpacing
-        speciesMenuView.menu.baseSize = CGSizeMake(speciesDiameter, speciesDiameter)
-        speciesMenuView.menu.itemSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
-        speciesMenuView.menu.views = speciesMenuButtons
-        speciesMenuView.backgroundColor = UIColor.blueColor()
-
-
-
-
-        speciesMenuView.center = speciesMenuButtonCenter
-        getAppDelegate().window?.addSubview(speciesMenuView)
     }
 
     /// Prepares the MenuView example.

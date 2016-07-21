@@ -78,6 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     var window: UIWindow?
     var nutella: Nutella?
     var collectionView: UICollectionView?
+    var speciesViewController: SpeciesMenuViewController = SpeciesMenuViewController()
+            
     
     let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
     
@@ -109,7 +111,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     
     
     func prepareViews() {
+                
+                // Configure the window with the SideNavigationController as the root view controller
+        window = UIWindow(frame:UIScreen.mainScreen().bounds)
+        window?.rootViewController = prepareSubviews()
+        window?.makeKeyAndVisible()
         
+        //species
+        
+    }
+    
+    func prepareSubviews() -> AppNavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
         let sideViewController = storyboard.instantiateViewControllerWithIdentifier("sideViewController") as! SideViewController
@@ -131,14 +143,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
         bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.Automatic
         
-        // Configure the window with the SideNavigationController as the root view controller
-        window = UIWindow(frame:UIScreen.mainScreen().bounds)
-        window?.rootViewController = navigationDrawerController
-        window?.makeKeyAndVisible()
-        
-        //mainViewController.prepareViews()
+        return navigationDrawerController
     }
-    
     
     func prepareDB() {
         
@@ -233,6 +239,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     
     func preparePlaceGroup() {
         bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+        
         
     }
     

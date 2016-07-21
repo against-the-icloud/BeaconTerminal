@@ -44,5 +44,15 @@ class AppBottomNavigationController: BottomNavigationController {
         tabBar.tintColor = MaterialColor.white
         tabBar.backgroundColor = MaterialColor.grey.darken4
     }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        LOG.debug("\(viewController)")
+    }
+    
+    override func tabBarController(tabBarController: UITabBarController, animationControllerForTransitionFromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        LOG.debug("from \(fromVC)")
+        LOG.debug("to \(toVC)")
+        return super.tabBarController(tabBarController, animationControllerForTransitionFromViewController: fromVC, toViewController: toVC)
+    }
 }
 

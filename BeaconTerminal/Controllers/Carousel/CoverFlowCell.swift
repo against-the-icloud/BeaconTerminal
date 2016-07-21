@@ -34,7 +34,7 @@ class CoverFlowCell: UICollectionViewCell {
     var previousSize: CGRect?
     
     var fromSpecies : Species?
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
