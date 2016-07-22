@@ -50,10 +50,10 @@ class RelationshipsUIView: UIView {
             
             let dView = DraggableSpeciesImageView(frame: CGRectMake(point.x, point.y, size, size))
             
-            dView.shouldSnapBack = false
-            dView.shouldCopy = false
-            dView.shouldClipBounds = false
-            dView.dragScaleFactor = 1.2
+//            dView.shouldSnapBack = false
+//            dView.shouldCopy = false
+//            dView.shouldClipBounds = false
+//            dView.dragScaleFactor = 1.2
             dView.fromSpecies = fromSpecies
             dView.toSpecies = relationship.toSpecies
             dView.tag = (relationship.toSpecies?.index)!

@@ -103,7 +103,7 @@ class DraggableImageView: UIImageView {
                 self.currentView?.shouldDropOnCell = self.shouldDropOnCell
                 
                 self.currentView!.clipsToBounds = true
-                self.currentView!.addSubview(UIImageView(image: scaledImageToSize(self.image!, newSize: self.bounds.size)))
+                self.currentView!.addSubview(UIImageView(image: DragUtil.scaledImageToSize(self.image!, newSize: self.bounds.size)))
 
                 
                 //let rootViewPoint = self.currentView!.convertPoint(self.currentView!.center, toView: overlay)
@@ -126,7 +126,7 @@ class DraggableImageView: UIImageView {
                
             }
 
-             self.animateView(self.currentView!, scale: self.dragScaleFactor, alpha: self.dragAlpha, duration: 0.3)
+             DragUtil.animateView(self.currentView!, scale: self.dragScaleFactor, alpha: self.dragAlpha, duration: 0.3)
 
            // LOG.debug("DROP START \(currentView!.tag)")
 
@@ -267,39 +267,8 @@ class DraggableImageView: UIImageView {
     func pointInside(sender:UIGestureRecognizer) -> Bool {
 
         if self.shouldDropOnCell {
-            
-//            let parentView = UIApplication.sharedApplication().keyWindow!
-//            let pc:CGPoint = sender.locationInView(parentView)
-//
-//            let collectionView = getAppDelegate().collectionView!
-//            
-//            let centerPoint = CGPointMake(collectionView.center.x + collectionView.contentOffset.x,
-//                                          collectionView.center.y + collectionView.contentOffset.y);
-//            if let centerCellIndexPath = collectionView.indexPathForItemAtPoint(centerPoint) {
-//                //let index = collectionView!.indexPathForItemAtPoint(centerPoint)
-//                print(centerCellIndexPath.item)
-//                
-//                let cell = getAppDelegate().collectionView!.cellForItemAtIndexPath(centerCellIndexPath) as! CoverFlowCell
-//                for relationshipView in cell.relationshipViews {
-//                    
-//                    if (CGRectContainsPoint(relationshipView.dropView.bounds, pc))
-//                    {
-//                        LOG.debug("FOUND")
-//                    } else {
-//                        break
-//                    }
-//                    
-//                }
-
-                
-                //            let obs = self.collectionView.cellForItemAtIndexPath(centerCellIndexPath) as? ObservationCollectionViewCell
-                //            obs?.borderColor = UIColor.blackColor()
-                //            obs?.borderWidth = 4
-                ///return centerCellIndexPath
-           
-            
-            
-            
+        
+    
            
             let pc:CGPoint = sender.locationInView(self.currentView!)
             let parentView = UIApplication.sharedApplication().keyWindow!
@@ -405,20 +374,5 @@ class DraggableImageView: UIImageView {
             self.delegate!.onDroppedToTarget(self.currentView!)
         }
 
-    }
-
-    private func scaledImageToSize(image: UIImage, newSize: CGSize) -> UIImage{
-        UIGraphicsBeginImageContext(newSize)
-        image.drawInRect(CGRectMake(0 ,0, newSize.width, newSize.height))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-    private func animateView(view:UIView, scale:CGFloat = 1.3, alpha:CGFloat = 0.5,duration:NSTimeInterval = 0.2){
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(duration)
-        view.transform = CGAffineTransformMakeScale(scale, scale)
-        view.alpha = alpha
-        UIView.commitAnimations()
     }
 }

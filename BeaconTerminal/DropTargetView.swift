@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Material
 
 class DropTargetView: UIView {
     override init(frame: CGRect) {
@@ -25,4 +26,14 @@ class DropTargetView: UIView {
         return super.pointInside(point, withEvent: event)
     }
     
+    
+    func highlight() {
+        self.backgroundColor = MaterialColor.grey.lighten3
+        self.borderColor = MaterialColor.blue.base
+    }
+    
+    func unhighlight() {
+        self.backgroundColor = UIColor.whiteColor()
+        self.borderColor = UIColor.blackColor()
+    }
 }

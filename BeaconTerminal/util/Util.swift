@@ -35,7 +35,7 @@ class Util {
         let randomRed:CGFloat = CGFloat(drand48())
         let randomGreen:CGFloat = CGFloat(drand48())
         let randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)    
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
     
 }
@@ -77,6 +77,19 @@ extension UIImage {
 // MARK: UIView Extensions
 
 extension UIView {
+    
+    func fadeIn(duration: NSTimeInterval = 1.0, delay: NSTimeInterval = 0.0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.alpha = 1.0
+            }, completion: completion)  }
+    
+    func fadeOut(duration: NSTimeInterval = 1.0, delay: NSTimeInterval = 0.0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
+        UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.alpha = 0.0
+            }, completion: completion)
+    }
+    
+    
     func captureImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, true, 1)
         self.drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)

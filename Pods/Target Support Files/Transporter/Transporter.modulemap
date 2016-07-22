@@ -1,0 +1,6 @@
+framework module Transporter {
+  umbrella header "Transporter-umbrella.h"
+
+  export *
+  module * { export * }
+}

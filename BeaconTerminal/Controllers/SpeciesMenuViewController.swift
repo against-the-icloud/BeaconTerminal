@@ -139,7 +139,7 @@ class SpeciesMenuViewController: UIViewController {
         speciesMenuView!.menu.itemSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
         speciesMenuView!.menu.views = speciesMenuButtons
         speciesMenuView!.backgroundColor = UIColor.blueColor()
-                        
+        
         speciesMenuView!.center = speciesMenuButtonCenter
         UIApplication.sharedApplication().keyWindow!.addSubview(speciesMenuView!)
         speciesMenuView?.hidden = true
@@ -147,11 +147,13 @@ class SpeciesMenuViewController: UIViewController {
     
     
     var dragAndDropView: UIView?
-    var copyImageView: UIImageView?
+    var copyImageView: DraggableSpeciesImageView?
     var startCenter: CGPoint?
+    var dragScaleFactor : CGFloat = 1.6
+    var dragAlpha : CGFloat = 0.8
     
     func dragSpecies(gesture: UIPanGestureRecognizer) {
-       
+        
         let targetView = gesture.view!
         LOG.debug("Drag CENTER \(targetView.center)")
         switch gesture.state {
@@ -163,23 +165,23 @@ class SpeciesMenuViewController: UIViewController {
                 //startCenter = targetView.center
                 
                 dragAndDropView = UIView(frame: UIApplication.sharedApplication().keyWindow!.frame)
-                dragAndDropView?.backgroundColor = UIColor.blueColor()
+                dragAndDropView?.backgroundColor = UIColor.clearColor()
                 dragAndDropView?.alpha = 0.5
                 
                 UIApplication.sharedApplication().keyWindow!.addSubview(dragAndDropView!)
                 
                 
-//                startCenter = targetView.convertPoint(targetView.center, toView: dragAndDropView)
-//                
+                //                startCenter = targetView.convertPoint(targetView.center, toView: dragAndDropView)
+                //
                 LOG.debug("START CENTER \(startCenter) target \(targetView)")
                 
                 if let targetView = gesture.view as? UIImageView {
                     
-                    copyImageView = UIImageView(frame: targetView.frame)
+                    copyImageView = DraggableSpeciesImageView(frame: targetView.frame)
                     copyImageView?.image = targetView.image
                     copyImageView?.userInteractionEnabled = true
-                    //copyImageView?.contentMode = UIViewContentMode.Center
-                    //copyImageView?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.dragSpecies(_:))))
+                    
+                    
                     UIApplication.sharedApplication().keyWindow!.addSubview(copyImageView!)
                     dragAndDropView?.addSubview(copyImageView!)
                     
@@ -188,49 +190,55 @@ class SpeciesMenuViewController: UIViewController {
                     let location = gesture.locationInView(dragAndDropView)
                     startCenter = location
                     copyImageView?.center = location;
-                }                                        
+                    
+                    DragUtil.animateView(copyImageView!, scale: self.dragScaleFactor, alpha: self.dragAlpha, duration: 0.3)
+                    
+                    copyImageView?.smoothJiggle()
+                }
             }
         case .Changed:
             
             
-//            dragAndDropView?.backgroundColor = UIColor.blueColor()
-//            dragAndDropView?.alpha = 0.5
+            //            dragAndDropView?.backgroundColor = UIColor.blueColor()
+            //            dragAndDropView?.alpha = 0.5
             
             let translation = gesture.translationInView(dragAndDropView)
             
             LOG.debug("TRANSLATE  \(translation) TARGET \(targetView)")
-
+            
             
             copyImageView!.center = CGPoint(x: startCenter!.x + translation.x, y: startCenter!.y + translation.y)
             
             LOG.debug("copy  \(copyImageView!.center)")
-
+            
+            for t in dropTargets {
+                let tPoint = gesture.locationInView(t)
+                if CGRectContainsPoint(t.frame, tPoint) {
+                  t.backgroundColor = MaterialColor.grey.lighten4
+                } else {
+                  t.backgroundColor = MaterialColor.white
+                }
+            }
             
         case .Ended:
             
-        
             let endpoint = gesture.locationInView(dragAndDropView)
             let endcenter = copyImageView!.center
+            copyImageView?.stopJiggling()
+            
             LOG.debug("end center \(endcenter) vs endpoint \(endpoint) with droptargets \(dropTargets.count)")
             
-
-
             for t in dropTargets {
-
-
-
-                    let tPoint = gesture.locationInView(t)
-                    if CGRectContainsPoint(t.frame, tPoint) {
-
-                        LOG.debug("GOT IT \(t)")
-
-                            copyImageView!.center = tPoint
-                            t.addSubview(copyImageView!)
-                    }
-
-
-
-
+                let tPoint = gesture.locationInView(t)
+                if CGRectContainsPoint(t.frame, tPoint) {
+                    
+                    LOG.debug("GOT IT \(t)")
+                    
+                    copyImageView!.center = tPoint
+                    
+                    DragUtil.animateViewWithCompletion(copyImageView!, scale: self.dragScaleFactor-0.3, alpha: self.dragAlpha, duration: 0.3, completion: { t.addSubview(self.copyImageView!) })
+                    
+                }
             }
             
             dragAndDropView?.removeFromSuperview()
@@ -254,10 +262,10 @@ class SpeciesMenuViewController: UIViewController {
     func openMenu() {
         if !speciesMenuView!.menu.opened {
             speciesMenuView!.open({
-            (self.speciesMenuView!.menu.views?.first as? MaterialButton)?.backgroundColor = MaterialColor.green.base
+                (self.speciesMenuView!.menu.views?.first as? MaterialButton)?.backgroundColor = MaterialColor.green.base
             })
             
-               (speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
+            (speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
         }
     }
     
@@ -279,9 +287,9 @@ class SpeciesMenuViewController: UIViewController {
         } else {
             openMenu()
             openAction()
-         
+            
         }
-
+        
     }
     
     
