@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 import Material
+import RealmSwift
 
 class SpeciesMenuViewController: UIViewController {
     
-    var dropTargets = [DropTargetView]()
-    
+    var dropTargets = [RelationshipDropView]()
     var speciesMenuButtons = [UIView]()
-    
     let sideMenuButtonSpacing: CGFloat = 10.0
-    
     var openAction = {}
+    var allSpecies: Results<Species>?
+    var fromSpecies: Species?
     
     var sideMenuButtonDiameter: CGFloat {
         
@@ -67,6 +67,8 @@ class SpeciesMenuViewController: UIViewController {
     /// Prepares the MenuView example.
     func prepareSpeciesMenu() {
         
+        allSpecies = realm!.objects(Species.self)
+
         if let sv = speciesMenuView {
             sv.removeFromSuperview()
             speciesMenuView = MenuView()
@@ -110,6 +112,8 @@ class SpeciesMenuViewController: UIViewController {
         
         for index in 0 ... 10 {
             
+            let species = allSpecies![index]
+            
             var fileIndex = ""
             var imageName = ""
             
@@ -123,10 +127,11 @@ class SpeciesMenuViewController: UIViewController {
             
             let speciesImage: UIImage? = UIImage(named: imageName)
             
-            let draggableImageView = UIImageView(frame: CGRectMake(0, 0, speciesDiameter, speciesDiameter))
+            let draggableImageView = DraggableSpeciesImageView(frame: CGRectMake(0, 0, speciesDiameter, speciesDiameter))
             draggableImageView.userInteractionEnabled = true
             draggableImageView.image = speciesImage
             draggableImageView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.dragSpecies(_:))))
+            draggableImageView.species = species
             speciesMenuView!.addSubview(draggableImageView)
             speciesMenuButtons.append(draggableImageView)
         }
@@ -151,35 +156,25 @@ class SpeciesMenuViewController: UIViewController {
     var startCenter: CGPoint?
     var dragScaleFactor : CGFloat = 1.6
     var dragAlpha : CGFloat = 0.8
-    
+    var found = false
+
     func dragSpecies(gesture: UIPanGestureRecognizer) {
-        
         let targetView = gesture.view!
-        LOG.debug("Drag CENTER \(targetView.center)")
         switch gesture.state {
         case .Began:
             if let dragOverlayView = dragAndDropView {
                 
             } else {
                 
-                //startCenter = targetView.center
-                
                 dragAndDropView = UIView(frame: UIApplication.sharedApplication().keyWindow!.frame)
                 dragAndDropView?.backgroundColor = UIColor.clearColor()
-                dragAndDropView?.alpha = 0.5
+                //dragAndDropView?.alpha = 0.5
                 
                 UIApplication.sharedApplication().keyWindow!.addSubview(dragAndDropView!)
                 
-                
-                //                startCenter = targetView.convertPoint(targetView.center, toView: dragAndDropView)
-                //
-                LOG.debug("START CENTER \(startCenter) target \(targetView)")
-                
                 if let targetView = gesture.view as? UIImageView {
                     
-                    copyImageView = DraggableSpeciesImageView(frame: targetView.frame)
-                    copyImageView?.image = targetView.image
-                    copyImageView?.userInteractionEnabled = true
+                    copyImageView = (targetView as! DraggableSpeciesImageView).clone()
                     
                     
                     UIApplication.sharedApplication().keyWindow!.addSubview(copyImageView!)
@@ -197,11 +192,6 @@ class SpeciesMenuViewController: UIViewController {
                 }
             }
         case .Changed:
-            
-            
-            //            dragAndDropView?.backgroundColor = UIColor.blueColor()
-            //            dragAndDropView?.alpha = 0.5
-            
             let translation = gesture.translationInView(dragAndDropView)
             
             LOG.debug("TRANSLATE  \(translation) TARGET \(targetView)")
@@ -210,43 +200,107 @@ class SpeciesMenuViewController: UIViewController {
             copyImageView!.center = CGPoint(x: startCenter!.x + translation.x, y: startCenter!.y + translation.y)
             
             LOG.debug("copy  \(copyImageView!.center)")
-            
+            found = false
             for t in dropTargets {
                 let tPoint = gesture.locationInView(t)
                 if CGRectContainsPoint(t.frame, tPoint) {
-                  t.backgroundColor = MaterialColor.grey.lighten4
+                    t.highlight()
+                    found = true
                 } else {
-                  t.backgroundColor = MaterialColor.white
+                    t.unhighlight()
                 }
             }
-            
         case .Ended:
-            
-            let endpoint = gesture.locationInView(dragAndDropView)
-            let endcenter = copyImageView!.center
-            copyImageView?.stopJiggling()
-            
-            LOG.debug("end center \(endcenter) vs endpoint \(endpoint) with droptargets \(dropTargets.count)")
-            
-            for t in dropTargets {
-                let tPoint = gesture.locationInView(t)
-                if CGRectContainsPoint(t.frame, tPoint) {
+            if found == false {
+                //if we are NOT inside dropzone
+                //snapback and remove
+                //LOG.debug("WE ARE NOT COPYING NOT INSIDE")
+                UIView.animateWithDuration(0.4, animations: {
                     
-                    LOG.debug("GOT IT \(t)")
+                    self.copyImageView!.center = self.startCenter!
                     
-                    copyImageView!.center = tPoint
+                    self.copyImageView!.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                    self.copyImageView!.alpha = 1.0
                     
-                    DragUtil.animateViewWithCompletion(copyImageView!, scale: self.dragScaleFactor-0.3, alpha: self.dragAlpha, duration: 0.3, completion: { t.addSubview(self.copyImageView!) })
+                    }, completion: {
+                        (finished:Bool) in
+                        self.copyImageView!.removeFromSuperview()
+                        self.dragAndDropView?.removeFromSuperview()
+                        self.found = false
+
+                })
+            } else {
+//                let endpoint = gesture.locationInView(dragAndDropView)
+//                let endcenter = copyImageView!.center
+                
+                copyImageView?.stopJiggling()
+                
+                
+                for t in dropTargets {
+                    let tPoint = gesture.locationInView(t)
+                    if CGRectContainsPoint(t.frame, tPoint) {
+                        
+                        t.unhighlight()
+                        
+                        LOG.debug("GOT IT \(t)")
+                        
+                        copyImageView!.center = tPoint
+                        
+                        self.found = false
+
+                        self.copyImageView!.removeFromSuperview()
+                        
+                        if t.addDraggableView(self.copyImageView!) {
+                            DragUtil.animateViewWithCompletion(copyImageView!, scale: self.dragScaleFactor-0.3, alpha: 1.0, duration: 0.3, completion: {
+                                self.dragAndDropView?.removeFromSuperview()
+                                self.dragAndDropView = nil
+                                self.found = false
+                            })
+                        } else {
+                            
+                            let location = gesture.locationInView(dragAndDropView)
+                            self.copyImageView?.center = location
+                            dragAndDropView?.addSubview(self.copyImageView!)
+                            UIView.animateWithDuration(0.4, animations: {
+                                
+                                self.copyImageView!.center = self.startCenter!
+                                self.copyImageView!.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                                self.copyImageView!.alpha = 1.0
+                                
+                                }, completion: {
+                                    (finished:Bool) in
+                                    self.copyImageView!.removeFromSuperview()
+                                    self.copyImageView = nil
+                                    self.dragAndDropView?.removeFromSuperview()
+                                    self.dragAndDropView = nil
+                                    self.found = false
+                                    
+                            })
+                            
+                        }
+
+                        
                     
+                        
+                        
+                        
+                    
+                    }
                 }
             }
             
-            dragAndDropView?.removeFromSuperview()
-            dragAndDropView = nil
+     
+
             break
         default:
             break
         }
+    }
+    
+    func enableSpecies(speciesIndex: Int, isEnabled: Bool) {
+        //+1 to the species index because of the add button
+        let speciesView = speciesMenuButtons[speciesIndex+1]
+        speciesView.userInteractionEnabled = isEnabled
     }
     
     func showMenu() {

@@ -1,4 +1,4 @@
-//
+
 //  ObservationDropView.swift
 //  BeaconTerminal
 //
@@ -8,15 +8,14 @@
 
 import Foundation
 import UIKit
+import Material
 
 class RelationshipDropView: DropTargetView {
 
+    var fromSpecies: Species? 
     var anchorCenter: CGPoint = CGPoint(x: 0, y: 0)
-    var targetPaths = [Int: UIBezierPath]()
     var ringColor : UIColor?
-
-
-    var draggableViews = [Int: DraggableSpeciesImageView]()
+    var draggableViews = [DraggableSpeciesImageView]()
     var anchorView : UIView?
 
     var isEditing: Bool = false {
@@ -45,34 +44,39 @@ class RelationshipDropView: DropTargetView {
     func prepareView() {
     }
 
-//    func addDraggableView(draggableView: DraggableSpeciesImageView) {
-//        
-//        let index = draggableView.tag
-//        
-//        if draggableViews.indexForKey(index) == nil {
-//            self.addSubview(draggableView)
-//            self.setNeedsDisplay()
-//            draggableViews.updateValue(draggableView, forKey: draggableView.tag)
-//        }
-//
-//    }
+    func addDraggableView(speciesImageView: DraggableSpeciesImageView) -> Bool {
+        
+        
+        
+        for dView in self.subviews {
+            
+            
+            if ((dView as? DraggableSpeciesImageView) != nil) {
+                let dView = dView as? DraggableSpeciesImageView
+                if dView?.species?.index == speciesImageView.species?.index {
+                    return false
+                }
+            }
+            
+            
+        }
+        
+        
+        self.addSubview(speciesImageView)
+
+        return true
+    }
     
 
-    // Resizes an input image (self) to a specified size
-    func imageView() -> UIImage? {
-        // Begins an image context with the specified size
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.frame.width,self.frame.height    ), false, 0.0);
-        // Draws the input image (self) in the specified size
-        for (_, value) in targetPaths {
-            value.lineWidth = 3
-            UIColor.blackColor().setStroke()
-            value.stroke()
-        }
-        // Gets an UIImage from the image context
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        // Ends the image context
-        UIGraphicsEndImageContext();
-        // Returns the final image, or NULL on error
-        return result;
+    
+
+    func highlight() {
+        self.backgroundColor = MaterialColor.grey.lighten3
+        self.borderColor = MaterialColor.blue.base
+    }
+    
+    func unhighlight() {
+        self.backgroundColor = UIColor.whiteColor()
+        self.borderColor = UIColor.blackColor()
     }
 }

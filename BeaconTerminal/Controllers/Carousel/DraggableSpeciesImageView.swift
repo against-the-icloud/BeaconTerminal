@@ -11,10 +11,9 @@ import UIKit
 
 class DraggableSpeciesImageView : UIImageView {
     
-    var toSpecies: Species?
-    var fromSpecies: Species?
-    var doubleArrow = false
-    var inwardArrow = false
+    var species: Species?
+    var jiggling = false
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,15 +23,7 @@ class DraggableSpeciesImageView : UIImageView {
         super.init(coder: aDecoder)
     }
     
-    func checkRelationship(draggableSpecies: DraggableSpeciesImageView) -> Bool {
-        if ( toSpecies?.index == draggableSpecies.toSpecies?.index && fromSpecies?.index == draggableSpecies.fromSpecies?.index ) {
-            return true
-        }
-        
-        return false
-    }
-    
-    var jiggling = false
+
     func smoothJiggle() {
     
         jiggling = true
@@ -73,6 +64,15 @@ class DraggableSpeciesImageView : UIImageView {
     
     func degreesToRadians(value:CGFloat) -> CGFloat {
         return value * CGFloat(M_PI / 180.0)
+    }
+    
+    func clone() -> DraggableSpeciesImageView {        
+        var clone = DraggableSpeciesImageView(frame: self.frame)
+        clone.image = self.image
+        clone.userInteractionEnabled = true
+        clone.species = self.species
+        return clone
+        
     }
 
 }

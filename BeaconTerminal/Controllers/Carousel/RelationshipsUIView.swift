@@ -18,10 +18,7 @@ class RelationshipsUIView: UIView {
     
     @IBInspectable var relationshipType: String?
     
-    var targetPoints = [CGPoint]()
-    var targetPaths = [Int: UIBezierPath]()
-    
-    var originPoint: CGPoint = CGPoint(x: 0, y: 0)
+
     var targetBorderWidth: CGFloat = 2.0
     var targetBorderColor = UIColor.blackColor()
     
@@ -49,19 +46,14 @@ class RelationshipsUIView: UIView {
             let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
             
             let dView = DraggableSpeciesImageView(frame: CGRectMake(point.x, point.y, size, size))
-            
-//            dView.shouldSnapBack = false
-//            dView.shouldCopy = false
-//            dView.shouldClipBounds = false
-//            dView.dragScaleFactor = 1.2
-            dView.fromSpecies = fromSpecies
-            dView.toSpecies = relationship.toSpecies
-            dView.tag = (relationship.toSpecies?.index)!
-            
-            let speciesImage = RealmDataController.generateImageForSpecies((relationship.toSpecies?.index)!)
-            dView.image = speciesImage
-            
-            dropView.addSubview(dView)
+            if let species = relationship.toSpecies {
+                let speciesImage = RealmDataController.generateImageForSpecies(species.index)
+                dView.image = speciesImage
+                dView.species = species
+                dropView.fromSpecies = fromSpecies
+                dropView.addDraggableView(dView)
+            }
+        
         }
         
     }
