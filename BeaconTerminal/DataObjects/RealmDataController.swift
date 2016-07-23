@@ -47,6 +47,7 @@ class RealmDataController {
         return true
         
     }
+
     
     func addTestGroup() -> Group {
         let simulationConfiguration = createDefaultConfiguration()
@@ -78,18 +79,29 @@ class RealmDataController {
         
         for fromSpecies in allSpecies {
            // var makeRelationship : (String, Group) -> List<SpeciesObservation>
-            
             let s : SpeciesObservation = createSpeciesObservation(fromSpecies, allSpecies: allSpecies, allEcosystems: allEcosystems)
-          
-                   
             group.speciesObservations.append(s)
-            
-    
-            
         }
 
             
         return group
+    }
+    
+    func updateSpeciesObservation(toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
+     
+        try! realm.write {
+            let relationship = Relationship()
+            relationship.id = NSUUID().UUIDString
+            relationship.toSpecies = toSpecies
+            relationship.lastModified = NSDate()
+            relationship.note = "NEW"
+            relationship.ecosystem = speciesObservation.ecosystem
+            relationship.relationshipType = relationshipType
+            speciesObservation.relationships.append(relationship)
+            self.realm.add(relationship, update: true)
+        }
+
+     
     }
     
     func createSpeciesObservation(fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
@@ -97,26 +109,28 @@ class RealmDataController {
         speciesObservation.id = NSUUID().UUIDString
         speciesObservation.fromSpecies = fromSpecies
         speciesObservation.lastModified = NSDate()
-        let ecosystem = allEcosystems[Int.random(0...3)]
+        let ecosystem = allEcosystems[0]
         speciesObservation.ecosystem = ecosystem
 
         for i in 0...3 {
             
             let relationship = Relationship()
             relationship.id = NSUUID().UUIDString
-            relationship.toSpecies = allSpecies[Int.random(0...10)]
+            relationship.toSpecies = allSpecies[i+2]
             relationship.lastModified = NSDate()
             relationship.note = "hello"
             relationship.ecosystem = ecosystem
             
             
             switch i {
+//            case 0:
+//                relationship.relationshipType = SpeciesRelationships.MUTUAL
             case 0:
-                relationship.relationshipType = SpeciesRelationships.MUTUAL
-            case 1:
                 relationship.relationshipType = SpeciesRelationships.PRODUCER
-            case 2:
+            case 1:
                 relationship.relationshipType = SpeciesRelationships.CONSUMER
+            case 3:
+                relationship.relationshipType = SpeciesRelationships.COMPLETES
             default:
                 relationship.relationshipType = SpeciesRelationships.CONSUMER
             }

@@ -57,15 +57,15 @@ class CoverFlowViewController: UIViewController {
             currentGroup = groups[groupId]
         }
         
-        notificationToken = realmDataController?.realm.addNotificationBlock {
-            notification in
-            let groups: Results<Group> = (realmDataController?.realm.objects(Group.self))!
-            if groups.count > 0 {
-                self.currentGroup = groups[self.groupId]
-            }
-            LOG.debug("GROUP HAS BEEN UPDATED UI COLLECTION VIEW")
-            self.collectionView.reloadData()
-        }
+//        notificationToken = realmDataController?.realm.addNotificationBlock {
+//            notification in
+//            let groups: Results<Group> = (realmDataController?.realm.objects(Group.self))!
+//            if groups.count > 0 {
+//                self.currentGroup = groups[self.groupId]
+//            }
+//            LOG.debug("GROUP HAS BEEN UPDATED UI COLLECTION VIEW")
+//            self.collectionView.reloadData()
+//        }
         
         getAppDelegate().speciesViewController.openAction = {
             let centeredIndexPath = self.findCenterIndexPath()

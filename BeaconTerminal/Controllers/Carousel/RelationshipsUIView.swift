@@ -13,15 +13,16 @@ import RealmSwift
 class RelationshipsUIView: UIView {
     
     @IBOutlet weak var dropView: RelationshipDropView!
-    
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBInspectable var relationshipType: String?
     
-
+    var speciesObservation: SpeciesObservation? {
+        didSet {
+            dropView.speciesObservation = speciesObservation!
+        }
+    }
     var targetBorderWidth: CGFloat = 2.0
     var targetBorderColor = UIColor.blackColor()
-    
     var fromSpecies : Species?
     
     //    var speciesObservation : SpeciesObservation?
@@ -38,10 +39,20 @@ class RelationshipsUIView: UIView {
         super.layoutSubviews()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        prepareView()
+    }
+    
+    func prepareView() {
+        dropView.relationshipType = relationshipType
+        dropView.fromSpecies = fromSpecies
+    }
+    
     func addRelationship(relationships: Results<Relationship>) {
         let size : CGFloat = 75.0
         
-
+        
         for relationship in relationships {
             let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
             
@@ -50,15 +61,14 @@ class RelationshipsUIView: UIView {
                 let speciesImage = RealmDataController.generateImageForSpecies(species.index)
                 dView.image = speciesImage
                 dView.species = species
-                dropView.fromSpecies = fromSpecies
-                dropView.addDraggableView(dView)
+                dropView.addSubview(dView)
             }
-        
+            
         }
         
     }
     
-
+    
     
     func ringColor() -> UIColor {
         switch relationshipType! {

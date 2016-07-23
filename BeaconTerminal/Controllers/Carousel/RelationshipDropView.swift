@@ -17,7 +17,9 @@ class RelationshipDropView: DropTargetView {
     var ringColor : UIColor?
     var draggableViews = [DraggableSpeciesImageView]()
     var anchorView : UIView?
-
+    var speciesObservation: SpeciesObservation?
+    var relationshipType: String?
+    
     var isEditing: Bool = false {
         didSet {
             if isEditing {
@@ -27,9 +29,6 @@ class RelationshipDropView: DropTargetView {
             }
         }
     }
-    var targetBorderWidth: CGFloat = 0.0
-    var targetBorderColor = UIColor.blackColor()
-    var lineWidth : CGFloat = 1.0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,25 +44,21 @@ class RelationshipDropView: DropTargetView {
     }
 
     func addDraggableView(speciesImageView: DraggableSpeciesImageView) -> Bool {
-        
-        
-        
         for dView in self.subviews {
-            
-            
             if ((dView as? DraggableSpeciesImageView) != nil) {
                 let dView = dView as? DraggableSpeciesImageView
                 if dView?.species?.index == speciesImageView.species?.index {
                     return false
                 }
             }
-            
-            
         }
         
-        
+ 
         self.addSubview(speciesImageView)
-
+    
+        dispatch_on_main {
+          realmDataController?.updateSpeciesObservation(speciesImageView.species!, speciesObservation: self.speciesObservation!, relationshipType: self.relationshipType!)
+        }
         return true
     }
     

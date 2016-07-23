@@ -162,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         realmDataController = RealmDataController(realm: realm!)
         
         if DEBUG {
-            if let realm = realm {
+            if let realm = realmDataController?.realm {
                 realm.beginWrite()
                 realm.deleteAll()
                 try! realm.commitWrite()

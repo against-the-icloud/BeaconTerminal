@@ -14,6 +14,7 @@ enum RelationshipType: String {
     case producer = "producer"
     case consumer = "consumer"
     case mutual = "mutual"
+    case completes = "competes"
 }
 
 
@@ -64,7 +65,7 @@ class CoverFlowCell: UICollectionViewCell {
             let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter("relationshipType = '\(relationshipView.relationshipType!)'")
             
             //LOG.debug("found relationships for \(fromSpecies.index) relationships \(foundRelationships)")
-            
+            relationshipView.speciesObservation = speciesObservation
             relationshipView.addRelationship(foundRelationships)
         }
         

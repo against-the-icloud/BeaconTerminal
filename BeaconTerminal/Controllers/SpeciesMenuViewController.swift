@@ -68,7 +68,7 @@ class SpeciesMenuViewController: UIViewController {
     func prepareSpeciesMenu() {
         
         allSpecies = realm!.objects(Species.self)
-
+        
         if let sv = speciesMenuView {
             sv.removeFromSuperview()
             speciesMenuView = MenuView()
@@ -157,7 +157,7 @@ class SpeciesMenuViewController: UIViewController {
     var dragScaleFactor : CGFloat = 1.6
     var dragAlpha : CGFloat = 0.8
     var found = false
-
+    
     func dragSpecies(gesture: UIPanGestureRecognizer) {
         let targetView = gesture.view!
         switch gesture.state {
@@ -227,11 +227,11 @@ class SpeciesMenuViewController: UIViewController {
                         self.copyImageView!.removeFromSuperview()
                         self.dragAndDropView?.removeFromSuperview()
                         self.found = false
-
+                        
                 })
             } else {
-//                let endpoint = gesture.locationInView(dragAndDropView)
-//                let endcenter = copyImageView!.center
+                //                let endpoint = gesture.locationInView(dragAndDropView)
+                //                let endcenter = copyImageView!.center
                 
                 copyImageView?.stopJiggling()
                 
@@ -247,7 +247,7 @@ class SpeciesMenuViewController: UIViewController {
                         copyImageView!.center = tPoint
                         
                         self.found = false
-
+                        
                         self.copyImageView!.removeFromSuperview()
                         
                         if t.addDraggableView(self.copyImageView!) {
@@ -274,23 +274,13 @@ class SpeciesMenuViewController: UIViewController {
                                     self.dragAndDropView?.removeFromSuperview()
                                     self.dragAndDropView = nil
                                     self.found = false
-                                    
                             })
                             
                         }
-
-                        
-                    
-                        
-                        
-                        
-                    
+  
                     }
                 }
             }
-            
-     
-
             break
         default:
             break
