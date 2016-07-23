@@ -268,8 +268,7 @@ class DraggableImageView: UIImageView {
 
         if self.shouldDropOnCell {
         
-    
-           
+            
             let pc:CGPoint = sender.locationInView(self.currentView!)
             let parentView = UIApplication.sharedApplication().keyWindow!
             let p:CGPoint = sender.locationInView(parentView)
@@ -307,7 +306,7 @@ class DraggableImageView: UIImageView {
                 //LOG.debug("HIT TEST: \(hitTestView)")
                 
                 
-                let newHit = hitTestView.hitTest(p, withEvent: nil)
+                _ = hitTestView.hitTest(p, withEvent: nil)
                 
                 
                 //LOG.debug("\(hitTestView) HIT NW TEST: \(newHit)")

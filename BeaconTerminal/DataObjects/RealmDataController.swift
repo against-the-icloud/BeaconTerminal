@@ -29,6 +29,12 @@ class RealmDataController {
             self.realm.add(realmObject, update: shouldUpdate)
         }
     }
+    
+    func delete(realmObject: Object) {
+        try! realm.write {
+            self.realm.delete(realmObject)
+        }
+    }
 
     // Mark: Group
     

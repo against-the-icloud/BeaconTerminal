@@ -29,14 +29,18 @@ class AppBottomNavigationController: BottomNavigationController {
     }
     
 
-    func changeGroupAndSectionTitles(newGroupTitle: String, newSectionTitle: String) {
-        navigationItem.title = "GROUP: \(newGroupTitle)"
-        navigationItem.titleLabel.textAlignment = .Left
-        navigationItem.titleLabel.textColor = MaterialColor.white
+    func changeGroupAndSectionTitles(newGroupTitle: String?, newSectionTitle: String?) {
         
-        navigationItem.detail = "SECTION: \(newSectionTitle)"
-        navigationItem.detailLabel.textAlignment = .Left
-        navigationItem.detailLabel.textColor = MaterialColor.white
+        if let gt = newGroupTitle, ns = newSectionTitle {
+            navigationItem.title = "GROUP: \(gt)"
+            navigationItem.titleLabel.textAlignment = .Left
+            navigationItem.titleLabel.textColor = MaterialColor.white
+            
+            navigationItem.detail = "SECTION: \(ns)"
+            navigationItem.detailLabel.textAlignment = .Left
+            navigationItem.detailLabel.textColor = MaterialColor.white
+        }
+
     }
 
     /// Prepares the tabBar.

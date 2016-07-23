@@ -115,7 +115,6 @@ class CoverFlowViewController: UIViewController {
     func prepareCollectionViewCells() {
         coverFlowLayout.minimumInteritemSpacing = 10
         coverFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        
     }
     
     
@@ -140,8 +139,6 @@ class CoverFlowViewController: UIViewController {
             print(centerCellIndexPath.item)
             return centerCellIndexPath
         }
-        
-        
         return nil
     }
     
@@ -200,7 +197,6 @@ extension CoverFlowViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         if let allSpecies = self.allSpecies {
             return allSpecies.count
         }
@@ -246,11 +242,8 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             if !speciesObservations.isEmpty {
                 cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
                 cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-                
             }
-            
         }
-        
         return cell
     }
     
@@ -305,8 +298,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         
         //if it is not open
         if !getAppDelegate().speciesViewController.isOpen() {
-            getAppDelegate().speciesViewController.openMenu()
-            
+            getAppDelegate().speciesViewController.openMenu()            
         }
         
         //remove expand cell target
@@ -346,7 +338,6 @@ extension CoverFlowViewController: UICollectionViewDataSource {
                             self.collectionView.scrollEnabled = false
                             cell.isFullscreen = true
                             cell.superview?.bringSubviewToFront(cell)
-                            
                             
                             //style
                             cell.cornerRadius = 0

@@ -57,6 +57,8 @@ class RelationshipsUIView: UIView {
             let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
             
             let dView = DraggableSpeciesImageView(frame: CGRectMake(point.x, point.y, size, size))
+            dView.userInteractionEnabled = true
+            
             if let species = relationship.toSpecies {
                 let speciesImage = RealmDataController.generateImageForSpecies(species.index)
                 dView.image = speciesImage
@@ -67,8 +69,6 @@ class RelationshipsUIView: UIView {
         }
         
     }
-    
-    
     
     func ringColor() -> UIColor {
         switch relationshipType! {

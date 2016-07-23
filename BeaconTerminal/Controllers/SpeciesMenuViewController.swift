@@ -61,7 +61,6 @@ class SpeciesMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        LOG.debug("ViewDidLoad SpeciesMenu")
     }
     
     /// Prepares the MenuView example.
@@ -162,8 +161,9 @@ class SpeciesMenuViewController: UIViewController {
         let targetView = gesture.view!
         switch gesture.state {
         case .Began:
-            if let dragOverlayView = dragAndDropView {
-                
+            if dragAndDropView != nil {
+                dragAndDropView?.removeFromSuperview()
+                dragAndDropView = nil
             } else {
                 
                 dragAndDropView = UIView(frame: UIApplication.sharedApplication().keyWindow!.frame)
@@ -194,12 +194,12 @@ class SpeciesMenuViewController: UIViewController {
         case .Changed:
             let translation = gesture.translationInView(dragAndDropView)
             
-            LOG.debug("TRANSLATE  \(translation) TARGET \(targetView)")
+            //LOG.debug("TRANSLATE  \(translation) TARGET \(targetView)")
             
             
             copyImageView!.center = CGPoint(x: startCenter!.x + translation.x, y: startCenter!.y + translation.y)
             
-            LOG.debug("copy  \(copyImageView!.center)")
+            //LOG.debug("copy  \(copyImageView!.center)")
             found = false
             for t in dropTargets {
                 let tPoint = gesture.locationInView(t)
@@ -242,7 +242,7 @@ class SpeciesMenuViewController: UIViewController {
                         
                         t.unhighlight()
                         
-                        LOG.debug("GOT IT \(t)")
+                        //LOG.debug("GOT IT \(t)")
                         
                         copyImageView!.center = tPoint
                         
@@ -349,51 +349,6 @@ class SpeciesMenuViewController: UIViewController {
             }
             (speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
         }
-    }
-    
-    
-}
-
-extension SpeciesMenuViewController: DraggableViewDelegate {
-    
-    func onDroppedToTarget(sender: DraggableImageView) {
-        LOG.debug("ON \(sender)")
-    }
-    
-    func enteringZone(sender: DraggableImageView, targets: [UIView]) {
-        if !targets.isEmpty {
-            for zone in targets {
-                zone.backgroundColor = UIColor.brownColor()
-            }
-        }
-    }
-    
-    func exitingZone(sender: DraggableImageView, targets: [UIView]) {
-        if !targets.isEmpty {
-            for zone in targets {
-                zone.backgroundColor = UIColor.brownColor()
-            }
-        }
-    }
-    
-    
-    func isDragging(sender: DraggableImageView) {
-        
-        for target in dropTargets {
-            if CGRectIntersectsRect(sender.frame, target.frame) {
-                LOG.debug("FOUND!!!!!!!! \(target)")
-            }
-        }
-        
-        
-        
-        //LOG.debug("IS DRAGGING \(sender)")
-    }
-    func onDraggingStarted(sender: DraggableImageView) {
-    }
-    func onSnappedBack(sender: DraggableImageView) {
-    }
-    func onCopied(copiedSender: DraggableImageView) {
     }
     
     

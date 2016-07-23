@@ -7,6 +7,7 @@ import Nutella
 import Transporter
 
 let DEBUG = true
+let REFRESH_DB = false
 
 // localhost || remote
 let HOST = "localhost"
@@ -79,11 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     var nutella: Nutella?
     var collectionView: UICollectionView?
     var speciesViewController: SpeciesMenuViewController = SpeciesMenuViewController()
-            
     
     let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-    
-    
     
     var beaconIDs = [
         BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: MaterialColor.pink.base),
@@ -155,24 +153,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
             //TODO
             //device config
             try! realm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "InMemoryRealm"))
-            //            let testRealmURL = NSURL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
-            //            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         }
         
         realmDataController = RealmDataController(realm: realm!)
         
-        if DEBUG {
+        if REFRESH_DB {
             if let realm = realmDataController?.realm {
                 realm.beginWrite()
                 realm.deleteAll()
                 try! realm.commitWrite()
             }
+            
+            //checks
+            //nutella config
+            realmDataController?.checkNutellaConfigs()
+            realmDataController?.checkGroups()
         }
         
-        //checks
-        //nutella config
-        realmDataController?.checkNutellaConfigs()
-        realmDataController?.checkGroups()
     }
     
     func setupNutellaConnection(host: String) {
@@ -244,7 +241,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
     }
     
     func prepareObjectGroup() {
-        bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+        
+        if let group = realmDataController?.currentGroup {
+            bottomNavigationController.changeGroupAndSectionTitles(group.groupTitle, newSectionTitle: realmDataController?.currentSection)
+        }
+        
+       
     }
     
     
