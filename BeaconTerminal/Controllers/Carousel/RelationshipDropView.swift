@@ -53,8 +53,6 @@ class RelationshipDropView: DropTargetView {
             }
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.deleteSpeciesView(_:)))
-        speciesImageView.addGestureRecognizer(tapGestureRecognizer)
         self.addSubview(speciesImageView)
         
         dispatch_on_main {
@@ -81,10 +79,10 @@ class RelationshipDropView: DropTargetView {
                     speciesView?.fadeOut(0.4, delay: 0.0, completion: {_ in
                         speciesView?.removeFromSuperview()
                     })
-                                                        
+                    
                 }
                 
-             
+                
             }
         }
         
@@ -100,5 +98,24 @@ class RelationshipDropView: DropTargetView {
     func unhighlight() {
         self.backgroundColor = UIColor.whiteColor()
         self.borderColor = UIColor.blackColor()
+    }
+    
+    // Mark: UIView Methods
+    
+    override func didAddSubview(subview: UIView) {
+        if let speciesView = subview as? DraggableSpeciesImageView {
+            // remove all the targets
+            
+            if let gestures = speciesView.gestureRecognizers {
+                for recognizer in gestures {
+                    subview.removeGestureRecognizer(recognizer)
+                }
+            }
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.deleteSpeciesView(_:)))
+            speciesView.addGestureRecognizer(tapGestureRecognizer)
+            
+        }
+        
     }
 }
