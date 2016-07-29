@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 import Material
 
+protocol SpeciesRelationshipDetailDelegate: class {
+    func presentRelationshipDetailView(sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation)
+}
+
+
 class RelationshipDropView: DropTargetView {
     
     var fromSpecies: Species?
@@ -19,6 +24,9 @@ class RelationshipDropView: DropTargetView {
     var anchorView : UIView?
     var speciesObservation: SpeciesObservation?
     var relationshipType: String?
+    
+    //always make delegates weak to avoid retain cycle
+    weak var delegate:SpeciesRelationshipDetailDelegate?
     
     var isEditing: Bool = false {
         didSet {
@@ -88,7 +96,25 @@ class RelationshipDropView: DropTargetView {
         
     }
     
-    
+    func showRelationshipDetail(sender: UITapGestureRecognizer) {
+        
+        
+        let speciesView = sender.view as? DraggableSpeciesImageView
+        
+        
+        if let delegate = self.delegate, species = speciesView?.species, relationshipType = relationshipType, speciesObservation = speciesObservation {
+            
+            //filer all relationship with this type
+            let foundRelationships = speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'").filter("toSpecies.index = \(species.index)")
+            
+            //find relationships that have toSpecies equal to species.index
+            
+            if !foundRelationships.isEmpty {
+                
+                delegate.presentRelationshipDetailView(sender.view as! DraggableSpeciesImageView, relationship: foundRelationships.first!, speciesObservation: speciesObservation)
+            }        
+        }
+    }
     
     func highlight() {
         self.backgroundColor = MaterialColor.grey.lighten3
@@ -112,10 +138,16 @@ class RelationshipDropView: DropTargetView {
                 }
             }
             
-            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.deleteSpeciesView(_:)))
+            //            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.deleteSpeciesView(_:)))
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.showRelationshipDetail(_:)))
+            
+            
+            
             speciesView.addGestureRecognizer(tapGestureRecognizer)
             
         }
         
     }
 }
+

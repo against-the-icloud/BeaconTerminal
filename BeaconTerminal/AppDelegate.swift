@@ -195,9 +195,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, NutellaDelegate {
         }
     }
     
-    func showToast(message: String) {
+    func makeToast(message: String) {
         if let presentWindow = UIApplication.sharedApplication().keyWindow {
             presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop)
+        }
+    }
+    
+    func makeToast(message: String, duration: Double = 3.0, position: AnyObject) {
+        if let presentWindow = UIApplication.sharedApplication().keyWindow {
+            presentWindow.makeToast(message: message, duration: duration, position: HRToastPositionTop)
         }
     }
     
@@ -290,7 +296,7 @@ extension AppDelegate: NutellaNetDelegate {
         if let message = message as? String, componentId = componentId, resourceId = resourceId {
             let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
             LOG.debug(s)
-            self.showToast(s)
+            self.makeToast(s)
         }
     }
     
@@ -305,7 +311,7 @@ extension AppDelegate: NutellaNetDelegate {
         if let response = response as? String, requestName = requestName {
             let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
             LOG.debug(s)
-            self.showToast(s)
+            self.makeToast(s)
         }
     }
     
@@ -320,7 +326,7 @@ extension AppDelegate: NutellaNetDelegate {
         if let request = request as? String, resourceId = resourceId, componentId = componentId {
             let s = "responseReceived \(channelName) request: \(request) componentId: \(componentId) resourceId: \(resourceId)"
             LOG.debug(s)
-            self.showToast(s)
+            self.makeToast(s)
         }
         
         return nil

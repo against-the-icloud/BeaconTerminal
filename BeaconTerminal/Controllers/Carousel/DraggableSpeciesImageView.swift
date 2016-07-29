@@ -67,7 +67,7 @@ class DraggableSpeciesImageView : UIImageView {
     }
     
     func clone() -> DraggableSpeciesImageView {        
-        var clone = DraggableSpeciesImageView(frame: self.frame)
+        let clone = DraggableSpeciesImageView(frame: self.frame)
         clone.image = self.image
         clone.userInteractionEnabled = true
         clone.species = self.species

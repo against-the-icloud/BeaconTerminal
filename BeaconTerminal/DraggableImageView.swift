@@ -269,7 +269,7 @@ class DraggableImageView: UIImageView {
         if self.shouldDropOnCell {
         
             
-            let pc:CGPoint = sender.locationInView(self.currentView!)
+            //let pc:CGPoint = sender.locationInView(self.currentView!)
             let parentView = UIApplication.sharedApplication().keyWindow!
             let p:CGPoint = sender.locationInView(parentView)
             

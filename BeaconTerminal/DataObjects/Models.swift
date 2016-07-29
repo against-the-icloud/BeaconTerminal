@@ -132,13 +132,13 @@ class Species: Object {
     dynamic var index = 0
     dynamic var last_modified = NSDate()
     
-    func convertHexColor() -> UIColor {
-        if !color.isEmpty {
-            return UIColor.init(hex: self.color)
-        }
-        
-        return UIColor.whiteColor()
-    }
+//    func convertHexColor() -> UIColor {
+//        if !color.isEmpty {
+//            return UIColor.init(hex: self.c)
+//        }
+//        
+//        return UIColor.whiteColor()
+//    }
 }
 
 class User: Object {

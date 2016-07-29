@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Spring
 import RealmSwift
 
 let CORNER_RADIUS = 10.0
@@ -57,15 +56,15 @@ class CoverFlowViewController: UIViewController {
             currentGroup = groups[groupId]
         }
         
-//        notificationToken = realmDataController?.realm.addNotificationBlock {
-//            notification in
-//            let groups: Results<Group> = (realmDataController?.realm.objects(Group.self))!
-//            if groups.count > 0 {
-//                self.currentGroup = groups[self.groupId]
-//            }
-//            LOG.debug("GROUP HAS BEEN UPDATED UI COLLECTION VIEW")
-//            self.collectionView.reloadData()
-//        }
+        //        notificationToken = realmDataController?.realm.addNotificationBlock {
+        //            notification in
+        //            let groups: Results<Group> = (realmDataController?.realm.objects(Group.self))!
+        //            if groups.count > 0 {
+        //                self.currentGroup = groups[self.groupId]
+        //            }
+        //            LOG.debug("GROUP HAS BEEN UPDATED UI COLLECTION VIEW")
+        //            self.collectionView.reloadData()
+        //        }
         
         getAppDelegate().speciesViewController.openAction = {
             let centeredIndexPath = self.findCenterIndexPath()
@@ -243,6 +242,13 @@ extension CoverFlowViewController: UICollectionViewDataSource {
                 cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
                 cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             }
+            
+            for rv in cell.relationshipViews {
+                //add delegate
+                rv.dropView.delegate = self       
+            }
+
+            
         }
         return cell
     }
@@ -298,7 +304,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         
         //if it is not open
         if !getAppDelegate().speciesViewController.isOpen() {
-            getAppDelegate().speciesViewController.openMenu()            
+            getAppDelegate().speciesViewController.openMenu()
         }
         
         //remove expand cell target
@@ -320,17 +326,15 @@ extension CoverFlowViewController: UICollectionViewDataSource {
                     LOG.debug("EXPANDING \(cell.titleLabel.text)")
                     
                     //add droptargets
-                                        
+                    
                     for rv in cell.relationshipViews {
                         getAppDelegate().speciesViewController.dropTargets.append(rv.dropView)
-                        UIApplication.sharedApplication().keyWindow?.bringSubviewToFront(rv.dropView)
+                        //add delegate
+                        rv.dropView.delegate = self
                     }
-                    
-                    
-                    //collectionView.selectItemAtIndexPath(indexPathExpanded, animated: true, scrollPosition: .CenteredHorizontally)
+               
                     if !cell.isFullscreen {
                         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: ({
-                            
                             getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: false)
                             cell.expandButton.transform = CGAffineTransformRotate(cell.expandButton.transform, CGFloat(M_PI));
                             cell.previousSize = cell.frame
@@ -357,7 +361,6 @@ extension CoverFlowViewController: UICollectionViewDataSource {
     }
 }
 
-
 extension CoverFlowViewController: UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -373,6 +376,98 @@ extension CoverFlowViewController: UIScrollViewDelegate {
     }
 }
 
+extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
+    
+    func presentRelationshipDetailView(sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation) {
+        
+        if let species = sender.species {
+            let storyboard = UIStoryboard(name: "CoverFlow", bundle: nil)
+            let relationshipDetailViewController = storyboard.instantiateViewControllerWithIdentifier("relationshipDetailViewController") as? RelationshipDetailViewController
+            relationshipDetailViewController?.speciesObservation = speciesObservation
+            relationshipDetailViewController?.sourceView = sender
+            relationshipDetailViewController?.relationship = relationship 
+            relationshipDetailViewController?.title = { ()->String in
+    
+                var rType = ""
+                switch relationship.relationshipType {
+                case "producer":
+                    //left side mid
+                    rType = "IS EATEN BY"
+                case "consumer":
+                    //left side mid
+                    rType = "EATS"
+                case "competes":
+                    //left side mid
+                    rType = "DEPENDS ON"
+                default:
+                    //nothing
+                    print()
+                }
+
+                return "\(speciesObservation.fromSpecies!.name) \(rType) \(relationship.toSpecies!.name)"
+            }()
+            
+            let navController = UINavigationController(rootViewController: relationshipDetailViewController!)
+            let tintColor =  UIColor.init(rgba: species.color)
+            navController.navigationBar.barTintColor = tintColor
+            let contrast = tintColor.fullContrastColorAdjusted
+            
+            LOG.debug("contrast color \(contrast)")
+            
+            if contrast.isLight {
+                navController.navigationBar.barStyle = .Black
+                navController.navigationBar.tintColor = contrast
+            } else {
+                navController.navigationBar.barStyle = .Default
+                navController.navigationBar.tintColor = contrast
+            }
+            
+            navController.navigationBar.hideBottomHairline()
+            navController.setToolbarHidden(false, animated: true)
+            navController.toolbar.barTintColor = tintColor
+            navController.toolbar.clipsToBounds = true
+            navController.modalPresentationStyle = .Popover
+            relationshipDetailViewController?.view.borderColor = tintColor
+            relationshipDetailViewController?.view.borderWidth = 3.0
+            
+            if let items = navController.toolbar.items {
+                for item in items {
+                    item.tintColor =  contrast
+                }
+                
+            }
+            
+            self.presentViewController(navController, animated: true, completion: nil)
+            
+            if let pop = navController.popoverPresentationController {
+                
+                pop.sourceView = sender
+                pop.sourceRect = sender.bounds
+                pop.backgroundColor = tintColor
+                pop.delegate = self
+                //pop.passthroughViews = allPassthroughViews
+                pop.permittedArrowDirections = .Any
+                navController.preferredContentSize = CGSizeMake(700, 425)
+            }
+        }
+        
+    }
+}
+
+extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
+    func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        let navController: UINavigationController = popoverPresentationController.presentedViewController as! UINavigationController
+        let relationshipDetailController: RelationshipDetailViewController = navController.viewControllers.first as! RelationshipDetailViewController
+        relationshipDetailController.save()
+        return true
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
+
+}
 
 
 

@@ -70,6 +70,7 @@ class RelationshipsUIView: UIView {
         
     }
     
+
     func ringColor() -> UIColor {
         switch relationshipType! {
         case "producer":

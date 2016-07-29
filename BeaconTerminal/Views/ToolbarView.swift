@@ -5,7 +5,7 @@
 
 import Foundation
 import UIKit
-import Spring
+//import Spring
 
 
 class ToolbarView: UIView {
@@ -13,7 +13,7 @@ class ToolbarView: UIView {
     @IBOutlet weak var mainTitleLabel: UILabel!
     
     
-    @IBOutlet var profileView: SpringImageView!
+//    @IBOutlet var profileView: SpringImageView!
     
     
     @IBOutlet weak var classLabel: UILabel!
@@ -75,49 +75,49 @@ class ToolbarView: UIView {
 //        }
     }
 
-    func promoteProfileView() {
-        UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self)
-
-        UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.profileView)
-
-    }
-    
-    func updateProfileImage(index: Int) {
-        
-        var fileIndex = ""
-        var imageName = ""
-
-        if index == -1 {
-            imageName = "ic_question_mark"
-            self.profileView.contentMode = .Center
-
-        } else {
-            if index < 10 {
-                fileIndex = "0\(index)"
-                imageName = "species_\(fileIndex).png"
-            } else {
-                fileIndex = "\(index)"
-                imageName = "species_\(fileIndex).png"
-            }
-        }
-
-        
-        LOG.debug("INDEX \(fileIndex)")
-        
-        
-        self.profileView.curve = Spring.AnimationCurve.EaseInOutCirc.rawValue
-        
-        self.profileView.animation = Spring.AnimationPreset.FlipY.rawValue
-        self.profileView.duration = 0.3
-        self.profileView.force = 3.8
-        self.profileView.damping = 0.9
-        self.profileView.velocity = 1.0
-        self.profileView.animateToNext({
-
-            self.profileView.image = UIImage(named: imageName)
-            self.profileView.contentMode = .ScaleAspectFit
-
-        })
-        
-    }
+//    func promoteProfileView() {
+//        UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self)
+//
+//        UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.profileView)
+//
+//    }
+//    
+//    func updateProfileImage(index: Int) {
+//        
+//        var fileIndex = ""
+//        var imageName = ""
+//
+//        if index == -1 {
+//            imageName = "ic_question_mark"
+//            self.profileView.contentMode = .Center
+//
+//        } else {
+//            if index < 10 {
+//                fileIndex = "0\(index)"
+//                imageName = "species_\(fileIndex).png"
+//            } else {
+//                fileIndex = "\(index)"
+//                imageName = "species_\(fileIndex).png"
+//            }
+//        }
+//
+//        
+//        LOG.debug("INDEX \(fileIndex)")
+//        
+//        
+//        self.profileView.curve = Spring.AnimationCurve.EaseInOutCirc.rawValue
+//        
+//        self.profileView.animation = Spring.AnimationPreset.FlipY.rawValue
+//        self.profileView.duration = 0.3
+//        self.profileView.force = 3.8
+//        self.profileView.damping = 0.9
+//        self.profileView.velocity = 1.0
+//        self.profileView.animateToNext({
+//
+//            self.profileView.image = UIImage(named: imageName)
+//            self.profileView.contentMode = .ScaleAspectFit
+//
+//        })
+//        
+//    }
 }

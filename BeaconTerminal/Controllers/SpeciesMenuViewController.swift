@@ -158,7 +158,7 @@ class SpeciesMenuViewController: UIViewController {
     var found = false
     
     func dragSpecies(gesture: UIPanGestureRecognizer) {
-        let targetView = gesture.view!
+        _ = gesture.view!
         switch gesture.state {
         case .Began:
             if dragAndDropView != nil {

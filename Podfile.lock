@@ -1,5 +1,4 @@
 PODS:
-  - IBAnimatable (2.5)
   - Material (1.42.7)
   - Nimble (4.1.0)
   - Quick (0.9.2)
@@ -8,47 +7,29 @@ PODS:
   - Realm/Headers (1.0.2)
   - RealmSwift (1.0.2):
     - Realm (= 1.0.2)
-  - Spring (1.0.3)
-  - SwiftState (4.1.0)
   - SwiftyJSON (2.3.2)
   - Transporter (2.0.1)
   - XCGLogger (3.3)
 
 DEPENDENCIES:
-  - IBAnimatable
   - Material
   - Nimble
   - Quick
   - RealmSwift
-  - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
-  - SwiftState
   - SwiftyJSON
   - Transporter (~> 2.0.0)
   - XCGLogger
 
-EXTERNAL SOURCES:
-  Spring:
-    :branch: swift2
-    :git: https://github.com/MengTo/Spring.git
-
-CHECKOUT OPTIONS:
-  Spring:
-    :commit: 18d5c7b74489de8044e34767f856d1e574f0820e
-    :git: https://github.com/MengTo/Spring.git
-
 SPEC CHECKSUMS:
-  IBAnimatable: 5c33ed051b55f5ab988b5b256121158d1b81a333
   Material: 2d46a44719b1f19e52956518af8aea54ac714963
   Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
   Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
   Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
   RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
-  Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
-  SwiftState: eb4f3ca252feac9ec26235cf4374f91e0560e3a1
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: 7ab1beb1be6cf50a34e0f041a18af7d0214a7f72
+PODFILE CHECKSUM: f7f9e797247d8bbbd661e0043027f8e658bbb81d
 
 COCOAPODS: 1.0.1

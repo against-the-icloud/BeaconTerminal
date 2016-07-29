@@ -1,9 +1,7 @@
 import UIKit
 import Photos
-import Spring
 import Material
 import MobileCoreServices
-import SwiftState
 //import ALCameraViewController
 
 //enum ApplicationState: StateType {
@@ -22,8 +20,6 @@ protocol ToolMenuDelegate {
     func onImageViewPresented(sender: UIImageView)
     func onImageViewDismissed(sender: UIImageView)
 }
-
-
 
 class MainViewController: UIViewController, UINavigationControllerDelegate {
 
@@ -226,25 +222,25 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBAction func unwindToHereFromScannerView(segue: UIStoryboardSegue) {
         // And we are back
-        let svc = segue.sourceViewController as! ScannerViewController
-
-        let speciesBeaconDetail = svc.selectedBeaconDetail
-
-        LOG.debug("UNWINDED TO ROOT INDEX \(speciesBeaconDetail?.asSimpleDescription)")
-        
-        
-        let changeNavigationColor = { (hexColor: String) -> Void in
-            
-            let nav = self.navigationController?.navigationBar
-            nav?.backgroundColor = UIColor(hex: hexColor)
-
-            nav?.tintColor = UIColor.whiteColor()
-            nav?.topItem?.titleLabel.textColor = UIColor.whiteColor()
-            
-            self.navigationController?.navigationBar.layer.zPosition = -1;
-        }
-        
-        changeNavigationColor(speciesBeaconDetail!.hexColor)
+//        let svc = segue.sourceViewController as! ScannerViewController
+//
+//        let speciesBeaconDetail = svc.selectedBeaconDetail
+//
+//        LOG.debug("UNWINDED TO ROOT INDEX \(speciesBeaconDetail?.asSimpleDescription)")
+//        
+//        
+//        let changeNavigationColor = { (hexColor: String) -> Void in
+//            
+//            let nav = self.navigationController?.navigationBar
+//            //nav?.backgroundColor = UIColor(hex: hexColor)
+//
+//            nav?.tintColor = UIColor.whiteColor()
+//            nav?.topItem?.titleLabel.textColor = UIColor.whiteColor()
+//            
+//            self.navigationController?.navigationBar.layer.zPosition = -1;
+//        }
+//        
+//        changeNavigationColor(speciesBeaconDetail!.hexColor)
         
 //        self.navigationBar.tintColor = MaterialColor.white
 //        self.navigationBar.backgroundColor = UIColor(hex: speciesBeaconDetail!.hexColor)
