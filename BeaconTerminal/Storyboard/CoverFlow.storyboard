@@ -32,7 +32,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -333,6 +333,7 @@
                     <size key="freeformSize" width="700" height="425"/>
                     <connections>
                         <outlet property="cameraButton" destination="1lL-TV-Txi" id="s4Q-bY-C05"/>
+                        <outlet property="ecosystemSegementedControl" destination="sUD-5P-tDg" id="f43-WM-WKt"/>
                         <outlet property="ecosystemSegmentedControl" destination="sUD-5P-tDg" id="oTo-hB-VFJ"/>
                         <outlet property="evidenceImageView" destination="iyx-Uf-TzI" id="RRH-2w-Hto"/>
                         <outlet property="libraryButton" destination="h7k-7J-OG4" id="RN1-6K-Z5V"/>

@@ -45,6 +45,7 @@ class RelationshipDetailViewController: UIViewController {
     @IBOutlet weak var evidenceImageView: UIImageView!
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var ecosystemSegementedControl: UISegmentedControl!
     
     // Mark: init
     required init?(coder aDecoder: NSCoder) {
@@ -66,10 +67,15 @@ class RelationshipDetailViewController: UIViewController {
     }
     
     func prepareViews() {
+
+
+        //textarea
         textView.delegate = self
         textView.becomeFirstResponder()
         textView.autocorrectionType = UITextAutocorrectionType.Yes
         textView.spellCheckingType = UITextSpellCheckingType.Yes
+
+
         
         //buttons
         libraryButton.tintColor = MaterialColor.blue.base
@@ -85,25 +91,38 @@ class RelationshipDetailViewController: UIViewController {
         evidenceImageView.layer.masksToBounds = true
         evidenceImageView.contentMode = .ScaleAspectFit
         
-        if let r = self.relationship {
-            if let attachment = r.attachments {
-                
-                if let url = NSURL(string: attachment) {
-                    let result = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil)
-                    if let photo = result.firstObject {                        
-                        evidenceImageView.image = photo.image
-                    }
-                
-                }
-                
-                
+        loadImageAsset()
+        loadTextAssets()
+    }
 
-                
-                
-            }
+    func loadTextAssets() {
+        //update views
+        if let r = relationship, index = ecosystemIndex {
+            textView.text = r.note
+            ecosystemSegementedControl.selectedSegmentIndex = index
         }
     }
     
+    func loadImageAsset() {
+        if let r = self.relationship {
+            if let attachment = r.attachments {
+                if !attachment.isEmpty {
+                    if let url = NSURL(string: attachment) {
+                        let assets = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil).firstObject as! PHAsset
+
+                        let targetSize = CGSizeMake(CGRectGetWidth(evidenceImageView.frame),CGRectGetHeight(evidenceImageView.frame))
+                        var options = PHImageRequestOptions()
+
+                        PHImageManager.defaultManager().requestImageForAsset(assets, targetSize: targetSize, contentMode: PHImageContentMode.AspectFit, options: options, resultHandler: {
+                            (result, info) in
+                            self.evidenceImageView.image = result
+                        })
+                    }
+                }
+            }
+        }
+        
+    }
     
     func save() {
         if let r = self.relationship, so = self.speciesObservation {
@@ -130,13 +149,11 @@ class RelationshipDetailViewController: UIViewController {
         }
         
     }
-
+    
     // Mark: Actions
 
-    
     @IBAction func evidenceImageTap(sender: UITapGestureRecognizer) {
         LOG.debug("WE TAPPED!")
-
     }
     
     @IBAction func okButtonAction(sender: UIBarButtonItem) {
@@ -152,7 +169,7 @@ class RelationshipDetailViewController: UIViewController {
     
     @IBAction func cameraAction(sender: UIButton) {
         imagePickerController.sourceType = .Camera
-        presentViewController(imagePickerController, animated: true, completion: nil)    
+        presentViewController(imagePickerController, animated: true, completion: nil)
     }
     @IBAction func deleteButtonAction(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: {
@@ -161,7 +178,7 @@ class RelationshipDetailViewController: UIViewController {
                 dispatch_on_main {
                     if let rIndex = so.relationships.indexOf(r) {
                         
-                       getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop)
+                        getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop)
                         
                         try! realmDataController!.realm.write {
                             so.relationships.removeAtIndex(rIndex)
@@ -203,7 +220,7 @@ class RelationshipDetailViewController: UIViewController {
         
     }
     
-  
+    
 }
 
 extension RelationshipDetailViewController {
@@ -230,7 +247,7 @@ extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINa
                     self.attachments.insert(attachUrl, atIndex: 0)
                     
                     UIImageWriteToSavedPhotosAlbum(image, self, #selector(RelationshipDetailViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
-
+                    
                     
                     if let r = self.relationship {
                         dispatch_on_main {
@@ -239,13 +256,13 @@ extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINa
                                 r.lastModified = NSDate()
                                 realmDataController!.realm.add(r, update: true)
                                 self.imagePickerController.dismissViewControllerAnimated(true, completion: nil)
-
+                                
                             }
                         }
                     }
-
+                    
                 }
-
+                
             }
         }
         
@@ -256,9 +273,8 @@ extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINa
 }
 
 extension RelationshipDetailViewController: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(textView: UITextView) {
+
+    func textViewDidChange(textView: UITextView) {
         isDirty = true
     }
-    func textViewDidEndEditing(textView: UITextView) {}
 }
