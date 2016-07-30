@@ -111,7 +111,7 @@ class RelationshipDetailViewController: UIViewController {
                         let assets = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil).firstObject as! PHAsset
 
                         let targetSize = CGSizeMake(CGRectGetWidth(evidenceImageView.frame),CGRectGetHeight(evidenceImageView.frame))
-                        var options = PHImageRequestOptions()
+                        let options = PHImageRequestOptions()
 
                         PHImageManager.defaultManager().requestImageForAsset(assets, targetSize: targetSize, contentMode: PHImageContentMode.AspectFit, options: options, resultHandler: {
                             (result, info) in

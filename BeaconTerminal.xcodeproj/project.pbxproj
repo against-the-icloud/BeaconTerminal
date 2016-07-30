@@ -24,6 +24,8 @@
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
 		70A06DD41CE3F84D008FC11F /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD21CE3F84D008FC11F /* coin.wav */; };
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
+		70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */; };
+		70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */; };
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE005F1D0F113300C3C61B /* DataModelTestsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
@@ -125,6 +127,8 @@
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
+		70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
+		70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE005E1D0F113300C3C61B /* DataModelTestsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTestsSpec.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
@@ -449,6 +453,8 @@
 				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
 				70C487461D32A6DF004F103A /* RelationshipsUIView.swift */,
 				706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */,
+				70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */,
+				70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 				70A06DD41CE3F84D008FC11F /* coin.wav in Resources */,
 				70A06DD61CE3FB54008FC11F /* tap.wav in Resources */,
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
+				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				C0A7DEC01C4F8FAA65B0617D /* CollectionBoard.storyboard in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
@@ -709,6 +716,7 @@
 				AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */,
 				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
 				70E8F41F1D162E27007DF331 /* TempViewController.swift in Sources */,
+				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				70D84A0A1D33F832003C36DF /* UIBezier+Arrow.swift in Sources */,
 				70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */,

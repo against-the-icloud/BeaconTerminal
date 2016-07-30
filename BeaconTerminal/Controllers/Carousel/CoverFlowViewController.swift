@@ -44,9 +44,12 @@ class CoverFlowViewController: UIViewController {
         static let CellIdentifier = "CoverFlowCell"
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
     }
     
     func setup() {
@@ -247,8 +250,8 @@ extension CoverFlowViewController: UICollectionViewDataSource {
                 //add delegate
                 rv.dropView.delegate = self       
             }
-
             
+            cell.delegate = self
         }
         return cell
     }
@@ -298,7 +301,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         }
         
     }
-    
+
     
     func expandCell(sender: UIButton) {
         
@@ -374,6 +377,63 @@ extension CoverFlowViewController: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         makeCenteredCellStyle()
     }
+}
+
+extension CoverFlowViewController: PreferenceEditDelegate {
+    
+    func preferenceEdit(speciesObservation: SpeciesObservation, sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Preferences", bundle: nil)
+        let navController = storyboard.instantiateViewControllerWithIdentifier("preferencesNavigationController") as! UINavigationController
+        
+        if let pvc = navController.viewControllers.first as? PreferencesViewController {
+            pvc.speciesObservation = speciesObservation
+        }
+        
+   
+     
+      
+ 
+        let tintColor =  UIColor.init(rgba: speciesObservation.fromSpecies!.color)
+        navController.navigationBar.barTintColor = tintColor
+        let contrast = tintColor.fullContrastColorAdjusted
+                
+        if contrast.isLight {
+            navController.navigationBar.barStyle = .Black
+            navController.navigationBar.tintColor = contrast
+        } else {
+            navController.navigationBar.barStyle = .Default
+            navController.navigationBar.tintColor = contrast
+        }
+//
+        navController.navigationBar.hideBottomHairline()
+        navController.setToolbarHidden(false, animated: true)
+        navController.toolbar.barTintColor = tintColor
+        navController.toolbar.clipsToBounds = true
+        navController.modalPresentationStyle = .Popover
+//        editNavigationController?.view.borderColor = tintColor
+//        editNavigationController?.view.borderWidth = 3.0
+//        
+        if let items = navController.toolbar.items {
+            for item in items {
+                item.tintColor =  contrast
+            }
+            
+        }
+//
+        self.presentViewController(navController, animated: true, completion: nil)
+        
+        if let pop = navController.popoverPresentationController {
+            
+            pop.sourceView = sender
+            pop.sourceRect = sender.bounds
+            pop.backgroundColor = tintColor
+            pop.delegate = self
+            //pop.passthroughViews = allPassthroughViews
+            pop.permittedArrowDirections = .Any
+            navController.preferredContentSize = CGSizeMake(700, 425)
+        }
+    }
+
 }
 
 extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
@@ -457,8 +517,12 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
 extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
     func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
         let navController: UINavigationController = popoverPresentationController.presentedViewController as! UINavigationController
-        let relationshipDetailController: RelationshipDetailViewController = navController.viewControllers.first as! RelationshipDetailViewController
-        relationshipDetailController.save()
+        
+        if navController.viewControllers.first is RelationshipDetailViewController {
+            let relationshipDetailController: RelationshipDetailViewController = navController.viewControllers.first as! RelationshipDetailViewController
+            relationshipDetailController.save()
+        }
+        
         return true
     }
     

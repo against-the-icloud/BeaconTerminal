@@ -17,6 +17,9 @@ enum RelationshipType: String {
     case completes = "competes"
 }
 
+protocol PreferenceEditDelegate {
+    func preferenceEdit(speciesObservation: SpeciesObservation, sender: UIButton)
+}
 
 class CoverFlowCell: UICollectionViewCell {
     @IBOutlet weak var profileView: UIImageView!
@@ -27,14 +30,16 @@ class CoverFlowCell: UICollectionViewCell {
     
     @IBOutlet var relationshipViews: [RelationshipsUIView]!
     
+    @IBOutlet weak var preferenceEditButton: UIButton!
     var isFullscreen : Bool = false {
         didSet {
             //previousSize = self.frame
         }
     }
     var previousSize: CGRect?
-    
     var fromSpecies : Species?
+    var delegate: PreferenceEditDelegate?
+    var speciesObservation: SpeciesObservation?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,7 +53,17 @@ class CoverFlowCell: UICollectionViewCell {
         super.layoutSubviews()
     }
     
+    @IBAction func editPreferencesAction(sender: UIButton) {
+        
+        if let so = speciesObservation {
+            delegate?.preferenceEdit(so, sender: sender)
+        }
+        
+    }
+    
     func prepareCell(speciesObservation: SpeciesObservation, fromSpecies: Species) {
+        
+        self.speciesObservation = speciesObservation
         
         let rounded : CGFloat = profileView.frame.size.width / 2.0
         profileView.layer.cornerRadius = rounded
@@ -71,7 +86,9 @@ class CoverFlowCell: UICollectionViewCell {
         
     }
     
-    
-    
+  
 }
+
+
+
 
