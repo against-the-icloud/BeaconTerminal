@@ -4,15 +4,15 @@
 
 import Foundation
 
-enum ImmediateBeaconDetectorError: ErrorType {
-    case BluetoothDisabled, Unknown
+enum ImmediateBeaconDetectorError: ErrorProtocol {
+    case bluetoothDisabled, unknown
 }
 
 protocol ImmediateBeaconDetectorDelegate: class {
 
-    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didDiscoverBeacon beacon: ESTDeviceLocationBeacon)
+    func immediateBeaconDetector(_ immediateBeaconDetector: ImmediateBeaconDetector, didDiscoverBeacon beacon: ESTDeviceLocationBeacon)
 
-    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didFailDiscovery error: ImmediateBeaconDetectorError)
+    func immediateBeaconDetector(_ immediateBeaconDetector: ImmediateBeaconDetector, didFailDiscovery error: ImmediateBeaconDetectorError)
 
 }
 
@@ -37,7 +37,7 @@ class ImmediateBeaconDetector: NSObject, ESTDeviceManagerDelegate, CBCentralMana
     }
 
     func start() {
-        deviceManager.startDeviceDiscoveryWithFilter(ESTDeviceFilterLocationBeacon())
+        deviceManager.startDeviceDiscovery(with: ESTDeviceFilterLocationBeacon())
     }
 
     func stop() {
@@ -46,28 +46,28 @@ class ImmediateBeaconDetector: NSObject, ESTDeviceManagerDelegate, CBCentralMana
 
     // MARK: ESTDeviceManagerDelegate
 
-    func deviceManager(manager: ESTDeviceManager, didDiscoverDevices devices: [ESTDevice]) {
+    func deviceManager(_ manager: ESTDeviceManager, didDiscover devices: [ESTDevice]) {
         let nextGenBeacons = devices as! [ESTDeviceLocationBeacon]
         let nearestBeacon = nextGenBeacons
             .map { ($0, normalizedRSSIForBeaconWithIdentifier($0.identifier, RSSI: $0.rssi)) }
             .filter { $0.1 != nil && $0.1 >= 0 }
-            .maxElement { $0.1 < $1.1 }?.0
+            .max { $0.1 < $1.1 }?.0
         if let nearestBeacon = nearestBeacon {
             delegate.immediateBeaconDetector(self, didDiscoverBeacon: nearestBeacon)
         }
     }
 
-    func deviceManagerDidFailDiscovery(manager: ESTDeviceManager) {
-        if bluetoothManager.state != .PoweredOn {
-            delegate.immediateBeaconDetector(self, didFailDiscovery: .BluetoothDisabled)
+    func deviceManagerDidFailDiscovery(_ manager: ESTDeviceManager) {
+        if bluetoothManager.state != .poweredOn {
+            delegate.immediateBeaconDetector(self, didFailDiscovery: .bluetoothDisabled)
         } else {
-            delegate.immediateBeaconDetector(self, didFailDiscovery: .Unknown)
+            delegate.immediateBeaconDetector(self, didFailDiscovery: .unknown)
         }
     }
 
     // MARK: CBCentralManagerDelegate
 
-    func centralManagerDidUpdateState(central: CBCentralManager) {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
     }
 
 }

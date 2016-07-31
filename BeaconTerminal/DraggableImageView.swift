@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 protocol DraggableViewDelegate {
-    func onDroppedToTarget(sender: DraggableImageView)
-    func isDragging(sender: DraggableImageView)
-    func onDraggingStarted(sender: DraggableImageView)
-    func onSnappedBack(sender: DraggableImageView)
-    func onCopied(copiedSender: DraggableImageView)
-    func enteringZone(sender: DraggableImageView, targets: [UIView])
-    func exitingZone(sender: DraggableImageView, targets: [UIView])
+    func onDroppedToTarget(_ sender: DraggableImageView)
+    func isDragging(_ sender: DraggableImageView)
+    func onDraggingStarted(_ sender: DraggableImageView)
+    func onSnappedBack(_ sender: DraggableImageView)
+    func onCopied(_ copiedSender: DraggableImageView)
+    func enteringZone(_ sender: DraggableImageView, targets: [UIView])
+    func exitingZone(_ sender: DraggableImageView, targets: [UIView])
 
 }
 
@@ -57,11 +57,11 @@ class DraggableImageView: UIImageView {
         self.initGestures(self)
     }
 
-    func initGestures(view: UIView) {
+    func initGestures(_ view: UIView) {
         
-        self.backgroundColor = UIColor.lightGrayColor()
+        self.backgroundColor = UIColor.lightGray()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(DraggableImageView.responseToPanGesture(_:)))
-        view.userInteractionEnabled = true
+        view.isUserInteractionEnabled = true
         view.addGestureRecognizer(panGesture)
         
         
@@ -69,10 +69,10 @@ class DraggableImageView: UIImageView {
         
     }
 
-    func getDropTarget(tag: Int) -> UIView? {
+    func getDropTarget(_ tag: Int) -> UIView? {
         let parentView = self.superview
         for sview in (parentView?.subviews)! {
-            if !sview.hidden && sview.alpha > 0 {
+            if !sview.isHidden && sview.alpha > 0 {
                 if sview.tag == tag {
                     return sview
                 }
@@ -84,20 +84,20 @@ class DraggableImageView: UIImageView {
 
 
 
-    func responseToPanGesture(sender: UIPanGestureRecognizer){
+    func responseToPanGesture(_ sender: UIPanGestureRecognizer){
 
-        if sender.state == UIGestureRecognizerState.Began {
+        if sender.state == UIGestureRecognizerState.began {
 
 
             if self.shouldCopy {
-                self.userInteractionEnabled = false 
+                self.isUserInteractionEnabled = false 
                 self.currentView = DraggableImageView(frame: self.frame)
-                self.currentView!.userInteractionEnabled = true
-                self.currentView!.autoresizingMask = UIViewAutoresizing.None
-                self.currentView!.contentMode = UIViewContentMode.Center
+                self.currentView!.isUserInteractionEnabled = true
+                self.currentView!.autoresizingMask = UIViewAutoresizing()
+                self.currentView!.contentMode = UIViewContentMode.center
                 self.currentView!.layer.cornerRadius = 10.0
                 self.currentView!.layer.borderWidth = 0.0
-                self.currentView!.tintColor = UIColor.blueColor()
+                self.currentView!.tintColor = UIColor.blue()
                 self.currentView!.delegate = self.delegate
                 self.currentView!.tag = self.tag
                 self.currentView?.shouldDropOnCell = self.shouldDropOnCell
@@ -107,7 +107,7 @@ class DraggableImageView: UIImageView {
 
                 
                 //let rootViewPoint = self.currentView!.convertPoint(self.currentView!.center, toView: overlay)
-                self.superview?.insertSubview(self.currentView!, atIndex: 0)
+                self.superview?.insertSubview(self.currentView!, at: 0)
                 
               
 
@@ -130,20 +130,20 @@ class DraggableImageView: UIImageView {
 
            // LOG.debug("DROP START \(currentView!.tag)")
 
-            self.superview?.bringSubviewToFront(self.currentView!)
+            self.superview?.bringSubview(toFront: self.currentView!)
 
-            UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.currentView!)
+            UIApplication.shared().keyWindow!.bringSubview(toFront: self.currentView!)
             
-        } else if sender.state == .Cancelled {
+        } else if sender.state == .cancelled {
             
 
-        } else if sender.state == UIGestureRecognizerState.Changed {
+        } else if sender.state == UIGestureRecognizerState.changed {
 
         
 
-            let translation = sender.translationInView(currentView!.superview)
-            self.currentView!.center = CGPointMake(self.currentView!.center.x + translation.x, currentView!.center.y + translation.y)
-            sender.setTranslation(CGPointZero, inView: currentView!.superview)
+            let translation = sender.translation(in: currentView!.superview)
+            self.currentView!.center = CGPoint(x: self.currentView!.center.x + translation.x, y: currentView!.center.y + translation.y)
+            sender.setTranslation(CGPoint.zero, in: currentView!.superview)
             
 //            let draggingPoint = sender.locationInView(currentView!)
 //            LOG.debug("dragging Point \(draggingPoint)")
@@ -160,18 +160,18 @@ class DraggableImageView: UIImageView {
             
             //check if it is getting clipped
             if shouldClipBounds {
-                if (!CGRectEqualToRect(CGRectIntersection(self.currentView!.superview!.bounds, self.currentView!.frame), self.currentView!.frame))
+                if (!self.currentView!.superview!.bounds.intersection(self.currentView!.frame).equalTo(self.currentView!.frame))
                 {
                     //view is partially out of bounds
                     LOG.debug("CLIPPPED")
                     
-                    UIView.animateWithDuration(0.4, animations: {
+                    UIView.animate(withDuration: 0.4, animations: {
                         
                         if let startPoint = self.startPoint {
                             self.currentView?.center = startPoint
                         }
                         
-                        self.currentView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                        self.currentView?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                         self.currentView?.alpha = 1.0
                         }, completion: {
                             (finished:Bool) in
@@ -186,7 +186,7 @@ class DraggableImageView: UIImageView {
             }
             
             //self.superview?.bringSubviewToFront(self.currentView!)
-            UIApplication.sharedApplication().keyWindow!.bringSubviewToFront(self.currentView!)
+            UIApplication.shared().keyWindow!.bringSubview(toFront: self.currentView!)
 
             //pointInside(sender)
 
@@ -196,10 +196,10 @@ class DraggableImageView: UIImageView {
 
 //            LOG.debug("CENTER DRAGGED \(self.currentView!)")
 
-        } else if sender.state == UIGestureRecognizerState.Ended{
+        } else if sender.state == UIGestureRecognizerState.ended{
 
 
-            self.superview?.bringSubviewToFront(self.currentView!)
+            self.superview?.bringSubview(toFront: self.currentView!)
 
 //            LOG.debug("is in the Zone: \(pointInside(sender))")
 
@@ -214,13 +214,13 @@ class DraggableImageView: UIImageView {
                     //if we are NOT inside dropzone
                     //snapback and remove
                     //LOG.debug("WE ARE NOT COPYING NOT INSIDE")
-                    UIView.animateWithDuration(0.4, animations: {
+                    UIView.animate(withDuration: 0.4, animations: {
 
                         if let startPoint = self.startPoint {
                             self.currentView?.center = startPoint
                         }
 
-                        self.currentView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                        self.currentView?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                         self.currentView?.alpha = 1.0
                     }, completion: {
                         (finished:Bool) in
@@ -239,8 +239,8 @@ class DraggableImageView: UIImageView {
                         self.currentView?.startPoint = startPoint
                     }
                     //move ended
-                    UIView.animateWithDuration(0.4, animations: {
-                        self.currentView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                    UIView.animate(withDuration: 0.4, animations: {
+                        self.currentView?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                         self.currentView?.alpha = 1.0
                     }, completion: {
                         (finished:Bool) in
@@ -249,10 +249,10 @@ class DraggableImageView: UIImageView {
                 }
             } else {
                 //SUCCESS MOVE
-                UIView.animateWithDuration(0.4, animations: {
-                    self.currentView?.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.currentView?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     self.currentView?.alpha = 1.0
-                    self.currentView?.borderColor = UIColor.clearColor()
+                    self.currentView?.borderColor = UIColor.clear()
                 }, completion: {
                     (finished:Bool) in
                     self.updateDelegates()
@@ -264,23 +264,23 @@ class DraggableImageView: UIImageView {
     }
 
 
-    func pointInside(sender:UIGestureRecognizer) -> Bool {
+    func pointInside(_ sender:UIGestureRecognizer) -> Bool {
 
         if self.shouldDropOnCell {
         
             
             //let pc:CGPoint = sender.locationInView(self.currentView!)
-            let parentView = UIApplication.sharedApplication().keyWindow!
-            let p:CGPoint = sender.locationInView(parentView)
+            let parentView = UIApplication.shared().keyWindow!
+            let p:CGPoint = sender.location(in: parentView)
             
-            let pointInCollection = CGPointMake(p.x + getAppDelegate().collectionView!.contentOffset.x, p.y + getAppDelegate().collectionView!.contentOffset.y);
+            let pointInCollection = CGPoint(x: p.x + getAppDelegate().collectionView!.contentOffset.x, y: p.y + getAppDelegate().collectionView!.contentOffset.y);
 
             
-            let path = getAppDelegate().collectionView!.indexPathForItemAtPoint(pointInCollection)
-            let cell = getAppDelegate().collectionView!.cellForItemAtIndexPath(path!) as! CoverFlowCell
+            let path = getAppDelegate().collectionView!.indexPathForItem(at: pointInCollection)
+            let cell = getAppDelegate().collectionView!.cellForItem(at: path!) as! CoverFlowCell
             for relationshipView in cell.relationshipViews {
                 
-                if (CGRectContainsPoint(relationshipView.dropView.bounds, pointInCollection))
+                if (relationshipView.dropView.bounds.contains(pointInCollection))
                 {
                     LOG.debug("FOUND")
                 }
@@ -288,32 +288,32 @@ class DraggableImageView: UIImageView {
             }
             
             
-            let found = pointInside(currentView!.center , withEvent: nil)
+            let found = point(inside: currentView!.center , with: nil)
             
             LOG.debug("found \(found)")
 
         } else {
-            let parentView = UIApplication.sharedApplication().keyWindow!
+            let parentView = UIApplication.shared().keyWindow!
             
-            let p:CGPoint = sender.locationInView(parentView)
+            let p:CGPoint = sender.location(in: parentView)
             
-            let found = pointInside(currentView!.center , withEvent: nil)
+            let found = point(inside: currentView!.center , with: nil)
             
             LOG.debug("found \(found)")
             
-            if let hitTestView = parentView.hitTest(p, withEvent: nil) {
+            if let hitTestView = parentView.hitTest(p, with: nil) {
                 
                 //LOG.debug("HIT TEST: \(hitTestView)")
                 
                 
-                _ = hitTestView.hitTest(p, withEvent: nil)
+                _ = hitTestView.hitTest(p, with: nil)
                 
                 
                 //LOG.debug("\(hitTestView) HIT NW TEST: \(newHit)")
                 
                 
                 if ((hitTestView as? DropTargetView) != nil) {
-                    if(CGRectIntersectsRect(hitTestView.frame, self.currentView!.frame) || CGRectContainsPoint(hitTestView.frame,p)){
+                    if(hitTestView.frame.intersects(self.currentView!.frame) || hitTestView.frame.contains(p)){
                         if enteredZones.contains(hitTestView) {
                         } else {
                             enteredZones.append(hitTestView)
@@ -342,13 +342,13 @@ class DraggableImageView: UIImageView {
     }
     
     
-    func pointInsideWindow(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        return ((subviewAtPoint(point, view: UIApplication.sharedApplication().keyWindow!) as? DropTargetView) != nil)
+    func pointInsideWindow(_ point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        return ((subviewAtPoint(point, view: UIApplication.shared().keyWindow!) as? DropTargetView) != nil)
     }
     
-    private func subviewAtPoint(point: CGPoint, view: UIView) -> UIView? {
+    private func subviewAtPoint(_ point: CGPoint, view: UIView) -> UIView? {
         for subview in view.subviews {
-            let view = subview.hitTest(point, withEvent: nil)
+            let view = subview.hitTest(point, with: nil)
             if view != nil {
                 return view
             }
@@ -363,9 +363,9 @@ class DraggableImageView: UIImageView {
             for zone in enteredZones {
                 //convert the point to the target view
                 //LOG.debug("CV \(self.currentView!.frame)")
-                let newPoint = self.superview!.convertPoint(self.currentView!.center, toView: zone)
+                let newPoint = self.superview!.convert(self.currentView!.center, to: zone)
                 zone.addSubview(self.currentView!)
-                zone.bringSubviewToFront(self.currentView!)
+                zone.bringSubview(toFront: self.currentView!)
                 self.currentView!.center =  newPoint
             }
             

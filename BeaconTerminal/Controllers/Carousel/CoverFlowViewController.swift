@@ -44,7 +44,7 @@ class CoverFlowViewController: UIViewController {
         static let CellIdentifier = "CoverFlowCell"
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
   
@@ -54,7 +54,7 @@ class CoverFlowViewController: UIViewController {
     
     func setup() {
         //load test group
-        let groups: Results<Group> = (realmDataController?.realm.objects(Group))!
+        let groups: Results<Group> = (realmDataController?.realm.allObjects(ofType: Group.self))!
         if groups.count > 0 {
             currentGroup = groups[groupId]
         }
@@ -71,11 +71,11 @@ class CoverFlowViewController: UIViewController {
         
         getAppDelegate().speciesViewController.openAction = {
             let centeredIndexPath = self.findCenterIndexPath()
-            self.collectionView.scrollToItemAtIndexPath(centeredIndexPath!, atScrollPosition: .CenteredHorizontally, animated: true)
-            let cell = self.collectionView.cellForItemAtIndexPath(centeredIndexPath!) as! CoverFlowCell
+            self.collectionView.scrollToItem(at: centeredIndexPath!, at: .centeredHorizontally, animated: true)
+            let cell = self.collectionView.cellForItem(at: centeredIndexPath!) as! CoverFlowCell
             
             
-            cell.expandButton.sendActionsForControlEvents(.TouchUpInside)
+            cell.expandButton.sendActions(for: .touchUpInside)
             LOG.debug("found \(cell.titleLabel.text)")
             
             self.makeCenteredCellStyle()
@@ -85,13 +85,13 @@ class CoverFlowViewController: UIViewController {
     
     
     func readSpeciesAndUpdate() {
-        self.allSpecies = realm!.objects(Species.self)
+        self.allSpecies = realm!.allObjects(ofType: Species.self)
         self.collectionView.reloadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        _ = NSIndexPath.init(forItem: 0, inSection: 0)
+        _ = IndexPath.init(item: 0, section: 0)
         
         //collectionView.scrollToItemAtIndexPath(secondItem, atScrollPosition: .CenteredHorizontally, animated: false)
         
@@ -105,11 +105,11 @@ class CoverFlowViewController: UIViewController {
         setup()
         prepareCollectionViewCells()
         
-        allSpecies = realm!.objects(Species.self)
+        allSpecies = realm!.allObjects(ofType: Species.self)
         
         let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
         
-        collectionView.registerNib(nib, forCellWithReuseIdentifier: "CoverFlowCell")
+        collectionView.register(nib, forCellWithReuseIdentifier: "CoverFlowCell")
     }
     
     //let INSET : CGFloat = 0.0
@@ -120,7 +120,7 @@ class CoverFlowViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         readSpeciesAndUpdate()
     }
@@ -133,12 +133,12 @@ class CoverFlowViewController: UIViewController {
         super.viewWillLayoutSubviews()
     }
     
-    func findCenterIndexPath() -> NSIndexPath? {
-        let centerPoint = CGPointMake(self.collectionView.center.x + self.collectionView.contentOffset.x,
-                                      self.collectionView.center.y + self.collectionView.contentOffset.y);
-        if let centerCellIndexPath = self.collectionView.indexPathForItemAtPoint(centerPoint) {
+    func findCenterIndexPath() -> IndexPath? {
+        let centerPoint = CGPoint(x: self.collectionView.center.x + self.collectionView.contentOffset.x,
+                                      y: self.collectionView.center.y + self.collectionView.contentOffset.y);
+        if let centerCellIndexPath = self.collectionView.indexPathForItem(at: centerPoint) {
             //let index = collectionView!.indexPathForItemAtPoint(centerPoint)
-            print(centerCellIndexPath.item)
+            print((centerCellIndexPath as NSIndexPath).item)
             return centerCellIndexPath
         }
         return nil
@@ -147,9 +147,9 @@ class CoverFlowViewController: UIViewController {
     func makeDraggingCellStyle() {
         let paths = self.collectionView.indexPathsForVisibleItems()
         for p in paths {
-            if let cell = self.collectionView.cellForItemAtIndexPath(p) {
-                cell.borderColor = UIColor.whiteColor()
-                cell.borderWidth = 1
+            if let cell = self.collectionView.cellForItem(at: p) {
+                cell.borderColor = UIColor.white()
+                cell.borderWidth = 1.0
             }
         }
     }
@@ -159,13 +159,13 @@ class CoverFlowViewController: UIViewController {
             let paths = self.collectionView.indexPathsForVisibleItems()
             for p in paths {
                 
-                if let cell = self.collectionView.cellForItemAtIndexPath(p) {
+                if let cell = self.collectionView.cellForItem(at: p) {
                     if p == centerIndexPath {
-                        cell.borderColor = UIColor.blueColor()
-                        cell.borderWidth = 1
+                        cell.borderColor = UIColor.blue()
+                        cell.borderWidth = 1.0
                     } else {
-                        cell.borderColor = UIColor.whiteColor()
-                        cell.borderWidth = 1
+                        cell.borderColor = UIColor.white()
+                        cell.borderWidth = 1.0
                     }
                 }
                 
@@ -179,13 +179,13 @@ class CoverFlowViewController: UIViewController {
 
 
 extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let totalWidth = CGRectGetWidth(collectionView.frame)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let totalWidth = collectionView.frame.width
         
         if totalWidth > 1024 {
-            return CGSizeMake(1024, 800)
+            return CGSize(width: 1024, height: 800)
         } else {
-            return CGSizeMake(800, 600)
+            return CGSize(width: 800, height: 600)
         }
     }
     
@@ -193,27 +193,27 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
 
 //MARK: UICollectionViewDataSource
 
-extension CoverFlowViewController: UICollectionViewDataSource {
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let allSpecies = self.allSpecies {
             return allSpecies.count
         }
         return 0
     }
     
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  
         LOG.debug("SELECTED \(indexPath.item)")
-        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StoryBoard.CellIdentifier, forIndexPath: indexPath) as! CoverFlowCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryBoard.CellIdentifier, for: indexPath) as! CoverFlowCell
         
         //use index to find species, then use group to find group and the latest entries for that species
         
@@ -230,7 +230,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             let fromSpecies = self.allSpecies![indexPath.row]
             
             
-            let speciesObservations: Results<SpeciesObservation> = currentGroup.speciesObservations.filter("fromSpecies.index = \(fromSpecies.index)")
+            let speciesObservations: Results<SpeciesObservation> = currentGroup.speciesObservations.filter(using: "fromSpecies.index = \(fromSpecies.index)")
             
             
             //            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
@@ -238,12 +238,12 @@ extension CoverFlowViewController: UICollectionViewDataSource {
             if !fromSpecies.name.isEmpty {
                 cell.titleLabel.text = fromSpecies.name
             } else {
-                cell.titleLabel.text = "Species \(indexPath.row)"
+                cell.titleLabel.text = "Species \((indexPath as NSIndexPath).row)"
             }
             
             if !speciesObservations.isEmpty {
                 cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
-                cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), for: UIControlEvents.touchUpInside)
             }
             
             for rv in cell.relationshipViews {
@@ -256,7 +256,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func minimizeCell(sender: UIButton) {
+    func minimizeCell(_ sender: UIButton) {
         
         //if it is  open
         if getAppDelegate().speciesViewController.isOpen() {
@@ -265,25 +265,25 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         
         
         //remove minimize cell target
-        sender.removeTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), forControlEvents: .TouchUpInside)
+        sender.removeTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), for: .touchUpInside)
         //add expand cell target
-        sender.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: .TouchUpInside)
+        sender.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), for: .touchUpInside)
         
         
         if let indexPathExpanded = findCenterIndexPath() {
             
             getAppDelegate().speciesViewController.dropTargets.removeAll()
             
-            let cell = self.collectionView.cellForItemAtIndexPath(indexPathExpanded) as! CoverFlowCell
+            let cell = self.collectionView.cellForItem(at: indexPathExpanded) as! CoverFlowCell
             LOG.debug("MINI \(cell.titleLabel.text)")
             makeCenteredCellStyle()
-            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseIn, animations: ({
+            UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseIn, animations: ({
                 
-                cell.expandButton.transform = CGAffineTransformRotate(cell.expandButton.transform, CGFloat(M_PI));
+                cell.expandButton.transform = cell.expandButton.transform.rotate(CGFloat(M_PI));
                 getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: true)
                 
                 cell.frame = cell.previousSize!
-                self.collectionView.scrollEnabled = true
+                self.collectionView.isScrollEnabled = true
                 cell.isFullscreen = false
                 
                 
@@ -303,7 +303,7 @@ extension CoverFlowViewController: UICollectionViewDataSource {
     }
 
     
-    func expandCell(sender: UIButton) {
+    func expandCell(_ sender: UIButton) {
         
         //if it is not open
         if !getAppDelegate().speciesViewController.isOpen() {
@@ -311,20 +311,20 @@ extension CoverFlowViewController: UICollectionViewDataSource {
         }
         
         //remove expand cell target
-        sender.removeTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), forControlEvents: .TouchUpInside)
+        sender.removeTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), for: .touchUpInside)
         //add minimized cell target
-        sender.addTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), forControlEvents: .TouchUpInside)
+        sender.addTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), for: .touchUpInside)
         
         
-        let point = sender.convertPoint(CGPointZero, toView: collectionView)
-        if let indexPathExpanded = collectionView.indexPathForItemAtPoint(point) {
-            UIView.animateWithDuration(0.5, animations: {
+        let point = sender.convert(CGPoint.zero, to: collectionView)
+        if let indexPathExpanded = collectionView.indexPathForItem(at: point) {
+            UIView.animate(withDuration: 0.5, animations: {
                 
-                self.collectionView.scrollToItemAtIndexPath(indexPathExpanded, atScrollPosition: .CenteredHorizontally, animated: false)
+                self.collectionView.scrollToItem(at: indexPathExpanded, at: .centeredHorizontally, animated: false)
                 
                 }, completion: {
                     (finished: Bool) -> Void in
-                    let cell = self.collectionView.cellForItemAtIndexPath(indexPathExpanded) as! CoverFlowCell
+                    let cell = self.collectionView.cellForItem(at: indexPathExpanded) as! CoverFlowCell
                     
                     LOG.debug("EXPANDING \(cell.titleLabel.text)")
                     
@@ -337,17 +337,17 @@ extension CoverFlowViewController: UICollectionViewDataSource {
                     }
                
                     if !cell.isFullscreen {
-                        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: ({
+                        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: ({
                             getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: false)
-                            cell.expandButton.transform = CGAffineTransformRotate(cell.expandButton.transform, CGFloat(M_PI));
+                            cell.expandButton.transform = cell.expandButton.transform.rotate(CGFloat(M_PI));
                             cell.previousSize = cell.frame
                             cell.frame = self.collectionView.bounds
-                            self.collectionView.scrollEnabled = false
+                            self.collectionView.isScrollEnabled = false
                             cell.isFullscreen = true
-                            cell.superview?.bringSubviewToFront(cell)
+                            cell.superview?.bringSubview(toFront: cell)
                             
                             //style
-                            cell.cornerRadius = 0
+                            cell.cornerRadius = 0.0
                             
                             self.coverFlowLayout.invalidateLayout()
                             self.collectionView.layoutIfNeeded()
@@ -366,24 +366,24 @@ extension CoverFlowViewController: UICollectionViewDataSource {
 
 extension CoverFlowViewController: UIScrollViewDelegate {
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         makeDraggingCellStyle()
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         makeCenteredCellStyle()
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         makeCenteredCellStyle()
     }
 }
 
 extension CoverFlowViewController: PreferenceEditDelegate {
     
-    func preferenceEdit(speciesObservation: SpeciesObservation, sender: UIButton) {
+    func preferenceEdit(_ speciesObservation: SpeciesObservation, sender: UIButton) {
         let storyboard = UIStoryboard(name: "Preferences", bundle: nil)
-        let navController = storyboard.instantiateViewControllerWithIdentifier("preferencesNavigationController") as! UINavigationController
+        let navController = storyboard.instantiateViewController(withIdentifier: "preferencesNavigationController") as! UINavigationController
         
         if let pvc = navController.viewControllers.first as? PreferencesViewController {
             pvc.speciesObservation = speciesObservation
@@ -398,10 +398,10 @@ extension CoverFlowViewController: PreferenceEditDelegate {
         let contrast = tintColor.fullContrastColorAdjusted
                 
         if contrast.isLight {
-            navController.navigationBar.barStyle = .Black
+            navController.navigationBar.barStyle = .black
             navController.navigationBar.tintColor = contrast
         } else {
-            navController.navigationBar.barStyle = .Default
+            navController.navigationBar.barStyle = .default
             navController.navigationBar.tintColor = contrast
         }
 //
@@ -409,7 +409,7 @@ extension CoverFlowViewController: PreferenceEditDelegate {
         navController.setToolbarHidden(false, animated: true)
         navController.toolbar.barTintColor = tintColor
         navController.toolbar.clipsToBounds = true
-        navController.modalPresentationStyle = .Popover
+        navController.modalPresentationStyle = .popover
 //        editNavigationController?.view.borderColor = tintColor
 //        editNavigationController?.view.borderWidth = 3.0
 //        
@@ -420,7 +420,7 @@ extension CoverFlowViewController: PreferenceEditDelegate {
             
         }
 //
-        self.presentViewController(navController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
         
         if let pop = navController.popoverPresentationController {
             
@@ -429,8 +429,8 @@ extension CoverFlowViewController: PreferenceEditDelegate {
             pop.backgroundColor = tintColor
             pop.delegate = self
             //pop.passthroughViews = allPassthroughViews
-            pop.permittedArrowDirections = .Any
-            navController.preferredContentSize = CGSizeMake(700, 425)
+            pop.permittedArrowDirections = .any
+            navController.preferredContentSize = CGSize(width: 700, height: 425)
         }
     }
 
@@ -438,11 +438,11 @@ extension CoverFlowViewController: PreferenceEditDelegate {
 
 extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
     
-    func presentRelationshipDetailView(sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation) {
+    func presentRelationshipDetailView(_ sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation) {
         
         if let species = sender.species {
             let storyboard = UIStoryboard(name: "CoverFlow", bundle: nil)
-            let relationshipDetailViewController = storyboard.instantiateViewControllerWithIdentifier("relationshipDetailViewController") as? RelationshipDetailViewController
+            let relationshipDetailViewController = storyboard.instantiateViewController(withIdentifier: "relationshipDetailViewController") as? RelationshipDetailViewController
             relationshipDetailViewController?.speciesObservation = speciesObservation
             relationshipDetailViewController?.sourceView = sender
             relationshipDetailViewController?.relationship = relationship 
@@ -475,10 +475,10 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
             LOG.debug("contrast color \(contrast)")
             
             if contrast.isLight {
-                navController.navigationBar.barStyle = .Black
+                navController.navigationBar.barStyle = .black
                 navController.navigationBar.tintColor = contrast
             } else {
-                navController.navigationBar.barStyle = .Default
+                navController.navigationBar.barStyle = .default
                 navController.navigationBar.tintColor = contrast
             }
             
@@ -486,7 +486,7 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
             navController.setToolbarHidden(false, animated: true)
             navController.toolbar.barTintColor = tintColor
             navController.toolbar.clipsToBounds = true
-            navController.modalPresentationStyle = .Popover
+            navController.modalPresentationStyle = .popover
             relationshipDetailViewController?.view.borderColor = tintColor
             relationshipDetailViewController?.view.borderWidth = 3.0
             
@@ -497,7 +497,7 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
                 
             }
             
-            self.presentViewController(navController, animated: true, completion: nil)
+            self.present(navController, animated: true, completion: nil)
             
             if let pop = navController.popoverPresentationController {
                 
@@ -506,8 +506,8 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
                 pop.backgroundColor = tintColor
                 pop.delegate = self
                 //pop.passthroughViews = allPassthroughViews
-                pop.permittedArrowDirections = .Any
-                navController.preferredContentSize = CGSizeMake(700, 425)
+                pop.permittedArrowDirections = .any
+                navController.preferredContentSize = CGSize(width: 700, height: 425)
             }
         }
         
@@ -515,7 +515,7 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
 }
 
 extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
-    func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         let navController: UINavigationController = popoverPresentationController.presentedViewController as! UINavigationController
         
         if navController.viewControllers.first is RelationshipDetailViewController {
@@ -526,8 +526,8 @@ extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
         return true
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
 

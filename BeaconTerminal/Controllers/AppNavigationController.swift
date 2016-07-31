@@ -7,14 +7,14 @@ class AppNavigationController: NavigationController {
         prepareNavigationBar()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationBar.statusBarStyle = .LightContent
+        navigationBar.statusBarStyle = .lightContent
     }
     
     /// Prepares the navigationBar
     private func prepareNavigationBar() {
-        navigationBar.tintColor = MaterialColor.white
-        navigationBar.backgroundColor = MaterialColor.blue.base
+        navigationBar.tintColor = Color.white
+        navigationBar.backgroundColor = Color.blue.base
     }
 }

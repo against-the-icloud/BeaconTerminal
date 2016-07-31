@@ -22,7 +22,7 @@ class RelationshipsUIView: UIView {
         }
     }
     var targetBorderWidth: CGFloat = 2.0
-    var targetBorderColor = UIColor.blackColor()
+    var targetBorderColor = UIColor.black()
     var fromSpecies : Species?
     
     //    var speciesObservation : SpeciesObservation?
@@ -49,27 +49,32 @@ class RelationshipsUIView: UIView {
         dropView.fromSpecies = fromSpecies
     }
     
-    func addRelationship(relationships: Results<Relationship>) {
+    func addRelationship(_ relationships: Results<Relationship>) {
         let size : CGFloat = 75.0
         
         
-        for relationship in relationships {
-            if dropView != nil {
-                let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
-                
-                let dView = DraggableSpeciesImageView(frame: CGRectMake(point.x, point.y, size, size))
-                dView.userInteractionEnabled = true
-                
-                if let species = relationship.toSpecies {
-                    let speciesImage = RealmDataController.generateImageForSpecies(species.index)
-                    dView.image = speciesImage
-                    dView.species = species
-                    dropView.addSubview(dView)
-                }
-                
-            }
         
+        for relationship in relationships {
+            
+            LOG.debug("dropView \(dropView.frame)")
+            
         }
+//            if dropView != nil {
+//                let point = Util.generateRandomPoint(UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
+//                
+//                let dView = DraggableSpeciesImageView(frame: CGRect(x: point.x, y: point.y, width: size, height: size))
+//                dView.isUserInteractionEnabled = true
+//                
+//                if let species = relationship.toSpecies {
+//                    let speciesImage = RealmDataController.generateImageForSpecies(species.index)
+//                    dView.image = speciesImage
+//                    dView.species = species
+//                    dropView.addSubview(dView)
+//                }
+//                
+//            }
+//        
+//        }
         
     }
     
@@ -78,19 +83,19 @@ class RelationshipsUIView: UIView {
         switch relationshipType! {
         case "producer":
             //left side mid
-            return UIColor.redColor()
+            return UIColor.red()
         case "consumer":
             //left side mid
-            return UIColor.blueColor()
+            return UIColor.blue()
         case "mutual":
             //left side mid
-            return UIColor.brownColor()
+            return UIColor.brown()
         default:
             //nothing
             print()
         }
         
-        return UIColor.yellowColor()
+        return UIColor.yellow()
     }
     
 }

@@ -13,10 +13,10 @@ import UIKit
  UnableToScanHexValue:      "Scan hex error"
  MismatchedHexStringLength: "Invalid RGB string, number of characters after '#' should be either 3, 4, 6 or 8"
  */
-public enum UIColorInputError : ErrorType {
-    case MissingHashMarkAsPrefix,
-    UnableToScanHexValue,
-    MismatchedHexStringLength
+public enum UIColorInputError : ErrorProtocol {
+    case missingHashMarkAsPrefix,
+    unableToScanHexValue,
+    mismatchedHexStringLength
 }
 
 extension UIColor {
@@ -85,13 +85,13 @@ extension UIColor {
      */
     public convenience init(rgba_throws rgba: String) throws {
         guard rgba.hasPrefix("#") else {
-            throw UIColorInputError.MissingHashMarkAsPrefix
+            throw UIColorInputError.missingHashMarkAsPrefix
         }
         
-        guard let hexString: String = rgba.substringFromIndex(rgba.startIndex.advancedBy(1)),
+        guard let hexString: String = rgba.substring(from: rgba.characters.index(rgba.startIndex, offsetBy: 1)),
             var   hexValue:  UInt32 = 0
-            where NSScanner(string: hexString).scanHexInt(&hexValue) else {
-                throw UIColorInputError.UnableToScanHexValue
+            , Scanner(string: hexString).scanHexInt32(&hexValue) else {
+                throw UIColorInputError.unableToScanHexValue
         }
         
         switch (hexString.characters.count) {
@@ -104,7 +104,7 @@ extension UIColor {
         case 8:
             self.init(hex8: hexValue)
         default:
-            throw UIColorInputError.MismatchedHexStringLength
+            throw UIColorInputError.mismatchedHexStringLength
         }
     }
     
@@ -113,12 +113,12 @@ extension UIColor {
      
      - parameter rgba: String value.
      */
-    public convenience init(rgba: String, defaultColor: UIColor = UIColor.clearColor()) {
+    public convenience init(rgba: String, defaultColor: UIColor = UIColor.clear()) {
         guard let color = try? UIColor(rgba_throws: rgba) else {
-            self.init(CGColor: defaultColor.CGColor)
+            self.init(cgColor: defaultColor.cgColor)
             return
         }
-        self.init(CGColor: color.CGColor)
+        self.init(cgColor: color.cgColor)
     }
     
     /**
@@ -126,7 +126,7 @@ extension UIColor {
      
      - parameter rgba: Whether the alpha should be included.
      */
-    public func hexString(includeAlpha: Bool) -> String {
+    public func hexString(_ includeAlpha: Bool) -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
@@ -245,7 +245,7 @@ extension UIColor {
             let other = color.RGBA
             let margin = CGFloat(0.01)
             
-            func comp(a: CGFloat, b: CGFloat) -> Bool {
+            func comp(_ a: CGFloat, b: CGFloat) -> Bool {
                 return abs(b-a) <= (a*margin)
             }
             
@@ -314,7 +314,7 @@ extension UIColor {
         
         let RGBA = self.RGBA
         
-        func XYZ_helper(c: CGFloat) -> CGFloat {
+        func XYZ_helper(_ c: CGFloat) -> CGFloat {
             return (0.04045 < c ? pow((c + 0.055)/1.055, 2.4) : c/12.92) * 100
         }
         
@@ -341,7 +341,7 @@ extension UIColor {
         
         let XYZ = self.XYZ
         
-        func LAB_helper(c: CGFloat) -> CGFloat {
+        func LAB_helper(_ c: CGFloat) -> CGFloat {
             return 0.008856 < c ? pow(c, 1/3) : ((7.787 * c) + (16/116))
         }
         
@@ -369,7 +369,7 @@ extension UIColor {
         
         let RGBA = self.RGBA
         
-        func lumHelper(c: CGFloat) -> CGFloat {
+        func lumHelper(_ c: CGFloat) -> CGFloat {
             return (c < 0.03928) ? (c/12.92): pow((c+0.055)/1.055, 2.4)
         }
         
@@ -499,11 +499,11 @@ extension UIColor {
     func CIEDE2000(compare color: UIColor) -> CGFloat {
         // CIEDE2000, Sharma 2004 -> http://www.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
         
-        func rad2deg(r: CGFloat) -> CGFloat {
+        func rad2deg(_ r: CGFloat) -> CGFloat {
             return r * CGFloat(180/M_PI)
         }
         
-        func deg2rad(d: CGFloat) -> CGFloat {
+        func deg2rad(_ d: CGFloat) -> CGFloat {
             return d * CGFloat(M_PI/180)
         }
         
@@ -658,8 +658,8 @@ extension UIColor {
      
      - returns: A UIColor clone with the new alpha.
      */
-    func withAlpha(newAlpha: CGFloat) -> UIColor {
-        return self.colorWithAlphaComponent(newAlpha)
+    func withAlpha(_ newAlpha: CGFloat) -> UIColor {
+        return self.withAlphaComponent(newAlpha)
     }
     
     
@@ -676,7 +676,7 @@ extension UIColor {
         let mainRGBA = self.RGBA
         let maskRGBA = color.RGBA
         
-        func masker(a: CGFloat, b: CGFloat) -> CGFloat {
+        func masker(_ a: CGFloat, b: CGFloat) -> CGFloat {
             if a < 0.5 {
                 return 2 * a * b
             } else {
@@ -748,7 +748,7 @@ extension UIColor {
         let mainRGBA = self.RGBA
         let maskRGBA = color.RGBA
         
-        func masker(a: CGFloat, b: CGFloat) -> CGFloat {
+        func masker(_ a: CGFloat, b: CGFloat) -> CGFloat {
             return 1-((1-a)*(1-b))
         }
         
@@ -763,7 +763,7 @@ extension UIColor {
     
     
     // Harmony helper method
-    private func harmony(hueIncrement: CGFloat) -> UIColor {
+    private func harmony(_ hueIncrement: CGFloat) -> UIColor {
         // http://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm
         
         let HSBA = self.HSBA_8Bit

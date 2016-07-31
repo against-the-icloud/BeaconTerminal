@@ -24,7 +24,7 @@ class SpeciesMenuViewController: UIViewController {
         
         get {
             
-            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            let screenHeight = UIScreen.main().bounds.height
             let numButtons: CGFloat = 12.0
             
             
@@ -39,18 +39,18 @@ class SpeciesMenuViewController: UIViewController {
     var speciesMenuButtonCenter: CGPoint {
         get {
             //lower left
-            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            let screenHeight = UIScreen.main().bounds.height
             
             let x: CGFloat = 10
             let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
             
-            return CGPointMake(x, y)
+            return CGPoint(x: x, y: y)
         }
     }
     
     var speciesMenuView: MenuView?
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -66,7 +66,7 @@ class SpeciesMenuViewController: UIViewController {
     /// Prepares the MenuView example.
     func prepareSpeciesMenu() {
         
-        allSpecies = realm!.objects(Species.self)
+        allSpecies = realm!.allObjects(ofType: Species.self)
         
         if let sv = speciesMenuView {
             sv.removeFromSuperview()
@@ -88,20 +88,20 @@ class SpeciesMenuViewController: UIViewController {
         
         
         let addButton: FabButton = FabButton()
-        addButton.depth = .None
+    
         
-        addButton.tintColor = MaterialColor.white
-        addButton.borderColor = MaterialColor.blue.accent3
-        addButton.backgroundColor = MaterialColor.blue.base
+        addButton.tintColor = Color.white
+        addButton.borderColor = Color.blue.accent3
+        addButton.backgroundColor = Color.blue.base
         //
-        addButton.setImage(image, forState: .Normal)
-        addButton.setImage(image, forState: .Highlighted)
+        addButton.setImage(image, for: .normal)
+        addButton.setImage(image, for: .highlighted)
         
-        addButton.addTarget(self, action: #selector(menuHandler), forControlEvents: .TouchUpInside)
+        addButton.addTarget(self, action: #selector(menuHandler), for: .touchUpInside)
         addButton.width = sideMenuButtonDiameter
         addButton.height = sideMenuButtonDiameter
         
-        addButton.shadowColor = MaterialColor.black
+        addButton.shadowColor = Color.black
         addButton.shadowOpacity = 0.5
         addButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
         addButton.layer.zPosition = CGFloat(FLT_MAX)
@@ -126,8 +126,8 @@ class SpeciesMenuViewController: UIViewController {
             
             let speciesImage: UIImage? = UIImage(named: imageName)
             
-            let draggableImageView = DraggableSpeciesImageView(frame: CGRectMake(0, 0, speciesDiameter, speciesDiameter))
-            draggableImageView.userInteractionEnabled = true
+            let draggableImageView = DraggableSpeciesImageView(frame: CGRect(x: 0, y: 0, width: speciesDiameter, height: speciesDiameter))
+            draggableImageView.isUserInteractionEnabled = true
             draggableImageView.image = speciesImage
             draggableImageView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.dragSpecies(_:))))
             draggableImageView.species = species
@@ -137,16 +137,16 @@ class SpeciesMenuViewController: UIViewController {
         
         
         // Initialize the menu and setup the configuration options.
-        speciesMenuView!.menu.direction = .Up
-        speciesMenuView!.menu.spacing = sideMenuButtonSpacing
-        speciesMenuView!.menu.baseSize = CGSizeMake(speciesDiameter, speciesDiameter)
-        speciesMenuView!.menu.itemSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
+        speciesMenuView!.menu.direction = .up
+        speciesMenuView!.menu.interimSpace = sideMenuButtonSpacing
+        speciesMenuView!.menu.baseSize = CGSize(width: speciesDiameter, height: speciesDiameter)
+        speciesMenuView!.menu.itemSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
         speciesMenuView!.menu.views = speciesMenuButtons
-        speciesMenuView!.backgroundColor = UIColor.blueColor()
+        speciesMenuView!.backgroundColor = UIColor.blue()
         
         speciesMenuView!.center = speciesMenuButtonCenter
-        UIApplication.sharedApplication().keyWindow!.addSubview(speciesMenuView!)
-        speciesMenuView?.hidden = true
+        UIApplication.shared().keyWindow!.addSubview(speciesMenuView!)
+        speciesMenuView?.isHidden = true
     }
     
     
@@ -157,32 +157,32 @@ class SpeciesMenuViewController: UIViewController {
     var dragAlpha : CGFloat = 0.8
     var found = false
     
-    func dragSpecies(gesture: UIPanGestureRecognizer) {
+    func dragSpecies(_ gesture: UIPanGestureRecognizer) {
         _ = gesture.view!
         switch gesture.state {
-        case .Began:
+        case .began:
             if dragAndDropView != nil {
                 dragAndDropView?.removeFromSuperview()
                 dragAndDropView = nil
             } else {
                 
-                dragAndDropView = UIView(frame: UIApplication.sharedApplication().keyWindow!.frame)
-                dragAndDropView?.backgroundColor = UIColor.clearColor()
+                dragAndDropView = UIView(frame: UIApplication.shared().keyWindow!.frame)
+                dragAndDropView?.backgroundColor = UIColor.clear()
                 //dragAndDropView?.alpha = 0.5
                 
-                UIApplication.sharedApplication().keyWindow!.addSubview(dragAndDropView!)
+                UIApplication.shared().keyWindow!.addSubview(dragAndDropView!)
                 
                 if let targetView = gesture.view as? UIImageView {
                     
                     copyImageView = (targetView as! DraggableSpeciesImageView).clone()
                     
                     
-                    UIApplication.sharedApplication().keyWindow!.addSubview(copyImageView!)
+                    UIApplication.shared().keyWindow!.addSubview(copyImageView!)
                     dragAndDropView?.addSubview(copyImageView!)
                     
-                    dragAndDropView?.userInteractionEnabled = true
+                    dragAndDropView?.isUserInteractionEnabled = true
                     
-                    let location = gesture.locationInView(dragAndDropView)
+                    let location = gesture.location(in: dragAndDropView)
                     startCenter = location
                     copyImageView?.center = location;
                     
@@ -191,8 +191,8 @@ class SpeciesMenuViewController: UIViewController {
                     copyImageView?.smoothJiggle()
                 }
             }
-        case .Changed:
-            let translation = gesture.translationInView(dragAndDropView)
+        case .changed:
+            let translation = gesture.translation(in: dragAndDropView)
             
             //LOG.debug("TRANSLATE  \(translation) TARGET \(targetView)")
             
@@ -202,24 +202,24 @@ class SpeciesMenuViewController: UIViewController {
             //LOG.debug("copy  \(copyImageView!.center)")
             found = false
             for t in dropTargets {
-                let tPoint = gesture.locationInView(t)
-                if CGRectContainsPoint(t.frame, tPoint) {
+                let tPoint = gesture.location(in: t)
+                if t.frame.contains(tPoint) {
                     t.highlight()
                     found = true
                 } else {
                     t.unhighlight()
                 }
             }
-        case .Ended:
+        case .ended:
             if found == false {
                 //if we are NOT inside dropzone
                 //snapback and remove
                 //LOG.debug("WE ARE NOT COPYING NOT INSIDE")
-                UIView.animateWithDuration(0.4, animations: {
+                UIView.animate(withDuration: 0.4, animations: {
                     
                     self.copyImageView!.center = self.startCenter!
                     
-                    self.copyImageView!.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                    self.copyImageView!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     self.copyImageView!.alpha = 1.0
                     
                     }, completion: {
@@ -237,8 +237,8 @@ class SpeciesMenuViewController: UIViewController {
                 
                 
                 for t in dropTargets {
-                    let tPoint = gesture.locationInView(t)
-                    if CGRectContainsPoint(t.frame, tPoint) {
+                    let tPoint = gesture.location(in: t)
+                    if t.frame.contains(tPoint) {
                         
                         t.unhighlight()
                         
@@ -258,13 +258,13 @@ class SpeciesMenuViewController: UIViewController {
                             })
                         } else {
                             
-                            let location = gesture.locationInView(dragAndDropView)
+                            let location = gesture.location(in: dragAndDropView)
                             self.copyImageView?.center = location
                             dragAndDropView?.addSubview(self.copyImageView!)
-                            UIView.animateWithDuration(0.4, animations: {
+                            UIView.animate(withDuration: 0.4, animations: {
                                 
                                 self.copyImageView!.center = self.startCenter!
-                                self.copyImageView!.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                                self.copyImageView!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                                 self.copyImageView!.alpha = 1.0
                                 
                                 }, completion: {
@@ -287,37 +287,37 @@ class SpeciesMenuViewController: UIViewController {
         }
     }
     
-    func enableSpecies(speciesIndex: Int, isEnabled: Bool) {
+    func enableSpecies(_ speciesIndex: Int, isEnabled: Bool) {
         //+1 to the species index because of the add button
         let speciesView = speciesMenuButtons[speciesIndex+1]
-        speciesView.userInteractionEnabled = isEnabled
+        speciesView.isUserInteractionEnabled = isEnabled
     }
     
     func showMenu() {
         if let sv = speciesMenuView {
-            sv.hidden = false
+            sv.isHidden = false
         }
     }
     
     func isOpen() -> Bool {
-        return speciesMenuView!.menu.opened
+        return speciesMenuView!.menu.isOpened
     }
     
     func openMenu() {
-        if !speciesMenuView!.menu.opened {
-            speciesMenuView!.open({
-                (self.speciesMenuView!.menu.views?.first as? MaterialButton)?.backgroundColor = MaterialColor.green.base
+        if !speciesMenuView!.menu.isOpened {
+            speciesMenuView!.open(completion: {
+                (self.speciesMenuView!.menu.views?.first as? Button)?.backgroundColor = Color.green.base
             })
             
-            (speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
+            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0.125))
         }
     }
     
     func closeMenu() {
-        if speciesMenuView!.menu.opened {
-            speciesMenuView!.close({
-                (self.speciesMenuView!.menu.views?.first as? MaterialButton)?.backgroundColor = MaterialColor.blue.base
-                (self.speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
+        if speciesMenuView!.menu.isOpened {
+            speciesMenuView!.close(completion: {
+                (self.speciesMenuView!.menu.views?.first as? Button)?.backgroundColor = Color.blue.base
+                (self.speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0))
             })
             
             
@@ -325,7 +325,7 @@ class SpeciesMenuViewController: UIViewController {
     }
     
     func menuHandler() {
-        if speciesMenuView!.menu.opened {
+        if speciesMenuView!.menu.isOpened {
             closeMenu()
             openAction()
         } else {
@@ -339,15 +339,15 @@ class SpeciesMenuViewController: UIViewController {
     
     /// Handle the menuView touch event.
     func handleSpeciesMenuSelection() {
-        if speciesMenuView!.menu.opened {
+        if speciesMenuView!.menu.isOpened {
             speciesMenuView!.menu.close()
-            (speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
+            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0))
         } else {
             speciesMenuView!.menu.open() {
                 (v: UIView) in
-                (v as? MaterialButton)?.pulse()
+                (v as? Button)?.pulse()
             }
-            (speciesMenuView!.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
+            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0.125))
         }
     }
     

@@ -17,8 +17,8 @@ enum ToolMenuActions: String {
 }
 
 protocol ToolMenuDelegate {
-    func onImageViewPresented(sender: UIImageView)
-    func onImageViewDismissed(sender: UIImageView)
+    func onImageViewPresented(_ sender: UIImageView)
+    func onImageViewDismissed(_ sender: UIImageView)
 }
 
 class MainViewController: UIViewController, UINavigationControllerDelegate {
@@ -29,7 +29,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var hasTabbar = false
     var hasScanButton = false
 
-    var statusBarColor: UIStatusBarStyle = UIStatusBarStyle.LightContent
+    var statusBarColor: UIStatusBarStyle = UIStatusBarStyle.lightContent
 
     let imagePicker = UIImagePickerController()
 
@@ -54,7 +54,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         
         get {
             
-            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            let screenHeight = UIScreen.main().bounds.height
             let numButtons: CGFloat = 12.0
             
             
@@ -69,32 +69,32 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var speciesMenuButtonCenter: CGPoint {
         get {
             //lower left
-            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
+            let screenHeight = UIScreen.main().bounds.height
             
             let x: CGFloat = 10
             let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
             
-            return CGPointMake(x, y)
+            return CGPoint(x: x, y: y)
         }
     }
     
     var toolsMenuButtonCenter: CGPoint {
         get {
             //lower right
-            let screenHeight = CGRectGetHeight(UIScreen.mainScreen().bounds)
-            let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
+            let screenHeight = UIScreen.main().bounds.height
+            let screenWidth = UIScreen.main().bounds.width
 
             let x: CGFloat = screenWidth - (sideMenuButtonDiameter + 10)
             let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
             
-            return CGPointMake(x, y)
+            return CGPoint(x: x, y: y)
         }
     }
     
     
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     var toolsMenuView : MenuView = MenuView()
@@ -103,7 +103,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UIVIEWCONTROLLER METHODS
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -118,11 +118,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         prepareViews()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationDrawerController?.enabled = true
-        let scannerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("scannerViewController")
-        scannerViewController!.modalPresentationStyle = .OverFullScreen
+        let scannerViewController = self.storyboard?.instantiateViewController(withIdentifier: "scannerViewController")
+        scannerViewController!.modalPresentationStyle = .overFullScreen
         
         
         if shouldPresentScanner {
@@ -142,11 +142,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     func prepareViews() {
         let state = getAppDelegate().checkApplicationState()
         switch state {
-        case .PLACE_GROUP:
+        case .placeGroup:
             prepareTabBarItem()
-        case .PLACE_TERMINAL:
+        case .placeTerminal:
+            print()
             break
-        case .OBJECT_GROUP:
+        case .objectGroup:
             prepareTabBarItem()
         default:
             break
@@ -156,11 +157,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     func prepareMenus() {
         let state = getAppDelegate().checkApplicationState()
         switch state {
-        case .PLACE_GROUP:
+        case .placeGroup:
             prepareSpeciesMenu()
-        case .PLACE_TERMINAL:
+        case .placeTerminal:
             break
-        case .OBJECT_GROUP:
+        case .objectGroup:
             prepareSpeciesMenu()        
         default:
             break
@@ -177,24 +178,24 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         tabBarItem.title = "Species"
         let iconImage = UIImage(named: "ic_lightbulb_white")!
         tabBarItem.image = iconImage
-        tabBarItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
-        tabBarItem.setTitleColor(MaterialColor.white, forState: .Selected)
+        tabBarItem.setTitleColor(color: Color.grey.base, forState: .normal)
+        tabBarItem.setTitleColor(color: Color.white, forState: .selected)
     }
 
 
     func openCamera() {
-        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)) {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            self.present(imagePicker, animated: true, completion: nil)
         } else {
             openGallary()
         }
     }
 
     func openGallary() {
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        if UIDevice.current().userInterfaceIdiom == .phone {
+            self.present(imagePicker, animated: true, completion: nil)
         } else {
 //            popover=UIPopoverController(contentViewController: picker)
 //            popover!.presentPopoverFromRect(btnClickMe.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
@@ -203,11 +204,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UNWIND SEGUE
 
-    @IBAction func unwindToHereFromSpeciesDone(segue: UIStoryboardSegue) {
+    @IBAction func unwindToHereFromSpeciesDone(_ segue: UIStoryboardSegue) {
         //remove blur after popover
 
         if blurEffectView != nil {
-            UIView.animateWithDuration(0.3, animations: {
+            UIView.animate(withDuration: 0.3, animations: {
                 self.blurEffectView!.alpha = 1.0
             }, completion: { finished in
                 self.setTabBarVisible(true, duration: 0.3, animated: true)
@@ -220,7 +221,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     }
 
-    @IBAction func unwindToHereFromScannerView(segue: UIStoryboardSegue) {
+    @IBAction func unwindToHereFromScannerView(_ segue: UIStoryboardSegue) {
         // And we are back
 //        let svc = segue.sourceViewController as! ScannerViewController
 //
@@ -242,13 +243,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 //        
 //        changeNavigationColor(speciesBeaconDetail!.hexColor)
         
-//        self.navigationBar.tintColor = MaterialColor.white
+//        self.navigationBar.tintColor = Color.white
 //        self.navigationBar.backgroundColor = UIColor(hex: speciesBeaconDetail!.hexColor)
         
         // use svc to get mood, action, and place
     }
 
-    @IBAction func unwindToHereTestTable(segue: UIStoryboardSegue) {
+    @IBAction func unwindToHereTestTable(_ segue: UIStoryboardSegue) {
         // And we are back
         let svc = segue.sourceViewController as! TestUITableViewController
 
@@ -260,7 +261,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: Photo Related
 
-    @IBAction func photoAlbumAction(sender: UIButton) {
+    @IBAction func photoAlbumAction(_ sender: UIButton) {
 
 //        self.imagePicker.allowsEditing = true
 //        self.imagePicker.sourceType = .PhotoLibrary
@@ -282,13 +283,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 //        presentViewController(libraryViewController, animated: true, completion: nil)
     }
 
-    @IBAction func cameraAction(sender: UIButton) {
-        if (UIImagePickerController.isSourceTypeAvailable(.Camera)) {
-            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+    @IBAction func cameraAction(_ sender: UIButton) {
+        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 imagePicker.allowsEditing = false
-                imagePicker.sourceType = .Camera
-                imagePicker.cameraCaptureMode = .Photo
-                presentViewController(imagePicker, animated: true, completion: {})
+                imagePicker.sourceType = .camera
+                imagePicker.cameraCaptureMode = .photo
+                present(imagePicker, animated: true, completion: {})
             } else {
 
             }
@@ -297,26 +298,26 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         }
     }
 
-    @IBAction func screenShotAction(sender: UIButton) {
+    @IBAction func screenShotAction(_ sender: UIButton) {
         if let wnd = self.view {
 
             let v = UIView(frame: wnd.bounds)
-            v.backgroundColor = UIColor.whiteColor()
+            v.backgroundColor = UIColor.white()
             v.alpha = 1
 
             wnd.addSubview(v)
-            UIView.animateWithDuration(1, animations: {
+            UIView.animate(withDuration: 1, animations: {
                 v.alpha = 0.0
             }, completion: {
                 (finished: Bool) in
 
                 v.removeFromSuperview()
                 let v = self.view
-                UIGraphicsBeginImageContextWithOptions(v.bounds.size, true, 1.0)
-                v.drawViewHierarchyInRect(v.bounds, afterScreenUpdates: true)
+                UIGraphicsBeginImageContextWithOptions((v?.bounds.size)!, true, 1.0)
+                v?.drawHierarchy(in: (v?.bounds)!, afterScreenUpdates: true)
                 let img = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
-                UIImageWriteToSavedPhotosAlbum(img, nil, nil, nil)
+                UIImageWriteToSavedPhotosAlbum(img!, nil, nil, nil)
             })
         }
 
@@ -324,8 +325,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     }
     
 
-    @IBAction func scanAction(sender: UIButton) {
-        self.performSegueWithIdentifier("scannerSegue", sender: sender)
+    @IBAction func scanAction(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "scannerSegue", sender: sender)
     }
 
 
@@ -336,54 +337,47 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
 extension UIImagePickerController {
     public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Landscape
+        return .landscape
     }
 }
 
 extension MainViewController: UIImagePickerControllerDelegate {
 
 
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         LOG.debug("ImagePickerCanceled")
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:AnyObject]) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:AnyObject]) {
+        dismiss(animated: true, completion: nil)
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String:AnyObject]?) {
-
-        dismissViewControllerAnimated(true, completion: {
-            if let imageView = self.passThroughImageView {
-                imageView.image = image
-            }
-        })
-    }
+    
 }
 
 extension MainViewController: ToolMenuDelegate {
-    func onImageViewPresented(sender: UIImageView) {
+    func onImageViewPresented(_ sender: UIImageView) {
 
-        self.view.bringSubviewToFront(self.toolsMenuView)
+        self.view.bringSubview(toFront: self.toolsMenuView)
         self.passThroughImageView = sender
 //        for v in self.view.subviews {
 //            if ((v as? UIVisualEffectView) != nil) {
 //                self.view.bringSubviewToFront(self.toolsMenuView)
 //            }
 //        }
-        if toolsMenuView.menu.opened == false {
+        if toolsMenuView.menu.isOpened == false {
             self.handleToolsMenuSelection()
         }
     }
 
-    func onImageViewDismissed(sender: UIImageView) {
+    func onImageViewDismissed(_ sender: UIImageView) {
         //self.toolsMenuView.superview?.bringSubviewToFront(self.toolsMenuView)
 
     }
 }
 
 extension MainViewController: UIPopoverPresentationControllerDelegate {
-    func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         return false
     }
 }
@@ -392,20 +386,20 @@ extension MainViewController {
 
     /// Handle the menuView touch event.
     internal func handleToolsMenuSelection() {
-        if toolsMenuView.menu.opened {
-            toolsMenuView.menu.close()
-            (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
-        } else {
-            toolsMenuView.menu.open() {
-                (v: UIView) in
-                (v as? MaterialButton)?.pulse()
-            }
-            (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
-        }
+//        if toolsMenuView.menu.opened {
+//            toolsMenuView.menu.close()
+//            (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0))
+//        } else {
+//            toolsMenuView.menu.open() {
+//                (v: UIView) in
+//                (v as? MaterialButton)?.pulse()
+//            }
+//            (toolsMenuView.menu.views?.first as? MaterialButton)?.animate(MaterialAnimation.rotate(rotation: 0.125))
+//        }
     }
 
     /// Prepares the MenuView example.
-    private func prepareToolsMenu(tools: [ToolTypes]) {
+    private func prepareToolsMenu(_ tools: [ToolTypes]) {
 
         /// Diameter for FabButtons.
         
@@ -424,21 +418,21 @@ extension MainViewController {
         image = image!.resizeToSize(CGSize(width: sideMenuButtonDiameter / 2, height: sideMenuButtonDiameter / 2))!
 
         let toolsButton: FabButton = FabButton()
-        toolsButton.depth = .None
+        
 
-        toolsButton.tintColor = MaterialColor.white
-        toolsButton.borderColor = MaterialColor.blue.accent3
-        toolsButton.backgroundColor = MaterialColor.red.base
+        toolsButton.tintColor = Color.white
+        toolsButton.borderColor = Color.blue.accent3
+        toolsButton.backgroundColor = Color.red.base
 
-        toolsButton.setImage(image, forState: .Normal)
-        toolsButton.setImage(image, forState: .Highlighted)
+        toolsButton.setImage(image, for: .normal)
+        toolsButton.setImage(image, for: .highlighted)
 
 
-        toolsButton.addTarget(self, action: #selector(handleToolsMenuSelection), forControlEvents: .TouchUpInside)
+        toolsButton.addTarget(self, action: #selector(handleToolsMenuSelection), for: .touchUpInside)
         toolsButton.width = sideMenuButtonDiameter
         toolsButton.height = sideMenuButtonDiameter
 
-        toolsButton.shadowColor = MaterialColor.black
+        toolsButton.shadowColor = Color.black
         toolsButton.shadowOpacity = 0.5
         toolsButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
 
@@ -454,20 +448,20 @@ extension MainViewController {
 
 
                 let scanButton: FabButton = FabButton()
-                scanButton.depth = .None
+                
 
-                scanButton.tintColor = MaterialColor.white
-                scanButton.borderColor = MaterialColor.blue.accent3
-                scanButton.backgroundColor = MaterialColor.blue.base
+                scanButton.tintColor = Color.white
+                scanButton.borderColor = Color.blue.accent3
+                scanButton.backgroundColor = Color.blue.base
 
-                scanButton.setImage(image, forState: .Normal)
-                scanButton.setImage(image, forState: .Highlighted)
+                scanButton.setImage(image, for: .normal)
+                scanButton.setImage(image, for: .highlighted)
 
-                scanButton.addTarget(self, action: #selector(scanAction), forControlEvents: .TouchUpInside)
+                scanButton.addTarget(self, action: #selector(scanAction), for: .touchUpInside)
                 scanButton.width = sideMenuButtonDiameter
                 scanButton.height = sideMenuButtonDiameter
 
-                scanButton.shadowColor = MaterialColor.black
+                scanButton.shadowColor = Color.black
                 scanButton.shadowOpacity = 0.5
                 scanButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
 
@@ -480,20 +474,20 @@ extension MainViewController {
                 image = image!.resizeToSize(CGSize(width: toolsButtonDiameter / 2, height: toolsButtonDiameter / 2))!
 
 
-                cameraButton.depth = .None
+                
 
-                cameraButton.tintColor = MaterialColor.white
-                cameraButton.borderColor = MaterialColor.blue.accent3
-                cameraButton.backgroundColor = MaterialColor.blue.base
+                cameraButton.tintColor = Color.white
+                cameraButton.borderColor = Color.blue.accent3
+                cameraButton.backgroundColor = Color.blue.base
 
-                cameraButton.setImage(image, forState: .Normal)
-                cameraButton.setImage(image, forState: .Highlighted)
+                cameraButton.setImage(image, for: .normal)
+                cameraButton.setImage(image, for: .highlighted)
 
-                cameraButton.addTarget(self, action: #selector(cameraAction), forControlEvents: .TouchUpInside)
+                cameraButton.addTarget(self, action: #selector(cameraAction), for: .touchUpInside)
                 cameraButton.width = sideMenuButtonDiameter
                 cameraButton.height = sideMenuButtonDiameter
 
-                cameraButton.shadowColor = MaterialColor.black
+                cameraButton.shadowColor = Color.black
                 cameraButton.shadowOpacity = 0.5
                 cameraButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
 
@@ -508,20 +502,20 @@ extension MainViewController {
 //
 
                 let photoLibButton: FabButton = FabButton()
-                photoLibButton.depth = .None
+                
 
-                photoLibButton.tintColor = MaterialColor.white
-                photoLibButton.borderColor = MaterialColor.blue.accent3
-                photoLibButton.backgroundColor = MaterialColor.blue.base
+                photoLibButton.tintColor = Color.white
+                photoLibButton.borderColor = Color.blue.accent3
+                photoLibButton.backgroundColor = Color.blue.base
 
-                photoLibButton.setImage(image, forState: .Normal)
-                photoLibButton.setImage(image, forState: .Highlighted)
+                photoLibButton.setImage(image, for: .normal)
+                photoLibButton.setImage(image, for: .highlighted)
 
-                photoLibButton.addTarget(self, action: #selector(photoAlbumAction), forControlEvents: .TouchUpInside)
+                photoLibButton.addTarget(self, action: #selector(photoAlbumAction), for: .touchUpInside)
                 photoLibButton.width = sideMenuButtonDiameter
                 photoLibButton.height = sideMenuButtonDiameter
 
-                photoLibButton.shadowColor = MaterialColor.black
+                photoLibButton.shadowColor = Color.black
                 photoLibButton.shadowOpacity = 0.5
                 photoLibButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
 
@@ -536,20 +530,20 @@ extension MainViewController {
 
                 let screenShotButton: FabButton = FabButton()
 
-                screenShotButton.depth = .None
+                
 
-                screenShotButton.tintColor = MaterialColor.white
-                screenShotButton.borderColor = MaterialColor.blue.accent3
-                screenShotButton.backgroundColor = MaterialColor.blue.base
+                screenShotButton.tintColor = Color.white
+                screenShotButton.borderColor = Color.blue.accent3
+                screenShotButton.backgroundColor = Color.blue.base
 
-                screenShotButton.setImage(image, forState: .Normal)
-                screenShotButton.setImage(image, forState: .Highlighted)
+                screenShotButton.setImage(image, for: .normal)
+                screenShotButton.setImage(image, for: .highlighted)
 
-                screenShotButton.addTarget(self, action: #selector(screenShotAction), forControlEvents: .TouchUpInside)
+                screenShotButton.addTarget(self, action: #selector(screenShotAction), for: .touchUpInside)
                 screenShotButton.width = sideMenuButtonDiameter
                 screenShotButton.height = sideMenuButtonDiameter
 
-                screenShotButton.shadowColor = MaterialColor.black
+                screenShotButton.shadowColor = Color.black
                 screenShotButton.shadowOpacity = 0.5
                 screenShotButton.shadowOffset = CGSize(width: 1.0, height: 0.0)
 
@@ -564,9 +558,9 @@ extension MainViewController {
         }
 
         // Initialize the menu and setup the configuration options.
-        toolsMenuView.menu.direction = .Up
-        toolsMenuView.menu.baseSize = CGSizeMake(sideMenuButtonDiameter, sideMenuButtonDiameter)
-        toolsMenuView.menu.itemSize = CGSizeMake(toolsButtonDiameter, toolsButtonDiameter)
+        toolsMenuView.menu.direction = .up
+        toolsMenuView.menu.baseSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
+        toolsMenuView.menu.itemSize = CGSize(width: toolsButtonDiameter, height: toolsButtonDiameter)
         toolsMenuView.menu.views = toolMenuButtons
 
 
@@ -596,35 +590,35 @@ extension MainViewController {
     }
 
     func isCameraAvailable() -> Bool {
-        return UIImagePickerController.isSourceTypeAvailable(.Camera)
+        return UIImagePickerController.isSourceTypeAvailable(.camera)
     }
 
     func determineStatus() -> Bool {
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
-        case .Authorized:
+        case .authorized:
             return true
-        case .NotDetermined:
+        case .notDetermined:
             PHPhotoLibrary.requestAuthorization() {
                 _ in }
             return false
-        case .Restricted:
+        case .restricted:
             return false
-        case .Denied:
+        case .denied:
             let alert = UIAlertController(
                     title: "Need Authorization",
                     message: "Wouldn't you like to authorize this app " +
                             "to use your Photo library?",
-                    preferredStyle: .Alert)
+                    preferredStyle: .alert)
             alert.addAction(UIAlertAction(
-                    title: "No", style: .Cancel, handler: nil))
+                    title: "No", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(
-                    title: "OK", style: .Default, handler: {
+                    title: "OK", style: .default, handler: {
                 _ in
-                let url = NSURL(string: UIApplicationOpenSettingsURLString)!
-                UIApplication.sharedApplication().openURL(url)
+                let url = URL(string: UIApplicationOpenSettingsURLString)!
+                UIApplication.shared().openURL(url)
             }))
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return false
         }
     }

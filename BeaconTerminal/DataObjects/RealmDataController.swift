@@ -24,13 +24,13 @@ class RealmDataController {
         self.init(realm: try! Realm())
     }
     
-    func add(realmObject: Object, shouldUpdate: Bool) {
+    func add(_ realmObject: Object, shouldUpdate: Bool) {
         try! realm.write {
             self.realm.add(realmObject, update: shouldUpdate)
         }
     }
     
-    func delete(realmObject: Object) {
+    func delete(_ realmObject: Object) {
         try! realm.write {
             self.realm.delete(realmObject)
         }
@@ -39,7 +39,7 @@ class RealmDataController {
     // Mark: Group
     
     func checkGroups() -> Bool {
-        let foundGroups = realm!.objects(Group)
+        let foundGroups = realm!.allObjects(ofType: Group.self)
         
         if foundGroups.count == 0 {
             currentGroup = addTestGroup()
@@ -59,9 +59,9 @@ class RealmDataController {
         let simulationConfiguration = createDefaultConfiguration()
 
         let group = Group()
-        group.id = NSUUID().UUIDString
+        group.id = UUID().uuidString
         group.groupTitle = Randoms.randomFakeGroupName()
-        group.last_modified = NSDate()
+        group.last_modified = Date()
         group.simulationConfiguration = simulationConfiguration
 
 
@@ -72,11 +72,11 @@ class RealmDataController {
         //four members
         for _ in 0...3 {
             let member = Member()
-            member.id = NSUUID().UUIDString
+            member.id = UUID().uuidString
             member.name = Randoms.randomFakeFirstName()
             member.section = currentSection
             member.teacher = teacher
-            member.last_modified = NSDate()
+            member.last_modified = Date()
             group.members.append(member)
         }
         
@@ -93,13 +93,13 @@ class RealmDataController {
         return group
     }
     
-    func updateSpeciesObservation(toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
+    func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
      
         try! realm.write {
             let relationship = Relationship()
-            relationship.id = NSUUID().UUIDString
+            relationship.id = NSUUID().uuidString
             relationship.toSpecies = toSpecies
-            relationship.lastModified = NSDate()
+            relationship.lastModified = NSDate() as Date
             relationship.note = "NEW"
             relationship.ecosystem = speciesObservation.ecosystem
             relationship.relationshipType = relationshipType
@@ -110,20 +110,20 @@ class RealmDataController {
      
     }
     
-    func createSpeciesObservation(fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
+    func createSpeciesObservation(_ fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
-        speciesObservation.id = NSUUID().UUIDString
+        speciesObservation.id = UUID().uuidString
         speciesObservation.fromSpecies = fromSpecies
-        speciesObservation.lastModified = NSDate()
+        speciesObservation.lastModified = Date()
         let ecosystem = allEcosystems[0]
         speciesObservation.ecosystem = ecosystem
 
         for i in 0...3 {
             
             let relationship = Relationship()
-            relationship.id = NSUUID().UUIDString
+            relationship.id = UUID().uuidString
             relationship.toSpecies = allSpecies[i+2]
-            relationship.lastModified = NSDate()
+            relationship.lastModified = Date()
             relationship.note = "hello"
             relationship.ecosystem = ecosystem
             
@@ -151,7 +151,7 @@ class RealmDataController {
     // Mark: Nutella
     
     func checkNutellaConfigs() -> Bool {
-        let foundConfigs = realm!.objects(NutellaConfig)
+        let foundConfigs = realm!.allObjects(ofType: NutellaConfig.self)
         
         if foundConfigs.count == 0 {
             let nutellaConfigs = addNutellaConfigs()
@@ -168,8 +168,8 @@ class RealmDataController {
     }
 
     func addNutellaConfigs() -> [NutellaConfig] {
-        let path = NSBundle.mainBundle().pathForResource("nutella_config", ofType: "json")
-        let jsonData = NSData(contentsOfFile:path!)
+        let path = Bundle.main.pathForResource("nutella_config", ofType: "json")
+        let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
         
         var nutellaConfigs = [NutellaConfig]()
@@ -177,7 +177,7 @@ class RealmDataController {
         if let configs = json["configs"].array {
             
             
-            for (_,item) in configs.enumerate() {
+            for (_,item) in configs.enumerated() {
                 let nutellaConfig = NutellaConfig()
                                 
                 if let id = item["id"].string {
@@ -205,7 +205,7 @@ class RealmDataController {
                 }
                 
                 if let outChannels = item["outChannels"].array {
-                    for (_, item) in outChannels.enumerate() {
+                    for (_, item) in outChannels.enumerated() {
                         let channel = Channel()
                         channel.name = item.string
                         nutellaConfig.outChannels.append(channel)
@@ -213,7 +213,7 @@ class RealmDataController {
                 }
                 
                 if let inChannels = item["inChannels"].array {
-                    for (_, item) in inChannels.enumerate() {
+                    for (_, item) in inChannels.enumerated() {
                         let channel = Channel()
                         channel.name = item.string
                         nutellaConfig.inChannels.append(channel)
@@ -233,16 +233,16 @@ class RealmDataController {
     // Mark: Configuration
     
     func createDefaultConfiguration() -> SimulationConfiguration {
-        let path = NSBundle.mainBundle().pathForResource("wallcology_configuration", ofType: "json")
-        let jsonData = NSData(contentsOfFile:path!)
+        let path = Bundle.main.pathForResource("wallcology_configuration", ofType: "json")
+        let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
         
         let simulationConfiguration = SimulationConfiguration()
-        simulationConfiguration.id = NSUUID().UUIDString
+        simulationConfiguration.id = UUID().uuidString
         
         if let ecosystem = json["ecosystems"].array {
             
-            for (index,item) in ecosystem.enumerate() {
+            for (index,item) in ecosystem.enumerated() {
                 
                 let ecosystem = Ecosystem()
                 
@@ -275,7 +275,7 @@ class RealmDataController {
         }
         
         if let critters = json["ecosystemItems"].array {
-            for (index,item) in critters.enumerate() {
+            for (index,item) in critters.enumerated() {
                 
                 let species = Species()
                 
@@ -317,12 +317,12 @@ class RealmDataController {
 
     // Mark: Species
     
-    func findSpecies(speciesIndex: Int) -> Species? {
-        let foundSpecies = realm!.objects(Species).filter("index = \(speciesIndex)")[0] as Species!
+    func findSpecies(_ speciesIndex: Int) -> Species? {
+        let foundSpecies = realm!.allObjects(ofType: Species.self).filter(using:"index = \(speciesIndex)")[0] as Species!
         return foundSpecies
     }
 
-    static func generateImageFileNameFromIndex(index: Int) -> String {
+    static func generateImageFileNameFromIndex(_ index: Int) -> String {
         var imageName = ""
         if index < 10 {
 
@@ -334,7 +334,7 @@ class RealmDataController {
         return imageName
     }
 
-    static func generateImageForSpecies(index: Int) -> UIImage? {
+    static func generateImageForSpecies(_ index: Int) -> UIImage? {
         let imageName = self.generateImageFileNameFromIndex(index)
         return UIImage(named: imageName)
     }

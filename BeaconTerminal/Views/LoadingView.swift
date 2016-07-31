@@ -17,7 +17,7 @@ struct circleSize {
 
 class LoadingView: UIImageView {
     
-    var color = UIColor.lightGrayColor()
+    var color = UIColor.lightGray()
     var speed = 0.6
     var isAnimate:Bool?
     var opacityWasSet:Bool?
@@ -32,10 +32,10 @@ class LoadingView: UIImageView {
     var dots: Array<CAShapeLayer>?
     
     override func layoutSubviews() {
-        self.frame = CGRectMake((centerPT!.x - dotSize.width * 1.5) - spacing, (centerPT!.y - dotSize.height), dotSize.width * 3 + spacing * 2, dotSize.height)
+        self.frame = CGRect(x: (centerPT!.x - dotSize.width * 1.5) - spacing, y: (centerPT!.y - dotSize.height), width: dotSize.width * 3 + spacing * 2, height: dotSize.height)
     }
     
-    func showAtCenterPointWithSize(centerPT:CGPoint, size:CGFloat)
+    func showAtCenterPointWithSize(_ centerPT:CGPoint, size:CGFloat)
     {
         self.dotSize.width = size
         self.dotSize.height = size
@@ -47,29 +47,29 @@ class LoadingView: UIImageView {
         setupDotsFromArray(dots!)
     }
     
-    func setupDotsFromArray(dotArray: [CAShapeLayer])
+    func setupDotsFromArray(_ dotArray: [CAShapeLayer])
     {
         
         for dot in dotArray
         {
             if dot == dotOne {
-                dot.frame = CGRectMake(0, 0, dotSize.width, dotSize.height)
+                dot.frame = CGRect(x: 0, y: 0, width: dotSize.width, height: dotSize.height)
                 
             } else if dot == dotTwo {
-                dot.frame = CGRectMake((dotSize.width + spacing), 0, dotSize.width, dotSize.height)
+                dot.frame = CGRect(x: (dotSize.width + spacing), y: 0, width: dotSize.width, height: dotSize.height)
                 
             } else {
-                dot.frame = CGRectMake((dotSize.width + spacing) * 2, 0, dotSize.width, dotSize.height)
+                dot.frame = CGRect(x: (dotSize.width + spacing) * 2, y: 0, width: dotSize.width, height: dotSize.height)
                 
             }
-            dot.path = UIBezierPath(ovalInRect:dot.bounds).CGPath
-            dot.fillColor = color.CGColor
+            dot.path = UIBezierPath(ovalIn:dot.bounds).cgPath
+            dot.fillColor = color.cgColor
             dot.opacity = opacity
             self.layer.addSublayer(dot)
         }
     }
     
-    func addStartingOpacity(opac:Float)
+    func addStartingOpacity(_ opac:Float)
     {
         self.opacity = opac
         for dot in dots!
@@ -81,14 +81,14 @@ class LoadingView: UIImageView {
     
     func hide()
     {
-        self.hidden = true
+        self.isHidden = true
         self.stopAnimating()
     }
     
     func startLoading ()
     {
         self.isAnimate = true
-        let dotOneBeg:CFTimeInterval = self.layer.convertTime(CACurrentMediaTime(), fromLayer:nil)
+        let dotOneBeg:CFTimeInterval = self.layer.convertTime(CACurrentMediaTime(), from:nil)
         let dotTwoBeg:CFTimeInterval = dotOneBeg + (speed/3)
         let dotThreeBeg:CFTimeInterval = dotOneBeg + ((speed/3) * 2)
         let timeArray = [dotOneBeg, dotTwoBeg, dotThreeBeg]
@@ -101,9 +101,9 @@ class LoadingView: UIImageView {
             let opacAnimation = generateOpacityAnimation()
             opacAnimation.beginTime = timeArray[index]
             
-            dots![index].addAnimation(scaleAnimation, forKey: "scale")
+            dots![index].add(scaleAnimation, forKey: "scale")
             if self.opacityWasSet == true {
-                dots![index].addAnimation(opacAnimation, forKey: "opacity")
+                dots![index].add(opacAnimation, forKey: "opacity")
             }
             
         }
@@ -124,7 +124,7 @@ class LoadingView: UIImageView {
         scaleAni.fromValue = 1
         scaleAni.toValue = 1.22
         scaleAni.duration = speed
-        scaleAni.removedOnCompletion = false
+        scaleAni.isRemovedOnCompletion = false
         scaleAni.fillMode = kCAFillModeForwards
         scaleAni.repeatCount = Float.infinity
         scaleAni.autoreverses = true
@@ -138,7 +138,7 @@ class LoadingView: UIImageView {
         opAni.fromValue = opacity
         opAni.toValue = 1
         opAni.duration = speed
-        opAni.removedOnCompletion = false
+        opAni.isRemovedOnCompletion = false
         opAni.fillMode = kCAFillModeForwards
         opAni.repeatCount = Float.infinity
         opAni.autoreverses = true

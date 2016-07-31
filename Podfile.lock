@@ -1,7 +1,5 @@
 PODS:
-  - Material (1.42.7)
-  - Nimble (4.1.0)
-  - Quick (0.9.3)
+  - Material (2.0.0)
   - Realm (1.0.2):
     - Realm/Headers (= 1.0.2)
   - Realm/Headers (1.0.2)
@@ -12,24 +10,59 @@ PODS:
   - XCGLogger (3.3)
 
 DEPENDENCIES:
-  - Material
-  - Nimble
-  - Quick
-  - RealmSwift
-  - SwiftyJSON
+  - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
+  - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
+  - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
   - Transporter (~> 2.0.0)
-  - XCGLogger
+  - XCGLogger (from `https://github.com/alexiosdev/XCGLogger.git`, branch `swift3_alex`)
+
+EXTERNAL SOURCES:
+  Material:
+    :branch: development
+    :git: https://github.com/CosmicMind/Material.git
+  Realm:
+    :branch: master
+    :git: git@github.com:realm/realm-cocoa.git
+    :submodules: true
+  RealmSwift:
+    :branch: master
+    :git: git@github.com:realm/realm-cocoa.git
+    :submodules: true
+  SwiftyJSON:
+    :branch: swift3
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+  XCGLogger:
+    :branch: swift3_alex
+    :git: https://github.com/alexiosdev/XCGLogger.git
+
+CHECKOUT OPTIONS:
+  Material:
+    :commit: ed874c9e7825c59ac4706588f43f0f4e988d5dce
+    :git: https://github.com/CosmicMind/Material.git
+  Realm:
+    :commit: 30947f35a115db9e62e208a2ee2c2b75a3009e9b
+    :git: git@github.com:realm/realm-cocoa.git
+    :submodules: true
+  RealmSwift:
+    :commit: 30947f35a115db9e62e208a2ee2c2b75a3009e9b
+    :git: git@github.com:realm/realm-cocoa.git
+    :submodules: true
+  SwiftyJSON:
+    :commit: 1a9755949a652967dc2986cd7f4653496e556715
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+  XCGLogger:
+    :commit: 66be6ebda07c5560e901bcb4567e341141607925
+    :git: https://github.com/alexiosdev/XCGLogger.git
 
 SPEC CHECKSUMS:
-  Material: 2d46a44719b1f19e52956518af8aea54ac714963
-  Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
-  Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
-  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
-  RealmSwift: 82f3ac5e24530143dddfde2033acc0d308f27d96
+  Material: 437cd15bddb544bb0f41ba24215351038e565a1d
+  Realm: 97aac1f75da832fce7d5fc89ffebee770b32997f
+  RealmSwift: 4816c8608630a9a00bba6d726bb30b4bab6dd6bf
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: f7f9e797247d8bbbd661e0043027f8e658bbb81d
+PODFILE CHECKSUM: 9d77a86eead3acba089b0900e2f5e3a0cb156777
 
 COCOAPODS: 1.0.1

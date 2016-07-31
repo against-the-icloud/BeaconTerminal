@@ -36,36 +36,36 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
 //        self.minimumLineSpacing = 50.0
     }
 
-    override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         var offsetAdjustmentX = CGFloat(MAXFLOAT)
         var offsetAdjustmentY = CGFloat(MAXFLOAT)
 
-        let horizontalCenter : CGFloat = proposedContentOffset.x + (CGRectGetWidth((self.collectionView?.bounds)!)/2.0)
-        let targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView!.bounds.size.width, self.collectionView!.bounds.size.height)
+        let horizontalCenter : CGFloat = proposedContentOffset.x + ((self.collectionView?.bounds)!.width/2.0)
+        let targetRect = CGRect(x: proposedContentOffset.x, y: 0.0, width: self.collectionView!.bounds.size.width, height: self.collectionView!.bounds.size.height)
         
-        guard let superArray = super.layoutAttributesForElementsInRect(targetRect) else { return CGPointZero }
+        guard let superArray = super.layoutAttributesForElements(in: targetRect) else { return CGPoint.zero }
         
         // copy items
-        guard let array = NSArray(array: superArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return CGPointZero }
+        guard let array = NSArray(array: superArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return CGPoint.zero }
         
 //        let array = super.layoutAttributesForElementsInRect(targetRect)
         for at in array {
-            let layoutAttributes = at as? UICollectionViewLayoutAttributes
-            let itemHorizontalCenter = layoutAttributes!.center.x
+            let layoutAttributes : UICollectionViewLayoutAttributes = at
+            let itemHorizontalCenter = layoutAttributes.center.x
             if( abs(itemHorizontalCenter - horizontalCenter) < abs(offsetAdjustmentX)) {
                 offsetAdjustmentX = itemHorizontalCenter - horizontalCenter
             }
-            let itemVerticalCenter = layoutAttributes!.center.y
+            let itemVerticalCenter = layoutAttributes.center.y
 
             if( abs(itemVerticalCenter - itemVerticalCenter) < abs(offsetAdjustmentY)) {
                 offsetAdjustmentY = itemVerticalCenter - itemVerticalCenter
             }
         }
 
-        return CGPointMake(proposedContentOffset.x + offsetAdjustmentX, proposedContentOffset.y)
+        return CGPoint(x: proposedContentOffset.x + offsetAdjustmentX, y: proposedContentOffset.y)
     }
 
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     
@@ -139,11 +139,11 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
 //        return array
 //    }
     
-    func indexPathIsCentered(indexPath: NSIndexPath) -> Bool {
-        let visibleRect = CGRectMake(self.collectionView!.contentOffset.x,
-                                     self.collectionView!.contentOffset.y, CGRectGetWidth(self.collectionView!.bounds), CGRectGetHeight(self.collectionView!.bounds))
-        let attributes = self.layoutAttributesForItemAtIndexPath(indexPath)
-        let distanceFromVisibleRectToItem = CGRectGetMidX(visibleRect) - attributes!.center.x
+    func indexPathIsCentered(_ indexPath: IndexPath) -> Bool {
+        let visibleRect = CGRect(x: self.collectionView!.contentOffset.x,
+                                     y: self.collectionView!.contentOffset.y, width: self.collectionView!.bounds.width, height: self.collectionView!.bounds.height)
+        let attributes = self.layoutAttributesForItem(at: indexPath)
+        let distanceFromVisibleRectToItem = visibleRect.midX - attributes!.center.x
         return fabs(distanceFromVisibleRectToItem) < 1
     }
 }

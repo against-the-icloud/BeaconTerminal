@@ -18,7 +18,7 @@ enum RelationshipType: String {
 }
 
 protocol PreferenceEditDelegate {
-    func preferenceEdit(speciesObservation: SpeciesObservation, sender: UIButton)
+    func preferenceEdit(_ speciesObservation: SpeciesObservation, sender: UIButton)
 }
 
 class CoverFlowCell: UICollectionViewCell {
@@ -53,7 +53,7 @@ class CoverFlowCell: UICollectionViewCell {
         super.layoutSubviews()
     }
     
-    @IBAction func editPreferencesAction(sender: UIButton) {
+    @IBAction func editPreferencesAction(_ sender: UIButton) {
         
         if let so = speciesObservation {
             delegate?.preferenceEdit(so, sender: sender)
@@ -61,7 +61,7 @@ class CoverFlowCell: UICollectionViewCell {
         
     }
     
-    func prepareCell(speciesObservation: SpeciesObservation, fromSpecies: Species) {
+    func prepareCell(_ speciesObservation: SpeciesObservation, fromSpecies: Species) {
         
         self.speciesObservation = speciesObservation
         
@@ -72,12 +72,12 @@ class CoverFlowCell: UICollectionViewCell {
         
         let speciesImage = RealmDataController.generateImageForSpecies(fromSpecies.index)
         
-        self.profileView.contentMode = .ScaleAspectFit
+        self.profileView.contentMode = .scaleAspectFit
         self.profileView.image = speciesImage
         
 
         for relationshipView in relationshipViews {
-            let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter("relationshipType = '\(relationshipView.relationshipType!)'")
+            let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipView.relationshipType!)'")
             
             //LOG.debug("found relationships for \(fromSpecies.index) relationships \(foundRelationships)")
             relationshipView.speciesObservation = speciesObservation

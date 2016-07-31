@@ -25,13 +25,13 @@ class DragViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        d1.shouldCopy = copySwitch.on
-        d1.shouldSnapBack = snapbackSwitch.on
+        d1.shouldCopy = copySwitch.isOn
+        d1.shouldSnapBack = snapbackSwitch.isOn
         
         d1.delegate = self
         
-        d2.shouldCopy = copySwitch.on
-        d2.shouldSnapBack = snapbackSwitch.on
+        d2.shouldCopy = copySwitch.isOn
+        d2.shouldSnapBack = snapbackSwitch.isOn
         
         d2.delegate = self
         
@@ -43,9 +43,9 @@ class DragViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    @IBAction func copySwitchAction(sender: UISwitch) {
-        moveSwitch.on = !sender.on
-        if sender.on {
+    @IBAction func copySwitchAction(_ sender: UISwitch) {
+        moveSwitch.isOn = !sender.isOn
+        if sender.isOn {
             for draggableView in draggableViews {
                 draggableView.shouldCopy = true
                 draggableView.shouldSnapBack = true
@@ -53,8 +53,8 @@ class DragViewController: UIViewController {
             snapbackSwitch.setOn(true, animated: true)
         }
     }
-    @IBAction func moveSwitchAction(sender: UISwitch) {
-        if sender.on {
+    @IBAction func moveSwitchAction(_ sender: UISwitch) {
+        if sender.isOn {
             for draggableView in draggableViews {
                 draggableView.shouldCopy = false
                 draggableView.shouldSnapBack = false
@@ -63,15 +63,15 @@ class DragViewController: UIViewController {
         }
     }
     
-    @IBAction func snapbackSwitchAction(sender: UISwitch) {
+    @IBAction func snapbackSwitchAction(_ sender: UISwitch) {
         
-        if sender.on == false {
+        if sender.isOn == false {
             copySwitch.setOn(false, animated: true)
         }
         
         for draggableView in draggableViews {
-            draggableView.shouldCopy = sender.on
-            draggableView.shouldSnapBack = sender.on
+            draggableView.shouldCopy = sender.isOn
+            draggableView.shouldSnapBack = sender.isOn
         }
     }
     
@@ -80,31 +80,31 @@ class DragViewController: UIViewController {
 
 extension DragViewController: DraggableViewDelegate {
     
-    func onDroppedToTarget(sender: DraggableImageView) {
+    func onDroppedToTarget(_ sender: DraggableImageView) {
         LOG.debug("\(sender)")
     }
     
-    func enteringZone(sender: DraggableImageView, targets: [UIView]) {
+    func enteringZone(_ sender: DraggableImageView, targets: [UIView]) {
         if !targets.isEmpty {
             for zone in targets {
-                zone.backgroundColor = UIColor.brownColor()
+                zone.backgroundColor = UIColor.brown()
             }
         }
     }
     
-    func exitingZone(sender: DraggableImageView, targets: [UIView]) {
+    func exitingZone(_ sender: DraggableImageView, targets: [UIView]) {
         if !targets.isEmpty {
             for zone in targets {
-                zone.backgroundColor = UIColor.brownColor()
+                zone.backgroundColor = UIColor.brown()
             }
         }
     }
 
 
-    func isDragging(sender: DraggableImageView) {}
-    func onDraggingStarted(sender: DraggableImageView) {}
-    func onSnappedBack(sender: DraggableImageView) {}
-    func onCopied(copiedSender: DraggableImageView) {}
+    func isDragging(_ sender: DraggableImageView) {}
+    func onDraggingStarted(_ sender: DraggableImageView) {}
+    func onSnappedBack(_ sender: DraggableImageView) {}
+    func onCopied(_ copiedSender: DraggableImageView) {}
 
 
 }

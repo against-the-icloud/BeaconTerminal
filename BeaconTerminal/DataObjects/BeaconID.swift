@@ -5,45 +5,45 @@ import UIKit
 
 struct BeaconID: Equatable, CustomStringConvertible, Hashable {
 
-    let proximityUUID: NSUUID?
+    let proximityUUID: UUID?
     let major: CLBeaconMajorValue?
     let minor: CLBeaconMinorValue?
     var index: Int = 0
-    var beaconColor: UIColor = UIColor.blackColor()
+    var beaconColor: UIColor = UIColor.black()
     var hexColor : String = ""
     
     init(index: Int, hexColor: String) {
         self.index = index
         self.hexColor = hexColor
-        beaconColor = UIColor.redColor()
+        beaconColor = UIColor.red()
         self.proximityUUID = nil
         self.major = nil
         self.minor = nil
     }
 
-    init(index: Int, proximityUUID: NSUUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, beaconColor: UIColor) {
+    init(index: Int, proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, beaconColor: UIColor) {
         self.index = index
         self.proximityUUID = proximityUUID
         self.major = major
         self.minor = minor
         self.beaconColor = beaconColor
     }
-    init(proximityUUID: NSUUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
+    init(proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
         self.proximityUUID = proximityUUID
         self.major = major
         self.minor = minor
     }
 
     init(index: Int, UUIDString: String, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, beaconColor: UIColor) {
-        self.init(index: index, proximityUUID: NSUUID(UUIDString: UUIDString)!, major: major, minor: minor, beaconColor: beaconColor)
+        self.init(index: index, proximityUUID: UUID(uuidString: UUIDString)!, major: major, minor: minor, beaconColor: beaconColor)
     }
     
     init(UUIDString: String, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
-        self.init(proximityUUID: NSUUID(UUIDString: UUIDString)!, major: major, minor: minor)
+        self.init(proximityUUID: UUID(uuidString: UUIDString)!, major: major, minor: minor)
     }
 
     var asString: String {
-        get { return "\(proximityUUID!.UUIDString):\(major):\(minor)" }
+        get { return "\(proximityUUID!.uuidString):\(major):\(minor)" }
     }
 
     var asBeaconRegion: CLBeaconRegion {
@@ -82,8 +82,8 @@ extension CLBeacon {
     var beaconID: BeaconID {
         get { return BeaconID(
             proximityUUID: proximityUUID,
-            major: major.unsignedShortValue,
-            minor: minor.unsignedShortValue) }
+            major: major.uint16Value,
+            minor: minor.uint16Value) }
     }
 
 }

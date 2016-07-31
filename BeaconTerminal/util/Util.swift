@@ -3,11 +3,11 @@ import UIKit
 
 class Util {
     
-    class func classNameAsString(obj: Any) -> String {
-        return String(obj.dynamicType).componentsSeparatedByString("__").last!
+    class func classNameAsString(_ obj: Any) -> String {
+        return String(obj.dynamicType).components(separatedBy: "__").last!
     }
     // MARK: Color
-    class func isLightColor(color: UIColor) -> Bool {
+    class func isLightColor(_ color: UIColor) -> Bool {
         var white: CGFloat = 0.0
         color.getWhite(&white, alpha: nil)
         
@@ -23,7 +23,7 @@ class Util {
         return isLight
     }
     
-    class func generateRandomPoint(maxXValue: UInt32, maxYValue: UInt32) -> CGPoint {
+    class func generateRandomPoint(_ maxXValue: UInt32, maxYValue: UInt32) -> CGPoint {
         let rand_x = CGFloat(arc4random_uniform(maxXValue)) // maxXValue is a variable with your maximum possible x value
         let rand_y = CGFloat(arc4random_uniform(maxYValue)) // maxYValue is a variable with your maximum possible y value
         return CGPoint(x: rand_x, y: rand_y)
@@ -47,11 +47,11 @@ class Util {
 extension UIImage {
     
     // Resizes an input image (self) to a specified size
-    func resizeToSize(size: CGSize!) -> UIImage? {
+    func resizeToSize(_ size: CGSize!) -> UIImage? {
         // Begins an image context with the specified size
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0);
         // Draws the input image (self) in the specified size
-        self.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         // Gets an UIImage from the image context
         let result = UIGraphicsGetImageFromCurrentImageContext()
         // Ends the image context
@@ -61,13 +61,13 @@ extension UIImage {
     }
     
     // Crops an input image (self) to a specified rect
-    func cropToRect(rect: CGRect!) -> UIImage? {
+    func cropToRect(_ rect: CGRect!) -> UIImage? {
         // Correct rect size based on the device screen scale
-        let scaledRect = CGRectMake(rect.origin.x * self.scale, rect.origin.y * self.scale, rect.size.width * self.scale, rect.size.height * self.scale);
+        let scaledRect = CGRect(x: rect.origin.x * self.scale, y: rect.origin.y * self.scale, width: rect.size.width * self.scale, height: rect.size.height * self.scale);
         // New CGImage reference based on the input image (self) and the specified rect
-        let imageRef = CGImageCreateWithImageInRect(self.CGImage, scaledRect);
+        let imageRef = self.cgImage!.cropping(to: scaledRect);
         // Gets an UIImage from the CGImage
-        let result = UIImage(CGImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+        let result = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
         // Returns the final image, or NULL on error
         return result;
     }
@@ -78,13 +78,13 @@ extension UIImage {
 
 extension UIView {
     
-    func fadeIn(duration: NSTimeInterval = 1.0, delay: NSTimeInterval = 0.0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
-        UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    func fadeIn(_ duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.alpha = 1.0
             }, completion: completion)  }
     
-    func fadeOut(duration: NSTimeInterval = 1.0, delay: NSTimeInterval = 0.0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
-        UIView.animateWithDuration(duration, delay: delay, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    func fadeOut(_ duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.alpha = 0.0
             }, completion: completion)
     }
@@ -92,18 +92,18 @@ extension UIView {
     
     func captureImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, true, 1)
-        self.drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
-        return UIGraphicsGetImageFromCurrentImageContext()
+        self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+        return UIGraphicsGetImageFromCurrentImageContext()!
     }
     
-    func createBlurForView(style: UIBlurEffectStyle) -> UIView  {
+    func createBlurForView(_ style: UIBlurEffectStyle) -> UIView  {
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.bounds
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
         
         let wrapperView = UIView(frame: blurEffectView.frame)
-        wrapperView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
+        wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
         wrapperView.addSubview(blurEffectView)
         return wrapperView
     }
@@ -131,20 +131,20 @@ extension UIView {
     /// The color of the layer's border. Defaults to opaque black. Colors created from tiled patterns are supported. Animatable.
     @IBInspectable var borderColor: UIColor? {
         get {
-            return UIColor(CGColor: self.layer.borderColor!)
+            return UIColor(cgColor: self.layer.borderColor!)
         }
         set {
-            self.layer.borderColor = newValue?.CGColor
+            self.layer.borderColor = newValue?.cgColor
         }
     }
     
     /// The color of the shadow. Defaults to opaque black. Colors created from patterns are currently NOT supported. Animatable.
     @IBInspectable var shadowColor: UIColor? {
         get {
-            return UIColor(CGColor: self.layer.shadowColor!)
+            return UIColor(cgColor: self.layer.shadowColor!)
         }
         set {
-            self.layer.shadowColor = newValue?.CGColor
+            self.layer.shadowColor = newValue?.cgColor
         }
     }
     
@@ -178,10 +178,10 @@ extension UIView {
         }
     }
     
-    func addDashedBorder(borderColor: UIColor, borderWidth: CGFloat, dashPattern: [NSNumber], cornerRadius: CGFloat) {
+    func addDashedBorder(_ borderColor: UIColor, borderWidth: CGFloat, dashPattern: [NSNumber], cornerRadius: CGFloat) {
         
         
-        let color = borderColor.CGColor
+        let color = borderColor.cgColor
         
         let shapeLayer:CAShapeLayer = CAShapeLayer()
         let frameSize = self.bounds.size
@@ -190,23 +190,23 @@ extension UIView {
         
         shapeLayer.bounds = shapeRect
         shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
-        shapeLayer.fillColor = UIColor.clearColor().CGColor
+        shapeLayer.fillColor = UIColor.clear().cgColor
         shapeLayer.strokeColor = color
         shapeLayer.lineWidth = borderWidth
         shapeLayer.lineJoin = kCALineJoinMiter
         shapeLayer.lineDashPattern = dashPattern
-        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: cornerRadius).CGPath
+        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: cornerRadius).cgPath
         
         self.layer.addSublayer(shapeLayer)
         
     }
     
     
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> UIView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+            ).instantiate(withOwner: nil, options: nil)[0] as? UIView
     }
     
 }
@@ -215,7 +215,7 @@ extension UIView {
 
 extension UIViewController {
     
-    func setTabBarVisible(visible:Bool, duration:NSTimeInterval, animated:Bool) {
+    func setTabBarVisible(_ visible:Bool, duration:TimeInterval, animated:Bool) {
         
         //* This cannot be called before viewDidLayoutSubviews(), because the frame is not set before this time
         
@@ -228,19 +228,19 @@ extension UIViewController {
         let offsetY = (visible ? -height! : height)
         
         // zero duration means no animation
-        let duration:NSTimeInterval = (animated ? 0.5 : 0.0)
+        let duration:TimeInterval = (animated ? 0.5 : 0.0)
         
         //  animate the tabBar
         if frame != nil {
-            UIView.animateWithDuration(duration) {
-                self.tabBarController?.tabBar.frame = CGRectOffset(frame!, 0, offsetY!)
+            UIView.animate(withDuration: duration) {
+                self.tabBarController?.tabBar.frame = frame!.offsetBy(dx: 0, dy: offsetY!)
                 return
             }
         }
     }
     
     func tabBarIsVisible() -> Bool {
-        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.mainScreen().bounds.height
+        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.main().bounds.height
     }
 }
 
@@ -248,16 +248,16 @@ extension UINavigationBar {
     
     func hideBottomHairline() {
         let navigationBarImageView = hairlineImageViewInNavigationBar(self)
-        navigationBarImageView!.hidden = true
+        navigationBarImageView!.isHidden = true
     }
     
     func showBottomHairline() {
         let navigationBarImageView = hairlineImageViewInNavigationBar(self)
-        navigationBarImageView!.hidden = false
+        navigationBarImageView!.isHidden = false
     }
     
-    private func hairlineImageViewInNavigationBar(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.height <= 1.0 {
+    private func hairlineImageViewInNavigationBar(_ view: UIView) -> UIImageView? {
+        if view.isKind(of: UIImageView.self) && view.bounds.height <= 1.0 {
             return (view as! UIImageView)
         }
         
@@ -277,16 +277,16 @@ extension UIToolbar {
     
     func hideHairline() {
         let navigationBarImageView = hairlineImageViewInToolbar(self)
-        navigationBarImageView!.hidden = true
+        navigationBarImageView!.isHidden = true
     }
     
     func showHairline() {
         let navigationBarImageView = hairlineImageViewInToolbar(self)
-        navigationBarImageView!.hidden = false
+        navigationBarImageView!.isHidden = false
     }
     
-    private func hairlineImageViewInToolbar(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.height <= 1.0 {
+    private func hairlineImageViewInToolbar(_ view: UIView) -> UIImageView? {
+        if view.isKind(of: UIImageView.self) && view.bounds.height <= 1.0 {
             return (view as! UIImageView)
         }
         

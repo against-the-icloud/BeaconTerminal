@@ -18,19 +18,19 @@ class TestUITableViewController: UITableViewController, UINavigationControllerDe
         super.init(coder: aDecoder)
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         LOG.debug("\(indexPath.row)")
         LOG.debug("\(indexPath.section)")
 
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             simulationType = "ECOSYSTEM"
-            simulationIndex = indexPath.row
-        } else if indexPath.section == 1 {
+            simulationIndex = (indexPath as NSIndexPath).row
+        } else if (indexPath as NSIndexPath).section == 1 {
             simulationType = "SPECIES"
-            simulationIndex = indexPath.row
+            simulationIndex = (indexPath as NSIndexPath).row
         }
 
-        self.performSegueWithIdentifier("unwindTestTableSegue", sender: self)
+        self.performSegue(withIdentifier: "unwindTestTableSegue", sender: self)
     }
 
     override func viewDidLoad() {
@@ -48,7 +48,7 @@ class TestUITableViewController: UITableViewController, UINavigationControllerDe
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        print("super viewWillAppear table content size \(tableView.contentSize)")
         if self.navigationController != nil {
@@ -57,7 +57,7 @@ class TestUITableViewController: UITableViewController, UINavigationControllerDe
     }
 
     func calculatePreferredContentSize() -> CGSize {
-        let windowSize = UIApplication.sharedApplication().windows.first?.frame.size
+        let windowSize = UIApplication.shared().windows.first?.frame.size
         var height = tableView.contentSize.height
         if let windowSize = windowSize{
             if  height > windowSize.height * 0.60 {
@@ -65,7 +65,7 @@ class TestUITableViewController: UITableViewController, UINavigationControllerDe
             }
         }
 
-        let size = CGSizeMake(self.tableView.contentSize.width, height)
+        let size = CGSize(width: self.tableView.contentSize.width, height: height)
         preferredContentSize = size
         self.tableView.flashScrollIndicators()
 //        print("table content size \(tableView.contentSize)")
@@ -74,7 +74,7 @@ class TestUITableViewController: UITableViewController, UINavigationControllerDe
 
     }
 
-    func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
-        calculatePreferredContentSize()
-    }
+//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+//        calculatePreferredContentSize()
+//    }
 }

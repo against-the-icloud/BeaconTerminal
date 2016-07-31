@@ -32,14 +32,14 @@ class ToolbarView: UIView {
 
 
     func resetToolbarView() {
-        self.addButton.tintColor = UIColor.whiteColor()
-        self.classLabel.textColor = UIColor.whiteColor()
-        self.groupLabel.textColor = UIColor.whiteColor()
-        self.titleLabel.textColor = UIColor.whiteColor()
-        self.backgroundColor = UIColor.blackColor()
+        self.addButton.tintColor = UIColor.white()
+        self.classLabel.textColor = UIColor.white()
+        self.groupLabel.textColor = UIColor.white()
+        self.titleLabel.textColor = UIColor.white()
+        self.backgroundColor = UIColor.black()
     }
 
-    func updateToolbarColors(baseColor: UIColor, newTextColor: UIColor) {
+    func updateToolbarColors(_ baseColor: UIColor, newTextColor: UIColor) {
 
 //        UIApplication.sharedApplication().st
 

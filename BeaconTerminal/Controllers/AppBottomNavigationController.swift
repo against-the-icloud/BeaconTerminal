@@ -12,7 +12,7 @@ class AppBottomNavigationController: BottomNavigationController {
     }
     
     /// Handles the menuButton.
-    internal func handleMenuButton(sender: UITapGestureRecognizer) {
+    internal func handleMenuButton(_ sender: UITapGestureRecognizer) {
         navigationDrawerController?.openLeftView()
     }
     
@@ -24,39 +24,34 @@ class AppBottomNavigationController: BottomNavigationController {
 
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleMenuButton))
         
-        navigationItem.detailLabel.userInteractionEnabled = true
+        navigationItem.detailLabel.isUserInteractionEnabled = true
         navigationItem.detailLabel.addGestureRecognizer(tap)
     }
     
 
-    func changeGroupAndSectionTitles(newGroupTitle: String?, newSectionTitle: String?) {
+    func changeGroupAndSectionTitles(_ newGroupTitle: String?, newSectionTitle: String?) {
         
-        if let gt = newGroupTitle, ns = newSectionTitle {
+        if let gt = newGroupTitle, let ns = newSectionTitle {
             navigationItem.title = "GROUP: \(gt)"
-            navigationItem.titleLabel.textAlignment = .Left
-            navigationItem.titleLabel.textColor = MaterialColor.white
+            navigationItem.titleLabel.textAlignment = .left
+            navigationItem.titleLabel.textColor = Color.white
             
             navigationItem.detail = "SECTION: \(ns)"
-            navigationItem.detailLabel.textAlignment = .Left
-            navigationItem.detailLabel.textColor = MaterialColor.white
+            navigationItem.detailLabel.textAlignment = .left
+            navigationItem.detailLabel.textColor = Color.white
         }
 
     }
 
     /// Prepares the tabBar.
     private func prepareTabBar() {
-        tabBar.tintColor = MaterialColor.white
-        tabBar.backgroundColor = MaterialColor.grey.darken4
+        tabBar.tintColor = Color.white
+        tabBar.backgroundColor = Color.grey.darken4
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
         LOG.debug("\(viewController)")
     }
     
-    override func tabBarController(tabBarController: UITabBarController, animationControllerForTransitionFromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        LOG.debug("from \(fromVC)")
-        LOG.debug("to \(toVC)")
-        return super.tabBarController(tabBarController, animationControllerForTransitionFromViewController: fromVC, toViewController: toVC)
-    }
 }
 

@@ -30,7 +30,7 @@ class DraggableSpeciesImageView : UIImageView {
         let degrees: CGFloat = 5.0
         let animation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
         animation.duration = 0.6
-        animation.cumulative = true
+        animation.isCumulative = true
         animation.repeatCount = Float.infinity
         animation.values = [0.0, degreesToRadians(-degrees) * 0.25,
                             0.0,
@@ -46,30 +46,30 @@ class DraggableSpeciesImageView : UIImageView {
                             0.0]
         animation.fillMode = kCAFillModeForwards;
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        animation.removedOnCompletion = true
+        animation.isRemovedOnCompletion = true
         
-        layer.addAnimation(animation, forKey: "wobble")
+        layer.add(animation, forKey: "wobble")
     }
     
     func stopJiggling() {
         jiggling = false
         self.layer.removeAllAnimations()
-        self.transform = CGAffineTransformIdentity
-        self.layer.anchorPoint = CGPointMake(0.5, 0.5)
+        self.transform = CGAffineTransform.identity
+        self.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
     }
     
-    func radiansToDegrees(radians: Double)->Double {
+    func radiansToDegrees(_ radians: Double)->Double {
         return radians * 180 / M_PI
     }
     
-    func degreesToRadians(value:CGFloat) -> CGFloat {
+    func degreesToRadians(_ value:CGFloat) -> CGFloat {
         return value * CGFloat(M_PI / 180.0)
     }
     
     func clone() -> DraggableSpeciesImageView {        
         let clone = DraggableSpeciesImageView(frame: self.frame)
         clone.image = self.image
-        clone.userInteractionEnabled = true
+        clone.isUserInteractionEnabled = true
         clone.species = self.species
         return clone
         

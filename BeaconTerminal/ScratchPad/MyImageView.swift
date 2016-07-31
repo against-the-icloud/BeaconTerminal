@@ -11,7 +11,7 @@ import UIKit
 
 
 class MyImageView: UIImageView {
-    var lastLocation:CGPoint = CGPointMake(0, 0)
+    var lastLocation:CGPoint = CGPoint(x: 0, y: 0)
     
     override init(image: UIImage?) {
         super.init(image: image)
@@ -40,15 +40,15 @@ class MyImageView: UIImageView {
     }
 
     func setup() {
-         self.userInteractionEnabled = true
+         self.isUserInteractionEnabled = true
         // Initialization code
         let panRecognizer = UIPanGestureRecognizer(target:self, action:#selector(MyImageView.detectPan(_:)))
         self.gestureRecognizers = [panRecognizer]
     }
     
-    func detectPan(recognizer:UIPanGestureRecognizer) {
-        let translation  = recognizer.translationInView(self.superview!)
-        self.center = CGPointMake(lastLocation.x + translation.x, lastLocation.y + translation.y)
+    func detectPan(_ recognizer:UIPanGestureRecognizer) {
+        let translation  = recognizer.translation(in: self.superview!)
+        self.center = CGPoint(x: lastLocation.x + translation.x, y: lastLocation.y + translation.y)
     }
     
     /*override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -59,9 +59,9 @@ class MyImageView: UIImageView {
      lastLocation = self.center
      }*/
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Promote the touched view
-        self.superview?.bringSubviewToFront(self)
+        self.superview?.bringSubview(toFront: self)
         
         // Remember original location
         lastLocation = self.center

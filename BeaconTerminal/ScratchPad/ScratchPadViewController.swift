@@ -28,7 +28,7 @@ class ScratchPadViewController: UIViewController {
     let reticleView: ReticleView = {
         let view = ReticleView(frame: CGRect.null)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.hidden = true
+        view.isHidden = true
         
         return view
     }()
@@ -44,8 +44,8 @@ class ScratchPadViewController: UIViewController {
         
         
         tabBarItem.image = iconImage
-        tabBarItem.setTitleColor(MaterialColor.grey.base, forState: .Normal)
-        tabBarItem.setTitleColor(MaterialColor.white, forState: .Selected)
+        tabBarItem.setTitleColor(color: Color.grey.base, forState: .normal)
+        tabBarItem.setTitleColor(color: Color.white, forState: .selected)
 
     }
 
@@ -56,35 +56,35 @@ class ScratchPadViewController: UIViewController {
             dview.delegate = self
         }
         
-        self.view.sendSubviewToBack(drawingCanvasView)
-        self.view.bringSubviewToFront(toolbarView)
+        self.view.sendSubview(toBack: drawingCanvasView)
+       // self.view.bringSubview(toFront: toolbarView)
     }
     
     // MARK: Touch Handling
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         drawingCanvasView.drawTouches(touches, withEvent: event)
         
         if visualizeAzimuth {
             for touch in touches {
-                if touch.type == .Stylus {
-                    reticleView.hidden = false
+                if touch.type == .stylus {
+                    reticleView.isHidden = false
                     updateReticleViewWithTouch(touch, event: event)
                 }
             }
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         drawingCanvasView.drawTouches(touches, withEvent: event)
         
         if visualizeAzimuth {
             for touch in touches {
-                if touch.type == .Stylus {
+                if touch.type == .stylus {
                     updateReticleViewWithTouch(touch, event: event)
                     
                     // Use the last predicted touch to update the reticle.
-                    guard let predictedTouch = event?.predictedTouchesForTouch(touch)?.last else { return }
+                    guard let predictedTouch = event?.predictedTouches(for: touch)?.last else { return }
                     
                     updateReticleViewWithTouch(predictedTouch, event: event, isPredicted: true)
                 }
@@ -92,51 +92,51 @@ class ScratchPadViewController: UIViewController {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         drawingCanvasView.drawTouches(touches, withEvent: event)
         drawingCanvasView.endTouches(touches, cancel: false)
         
         if visualizeAzimuth {
             for touch in touches {
-                if touch.type == .Stylus {
-                    reticleView.hidden = true
+                if touch.type == .stylus {
+                    reticleView.isHidden = true
                 }
             }
         }
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {
         guard let touches = touches else { return }
         drawingCanvasView.endTouches(touches, cancel: true)
         
         if visualizeAzimuth {
             for touch in touches {
-                if touch.type == .Stylus {
-                    reticleView.hidden = true
+                if touch.type == .stylus {
+                    reticleView.isHidden = true
                 }
             }
         }
     }
     
-    override func touchesEstimatedPropertiesUpdated(touches: Set<NSObject>) {
+    override func touchesEstimatedPropertiesUpdated(_ touches: Set<UITouch>) {
         drawingCanvasView.updateEstimatedPropertiesForTouches(touches)
     }
     
     // MARK: Actions
     
-    @IBAction func clearView(sender: UIBarButtonItem) {
+    @IBAction func clearView(_ sender: UIBarButtonItem) {
         drawingCanvasView.clear()
     }
     
-    @IBAction func toggleDebugDrawing(sender: UIButton) {
+    @IBAction func toggleDebugDrawing(_ sender: UIButton) {
         drawingCanvasView.isDebuggingEnabled = !drawingCanvasView.isDebuggingEnabled
         visualizeAzimuth = !visualizeAzimuth
-        sender.selected = drawingCanvasView.isDebuggingEnabled
+        sender.isSelected = drawingCanvasView.isDebuggingEnabled
     }
     
-    @IBAction func toggleUsePreciseLocations(sender: UIButton) {
+    @IBAction func toggleUsePreciseLocations(_ sender: UIButton) {
         drawingCanvasView.usePreciseLocations = !drawingCanvasView.usePreciseLocations
-        sender.selected = drawingCanvasView.usePreciseLocations
+        sender.isSelected = drawingCanvasView.usePreciseLocations
     }
     
     // MARK: Rotation
@@ -146,56 +146,56 @@ class ScratchPadViewController: UIViewController {
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [.LandscapeLeft, .LandscapeRight]
+        return [.landscapeLeft, .landscapeRight]
     }
     
     // MARK: Convenience
     
-    func updateReticleViewWithTouch(touch: UITouch?, event: UIEvent?, isPredicted: Bool = false) {
-        guard let touch = touch where touch.type == .Stylus else { return }
-        
-        reticleView.predictedDotLayer.hidden = !isPredicted
-        reticleView.predictedLineLayer.hidden = !isPredicted
-        
-        let azimuthAngle = touch.azimuthAngleInView(view)
-        let azimuthUnitVector = touch.azimuthUnitVectorInView(view)
-        let altitudeAngle = touch.altitudeAngle
-        
-        if isPredicted {
-            reticleView.predictedAzimuthAngle = azimuthAngle
-            reticleView.predictedAzimuthUnitVector = azimuthUnitVector
-            reticleView.predictedAltitudeAngle = altitudeAngle
-        }
-        else {
-            let location = touch.preciseLocationInView(view)
-            reticleView.center = location
-            reticleView.actualAzimuthAngle = azimuthAngle
-            reticleView.actualAzimuthUnitVector = azimuthUnitVector
-            reticleView.actualAltitudeAngle = altitudeAngle
-        }
+    func updateReticleViewWithTouch(_ touch: UITouch?, event: UIEvent?, isPredicted: Bool = false) {
+//        guard let touch = touch where touch.type == .stylus else { return }
+//        
+//        reticleView.predictedDotLayer.isHidden = !isPredicted
+//        reticleView.predictedLineLayer.isHidden = !isPredicted
+//        
+//        let azimuthAngle = touch.azimuthAngle(in: view)
+//        let azimuthUnitVector = touch.azimuthUnitVector(in: view)
+//        let altitudeAngle = touch.altitudeAngle
+//        
+//        if isPredicted {
+//            reticleView.predictedAzimuthAngle = azimuthAngle
+//            reticleView.predictedAzimuthUnitVector = azimuthUnitVector
+//            reticleView.predictedAltitudeAngle = altitudeAngle
+//        }
+//        else {
+//            let location = touch.preciseLocation(in: view)
+//            reticleView.center = location
+//            reticleView.actualAzimuthAngle = azimuthAngle
+//            reticleView.actualAzimuthUnitVector = azimuthUnitVector
+//            reticleView.actualAltitudeAngle = altitudeAngle
+//        }
     }
 }
 
 extension ScratchPadViewController: DraggableViewDelegate {
     
-    func onDroppedToTarget(sender: DraggableImageView) {
+    func onDroppedToTarget(_ sender: DraggableImageView) {
         LOG.debug("dropped! \(sender.tag)")
         sender.shouldSnapBack = false
         sender.shouldCopy = false
     }
     
-    func enteringZone(sender: DraggableImageView, targets: [UIView]) {
+    func enteringZone(_ sender: DraggableImageView, targets: [UIView]) {
 
     }
     
-    func exitingZone(sender: DraggableImageView, targets: [UIView]) {
+    func exitingZone(_ sender: DraggableImageView, targets: [UIView]) {
 
     }
 
-    func isDragging(sender: DraggableImageView) {}
-    func onDraggingStarted(sender: DraggableImageView) {}
-    func onSnappedBack(sender: DraggableImageView) {}
-    func onCopied(copiedSender: DraggableImageView) {}
+    func isDragging(_ sender: DraggableImageView) {}
+    func onDraggingStarted(_ sender: DraggableImageView) {}
+    func onSnappedBack(_ sender: DraggableImageView) {}
+    func onCopied(_ copiedSender: DraggableImageView) {}
 
 
 }

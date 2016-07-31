@@ -13,7 +13,7 @@ class Member: Object {
     dynamic var name : String? = nil
     dynamic var teacher : String? = nil
     dynamic var section : String? = nil
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -23,10 +23,10 @@ class Member: Object {
 class Group: Object {
     dynamic var id : String? = nil
     dynamic var groupTitle : String? = nil
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     dynamic var simulationConfiguration : SimulationConfiguration? = nil
-    let members = List<Member>()
-    let speciesObservations = List<SpeciesObservation>()
+    var members = List<Member>()
+    var speciesObservations = List<SpeciesObservation>()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -36,11 +36,11 @@ class Group: Object {
 class SpeciesObservation: Object {
     dynamic var id : String? = nil
     dynamic var authors : Group? = nil
-    dynamic var lastModified = NSDate()
+    dynamic var lastModified = Date()
     dynamic var fromSpecies: Species?
     dynamic var ecosystem: Ecosystem?
-    let relationships = List<Relationship>()
-    let preferences = List<Preference>()
+    var relationships = List<Relationship>()
+    var preferences = List<Preference>()
     
     
     override static func primaryKey() -> String? {
@@ -55,7 +55,7 @@ class Relationship: Object {
     dynamic var attachments : String? = nil
     dynamic var authors : Group? = nil
     dynamic var relationshipType: String = ""
-    dynamic var lastModified = NSDate()
+    dynamic var lastModified = Date()
     dynamic var toSpecies: Species?
     dynamic var ecosystem: Ecosystem?
     
@@ -71,7 +71,7 @@ class Preference: Object {
     dynamic var value : String? = nil
     dynamic var attachments : String? = nil
     dynamic var type: String = ""
-    dynamic var lastModified = NSDate()
+    dynamic var lastModified = Date()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -81,15 +81,15 @@ class Preference: Object {
 
 class NutellaConfig: Object {
     dynamic var id : String? = nil
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     
     dynamic var appId: String? = nil
     dynamic var runId: String? = nil
     dynamic var host: String? = nil
     dynamic var componentId: String? = nil
     dynamic var resourceId: String? = nil
-    let outChannels = List<Channel>()
-    let inChannels = List<Channel>()
+    var outChannels = List<Channel>()
+    var inChannels = List<Channel>()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -102,7 +102,7 @@ class Channel: Object {
 
 class SimulationConfiguration: Object {
     dynamic var id : String? = nil
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     
     let ecosystems = List<Ecosystem>()
     let species = List<Species>()
@@ -120,7 +120,7 @@ class Ecosystem: Object {
     dynamic var brickarea = 0
     dynamic var name = ""
     dynamic var ecosystemNumber = 0
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     
 }
 
@@ -130,7 +130,7 @@ class Species: Object {
     dynamic var color = ""
     dynamic var name = ""
     dynamic var index = 0
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     
 //    func convertHexColor() -> UIColor {
 //        if !color.isEmpty {
@@ -148,7 +148,7 @@ class User: Object {
     dynamic var displayName = ""
     dynamic var tags = ""
     dynamic var userRole = ""
-    dynamic var last_modified = NSDate()
+    dynamic var last_modified = Date()
     dynamic var ecosystemGroup = ""
     
     
@@ -163,12 +163,12 @@ extension Realm {
     
     
     var species: Results<Species> {
-        return objects(Species.self)
+        return allObjects(ofType: Species.self)
     }
     
-    func critterWithIndex(index: Int) -> Species {
+    func critterWithIndex(_ index: Int) -> Species {
         
-        return objects(Species).filter("index = \(index)")[0] as Species!
+        return allObjects(ofType: Species.self).filter(using: "index = \(index)")[0] as Species!
         
     }
 }
@@ -178,10 +178,10 @@ extension Object {
     
     func toDictionary() -> NSDictionary {
         let properties = self.objectSchema.properties.map { $0.name }
-        let dictionary = self.dictionaryWithValuesForKeys(properties)
+        let dictionary = self.dictionaryWithValues(forKeys: properties)
         
         let mutabledic = NSMutableDictionary()
-        mutabledic.setValuesForKeysWithDictionary(dictionary)
+        mutabledic.setValuesForKeys(dictionary)
         
         for prop in self.objectSchema.properties as [Property]! {
             // find lists

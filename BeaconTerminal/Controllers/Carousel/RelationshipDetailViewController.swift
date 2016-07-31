@@ -52,7 +52,7 @@ class RelationshipDetailViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -62,7 +62,7 @@ class RelationshipDetailViewController: UIViewController {
         prepareViews()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
@@ -72,14 +72,14 @@ class RelationshipDetailViewController: UIViewController {
         //textarea
         textView.delegate = self
         textView.becomeFirstResponder()
-        textView.autocorrectionType = UITextAutocorrectionType.Yes
-        textView.spellCheckingType = UITextSpellCheckingType.Yes
+        textView.autocorrectionType = UITextAutocorrectionType.yes
+        textView.spellCheckingType = UITextSpellCheckingType.yes
 
 
         
         //buttons
-        libraryButton.tintColor = MaterialColor.blue.base
-        cameraButton.tintColor = MaterialColor.blue.base
+        libraryButton.tintColor = Color.blue.base
+        cameraButton.tintColor = Color.blue.base
         
         //image picker and camera
         imagePickerController.delegate = self
@@ -89,7 +89,7 @@ class RelationshipDetailViewController: UIViewController {
         //imageview
         evidenceImageView.clipsToBounds = true
         evidenceImageView.layer.masksToBounds = true
-        evidenceImageView.contentMode = .ScaleAspectFit
+        evidenceImageView.contentMode = .scaleAspectFit
         
         loadImageAsset()
         loadTextAssets()
@@ -97,7 +97,7 @@ class RelationshipDetailViewController: UIViewController {
 
     func loadTextAssets() {
         //update views
-        if let r = relationship, index = ecosystemIndex {
+        if let r = relationship, let index = ecosystemIndex {
             textView.text = r.note
             ecosystemSegementedControl.selectedSegmentIndex = index
         }
@@ -107,16 +107,16 @@ class RelationshipDetailViewController: UIViewController {
         if let r = self.relationship {
             if let attachment = r.attachments {
                 if !attachment.isEmpty {
-                    if let url = NSURL(string: attachment) {
-                        let assets = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil).firstObject as! PHAsset
-
-                        let targetSize = CGSizeMake(CGRectGetWidth(evidenceImageView.frame),CGRectGetHeight(evidenceImageView.frame))
-                        let options = PHImageRequestOptions()
-
-                        PHImageManager.defaultManager().requestImageForAsset(assets, targetSize: targetSize, contentMode: PHImageContentMode.AspectFit, options: options, resultHandler: {
-                            (result, info) in
-                            self.evidenceImageView.image = result
-                        })
+                    if let url = URL(string: attachment) {
+                        if let assets : PHAsset = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil).firstObject {
+                            let targetSize = CGSize(width: evidenceImageView.frame.width,height: evidenceImageView.frame.height)
+                            let options = PHImageRequestOptions()
+                            
+                            PHImageManager.default().requestImage(for: assets, targetSize: targetSize, contentMode: PHImageContentMode.aspectFit, options: options, resultHandler: {
+                                (result, info) in
+                                self.evidenceImageView.image = result
+                            })
+                        }
                     }
                 }
             }
@@ -125,10 +125,10 @@ class RelationshipDetailViewController: UIViewController {
     }
     
     func save() {
-        if let r = self.relationship, so = self.speciesObservation {
+        if let r = self.relationship, let so = self.speciesObservation {
             
             LOG.debug("speciesOb \(so.id)")
-            let ecosystem = realm!.objects(Ecosystem.self)[self.ecosystemSegmentedControl.selectedSegmentIndex]
+            let ecosystem = realm!.allObjects(ofType: Ecosystem.self)[self.ecosystemSegmentedControl.selectedSegmentIndex]
             
             dispatch_on_main {
                 try! realmDataController!.realm.write {
@@ -142,7 +142,7 @@ class RelationshipDetailViewController: UIViewController {
                     }
                     
                     r.ecosystem = ecosystem
-                    r.lastModified = NSDate()
+                    r.lastModified = NSDate() as Date
                     realmDataController!.realm.add(r, update: true)
                 }
             }
@@ -152,36 +152,36 @@ class RelationshipDetailViewController: UIViewController {
     
     // Mark: Actions
 
-    @IBAction func evidenceImageTap(sender: UITapGestureRecognizer) {
+    @IBAction func evidenceImageTap(_ sender: UITapGestureRecognizer) {
         LOG.debug("WE TAPPED!")
     }
     
-    @IBAction func okButtonAction(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: {
+    @IBAction func okButtonAction(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: {
             self.save()
         })
     }
     
-    @IBAction func photoLibraryAction(sender: UIButton) {
-        imagePickerController.sourceType = .SavedPhotosAlbum
-        presentViewController(imagePickerController, animated: true, completion: nil)
+    @IBAction func photoLibraryAction(_ sender: UIButton) {
+        imagePickerController.sourceType = .savedPhotosAlbum
+        present(imagePickerController, animated: true, completion: nil)
     }
     
-    @IBAction func cameraAction(sender: UIButton) {
-        imagePickerController.sourceType = .Camera
-        presentViewController(imagePickerController, animated: true, completion: nil)
+    @IBAction func cameraAction(_ sender: UIButton) {
+        imagePickerController.sourceType = .camera
+        present(imagePickerController, animated: true, completion: nil)
     }
-    @IBAction func deleteButtonAction(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: {
+    @IBAction func deleteButtonAction(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: {
             
-            if let r = self.relationship, so = self.speciesObservation {
+            if let r = self.relationship, let so = self.speciesObservation {
                 dispatch_on_main {
-                    if let rIndex = so.relationships.indexOf(r) {
+                    if let rIndex = so.relationships.index(of: r) {
                         
                         getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop)
                         
                         try! realmDataController!.realm.write {
-                            so.relationships.removeAtIndex(rIndex)
+                            so.relationships.remove(at: rIndex)
                             
                             realmDataController!.realm.add(so, update: true)
                         }
@@ -200,19 +200,19 @@ class RelationshipDetailViewController: UIViewController {
         })
     }
     
-    @IBAction func ecosystemSelectionChanged(sender: UISegmentedControl) {
+    @IBAction func ecosystemSelectionChanged(_ sender: UISegmentedControl) {
         
         LOG.debug("ecoystem selection \(sender.selectedSegmentIndex)")
         
-        if let r = self.relationship, so = self.speciesObservation {
+        if let r = self.relationship, let so = self.speciesObservation {
             
             LOG.debug("speciesOb \(so.id)")
-            let ecosystem = realm!.objects(Ecosystem.self)[sender.selectedSegmentIndex]
+            let ecosystem = realm!.allObjects(ofType: Ecosystem.self)[sender.selectedSegmentIndex]
             
             dispatch_on_main {
                 try! realmDataController!.realm.write {
                     r.ecosystem = ecosystem
-                    r.lastModified = NSDate()
+                    r.lastModified = NSDate() as Date
                     realmDataController!.realm.add(r, update: true)
                 }
             }
@@ -224,7 +224,7 @@ class RelationshipDetailViewController: UIViewController {
 }
 
 extension RelationshipDetailViewController {
-    func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafePointer<Void>) {
+    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafePointer<Void>) {
         if error == nil {
             getAppDelegate().makeToast("Your image has been saved.")
         } else {
@@ -236,45 +236,47 @@ extension RelationshipDetailViewController {
 
 extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        evidenceImageView.image = image
-        
-        if let info = editingInfo {
-            if let imageURL = info[UIImagePickerControllerReferenceURL] as? NSURL {
-                let result = PHAsset.fetchAssetsWithALAssetURLs([imageURL], options: nil)
-                attachmentImageUrl = imageURL.absoluteString
-                if let attachUrl =  attachmentImageUrl {
-                    self.attachments.insert(attachUrl, atIndex: 0)
-                    
-                    UIImageWriteToSavedPhotosAlbum(image, self, #selector(RelationshipDetailViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                    
-                    
-                    if let r = self.relationship {
-                        dispatch_on_main {
-                            try! realmDataController!.realm.write {
-                                r.attachments = attachUrl
-                                r.lastModified = NSDate()
-                                realmDataController!.realm.add(r, update: true)
-                                self.imagePickerController.dismissViewControllerAnimated(true, completion: nil)
-                                
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            // todo: set contentMode
+            evidenceImageView.image = image
+            
+            
+                if let imageURL = info[UIImagePickerControllerReferenceURL] as? URL {
+                    _ = PHAsset.fetchAssets(withALAssetURLs: [imageURL], options: nil)
+                    attachmentImageUrl = imageURL.absoluteString
+                    if let attachUrl =  attachmentImageUrl {
+                        self.attachments.insert(attachUrl, at: 0)
+                        
+                        UIImageWriteToSavedPhotosAlbum(image, self, #selector(RelationshipDetailViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                        
+                        
+                        if let r = self.relationship {
+                            dispatch_on_main {
+                                try! realmDataController!.realm.write {
+                                    r.attachments = attachUrl
+                                    r.lastModified = NSDate() as Date
+                                    realmDataController!.realm.add(r, update: true)
+                                    self.imagePickerController.dismiss(animated: true, completion: nil)
+                                    
+                                }
                             }
                         }
+                        
                     }
-                    
                 }
-                
-            }
         }
-        
-        
-        
+
     }
     
 }
 
 extension RelationshipDetailViewController: UITextViewDelegate {
 
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         isDirty = true
     }
 }

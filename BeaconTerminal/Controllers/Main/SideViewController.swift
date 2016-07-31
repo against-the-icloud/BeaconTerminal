@@ -16,42 +16,42 @@ class SideViewController: UITableViewController {
     }
 
     override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white()
     }
 
     // MARK: table
     
     /// Select item at row in tableView.
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
 
-        if indexPath.section == 0 {
-            switch indexPath.row {
+        if (indexPath as NSIndexPath).section == 0 {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 
-                getAppDelegate().changeSystemStateTo(ApplicationState.PLACE_GROUP)
+                getAppDelegate().changeSystemStateTo(ApplicationState.placeGroup)
                 
                 //place group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+                let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
                 //mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
 
 
-                let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
+                let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
 
                 let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
                 bottomNavigationController.selectedIndex = 0
-                bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
-                bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
+                bottomNavigationController.tabBar.tintColor = UIColor.white()
+                bottomNavigationController.tabBar.backgroundColor = UIColor.black()
 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
 
-                navigationDrawerController?.transitionFromRootViewController(navigationController,
+                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
-                        options: .TransitionNone,
+                        options: [],
                         animations: nil,
                         completion: {
                             [weak self] _ in
@@ -63,16 +63,18 @@ class SideViewController: UITableViewController {
                 //place terminal
 
 
-                getAppDelegate().changeSystemStateTo(ApplicationState.PLACE_TERMINAL)
+                getAppDelegate().changeSystemStateTo(ApplicationState.placeTerminal)
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+                let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
 
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainViewController)
 
-                navigationDrawerController!.transitionFromRootViewController(navigationController,
+                
+            
+                navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
-                        options: .TransitionNone,
+                        options: [],
                         animations: nil,
                         completion: {
                             [weak self] _ in
@@ -83,32 +85,32 @@ class SideViewController: UITableViewController {
             default:
                 break
             }
-        } else if indexPath.section == 1 {
-            switch indexPath.row {
+        } else if (indexPath as NSIndexPath).section == 1 {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 
-                getAppDelegate().changeSystemStateTo(ApplicationState.OBJECT_GROUP)
+                getAppDelegate().changeSystemStateTo(ApplicationState.objectGroup)
                 
                 //object group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainViewController = storyboard.instantiateViewControllerWithIdentifier("mainViewController") as! MainViewController
+                let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
        
 
-                let scratchPadViewController = storyboard.instantiateViewControllerWithIdentifier("scratchPadViewController") as! ScratchPadViewController
+                let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
 
                 let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
-                bottomNavigationController.tabBar.tintColor = UIColor.whiteColor()
-                bottomNavigationController.tabBar.backgroundColor = UIColor.blackColor()
+                bottomNavigationController.tabBar.tintColor = UIColor.white()
+                bottomNavigationController.tabBar.backgroundColor = UIColor.black()
 
 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
-                navigationDrawerController?.transitionFromRootViewController(navigationController,
+                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                                                                              duration: 0,
-                                                                             options: .TransitionNone,
+                                                                             options: [],
                                                                              animations: nil,
                                                                              completion: {
                                                                                 [weak self] _ in
@@ -121,20 +123,20 @@ class SideViewController: UITableViewController {
             default:
                 break
             }
-        } else if indexPath.section == 2 {
-            switch indexPath.row {
+        } else if (indexPath as NSIndexPath).section == 2 {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 //control panel
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controlPanelViewController = storyboard.instantiateViewControllerWithIdentifier("controlPanelViewController") as! ControlPanelViewController
+                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
                 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
 
                 
-                navigationDrawerController?.transitionFromRootViewController(navigationController,
+                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
-                        options: .TransitionNone,
+                        options: [],
                         animations: nil,
                         completion: {
                             [weak self] _ in
@@ -144,14 +146,14 @@ class SideViewController: UITableViewController {
                 
                 //debug
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controlPanelViewController = storyboard.instantiateViewControllerWithIdentifier("controlPanelViewController") as! ControlPanelViewController
+                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
                 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
                 
-                navigationDrawerController?.transitionFromRootViewController(navigationController,
+                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
-                        options: .TransitionNone,
+                        options: [],
                         animations: nil,
                         completion: {
                             [weak self] _ in

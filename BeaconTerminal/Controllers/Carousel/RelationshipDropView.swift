@@ -11,17 +11,15 @@ import UIKit
 import Material
 
 protocol SpeciesRelationshipDetailDelegate: class {
-    func presentRelationshipDetailView(sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation)
+    func presentRelationshipDetailView(_ sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation)
 }
 
 
 class RelationshipDropView: DropTargetView {
     
     var fromSpecies: Species?
-    var anchorCenter: CGPoint = CGPoint(x: 0, y: 0)
     var ringColor : UIColor?
     var draggableViews = [DraggableSpeciesImageView]()
-    var anchorView : UIView?
     var speciesObservation: SpeciesObservation?
     var relationshipType: String?
     
@@ -51,7 +49,7 @@ class RelationshipDropView: DropTargetView {
     func prepareView() {
     }
     
-    func addDraggableView(speciesImageView: DraggableSpeciesImageView) -> Bool {
+    func addDraggableView(_ speciesImageView: DraggableSpeciesImageView) -> Bool {
         for dView in self.subviews {
             if ((dView as? DraggableSpeciesImageView) != nil) {
                 let dView = dView as? DraggableSpeciesImageView
@@ -69,13 +67,13 @@ class RelationshipDropView: DropTargetView {
         return true
     }
     
-    func deleteSpeciesView(sender: UITapGestureRecognizer) {
+    func deleteSpeciesView(_ sender: UITapGestureRecognizer) {
         let speciesView = sender.view as? DraggableSpeciesImageView
         
-        if let species = speciesView?.species, relationshipType = relationshipType, speciesObservation = speciesObservation {
+        if let species = speciesView?.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
             
             //filer all relationship with this type
-            let foundRelationships = speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'").filter("toSpecies.index = \(species.index)")
+            let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'").filter(using: "toSpecies.index = \(species.index)")
             
             //find relationships that have toSpecies equal to species.index
             
@@ -96,16 +94,16 @@ class RelationshipDropView: DropTargetView {
         
     }
     
-    func showRelationshipDetail(sender: UITapGestureRecognizer) {
+    func showRelationshipDetail(_ sender: UITapGestureRecognizer) {
         
         
         let speciesView = sender.view as? DraggableSpeciesImageView
         
         
-        if let delegate = self.delegate, species = speciesView?.species, relationshipType = relationshipType, speciesObservation = speciesObservation {
+        if let delegate = self.delegate, let species = speciesView?.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
             
             //filer all relationship with this type
-            let foundRelationships = speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'").filter("toSpecies.index = \(species.index)")
+            let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'").filter(using: "toSpecies.index = \(species.index)")
             
             //find relationships that have toSpecies equal to species.index
             
@@ -117,18 +115,18 @@ class RelationshipDropView: DropTargetView {
     }
     
     func highlight() {
-        self.backgroundColor = MaterialColor.grey.lighten3
-        self.borderColor = MaterialColor.blue.base
+        self.backgroundColor = Color.grey.lighten3
+        self.borderColor = Color.blue.base
     }
     
     func unhighlight() {
-        self.backgroundColor = UIColor.whiteColor()
-        self.borderColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.white()
+        self.borderColor = UIColor.black()
     }
     
     // Mark: UIView Methods
     
-    override func didAddSubview(subview: UIView) {
+    override func didAddSubview(_ subview: UIView) {
         if let speciesView = subview as? DraggableSpeciesImageView {
             // remove all the targets
             
