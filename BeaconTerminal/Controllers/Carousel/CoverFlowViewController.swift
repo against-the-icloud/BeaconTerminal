@@ -35,7 +35,6 @@ class CoverFlowViewController: UIViewController {
     
     // Mark: Style properties
     
-    
     var coverFlowLayout: UICollectionViewFlowLayout {
         return self.collectionView?.collectionViewLayout as! CenterCellCollectionViewFlowLayout
     }
@@ -192,7 +191,6 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
 }
 
 //MARK: UICollectionViewDataSource
-
 extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -301,7 +299,6 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
         }
         
     }
-
     
     func expandCell(_ sender: UIButton) {
         
@@ -417,7 +414,6 @@ extension CoverFlowViewController: PreferenceEditDelegate {
             for item in items {
                 item.tintColor =  contrast
             }
-            
         }
 //
         self.present(navController, animated: true, completion: nil)
@@ -499,8 +495,7 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
             
             self.present(navController, animated: true, completion: nil)
             
-            if let pop = navController.popoverPresentationController {
-                
+            if let pop = navController.popoverPresentationController {                
                 pop.sourceView = sender
                 pop.sourceRect = sender.bounds
                 pop.backgroundColor = tintColor
@@ -510,19 +505,16 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
                 navController.preferredContentSize = CGSize(width: 700, height: 425)
             }
         }
-        
     }
 }
 
 extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         let navController: UINavigationController = popoverPresentationController.presentedViewController as! UINavigationController
-        
         if navController.viewControllers.first is RelationshipDetailViewController {
             let relationshipDetailController: RelationshipDetailViewController = navController.viewControllers.first as! RelationshipDetailViewController
             relationshipDetailController.save()
         }
-        
         return true
     }
     

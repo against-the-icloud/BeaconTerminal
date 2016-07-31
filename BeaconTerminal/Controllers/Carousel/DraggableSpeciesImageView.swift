@@ -23,9 +23,8 @@ class DraggableSpeciesImageView : UIImageView {
         super.init(coder: aDecoder)
     }
     
-
-    func smoothJiggle() {
     
+    func smoothJiggle() {
         jiggling = true
         let degrees: CGFloat = 5.0
         let animation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
@@ -66,13 +65,12 @@ class DraggableSpeciesImageView : UIImageView {
         return value * CGFloat(M_PI / 180.0)
     }
     
-    func clone() -> DraggableSpeciesImageView {        
+    func clone() -> DraggableSpeciesImageView {
         let clone = DraggableSpeciesImageView(frame: self.frame)
         clone.image = self.image
         clone.isUserInteractionEnabled = true
         clone.species = self.species
         return clone
-        
     }
-
+    
 }

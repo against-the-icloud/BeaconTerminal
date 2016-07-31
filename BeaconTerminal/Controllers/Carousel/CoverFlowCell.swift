@@ -54,15 +54,12 @@ class CoverFlowCell: UICollectionViewCell {
     }
     
     @IBAction func editPreferencesAction(_ sender: UIButton) {
-        
         if let so = speciesObservation {
             delegate?.preferenceEdit(so, sender: sender)
         }
-        
     }
     
     func prepareCell(_ speciesObservation: SpeciesObservation, fromSpecies: Species) {
-        
         self.speciesObservation = speciesObservation
         
         let rounded : CGFloat = profileView.frame.size.width / 2.0
@@ -82,8 +79,7 @@ class CoverFlowCell: UICollectionViewCell {
             //LOG.debug("found relationships for \(fromSpecies.index) relationships \(foundRelationships)")
             relationshipView.speciesObservation = speciesObservation
             relationshipView.addRelationship(foundRelationships)
-        }
-        
+        }        
     }
     
   

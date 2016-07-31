@@ -11,6 +11,7 @@ class DragUtil {
         UIGraphicsEndImageContext()
         return newImage!
     }
+    
     class func animateView(_ view:UIView, scale:CGFloat = 1.3, alpha:CGFloat = 0.5,duration:TimeInterval = 0.2){
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(duration)
@@ -22,11 +23,8 @@ class DragUtil {
     class func animateViewWithCompletion(_ view:UIView, scale:CGFloat = 1.3, alpha:CGFloat = 0.5,duration:TimeInterval = 0.2, completion: (() -> Void)? = nil){
   
         UIView.animate(withDuration: duration, animations: {
-            
-       
             view.transform = CGAffineTransform(scaleX: scale, y: scale)
             view.alpha = alpha
-            
             }, completion: { (complete: Bool) in
                 if let c = completion {
                     c()

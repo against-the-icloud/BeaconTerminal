@@ -30,7 +30,6 @@ class Util {
         
     }
     
-    
     class func getRandomColor() -> UIColor{
         let randomRed:CGFloat = CGFloat(drand48())
         let randomGreen:CGFloat = CGFloat(drand48())

@@ -20,7 +20,6 @@ extension UIBezierPath {
                     points.append(CGPoint(x: tailLength, y: -headWidth/2))
         }
 
-
         //left side length
         
         points.append(CGPoint(x: tailLength, y: -tailWidth/2))
@@ -37,12 +36,10 @@ extension UIBezierPath {
     class func transformForStartPoint(_ startPoint: CGPoint, endPoint: CGPoint, length: CGFloat) -> CGAffineTransform{
         let cosine: CGFloat = (endPoint.x - startPoint.x)/length
         let sine: CGFloat = (endPoint.y - startPoint.y)/length
-        
             
         return __CGAffineTransformMake(cosine, sine, -sine, cosine, startPoint.x, startPoint.y)
     }
-    
-    
+
     class func bezierPathWithArrowFromPoint(_ startPoint:CGPoint, endPoint: CGPoint, tailWidth: CGFloat, headWidth: CGFloat, headLength: CGFloat, doubleArrow: Bool, inwardArrow: Bool) -> UIBezierPath {
         
         let xdiff: Float = Float(endPoint.x) - Float(startPoint.x)

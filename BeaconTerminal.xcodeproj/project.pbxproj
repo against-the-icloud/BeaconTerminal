@@ -393,7 +393,6 @@
 				AE9764851C22C1BF0058A4DC /* Sources */,
 				AE9764861C22C1BF0058A4DC /* Frameworks */,
 				AE9764871C22C1BF0058A4DC /* Resources */,
-				AEFCFADA1C3FBEA90036EAB7 /* Carthage copy-frameworks */,
 				50D286FD496FE984E4D6B351 /* [CP] Embed Pods Frameworks */,
 				85B49BC250861258E287251E /* [CP] Copy Pods Resources */,
 			);
@@ -494,20 +493,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AEFCFADA1C3FBEA90036EAB7 /* Carthage copy-frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Carthage copy-frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
 		D6EF7029447DC3EE7147C62B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -569,10 +554,10 @@
 				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
+				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
 				C0A7D3406B5149858C3801A4 /* TestUITableViewController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
-				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */,
 				C0A7DDEB47B86F12E4714985 /* PlaceTerminalViewController.swift in Sources */,
 			);
@@ -595,6 +580,7 @@
 		AE9764991C22C1BF0058A4DC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -642,6 +628,7 @@
 		AE97649A1C22C1BF0058A4DC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -690,7 +677,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
 					"$(PROJECT_DIR)",
 				);
@@ -717,7 +703,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
 					"$(PROJECT_DIR)",
 				);
