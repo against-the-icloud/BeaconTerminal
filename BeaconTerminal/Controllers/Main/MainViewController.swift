@@ -149,6 +149,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             break
         case .objectGroup:
             prepareTabBarItem()
+            
         default:
             break
         }
@@ -179,7 +180,10 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         let iconImage = UIImage(named: "ic_lightbulb_white")!
         tabBarItem.image = iconImage
         tabBarItem.setTitleColor(color: Color.grey.base, forState: .normal)
-        tabBarItem.setTitleColor(color: Color.white, forState: .selected)
+        tabBarItem.setTitleColor(color: Color.black, forState: .selected)
+        
+        //setTabBarVisible(true, duration: 0.3, animated: true)
+
     }
 
 

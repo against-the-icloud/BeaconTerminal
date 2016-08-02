@@ -14,7 +14,6 @@ protocol SpeciesRelationshipDetailDelegate: class {
     func presentRelationshipDetailView(_ sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation)
 }
 
-
 class RelationshipDropView: DropTargetView {
     
     var fromSpecies: Species?
@@ -36,17 +35,50 @@ class RelationshipDropView: DropTargetView {
         }
     }
     
+    // Mark: UIView Methods
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        prepareView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        prepareView()
     }
     
-    func prepareView() {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func didAddSubview(_ subview: UIView) {
+        if let speciesView = subview as? DraggableSpeciesImageView {
+            // remove all the targets
+            if let gestures = speciesView.gestureRecognizers {
+                for recognizer in gestures {
+                    subview.removeGestureRecognizer(recognizer)
+                }
+            }
+            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.showRelationshipDetail(_:)))
+            speciesView.addGestureRecognizer(tapGestureRecognizer)
+            rearrangeSpeciesViews()
+        }
+    }
+
+    
+    func rearrangeSpeciesViews() {
+        let size : CGFloat = 75.0                
+        if self.frame.width > 0.0 {
+            LOG.debug("*** frame is \(self.frame)")
+            for sv in self.subviews where ((sv as? DraggableSpeciesImageView) != nil) {
+                let point = Util.generateRandomPoint(UInt32(self.frame.size.width - CGFloat(size)), maxYValue: UInt32(self.frame.size.height - CGFloat(size)))
+                sv.center = point
+            }
+        } else {
+            LOG.debug("*** ZERO FRAME \(self.frame)")
+        }
     }
     
     func addDraggableView(_ speciesImageView: DraggableSpeciesImageView) -> Bool {
@@ -66,6 +98,8 @@ class RelationshipDropView: DropTargetView {
         }
         return true
     }
+    
+    // Mark: Actions
     
     func deleteSpeciesView(_ sender: UITapGestureRecognizer) {
         let speciesView = sender.view as? DraggableSpeciesImageView
@@ -95,20 +129,14 @@ class RelationshipDropView: DropTargetView {
     }
     
     func showRelationshipDetail(_ sender: UITapGestureRecognizer) {
-        
-        
         let speciesView = sender.view as? DraggableSpeciesImageView
         
-        
         if let delegate = self.delegate, let species = speciesView?.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
-            
             //filer all relationship with this type
             let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'").filter(using: "toSpecies.index = \(species.index)")
             
             //find relationships that have toSpecies equal to species.index
-            
             if !foundRelationships.isEmpty {
-                
                 delegate.presentRelationshipDetailView(sender.view as! DraggableSpeciesImageView, relationship: foundRelationships.first!, speciesObservation: speciesObservation)
             }        
         }
@@ -122,30 +150,6 @@ class RelationshipDropView: DropTargetView {
     func unhighlight() {
         self.backgroundColor = UIColor.white()
         self.borderColor = UIColor.black()
-    }
-    
-    // Mark: UIView Methods
-    
-    override func didAddSubview(_ subview: UIView) {
-        if let speciesView = subview as? DraggableSpeciesImageView {
-            // remove all the targets
-            
-            if let gestures = speciesView.gestureRecognizers {
-                for recognizer in gestures {
-                    subview.removeGestureRecognizer(recognizer)
-                }
-            }
-            
-            //            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.deleteSpeciesView(_:)))
-            
-            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.showRelationshipDetail(_:)))
-            
-            
-            
-            speciesView.addGestureRecognizer(tapGestureRecognizer)
-            
-        }
-        
     }
 }
 

@@ -9,6 +9,7 @@
 import Foundation
 import RealmSwift
 import UIKit
+import Material
 
 enum RelationshipType: String {
     case producer = "producer"
@@ -53,6 +54,11 @@ class CoverFlowCell: UICollectionViewCell {
         super.layoutSubviews()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        //prepareView()
+    }
+    
     @IBAction func editPreferencesAction(_ sender: UIButton) {
         if let so = speciesObservation {
             delegate?.preferenceEdit(so, sender: sender)
@@ -82,6 +88,35 @@ class CoverFlowCell: UICollectionViewCell {
         }        
     }
     
+    func prepareView() {
+//        self.contentView.layer.cornerRadius = 10.0;
+        self.contentView.layer.borderWidth = 1.0;
+        self.contentView.layer.borderColor = Color.blueGrey.lighten5.cgColor
+//        self.contentView.layer.masksToBounds = false;
+//        
+//        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.banner.bounds
+//            byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight)
+//            cornerRadii:CGSizeMake(10, 10)];
+//        
+//        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+//        maskLayer.frame = self.banner.bounds;
+//        maskLayer.path = maskPath.CGPath;
+//        self.banner.layer.mask = maskLayer;
+        
+//        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight], cornerRadii: CGSize(width: 10, height: 10))
+//        
+//        let maskLayer = CALayer()
+//        maskLayer.frame = self.bounds;
+//        maskLayer.shadowPath = maskPath.cgPath;
+//        self.contentView.layer.mask = maskLayer;
+        
+        self.layer.shadowColor = UIColor.gray().cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        self.layer.shadowRadius = 5.0
+        self.layer.shadowOpacity = 0.7
+        self.layer.masksToBounds = false
+        self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath
+    }
   
 }
 

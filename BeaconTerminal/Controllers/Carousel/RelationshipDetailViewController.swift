@@ -17,7 +17,7 @@ class RelationshipDetailViewController: UIViewController {
     // Mark: variables
     var speciesObservation: SpeciesObservation?
     var ecosystemIndex: Int?
-    var relationship: Relationship? {
+    var relationship: Relationship? = nil {
         didSet {
             if let r = relationship {
                 if let ecosystemIndex = r.ecosystem?.ecosystemNumber {
@@ -64,18 +64,16 @@ class RelationshipDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadImageAsset()
+        loadTextAssets()
     }
     
     func prepareViews() {
-
-
         //textarea
         textView.delegate = self
         textView.becomeFirstResponder()
         textView.autocorrectionType = UITextAutocorrectionType.yes
         textView.spellCheckingType = UITextSpellCheckingType.yes
-
-
         
         //buttons
         libraryButton.tintColor = Color.blue.base
@@ -91,8 +89,7 @@ class RelationshipDetailViewController: UIViewController {
         evidenceImageView.layer.masksToBounds = true
         evidenceImageView.contentMode = .scaleAspectFit
         
-        loadImageAsset()
-        loadTextAssets()
+        
     }
 
     func loadTextAssets() {
@@ -132,6 +129,7 @@ class RelationshipDetailViewController: UIViewController {
             
             dispatch_on_main {
                 try! realmDataController!.realm.write {
+                    
                     if self.isDirty {
                         r.note = self.textView.text
                         self.isDirty = false
@@ -236,14 +234,12 @@ extension RelationshipDetailViewController {
 
 extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
     
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             // todo: set contentMode
             evidenceImageView.image = image
-            
             
                 if let imageURL = info[UIImagePickerControllerReferenceURL] as? URL {
                     _ = PHAsset.fetchAssets(withALAssetURLs: [imageURL], options: nil)

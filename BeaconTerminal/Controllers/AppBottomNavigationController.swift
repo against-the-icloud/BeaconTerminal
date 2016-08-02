@@ -8,7 +8,6 @@ class AppBottomNavigationController: BottomNavigationController {
     override func prepareView() {
         super.prepareView()
         prepareNavigationItem()
-        
     }
     
     /// Handles the menuButton.
@@ -43,15 +42,5 @@ class AppBottomNavigationController: BottomNavigationController {
 
     }
 
-    /// Prepares the tabBar.
-    private func prepareTabBar() {
-        tabBar.tintColor = Color.white
-        tabBar.backgroundColor = Color.grey.darken4
-    }
-    
-    func tabBarController(_ tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        LOG.debug("\(viewController)")
-    }
-    
 }
 

@@ -15,6 +15,8 @@ let CORNER_RADIUS = 10.0
 class CoverFlowViewController: UIViewController {
     // MARK: IBOutlets
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBInspectable var unselectedCellColor: UIColor?
+    @IBInspectable var selectedCellColor: UIColor?
     
     var notificationToken: NotificationToken? = nil
     
@@ -23,6 +25,7 @@ class CoverFlowViewController: UIViewController {
     let groupId = 0
     var allSpecies: Results<Species>?
     var selectedCell: CoverFlowCell?
+    var previousSize: CGRect?
     
     
     deinit {
@@ -46,7 +49,7 @@ class CoverFlowViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-  
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -72,11 +75,8 @@ class CoverFlowViewController: UIViewController {
             let centeredIndexPath = self.findCenterIndexPath()
             self.collectionView.scrollToItem(at: centeredIndexPath!, at: .centeredHorizontally, animated: true)
             let cell = self.collectionView.cellForItem(at: centeredIndexPath!) as! CoverFlowCell
-            
-            
             cell.expandButton.sendActions(for: .touchUpInside)
             LOG.debug("found \(cell.titleLabel.text)")
-            
             self.makeCenteredCellStyle()
         }
         
@@ -92,7 +92,7 @@ class CoverFlowViewController: UIViewController {
         super.viewDidAppear(animated)
         _ = IndexPath.init(item: 0, section: 0)
         
-        //collectionView.scrollToItemAtIndexPath(secondItem, atScrollPosition: .CenteredHorizontally, animated: false)
+        //collectionView.scrollToItem(at: firstItem, at: .centeredHorizontally, animated: false)
         
     }
     
@@ -111,13 +111,16 @@ class CoverFlowViewController: UIViewController {
         collectionView.register(nib, forCellWithReuseIdentifier: "CoverFlowCell")
     }
     
+    func prepareView() {
+        
+    }
+    
     //let INSET : CGFloat = 0.0
     
     func prepareCollectionViewCells() {
         coverFlowLayout.minimumInteritemSpacing = 10
         coverFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -134,7 +137,7 @@ class CoverFlowViewController: UIViewController {
     
     func findCenterIndexPath() -> IndexPath? {
         let centerPoint = CGPoint(x: self.collectionView.center.x + self.collectionView.contentOffset.x,
-                                      y: self.collectionView.center.y + self.collectionView.contentOffset.y);
+                                  y: self.collectionView.center.y + self.collectionView.contentOffset.y);
         if let centerCellIndexPath = self.collectionView.indexPathForItem(at: centerPoint) {
             //let index = collectionView!.indexPathForItemAtPoint(centerPoint)
             print((centerCellIndexPath as NSIndexPath).item)
@@ -147,7 +150,7 @@ class CoverFlowViewController: UIViewController {
         let paths = self.collectionView.indexPathsForVisibleItems()
         for p in paths {
             if let cell = self.collectionView.cellForItem(at: p) {
-                cell.borderColor = UIColor.white()
+                cell.borderColor = self.unselectedCellColor
                 cell.borderWidth = 1.0
             }
         }
@@ -160,15 +163,13 @@ class CoverFlowViewController: UIViewController {
                 
                 if let cell = self.collectionView.cellForItem(at: p) {
                     if p == centerIndexPath {
-                        cell.borderColor = UIColor.blue()
+                        cell.borderColor = self.selectedCellColor
                         cell.borderWidth = 1.0
                     } else {
-                        cell.borderColor = UIColor.white()
+                        cell.borderColor = self.unselectedCellColor
                         cell.borderWidth = 1.0
                     }
                 }
-                
-                
             }
             
         }
@@ -176,21 +177,34 @@ class CoverFlowViewController: UIViewController {
     
 }
 
-
 extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let totalWidth = collectionView.frame.width
         
-        if totalWidth > 1024 {
-            return CGSize(width: 1024, height: 800)
+        let sizeRect = UIScreen.main().bounds
+        let width    = sizeRect.size.width
+        let height   = sizeRect.size.height
+        
+        LOG.debug("* cell frame \(collectionView.cellForItem(at: indexPath)?.frame) \(collectionView.cellForItem(at: indexPath)?.bounds)")
+                    
+        LOG.debug("* width \(width) height \(height) \(totalWidth)")
+        
+        if width > 1024 {
+            let s = CGSize(width: 1024, height: 800)
+            //self.previousSize = CGRect(origin: CGPoint(x: 0, y: 0), size: s)
+            return s
         } else {
-            return CGSize(width: 800, height: 600)
+            let s = CGSize(width: 800, height: 600)
+            //self.previousSize = CGRect(origin: CGPoint(x: 0, y: 0), size: s)
+            return s
         }
+        
     }
     
 }
 
 //MARK: UICollectionViewDataSource
+
 extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -204,8 +218,6 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-  
-        LOG.debug("SELECTED \(indexPath.item)")
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
@@ -222,16 +234,10 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
             relationshipView.dropView.subviews.forEach({ $0.removeFromSuperview() })
         }) // this gets things done
         
-        
-        
         if currentGroup.speciesObservations.count > 0 {
             let fromSpecies = self.allSpecies![indexPath.row]
             
-            
             let speciesObservations: Results<SpeciesObservation> = currentGroup.speciesObservations.filter(using: "fromSpecies.index = \(fromSpecies.index)")
-            
-            
-            //            LOG.debug("CELL fromSpecies: \(fromSpecies) speciesObservations: \(speciesObservations.count)")
             
             if !fromSpecies.name.isEmpty {
                 cell.titleLabel.text = fromSpecies.name
@@ -246,10 +252,11 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
             
             for rv in cell.relationshipViews {
                 //add delegate
-                rv.dropView.delegate = self       
+                rv.dropView.delegate = self
             }
             
             cell.delegate = self
+            cell.prepareView()
         }
         return cell
     }
@@ -260,7 +267,6 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
         if getAppDelegate().speciesViewController.isOpen() {
             getAppDelegate().speciesViewController.closeMenu()
         }
-        
         
         //remove minimize cell target
         sender.removeTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), for: .touchUpInside)
@@ -279,15 +285,12 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
                 
                 cell.expandButton.transform = cell.expandButton.transform.rotate(CGFloat(M_PI));
                 getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: true)
-                
-                cell.frame = cell.previousSize!
+                cell.frame = self.previousSize!
                 self.collectionView.isScrollEnabled = true
                 cell.isFullscreen = false
                 
-                
                 //style
                 cell.cornerRadius = CORNER_RADIUS
-                
                 self.coverFlowLayout.invalidateLayout()
                 self.collectionView.layoutIfNeeded()
                 
@@ -312,7 +315,6 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
         //add minimized cell target
         sender.addTarget(self, action: #selector(CoverFlowViewController.minimizeCell(_:)), for: .touchUpInside)
         
-        
         let point = sender.convert(CGPoint.zero, to: collectionView)
         if let indexPathExpanded = collectionView.indexPathForItem(at: point) {
             UIView.animate(withDuration: 0.5, animations: {
@@ -326,18 +328,17 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
                     LOG.debug("EXPANDING \(cell.titleLabel.text)")
                     
                     //add droptargets
-                    
                     for rv in cell.relationshipViews {
                         getAppDelegate().speciesViewController.dropTargets.append(rv.dropView)
                         //add delegate
                         rv.dropView.delegate = self
                     }
-               
+                    
                     if !cell.isFullscreen {
                         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: ({
                             getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: false)
                             cell.expandButton.transform = cell.expandButton.transform.rotate(CGFloat(M_PI));
-                            cell.previousSize = cell.frame
+                            self.previousSize = cell.frame
                             cell.frame = self.collectionView.bounds
                             self.collectionView.isScrollEnabled = false
                             cell.isFullscreen = true
@@ -351,7 +352,6 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
                             
                         }), completion: {
                             (finished: Bool) -> Void in
-                            print("hey")
                             //show species menu
                         })
                     }
@@ -379,21 +379,17 @@ extension CoverFlowViewController: UIScrollViewDelegate {
 extension CoverFlowViewController: PreferenceEditDelegate {
     
     func preferenceEdit(_ speciesObservation: SpeciesObservation, sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Preferences", bundle: nil)
+        let storyboard = UIStoryboard(name: "Popover", bundle: nil)
         let navController = storyboard.instantiateViewController(withIdentifier: "preferencesNavigationController") as! UINavigationController
         
         if let pvc = navController.viewControllers.first as? PreferencesViewController {
             pvc.speciesObservation = speciesObservation
         }
         
-   
-     
-      
- 
         let tintColor =  UIColor.init(rgba: speciesObservation.fromSpecies!.color)
         navController.navigationBar.barTintColor = tintColor
         let contrast = tintColor.fullContrastColorAdjusted
-                
+        
         if contrast.isLight {
             navController.navigationBar.barStyle = .black
             navController.navigationBar.tintColor = contrast
@@ -401,25 +397,22 @@ extension CoverFlowViewController: PreferenceEditDelegate {
             navController.navigationBar.barStyle = .default
             navController.navigationBar.tintColor = contrast
         }
-//
+        
         navController.navigationBar.hideBottomHairline()
         navController.setToolbarHidden(false, animated: true)
         navController.toolbar.barTintColor = tintColor
         navController.toolbar.clipsToBounds = true
         navController.modalPresentationStyle = .popover
-//        editNavigationController?.view.borderColor = tintColor
-//        editNavigationController?.view.borderWidth = 3.0
-//        
+        
         if let items = navController.toolbar.items {
             for item in items {
                 item.tintColor =  contrast
             }
         }
-//
+        
         self.present(navController, animated: true, completion: nil)
         
         if let pop = navController.popoverPresentationController {
-            
             pop.sourceView = sender
             pop.sourceRect = sender.bounds
             pop.backgroundColor = tintColor
@@ -429,80 +422,86 @@ extension CoverFlowViewController: PreferenceEditDelegate {
             navController.preferredContentSize = CGSize(width: 700, height: 425)
         }
     }
-
+    
 }
 
 extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
     
     func presentRelationshipDetailView(_ sender: DraggableSpeciesImageView, relationship: Relationship, speciesObservation: SpeciesObservation) {
         
-        if let species = sender.species {
-            let storyboard = UIStoryboard(name: "CoverFlow", bundle: nil)
-            let relationshipDetailViewController = storyboard.instantiateViewController(withIdentifier: "relationshipDetailViewController") as? RelationshipDetailViewController
-            relationshipDetailViewController?.speciesObservation = speciesObservation
-            relationshipDetailViewController?.sourceView = sender
-            relationshipDetailViewController?.relationship = relationship 
-            relationshipDetailViewController?.title = { ()->String in
-    
-                var rType = ""
-                switch relationship.relationshipType {
-                case "producer":
-                    //left side mid
-                    rType = "IS EATEN BY"
-                case "consumer":
-                    //left side mid
-                    rType = "EATS"
-                case "competes":
-                    //left side mid
-                    rType = "DEPENDS ON"
-                default:
-                    //nothing
-                    print()
-                }
-
-                return "\(speciesObservation.fromSpecies!.name) \(rType) \(relationship.toSpecies!.name)"
-            }()
+        if sender.species != nil, let species = sender.species {
+            let storyboard = UIStoryboard(name: "Popover", bundle: nil)
             
-            let navController = UINavigationController(rootViewController: relationshipDetailViewController!)
-            let tintColor =  UIColor.init(rgba: species.color)
-            navController.navigationBar.barTintColor = tintColor
-            let contrast = tintColor.fullContrastColorAdjusted
-            
-            LOG.debug("contrast color \(contrast)")
-            
-            if contrast.isLight {
-                navController.navigationBar.barStyle = .black
-                navController.navigationBar.tintColor = contrast
-            } else {
-                navController.navigationBar.barStyle = .default
-                navController.navigationBar.tintColor = contrast
-            }
-            
-            navController.navigationBar.hideBottomHairline()
-            navController.setToolbarHidden(false, animated: true)
-            navController.toolbar.barTintColor = tintColor
-            navController.toolbar.clipsToBounds = true
-            navController.modalPresentationStyle = .popover
-            relationshipDetailViewController?.view.borderColor = tintColor
-            relationshipDetailViewController?.view.borderWidth = 3.0
-            
-            if let items = navController.toolbar.items {
-                for item in items {
-                    item.tintColor =  contrast
+            if let navController = storyboard.instantiateViewController(withIdentifier: "relationshipDetailNavigationController") as? UINavigationController{
+                
+                let tintColor =  UIColor.init(rgba: species.color)
+                let contrast = tintColor.fullContrastColorAdjusted
+                
+                navController.navigationBar.barTintColor = tintColor
+                
+                LOG.debug("contrast color \(contrast)")
+                
+                if contrast.isLight {
+                    navController.navigationBar.barStyle = .black
+                    navController.navigationBar.tintColor = contrast
+                } else {
+                    navController.navigationBar.barStyle = .default
+                    navController.navigationBar.tintColor = contrast
                 }
                 
-            }
-            
-            self.present(navController, animated: true, completion: nil)
-            
-            if let pop = navController.popoverPresentationController {                
-                pop.sourceView = sender
-                pop.sourceRect = sender.bounds
-                pop.backgroundColor = tintColor
-                pop.delegate = self
-                //pop.passthroughViews = allPassthroughViews
-                pop.permittedArrowDirections = .any
-                navController.preferredContentSize = CGSize(width: 700, height: 425)
+                navController.navigationBar.hideBottomHairline()
+                navController.setToolbarHidden(false, animated: true)
+                navController.toolbar.barTintColor = tintColor
+                navController.toolbar.clipsToBounds = true
+                navController.modalPresentationStyle = .popover
+                
+                if let items = navController.toolbar.items {
+                    for item in items {
+                        item.tintColor =  contrast
+                    }
+                    
+                }
+                
+                if let rvc = navController.viewControllers.first as? RelationshipDetailViewController {
+                    rvc.view.borderColor = tintColor
+                    rvc.view.borderWidth = 3.0
+                    
+                    rvc.speciesObservation = speciesObservation
+                    rvc.relationship = relationship
+                    rvc.sourceView = sender
+                    rvc.title = { ()->String in
+                        
+                        var rType = ""
+                        switch relationship.relationshipType {
+                        case "producer":
+                            //left side mid
+                            rType = "IS EATEN BY"
+                        case "consumer":
+                            //left side mid
+                            rType = "EATS"
+                        case "competes":
+                            //left side mid
+                            rType = "DEPENDS ON"
+                        default:
+                            //nothing
+                            print()
+                        }
+                        
+                        return "\(speciesObservation.fromSpecies!.name) \(rType) \(relationship.toSpecies!.name)"
+                    }()
+                    
+                    
+                    self.present(navController, animated: true, completion: nil)
+                    
+                    if let pop = navController.popoverPresentationController {
+                        pop.sourceView = sender
+                        pop.sourceRect = sender.bounds
+                        pop.backgroundColor = tintColor
+                        pop.delegate = self
+                        pop.permittedArrowDirections = .any
+                        navController.preferredContentSize = CGSize(width: 700, height: 425)
+                    }
+                }
             }
         }
     }
@@ -522,7 +521,11 @@ extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
         return .none
     }
     
-
+    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+    }
 }
 
 

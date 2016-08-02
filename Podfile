@@ -10,7 +10,7 @@ target 'BeaconTerminal' do
     pod 'Realm', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
 	pod 'RealmSwift', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
 
-    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
+    #pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
     pod 'XCGLogger', :git => 'https://github.com/alexiosdev/XCGLogger.git', :branch => 'swift3_alex'
 
     #state machinepod

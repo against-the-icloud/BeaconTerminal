@@ -5,7 +5,6 @@ PODS:
   - Realm/Headers (1.0.2)
   - RealmSwift (1.0.2):
     - Realm (= 1.0.2)
-  - SwiftyJSON (2.3.2)
   - Transporter (2.0.1)
   - XCGLogger (3.3)
 
@@ -13,7 +12,6 @@ DEPENDENCIES:
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
   - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
   - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
-  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `swift3`)
   - Transporter (~> 2.0.0)
   - XCGLogger (from `https://github.com/alexiosdev/XCGLogger.git`, branch `swift3_alex`)
 
@@ -29,9 +27,6 @@ EXTERNAL SOURCES:
     :branch: master
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
-  SwiftyJSON:
-    :branch: swift3
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
   XCGLogger:
     :branch: swift3_alex
     :git: https://github.com/alexiosdev/XCGLogger.git
@@ -48,9 +43,6 @@ CHECKOUT OPTIONS:
     :commit: 30947f35a115db9e62e208a2ee2c2b75a3009e9b
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
-  SwiftyJSON:
-    :commit: 1a9755949a652967dc2986cd7f4653496e556715
-    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
   XCGLogger:
     :commit: 66be6ebda07c5560e901bcb4567e341141607925
     :git: https://github.com/alexiosdev/XCGLogger.git
@@ -59,10 +51,9 @@ SPEC CHECKSUMS:
   Material: 437cd15bddb544bb0f41ba24215351038e565a1d
   Realm: 97aac1f75da832fce7d5fc89ffebee770b32997f
   RealmSwift: 4816c8608630a9a00bba6d726bb30b4bab6dd6bf
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: df1b9a06f23ec2c30822082ca53d9ca7c15cc21a
+PODFILE CHECKSUM: 87085bb1969041fe8577b0d0bc782c86b0803135
 
 COCOAPODS: 1.0.1

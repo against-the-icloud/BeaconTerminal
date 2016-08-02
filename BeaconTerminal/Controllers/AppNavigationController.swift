@@ -16,5 +16,6 @@ class AppNavigationController: NavigationController {
     private func prepareNavigationBar() {
         navigationBar.tintColor = Color.white
         navigationBar.backgroundColor = Color.blue.base
+        LOG.debug("navigationbar height \(navigationBar.height)")
     }
 }

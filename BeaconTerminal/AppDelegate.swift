@@ -2,7 +2,6 @@ import UIKit
 import RealmSwift
 import Material
 import XCGLogger
-import SwiftyJSON
 //import Nutella
 import Transporter
 
@@ -94,8 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         initStateMachine()
         
         prepareViews()
-        
-        
+                
         UIView.hr_setToastThemeColor(UIColor.black())
         
         return true
@@ -119,9 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
-        
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        
         
         // create drawer
         
@@ -131,8 +127,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
         bottomNavigationController.selectedIndex = 0
-        bottomNavigationController.tabBar.tintColor = UIColor.white()
-        bottomNavigationController.tabBar.backgroundColor = UIColor.black()
+        bottomNavigationController.tabBar.tintColor = UIColor.black()
+        bottomNavigationController.tabBar.backgroundColor = UIColor.white()
         bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.automatic
         
         return navigationDrawerController
@@ -161,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
             //checks
             //nutella config
             //            realmDataController?.checkNutellaConfigs()
-            //            realmDataController?.checkGroups()
+           _ = realmDataController?.checkGroups()
         }
         
     }

@@ -52,10 +52,10 @@ class ScratchPadViewController: UIViewController {
     override func viewDidLoad() {
         drawingCanvasView.addSubview(reticleView)
         
-        for dview in draggableImageViews {
-            dview.delegate = self
-        }
-        
+//        for dview in draggableImageViews {
+//            dview.delegate = self
+//        }
+//        
         self.view.sendSubview(toBack: drawingCanvasView)
        // self.view.bringSubview(toFront: toolbarView)
     }
