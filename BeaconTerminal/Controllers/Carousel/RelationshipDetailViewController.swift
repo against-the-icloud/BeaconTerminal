@@ -15,7 +15,11 @@ import MobileCoreServices
 class RelationshipDetailViewController: UIViewController {
     
     // Mark: variables
-    var speciesObservation: SpeciesObservation?
+    var speciesObservation: SpeciesObservation? {
+        didSet{
+            updateHeaderView()
+        }
+    }
     var ecosystemIndex: Int?
     var relationship: Relationship? = nil {
         didSet {
@@ -25,6 +29,8 @@ class RelationshipDetailViewController: UIViewController {
                 } else {
                     self.ecosystemIndex = -1
                 }
+                
+                updateHeaderView()
                 
                 if let attachments = r.attachments {
                     self.attachments.append(attachments)
@@ -46,6 +52,13 @@ class RelationshipDetailViewController: UIViewController {
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var ecosystemSegementedControl: UISegmentedControl!
+    @IBOutlet weak var okButton: UIBarButtonItem!
+    
+    @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var fromSpecies: UIImageView!
+    @IBOutlet weak var toSpecies: UIImageView!
+    @IBOutlet weak var relationshipLabel: UILabel!
+    
     
     // Mark: init
     required init?(coder aDecoder: NSCoder) {
@@ -89,7 +102,56 @@ class RelationshipDetailViewController: UIViewController {
         evidenceImageView.layer.masksToBounds = true
         evidenceImageView.contentMode = .scaleAspectFit
         
+      
         
+        
+    }
+    
+    func updateHeaderView() {
+        //header
+        if let species = speciesObservation?.fromSpecies, let r = relationship {
+            
+            //from species
+            
+            let fromSpeciesImage = RealmDataController.generateImageForSpecies(species.index)
+            
+            fromSpecies.contentMode = .scaleAspectFit
+            fromSpecies.image = fromSpeciesImage
+            
+            let toSpeciesImage = RealmDataController.generateImageForSpecies((r.toSpecies?.index)!)
+            
+            self.toSpecies.contentMode = .scaleAspectFit
+            self.toSpecies.image = toSpeciesImage
+            
+            relationshipLabel.text = titleRelationshipText()
+            
+        }
+    }
+    
+    func titleRelationshipText() -> String {
+        if let r = relationship?.relationshipType {
+            switch r {
+            case "producer":
+                //left side mid
+                return "IS EATEN BY"
+            case "consumer":
+                //left side mid
+                return "EATS"
+            case "competes":
+                //left side mid
+                return "DEPENDS ON"
+            default:
+                //nothing
+                return ""
+            }
+            
+        }
+        return ""
+    }
+    
+    func updateTint(tint: UIColor) {
+        okButton.tintColor = tint
+        trashButton.tintColor = tint
     }
 
     func loadTextAssets() {

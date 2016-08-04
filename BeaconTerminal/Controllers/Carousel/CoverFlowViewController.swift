@@ -469,27 +469,8 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
                     rvc.speciesObservation = speciesObservation
                     rvc.relationship = relationship
                     rvc.sourceView = sender
-                    rvc.title = { ()->String in
-                        
-                        var rType = ""
-                        switch relationship.relationshipType {
-                        case "producer":
-                            //left side mid
-                            rType = "IS EATEN BY"
-                        case "consumer":
-                            //left side mid
-                            rType = "EATS"
-                        case "competes":
-                            //left side mid
-                            rType = "DEPENDS ON"
-                        default:
-                            //nothing
-                            print()
-                        }
-                        
-                        return "\(speciesObservation.fromSpecies!.name) \(rType) \(relationship.toSpecies!.name)"
-                    }()
                     
+                    rvc.updateTint(tint: contrast)                                                        
                     
                     self.present(navController, animated: true, completion: nil)
                     

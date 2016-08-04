@@ -22,9 +22,36 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5ci-3W-sWE" userLabel="UpperStackView">
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDp-2A-WMv" userLabel="HeaderView">
-                                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JEL-cE-Yg4">
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wvs-y1-RG9">
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="49" id="APP-8H-0jy"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="IS A CONSUMER OF" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHw-gm-n3q">
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="156" id="GOS-32-app"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AO8-mR-YJZ"/>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="272" id="6GD-IA-TP1"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4Qc-k3-mpD"/>
+                                            <constraint firstItem="JEL-cE-Yg4" firstAttribute="top" secondItem="YDp-2A-WMv" secondAttribute="top" id="60S-Cp-UT5"/>
+                                            <constraint firstItem="JEL-cE-Yg4" firstAttribute="centerX" secondItem="YDp-2A-WMv" secondAttribute="centerX" id="TTB-EZ-YCo"/>
+                                            <constraint firstAttribute="bottom" secondItem="JEL-cE-Yg4" secondAttribute="bottom" id="dy5-Tl-mcG"/>
+                                            <constraint firstItem="JEL-cE-Yg4" firstAttribute="centerY" secondItem="YDp-2A-WMv" secondAttribute="centerY" id="pNP-6K-4zS"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kn2-Va-rFZ" userLabel="BodyStackView">
@@ -187,14 +214,12 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems>
                         <barButtonItem systemItem="trash" id="1Yw-r1-fPi">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="deleteButtonAction:" destination="DXa-Wq-d43" id="Own-zF-uGY"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="TxK-ln-rtX"/>
                         <barButtonItem title="OK" id="biT-0K-mcV">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="okButtonAction:" destination="DXa-Wq-d43" id="ka0-eR-ng0"/>
                             </connections>
@@ -211,8 +236,13 @@
                         <outlet property="ecosystemSegementedControl" destination="sUD-5P-tDg" id="f43-WM-WKt"/>
                         <outlet property="ecosystemSegmentedControl" destination="sUD-5P-tDg" id="oTo-hB-VFJ"/>
                         <outlet property="evidenceImageView" destination="iyx-Uf-TzI" id="RRH-2w-Hto"/>
+                        <outlet property="fromSpecies" destination="wvs-y1-RG9" id="hlP-Re-CFy"/>
                         <outlet property="libraryButton" destination="h7k-7J-OG4" id="RN1-6K-Z5V"/>
+                        <outlet property="okButton" destination="biT-0K-mcV" id="hK4-BD-OWR"/>
+                        <outlet property="relationshipLabel" destination="BHw-gm-n3q" id="nIw-Oq-Ya6"/>
                         <outlet property="textView" destination="8vg-Vf-sr9" id="rpJ-yZ-1kZ"/>
+                        <outlet property="toSpecies" destination="AO8-mR-YJZ" id="pCx-t3-hRx"/>
+                        <outlet property="trashButton" destination="1Yw-r1-fPi" id="hOx-ds-cnL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wdf-4m-iSF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -223,7 +253,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="566" y="-1799"/>
+            <point key="canvasLocation" x="565.4296875" y="-1799.609375"/>
         </scene>
         <!--RelationshipDetailNavigationController-->
         <scene sceneID="dHq-tx-2uR">
