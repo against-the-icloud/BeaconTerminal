@@ -54,7 +54,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         
         get {
             
-            let screenHeight = UIScreen.main().bounds.height
+            let screenHeight = UIScreen.main.bounds.height
             let numButtons: CGFloat = 12.0
             
             
@@ -69,7 +69,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var speciesMenuButtonCenter: CGPoint {
         get {
             //lower left
-            let screenHeight = UIScreen.main().bounds.height
+            let screenHeight = UIScreen.main.bounds.height
             
             let x: CGFloat = 10
             let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
@@ -81,8 +81,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     var toolsMenuButtonCenter: CGPoint {
         get {
             //lower right
-            let screenHeight = UIScreen.main().bounds.height
-            let screenWidth = UIScreen.main().bounds.width
+            let screenHeight = UIScreen.main.bounds.height
+            let screenWidth = UIScreen.main.bounds.width
 
             let x: CGFloat = screenWidth - (sideMenuButtonDiameter + 10)
             let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
@@ -198,7 +198,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     func openGallary() {
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        if UIDevice.current().userInterfaceIdiom == .phone {
+        if UIDevice.current.userInterfaceIdiom == .phone {
             self.present(imagePicker, animated: true, completion: nil)
         } else {
 //            popover=UIPopoverController(contentViewController: picker)
@@ -255,7 +255,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBAction func unwindToHereTestTable(_ segue: UIStoryboardSegue) {
         // And we are back
-        let svc = segue.sourceViewController as! TestUITableViewController
+        let svc = segue.source as! TestUITableViewController
 
         let simulationIndex = svc.simulationIndex
         let simulationType = svc.simulationType
@@ -340,10 +340,18 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
 
 extension UIImagePickerController {
-    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .landscape
+    
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .landscape
+        }
     }
+    
 }
+//    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+//        return .landscape
+//    }
+//}
 
 extension MainViewController: UIImagePickerControllerDelegate {
 
@@ -620,7 +628,7 @@ extension MainViewController {
                     title: "OK", style: .default, handler: {
                 _ in
                 let url = URL(string: UIApplicationOpenSettingsURLString)!
-                UIApplication.shared().openURL(url)
+                UIApplication.shared.openURL(url)
             }))
             self.present(alert, animated: true, completion: nil)
             return false

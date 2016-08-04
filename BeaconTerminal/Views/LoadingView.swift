@@ -17,7 +17,7 @@ struct circleSize {
 
 class LoadingView: UIImageView {
     
-    var color = UIColor.lightGray()
+    var color = UIColor.lightGray
     var speed = 0.6
     var isAnimate:Bool?
     var opacityWasSet:Bool?

@@ -20,8 +20,6 @@
 		708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D70631D2EFEF70032F422 /* CoverFlowCell.swift */; };
 		708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708D70651D2F03070032F422 /* CoverFlowCell.xib */; };
 		708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */; };
-		7090F53B1D515691001EEC66 /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090F53A1D515691001EEC66 /* ArrowView.swift */; };
-		7090F53D1D5156C1001EEC66 /* ArrowStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090F53C1D5156C1001EEC66 /* ArrowStyleKit.swift */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7099CDA11D0F99050037E56C /* Pulsator.swift */; };
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
@@ -90,8 +88,6 @@
 		708D70631D2EFEF70032F422 /* CoverFlowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowCell.swift; sourceTree = "<group>"; };
 		708D70651D2F03070032F422 /* CoverFlowCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverFlowCell.xib; sourceTree = "<group>"; };
 		708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CoverFlow.storyboard; path = BeaconTerminal/Controllers/Carousel/CoverFlow.storyboard; sourceTree = SOURCE_ROOT; };
-		7090F53A1D515691001EEC66 /* ArrowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowView.swift; sourceTree = "<group>"; };
-		7090F53C1D5156C1001EEC66 /* ArrowStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowStyleKit.swift; sourceTree = "<group>"; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = wallcology_configuration.json; sourceTree = "<group>"; };
 		7099CDA11D0F99050037E56C /* Pulsator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pulsator.swift; path = ../Views/Pulsator.swift; sourceTree = "<group>"; };
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
@@ -186,8 +182,6 @@
 			isa = PBXGroup;
 			children = (
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
-				7090F53C1D5156C1001EEC66 /* ArrowStyleKit.swift */,
-				7090F53A1D515691001EEC66 /* ArrowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -554,13 +548,11 @@
 				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
-				7090F53D1D5156C1001EEC66 /* ArrowStyleKit.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
 				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
-				7090F53B1D515691001EEC66 /* ArrowView.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
@@ -600,8 +592,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -648,8 +642,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -11,7 +11,7 @@ import UIKit
 class CanvasView: DropTargetView {
     // MARK: Properties
     
-    let isPredictionEnabled = UIDevice.current().userInterfaceIdiom == .pad
+    let isPredictionEnabled = UIDevice.current.userInterfaceIdiom == .pad
     let isTouchUpdatingEnabled = true
     
     var usePreciseLocations = false {
@@ -42,7 +42,7 @@ class CanvasView: DropTargetView {
         in accessing the properties of the touch used as a key in the map table. `UITouch` properties should
         be accessed in `NSResponder` callbacks and methods called from them.
     */
-    let activeLines = MapTable.strongToStrongObjects() as MapTable<UITouch,Line>
+    let activeLines = NSMapTable.strongToStrongObjects() as NSMapTable<UITouch,Line>
     
     /**
         Holds a map of `UITouch` objects to `Line` objects whose touch has ended but still has points awaiting
@@ -52,7 +52,7 @@ class CanvasView: DropTargetView {
         in accessing the properties of the touch used as a key in the map table. `UITouch` properties should
         be accessed in `NSResponder` callbacks and methods called from them.
     */
-    let pendingLines = MapTable.strongToStrongObjects() as MapTable<UITouch,Line>
+    let pendingLines = NSMapTable.strongToStrongObjects() as NSMapTable<UITouch,Line>
     
     /// A `CGContext` for drawing the last representation of lines no longer receiving updates into.
     lazy var frozenContext: CGContext = {
@@ -67,7 +67,7 @@ class CanvasView: DropTargetView {
 
         context!.setLineCap(.round)
         let transform = CGAffineTransform(scaleX: scale, y: scale)
-        context!.concatCTM(transform)
+        //context!.concatCTM(transform)
         
         return context!
     }()

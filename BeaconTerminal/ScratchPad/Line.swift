@@ -118,26 +118,26 @@ class Line: NSObject {
             let pointType = point.pointType
             if isDebuggingEnabled {
                 if pointType.contains(.Cancelled) {
-                    color = UIColor.red()
+                    color = UIColor.red
                 }
                 else if pointType.contains(.NeedsUpdate) {
-                    color = UIColor.orange()
+                    color = UIColor.orange
                 }
                 else if pointType.contains(.Finger) {
-                    color = UIColor.purple()
+                    color = UIColor.purple
                 }
                 else if pointType.contains(.Coalesced) {
-                    color = UIColor.green()
+                    color = UIColor.green
                 }
                 else if pointType.contains(.Predicted) {
-                    color = UIColor.blue()
+                    color = UIColor.blue
                 }
             } else {
                 if pointType.contains(.Cancelled) {
-                    color = UIColor.clear()
+                    color = UIColor.clear
                 }
                 else if pointType.contains(.Finger) {
-                    color = UIColor.purple()
+                    color = UIColor.purple
                 }
                 if pointType.contains(.Predicted) && !pointType.contains(.Cancelled) {
                     color = color.withAlphaComponent(0.5)
@@ -160,11 +160,11 @@ class Line: NSObject {
             // Draw azimuith and elevation on all non-coalesced points when debugging.
             if isDebuggingEnabled && !pointType.contains(.Coalesced) && !pointType.contains(.Predicted) && !pointType.contains(.Finger) {
                 context.beginPath()
-                context.setStrokeColor(UIColor.red().cgColor)
+                context.setStrokeColor(UIColor.red.cgColor)
                 context.setLineWidth(0.5);
                 context.moveTo(x: location.x, y: location.y)
                 var targetPoint = CGPoint(x:0.5 + 10.0 * cos(point.altitudeAngle), y:0.0)
-                targetPoint = targetPoint.apply(transform: CGAffineTransform(rotationAngle: point.azimuthAngle))
+                targetPoint = targetPoint.applying(CGAffineTransform(rotationAngle: point.azimuthAngle))
                 targetPoint.x += location.x
                 targetPoint.y += location.y
                 context.addLineTo(x: targetPoint.x, y: targetPoint.y)
@@ -224,11 +224,11 @@ class Line: NSObject {
     // MARK: Convenience
     
     func updateRectForLinePoint(_ point: LinePoint) -> CGRect {
-        var rect = CGRect(origin: point.location, size: CGSize.zero)
+        let rect = CGRect(origin: point.location, size: CGSize.zero)
         
         // The negative magnitude ensures an outset rectangle.
-        let magnitude = -3 * point.magnitude - 2
-        rect.insetInPlace(dx: magnitude, dy: magnitude)
+        _ = -3 * point.magnitude - 2
+       // rect.insetInPlace(dx: magnitude, dy: magnitude)
         
         return rect
     }
@@ -244,8 +244,8 @@ class Line: NSObject {
         }
         
         // The negative magnitude ensures an outset rectangle.
-        let magnitude = -3.0 * pointMagnitude - 2.0
-        rect.insetInPlace(dx: magnitude, dy: magnitude)
+        _ = -3.0 * pointMagnitude - 2.0
+      //  rect.insetInPlace(dx: magnitude, dy: magnitude)
         
         return rect
     }

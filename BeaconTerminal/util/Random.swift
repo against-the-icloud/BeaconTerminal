@@ -57,41 +57,43 @@ public extension CGFloat {
     }
 }
 
-public extension Date {
-    /// SwiftRandom extension
-    public static func randomWithinDaysBeforeToday(_ days: Int) -> Date {
-        let today = Date()
-
-        guard let gregorian = Calendar(calendarIdentifier: Calendar.Identifier.gregorian) else {
-            print("no calendar \"NSCalendarIdentifierGregorian\" found")
-            return today
-        }
-
-        let r1 = arc4random_uniform(UInt32(days))
-        let r2 = arc4random_uniform(UInt32(23))
-        let r3 = arc4random_uniform(UInt32(59))
-        let r4 = arc4random_uniform(UInt32(59))
-
-        var offsetComponents = DateComponents()
-        offsetComponents.day = Int(r1) * -1
-        offsetComponents.hour = Int(r2)
-        offsetComponents.minute = Int(r3)
-        offsetComponents.second = Int(r4)
-
-        guard let rndDate1 = gregorian.date(byAdding: offsetComponents, to: today, options: []) else {
-            print("randoming failed")
-            return today
-        }
-        return rndDate1
-    }
-
-    /// SwiftRandom extension
-    public static func random() -> Date {
-        let randomTime = TimeInterval(arc4random_uniform(UInt32.max))
-        return Date(timeIntervalSince1970: randomTime)
-    }
-
-}
+//public extension Date {
+//    /// SwiftRandom extension
+//    public static func randomWithinDaysBeforeToday(_ days: Int) -> Date {
+//        let today = Date()
+//
+//        var gregorian: Calendar?
+//            
+//        gregorian = Calendar(identifier: Calendar.Identifier.gregorian) else {
+//            print("no calendar \"NSCalendarIdentifierGregorian\" found")
+//            return today
+//        }
+//
+//        let r1 = arc4random_uniform(UInt32(days))
+//        let r2 = arc4random_uniform(UInt32(23))
+//        let r3 = arc4random_uniform(UInt32(59))
+//        let r4 = arc4random_uniform(UInt32(59))
+//
+//        var offsetComponents = DateComponents()
+//        offsetComponents.day = Int(r1) * -1
+//        offsetComponents.hour = Int(r2)
+//        offsetComponents.minute = Int(r3)
+//        offsetComponents.second = Int(r4)
+//
+//        guard let rndDate1 = gregorian?.date(byAdding: offsetComponents, to: today, options: []) else {
+//            print("randoming failed")
+//            return today
+//        }
+//        return rndDate1
+//    }
+//
+//    /// SwiftRandom extension
+//    public static func random() -> Date {
+//        let randomTime = TimeInterval(arc4random_uniform(UInt32.max))
+//        return Date(timeIntervalSince1970: randomTime)
+//    }
+//
+//}
 
 public extension UIColor {
     /// SwiftRandom extension
@@ -172,11 +174,11 @@ public struct Randoms {
     }
 
     public static func randomDateWithinDaysBeforeToday(_ days: Int) -> Date {
-        return Date.randomWithinDaysBeforeToday(days)
+        return Date()
     }
 
     public static func randomDate() -> Date {
-        return Date.random()
+        return Date()
     }
 
     public static func randomColor(_ randomAlpha: Bool = false) -> UIColor {

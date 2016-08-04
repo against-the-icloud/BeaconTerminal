@@ -21,7 +21,7 @@ let LOG: XCGLogger = {
         .debug: .red,
         .info: .darkGreen,
         .warning: .orange,
-        .error: XCGLogger.XcodeColor(fg: UIColor.red(), bg: UIColor.white()), // Optionally use a UIColor
+        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white()), // Optionally use a UIColor
         .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
     ]
     return LOG
@@ -64,7 +64,7 @@ func dispatch_on_main(_ block: ()->()) {
 }
 
 func getAppDelegate() -> AppDelegate {
-    return UIApplication.shared().delegate as! AppDelegate
+    return UIApplication.shared.delegate as! AppDelegate
 }
 
 
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     func prepareViews() {
         
         // Configure the window with the SideNavigationController as the root view controller
-        window = UIWindow(frame:UIScreen.main().bounds)
+        window = UIWindow(frame:UIScreen.main.bounds)
         window?.rootViewController = prepareSubviews()
         window?.makeKeyAndVisible()
         
@@ -186,13 +186,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     //    }
     
     func makeToast(_ message: String) {
-        if let presentWindow = UIApplication.shared().keyWindow {
+        if let presentWindow = UIApplication.shared.keyWindow {
             presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop)
         }
     }
     
     func makeToast(_ message: String, duration: Double = 3.0, position: AnyObject) {
-        if let presentWindow = UIApplication.shared().keyWindow {
+        if let presentWindow = UIApplication.shared.keyWindow {
             presentWindow.makeToast(message: message, duration: duration, position: HRToastPositionTop)
         }
     }

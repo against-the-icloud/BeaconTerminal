@@ -189,7 +189,7 @@ extension UIView {
         
         shapeLayer.bounds = shapeRect
         shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
-        shapeLayer.fillColor = UIColor.clear().cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.strokeColor = color
         shapeLayer.lineWidth = borderWidth
         shapeLayer.lineJoin = kCALineJoinMiter
@@ -239,7 +239,7 @@ extension UIViewController {
     }
     
     func tabBarIsVisible() -> Bool {
-        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.main().bounds.height
+        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.main.bounds.height
     }
 }
 

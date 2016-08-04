@@ -65,7 +65,7 @@ class ReticleView: UIView {
         super.init(frame: frame)
         
         // Set the contentScaleFactor.
-        contentScaleFactor = UIScreen.main().scale
+        contentScaleFactor = UIScreen.main.scale
         
         reticleLayer.contentsGravity = kCAGravityCenter
         reticleLayer.position = layer.position
@@ -92,10 +92,12 @@ class ReticleView: UIView {
     }
     
     // MARK: UIView Overrides
+    /*
     
     override func intrinsicContentSize() -> CGSize {
         return reticleImage.size
     }
+ */
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -115,7 +117,7 @@ class ReticleView: UIView {
         let imageSize = CGSize(width: imageRadius * 2, height: imageRadius * 2)
         UIGraphicsBeginImageContextWithOptions(imageSize, false, contentScaleFactor)
         let ctx = UIGraphicsGetCurrentContext()
-        ctx!.translate(x: imageRadius, y: imageRadius)
+        ctx!.translateBy(x: imageRadius, y: imageRadius)
         ctx!.setLineWidth(2)
         ctx!.setStrokeColor(reticleColor.cgColor)
         ctx!.strokeEllipse(in: CGRect(x: -radius, y: -radius, width: radius * 2, height: radius * 2))
@@ -127,7 +129,7 @@ class ReticleView: UIView {
         for _ in 0..<4 {
             path.moveTo(&transform, x: radius * 0.5, y: 0)
             path.addLineTo(&transform, x: radius * 1.15, y: 0)
-            transform = transform.rotate(CGFloat(M_PI_2))
+            transform = transform.rotated(by: CGFloat(M_PI_2))
         }
         ctx!.addPath(path)
         ctx!.strokePath()
@@ -150,12 +152,12 @@ class ReticleView: UIView {
     
     func layoutIndicatorForAzimuthAngle(_ azimuthAngle: CGFloat, azimuthUnitVector: CGVector, altitudeAngle: CGFloat, lineLayer targetLineLayer: CALayer, dotLayer targetDotLayer: CALayer) {
         let reticleBounds = reticleLayer.bounds
-        let centeringTransform = CGAffineTransform(translationX: reticleBounds.width / 2, y: reticleBounds.height / 2)
+        _ = CGAffineTransform(translationX: reticleBounds.width / 2, y: reticleBounds.height / 2)
         
-        var rotationTransform = CGAffineTransform(rotationAngle: azimuthAngle)
+        _ = CGAffineTransform(rotationAngle: azimuthAngle)
         
         // Draw the indicator opposite the azimuth by rotating pi radians, for easy visualization.
-        rotationTransform = rotationTransform.rotate(CGFloat(M_PI))
+       // rotationTransform = rotationTransform.rotate(CGFloat(M_PI))
         
         /*
             Make the length of the indicator's line representative of the `altitudeAngle`. When the angle is
@@ -164,13 +166,13 @@ class ReticleView: UIView {
         */
         let altitudeRadius = (1.0 - altitudeAngle / CGFloat(M_PI_2)) * radius
         
-        var lineTransform = CGAffineTransform(scaleX: altitudeRadius, y: 1)
-        lineTransform = lineTransform.concat(rotationTransform)
-        lineTransform = lineTransform.concat(centeringTransform)
+        let lineTransform = CGAffineTransform(scaleX: altitudeRadius, y: 1)
+//        lineTransform = lineTransform.concat(rotationTransform)
+//        lineTransform = lineTransform.concat(centeringTransform)
         targetLineLayer.setAffineTransform(lineTransform)
         
-        var dotTransform = CGAffineTransform(translationX: -azimuthUnitVector.dx * altitudeRadius, y: -azimuthUnitVector.dy * altitudeRadius)
-        dotTransform = dotTransform.concat(centeringTransform)
+        let dotTransform = CGAffineTransform(translationX: -azimuthUnitVector.dx * altitudeRadius, y: -azimuthUnitVector.dy * altitudeRadius)
+//        dotTransform = dotTransform.concat(centeringTransform)
         
         targetDotLayer.setAffineTransform(dotTransform)
     }

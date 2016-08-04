@@ -17,8 +17,8 @@ let expectedRSSIs = [
       0: -36,
       4: -32,
 ]
-let deviceRSSICorrection = UIDevice.current().model == "iPad" ? -14 : 0
-let minConsiderableRSSI = expectedRSSIs.min(isOrderedBefore: {$0.1 < $1.1})!.1 + deviceRSSICorrection
+let deviceRSSICorrection = UIDevice.current.model == "iPad" ? -14 : 0
+let minConsiderableRSSI = expectedRSSIs.min(by: {$0.1 < $1.1})!.1 + deviceRSSICorrection
 
 // First, this method normalizes the RSSI between beacons with different Tx power.
 //

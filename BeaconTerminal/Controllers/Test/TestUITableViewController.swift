@@ -57,7 +57,7 @@ class TestUITableViewController: UITableViewController, UINavigationControllerDe
     }
 
     func calculatePreferredContentSize() -> CGSize {
-        let windowSize = UIApplication.shared().windows.first?.frame.size
+        let windowSize = UIApplication.shared.windows.first?.frame.size
         var height = tableView.contentSize.height
         if let windowSize = windowSize{
             if  height > windowSize.height * 0.60 {

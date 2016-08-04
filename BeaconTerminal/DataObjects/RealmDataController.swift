@@ -167,7 +167,7 @@ class RealmDataController {
     }
 
     func addNutellaConfigs() -> [NutellaConfig] {
-        let path = Bundle.main.pathForResource("nutella_config", ofType: "json")
+        let path = Bundle.main.path(forResource: "nutella_config", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
         
@@ -232,7 +232,7 @@ class RealmDataController {
     // Mark: Configuration
     
     func createDefaultConfiguration() -> SimulationConfiguration {
-        let path = Bundle.main.pathForResource("wallcology_configuration", ofType: "json")
+        let path = Bundle.main.path(forResource: "wallcology_configuration", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
         

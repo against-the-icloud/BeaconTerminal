@@ -13,7 +13,7 @@ import UIKit
  UnableToScanHexValue:      "Scan hex error"
  MismatchedHexStringLength: "Invalid RGB string, number of characters after '#' should be either 3, 4, 6 or 8"
  */
-public enum UIColorInputError : ErrorProtocol {
+public enum UIColorInputError : Error {
     case missingHashMarkAsPrefix,
     unableToScanHexValue,
     mismatchedHexStringLength
@@ -113,7 +113,7 @@ extension UIColor {
      
      - parameter rgba: String value.
      */
-    public convenience init(rgba: String, defaultColor: UIColor = UIColor.clear()) {
+    public convenience init(rgba: String, defaultColor: UIColor = UIColor.clear) {
         guard let color = try? UIColor(rgba_throws: rgba) else {
             self.init(cgColor: defaultColor.cgColor)
             return
@@ -496,92 +496,92 @@ extension UIColor {
      
      - returns: A CGFloat representing the deltaE
      */
-    func CIEDE2000(compare color: UIColor) -> CGFloat {
-        // CIEDE2000, Sharma 2004 -> http://www.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
-        
-        func rad2deg(_ r: CGFloat) -> CGFloat {
-            return r * CGFloat(180/M_PI)
-        }
-        
-        func deg2rad(_ d: CGFloat) -> CGFloat {
-            return d * CGFloat(M_PI/180)
-        }
-        
-        let k_l = CGFloat(1), k_c = CGFloat(1), k_h = CGFloat(1)
-        
-        let LAB1 = self.LAB
-        let L_1 = LAB1[0], a_1 = LAB1[1], b_1 = LAB1[2]
-        
-        let LAB2 = color.LAB
-        let L_2 = LAB2[0], a_2 = LAB2[1], b_2 = LAB2[2]
-        
-        let C_1ab = sqrt(pow(a_1, 2) + pow(b_1, 2))
-        let C_2ab = sqrt(pow(a_2, 2) + pow(b_2, 2))
-        let C_ab  = (C_1ab + C_2ab)/2
-        
-        let G = 0.5 * (1 - sqrt(pow(C_ab, 7)/(pow(C_ab, 7) + pow(25, 7))))
-        let a_1_p = (1 + G) * a_1
-        let a_2_p = (1 + G) * a_2
-        
-        let C_1_p = sqrt(pow(a_1_p, 2) + pow(b_1, 2))
-        let C_2_p = sqrt(pow(a_2_p, 2) + pow(b_2, 2))
-        
-        // Read note 1 (page 23) for clarification on radians to hue degrees
-        let h_1_p = (b_1 == 0 && a_1_p == 0) ? 0 : (atan2(b_1, a_1_p) + CGFloat(2 * M_PI)) * CGFloat(180/M_PI)
-        let h_2_p = (b_2 == 0 && a_2_p == 0) ? 0 : (atan2(b_2, a_2_p) + CGFloat(2 * M_PI)) * CGFloat(180/M_PI)
-        
-        let deltaL_p = L_2 - L_1
-        let deltaC_p = C_2_p - C_1_p
-        
-        var h_p: CGFloat = 0
-        if (C_1_p * C_2_p) == 0 {
-            h_p = 0
-        } else if fabs(h_2_p - h_1_p) <= 180 {
-            h_p = h_2_p - h_1_p
-        } else if (h_2_p - h_1_p) > 180 {
-            h_p = h_2_p - h_1_p - 360
-        } else if (h_2_p - h_1_p) < -180 {
-            h_p = h_2_p - h_1_p + 360
-        }
-        
-        let deltaH_p = 2 * sqrt(C_1_p * C_2_p) * sin(deg2rad(h_p/2))
-        
-        let L_p = (L_1 + L_2)/2
-        let C_p = (C_1_p + C_2_p)/2
-        
-        var h_p_bar: CGFloat = 0
-        if (h_1_p * h_2_p) == 0 {
-            h_p_bar = h_1_p + h_2_p
-        } else if fabs(h_1_p - h_2_p) <= 180 {
-            h_p_bar = (h_1_p + h_2_p)/2
-        } else if fabs(h_1_p - h_2_p) > 180 && (h_1_p + h_2_p) < 360 {
-            h_p_bar = (h_1_p + h_2_p + 360)/2
-        } else if fabs(h_1_p - h_2_p) > 180 && (h_1_p + h_2_p) >= 360 {
-            h_p_bar = (h_1_p + h_2_p - 360)/2
-        }
-        
-        let T1 = cos(deg2rad(h_p_bar - 30))
-        let T2 = cos(deg2rad(2 * h_p_bar))
-        let T3 = cos(deg2rad((3 * h_p_bar) + 6))
-        let T4 = cos(deg2rad((4 * h_p_bar) - 63))
-        let T = 1 - rad2deg(0.17 * T1) + rad2deg(0.24 * T2) - rad2deg(0.32 * T3) + rad2deg(0.20 * T4)
-        
-        let deltaTheta = 30 * exp(-pow((h_p_bar - 275)/25, 2))
-        let R_c = 2 * sqrt(pow(C_p, 7)/(pow(C_p, 7) + pow(25, 7)))
-        let S_l =  1 + ((0.015 * pow(L_p - 50, 2))/sqrt(20 + pow(L_p - 50, 2)))
-        let S_c = 1 + (0.045 * C_p)
-        let S_h = 1 + (0.015 * C_p * T)
-        let R_t = -sin(deg2rad(2 * deltaTheta)) * R_c
-        
-        // Calculate total
-        
-        let P1 = deltaL_p/(k_l * S_l)
-        let P2 = deltaC_p/(k_c * S_c)
-        let P3 = deltaH_p/(k_h * S_h)
-        let deltaE = sqrt(pow(P1, 2) + pow(P2, 2) + pow(P3, 2) + (R_t * P2 * P3))
-        
-        return deltaE
-    }
+//    func CIEDE2000(compare color: UIColor) -> CGFloat {
+//        // CIEDE2000, Sharma 2004 -> http://www.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
+//        
+//        func rad2deg(_ r: CGFloat) -> CGFloat {
+//            return r * CGFloat(180/M_PI)
+//        }
+//        
+//        func deg2rad(_ d: CGFloat) -> CGFloat {
+//            return d * CGFloat(M_PI/180)
+//        }
+//        
+//        let k_l = CGFloat(1), k_c = CGFloat(1), k_h = CGFloat(1)
+//        
+//        let LAB1 = self.LAB
+//        let L_1 = LAB1[0], a_1 = LAB1[1], b_1 = LAB1[2]
+//        
+//        let LAB2 = color.LAB
+//        let L_2 = LAB2[0], a_2 = LAB2[1], b_2 = LAB2[2]
+//        
+//        let C_1ab = sqrt(pow(a_1, 2) + pow(b_1, 2))
+//        let C_2ab = sqrt(pow(a_2, 2) + pow(b_2, 2))
+//        let C_ab  = (C_1ab + C_2ab)/2
+//        
+//        let G = 0.5 * (1 - sqrt(pow(C_ab, 7)/(pow(C_ab, 7) + pow(25, 7))))
+//        let a_1_p = (1 + G) * a_1
+//        let a_2_p = (1 + G) * a_2
+//        
+//        let C_1_p = sqrt(pow(a_1_p, 2) + pow(b_1, 2))
+//        let C_2_p = sqrt(pow(a_2_p, 2) + pow(b_2, 2))
+//        
+//        // Read note 1 (page 23) for clarification on radians to hue degrees
+//        let h_1_p = (b_1 == 0 && a_1_p == 0) ? 0 : (atan2(b_1, a_1_p) + CGFloat(2 * M_PI)) * CGFloat(180/M_PI)
+//        let h_2_p = (b_2 == 0 && a_2_p == 0) ? 0 : (atan2(b_2, a_2_p) + CGFloat(2 * M_PI)) * CGFloat(180/M_PI)
+//        
+//        let deltaL_p = L_2 - L_1
+//        let deltaC_p = C_2_p - C_1_p
+//        
+//        var h_p: CGFloat = 0
+//        if (C_1_p * C_2_p) == 0 {
+//            h_p = 0
+//        } else if fabs(h_2_p - h_1_p) <= 180 {
+//            h_p = h_2_p - h_1_p
+//        } else if (h_2_p - h_1_p) > 180 {
+//            h_p = h_2_p - h_1_p - 360
+//        } else if (h_2_p - h_1_p) < -180 {
+//            h_p = h_2_p - h_1_p + 360
+//        }
+//        
+//        let deltaH_p = 2 * sqrt(C_1_p * C_2_p) * sin(deg2rad(h_p/2))
+//        
+//        let L_p = (L_1 + L_2)/2
+//        let C_p = (C_1_p + C_2_p)/2
+//        
+//        var h_p_bar: CGFloat = 0
+//        if (h_1_p * h_2_p) == 0 {
+//            h_p_bar = h_1_p + h_2_p
+//        } else if fabs(h_1_p - h_2_p) <= 180 {
+//            h_p_bar = (h_1_p + h_2_p)/2
+//        } else if fabs(h_1_p - h_2_p) > 180 && (h_1_p + h_2_p) < 360 {
+//            h_p_bar = (h_1_p + h_2_p + 360)/2
+//        } else if fabs(h_1_p - h_2_p) > 180 && (h_1_p + h_2_p) >= 360 {
+//            h_p_bar = (h_1_p + h_2_p - 360)/2
+//        }
+//        
+//        let T1 = cos(deg2rad(h_p_bar - 30))
+//        let T2 = cos(deg2rad(2 * h_p_bar))
+//        let T3 = cos(deg2rad((3 * h_p_bar) + 6))
+//        let T4 = cos(deg2rad((4 * h_p_bar) - 63))
+//        let T = 1 - rad2deg(0.17 * T1) + rad2deg(0.24 * T2) - rad2deg(0.32 * T3) + rad2deg(0.20 * T4)
+//        
+//        let deltaTheta = 30 * exp(-pow((h_p_bar - 275)/25, 2))
+//        let R_c = 2 * sqrt(pow(C_p, 7)/(pow(C_p, 7) + pow(25, 7)))
+//        let S_l =  1 + ((0.015 * pow(L_p - 50, 2))/sqrt(20 + pow(L_p - 50, 2)))
+//        let S_c = 1 + (0.045 * C_p)
+//        let S_h = 1 + (0.015 * C_p * T)
+//        let R_t = -sin(deg2rad(2 * deltaTheta)) * R_c
+//        
+//        // Calculate total
+//        
+//        let P1 = deltaL_p/(k_l * S_l)
+//        let P2 = deltaC_p/(k_c * S_c)
+//        let P3 = deltaH_p/(k_h * S_h)
+//        let deltaE = sqrt(pow(P1, 2) + pow(P2, 2) + pow(P3, 2) + (R_t * P2 * P3))
+//        
+//        return deltaE
+//    }
     
     
     

@@ -12,7 +12,7 @@ DEPENDENCIES:
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
   - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
   - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
-  - Transporter (~> 2.0.0)
+  - Transporter (from `https://github.com/DenHeadless/Transporter.git`, branch `swift3`)
   - XCGLogger (from `https://github.com/alexiosdev/XCGLogger.git`, branch `swift3_alex`)
 
 EXTERNAL SOURCES:
@@ -27,22 +27,28 @@ EXTERNAL SOURCES:
     :branch: master
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
+  Transporter:
+    :branch: swift3
+    :git: https://github.com/DenHeadless/Transporter.git
   XCGLogger:
     :branch: swift3_alex
     :git: https://github.com/alexiosdev/XCGLogger.git
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: ed874c9e7825c59ac4706588f43f0f4e988d5dce
+    :commit: ad4a589126a5b0262944bda9ec45d180f61b272a
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :commit: 30947f35a115db9e62e208a2ee2c2b75a3009e9b
+    :commit: 05ca7aad2b74ab9a5e1de11e0f9cbd4598f05458
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :commit: 30947f35a115db9e62e208a2ee2c2b75a3009e9b
+    :commit: 05ca7aad2b74ab9a5e1de11e0f9cbd4598f05458
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
+  Transporter:
+    :commit: 4ca0e4be15db562b5a00d0e91be6f7e1314243b1
+    :git: https://github.com/DenHeadless/Transporter.git
   XCGLogger:
     :commit: 66be6ebda07c5560e901bcb4567e341141607925
     :git: https://github.com/alexiosdev/XCGLogger.git
@@ -54,6 +60,6 @@ SPEC CHECKSUMS:
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: 87085bb1969041fe8577b0d0bc782c86b0803135
+PODFILE CHECKSUM: c7cf364e172173e1a7aadfa5b4550bcb743b55df
 
 COCOAPODS: 1.0.1

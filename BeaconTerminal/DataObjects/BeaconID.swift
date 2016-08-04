@@ -15,7 +15,7 @@ struct BeaconID: Equatable, CustomStringConvertible, Hashable {
     init(index: Int, hexColor: String) {
         self.index = index
         self.hexColor = hexColor
-        beaconColor = UIColor.red()
+        beaconColor = UIColor.red
         self.proximityUUID = nil
         self.major = nil
         self.minor = nil

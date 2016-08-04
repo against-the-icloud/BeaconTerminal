@@ -14,7 +14,7 @@ target 'BeaconTerminal' do
     pod 'XCGLogger', :git => 'https://github.com/alexiosdev/XCGLogger.git', :branch => 'swift3_alex'
 
     #state machinepod
-    pod 'Transporter', '~> 2.0.0'
+    pod 'Transporter', :git => 'https://github.com/DenHeadless/Transporter.git', :branch => 'swift3'
 end
 
 post_install do |installer|

@@ -147,7 +147,7 @@ class CoverFlowViewController: UIViewController {
     }
     
     func makeDraggingCellStyle() {
-        let paths = self.collectionView.indexPathsForVisibleItems()
+        let paths = self.collectionView.indexPathsForVisibleItems
         for p in paths {
             if let cell = self.collectionView.cellForItem(at: p) {
                 cell.borderColor = self.unselectedCellColor
@@ -158,7 +158,7 @@ class CoverFlowViewController: UIViewController {
     
     func makeCenteredCellStyle() {
         if let centerIndexPath = findCenterIndexPath() {
-            let paths = self.collectionView.indexPathsForVisibleItems()
+            let paths = self.collectionView.indexPathsForVisibleItems
             for p in paths {
                 
                 if let cell = self.collectionView.cellForItem(at: p) {
@@ -181,7 +181,7 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let totalWidth = collectionView.frame.width
         
-        let sizeRect = UIScreen.main().bounds
+        let sizeRect = UIScreen.main.bounds
         let width    = sizeRect.size.width
         let height   = sizeRect.size.height
         
@@ -282,7 +282,7 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
             makeCenteredCellStyle()
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseIn, animations: ({
                 
-                cell.expandButton.transform = cell.expandButton.transform.rotate(CGFloat(M_PI));
+                cell.expandButton.transform = cell.expandButton.transform.rotated(by: CGFloat(M_PI));
                 getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: true)
                 cell.frame = self.previousSize!
                 self.collectionView.isScrollEnabled = true
@@ -336,7 +336,7 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
                     if !cell.isFullscreen {
                         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: ({
                             getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: false)
-                            cell.expandButton.transform = cell.expandButton.transform.rotate(CGFloat(M_PI));
+                            cell.expandButton.transform = cell.expandButton.transform.rotated(by:CGFloat(M_PI));
                             self.previousSize = cell.frame
                             cell.frame = self.collectionView.bounds
                             self.collectionView.isScrollEnabled = false
@@ -469,7 +469,7 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
                     rvc.relationship = relationship
                     rvc.sourceView = sender
                     
-                    rvc.updateTint(tint: contrast)                                                        
+                    rvc.updateTint(contrast)                                                        
                     
                     self.present(navController, animated: true, completion: nil)
                     

@@ -39,7 +39,7 @@ func updateFirmwareIfUpdateAvailable(
                     progress(progressPercentage: progressPercentage)
                 })
             }, completion: { error in
-                if error == nil || error!.code == ESTDeviceLocationBeaconError.firmwareUpdateNoUpdate.rawValue {
+                if error == nil || error!._code == ESTDeviceLocationBeaconError.firmwareUpdateNoUpdate.rawValue {
                     DispatchQueue.main.async(execute: {
                         completion(error: nil)
                     })
@@ -86,86 +86,87 @@ func operationForSetting(
     completionGenerator: (operationIdentifier: String) -> ((AnyObject?, NSError?) -> Void))
     -> ESTBeaconOperationProtocol! {
 
-        switch setting {
-
-        case let setting as ESTSettingDeviceInfoTags:
-            return ESTCloudOperationDeviceInfoTags.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "tags"))
-
-        case let setting as ESTSettingDeviceInfoGeoLocation:
-            return ESTCloudOperationDeviceInfoGeoLocation.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "geolocation"))
-
-        case let setting as ESTSettingPowerSmartPowerModeEnable:
-            return ESTBeaconOperationPowerSmartPowerModeEnable.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "smart power mode"))
-
-        case let setting as ESTSettingIBeaconEnable:
-            return ESTBeaconOperationIBeaconEnable.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon enabled"))
-
-        case let setting as ESTSettingIBeaconInterval:
-            return ESTBeaconOperationIBeaconInterval.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon advertising interval"))
-
-        case let setting as ESTSettingIBeaconMajor:
-            return ESTBeaconOperationIBeaconMajor.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon major"))
-
-        case let setting as ESTSettingIBeaconMinor:
-            return ESTBeaconOperationIBeaconMinor.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon minor"))
-
-        case let setting as ESTSettingIBeaconNonStrictMode:
-            return ESTCloudOperationIBeaconNonStrictMode.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon non-strict mode"))
-
-        case let setting as ESTSettingIBeaconPower:
-            return ESTBeaconOperationIBeaconPower.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon transmit power"))
-
-        case let setting as ESTSettingIBeaconProximityUUID:
-            return ESTBeaconOperationIBeaconProximityUUID.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon UUID"))
-
-        case let setting as ESTSettingIBeaconSecureUUIDEnable:
-            return ESTBeaconOperationIBeaconSecureUUIDEnable.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "iBeacon Secure UUID enabled"))
-
-        case let setting as ESTSettingEstimoteTLMEnable:
-            return ESTBeaconOperationEstimoteTLMEnable.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "TLM enabled"))
-
-        case let setting as ESTSettingEstimoteTLMInterval:
-            return ESTBeaconOperationEstimoteTLMInterval.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "TLM advertising interval"))
-
-        case let setting as ESTSettingEstimoteTLMPower:
-            return ESTBeaconOperationEstimoteTLMPower.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "TLM transmit power"))
-
-        case let setting as ESTSettingConnectivityInterval:
-            return ESTBeaconOperationConnectivityInterval.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "connectivity advertising interval"))
-
-        case let setting as ESTSettingConnectivityPower:
-            return ESTBeaconOperationConnectivityPower.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "connectivity transmit power"))
-
-        case let setting as ESTSettingEstimoteLocationEnable:
-            return ESTBeaconOperationEstimoteLocationEnable.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "Estimote packet enabled"))
-
-        case let setting as ESTSettingEstimoteLocationInterval:
-            return ESTBeaconOperationEstimoteLocationInterval.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "Estimote packet advertising interval"))
-
-        case let setting as ESTSettingEstimoteLocationPower:
-            return ESTBeaconOperationEstimoteLocationPower.writeOperation(withSetting: setting,
-                completion: completionGenerator(operationIdentifier: "Estimote packet transmit power"))
-
-        default:
-            assertionFailure("Couldn't find an operation to handle writing the \(setting.dynamicType) setting. Make sure there's an appropriate case statement in the `operationForSetting:` function.")
-            return nil
-        }
+        return nil
+//        switch setting {
+//
+//        case let setting as ESTSettingDeviceInfoTags:
+//            return ESTCloudOperationDeviceInfoTags.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "tags"))
+//
+//        case let setting as ESTSettingDeviceInfoGeoLocation:
+//            return ESTCloudOperationDeviceInfoGeoLocation.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "geolocation"))
+//
+//        case let setting as ESTSettingPowerSmartPowerModeEnable:
+//            return ESTBeaconOperationPowerSmartPowerModeEnable.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "smart power mode"))
+//
+//        case let setting as ESTSettingIBeaconEnable:
+//            return ESTBeaconOperationIBeaconEnable.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon enabled"))
+//
+//        case let setting as ESTSettingIBeaconInterval:
+//            return ESTBeaconOperationIBeaconInterval.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon advertising interval"))
+//
+//        case let setting as ESTSettingIBeaconMajor:
+//            return ESTBeaconOperationIBeaconMajor.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon major"))
+//
+//        case let setting as ESTSettingIBeaconMinor:
+//            return ESTBeaconOperationIBeaconMinor.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon minor"))
+//
+//        case let setting as ESTSettingIBeaconNonStrictMode:
+//            return ESTCloudOperationIBeaconNonStrictMode.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon non-strict mode"))
+//
+//        case let setting as ESTSettingIBeaconPower:
+//            return ESTBeaconOperationIBeaconPower.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon transmit power"))
+//
+//        case let setting as ESTSettingIBeaconProximityUUID:
+//            return ESTBeaconOperationIBeaconProximityUUID.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon UUID"))
+//
+//        case let setting as ESTSettingIBeaconSecureUUIDEnable:
+//            return ESTBeaconOperationIBeaconSecureUUIDEnable.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "iBeacon Secure UUID enabled"))
+//
+//        case let setting as ESTSettingEstimoteTLMEnable:
+//            return ESTBeaconOperationEstimoteTLMEnable.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "TLM enabled"))
+//
+//        case let setting as ESTSettingEstimoteTLMInterval:
+//            return ESTBeaconOperationEstimoteTLMInterval.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "TLM advertising interval"))
+//
+//        case let setting as ESTSettingEstimoteTLMPower:
+//            return ESTBeaconOperationEstimoteTLMPower.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "TLM transmit power"))
+//
+//        case let setting as ESTSettingConnectivityInterval:
+//            return ESTBeaconOperationConnectivityInterval.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "connectivity advertising interval"))
+//
+//        case let setting as ESTSettingConnectivityPower:
+//            return ESTBeaconOperationConnectivityPower.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "connectivity transmit power"))
+//
+//        case let setting as ESTSettingEstimoteLocationEnable:
+//            return ESTBeaconOperationEstimoteLocationEnable.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "Estimote packet enabled"))
+//
+//        case let setting as ESTSettingEstimoteLocationInterval:
+//            return ESTBeaconOperationEstimoteLocationInterval.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "Estimote packet advertising interval"))
+//
+//        case let setting as ESTSettingEstimoteLocationPower:
+//            return ESTBeaconOperationEstimoteLocationPower.writeOperation(withSetting: setting,
+//                completion: completionGenerator(operationIdentifier: "Estimote packet transmit power"))
+//
+//        default:
+//            assertionFailure("Couldn't find an operation to handle writing the \(setting.dynamicType) setting. Make sure there's an appropriate case statement in the `operationForSetting:` function.")
+//            return nil
+//        }
 }

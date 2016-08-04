@@ -78,19 +78,19 @@ class RelationshipsUIView: UIView {
         switch relationshipType! {
         case "producer":
             //left side mid
-            return UIColor.red()
+            return UIColor.red
         case "consumer":
             //left side mid
-            return UIColor.blue()
+            return UIColor.blue
         case "mutual":
             //left side mid
-            return UIColor.brown()
+            return UIColor.brown
         default:
             //nothing
             print()
         }
         
-        return UIColor.yellow()
+        return UIColor.yellow
     }
     
 }

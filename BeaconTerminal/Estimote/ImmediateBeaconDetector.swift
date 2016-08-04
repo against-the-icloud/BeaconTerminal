@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum ImmediateBeaconDetectorError: ErrorProtocol {
+enum ImmediateBeaconDetectorError: Error {
     case bluetoothDisabled, unknown
 }
 

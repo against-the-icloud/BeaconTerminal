@@ -358,7 +358,7 @@ extension UIView {
             titleLabel!.textAlignment = .center
             titleLabel!.lineBreakMode = .byWordWrapping
             titleLabel!.textColor = UIView.hr_toastFontColor()
-            titleLabel!.backgroundColor = UIColor.clear()
+            titleLabel!.backgroundColor = UIColor.clear
             titleLabel!.alpha = 1.0
             titleLabel!.text = title
             
@@ -375,7 +375,7 @@ extension UIView {
             msgLabel!.lineBreakMode = .byWordWrapping
             msgLabel!.textAlignment = .center
             msgLabel!.textColor = UIView.hr_toastFontColor()
-            msgLabel!.backgroundColor = UIColor.clear()
+            msgLabel!.backgroundColor = UIColor.clear
             msgLabel!.alpha = 1.0
             msgLabel!.text = msg
             

@@ -24,7 +24,7 @@ class SpeciesMenuViewController: UIViewController {
         
         get {
             
-            let screenHeight = UIScreen.main().bounds.height
+            let screenHeight = UIScreen.main.bounds.height
             let numButtons: CGFloat = 12.0
             
             
@@ -39,7 +39,7 @@ class SpeciesMenuViewController: UIViewController {
     var speciesMenuButtonCenter: CGPoint {
         get {
             //lower left
-            let screenHeight = UIScreen.main().bounds.height
+            let screenHeight = UIScreen.main.bounds.height
             
             let x: CGFloat = 10
             let y: CGFloat = screenHeight - (sideMenuButtonDiameter + 10)
@@ -142,10 +142,10 @@ class SpeciesMenuViewController: UIViewController {
         speciesMenuView!.menu.baseSize = CGSize(width: speciesDiameter, height: speciesDiameter)
         speciesMenuView!.menu.itemSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
         speciesMenuView!.menu.views = speciesMenuButtons
-        speciesMenuView!.backgroundColor = UIColor.blue()
+        speciesMenuView!.backgroundColor = UIColor.blue
         
         speciesMenuView!.center = speciesMenuButtonCenter
-        UIApplication.shared().keyWindow!.addSubview(speciesMenuView!)
+        UIApplication.shared.keyWindow!.addSubview(speciesMenuView!)
         speciesMenuView?.isHidden = true
     }
     
@@ -166,18 +166,18 @@ class SpeciesMenuViewController: UIViewController {
                 dragAndDropView = nil
             } else {
                 
-                dragAndDropView = UIView(frame: UIApplication.shared().keyWindow!.frame)
-                dragAndDropView?.backgroundColor = UIColor.clear()
+                dragAndDropView = UIView(frame: UIApplication.shared.keyWindow!.frame)
+                dragAndDropView?.backgroundColor = UIColor.clear
                 //dragAndDropView?.alpha = 0.5
                 
-                UIApplication.shared().keyWindow!.addSubview(dragAndDropView!)
+                UIApplication.shared.keyWindow!.addSubview(dragAndDropView!)
                 
                 if let targetView = gesture.view as? UIImageView {
                     
                     copyImageView = (targetView as! DraggableSpeciesImageView).clone()
                     
                     
-                    UIApplication.shared().keyWindow!.addSubview(copyImageView!)
+                    UIApplication.shared.keyWindow!.addSubview(copyImageView!)
                     dragAndDropView?.addSubview(copyImageView!)
                     
                     dragAndDropView?.isUserInteractionEnabled = true

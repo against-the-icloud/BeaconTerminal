@@ -2,7 +2,7 @@
 // Please report any problems with this app template to contact@estimote.com
 //
 
-enum GeoLocatorError: ErrorProtocol {
+enum GeoLocatorError: Error {
     case insufficientPermissions, noLocationFound
 }
 
@@ -52,7 +52,7 @@ class GeoLocator: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.filter({ $0.horizontalAccuracy >= 0 }).min(isOrderedBefore: { $0.horizontalAccuracy < $1.horizontalAccuracy }) else { return }
+        guard let location = locations.filter({ $0.horizontalAccuracy >= 0 }).min(by: { $0.horizontalAccuracy < $1.horizontalAccuracy }) else { return }
         NSLog(location.debugDescription)
         if currentLocation == nil || currentLocation!.horizontalAccuracy > location.horizontalAccuracy {
             currentLocation = location
@@ -70,7 +70,7 @@ class GeoLocator: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationUpdatesInProgress = false
     }
 

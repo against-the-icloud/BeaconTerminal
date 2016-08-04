@@ -87,7 +87,7 @@ extension DragViewController: DraggableViewDelegate {
     func enteringZone(_ sender: DraggableImageView, targets: [UIView]) {
         if !targets.isEmpty {
             for zone in targets {
-                zone.backgroundColor = UIColor.brown()
+                zone.backgroundColor = UIColor.brown
             }
         }
     }
@@ -95,7 +95,7 @@ extension DragViewController: DraggableViewDelegate {
     func exitingZone(_ sender: DraggableImageView, targets: [UIView]) {
         if !targets.isEmpty {
             for zone in targets {
-                zone.backgroundColor = UIColor.brown()
+                zone.backgroundColor = UIColor.brown
             }
         }
     }

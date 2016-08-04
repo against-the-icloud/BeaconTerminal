@@ -59,7 +59,7 @@ class DraggableImageView: UIImageView {
 
     func initGestures(_ view: UIView) {
         
-        self.backgroundColor = UIColor.lightGray()
+        self.backgroundColor = UIColor.lightGray
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(DraggableImageView.responseToPanGesture(_:)))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(panGesture)
@@ -97,7 +97,7 @@ class DraggableImageView: UIImageView {
                 self.currentView!.contentMode = UIViewContentMode.center
                 self.currentView!.layer.cornerRadius = 10.0
                 self.currentView!.layer.borderWidth = 0.0
-                self.currentView!.tintColor = UIColor.blue()
+                self.currentView!.tintColor = UIColor.blue
                 self.currentView!.delegate = self.delegate
                 self.currentView!.tag = self.tag
                 self.currentView?.shouldDropOnCell = self.shouldDropOnCell
@@ -132,7 +132,7 @@ class DraggableImageView: UIImageView {
 
             self.superview?.bringSubview(toFront: self.currentView!)
 
-            UIApplication.shared().keyWindow!.bringSubview(toFront: self.currentView!)
+            UIApplication.shared.keyWindow!.bringSubview(toFront: self.currentView!)
             
         } else if sender.state == .cancelled {
             
@@ -186,7 +186,7 @@ class DraggableImageView: UIImageView {
             }
             
             //self.superview?.bringSubviewToFront(self.currentView!)
-            UIApplication.shared().keyWindow!.bringSubview(toFront: self.currentView!)
+            UIApplication.shared.keyWindow!.bringSubview(toFront: self.currentView!)
 
             //pointInside(sender)
 
@@ -252,7 +252,7 @@ class DraggableImageView: UIImageView {
                 UIView.animate(withDuration: 0.4, animations: {
                     self.currentView?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     self.currentView?.alpha = 1.0
-                    self.currentView?.borderColor = UIColor.clear()
+                    self.currentView?.borderColor = UIColor.clear
                 }, completion: {
                     (finished:Bool) in
                     self.updateDelegates()
@@ -270,7 +270,7 @@ class DraggableImageView: UIImageView {
         
             
             //let pc:CGPoint = sender.locationInView(self.currentView!)
-            let parentView = UIApplication.shared().keyWindow!
+            let parentView = UIApplication.shared.keyWindow!
             let p:CGPoint = sender.location(in: parentView)
             
             let pointInCollection = CGPoint(x: p.x + getAppDelegate().collectionView!.contentOffset.x, y: p.y + getAppDelegate().collectionView!.contentOffset.y);
@@ -293,7 +293,7 @@ class DraggableImageView: UIImageView {
             LOG.debug("found \(found)")
 
         } else {
-            let parentView = UIApplication.shared().keyWindow!
+            let parentView = UIApplication.shared.keyWindow!
             
             let p:CGPoint = sender.location(in: parentView)
             
@@ -343,7 +343,7 @@ class DraggableImageView: UIImageView {
     
     
     func pointInsideWindow(_ point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        return ((subviewAtPoint(point, view: UIApplication.shared().keyWindow!) as? DropTargetView) != nil)
+        return ((subviewAtPoint(point, view: UIApplication.shared.keyWindow!) as? DropTargetView) != nil)
     }
     
     private func subviewAtPoint(_ point: CGPoint, view: UIView) -> UIView? {

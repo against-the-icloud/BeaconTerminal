@@ -149,7 +149,7 @@ class RelationshipDetailViewController: UIViewController {
         return ""
     }
     
-    func updateTint(tint: UIColor) {
+    func updateTint(_ tint: UIColor) {
         okButton.tintColor = tint
         trashButton.tintColor = tint
     }

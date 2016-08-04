@@ -30,7 +30,8 @@
 
 import UIKit
 
-public enum PulseAnimation {
+@objc(PulseAnimation)
+public enum PulseAnimation: Int {
 	case none
 	case center
 	case centerWithBacking

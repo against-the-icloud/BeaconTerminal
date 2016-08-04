@@ -141,13 +141,11 @@ class ScratchPadViewController: UIViewController {
     
     // MARK: Rotation
     
-    override func shouldAutorotate() -> Bool {
-        return true
-    }
-    
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+/*
+    func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return [.landscapeLeft, .landscapeRight]
     }
+ */
     
     // MARK: Convenience
     

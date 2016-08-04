@@ -124,7 +124,7 @@ public class Pulsator: CAReplicatorLayer {
     // MARK: - Private Methods
     
     private func setupPulse() {
-        pulse.contentsScale = UIScreen.main().scale
+        pulse.contentsScale = UIScreen.main.scale
         pulse.opacity = 0
         addSublayer(pulse)
         updatePulse()
@@ -171,10 +171,13 @@ public class Pulsator: CAReplicatorLayer {
         guard animationGroup != nil else { return }        // Not need to be recreated.
         stop()
         let when = DispatchTime.now() + Double(Int64(0.2 * double_t(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-        DispatchQueue.main.after(when: when) { () -> Void in
-            self.start()
-        }
+        DispatchQueue.main.asyncAfter(deadline: when, execute: { () -> Void in
+                        self.start()
+                    }
+        )
     }
+    
+//        DispatchQueue.main.after(when: when)
     
     // MARK: - Public Methods
     

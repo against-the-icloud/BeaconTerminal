@@ -110,7 +110,7 @@ class CoverFlowCell: UICollectionViewCell {
 //        maskLayer.shadowPath = maskPath.cgPath;
 //        self.contentView.layer.mask = maskLayer;
         
-        self.layer.shadowColor = UIColor.gray().cgColor
+        self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         self.layer.shadowRadius = 5.0
         self.layer.shadowOpacity = 0.7

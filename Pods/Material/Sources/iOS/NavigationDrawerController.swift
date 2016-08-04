@@ -30,8 +30,8 @@
 
 import UIKit
 
-@objc
-public enum NavigationDrawerPosition: NSInteger {
+@objc(NavigationDrawerPosition)
+public enum NavigationDrawerPosition: Int {
 	case left
 	case right
 }
@@ -1022,7 +1022,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 			isStatusBarHidden = false
 			DispatchQueue.main.async { [weak self] in
 				if let s = self {
-					if let v = UIApplication.shared().keyWindow {
+					if let v = UIApplication.shared.keyWindow {
 						v.windowLevel = UIWindowLevelNormal
 						s.delegate?.navigationDrawerStatusBarHiddenState?(navigationDrawerController: s, hidden: false)
 					}
@@ -1038,7 +1038,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 				isStatusBarHidden = true
 				DispatchQueue.main.async { [weak self] in
 					if let s = self {
-						if let v = UIApplication.shared().keyWindow {
+						if let v = UIApplication.shared.keyWindow {
 							v.windowLevel = UIWindowLevelStatusBar + 1
 							s.delegate?.navigationDrawerStatusBarHiddenState?(navigationDrawerController: s, hidden: true)
 						}
