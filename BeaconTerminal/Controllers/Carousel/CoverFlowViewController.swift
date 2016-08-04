@@ -226,7 +226,6 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryBoard.CellIdentifier, for: indexPath) as! CoverFlowCell
         
         //use index to find species, then use group to find group and the latest entries for that species
-        
         //initialize the cell
         
         cell.relationshipViews.forEach({
