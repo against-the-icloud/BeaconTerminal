@@ -78,7 +78,7 @@ class PreferencesTableViewController: UITableViewController {
                 
                 if foundPreferences.count > 0 {
                     let preference = foundPreferences[0]
-                    try! realmDataController!.realm.write {                        
+                    try! realmDataController!.realm.write {
                         preference.type = cell.preferenceType!
                         preference.value = cell.textLabel?.text
                         preference.lastModified = NSDate() as Date

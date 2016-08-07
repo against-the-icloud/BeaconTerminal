@@ -1,23 +1,6 @@
 import Foundation
 import RealmSwift
 
-struct SpeciesRelationships {
-    static let PRODUCER = "producer"
-    static let CONSUMER = "consumer"
-    static let COMPLETES = "completes"
-    static let MUTUAL = "mutual"
-}
-
-struct Preferences {
-    static let trophicLevel = "trophic_level"
-    static let behaviors = "behaviors"
-    static let predationResistance = "predation_resistence"
-    static let heatSensitivity = "heat_sensitivity"
-    static let humditiySensitivity = "humidity_sensitivity"
-    static let habitatPreference = "habitat_preference"    
-}
-
-
 class Member: Object {
     dynamic var id : String? = nil
     dynamic var name : String? = nil
@@ -59,6 +42,13 @@ class SpeciesObservation: Object {
     
 }
 
+struct SpeciesRelationships {
+    static let PRODUCER = "producer"
+    static let CONSUMER = "consumer"
+    static let COMPLETES = "completes"
+    static let MUTUAL = "mutual"
+}
+
 class Relationship: Object {
     dynamic var id : String? = nil
     dynamic var note: String? = nil
@@ -73,6 +63,15 @@ class Relationship: Object {
         return "id"
     }
     
+}
+
+struct Preferences {
+    static let trophicLevel = "trophic_level"
+    static let behaviors = "behaviors"
+    static let predationResistance = "predation_resistence"
+    static let heatSensitivity = "heat_sensitivity"
+    static let humditiySensitivity = "humidity_sensitivity"
+    static let habitatPreference = "habitat_preference"
 }
 
 class Preference: Object {

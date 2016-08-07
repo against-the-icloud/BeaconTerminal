@@ -254,7 +254,7 @@
                                                             <outlet property="titleLabel" destination="9Pz-G5-gKr" id="fUa-Ga-jss"/>
                                                         </connections>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoT-Ru-e4G" userLabel="PreferencesView">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoT-Ru-e4G" userLabel="PreferencesView" customClass="PreferenceUIView" customModule="BeaconTerminal" customModuleProvider="target">
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3UV-md-Ig3" userLabel="OutlineView">
                                                                 <subviews>
@@ -269,30 +269,39 @@
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOY-Hj-SBh" userLabel="trophicAnswer">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOY-Hj-SBh" userLabel="trophicAnswer" customClass="PreferenceUILabel" customModule="BeaconTerminal" customModuleProvider="target">
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="trophic_level"/>
+                                                                                                </userDefinedRuntimeAttributes>
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Behaviors" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjK-1v-cHY" userLabel="behaviorHeader">
                                                                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWj-SC-Zqn" userLabel="behaviorAnswer">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWj-SC-Zqn" userLabel="behaviorAnswer" customClass="PreferenceUILabel" customModule="BeaconTerminal" customModuleProvider="target">
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="behaviors"/>
+                                                                                                </userDefinedRuntimeAttributes>
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Predation Resistance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kjk-UG-dWF" userLabel="predationHeader">
                                                                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xt-fN-hRH" userLabel="predationAnswer">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Xt-fN-hRH" userLabel="predationAnswer" customClass="PreferenceUILabel" customModule="BeaconTerminal" customModuleProvider="target">
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="predation_resistence"/>
+                                                                                                </userDefinedRuntimeAttributes>
                                                                                             </label>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -303,30 +312,39 @@
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCh-zw-8G9" userLabel="heatAnswer">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCh-zw-8G9" userLabel="heatAnswer" customClass="PreferenceUILabel" customModule="BeaconTerminal" customModuleProvider="target">
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="heat_sensitivity"/>
+                                                                                                </userDefinedRuntimeAttributes>
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity Sensitivity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxh-hF-Nn0" userLabel="humidHeader">
                                                                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK8-mx-NLK" userLabel="humidAnswer">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PK8-mx-NLK" userLabel="humidAnswer" customClass="PreferenceUILabel" customModule="BeaconTerminal" customModuleProvider="target">
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="humidity_sensitivity"/>
+                                                                                                </userDefinedRuntimeAttributes>
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Habitat Preference" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yoU-JS-Ivp" userLabel="habitatHeader">
                                                                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XON-c2-ixb" userLabel="habitatAnswer">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not ready to report." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XON-c2-ixb" userLabel="habitatAnswer" customClass="PreferenceUILabel" customModule="BeaconTerminal" customModuleProvider="target">
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="habitat_preference"/>
+                                                                                                </userDefinedRuntimeAttributes>
                                                                                             </label>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -395,6 +413,14 @@
                                                                 <real key="value" value="0.0"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <outletCollection property="preferenceLabels" destination="mOY-Hj-SBh" collectionClass="NSMutableArray" id="hfH-UD-lW8"/>
+                                                            <outletCollection property="preferenceLabels" destination="EWj-SC-Zqn" collectionClass="NSMutableArray" id="zpw-w3-eEU"/>
+                                                            <outletCollection property="preferenceLabels" destination="6Xt-fN-hRH" collectionClass="NSMutableArray" id="kJo-OM-q1g"/>
+                                                            <outletCollection property="preferenceLabels" destination="lCh-zw-8G9" collectionClass="NSMutableArray" id="Dqp-i6-d76"/>
+                                                            <outletCollection property="preferenceLabels" destination="PK8-mx-NLK" collectionClass="NSMutableArray" id="7WK-Lv-EVg"/>
+                                                            <outletCollection property="preferenceLabels" destination="XON-c2-ixb" collectionClass="NSMutableArray" id="CxL-BF-SIx"/>
+                                                        </connections>
                                                     </view>
                                                 </subviews>
                                                 <constraints>
@@ -459,6 +485,7 @@
             <connections>
                 <outlet property="expandButton" destination="9rT-PT-rXi" id="rJE-Iw-H1U"/>
                 <outlet property="preferenceEditButton" destination="OFz-Fg-7aN" id="TgO-ci-edX"/>
+                <outlet property="preferenceView" destination="RoT-Ru-e4G" id="aWf-Vn-6a0"/>
                 <outlet property="profileView" destination="vr0-UI-ayi" id="4iK-bo-p3h"/>
                 <outlet property="titleLabel" destination="Tpw-1U-0pq" id="2Co-VO-wsD"/>
                 <outletCollection property="relationshipViews" destination="hxN-EI-lGo" collectionClass="NSMutableArray" id="FEu-4x-79v"/>

@@ -13,8 +13,6 @@ import UIKit
     
     @IBInspectable var preferenceType: String?
     
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

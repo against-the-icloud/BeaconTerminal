@@ -52,6 +52,13 @@
 		70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */; };
 		70F29A541D57655E0057A497 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A531D57655E0057A497 /* GradientView.swift */; };
 		70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */; };
+		70F29A5A1D57D8200057A497 /* PreferenceUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A591D57D8200057A497 /* PreferenceUILabel.swift */; };
+		70F29A601D57DB820057A497 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5B1D57DB820057A497 /* Roboto-Bold.ttf */; };
+		70F29A611D57DB820057A497 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5C1D57DB820057A497 /* Roboto-Light.ttf */; };
+		70F29A621D57DB820057A497 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5D1D57DB820057A497 /* Roboto-Medium.ttf */; };
+		70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */; };
+		70F29A641D57DB820057A497 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */; };
+		70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A661D57E15F0057A497 /* PreferenceUIView.swift */; };
 		AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE090D311C747B85009C8468 /* GeoLocator.swift */; };
 		AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6021C3FEBC000DA4533 /* Utilities.swift */; };
 		AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */; };
@@ -123,6 +130,13 @@
 		70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTableViewController.swift; sourceTree = "<group>"; };
 		70F29A531D57655E0057A497 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientView.swift; path = ../Views/GradientView.swift; sourceTree = "<group>"; };
 		70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTableViewCell.swift; sourceTree = "<group>"; };
+		70F29A591D57D8200057A497 /* PreferenceUILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceUILabel.swift; sourceTree = "<group>"; };
+		70F29A5B1D57DB820057A497 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		70F29A5C1D57DB820057A497 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		70F29A5D1D57DB820057A497 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		70F29A661D57E15F0057A497 /* PreferenceUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceUIView.swift; sourceTree = "<group>"; };
 		AE090D311C747B85009C8468 /* GeoLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoLocator.swift; sourceTree = "<group>"; };
 		AE41A6021C3FEBC000DA4533 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconPlaceholderView.swift; sourceTree = "<group>"; };
@@ -207,6 +221,7 @@
 		70920D0C1CD57B3F001B582F /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				70F29A651D57DB8C0057A497 /* Fonts */,
 				704204201CE8E98B00C09FD0 /* Sounds */,
 				70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */,
 				70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */,
@@ -250,6 +265,41 @@
 				70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */,
 			);
 			path = ScratchPad;
+			sourceTree = "<group>";
+		};
+		70F29A571D57D7F60057A497 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */,
+				70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */,
+				70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */,
+				70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */,
+				70F29A591D57D8200057A497 /* PreferenceUILabel.swift */,
+				70F29A661D57E15F0057A497 /* PreferenceUIView.swift */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		70F29A581D57D8080057A497 /* Relationships */ = {
+			isa = PBXGroup;
+			children = (
+				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
+				70C487461D32A6DF004F103A /* RelationshipsUIView.swift */,
+				706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */,
+			);
+			name = Relationships;
+			sourceTree = "<group>";
+		};
+		70F29A651D57DB8C0057A497 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				70F29A5B1D57DB820057A497 /* Roboto-Bold.ttf */,
+				70F29A5C1D57DB820057A497 /* Roboto-Light.ttf */,
+				70F29A5D1D57DB820057A497 /* Roboto-Medium.ttf */,
+				70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */,
+				70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		766D0529C4FB0F9C31C2172B /* Pods */ = {
@@ -369,14 +419,9 @@
 				708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */,
 				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
 				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
-				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
-				70C487461D32A6DF004F103A /* RelationshipsUIView.swift */,
-				706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */,
+				70F29A581D57D8080057A497 /* Relationships */,
 				7070C4D41D4E77BA00AB47FF /* Popover.storyboard */,
-				70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */,
-				70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */,
-				70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */,
-				70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */,
+				70F29A571D57D7F60057A497 /* Preferences */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -444,17 +489,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70F29A621D57DB820057A497 /* Roboto-Medium.ttf in Resources */,
+				70F29A601D57DB820057A497 /* Roboto-Bold.ttf in Resources */,
 				70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */,
+				70F29A611D57DB820057A497 /* Roboto-Light.ttf in Resources */,
 				7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */,
 				70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */,
 				70A06DD31CE3F84D008FC11F /* click.wav in Resources */,
 				AE9764941C22C1BF0058A4DC /* Assets.xcassets in Resources */,
+				70F29A641D57DB820057A497 /* Roboto-Thin.ttf in Resources */,
 				70A06DD41CE3F84D008FC11F /* coin.wav in Resources */,
 				70A06DD61CE3FB54008FC11F /* tap.wav in Resources */,
 				708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */,
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
 				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
+				70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
 				708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */,
 			);
@@ -518,6 +568,7 @@
 				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
 				70D142691D414E2700A588B3 /* DragUtil.swift in Sources */,
 				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
+				70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */,
 				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */,
@@ -554,6 +605,7 @@
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
 				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
+				70F29A5A1D57D8200057A497 /* PreferenceUILabel.swift in Sources */,
 				70F29A541D57655E0057A497 /* GradientView.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,

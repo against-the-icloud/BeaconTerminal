@@ -31,6 +31,10 @@ class CoverFlowCell: UICollectionViewCell {
     
     @IBOutlet var relationshipViews: [RelationshipsUIView]!
     
+    
+    @IBOutlet weak var preferenceView: PreferenceUIView!
+    
+
     @IBOutlet weak var preferenceEditButton: UIButton!
     var isFullscreen : Bool = false {
         didSet {
@@ -79,6 +83,11 @@ class CoverFlowCell: UICollectionViewCell {
         self.profileView.image = speciesImage
         
 
+        //setup PreferenceView
+        
+        preferenceView.speciesObservation = self.speciesObservation
+        
+        //setup RelationshipView
         for relationshipView in relationshipViews {
             let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipView.relationshipType!)'")
             
