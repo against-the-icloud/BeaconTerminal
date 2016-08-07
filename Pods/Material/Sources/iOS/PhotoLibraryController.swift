@@ -28,36 +28,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-public extension Array where Element: Equatable {
-    /**
-     Slices a out a segment of an array based on the start
-     and end positions.
-     - Parameter start: A start index.
-     - Parameter end: An end index.
-     - Returns: A segmented array based on the start and end
-     indices.
-     */
-    public func slice(start: Int, end: Int?) -> [Element] {
-        var e = end ?? count - 1
-        if e >= count {
-            e = count - 1
-        }
-        
-        guard -1 < start else {
-            fatalError("Range out of bounds for \(start) - \(end), should be 0 - \(count).")
-        }
-        
-        var diff = abs(e - start)
-        guard count > diff else {
-            return self
-        }
-        
-        var ret = [Element]()
-        while -1 < diff {
-            ret.insert(self[start + diff], at: 0)
-            diff -= 1
-        }
-        
-        return ret
+import Photos
+
+public class PhotoLibraryController: UIViewController, PhotoLibraryDelegate {
+    /// A reference to a PhotoLibrary.
+    public private(set) var photoLibrary: PhotoLibrary!
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        preparePhotoLibrary()
+    }
+    
+    /// Prepares the photoLibrary.
+    private func preparePhotoLibrary() {
+        photoLibrary = PhotoLibrary()
+        photoLibrary.delegate = self
     }
 }

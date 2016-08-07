@@ -15,11 +15,7 @@ import MobileCoreServices
 class RelationshipDetailViewController: UIViewController {
     
     // Mark: variables
-    var speciesObservation: SpeciesObservation? {
-        didSet{
-            updateHeaderView()
-        }
-    }
+    var speciesObservation: SpeciesObservation?
     var ecosystemIndex: Int?
     var relationship: Relationship? = nil {
         didSet {
@@ -30,7 +26,7 @@ class RelationshipDetailViewController: UIViewController {
                     self.ecosystemIndex = -1
                 }
                 
-                updateHeaderView()
+               
                 
                 if let attachments = r.attachments {
                     self.attachments.append(attachments)
@@ -58,7 +54,6 @@ class RelationshipDetailViewController: UIViewController {
     @IBOutlet weak var fromSpecies: UIImageView!
     @IBOutlet weak var toSpecies: UIImageView!
     @IBOutlet weak var relationshipLabel: UILabel!
-    
     
     // Mark: init
     required init?(coder aDecoder: NSCoder) {
@@ -102,9 +97,7 @@ class RelationshipDetailViewController: UIViewController {
         evidenceImageView.layer.masksToBounds = true
         evidenceImageView.contentMode = .scaleAspectFit
         
-      
-        
-        
+        updateHeaderView()
     }
     
     func updateHeaderView() {
@@ -144,7 +137,6 @@ class RelationshipDetailViewController: UIViewController {
                 //nothing
                 return ""
             }
-            
         }
         return ""
     }

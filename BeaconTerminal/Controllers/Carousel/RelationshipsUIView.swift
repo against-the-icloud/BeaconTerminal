@@ -64,6 +64,11 @@ class RelationshipsUIView: UIView {
                     let speciesImage = RealmDataController.generateImageForSpecies(species.index)
                     dView.image = speciesImage
                     dView.species = species
+                    
+                    //random location
+                    let point = Util.generateRandomPoint(UInt32(size), minYValue: UInt32(size), UInt32(dropView.frame.size.width - CGFloat(size)), maxYValue: UInt32(dropView.frame.size.height - CGFloat(size)))
+                    dView.center = point
+                    
                     dropView.addSubview(dView)
                 }
                 

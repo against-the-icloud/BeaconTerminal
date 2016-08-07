@@ -49,6 +49,9 @@
 		70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3EF1CE652F400A0E752 /* MyImageView.swift */; };
 		70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F11CE6530200A0E752 /* ReticleView.swift */; };
 		70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */; };
+		70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */; };
+		70F29A541D57655E0057A497 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A531D57655E0057A497 /* GradientView.swift */; };
+		70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */; };
 		AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE090D311C747B85009C8468 /* GeoLocator.swift */; };
 		AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6021C3FEBC000DA4533 /* Utilities.swift */; };
 		AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */; };
@@ -117,6 +120,9 @@
 		70F0A3EF1CE652F400A0E752 /* MyImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView.swift; sourceTree = "<group>"; };
 		70F0A3F11CE6530200A0E752 /* ReticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReticleView.swift; sourceTree = "<group>"; };
 		70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadViewController.swift; sourceTree = "<group>"; };
+		70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTableViewController.swift; sourceTree = "<group>"; };
+		70F29A531D57655E0057A497 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientView.swift; path = ../Views/GradientView.swift; sourceTree = "<group>"; };
+		70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTableViewCell.swift; sourceTree = "<group>"; };
 		AE090D311C747B85009C8468 /* GeoLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoLocator.swift; sourceTree = "<group>"; };
 		AE41A6021C3FEBC000DA4533 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconPlaceholderView.swift; sourceTree = "<group>"; };
@@ -132,7 +138,7 @@
 		C0A7D004FC456D55A564307C /* nutella_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nutella_config.json; sourceTree = "<group>"; };
 		C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideViewController.swift; path = Main/SideViewController.swift; sourceTree = "<group>"; };
 		C0A7D0EA135DC06E087DD472 /* PlaceTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTerminalViewController.swift; sourceTree = "<group>"; };
-		C0A7D118835AC334A93CDE75 /* ToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
+		C0A7D118835AC334A93CDE75 /* ToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolbarView.swift; path = ../Views/ToolbarView.swift; sourceTree = "<group>"; };
 		C0A7D42A074C04107E1DC615 /* Base */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Base; path = BeaconTerminal/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C0A7D6AC0D72ADF2FA28B555 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
@@ -176,14 +182,6 @@
 			);
 			name = SupportFrameworks;
 			path = Storyboard;
-			sourceTree = "<group>";
-		};
-		704204171CE8E8C300C09FD0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		704204201CE8E98B00C09FD0 /* Sounds */ = {
@@ -287,7 +285,6 @@
 			children = (
 				70F0A3EA1CE6526000A0E752 /* ScratchPad */,
 				70920D091CD52C4F001B582F /* DataObjects */,
-				704204171CE8E8C300C09FD0 /* Views */,
 				70D62F871CFCF043006F6997 /* DragAndDrop */,
 				70920D0C1CD57B3F001B582F /* Support */,
 				AEC0A9391C86F6C700F88936 /* Estimote */,
@@ -334,6 +331,8 @@
 		C0A7D5E1CCBC3F9F3D7FF1EF /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
+				70F29A531D57655E0057A497 /* GradientView.swift */,
 				7099CDA11D0F99050037E56C /* Pulsator.swift */,
 				704204191CE8E94D00C09FD0 /* LoadingView.swift */,
 				70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */,
@@ -376,6 +375,8 @@
 				7070C4D41D4E77BA00AB47FF /* Popover.storyboard */,
 				70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */,
 				70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */,
+				70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */,
+				70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -533,6 +534,7 @@
 				70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */,
 				AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */,
 				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
+				70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */,
 				70E8F41F1D162E27007DF331 /* TempViewController.swift in Sources */,
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
@@ -552,6 +554,7 @@
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
 				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
+				70F29A541D57655E0057A497 /* GradientView.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
@@ -559,6 +562,7 @@
 				C0A7D3406B5149858C3801A4 /* TestUITableViewController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
 				C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */,
+				70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */,
 				C0A7DDEB47B86F12E4714985 /* PlaceTerminalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,16 @@ struct SpeciesRelationships {
     static let MUTUAL = "mutual"
 }
 
+struct Preferences {
+    static let trophicLevel = "trophic_level"
+    static let behaviors = "behaviors"
+    static let predationResistance = "predation_resistence"
+    static let heatSensitivity = "heat_sensitivity"
+    static let humditiySensitivity = "humidity_sensitivity"
+    static let habitatPreference = "habitat_preference"    
+}
+
+
 class Member: Object {
     dynamic var id : String? = nil
     dynamic var name : String? = nil
@@ -77,6 +87,11 @@ class Preference: Object {
         return "id"
     }
     
+    func configure(id: String, type: String, value: String) {
+        self.id = id
+        self.type = type
+        self.value = value
+    }
 }
 
 class NutellaConfig: Object {

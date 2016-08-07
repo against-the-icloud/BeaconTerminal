@@ -30,6 +30,24 @@ class Util {
         
     }
     
+    class func generateRandomPoint(_ minXValue: UInt32, minYValue: UInt32, _ maxXValue: UInt32, maxYValue: UInt32) -> CGPoint {
+        var rand_x = CGFloat(arc4random_uniform(maxXValue)) // maxXValue is a variable with your maximum possible x value
+        
+        if rand_x < CGFloat(minXValue) {
+            rand_x = CGFloat(minXValue)
+        }
+        
+        var rand_y = CGFloat(arc4random_uniform(maxYValue)) // maxYValue is a variable with your maximum possible y value
+
+        
+        if rand_y < CGFloat(minYValue) {
+            rand_y = CGFloat(minYValue)
+        }
+        
+        return CGPoint(x: rand_x, y: rand_y)
+        
+    }
+    
     class func getRandomColor() -> UIColor{
         let randomRed:CGFloat = CGFloat(drand48())
         let randomGreen:CGFloat = CGFloat(drand48())

@@ -82,6 +82,7 @@ class RealmDataController {
         let allEcosystems = group.simulationConfiguration!.ecosystems
         let allSpecies = group.simulationConfiguration!.species
         
+        
         for fromSpecies in allSpecies {
            // var makeRelationship : (String, Group) -> List<SpeciesObservation>
             let s : SpeciesObservation = createSpeciesObservation(fromSpecies, allSpecies: allSpecies, allEcosystems: allEcosystems)
@@ -91,6 +92,8 @@ class RealmDataController {
             
         return group
     }
+    
+    
     
     func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
      
@@ -117,6 +120,8 @@ class RealmDataController {
         let ecosystem = allEcosystems[0]
         speciesObservation.ecosystem = ecosystem
 
+        //create relationships
+        
         for i in 0...3 {
             
             let relationship = Relationship()
@@ -143,6 +148,53 @@ class RealmDataController {
             speciesObservation.relationships.append(relationship)
         }
         
+        //create preferences
+        let initalPreference = "Not ready to report"
+        
+        let trophicLevelPreference = Preference()
+        trophicLevelPreference.configure(id: UUID().uuidString, type: Preferences.trophicLevel, value: initalPreference)
+        
+        
+        //add(trophicLevelPreference,shouldUpdate: false)
+        
+        speciesObservation.preferences.append(trophicLevelPreference)
+        
+        let behavorsPreference = Preference()
+        behavorsPreference.configure(id: UUID().uuidString, type: Preferences.behaviors, value: initalPreference)
+        
+ //       add(behavorsPreference,shouldUpdate: false)
+        
+        speciesObservation.preferences.append(behavorsPreference)
+        
+        let predationPreference = Preference()
+        predationPreference.configure(id: UUID().uuidString, type: Preferences.predationResistance, value: initalPreference)
+        
+//        add(predationPreference,shouldUpdate: false)
+        
+        speciesObservation.preferences.append(predationPreference)
+        
+        let heatSensitivityPreference = Preference()
+        heatSensitivityPreference.configure(id: UUID().uuidString, type: Preferences.heatSensitivity, value: initalPreference)
+        
+        
+//        add(heatSensitivityPreference,shouldUpdate: false)
+        
+        speciesObservation.preferences.append(heatSensitivityPreference)
+        
+        let humiditySensistivityPreference = Preference()
+        humiditySensistivityPreference.configure(id: UUID().uuidString, type: Preferences.humditiySensitivity, value: initalPreference)
+        
+//        add(humiditySensistivityPreference,shouldUpdate: false)
+
+        speciesObservation.preferences.append(humiditySensistivityPreference)
+        
+        let habitatPreference = Preference()
+        habitatPreference.configure(id: UUID().uuidString, type: Preferences.habitatPreference, value: "")
+        
+//        add(humiditySensistivityPreference,shouldUpdate: false)
+
+        speciesObservation.preferences.append(habitatPreference)
+       
         return speciesObservation
     }
 

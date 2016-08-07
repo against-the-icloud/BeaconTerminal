@@ -61,9 +61,9 @@ class RelationshipDropView: DropTargetView {
                     subview.removeGestureRecognizer(recognizer)
                 }
             }
-            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.showRelationshipDetail(_:)))
+            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(RelationshipDropView.showRelationshipDetailTap(_:)))
             speciesView.addGestureRecognizer(tapGestureRecognizer)
-            rearrangeSpeciesViews()
+            //rearrangeSpeciesViews()
         }
     }
 
@@ -95,6 +95,7 @@ class RelationshipDropView: DropTargetView {
         
         dispatch_on_main {
             realmDataController?.updateSpeciesObservation(speciesImageView.species!, speciesObservation: self.speciesObservation!, relationshipType: self.relationshipType!)
+            self.showRelationshipDetail(sender: speciesImageView)
         }
         return true
     }
@@ -128,19 +129,28 @@ class RelationshipDropView: DropTargetView {
         
     }
     
-    func showRelationshipDetail(_ sender: UITapGestureRecognizer) {
-        let speciesView = sender.view as? DraggableSpeciesImageView
+    func showRelationshipDetailTap(_ sender: UITapGestureRecognizer) {
+        if (sender.view as? DraggableSpeciesImageView) != nil {
+            showRelationshipDetail(sender: sender.view as? DraggableSpeciesImageView)
+        }
         
-        if let delegate = self.delegate, let species = speciesView?.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
+    }
+    
+    func showRelationshipDetail(sender: DraggableSpeciesImageView?) {
+        
+        if let speciesView = sender, let delegate = self.delegate, let species = speciesView.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
             //filer all relationship with this type
             let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'").filter(using: "toSpecies.index = \(species.index)")
             
             //find relationships that have toSpecies equal to species.index
             if !foundRelationships.isEmpty {
-                delegate.presentRelationshipDetailView(sender.view as! DraggableSpeciesImageView, relationship: foundRelationships.first!, speciesObservation: speciesObservation)
-            }        
+                delegate.presentRelationshipDetailView(speciesView , relationship: foundRelationships.first!, speciesObservation: speciesObservation)
+            }
         }
     }
+    
+    
+    
     
     func highlight() {
         self.backgroundColor = Color.grey.lighten3

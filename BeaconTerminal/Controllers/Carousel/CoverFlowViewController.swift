@@ -186,7 +186,7 @@ extension CoverFlowViewController: UICollectionViewDelegateFlowLayout {
         let height   = sizeRect.size.height
         
         LOG.debug("* cell frame \(collectionView.cellForItem(at: indexPath)?.frame) \(collectionView.cellForItem(at: indexPath)?.bounds)")
-                    
+        
         LOG.debug("* width \(width) height \(height) \(totalWidth)")
         
         if width > 1024 {
@@ -378,50 +378,49 @@ extension CoverFlowViewController: UIScrollViewDelegate {
 extension CoverFlowViewController: PreferenceEditDelegate {
     
     func preferenceEdit(_ speciesObservation: SpeciesObservation, sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Popover", bundle: nil)
-        let navController = storyboard.instantiateViewController(withIdentifier: "preferencesNavigationController") as! UINavigationController
         
-        if let pvc = navController.viewControllers.first as? PreferencesViewController {
-            pvc.speciesObservation = speciesObservation
-        }
-        
-        let tintColor =  UIColor.init(rgba: speciesObservation.fromSpecies!.color)
-        navController.navigationBar.barTintColor = tintColor
-        let contrast = tintColor.fullContrastColorAdjusted
-        
-        if contrast.isLight {
-            navController.navigationBar.barStyle = .black
-            navController.navigationBar.tintColor = contrast
-        } else {
-            navController.navigationBar.barStyle = .default
-            navController.navigationBar.tintColor = contrast
-        }
-        
-        navController.navigationBar.hideBottomHairline()
-        navController.setToolbarHidden(false, animated: true)
-        navController.toolbar.barTintColor = tintColor
-        navController.toolbar.clipsToBounds = true
-        navController.modalPresentationStyle = .popover
-        
-        if let items = navController.toolbar.items {
-            for item in items {
-                item.tintColor =  contrast
+        if speciesObservation.fromSpecies != nil {
+            
+            let storyboard = UIStoryboard(name: "Popover", bundle: nil)
+            let navController = storyboard.instantiateViewController(withIdentifier: "preferencesNavigationController") as! UINavigationController
+            
+            
+            
+            let tintColor =  UIColor.init(rgba: speciesObservation.fromSpecies!.color)
+            navController.navigationBar.barTintColor = tintColor
+            
+            let contrast = tintColor.fullContrastColorAdjusted
+            
+            if contrast.isLight {
+                navController.navigationBar.barStyle = .black
+                navController.navigationBar.tintColor = contrast
+            } else {
+                navController.navigationBar.barStyle = .default
+                navController.navigationBar.tintColor = contrast
+            }
+            
+            navController.navigationBar.hideBottomHairline()
+            navController.setToolbarHidden(false, animated: true)
+            navController.toolbar.barTintColor = tintColor
+            navController.toolbar.clipsToBounds = true
+            navController.modalPresentationStyle = .popover
+            
+            if let pvc = navController.viewControllers.first as? PreferencesViewController {
+                pvc.speciesObservation = speciesObservation
+                pvc.updateTint(tintColor)
+            }
+            
+            self.present(navController, animated: true, completion: nil)
+            
+            if let pop = navController.popoverPresentationController {
+                pop.sourceView = sender
+                pop.sourceRect = sender.bounds
+                pop.delegate = self
+                pop.permittedArrowDirections = .any
+                navController.preferredContentSize = CGSize(width: 600, height: 612)
             }
         }
-        
-        self.present(navController, animated: true, completion: nil)
-        
-        if let pop = navController.popoverPresentationController {
-            pop.sourceView = sender
-            pop.sourceRect = sender.bounds
-            pop.backgroundColor = tintColor
-            pop.delegate = self
-            //pop.passthroughViews = allPassthroughViews
-            pop.permittedArrowDirections = .any
-            navController.preferredContentSize = CGSize(width: 700, height: 425)
-        }
     }
-    
 }
 
 extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
@@ -458,25 +457,22 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
                     for item in items {
                         item.tintColor =  contrast
                     }
-                    
                 }
                 
                 if let rvc = navController.viewControllers.first as? RelationshipDetailViewController {
-                    rvc.view.borderColor = tintColor
-                    rvc.view.borderWidth = 3.0
+                    rvc.title = "ADD \(relationship.relationshipType.uppercased()) RELATIONSHIP"
                     
                     rvc.speciesObservation = speciesObservation
                     rvc.relationship = relationship
                     rvc.sourceView = sender
                     
-                    rvc.updateTint(contrast)                                                        
+                    rvc.updateTint(contrast)
                     
                     self.present(navController, animated: true, completion: nil)
                     
                     if let pop = navController.popoverPresentationController {
                         pop.sourceView = sender
                         pop.sourceRect = sender.bounds
-                        pop.backgroundColor = tintColor
                         pop.delegate = self
                         pop.permittedArrowDirections = .any
                         navController.preferredContentSize = CGSize(width: 700, height: 425)
@@ -485,9 +481,11 @@ extension CoverFlowViewController: SpeciesRelationshipDetailDelegate {
             }
         }
     }
+    
 }
 
 extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
+    
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         let navController: UINavigationController = popoverPresentationController.presentedViewController as! UINavigationController
         if navController.viewControllers.first is RelationshipDetailViewController {
@@ -506,6 +504,7 @@ extension CoverFlowViewController: UIPopoverPresentationControllerDelegate {
     
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
     }
+    
 }
 
 

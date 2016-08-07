@@ -251,7 +251,7 @@ class SpeciesMenuViewController: UIViewController {
                         self.copyImageView!.removeFromSuperview()
                         
                         if t.addDraggableView(self.copyImageView!) {
-                            DragUtil.animateViewWithCompletion(copyImageView!, scale: self.dragScaleFactor-0.3, alpha: 1.0, duration: 0.3, completion: {
+                            DragUtil.animateViewWithCompletion(copyImageView!, scale: 1.0, alpha: 1.0, duration: 0.3, completion: {
                                 self.dragAndDropView?.removeFromSuperview()
                                 self.dragAndDropView = nil
                                 self.found = false

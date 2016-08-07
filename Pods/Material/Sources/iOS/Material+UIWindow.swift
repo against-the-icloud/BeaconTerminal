@@ -28,36 +28,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-public extension Array where Element: Equatable {
+import UIKit
+
+public extension UIWindow {
     /**
-     Slices a out a segment of an array based on the start
-     and end positions.
-     - Parameter start: A start index.
-     - Parameter end: An end index.
-     - Returns: A segmented array based on the start and end
-     indices.
+     Captures a screenshot of the contents in the apps keyWindow.
+     - Returns: An optional UIImage.
      */
-    public func slice(start: Int, end: Int?) -> [Element] {
-        var e = end ?? count - 1
-        if e >= count {
-            e = count - 1
-        }
-        
-        guard -1 < start else {
-            fatalError("Range out of bounds for \(start) - \(end), should be 0 - \(count).")
-        }
-        
-        var diff = abs(e - start)
-        guard count > diff else {
-            return self
-        }
-        
-        var ret = [Element]()
-        while -1 < diff {
-            ret.insert(self[start + diff], at: 0)
-            diff -= 1
-        }
-        
-        return ret
+    public func capture() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(frame.size, isOpaque, Device.scale)
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
