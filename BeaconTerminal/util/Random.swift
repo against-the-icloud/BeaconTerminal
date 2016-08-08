@@ -197,6 +197,10 @@ public struct Randoms {
     public static func randomFakeGroupName() -> String {
         return ["ECOSYSTEM 1","ECOSYSTEM 2","ECOSYSTEM 3","ECOSYSTEM 4","ECOSYSTEM 5"].randomItem()
     }
+    
+    public static func randomFakeGroups() -> [String] {
+        return ["ECOSYSTEM 1","ECOSYSTEM 2","ECOSYSTEM 3","ECOSYSTEM 4","ECOSYSTEM 5"]
+    }
 
     public static func randomFakeCreatureNames() -> String {
         return creatureNames().randomItem()

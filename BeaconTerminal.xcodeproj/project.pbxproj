@@ -59,6 +59,7 @@
 		70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */; };
 		70F29A641D57DB820057A497 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */; };
 		70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A661D57E15F0057A497 /* PreferenceUIView.swift */; };
+		70F29A691D582AAD0057A497 /* system_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A681D582AAD0057A497 /* system_configuration.json */; };
 		AE090D321C747B85009C8468 /* GeoLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE090D311C747B85009C8468 /* GeoLocator.swift */; };
 		AE41A6031C3FEBC000DA4533 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE41A6021C3FEBC000DA4533 /* Utilities.swift */; };
 		AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */; };
@@ -137,6 +138,7 @@
 		70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		70F29A661D57E15F0057A497 /* PreferenceUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceUIView.swift; sourceTree = "<group>"; };
+		70F29A681D582AAD0057A497 /* system_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = system_configuration.json; sourceTree = "<group>"; };
 		AE090D311C747B85009C8468 /* GeoLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoLocator.swift; sourceTree = "<group>"; };
 		AE41A6021C3FEBC000DA4533 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		AE5AC2511C29610600158445 /* BeaconPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconPlaceholderView.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */,
 				70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */,
 				70920D0D1CD57B54001B582F /* wallcology_configuration.json */,
+				70F29A681D582AAD0057A497 /* system_configuration.json */,
 				AE9764981C22C1BF0058A4DC /* Info.plist */,
 				AE9764BC1C22F4B80058A4DC /* ObjCBridge.h */,
 				C0A7D004FC456D55A564307C /* nutella_config.json */,
@@ -503,6 +506,7 @@
 				708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */,
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
 				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
+				70F29A691D582AAD0057A497 /* system_configuration.json in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,

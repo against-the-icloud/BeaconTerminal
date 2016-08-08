@@ -47,13 +47,13 @@ class PreferenceUIView: UIView {
         // Observe Results Notifications
         notificationToken = preferences?.addNotificationBlock { (changes: RealmCollectionChange) in
             switch changes {
-            case .Initial(let preferences):                                
+            case .Initial(let preferences):
                 //look up the preference
                 for p in preferences {
                     self.updateLabels(preference: p)
                 }
                 break
-            case .Update(let preferences, let deletions, let insertions, let modifications):
+            case .Update(let preferences, _, _, let modifications):
                 if !modifications.isEmpty {
                     
                     for index in modifications {

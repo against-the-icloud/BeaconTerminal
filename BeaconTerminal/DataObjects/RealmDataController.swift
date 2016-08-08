@@ -12,8 +12,7 @@ import RealmSwift
 class RealmDataController {
     
     let realm: Realm!
-    var currentGroup : Group?
-    var currentSection : String?
+    var systemConfiguration: SystemConfiguration?
     
     init(realm: Realm) {
         self.realm = realm
@@ -38,43 +37,224 @@ class RealmDataController {
     // Mark: Group
     
     func checkGroups() -> Bool {
-        let foundGroups = realm!.allObjects(ofType: Group.self)
-        
-        if foundGroups.count == 0 {
-            currentGroup = addTestGroup()
-            add(currentGroup!, shouldUpdate: false)
-            if DEBUG {
-                LOG.debug("Added Groups, not present")
-            }
-            return false
-        }
+//        let foundGroups = realm!.allObjects(ofType: Group.self)
+//        
+//        if foundGroups.count == 0 {
+//          //  currentGroup = addTestGroup()
+//            add(currentGroup!, shouldUpdate: false)
+//            if DEBUG {
+//                LOG.debug("Added Groups, not present")
+//            }
+//            return false
+//        }
         
         return true
         
     }
+    
+    //step 1. load system config
+    func loadSystemConfiguration() -> SystemConfiguration {
+        let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
+        let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
+        let json = JSON(data: jsonData!)
+        
+        let systemConfigruation = SystemConfiguration()
+        systemConfigruation.id = UUID().uuidString
+        systemConfigruation.last_modified = Date()
+        systemConfigruation.simulationConfiguration = loadSimulationConfiguration()
+        
+        self.systemConfiguration = systemConfigruation
+        
+        if let sections = json["sections"].array {
+            
+            for (_,sectionItem) in sections.enumerated() {
+                let section = Section()
+                
+                section.id = UUID().uuidString
+                section.last_modified = Date()
+                
+                if let name = sectionItem["name"].string {
+                    section.name = name
+                }
+                
+                if let teacher = sectionItem["teacher"].string {
+                    section.teacher = teacher
+                }
+                
+                //add system config
+                systemConfigruation.sections.append(section)
+                
+                if let groups = sectionItem["groups"].array {
+                    for (groupIndex,groupItem) in groups.enumerated() {
+                        
+                        let group = Group()
+                        group.id = UUID().uuidString
+                        
+                        if let name = groupItem["name"].string {
+                            group.name = name
+                        }
+                        
+                        group.index = groupIndex
+                        group.last_modified = Date()
+                        
+                        //add groups
+                        section.groups.append(group)
+                        
+                        if let groupMembers = groupItem["members"].array {
+                            for (_,memberItem) in groupMembers.enumerated() {
+                                
+                                let member = Member()
+                                member.id = UUID().uuidString
+                                member.name = memberItem.string
+                                member.last_modified = Date()
+                                
+                                //add members
+                                group.members.append(member)
+                                section.members.append(member)
+                            }
+                        }
+                        
+                        //create speciesObservation place holders for group
+                        prepareSpeciesObservations(for: group)
+                    }
+                }
+                
+            }
+        }
+        
+        add(systemConfigruation, shouldUpdate: false)
+     
+        return systemConfigruation
+    }
+    
+    //step 2. add empty speciesobservations
+    func prepareSpeciesObservations(for group: Group) {
+        if let simConfig = systemConfiguration?.simulationConfiguration  {
+            let allSpecies = simConfig.species
+            
+            //create a speciesObservation for each species
+            for fromSpecies in allSpecies {
+                // var makeRelationship : (String, Group) -> List<SpeciesObservation>
+                
+                let speciesObservation = SpeciesObservation()
+                speciesObservation.id = UUID().uuidString
+                speciesObservation.fromSpecies = fromSpecies
+                speciesObservation.lastModified = Date()
+                
+                preparePreferences(for: speciesObservation)
+                
+                group.speciesObservations.append(speciesObservation)
+            }
 
+        }
+    }
+    
+    //step 3. prepare preferences
+    func preparePreferences(for speciesObservation: SpeciesObservation) {
+        //create preferences
+        let initalPreference = "Not ready to report"
+        
+        let trophicLevelPreference = Preference()
+        trophicLevelPreference.configure(id: UUID().uuidString, type: Preferences.trophicLevel, value: initalPreference)
+        speciesObservation.preferences.append(trophicLevelPreference)
+        
+        let behavorsPreference = Preference()
+        behavorsPreference.configure(id: UUID().uuidString, type: Preferences.behaviors, value: initalPreference)
+        speciesObservation.preferences.append(behavorsPreference)
+        
+        let predationPreference = Preference()
+        predationPreference.configure(id: UUID().uuidString, type: Preferences.predationResistance, value: initalPreference)
+        speciesObservation.preferences.append(predationPreference)
+        
+        let heatSensitivityPreference = Preference()
+        heatSensitivityPreference.configure(id: UUID().uuidString, type: Preferences.heatSensitivity, value: initalPreference)
+        speciesObservation.preferences.append(heatSensitivityPreference)
+        
+        let humiditySensistivityPreference = Preference()
+        humiditySensistivityPreference.configure(id: UUID().uuidString, type: Preferences.humditiySensitivity, value: initalPreference)
+        speciesObservation.preferences.append(humiditySensistivityPreference)
+        
+        let habitatPreference = Preference()
+        habitatPreference.configure(id: UUID().uuidString, type: Preferences.habitatPreference, value: "")
+        
+        speciesObservation.preferences.append(habitatPreference)
+    }
+    
+    //step 4. populate data
+    func generateTestData() {
+        
+        if let simConfig = systemConfiguration {
+            
+            for section in simConfig.sections {
+                for group in section.groups {
+                    populateWithSpeciesObservationTestData(for: group)
+                }
+            }
+            
+        }
+        
+    }
+    
+    //populate speciesObservation with fake data
+    func populateWithSpeciesObservationTestData(for group: Group?) {
+        if let group = group, let simConfig = systemConfiguration?.simulationConfiguration  {
+            let allSpecies = simConfig.species
+            let allEcosystems = simConfig.ecosystems
+            
+            for so in group.speciesObservations {
+                so.realm?.beginWrite()
+                so.lastModified = Date()
+                for i in 0...3 {
+                    
+                    let relationship = Relationship()
+                    relationship.id = UUID().uuidString
+                    relationship.toSpecies = allSpecies[i+2]
+                    relationship.lastModified = Date()
+                    relationship.note = "hello"
+                    relationship.ecosystem = allEcosystems[Randoms.randomInt(0, 4)]
+                    
+                    
+                    switch i {
+                        //            case 0:
+                    //                relationship.relationshipType = SpeciesRelationships.MUTUAL
+                    case 0:
+                        relationship.relationshipType = SpeciesRelationships.PRODUCER
+                    case 1:
+                        relationship.relationshipType = SpeciesRelationships.CONSUMER
+                    case 3:
+                        relationship.relationshipType = SpeciesRelationships.COMPLETES
+                    default:
+                        relationship.relationshipType = SpeciesRelationships.CONSUMER
+                    }
+                    
+                    so.relationships.append(relationship)
+                }
+                
+                try! so.realm?.commitWrite()
+            }
+        }
+    }
+    
     
     func addTestGroup() -> Group {
-        let simulationConfiguration = createDefaultConfiguration()
-
+        let simulationConfiguration = loadSimulationConfiguration()
+        
         let group = Group()
         group.id = UUID().uuidString
-        group.groupTitle = Randoms.randomFakeGroupName()
+        group.name = Randoms.randomFakeGroupName()
         group.last_modified = Date()
         group.simulationConfiguration = simulationConfiguration
-
-
-        let teacher = "Jonna Jet"
-        currentSection = "6DF"
-
-
+        
+        
+//        let teacher = "Jonna Jet"
+        //currentSection = "6DF"
+        
+        
         //four members
         for _ in 0...3 {
             let member = Member()
             member.id = UUID().uuidString
             member.name = Randoms.randomFakeFirstName()
-            member.section = currentSection
-            member.teacher = teacher
             member.last_modified = Date()
             group.members.append(member)
         }
@@ -84,19 +264,18 @@ class RealmDataController {
         
         
         for fromSpecies in allSpecies {
-           // var makeRelationship : (String, Group) -> List<SpeciesObservation>
+            // var makeRelationship : (String, Group) -> List<SpeciesObservation>
             let s : SpeciesObservation = createSpeciesObservation(fromSpecies, allSpecies: allSpecies, allEcosystems: allEcosystems)
             group.speciesObservations.append(s)
         }
-
-            
+        
+        
         return group
     }
     
     
-    
+    //update species relationship
     func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
-     
         try! realm.write {
             let relationship = Relationship()
             relationship.id = NSUUID().uuidString
@@ -108,10 +287,10 @@ class RealmDataController {
             speciesObservation.relationships.append(relationship)
             self.realm.add(relationship, update: true)
         }
-
-     
     }
     
+
+
     func createSpeciesObservation(_ fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
         speciesObservation.id = UUID().uuidString
@@ -148,56 +327,11 @@ class RealmDataController {
             speciesObservation.relationships.append(relationship)
         }
         
-        //create preferences
-        let initalPreference = "Not ready to report"
         
-        let trophicLevelPreference = Preference()
-        trophicLevelPreference.configure(id: UUID().uuidString, type: Preferences.trophicLevel, value: initalPreference)
-        
-        
-        //add(trophicLevelPreference,shouldUpdate: false)
-        
-        speciesObservation.preferences.append(trophicLevelPreference)
-        
-        let behavorsPreference = Preference()
-        behavorsPreference.configure(id: UUID().uuidString, type: Preferences.behaviors, value: initalPreference)
-        
- //       add(behavorsPreference,shouldUpdate: false)
-        
-        speciesObservation.preferences.append(behavorsPreference)
-        
-        let predationPreference = Preference()
-        predationPreference.configure(id: UUID().uuidString, type: Preferences.predationResistance, value: initalPreference)
-        
-//        add(predationPreference,shouldUpdate: false)
-        
-        speciesObservation.preferences.append(predationPreference)
-        
-        let heatSensitivityPreference = Preference()
-        heatSensitivityPreference.configure(id: UUID().uuidString, type: Preferences.heatSensitivity, value: initalPreference)
-        
-        
-//        add(heatSensitivityPreference,shouldUpdate: false)
-        
-        speciesObservation.preferences.append(heatSensitivityPreference)
-        
-        let humiditySensistivityPreference = Preference()
-        humiditySensistivityPreference.configure(id: UUID().uuidString, type: Preferences.humditiySensitivity, value: initalPreference)
-        
-//        add(humiditySensistivityPreference,shouldUpdate: false)
-
-        speciesObservation.preferences.append(humiditySensistivityPreference)
-        
-        let habitatPreference = Preference()
-        habitatPreference.configure(id: UUID().uuidString, type: Preferences.habitatPreference, value: "")
-        
-//        add(humiditySensistivityPreference,shouldUpdate: false)
-
-        speciesObservation.preferences.append(habitatPreference)
-       
         return speciesObservation
     }
 
+    
     
     // Mark: Nutella
     
@@ -226,8 +360,6 @@ class RealmDataController {
         var nutellaConfigs = [NutellaConfig]()
 
         if let configs = json["configs"].array {
-            
-            
             for (_,item) in configs.enumerated() {
                 let nutellaConfig = NutellaConfig()
                                 
@@ -271,8 +403,6 @@ class RealmDataController {
                         
                     }
                 }
-                
-                
                 nutellaConfigs.append(nutellaConfig)
             }
         }
@@ -283,7 +413,7 @@ class RealmDataController {
 
     // Mark: Configuration
     
-    func createDefaultConfiguration() -> SimulationConfiguration {
+    func loadSimulationConfiguration() -> SimulationConfiguration {
         let path = Bundle.main.path(forResource: "wallcology_configuration", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
@@ -316,12 +446,6 @@ class RealmDataController {
                 }
                 
                 simulationConfiguration.ecosystems.append(ecosystem)
-                
-                // Persist your data easily
-//                try! realm!.write {
-//                    realm!.add(ecosystem)
-//                }
-                
             }
         }
         
@@ -344,15 +468,8 @@ class RealmDataController {
                 }
                 
                 species.name = Randoms.creatureNames()[index]
-                
-                
                 simulationConfiguration.species.append(species)
-                
-                // Persist your data easily
-//                try! realm!.write {
-//                    realm!.add(critter)
-//                }
-                
+
             }
             
         }
@@ -362,7 +479,7 @@ class RealmDataController {
     
     func createTestConfiguration() {
             try! realm!.write {
-                realm!.add(createDefaultConfiguration())
+                realm!.add(loadSystemConfiguration())
             }
     }
 

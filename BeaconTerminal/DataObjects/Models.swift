@@ -4,9 +4,21 @@ import RealmSwift
 class Member: Object {
     dynamic var id : String? = nil
     dynamic var name : String? = nil
-    dynamic var teacher : String? = nil
-    dynamic var section : String? = nil
     dynamic var last_modified = Date()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class Section: Object {
+    dynamic var id : String? = nil
+    dynamic var name : String? = nil
+    dynamic var teacher : String? = nil
+    dynamic var last_modified = Date()
+    
+    var members = List<Member>()
+    var groups = List<Group>()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -15,7 +27,8 @@ class Member: Object {
 
 class Group: Object {
     dynamic var id : String? = nil
-    dynamic var groupTitle : String? = nil
+    dynamic var name : String? = nil
+    dynamic var index = 0
     dynamic var last_modified = Date()
     dynamic var simulationConfiguration : SimulationConfiguration? = nil
     var members = List<Member>()
@@ -114,6 +127,24 @@ class Channel: Object {
     dynamic var name: String? = nil
 }
 
+class SystemConfiguration: Object {
+    dynamic var id : String? = nil
+    dynamic var last_modified = Date()
+    dynamic var simulationConfiguration : SimulationConfiguration? = nil
+    
+    let sections = List<Section>()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class Runtime: Object {
+    dynamic var currentGroup: Group? = nil
+    dynamic var currentSection: Section? = nil
+}
+
+
 class SimulationConfiguration: Object {
     dynamic var id : String? = nil
     dynamic var last_modified = Date()
@@ -181,9 +212,7 @@ extension Realm {
     }
     
     func critterWithIndex(_ index: Int) -> Species {
-        
         return allObjects(ofType: Species.self).filter(using: "index = \(index)")[0] as Species!
-        
     }
 }
 

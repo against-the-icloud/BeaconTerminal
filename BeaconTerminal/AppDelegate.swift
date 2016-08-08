@@ -6,7 +6,7 @@ import XCGLogger
 import Transporter
 
 let DEBUG = true
-let REFRESH_DB = false
+let REFRESH_DB = true
 
 // localhost || remote
 let HOST = "localhost"
@@ -158,6 +158,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
             //nutella config
             //            realmDataController?.checkNutellaConfigs()
            _ = realmDataController?.checkGroups()
+            if let symConfig = realmDataController?.loadSystemConfiguration() {
+                realmDataController?.generateTestData()
+                let section = symConfig.sections[1]
+                let group = section.groups[1]
+                let runtime = Runtime()
+                runtime.currentGroup = group
+                runtime.currentSection = section
+                realmDataController?.add(runtime, shouldUpdate: false)
+            }
         }
         
     }
@@ -241,17 +250,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     }
     
     func preparePlaceGroup() {
-        bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
-        
+//        bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.name)!, newSectionTitle: (realmDataController?.currentSection)!)
+//        
         
     }
     
     func prepareObjectGroup() {
         
-        if let group = realmDataController?.currentGroup {
-            bottomNavigationController.changeGroupAndSectionTitles(group.groupTitle, newSectionTitle: realmDataController?.currentSection)
-        }
-        
+//        if let group = realmDataController?.currentGroup {
+//            bottomNavigationController.changeGroupAndSectionTitles(group.name, newSectionTitle: realmDataController?.currentSection)
+//        }
+//        
         
     }
     

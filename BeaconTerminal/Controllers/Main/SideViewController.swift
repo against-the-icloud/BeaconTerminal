@@ -55,7 +55,7 @@ class SideViewController: UITableViewController {
                         animations: nil,
                         completion: {
                             [weak self] _ in
-                            bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
+//                            bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.name)!, newSectionTitle: (realmDataController?.currentSection)!)
 
                             self?.navigationDrawerController?.closeLeftView()
                         })
@@ -114,8 +114,8 @@ class SideViewController: UITableViewController {
                                                                              animations: nil,
                                                                              completion: {
                                                                                 [weak self] _ in
-                                                                                bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.groupTitle)!, newSectionTitle: (realmDataController?.currentSection)!)
-                                                                                
+//                                                                                bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.name)!, newSectionTitle: (realmDataController?.currentSection)!)
+//                                                                                
                                                                                 self?.navigationDrawerController?.closeLeftView()
                     })
 
