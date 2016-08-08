@@ -166,6 +166,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
                 runtime.currentGroup = group
                 runtime.currentSection = section
                 realmDataController?.add(runtime, shouldUpdate: false)
+                //update bottombar
+                bottomNavigationController.changeTitle(with: runtime.currentGroup, and: runtime.currentSection)
             }
         }
         
