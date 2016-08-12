@@ -140,8 +140,13 @@ class SystemConfiguration: Object {
 }
 
 class Runtime: Object {
+    dynamic var id : String? = nil
     dynamic var currentGroup: Group? = nil
     dynamic var currentSection: Section? = nil
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 

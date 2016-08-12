@@ -162,12 +162,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
                 realmDataController?.generateTestData()
                 let section = symConfig.sections[1]
                 let group = section.groups[1]
-                let runtime = Runtime()
-                runtime.currentGroup = group
-                runtime.currentSection = section
-                realmDataController?.add(runtime, shouldUpdate: false)
+             
+                realmDataController?.updateUser(withGroup: group, section: section)
                 //update bottombar
-                bottomNavigationController.changeTitle(with: runtime.currentGroup, and: runtime.currentSection)
+                //realmDataController?.updateBottomBar(withRuntime: runtime)
             }
         }
         

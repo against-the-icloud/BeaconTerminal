@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11173.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11185.3" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11143.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11151.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,21 +11,21 @@
             <objects>
                 <tableViewController storyboardIdentifier="testUITableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QHX-Us-3Wd" customClass="TestUITableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="m9o-rB-8xF">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
                             <tableViewSection headerTitle="Ecosystem Beacon Simulation" id="fid-Bb-B4X">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ECO1" textLabel="MWq-aH-tAm" style="IBUITableViewCellStyleDefault" id="JTI-Wc-tuK">
-                                        <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JTI-Wc-tuK" id="aBv-sM-JeW">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ecosystem 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MWq-aH-tAm">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -38,14 +38,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ECO2" textLabel="ANg-dg-c7u" style="IBUITableViewCellStyleDefault" id="GZd-yd-wsT">
-                                        <rect key="frame" x="0.0" y="72" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GZd-yd-wsT" id="W5K-4e-XGr">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ecosystem 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ANg-dg-c7u">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -58,14 +58,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ECO3" textLabel="8qN-9c-MQ6" style="IBUITableViewCellStyleDefault" id="9Nv-K4-YOI">
-                                        <rect key="frame" x="0.0" y="116" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="116" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Nv-K4-YOI" id="QBu-Dt-Vsp">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ecosystem 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8qN-9c-MQ6">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -78,14 +78,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ECO4" textLabel="dwY-vW-gQn" style="IBUITableViewCellStyleDefault" id="33u-IL-Q1R">
-                                        <rect key="frame" x="0.0" y="160" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="160" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="33u-IL-Q1R" id="no0-nl-eJ2">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ecosystem 4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dwY-vW-gQn">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -98,14 +98,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ECODIS" textLabel="jc4-fK-fUG" style="IBUITableViewCellStyleDefault" id="ciI-QZ-7R0">
-                                        <rect key="frame" x="0.0" y="204" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="204" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ciI-QZ-7R0" id="yxp-6v-d2C">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Simulate Ecosystem Disconnect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jc4-fK-fUG">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -122,14 +122,14 @@
                             <tableViewSection headerTitle="Species Beacon Simulation" id="cmM-rZ-JpS">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RANSPECIES" textLabel="FrT-cd-NJS" style="IBUITableViewCellStyleDefault" id="te2-xC-Mv8">
-                                        <rect key="frame" x="0.0" y="276" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="276" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="te2-xC-Mv8" id="lXo-pX-0mX">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Random Species" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FrT-cd-NJS">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -142,14 +142,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIESDIS" textLabel="JsF-Iu-ate" style="IBUITableViewCellStyleDefault" id="YjG-nj-O9v">
-                                        <rect key="frame" x="0.0" y="320" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="320" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YjG-nj-O9v" id="9me-Vp-jFW">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Disconnect Species" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JsF-Iu-ate">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -162,14 +162,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES0" textLabel="hCR-yb-76j" imageView="dct-Nm-cD5" style="IBUITableViewCellStyleDefault" id="HvI-Vn-lGz">
-                                        <rect key="frame" x="0.0" y="364" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="364" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HvI-Vn-lGz" id="57u-QZ-MGp">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hCR-yb-76j">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -179,21 +179,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="species_00" id="dct-Nm-cD5">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES1" textLabel="5YQ-sK-jxP" imageView="BIk-up-Dby" style="IBUITableViewCellStyleDefault" id="e9c-7C-RSE">
-                                        <rect key="frame" x="0.0" y="408" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="408" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e9c-7C-RSE" id="2kr-wP-I8M">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5YQ-sK-jxP">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -203,21 +203,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="species_01" id="BIk-up-Dby">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES2" textLabel="Qd4-G6-BJc" imageView="ocb-7N-dDw" style="IBUITableViewCellStyleDefault" id="DbP-cZ-Edb">
-                                        <rect key="frame" x="0.0" y="452" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="452" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DbP-cZ-Edb" id="YKh-dN-jIK">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qd4-G6-BJc">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -227,21 +227,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_02" id="ocb-7N-dDw">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES3" textLabel="H7h-eE-MwN" imageView="YAC-fT-RAa" style="IBUITableViewCellStyleDefault" id="MYj-x0-jkv">
-                                        <rect key="frame" x="0.0" y="496" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="496" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MYj-x0-jkv" id="Eh3-FW-44a">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H7h-eE-MwN">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -251,21 +251,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_03" id="YAC-fT-RAa">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES4" textLabel="y2h-GV-TCO" imageView="xra-8T-aOH" style="IBUITableViewCellStyleDefault" id="PPt-Ua-BQw">
-                                        <rect key="frame" x="0.0" y="540" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="540" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PPt-Ua-BQw" id="vuN-XP-ZCc">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y2h-GV-TCO">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -275,21 +275,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_04" id="xra-8T-aOH">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES5" textLabel="MGt-rA-it4" imageView="8qo-gO-yma" style="IBUITableViewCellStyleDefault" id="35S-zH-mar">
-                                        <rect key="frame" x="0.0" y="584" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="584" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="35S-zH-mar" id="MaC-de-n7C">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MGt-rA-it4">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -299,21 +299,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_05" id="8qo-gO-yma">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES6" textLabel="Byb-zL-BWC" imageView="DKN-hN-ToY" style="IBUITableViewCellStyleDefault" id="WA2-2E-fLv">
-                                        <rect key="frame" x="0.0" y="628" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="628" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WA2-2E-fLv" id="siC-I0-YkY">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Byb-zL-BWC">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -323,21 +323,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_06" id="DKN-hN-ToY">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES7" textLabel="YkT-Im-xr2" imageView="WQU-w0-AEL" style="IBUITableViewCellStyleDefault" id="WSZ-q7-dHR">
-                                        <rect key="frame" x="0.0" y="672" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="672" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WSZ-q7-dHR" id="KIH-O6-Qpp">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YkT-Im-xr2">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -347,21 +347,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_07" id="WQU-w0-AEL">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES8" textLabel="Pzw-iO-4bb" imageView="2EG-Iw-zUl" style="IBUITableViewCellStyleDefault" id="OTn-Yy-N5g">
-                                        <rect key="frame" x="0.0" y="716" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="716" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OTn-Yy-N5g" id="Yul-TL-JpS">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pzw-iO-4bb">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -371,21 +371,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_08" id="2EG-Iw-zUl">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SPECIES9" textLabel="edr-u3-Ode" imageView="jhB-mQ-JVN" style="IBUITableViewCellStyleDefault" id="rHM-5h-ebK">
-                                        <rect key="frame" x="0.0" y="760" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="760" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rHM-5h-ebK" id="Lyn-aQ-geC">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 9" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="edr-u3-Ode">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -395,21 +395,21 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_09" id="jhB-mQ-JVN">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="5Tm-N9-7FM" imageView="fkH-fQ-dTq" style="IBUITableViewCellStyleDefault" id="x1b-ke-R03">
-                                        <rect key="frame" x="0.0" y="804" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="804" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x1b-ke-R03" id="l18-S2-WNQ">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Species 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Tm-N9-7FM">
-                                                    <frame key="frameInset" minX="234" width="614" height="43"/>
+                                                    <frame key="frameInset" minX="405" width="614" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -419,7 +419,7 @@
                                                     </variation>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="species_10" id="fkH-fQ-dTq">
-                                                    <frame key="frameInset" minX="176" width="43" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="43" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -447,21 +447,21 @@
             <objects>
                 <tableViewController storyboardIdentifier="sideViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zmJ-ct-Y8s" customClass="SideViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="mt3-EB-IMU">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
                             <tableViewSection headerTitle="Place Condition" id="x45-u6-mlQ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="LF1-i4-ino" style="IBUITableViewCellStyleDefault" id="GXO-nV-VJ7">
-                                        <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GXO-nV-VJ7" id="7fj-3y-Uwi">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Place Group Tablet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LF1-i4-ino">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -474,14 +474,14 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="aVY-Ve-Gxf" style="IBUITableViewCellStyleDefault" id="L4f-dV-hNt">
-                                        <rect key="frame" x="0.0" y="72" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L4f-dV-hNt" id="YL7-Ar-q2P">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Place Terminal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aVY-Ve-Gxf">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -498,14 +498,14 @@
                             <tableViewSection headerTitle="Object Condition" id="QnP-TP-VVm">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="UAG-fR-7Qv" style="IBUITableViewCellStyleDefault" id="3KE-Mi-pRF">
-                                        <rect key="frame" x="0.0" y="144" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="144" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3KE-Mi-pRF" id="eO5-2n-khM">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Object Group Tablet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UAG-fR-7Qv">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -522,14 +522,14 @@
                             <tableViewSection headerTitle="Preferences" id="VDb-2S-HcW">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="JI6-kc-Qvs" style="IBUITableViewCellStyleDefault" id="qU3-tO-xxK">
-                                        <rect key="frame" x="0.0" y="216" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="216" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qU3-tO-xxK" id="ZQ3-Wv-wUJ">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Control Panel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JI6-kc-Qvs">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -542,14 +542,38 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="KSG-p2-bOc" style="IBUITableViewCellStyleDefault" id="p3s-zc-kmQ">
-                                        <rect key="frame" x="0.0" y="260" width="1024" height="44"/>
+                                        <rect key="frame" x="0.0" y="260" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p3s-zc-kmQ" id="T7J-yl-olH">
-                                            <frame key="frameInset" width="1024" height="43"/>
+                                            <frame key="frameInset" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KSG-p2-bOc">
-                                                    <frame key="frameInset" minX="176" width="672" height="43"/>
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Preferences" id="QdR-fa-MgL" userLabel="Groups">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="1Fw-g2-reu" style="IBUITableViewCellStyleDefault" id="Izb-J6-AcR">
+                                        <rect key="frame" x="0.0" y="332" width="1366" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Izb-J6-AcR" id="cgh-OZ-9JS">
+                                            <frame key="frameInset" width="1366" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Select Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1Fw-g2-reu" userLabel="Select Groups">
+                                                    <frame key="frameInset" minX="347" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -574,16 +598,16 @@
             </objects>
             <point key="canvasLocation" x="566" y="-500"/>
         </scene>
-        <!--Control Panel View Controller-->
+        <!--controlPanelViewController-->
         <scene sceneID="fSg-0L-m0f">
             <objects>
-                <viewController storyboardIdentifier="controlPanelViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NZw-lG-1XK" customClass="ControlPanelViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="controlPanelViewController" title="controlPanelViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NZw-lG-1XK" customClass="ControlPanelViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pat-DK-B53"/>
                         <viewControllerLayoutGuide type="bottom" id="fdg-yZ-r3y"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RZe-Qc-8Yx">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8K-VX-1h9">
@@ -613,16 +637,16 @@
             </objects>
             <point key="canvasLocation" x="572" y="351"/>
         </scene>
-        <!--MainViewController-->
+        <!--mainViewController-->
         <scene sceneID="Ir5-NE-vXh">
             <objects>
-                <viewController storyboardIdentifier="mainViewController" title="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oOh-3b-NoF" customClass="MainViewController" customModule="BeaconTerminal" customModuleProvider="target" colorLabel="IBBuiltInLabel-Blue" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainViewController" title="mainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oOh-3b-NoF" customClass="MainViewController" customModule="BeaconTerminal" customModuleProvider="target" colorLabel="IBBuiltInLabel-Blue" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DeB-CY-S1i"/>
                         <viewControllerLayoutGuide type="bottom" id="h9V-lq-TMD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9Ca-7k-s9V">
-                        <rect key="frame" x="0.0" y="64" width="1024" height="1302"/>
+                        <rect key="frame" x="0.0" y="64" width="1366" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDa-S0-USE">
@@ -673,16 +697,16 @@
             </objects>
             <point key="canvasLocation" x="-155.25" y="-1557"/>
         </scene>
-        <!--ScannerViewController-->
+        <!--scannerViewController-->
         <scene sceneID="qhC-lr-rh3">
             <objects>
-                <viewController storyboardIdentifier="scannerViewController" title="ScannerViewController" id="9Hj-2C-0Vm" customClass="ScannerViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scannerViewController" title="scannerViewController" id="9Hj-2C-0Vm" customClass="ScannerViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UBl-yK-UwO"/>
                         <viewControllerLayoutGuide type="bottom" id="n4h-EN-ePz"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="b9V-22-pdI">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJW-SH-Hth" userLabel="ScannerView">
@@ -761,16 +785,16 @@
             </objects>
             <point key="canvasLocation" x="-560" y="-38"/>
         </scene>
-        <!--ScratchPadViewController-->
+        <!--scratchPadViewController-->
         <scene sceneID="rdq-O7-bbq">
             <objects>
-                <viewController storyboardIdentifier="scratchPadViewController" title="ScratchPadViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ltJ-6y-lYV" customClass="ScratchPadViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scratchPadViewController" title="scratchPadViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ltJ-6y-lYV" customClass="ScratchPadViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UBP-kf-6G9"/>
                         <viewControllerLayoutGuide type="bottom" id="kZX-2Z-aam"/>
                     </layoutGuides>
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="zo7-vQ-0C7">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybn-aR-XV9" customClass="CanvasView" customModule="BeaconTerminal" customModuleProvider="target">

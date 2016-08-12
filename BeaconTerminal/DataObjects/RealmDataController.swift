@@ -33,22 +33,53 @@ class RealmDataController {
             self.realm.delete(realmObject)
         }
     }
-
+    
     // Mark: Group
     
     func checkGroups() -> Bool {
-//        let foundGroups = realm!.allObjects(ofType: Group.self)
-//        
-//        if foundGroups.count == 0 {
-//          //  currentGroup = addTestGroup()
-//            add(currentGroup!, shouldUpdate: false)
-//            if DEBUG {
-//                LOG.debug("Added Groups, not present")
-//            }
-//            return false
-//        }
+        //        let foundGroups = realm!.allObjects(ofType: Group.self)
+        //
+        //        if foundGroups.count == 0 {
+        //          //  currentGroup = addTestGroup()
+        //            add(currentGroup!, shouldUpdate: false)
+        //            if DEBUG {
+        //                LOG.debug("Added Groups, not present")
+        //            }
+        //            return false
+        //        }
         
         return true
+        
+    }
+    
+    
+
+    
+    
+    func updateUser(withGroup group: Group?, section: Section?) {
+        if let g = group, let s = section {
+                        
+            let runtimeObjs = realm.allObjects(ofType: Runtime.self)
+            for r in runtimeObjs {
+                LOG.debug("DELETE runtime obj \(r.id)")
+            }
+            //create a new one
+            
+            try! realm.write {                
+                realm.delete(realm.allObjects(ofType: Runtime.self))
+                
+                let runtime = Runtime()
+                runtime.id = UUID().uuidString
+                runtime.currentGroup = g
+                runtime.currentSection = s
+                realm.add(runtime)
+                
+                //update bottombar
+                
+                getAppDelegate().bottomNavigationController.changeTitle(with: group, and: s)
+            }
+        }
+        
         
     }
     
@@ -123,7 +154,7 @@ class RealmDataController {
         }
         
         add(systemConfigruation, shouldUpdate: false)
-     
+        
         return systemConfigruation
     }
     
@@ -145,7 +176,7 @@ class RealmDataController {
                 
                 group.speciesObservations.append(speciesObservation)
             }
-
+            
         }
     }
     
@@ -246,7 +277,7 @@ class RealmDataController {
         group.simulationConfiguration = simulationConfiguration
         
         
-//        let teacher = "Jonna Jet"
+        //        let teacher = "Jonna Jet"
         //currentSection = "6DF"
         
         
@@ -289,8 +320,8 @@ class RealmDataController {
         }
     }
     
-
-
+    
+    
     func createSpeciesObservation(_ fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
         speciesObservation.id = UUID().uuidString
@@ -298,7 +329,7 @@ class RealmDataController {
         speciesObservation.lastModified = Date()
         let ecosystem = allEcosystems[0]
         speciesObservation.ecosystem = ecosystem
-
+        
         //create relationships
         
         for i in 0...3 {
@@ -312,8 +343,8 @@ class RealmDataController {
             
             
             switch i {
-//            case 0:
-//                relationship.relationshipType = SpeciesRelationships.MUTUAL
+                //            case 0:
+            //                relationship.relationshipType = SpeciesRelationships.MUTUAL
             case 0:
                 relationship.relationshipType = SpeciesRelationships.PRODUCER
             case 1:
@@ -330,7 +361,7 @@ class RealmDataController {
         
         return speciesObservation
     }
-
+    
     
     
     // Mark: Nutella
@@ -351,18 +382,18 @@ class RealmDataController {
         
         return true
     }
-
+    
     func addNutellaConfigs() -> [NutellaConfig] {
         let path = Bundle.main.path(forResource: "nutella_config", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
         
         var nutellaConfigs = [NutellaConfig]()
-
+        
         if let configs = json["configs"].array {
             for (_,item) in configs.enumerated() {
                 let nutellaConfig = NutellaConfig()
-                                
+                
                 if let id = item["id"].string {
                     nutellaConfig.id = id
                 }
@@ -407,10 +438,10 @@ class RealmDataController {
             }
         }
         
-
+        
         return nutellaConfigs
     }
-
+    
     // Mark: Configuration
     
     func loadSimulationConfiguration() -> SimulationConfiguration {
@@ -469,7 +500,7 @@ class RealmDataController {
                 
                 species.name = Randoms.creatureNames()[index]
                 simulationConfiguration.species.append(species)
-
+                
             }
             
         }
@@ -478,33 +509,33 @@ class RealmDataController {
     }
     
     func createTestConfiguration() {
-            try! realm!.write {
-                realm!.add(loadSystemConfiguration())
-            }
+        try! realm!.write {
+            realm!.add(loadSystemConfiguration())
+        }
     }
-
+    
     // Mark: Species
     
     func findSpecies(_ speciesIndex: Int) -> Species? {
         let foundSpecies = realm!.allObjects(ofType: Species.self).filter(using:"index = \(speciesIndex)")[0] as Species!
         return foundSpecies
     }
-
+    
     static func generateImageFileNameFromIndex(_ index: Int) -> String {
         var imageName = ""
         if index < 10 {
-
+            
             imageName = "species_0\(index).png"
         } else {
-
+            
             imageName = "species_\(index).png"
         }
         return imageName
     }
-
+    
     static func generateImageForSpecies(_ index: Int) -> UIImage? {
         let imageName = self.generateImageFileNameFromIndex(index)
         return UIImage(named: imageName)
     }
-
+    
 }

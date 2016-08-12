@@ -162,9 +162,26 @@ class SideViewController: UITableViewController {
             default:
                 break
             }
+        } else if (indexPath as NSIndexPath).section == 3 {
+            switch (indexPath as NSIndexPath).row {
+            case 0:
+                //control panel
+                let storyboard = UIStoryboard(name: "Popover", bundle: nil)
+                let loginNavigationController = storyboard.instantiateViewController(withIdentifier: "loginNavigationController") as! UINavigationController
+                
+                self.present(loginNavigationController, animated: true, completion: {})
+                
+            default:
+                break
+            }
         }
 
 
+
+    }
+    
+    @IBAction func unwindToSideMenu(segue: UIStoryboardSegue) {
+        self.navigationDrawerController?.closeLeftView()
     }
 
 }

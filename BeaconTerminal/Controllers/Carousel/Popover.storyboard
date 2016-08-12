@@ -264,7 +264,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="700" height="425"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UTz-Nt-Nvv">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UTz-Nt-Nvv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -289,7 +289,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="612"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="p0Q-b8-1Ta">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="p0Q-b8-1Ta">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -362,6 +362,153 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5m-aK-0Ay" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="338" y="-1090"/>
+        </scene>
+        <!--LoginTableViewController-->
+        <scene sceneID="TkQ-H6-cU8">
+            <objects>
+                <tableViewController storyboardIdentifier="loginTableViewController" title="LoginTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nK8-fl-NS3" customClass="LoginSectionTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="KAS-w0-I7o">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="660"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sectionCell" textLabel="CDu-8u-OmH" style="IBUITableViewCellStyleDefault" id="Est-Os-GvT">
+                                <frame key="frameInset" minY="28" width="1024" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Est-Os-GvT" id="mcx-rD-wcD">
+                                    <frame key="frameInset" width="1024" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CDu-8u-OmH">
+                                            <frame key="frameInset" minX="176" width="672" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="tO7-uH-CHh" kind="show" identifier="groupSegue" id="jeJ-lw-4yF"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nK8-fl-NS3" id="llC-Pz-8nM"/>
+                            <outlet property="delegate" destination="nK8-fl-NS3" id="N1P-rn-Ylh"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Cancel" id="vm3-XC-E5W">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="nK8-fl-NS3" id="h1w-rX-J6B"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zRx-Bv-p3T"/>
+                        <barButtonItem title="Select" id="yzE-61-XyJ">
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Choose Your Class" id="ZuM-dR-zCZ">
+                        <barButtonItem key="backBarButtonItem" title="back" id="szI-Ig-5v9">
+                            <color key="tintColor" red="1" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <connections>
+                        <segue destination="utf-P3-meK" kind="unwind" identifier="unwindToSideMenu" unwindAction="unwindToSideMenuWithSegue:" id="Gkq-Ti-onY"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xeR-w5-oBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="utf-P3-meK" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="735" y="178"/>
+        </scene>
+        <!--LoginNavigationController-->
+        <scene sceneID="P5h-w4-Z3b">
+            <objects>
+                <navigationController storyboardIdentifier="loginNavigationController" title="LoginNavigationController" modalPresentationStyle="formSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="Hs1-HZ-BNG" sceneMemberID="viewController">
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1024" height="768"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aQs-ja-HPW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1019607843" green="0.1019607843" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="g3d-sr-aYf">
+                        <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="nK8-fl-NS3" kind="relationship" relationship="rootViewController" id="Uwa-B7-G8J"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="thV-7o-X7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-696" y="14"/>
+        </scene>
+        <!--Login Group Table View Controller-->
+        <scene sceneID="7QH-Rf-I6Z">
+            <objects>
+                <tableViewController storyboardIdentifier="loginGroupTableController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tO7-uH-CHh" customClass="LoginGroupTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="c7B-MU-jWQ">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="660"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupCell" textLabel="nSv-pS-6jx" style="IBUITableViewCellStyleDefault" id="1JY-9u-keM">
+                                <frame key="frameInset" minY="28" width="1024" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1JY-9u-keM" id="RzZ-PX-2Ns">
+                                    <frame key="frameInset" width="1024" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nSv-pS-6jx">
+                                            <frame key="frameInset" minX="176" width="672" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="tO7-uH-CHh" id="KXJ-VV-85K"/>
+                            <outlet property="delegate" destination="tO7-uH-CHh" id="icR-7P-LS4"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Cancel" id="CVu-yN-J4i">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="tO7-uH-CHh" id="zPf-Oj-AVE"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ur0-TF-QHa"/>
+                        <barButtonItem title="Select" id="4aX-mF-mjw">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="selectGroupAction:" destination="tO7-uH-CHh" id="tPl-Gf-VEW"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <segue destination="Dik-O2-Jyv" kind="unwind" identifier="unwindToSideMenu" unwindAction="unwindToSideMenuWithSegue:" id="NTN-H4-Jzg"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GnL-7b-XWG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Dik-O2-Jyv" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2538" y="177"/>
         </scene>
         <!--Preferences Table View Controller-->
         <scene sceneID="tqZ-Cl-1Wy">

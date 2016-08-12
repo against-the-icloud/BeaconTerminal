@@ -3,6 +3,8 @@ import UIKit
 
 class Util {
     
+    static let flatBlack: UIColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.00)
+    
     class func classNameAsString(_ obj: Any) -> String {
         return String(obj.dynamicType).components(separatedBy: "__").last!
     }

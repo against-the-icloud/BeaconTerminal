@@ -69,22 +69,7 @@ public class Material {
     }
     
     /// A preset property to set the shape.
-    public var shapePreset: ShapePreset = .none {
-        didSet {
-            guard let v = view else {
-                return
-            }
-            
-            if .none != shapePreset {
-                if v.width < v.height {
-                    v.frame.size.width = v.height
-                } else {
-                    v.frame.size.height = v.width
-                }
-                v.layoutShadowPath()
-            }
-        }
-    }
+    public var shapePreset: ShapePreset = .none
     
     /// A preset value for Depth.
     public var depthPreset: DepthPreset {
@@ -111,7 +96,7 @@ public class Material {
     }
     
     /// Enables automatic shadowPath sizing.
-    public var isShadowPathAutoSizing: Bool = true {
+    public var isShadowPathAutoSizing: Bool = false {
         didSet {
             if isShadowPathAutoSizing {
                 view?.layoutShadowPath()
@@ -124,7 +109,7 @@ public class Material {
 private var MaterialKey: UInt8 = 0
 
 /// Grid extension for UIView.
-public extension UIView {
+extension UIView {
     /// Material Reference.
     internal var material: Material {
         get {
@@ -137,53 +122,65 @@ public extension UIView {
         }
     }
     
-    /// A property that accesses the layer.frame.origin.x property.
+    /// A property that accesses the frame.origin.x property.
     @IBInspectable
     public var x: CGFloat {
         get {
-            return layer.frame.origin.x
+            return frame.origin.x
         }
         set(value) {
-            layer.frame.origin.x = value
+            frame.origin.x = value
+            
+            layoutShadowPath()
         }
     }
     
-    /// A property that accesses the layer.frame.origin.y property.
+    /// A property that accesses the frame.origin.y property.
     @IBInspectable
     public var y: CGFloat {
         get {
-            return layer.frame.origin.y
+            return frame.origin.y
         }
         set(value) {
-            layer.frame.origin.y = value
+            frame.origin.y = value
+            
+            layoutShadowPath()
         }
     }
     
-    /// A property that accesses the layer.frame.size.width property.
+    /// A property that accesses the frame.size.width property.
     @IBInspectable
     public var width: CGFloat {
         get {
-            return layer.frame.size.width
+            return frame.size.width
         }
         set(value) {
-            layer.frame.size.width = value
+            frame.size.width = value
+            
             if .none != shapePreset {
-                layer.frame.size.height = value
+                frame.size.height = value
+                layoutShape()
             }
+            
+            layoutShadowPath()
         }
     }
     
-    /// A property that accesses the layer.frame.size.height property.
+    /// A property that accesses the frame.size.height property.
     @IBInspectable
     public var height: CGFloat {
         get {
-            return layer.frame.size.height
+            return frame.size.height
         }
         set(value) {
-            layer.frame.size.height = value
+            frame.size.height = value
+            
             if .none != shapePreset {
-                layer.frame.size.width = value
+                frame.size.width = value
+                layoutShape()
             }
+            
+            layoutShadowPath()
         }
     }
     
@@ -198,6 +195,7 @@ public extension UIView {
         }
         set(value) {
             material.shapePreset = value
+            
             layoutShape()
             layoutShadowPath()
         }
@@ -291,9 +289,11 @@ public extension UIView {
         }
         set(value) {
             layer.cornerRadius = value
-            layoutShadowPath()
+            
             if .circle == shapePreset {
                 shapePreset = .none
+            } else {
+                layoutShadowPath()
             }
         }
     }
@@ -400,11 +400,16 @@ public extension UIView {
     
     /// Manages the layout for the shape of the view instance.
     public func layoutShape() {
-        if .circle == shapePreset {
-            let w: CGFloat = (width / 2)
-            if w != cornerRadius {
-                cornerRadius = w
+        if .none != shapePreset {
+            if width < height {
+                frame.size.width = height
+            } else if width > height {
+                frame.size.height = width
             }
+        }
+        
+        if .circle == shapePreset {
+            layer.cornerRadius = width / 2
         }
     }
     

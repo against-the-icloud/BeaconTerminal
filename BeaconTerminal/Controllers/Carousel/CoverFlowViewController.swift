@@ -20,7 +20,6 @@ class CoverFlowViewController: UIViewController {
     
     var notificationToken: NotificationToken? = nil
     
-    var dataArray: [String] = []
     var currentGroup: Group?
     let groupId = 0
     var allSpecies: Results<Species>?
@@ -54,6 +53,16 @@ class CoverFlowViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
+    func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
+        self.runtimeResults = runtimeResults
+        
+        if runtimeResults[0].currentGroup != nil {
+            currentGroup = runtimeResults[0].currentGroup
+            guard let collectionView = self.collectionView else { return }
+            collectionView.reloadData()
+        }
+    }
+    
     func loadData() {
         //load test group
         
@@ -62,24 +71,14 @@ class CoverFlowViewController: UIViewController {
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
+            
+            guard let coverFlowController = self else { return }            
             switch changes {
             case .Initial(let runtimeResults):
-                
-                if runtimeResults[0].currentGroup != nil {
-                    self?.currentGroup = runtimeResults[0].currentGroup
-                    collectionView.reloadData()
-                }
-                // Results are now populated and can be accessed without blocking the UI
-                
+                coverFlowController.updateUI(withRuntimeResults: runtimeResults)
                 break
-            case .Update(_, let deletions, let insertions, let modifications):
-                // Query results have changed, so apply them to the UITableView
-//                collectionView.performBatchUpdates({
-//                    collectionView.insertItemsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) })
-//                    collectionView.deleteItemsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) })
-//                    collectionView.reloadItemsAtIndexPaths(modifications.map { NSIndexPath(forRow: $0, inSection: 0) })
-//                    }, completion: { _ in })
+            case .Update(let runtimeResults, _, _, _):
+                coverFlowController.updateUI(withRuntimeResults: runtimeResults)
                 break
             case .Error(let error):
                 // An error occurred while opening the Realm file on the background worker thread

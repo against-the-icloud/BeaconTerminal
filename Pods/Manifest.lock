@@ -36,14 +36,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: ccc5156120f98a96d2e7f7c21a3f91f386f4cb8b
+    :commit: 898337570cae7502c3a7e65e65bfdef652b0b8f7
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :commit: 05ca7aad2b74ab9a5e1de11e0f9cbd4598f05458
+    :commit: 835a8840faece9ae575add1e836b9ada5d8c7064
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :commit: 05ca7aad2b74ab9a5e1de11e0f9cbd4598f05458
+    :commit: 835a8840faece9ae575add1e836b9ada5d8c7064
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   Transporter:
@@ -54,7 +54,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/alexiosdev/XCGLogger.git
 
 SPEC CHECKSUMS:
-  Material: 437cd15bddb544bb0f41ba24215351038e565a1d
+  Material: 61dcd49507c32d07c1557267ec360ce35bd0b1c5
   Realm: 97aac1f75da832fce7d5fc89ffebee770b32997f
   RealmSwift: 4816c8608630a9a00bba6d726bb30b4bab6dd6bf
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63

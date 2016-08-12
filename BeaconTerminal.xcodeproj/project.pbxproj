@@ -11,6 +11,7 @@
 		700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */; };
 		701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */; };
 		702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCA3A1CE1A527000B6EDE /* BeaconID.swift */; };
+		70389A091D5CEDE6005DF200 /* LoginGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70389A081D5CEDE6005DF200 /* LoginGroupTableViewController.swift */; };
 		70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */; };
@@ -30,6 +31,7 @@
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
+		70C1CF361D592E2800CB687E /* LoginSectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionTableViewController.swift */; };
 		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D142691D414E2700A588B3 /* DragUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D142681D414E2700A588B3 /* DragUtil.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
@@ -90,6 +92,7 @@
 		700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		702DCA3A1CE1A527000B6EDE /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
+		70389A081D5CEDE6005DF200 /* LoginGroupTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupTableViewController.swift; path = Login/LoginGroupTableViewController.swift; sourceTree = "<group>"; };
 		70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesMenuViewController.swift; path = BeaconTerminal/Controllers/SpeciesMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
 		705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBottomNavigationController.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
+		70C1CF351D592E2800CB687E /* LoginSectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionTableViewController.swift; path = Login/LoginSectionTableViewController.swift; sourceTree = "<group>"; };
 		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
 		70D142681D414E2700A588B3 /* DragUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragUtil.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -234,6 +238,15 @@
 				C0A7D004FC456D55A564307C /* nutella_config.json */,
 			);
 			name = Support;
+			sourceTree = "<group>";
+		};
+		70C1CF341D592DEB00CB687E /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				70C1CF351D592E2800CB687E /* LoginSectionTableViewController.swift */,
+				70389A081D5CEDE6005DF200 /* LoginGroupTableViewController.swift */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		70D62F871CFCF043006F6997 /* DragAndDrop */ = {
@@ -373,6 +386,7 @@
 		C0A7D28976CF55BCDC92A3AB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				70C1CF341D592DEB00CB687E /* Login */,
 				C0A7DAF922A5401E5A9F4885 /* Main */,
 				70E8F41A1D162CA8007DF331 /* Setup */,
 				C0A7DC783C6B08701103D5EF /* Carousel */,
@@ -574,6 +588,7 @@
 				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
 				70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */,
 				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				70C1CF361D592E2800CB687E /* LoginSectionTableViewController.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				AE5AC2521C29610600158445 /* BeaconPlaceholderView.swift in Sources */,
 				702DCA3B1CE1A527000B6EDE /* BeaconID.swift in Sources */,
@@ -605,6 +620,7 @@
 				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
+				70389A091D5CEDE6005DF200 /* LoginGroupTableViewController.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,

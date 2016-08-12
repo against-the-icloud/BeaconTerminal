@@ -16,15 +16,38 @@ class AppBottomNavigationController: BottomNavigationController {
         }
     }
     
+    
+    /**
+     An initializer that initializes the object with a NSCoder object.
+     - Parameter aDecoder: A NSCoder instance.
+     */
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    /**
+     An initializer that initializes the object with an Optional nib and bundle.
+     - Parameter nibNameOrNil: An Optional String for the nib.
+     - Parameter bundle: An Optional NSBundle where the nib is located.
+     */
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public override init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        prepareNavigationItem()
+        prepareNotification()
     }
     
     override func prepareView() {
         super.prepareView()
-        prepareNavigationItem()
-        prepareNotification()
+        
     }
     
     /// Handles the menuButton.
@@ -40,30 +63,28 @@ class AppBottomNavigationController: BottomNavigationController {
     }
     
     
+    
     func prepareNotification() {
         
         runtimeResults = realmDataController?.realm.allObjects(ofType: Runtime.self)
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let bottomNav = self else { return }
+
+            
             switch changes {
             case .Initial(let runtimeResults):
                 
-                if runtimeResults[0].currentGroup != nil {
-                    let group = runtimeResults[0].currentGroup
-                    let section = runtimeResults[0].currentSection
-                    self?.changeTitle(with: group, and: section)
-                }
+                bottomNav.updateUI(withRuntimeResults: runtimeResults)
                 // Results are now populated and can be accessed without blocking the UI
                 
                 break
-            case .Update(_, let deletions, let insertions, let modifications):
-                // Query results have changed, so apply them to the UITableView
-                //                collectionView.performBatchUpdates({
-                //                    collectionView.insertItemsAtIndexPaths(insertions.map { NSIndexPath(forRow: $0, inSection: 0) })
-                //                    collectionView.deleteItemsAtIndexPaths(deletions.map { NSIndexPath(forRow: $0, inSection: 0) })
-                //                    collectionView.reloadItemsAtIndexPaths(modifications.map { NSIndexPath(forRow: $0, inSection: 0) })
-                //                    }, completion: { _ in })
+            case .Update(let runtimeResults, _, _, _):
+                
+                bottomNav.updateUI(withRuntimeResults: runtimeResults)
+                
                 break
             case .Error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -73,11 +94,18 @@ class AppBottomNavigationController: BottomNavigationController {
         }
     }
     
+    func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
+        self.runtimeResults = runtimeResults
+        
+        if runtimeResults[0].currentGroup != nil {
+            let group = runtimeResults[0].currentGroup
+            let section = runtimeResults[0].currentSection
+            changeTitle(with: group, and: section)
+        }
+    }
+    
+    
     func changeTitle(with group: Group?, and section: Section?) {
-        
-        
-        
-        
         if let g = group, let gt = g.name, let ns = section?.name {
             
             if g.members.count > 0 {

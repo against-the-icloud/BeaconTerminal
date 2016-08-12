@@ -1,38 +1,38 @@
 /*
-* Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*	*	Redistributions of source code must retain the above copyright notice, this
-*		list of conditions and the following disclaimer.
-*
-*	*	Redistributions in binary form must reproduce the above copyright notice,
-*		this list of conditions and the following disclaimer in the documentation
-*		and/or other materials provided with the distribution.
-*
-*	*	Neither the name of CosmicMind nor the names of its
-*		contributors may be used to endorse or promote products derived from
-*		this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *	*	Redistributions of source code must retain the above copyright notice, this
+ *		list of conditions and the following disclaimer.
+ *
+ *	*	Redistributions in binary form must reproduce the above copyright notice,
+ *		this list of conditions and the following disclaimer in the documentation
+ *		and/or other materials provided with the distribution.
+ *
+ *	*	Neither the name of CosmicMind nor the names of its
+ *		contributors may be used to endorse or promote products derived from
+ *		this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 import UIKit
 
 @objc(GridAxisDirection)
 public enum GridAxisDirection: Int {
-    case none
+    case any
     case horizontal
     case vertical
 }
@@ -199,45 +199,55 @@ public class Grid {
             let gc = axis.inherited ? columns : axis.columns
             let gr = axis.inherited ? rows : axis.rows
             var n: Int = 0
+            
             for i in 0..<v.count {
-                let child: UIView = v[i]
-                if let parent: UIView = context {
+                let child = v[i]
+                
+                if let parent = context {
                     if parent != child.superview {
                         child.removeFromSuperview()
                         parent.addSubview(child)
                     }
+                    
                     parent.layoutIfNeeded()
+                    
                     switch axis.direction {
                     case .horizontal:
-                        let w = (parent.bounds.width - contentInset.left - contentInset.right - layoutInset.left - layoutInset.right + interimSpace) / CGFloat(gc)
                         let c = child.grid.columns
                         let co = child.grid.offset.columns
-                        let vh = parent.bounds.height - contentInset.top - contentInset.bottom - layoutInset.top - layoutInset.bottom
-                        let vl = CGFloat(i + n + co) * w + contentInset.left + layoutInset.left
-                        let vw = w * CGFloat(c) - interimSpace
-                        child.frame = CGRect(x: vl, y: contentInset.top + layoutInset.top, width: vw, height: vh)
+                        let w = (parent.bounds.width - contentInset.left - contentInset.right - layoutInset.left - layoutInset.right + interimSpace) / CGFloat(gc)
+                        
+                        child.x = CGFloat(i + n + co) * w + contentInset.left + layoutInset.left
+                        child.y = contentInset.top + layoutInset.top
+                        child.width = w * CGFloat(c) - interimSpace
+                        child.height = parent.bounds.height - contentInset.top - contentInset.bottom - layoutInset.top - layoutInset.bottom
+                        
                         n += c + co - 1
+                        
                     case .vertical:
-                        let h = (parent.bounds.height - contentInset.top - contentInset.bottom - layoutInset.top - layoutInset.bottom + interimSpace) / CGFloat(gr)
                         let r = child.grid.rows
                         let ro = child.grid.offset.rows
-                        let vw = parent.bounds.width - contentInset.left - contentInset.right - layoutInset.left - layoutInset.right
-                        let vt = CGFloat(i + n + ro) * h + contentInset.top + layoutInset.top
-                        let vh = h * CGFloat(r) - interimSpace
-                        child.frame = CGRect(x: contentInset.left + layoutInset.left, y: vt, width: vw, height: vh)
+                        let h = (parent.bounds.height - contentInset.top - contentInset.bottom - layoutInset.top - layoutInset.bottom + interimSpace) / CGFloat(gr)
+                        
+                        child.x = contentInset.left + layoutInset.left
+                        child.y = CGFloat(i + n + ro) * h + contentInset.top + layoutInset.top
+                        child.width = parent.bounds.width - contentInset.left - contentInset.right - layoutInset.left - layoutInset.right
+                        child.height = h * CGFloat(r) - interimSpace
+                        
                         n += r + ro - 1
-                    case .none:
-                        let w = (parent.bounds.width - contentInset.left - contentInset.right - layoutInset.left - layoutInset.right + interimSpace) / CGFloat(gc)
+                    
+                    case .any:
+                        let r = child.grid.rows
+                        let ro = child.grid.offset.rows
                         let c = child.grid.columns
                         let co = child.grid.offset.columns
+                        let w = (parent.bounds.width - contentInset.left - contentInset.right - layoutInset.left - layoutInset.right + interimSpace) / CGFloat(gc)
                         let h = (parent.bounds.height - contentInset.top - contentInset.bottom - layoutInset.top - layoutInset.bottom + interimSpace) / CGFloat(gr)
-                        let r = child.grid.rows
-                        let ro = child.grid.offset.rows
-                        let vt = CGFloat(ro) * h + contentInset.top + layoutInset.top
-                        let vl = CGFloat(co) * w + contentInset.left + layoutInset.left
-                        let vh = h * CGFloat(r) - interimSpace
-                        let vw = w * CGFloat(c) - interimSpace
-                        child.frame = CGRect(x: vl, y: vt, width: vw, height: vh)
+                        
+                        child.x = CGFloat(co) * w + contentInset.left + layoutInset.left
+                        child.y = CGFloat(ro) * h + contentInset.top + layoutInset.top
+                        child.width = w * CGFloat(c) - interimSpace
+                        child.height = h * CGFloat(r) - interimSpace
                     }
                 }
             }
@@ -249,7 +259,7 @@ public class Grid {
 private var GridKey: UInt8 = 0
 
 /// Grid extension for UIView.
-public extension UIView {
+extension UIView {
     /// Grid reference.
     public private(set) var grid: Grid {
         get {
