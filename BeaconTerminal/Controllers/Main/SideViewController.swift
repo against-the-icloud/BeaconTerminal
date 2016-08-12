@@ -25,6 +25,15 @@ class SideViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
 
+        for cell in tableView.visibleCells {
+            cell.selectionStyle = .default
+        }
+        
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.selectionStyle = .blue
+        }
+        
+        
         if (indexPath as NSIndexPath).section == 0 {
             switch (indexPath as NSIndexPath).row {
             case 0:

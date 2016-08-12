@@ -109,7 +109,8 @@ class CoverFlowViewController: UIViewController {
         _ = IndexPath.init(item: 0, section: 0)
         
         //collectionView.scrollToItem(at: firstItem, at: .centeredHorizontally, animated: false)
-        
+        makeDraggingCellStyle()
+        makeCenteredCellStyle()
     }
     
     override func viewDidLoad() {
@@ -125,6 +126,8 @@ class CoverFlowViewController: UIViewController {
         let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
         
         collectionView.register(nib, forCellWithReuseIdentifier: "CoverFlowCell")
+        
+        
     }
     
     func prepareView() {
@@ -168,6 +171,7 @@ class CoverFlowViewController: UIViewController {
             if let cell = self.collectionView.cellForItem(at: p) {
                 cell.borderColor = self.unselectedCellColor
                 cell.borderWidth = 1.0
+                cell.cornerRadius = 10.0
             }
         }
     }
@@ -180,10 +184,12 @@ class CoverFlowViewController: UIViewController {
                 if let cell = self.collectionView.cellForItem(at: p) {
                     if p == centerIndexPath {
                         cell.borderColor = self.selectedCellColor
-                        cell.borderWidth = 1.0
+                        cell.borderWidth = 2.0
+                        cell.cornerRadius = 10.0
                     } else {
                         cell.borderColor = self.unselectedCellColor
-                        cell.borderWidth = 1.0
+                        cell.borderWidth = 2.0
+                        cell.cornerRadius = 10.0
                     }
                 }
             }

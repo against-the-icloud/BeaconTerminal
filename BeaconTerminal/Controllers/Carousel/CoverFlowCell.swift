@@ -60,7 +60,7 @@ class CoverFlowCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        //prepareView()
+        prepareView()
     }
     
     @IBAction func editPreferencesAction(_ sender: UIButton) {
@@ -98,26 +98,15 @@ class CoverFlowCell: UICollectionViewCell {
     }
     
     func prepareView() {
-//        self.contentView.layer.cornerRadius = 10.0;
+        self.contentView.layer.cornerRadius = 10.0;
         self.contentView.layer.borderWidth = 1.0;
-        self.contentView.layer.borderColor = Color.blueGrey.lighten5.cgColor
-//        self.contentView.layer.masksToBounds = false;
-//        
-//        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.banner.bounds
-//            byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight)
-//            cornerRadii:CGSizeMake(10, 10)];
-//        
-//        CAShapeLayer *maskLayer = [CAShapeLayer layer];
-//        maskLayer.frame = self.banner.bounds;
-//        maskLayer.path = maskPath.CGPath;
-//        self.banner.layer.mask = maskLayer;
+        self.contentView.layer.borderColor = UIColor.clear.cgColor
+
+//        self.contentView.layer.cornerRadius = 2.0f;
+//        cell.contentView.layer.borderWidth = 1.0f;
+//        cell.contentView.layer.borderColor = [UIColor clearColor].CGColor;
+//        cell.contentView.layer.masksToBounds = YES;
         
-//        let maskPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: [UIRectCorner.topLeft, UIRectCorner.topRight], cornerRadii: CGSize(width: 10, height: 10))
-//        
-//        let maskLayer = CALayer()
-//        maskLayer.frame = self.bounds;
-//        maskLayer.shadowPath = maskPath.cgPath;
-//        self.contentView.layer.mask = maskLayer;
         
         self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)

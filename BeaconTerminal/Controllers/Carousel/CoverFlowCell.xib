@@ -46,7 +46,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-PT-rXi" customClass="MaterialButton">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-PT-rXi" customClass="Button">
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="dxR-lR-EYs"/>
                                                     <constraint firstAttribute="height" constant="30" id="kbY-pc-FQz"/>
@@ -79,6 +79,11 @@
                                     <constraint firstAttribute="trailing" secondItem="jrE-5k-xvU" secondAttribute="trailing" constant="8" id="Mms-Nz-f6H"/>
                                     <constraint firstItem="jrE-5k-xvU" firstAttribute="centerY" secondItem="3Kw-Xx-TkA" secondAttribute="centerY" id="rzN-2U-6an"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2jr-jF-L4A" userLabel="body">
                                 <subviews>
@@ -445,12 +450,17 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jY-Ah-iPo" userLabel="footer">
                                 <color key="backgroundColor" red="1" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                     </stackView>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.1058823529" green="0.4431372549" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Ipv-Hz-G56" firstAttribute="width" secondItem="EIe-un-DM0" secondAttribute="width" id="3x8-bx-LrA"/>
                 <constraint firstItem="Ipv-Hz-G56" firstAttribute="centerX" secondItem="EIe-un-DM0" secondAttribute="centerX" id="7VV-AJ-BEr"/>
