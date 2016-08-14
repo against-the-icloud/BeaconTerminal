@@ -144,6 +144,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         switch state {
         case .placeGroup:
             prepareTabBarItem()
+            prepareNavigationItem(withTitle: "Place-Group")
         case .placeTerminal:
             print()
             break
@@ -160,10 +161,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         switch state {
         case .placeGroup:
             prepareSpeciesMenu()
+            BadgeUtil.showBadge(withType: .mapBadge)
         case .placeTerminal:
+            BadgeUtil.showBadge(withType: .terminalBadge)
             break
         case .objectGroup:
-            prepareSpeciesMenu()        
+            prepareSpeciesMenu()
+            BadgeUtil.showBadge(withType: .objectBadge)
         default:
             break
         }
@@ -181,11 +185,18 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         tabBarItem.image = iconImage
         tabBarItem.setTitleColor(color: Color.grey.base, forState: .normal)
         tabBarItem.setTitleColor(color: Color.black, forState: .selected)
-        
         //setTabBarVisible(true, duration: 0.3, animated: true)
-
     }
-
+    
+    private func prepareNavigationItem(withTitle title: String) {
+        let nav = self.navigationController?.navigationBar
+        nav?.backgroundColor = Util.flatBlack
+        nav?.topItem?.titleLabel.text = title
+        nav?.topItem?.titleLabel.textColor = UIColor.white
+        
+        navigationItem.titleLabel.text = "hello"
+        self.title = "Hello"
+    }
 
     func openCamera() {
         if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)) {
