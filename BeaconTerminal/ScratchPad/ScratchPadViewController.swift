@@ -1,16 +1,8 @@
-/*
- Copyright (C) 2015 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- The primary view controller that hosts a `drawingCanvasView` for the user to interact with.
- */
 
 import UIKit
 import Material
 
 class ScratchPadViewController: UIViewController {
-    
     
     @IBOutlet weak var drawingCanvasView: CanvasView!
     
@@ -32,32 +24,27 @@ class ScratchPadViewController: UIViewController {
         
         return view
     }()
-//
-////    var drawingCanvasView: drawingCanvasView {
-////        return con as! drawingCanvasView
-////    }
-//    
-//    // MARK: View Life Cycle
+    
+    
+    // MARK: View Life Cycle
     private func prepareTabBarItem() {
         tabBarItem.title = "Scratch Pad"
         let iconImage = UIImage(named: "ic_mode_edit_white")!
-        
-        
         tabBarItem.image = iconImage
-        tabBarItem.setTitleColor(color: Color.grey.base, forState: .normal)
-        tabBarItem.setTitleColor(color: Color.white, forState: .selected)
-
+        Util.prepareTabBar(with: tabBarItem)
     }
-
+    
     override func viewDidLoad() {
-        drawingCanvasView.addSubview(reticleView)
+        super.viewDidLoad()
+        prepareTabBarItem()
+        // drawingCanvasView.addSubview(reticleView)
         
-//        for dview in draggableImageViews {
-//            dview.delegate = self
-//        }
-//        
-        self.view.sendSubview(toBack: drawingCanvasView)
-       // self.view.bringSubview(toFront: toolbarView)
+        //        for dview in draggableImageViews {
+        //            dview.delegate = self
+        //        }
+        //
+        // self.view.sendSubview(toBack: drawingCanvasView)
+        // self.view.bringSubview(toFront: toolbarView)
     }
     
     // MARK: Touch Handling
@@ -141,36 +128,36 @@ class ScratchPadViewController: UIViewController {
     
     // MARK: Rotation
     
-/*
-    func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return [.landscapeLeft, .landscapeRight]
-    }
- */
+    /*
+     func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+     return [.landscapeLeft, .landscapeRight]
+     }
+     */
     
     // MARK: Convenience
     
     func updateReticleViewWithTouch(_ touch: UITouch?, event: UIEvent?, isPredicted: Bool = false) {
-//        guard let touch = touch where touch.type == .stylus else { return }
-//        
-//        reticleView.predictedDotLayer.isHidden = !isPredicted
-//        reticleView.predictedLineLayer.isHidden = !isPredicted
-//        
-//        let azimuthAngle = touch.azimuthAngle(in: view)
-//        let azimuthUnitVector = touch.azimuthUnitVector(in: view)
-//        let altitudeAngle = touch.altitudeAngle
-//        
-//        if isPredicted {
-//            reticleView.predictedAzimuthAngle = azimuthAngle
-//            reticleView.predictedAzimuthUnitVector = azimuthUnitVector
-//            reticleView.predictedAltitudeAngle = altitudeAngle
-//        }
-//        else {
-//            let location = touch.preciseLocation(in: view)
-//            reticleView.center = location
-//            reticleView.actualAzimuthAngle = azimuthAngle
-//            reticleView.actualAzimuthUnitVector = azimuthUnitVector
-//            reticleView.actualAltitudeAngle = altitudeAngle
-//        }
+        //        guard let touch = touch where touch.type == .stylus else { return }
+        //
+        //        reticleView.predictedDotLayer.isHidden = !isPredicted
+        //        reticleView.predictedLineLayer.isHidden = !isPredicted
+        //
+        //        let azimuthAngle = touch.azimuthAngle(in: view)
+        //        let azimuthUnitVector = touch.azimuthUnitVector(in: view)
+        //        let altitudeAngle = touch.altitudeAngle
+        //
+        //        if isPredicted {
+        //            reticleView.predictedAzimuthAngle = azimuthAngle
+        //            reticleView.predictedAzimuthUnitVector = azimuthUnitVector
+        //            reticleView.predictedAltitudeAngle = altitudeAngle
+        //        }
+        //        else {
+        //            let location = touch.preciseLocation(in: view)
+        //            reticleView.center = location
+        //            reticleView.actualAzimuthAngle = azimuthAngle
+        //            reticleView.actualAzimuthUnitVector = azimuthUnitVector
+        //            reticleView.actualAltitudeAngle = altitudeAngle
+        //        }
     }
 }
 
@@ -183,18 +170,18 @@ extension ScratchPadViewController: DraggableViewDelegate {
     }
     
     func enteringZone(_ sender: DraggableImageView, targets: [UIView]) {
-
+        
     }
     
     func exitingZone(_ sender: DraggableImageView, targets: [UIView]) {
-
+        
     }
-
+    
     func isDragging(_ sender: DraggableImageView) {}
     func onDraggingStarted(_ sender: DraggableImageView) {}
     func onSnappedBack(_ sender: DraggableImageView) {}
     func onCopied(_ copiedSender: DraggableImageView) {}
-
-
+    
+    
 }
 

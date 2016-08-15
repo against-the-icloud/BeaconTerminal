@@ -101,14 +101,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     
     func prepareViews() {
-        
         // Configure the window with the SideNavigationController as the root view controller
         window = UIWindow(frame:UIScreen.main.bounds)
         window?.rootViewController = prepareSubviews()
         window?.makeKeyAndVisible()
-        
-        //species
-        
     }
     
     func prepareSubviews() -> AppNavigationDrawerController {
@@ -127,9 +123,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
         bottomNavigationController.selectedIndex = 0
-        bottomNavigationController.tabBar.tintColor = UIColor.black()
-        bottomNavigationController.tabBar.backgroundColor = UIColor.white()
-        bottomNavigationController.tabBar.itemPositioning = UITabBarItemPositioning.automatic
         
         return navigationDrawerController
     }

@@ -13,17 +13,17 @@ import RealmSwift
 
 class SpeciesMenuViewController: UIViewController {
     
+    let sideMenuButtonSpacing: CGFloat = 10.0
+    let speciesMenuTag = 90
+    
     var dropTargets = [RelationshipDropView]()
     var speciesMenuButtons = [UIView]()
-    let sideMenuButtonSpacing: CGFloat = 10.0
     var openAction = {}
     var allSpecies: Results<Species>?
     var fromSpecies: Species?
     
     var sideMenuButtonDiameter: CGFloat {
-        
         get {
-            
             let screenHeight = UIScreen.main.bounds.height
             let numButtons: CGFloat = 12.0
             
@@ -63,9 +63,17 @@ class SpeciesMenuViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    
+    func removeSpeciesMenu() {
+        for sv in UIApplication.shared.keyWindow!.subviews {
+            if sv.tag == speciesMenuTag {
+                sv.removeFromSuperview()
+            }
+        }
+    }
+    
     /// Prepares the MenuView example.
     func prepareSpeciesMenu() {
-        
         allSpecies = realm!.allObjects(ofType: Species.self)
         
         if let sv = speciesMenuView {
@@ -86,9 +94,7 @@ class SpeciesMenuViewController: UIViewController {
         var image: UIImage? = UIImage(named: "tb_add_white")!
         image = image!.resizeToSize(CGSize(width: sideMenuButtonDiameter / 2, height: sideMenuButtonDiameter / 2))
         
-        
         let addButton: FabButton = FabButton()
-    
         
         addButton.tintColor = Color.white
         addButton.borderColor = Color.blue.accent3
@@ -145,6 +151,7 @@ class SpeciesMenuViewController: UIViewController {
         speciesMenuView!.backgroundColor = UIColor.blue
         
         speciesMenuView!.center = speciesMenuButtonCenter
+        speciesMenuView!.tag = speciesMenuTag
         UIApplication.shared.keyWindow!.addSubview(speciesMenuView!)
         speciesMenuView?.isHidden = true
     }
@@ -331,11 +338,8 @@ class SpeciesMenuViewController: UIViewController {
         } else {
             openMenu()
             openAction()
-            
         }
-        
     }
-    
     
     /// Handle the menuView touch event.
     func handleSpeciesMenuSelection() {

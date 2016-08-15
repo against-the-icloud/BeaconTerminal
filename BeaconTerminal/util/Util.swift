@@ -1,13 +1,21 @@
 import Foundation
 import UIKit
+import Material
 
 class Util {
     
     static let flatBlack: UIColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.00)
     
+    
     class func classNameAsString(_ obj: Any) -> String {
         return String(obj.dynamicType).components(separatedBy: "__").last!
     }
+    
+    class func prepareTabBar(with item: UITabBarItem) {
+        item.setTitleColor(color: Color.grey.base, forState: .normal)
+        item.setTitleColor(color: Color.black, forState: .selected)
+    }
+    
     // MARK: Color
     class func isLightColor(_ color: UIColor) -> Bool {
         var white: CGFloat = 0.0

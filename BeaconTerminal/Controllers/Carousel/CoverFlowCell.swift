@@ -31,10 +31,8 @@ class CoverFlowCell: UICollectionViewCell {
     
     @IBOutlet var relationshipViews: [RelationshipsUIView]!
     
-    
     @IBOutlet weak var preferenceView: PreferenceUIView!
     
-
     @IBOutlet weak var preferenceEditButton: UIButton!
     var isFullscreen : Bool = false {
         didSet {
@@ -82,7 +80,6 @@ class CoverFlowCell: UICollectionViewCell {
         self.profileView.contentMode = .scaleAspectFit
         self.profileView.image = speciesImage
         
-
         //setup PreferenceView
         
         preferenceView.speciesObservation = self.speciesObservation
@@ -101,16 +98,9 @@ class CoverFlowCell: UICollectionViewCell {
         self.contentView.layer.cornerRadius = 10.0;
         self.contentView.layer.borderWidth = 1.0;
         self.contentView.layer.borderColor = UIColor.clear.cgColor
-
-//        self.contentView.layer.cornerRadius = 2.0f;
-//        cell.contentView.layer.borderWidth = 1.0f;
-//        cell.contentView.layer.borderColor = [UIColor clearColor].CGColor;
-//        cell.contentView.layer.masksToBounds = YES;
-        
-        
         self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-        self.layer.shadowRadius = 5.0
+        self.layer.shadowRadius = 1.0
         self.layer.shadowOpacity = 0.7
         self.layer.masksToBounds = false
         self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath

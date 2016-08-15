@@ -9,13 +9,13 @@ class AppNavigationController: NavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationBar.statusBarStyle = .lightContent
     }
     
     /// Prepares the navigationBar
     private func prepareNavigationBar() {
         navigationBar.tintColor = Color.white
         navigationBar.backgroundColor = Util.flatBlack
+        navigationBar.statusBarStyle = .lightContent
         //LOG.debug("navigationbar height \(navigationBar.height)")
     }
 }

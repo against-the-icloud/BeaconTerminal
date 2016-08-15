@@ -16,33 +16,11 @@ class AppBottomNavigationController: BottomNavigationController {
         }
     }
     
-    
-    /**
-     An initializer that initializes the object with a NSCoder object.
-     - Parameter aDecoder: A NSCoder instance.
-     */
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    /**
-     An initializer that initializes the object with an Optional nib and bundle.
-     - Parameter nibNameOrNil: An Optional String for the nib.
-     - Parameter bundle: An Optional NSBundle where the nib is located.
-     */
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    public override init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNavigationItem()
         prepareNotification()
+        prepareTabBar()
     }
     
     override func prepareView() {
@@ -55,6 +33,14 @@ class AppBottomNavigationController: BottomNavigationController {
         navigationDrawerController?.openLeftView()
     }
     
+    
+    private func prepareTabBar() {
+        tabBar.tintColor = UIColor.black()
+        tabBar.backgroundColor = UIColor.white()
+        tabBar.itemPositioning = UITabBarItemPositioning.automatic
+        self.selectedIndex = 0
+    }
+    
     /// Prepares the navigationItem.
     private func prepareNavigationItem() {
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleMenuButton))
@@ -62,17 +48,13 @@ class AppBottomNavigationController: BottomNavigationController {
         navigationItem.detailLabel.addGestureRecognizer(tap)
     }
     
-    
-    
     func prepareNotification() {
-        
         runtimeResults = realmDataController?.realm.allObjects(ofType: Runtime.self)
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let bottomNav = self else { return }
-
             
             switch changes {
             case .Initial(let runtimeResults):
@@ -119,12 +101,10 @@ class AppBottomNavigationController: BottomNavigationController {
                 }
                 
                 navigationItem.title = "\(gt): \(memberTitle)"
-
+                
             } else {
                 navigationItem.title = "GROUP: \(gt)"
             }
-            
-            
             navigationItem.titleLabel.textAlignment = .left
             navigationItem.titleLabel.textColor = Color.white
             

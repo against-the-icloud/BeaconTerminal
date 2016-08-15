@@ -52,8 +52,6 @@ class SideViewController: UITableViewController {
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
                 bottomNavigationController.selectedIndex = 0
-                bottomNavigationController.tabBar.tintColor = UIColor.white()
-                bottomNavigationController.tabBar.backgroundColor = UIColor.black()
 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
@@ -64,7 +62,6 @@ class SideViewController: UITableViewController {
                         animations: nil,
                         completion: {
                             [weak self] _ in
-//                            bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.name)!, newSectionTitle: (realmDataController?.currentSection)!)
 
                             self?.navigationDrawerController?.closeLeftView()
                         })
@@ -80,7 +77,6 @@ class SideViewController: UITableViewController {
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainViewController)
 
                 
-            
                 navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
                         options: [],
@@ -110,10 +106,7 @@ class SideViewController: UITableViewController {
                 let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
 
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
-                bottomNavigationController.tabBar.tintColor = UIColor.white()
-                bottomNavigationController.tabBar.backgroundColor = UIColor.black()
-
-
+                
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
@@ -123,8 +116,6 @@ class SideViewController: UITableViewController {
                                                                              animations: nil,
                                                                              completion: {
                                                                                 [weak self] _ in
-//                                                                                bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.name)!, newSectionTitle: (realmDataController?.currentSection)!)
-//                                                                                
                                                                                 self?.navigationDrawerController?.closeLeftView()
                     })
 

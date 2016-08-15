@@ -47,16 +47,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     var blurEffectView: UIView?
     
-    
     let sideMenuButtonSpacing: CGFloat = 10.0
     
     var sideMenuButtonDiameter: CGFloat {
         
         get {
-            
             let screenHeight = UIScreen.main.bounds.height
             let numButtons: CGFloat = 12.0
-            
             
             //button size
             let buttonSize = (screenHeight - (numButtons * sideMenuButtonSpacing)) / numButtons
@@ -91,8 +88,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         }
     }
     
-    
-
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -160,32 +155,39 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         let state = getAppDelegate().checkApplicationState()
         switch state {
         case .placeGroup:
-            prepareSpeciesMenu()
+            speciesMenu(shouldShow: true)
             BadgeUtil.showBadge(withType: .mapBadge)
+            let gestureRecongizer = UITapGestureRecognizer(target: self, action: #selector(showMap))
+            BadgeUtil.addGesture(gesture: gestureRecongizer)
         case .placeTerminal:
+            speciesMenu(shouldShow: false)
             BadgeUtil.showBadge(withType: .terminalBadge)
             break
         case .objectGroup:
-            prepareSpeciesMenu()
+            speciesMenu(shouldShow: true)
             BadgeUtil.showBadge(withType: .objectBadge)
         default:
             break
         }
     }
     
-    func prepareSpeciesMenu() {
-        getAppDelegate().speciesViewController.prepareSpeciesMenu()
-        getAppDelegate().speciesViewController.showMenu()
+    func speciesMenu(shouldShow: Bool) {
+        if shouldShow {
+            getAppDelegate().speciesViewController.prepareSpeciesMenu()
+            getAppDelegate().speciesViewController.showMenu()
+        } else {
+            getAppDelegate().speciesViewController.removeSpeciesMenu()
+        }
+      
     }
+    
     
     /// Prepare tabBarItem.
     private func prepareTabBarItem() {
         tabBarItem.title = "Species"
         let iconImage = UIImage(named: "ic_lightbulb_white")!
         tabBarItem.image = iconImage
-        tabBarItem.setTitleColor(color: Color.grey.base, forState: .normal)
-        tabBarItem.setTitleColor(color: Color.black, forState: .selected)
-        //setTabBarVisible(true, duration: 0.3, animated: true)
+        Util.prepareTabBar(with: tabBarItem)
     }
     
     private func prepareNavigationItem(withTitle title: String) {
@@ -335,20 +337,29 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
                 UIImageWriteToSavedPhotosAlbum(img!, nil, nil, nil)
             })
         }
-
-
     }
     
-
+    // Mark: Scanner Action
+    
     @IBAction func scanAction(_ sender: UIButton) {
         self.performSegue(withIdentifier: "scannerSegue", sender: sender)
     }
-
-
-
+    
+    // Mark: ShowMap Action
+    
+    func showMap(gesture: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "mapSegue", sender: self)
+    }
+    
+    // Mark: Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showMap" {
+            _ = segue.destination as? MapViewController
+///            mapController
+        }
+    }
 }
-
-
 
 extension UIImagePickerController {
     
@@ -359,13 +370,8 @@ extension UIImagePickerController {
     }
     
 }
-//    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-//        return .landscape
-//    }
-//}
 
 extension MainViewController: UIImagePickerControllerDelegate {
-
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         LOG.debug("ImagePickerCanceled")
@@ -495,10 +501,6 @@ extension MainViewController {
                 let cameraButton: FabButton = FabButton()
                 image = UIImage(named: "tb_camera_white")
                 image = image!.resizeToSize(CGSize(width: toolsButtonDiameter / 2, height: toolsButtonDiameter / 2))!
-
-
-                
-
                 cameraButton.tintColor = Color.white
                 cameraButton.borderColor = Color.blue.accent3
                 cameraButton.backgroundColor = Color.blue.base

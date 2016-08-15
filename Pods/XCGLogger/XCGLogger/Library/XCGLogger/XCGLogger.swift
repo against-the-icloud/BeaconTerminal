@@ -271,7 +271,7 @@ public class XCGFileLogDestination: XCGBaseLogDestination {
         }
         
         if let writeToFileURL = writeToFileURL {
-            let path = writeToFileURL.path
+            let path = writeToFileURL.path 
             
             FileManager.default.createFile(atPath: path, contents: nil, attributes: nil)
             do {
