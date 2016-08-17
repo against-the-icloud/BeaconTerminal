@@ -7,9 +7,9 @@ class Util {
     static let flatBlack: UIColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.00)
     
     
-    class func classNameAsString(_ obj: Any) -> String {
-        return String(obj.dynamicType).components(separatedBy: "__").last!
-    }
+//    class func classNameAsString(_ obj: Any) -> String {
+//        return String(type(descring)).components(separatedBy: "__").last!
+//    }
     
     class func prepareTabBar(with item: UITabBarItem) {
         item.setTitleColor(color: Color.grey.base, forState: .normal)
@@ -110,10 +110,10 @@ extension UIView {
             self.alpha = 1.0
             }, completion: completion)  }
     
-    func fadeOut(_ duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: (Bool) -> Void = {(finished: Bool) -> Void in}) {
+    func fadeOut(_ duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion:  ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
         UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.alpha = 0.0
-            }, completion: completion)
+            }, completion:(completion))
     }
     
     
@@ -267,7 +267,7 @@ extension UIViewController {
     }
     
     func tabBarIsVisible() -> Bool {
-        return self.tabBarController?.tabBar.frame.origin.y < UIScreen.main.bounds.height
+        return (self.tabBarController?.tabBar.frame.origin.y)! < UIScreen.main.bounds.height
     }
 }
 

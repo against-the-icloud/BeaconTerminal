@@ -13,6 +13,9 @@ import RealmSwift
 let CORNER_RADIUS = 10.0
 
 class CoverFlowViewController: UIViewController {
+    
+    static let cellIdentifier = "CoverFlowCell"
+    
     // MARK: IBOutlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBInspectable var unselectedCellColor: UIColor?
@@ -41,10 +44,6 @@ class CoverFlowViewController: UIViewController {
         return self.collectionView?.collectionViewLayout as! CenterCellCollectionViewFlowLayout
     }
     
-    private struct StoryBoard {
-        static let CellIdentifier = "CoverFlowCell"
-    }
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -67,12 +66,12 @@ class CoverFlowViewController: UIViewController {
         //load test group
         
         runtimeResults = realmDataController?.realm.allObjects(ofType: Runtime.self)
-
+        
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
-            guard let coverFlowController = self else { return }            
+            guard let coverFlowController = self else { return }
             switch changes {
             case .Initial(let runtimeResults):
                 coverFlowController.updateUI(withRuntimeResults: runtimeResults)
@@ -245,7 +244,7 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryBoard.CellIdentifier, for: indexPath) as! CoverFlowCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoverFlowViewController.cellIdentifier, for: indexPath) as! CoverFlowCell
         
         //use index to find species, then use group to find group and the latest entries for that species
         //initialize the cell
@@ -255,29 +254,34 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
             relationshipView.dropView.subviews.forEach({ $0.removeFromSuperview() })
         }) // this gets things done
         
-        if currentGroup?.speciesObservations.count > 0 {
-            let fromSpecies = self.allSpecies![indexPath.row]
+        
+        if let currentGroup = currentGroup {
             
-            let speciesObservations: Results<SpeciesObservation> = currentGroup!.speciesObservations.filter(using: "fromSpecies.index = \(fromSpecies.index)")
             
-            if !fromSpecies.name.isEmpty {
-                cell.titleLabel.text = fromSpecies.name
-            } else {
-                cell.titleLabel.text = "Species \((indexPath as NSIndexPath).row)"
+            if currentGroup.speciesObservations.count > 0 {
+                let fromSpecies = self.allSpecies![indexPath.row]
+                
+                let speciesObservations: Results<SpeciesObservation> = currentGroup.speciesObservations.filter(using: "fromSpecies.index = \(fromSpecies.index)")
+                
+                if !fromSpecies.name.isEmpty {
+                    cell.titleLabel.text = fromSpecies.name
+                } else {
+                    cell.titleLabel.text = "Species \((indexPath as NSIndexPath).row)"
+                }
+                
+                if !speciesObservations.isEmpty {
+                    cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
+                    cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), for: UIControlEvents.touchUpInside)
+                }
+                
+                for rv in cell.relationshipViews {
+                    //add delegate
+                    rv.dropView.delegate = self
+                }
+                
+                cell.delegate = self
+                cell.prepareView()
             }
-            
-            if !speciesObservations.isEmpty {
-                cell.prepareCell(speciesObservations.first!, fromSpecies: fromSpecies)
-                cell.expandButton.addTarget(self, action: #selector(CoverFlowViewController.expandCell(_:)), for: UIControlEvents.touchUpInside)
-            }
-            
-            for rv in cell.relationshipViews {
-                //add delegate
-                rv.dropView.delegate = self
-            }
-            
-            cell.delegate = self
-            cell.prepareView()
         }
         return cell
     }

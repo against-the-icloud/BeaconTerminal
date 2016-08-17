@@ -140,11 +140,11 @@ extension UIColor {
         }
     }
     
-    public override var description: String {
+    open override var description: String {
         return self.hexString(true)
     }
     
-    public override var debugDescription: String {
+    open override var debugDescription: String {
         return self.hexString(true)
     }
     

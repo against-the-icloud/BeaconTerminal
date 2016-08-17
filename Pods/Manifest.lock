@@ -10,48 +10,48 @@ PODS:
 
 DEPENDENCIES:
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
-  - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
-  - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
+  - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `jg-swift-3-beta-6`)
+  - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `jg-swift-3-beta-6`)
   - Transporter (from `https://github.com/DenHeadless/Transporter.git`, branch `swift3`)
-  - XCGLogger (from `https://github.com/alexiosdev/XCGLogger.git`, branch `swift3_alex`)
+  - XCGLogger (from `https://github.com/aperritano/XCGLogger.git`, branch `swift3_xcode8_6`)
 
 EXTERNAL SOURCES:
   Material:
     :branch: development
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :branch: master
+    :branch: jg-swift-3-beta-6
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :branch: master
+    :branch: jg-swift-3-beta-6
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   Transporter:
     :branch: swift3
     :git: https://github.com/DenHeadless/Transporter.git
   XCGLogger:
-    :branch: swift3_alex
-    :git: https://github.com/alexiosdev/XCGLogger.git
+    :branch: swift3_xcode8_6
+    :git: https://github.com/aperritano/XCGLogger.git
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: b53376dd6a9c4ae14ee3e4080ef183dd954aec94
+    :commit: 6c813dcfc5e56980d725955c45e9ca27e68bdd5d
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :commit: dd3e8ce48d4259167106a304cbd1b994eb34af06
+    :commit: 2d7c60150da6998a083853bc8356db842b4e2263
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :commit: dd3e8ce48d4259167106a304cbd1b994eb34af06
+    :commit: 2d7c60150da6998a083853bc8356db842b4e2263
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   Transporter:
-    :commit: 4ca0e4be15db562b5a00d0e91be6f7e1314243b1
+    :commit: e609806c36457e317740ebbdeba9e0039f5eb47b
     :git: https://github.com/DenHeadless/Transporter.git
   XCGLogger:
-    :commit: 66be6ebda07c5560e901bcb4567e341141607925
-    :git: https://github.com/alexiosdev/XCGLogger.git
+    :commit: 8c36469e563d04ad598c8149ef9c434d3e22831b
+    :git: https://github.com/aperritano/XCGLogger.git
 
 SPEC CHECKSUMS:
   Material: 61dcd49507c32d07c1557267ec360ce35bd0b1c5
@@ -60,6 +60,6 @@ SPEC CHECKSUMS:
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: c7cf364e172173e1a7aadfa5b4550bcb743b55df
+PODFILE CHECKSUM: 57f4a1da025ffe700872644e651e471b813aeadd
 
 COCOAPODS: 1.0.1

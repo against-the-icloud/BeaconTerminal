@@ -78,7 +78,7 @@ class LoginSectionTableViewController: UITableViewController {
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "groupSegue" {
             let selectedCell = sender as? UITableViewCell
             let selectedIndexPath = tableView.indexPath(for: selectedCell!)
@@ -87,7 +87,7 @@ class LoginSectionTableViewController: UITableViewController {
             let selectedSection = sections![(selectedIndexPath?.row)!]
             gvc?.groups = sections![(selectedIndexPath?.row)!].groups
             gvc?.selectedSection = selectedSection
-            if sections?.count > 0 {
+            if (sections?.count)! > 0 {
                 let sectionName = sections?[(selectedIndexPath?.row)!].name
                 gvc?.title = "Choose Your Group"
                 navigationItem.backBarButtonItem?.tintColor = UIColor.white

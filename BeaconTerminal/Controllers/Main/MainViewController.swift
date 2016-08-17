@@ -353,7 +353,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     // Mark: Segue
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMap" {
             _ = segue.destination as? MapViewController
 ///            mapController
@@ -363,7 +363,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
 extension UIImagePickerController {
     
-    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
             return .landscape
         }
@@ -377,7 +377,7 @@ extension MainViewController: UIImagePickerControllerDelegate {
         LOG.debug("ImagePickerCanceled")
     }
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:AnyObject]) {
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String:AnyObject]) {
         dismiss(animated: true, completion: nil)
     }
 

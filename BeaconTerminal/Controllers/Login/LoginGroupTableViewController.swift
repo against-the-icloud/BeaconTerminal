@@ -82,7 +82,7 @@ class LoginGroupTableViewController: UITableViewController {
     @IBAction func selectGroupAction(_ sender: UIBarButtonItem) {
         //nothing is selected
         if tableView.indexPathForSelectedRow != nil {
-            if groups?.count > 0 {
+            if (groups?.count)! > 0 {
                 
                 if let indexPath = tableView.indexPathForSelectedRow {
                     let group = groups![indexPath.row]

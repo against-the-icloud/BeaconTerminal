@@ -122,7 +122,7 @@ public protocol NavigationDrawerControllerDelegate {
 
 @IBDesignable
 @objc(NavigationDrawerController)
-public class NavigationDrawerController: RootController, UIGestureRecognizerDelegate {
+open class NavigationDrawerController: RootController, UIGestureRecognizerDelegate {
 	/**
 	A CGFloat property that is used internally to track
 	the original (x) position of the container view when panning.
@@ -185,7 +185,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 	A CGFloat property that sets the animation duration of the
 	leftView when closing and opening. Defaults to 0.25.
 	*/
-	@IBInspectable public var animationDuration: CGFloat = 0.25
+	@IBInspectable public var animationDuration: TimeInterval = 0.25
 	
 	/**
 	A Boolean property that enables and disables the leftView from
@@ -391,7 +391,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 	The super.prepareView method should always be called immediately
 	when subclassing.
 	*/
-	public override func prepareView() {
+	open override func prepareView() {
 		super.prepareView()
 		prepareContentViewController()
 		prepareLeftView()
@@ -429,7 +429,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 		}
 	}
 	
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 		// Ensures the view is hidden.
 		if let v: View = rightView {
@@ -619,7 +619,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 				showView(container: v)
 				isUserInteractionEnabled = false
 				delegate?.navigationDrawerWillOpen?(navigationDrawerController: self, position: .left)
-				UIView.animate(withDuration: Double(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
+				UIView.animate(withDuration: TimeInterval(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
 					animations: {
 						v.position.x = v.width / 2
 						self.rootViewController.view.alpha = 0.5
@@ -645,7 +645,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 				showView(container: v)
 				isUserInteractionEnabled = false
 				delegate?.navigationDrawerWillOpen?(navigationDrawerController: self, position: .right)
-				UIView.animate(withDuration: Double(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
+				UIView.animate(withDuration: TimeInterval(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
 					animations: { [weak self] in
 						if let s = self {
 							v.position.x = s.view.bounds.width - v.width / 2
@@ -671,7 +671,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 			if let v: View = leftView {
 				isUserInteractionEnabled = true
 				delegate?.navigationDrawerWillClose?(navigationDrawerController: self, position: .left)
-				UIView.animate(withDuration: Double(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
+				UIView.animate(withDuration: TimeInterval(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
 					animations: { [weak self] in
 						if let s = self {
 							v.position.x = -v.width / 2
@@ -699,7 +699,7 @@ public class NavigationDrawerController: RootController, UIGestureRecognizerDele
 			if let v: View = rightView {
 				isUserInteractionEnabled = true
 				delegate?.navigationDrawerWillClose?(navigationDrawerController: self, position: .right)
-				UIView.animate(withDuration: Double(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
+				UIView.animate(withDuration: TimeInterval(0 == velocity ? animationDuration : fmax(0.1, fmin(1, Double(v.x / velocity)))),
 					animations: { [weak self] in
 						if let s = self {
 							v.position.x = s.view.bounds.width + v.width / 2

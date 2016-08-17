@@ -230,7 +230,7 @@ class RelationshipDetailViewController: UIViewController {
                 dispatch_on_main {
                     if let rIndex = so.relationships.index(of: r) {
                         
-                        getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop)
+                        getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop as AnyObject)
                         
                         try! realmDataController!.realm.write {
                             so.relationships.remove(at: rIndex)
@@ -276,7 +276,7 @@ class RelationshipDetailViewController: UIViewController {
 }
 
 extension RelationshipDetailViewController {
-    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafePointer<Void>) {
+    func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
         if error == nil {
             getAppDelegate().makeToast("Your image has been saved.")
         } else {
@@ -287,11 +287,9 @@ extension RelationshipDetailViewController {
 }
 
 extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) { //
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
+    
             // todo: set contentMode
             evidenceImageView.image = image
             

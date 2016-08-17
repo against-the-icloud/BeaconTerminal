@@ -23,11 +23,6 @@ class AppBottomNavigationController: BottomNavigationController {
         prepareTabBar()
     }
     
-    override func prepareView() {
-        super.prepareView()
-        
-    }
-    
     /// Handles the menuButton.
     internal func handleMenuButton(_ sender: UITapGestureRecognizer) {
         navigationDrawerController?.openLeftView()

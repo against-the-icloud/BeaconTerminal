@@ -131,7 +131,7 @@ extension UIView {
     }
     
     func makeToast(message msg: String) {
-        self.makeToast(message: msg, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+        self.makeToast(message: msg, duration: HRToastDefaultDuration, position: HRToastPositionDefault as AnyObject)
     }
     
     func makeToast(message msg: String, duration: Double, position: AnyObject) {
@@ -155,7 +155,7 @@ extension UIView {
     }
     
     func showToast(_ toast: UIView) {
-        self.showToast(toast, duration: HRToastDefaultDuration, position: HRToastPositionDefault)
+        self.showToast(toast, duration: HRToastDefaultDuration, position: HRToastPositionDefault as AnyObject)
     }
     
     private func showToast(_ toast: UIView, duration: Double, position: AnyObject) {
@@ -192,11 +192,11 @@ extension UIView {
     }
     
     func makeToastActivity() {
-        self.makeToastActivity(position: HRToastActivityPositionDefault)
+        self.makeToastActivity(position: HRToastActivityPositionDefault as AnyObject)
     }
     
     func makeToastActivity(message msg: String){
-        self.makeToastActivity(position: HRToastActivityPositionDefault, message: msg)
+        self.makeToastActivity(position: HRToastActivityPositionDefault as AnyObject, message: msg)
     }
     
     private func makeToastActivity(position pos: AnyObject, message msg: String = "") {
@@ -314,7 +314,7 @@ extension UIView {
         }
         
         print("Warning: Invalid position for toast.")
-        return self.centerPointForPosition(HRToastPositionDefault, toast: toast)
+        return self.centerPointForPosition(HRToastPositionDefault as AnyObject, toast: toast)
     }
     
     private func viewForMessage(_ msg: String?, title: String?, image: UIImage?) -> UIView? {

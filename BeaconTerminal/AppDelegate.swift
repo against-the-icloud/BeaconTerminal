@@ -59,7 +59,7 @@ struct Platform {
 
 var realm: Realm?
 
-func dispatch_on_main(_ block: ()->()) {
+func dispatch_on_main(_ block: @escaping ()->()) {
     DispatchQueue.main.async(execute: block)
 }
 
@@ -78,14 +78,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
     
-    var beaconIDs = [
-        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
-        BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: Color.yellow.base),
-        BeaconID(index: 2, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 15252, minor: 24173, beaconColor: Color.green.base)
-    ]
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject:AnyObject]?) -> Bool {
-        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
+//    var beaconIDs = [
+//        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
+//        BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: Color.yellow.base),
+//        BeaconID(index: 2, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 15252, minor: 24173, beaconColor: Color.green.base)
+//    ]
+//    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+//        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
         prepareDB()
         //setupNutellaConnection(HOST)
@@ -93,12 +93,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         initStateMachine()
         
         prepareViews()
-                
+        
+        
+        
+        
         UIView.hr_setToastThemeColor(UIColor.black())
         
         return true
     }
-    
     
     func prepareViews() {
         // Configure the window with the SideNavigationController as the root view controller
@@ -111,6 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
+        
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
@@ -123,6 +126,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
         bottomNavigationController.selectedIndex = 0
+        
+        sideViewController.showSelectedCell(with: checkApplicationState())
         
         return navigationDrawerController
     }
@@ -189,13 +194,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     func makeToast(_ message: String) {
         if let presentWindow = UIApplication.shared.keyWindow {
-            presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop)
+            presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop as AnyObject)
         }
     }
     
     func makeToast(_ message: String, duration: Double = 3.0, position: AnyObject) {
         if let presentWindow = UIApplication.shared.keyWindow {
-            presentWindow.makeToast(message: message, duration: duration, position: HRToastPositionTop)
+            presentWindow.makeToast(message: message, duration: duration, position: HRToastPositionTop as AnyObject)
         }
     }
     
@@ -211,6 +216,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         //init with group termainal
         if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
             LOG.debug("We didn't transition")
+        } else {
+            //successful
+           
         }
     }
     
@@ -240,20 +248,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     }
     
     func preparePlaceTerminal() {
+
     }
     
     func preparePlaceGroup() {
-//        bottomNavigationController.changeGroupAndSectionTitles((realmDataController?.currentGroup?.name)!, newSectionTitle: (realmDataController?.currentSection)!)
-//        
-        
+   
     }
     
     func prepareObjectGroup() {
-        
-//        if let group = realmDataController?.currentGroup {
-//            bottomNavigationController.changeGroupAndSectionTitles(group.name, newSectionTitle: realmDataController?.currentSection)
-//        }
-//        
         
     }
     

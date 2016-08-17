@@ -286,7 +286,7 @@ public struct Randoms {
         static let allValues = [Standard, MM, Identicon, MonsterID, Wavatar, Retro]
     }
 
-    public static func createGravatar(_ style: Randoms.GravatarStyle = .Standard, size: Int = 80, completion: ((image: UIImage?, error: NSError?) -> Void)?) {
+    public static func createGravatar(_ style: Randoms.GravatarStyle = .Standard, size: Int = 80, completion: ((_ image: UIImage?, _ error: NSError?) -> Void)?) {
         var url = "https://secure.gravatar.com/avatar/thisimagewillnotbefound?s=\(size)"
         if style != .Standard {
             url += "&d=\(style.rawValue.lowercased())"
@@ -298,15 +298,15 @@ public struct Randoms {
         session.dataTask(with: request, completionHandler: {(data, response, error) in
             DispatchQueue.main.async {
                 if error == nil {
-                    completion?(image: UIImage(data: data!), error: nil)
+                    completion?(UIImage(data: data!), nil)
                 } else {
-                    completion?(image: nil, error: error)
+                    completion?(nil, error as NSError?)
                 }
             }
         }).resume()
     }
 
-    public static func randomGravatar(_ size: Int = 80, completion: ((image: UIImage?, error: NSError?) -> Void)?) {
+    public static func randomGravatar(_ size: Int = 80, completion: ((_ image: UIImage?, _ error: NSError?) -> Void)?) {
         let options = Randoms.GravatarStyle.allValues
         Randoms.createGravatar(options.randomItem(), size: size, completion: completion)
     }

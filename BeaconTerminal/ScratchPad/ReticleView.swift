@@ -124,12 +124,12 @@ class ReticleView: UIView {
         
         // Draw targeting lines.
         let path = CGMutablePath()
-        var transform = CGAffineTransform.identity
+        _ = CGAffineTransform.identity
         
         for _ in 0..<4 {
-            path.moveTo(&transform, x: radius * 0.5, y: 0)
-            path.addLineTo(&transform, x: radius * 1.15, y: 0)
-            transform = transform.rotated(by: CGFloat(M_PI_2))
+//            path.moveTo(&transform, x: radius * 0.5, y: 0)
+//            path.addLine(&transform, x: radius * 1.15, y: 0)
+//            transform = transform.rotated(by: CGFloat(M_PI_2))
         }
         ctx!.addPath(path)
         ctx!.strokePath()

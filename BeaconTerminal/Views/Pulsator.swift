@@ -6,7 +6,7 @@ internal let kPulsatorAnimationKey = "pulsator"
 
 public class Pulsator: CAReplicatorLayer {
     
-    private let pulse = CALayer()
+    let pulse = CALayer()
     private var animationGroup: CAAnimationGroup!
     private var alpha: CGFloat = 0.45
     
@@ -109,12 +109,14 @@ public class Pulsator: CAReplicatorLayer {
                                                          object: nil)
     }
     
-    override public init(layer: AnyObject) {
-        super.init(layer: layer)
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    override init(layer: Any) {
+        super.init(layer: layer)
     }
     
     deinit {
@@ -139,7 +141,8 @@ public class Pulsator: CAReplicatorLayer {
         let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
         opacityAnimation.duration = animationDuration
         opacityAnimation.values = [alpha, alpha * 0.5, 0.0]
-        opacityAnimation.keyTimes = [0.0, keyTimeForHalfOpacity, 1.0]
+        
+        opacityAnimation.keyTimes = [0.0, NSNumber(value: keyTimeForHalfOpacity), 1.0]
         
         animationGroup = CAAnimationGroup()
         animationGroup.animations = [scaleAnimation, opacityAnimation]
@@ -202,7 +205,7 @@ public class Pulsator: CAReplicatorLayer {
 extension Pulsator: CAAnimationDelegate {
     
     public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if pulse.animationKeys()?.count > 0 {
+        if (pulse.animationKeys()?.count)! > 0 {
             pulse.removeAllAnimations()
         }
         pulse.removeFromSuperlayer()

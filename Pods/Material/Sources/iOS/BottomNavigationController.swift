@@ -32,8 +32,8 @@ import UIKit
 
 public class BottomNavigationFadeAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransitioning {
 	public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-		let fromView : UIView = transitionContext.view(forKey: UITransitionContextFromViewKey)!
-		let toView : UIView = transitionContext.view(forKey: UITransitionContextToViewKey)!
+		let fromView : UIView = transitionContext.view(forKey: UITransitionContextViewKey.from)!
+		let toView : UIView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
 		toView.alpha = 0
 		
 		transitionContext.containerView.addSubview(fromView)
@@ -60,7 +60,7 @@ public enum BottomNavigationTransitionAnimation: Int {
 }
 
 @IBDesignable
-public class BottomNavigationController : UITabBarController, UITabBarControllerDelegate {
+open class BottomNavigationController : UITabBarController, UITabBarControllerDelegate {
 	/// The transition animation to use when selecting a new tab.
 	public var transitionAnimation: BottomNavigationTransitionAnimation = .fade
 	
@@ -85,12 +85,12 @@ public class BottomNavigationController : UITabBarController, UITabBarController
 		super.init(nibName: nil, bundle: nil)
 	}
 	
-	public override func viewDidLoad() {
+	open override func viewDidLoad() {
 		super.viewDidLoad()
 		prepareView()
 	}
 	
-	public override func viewWillLayoutSubviews() {
+	open override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		layoutSubviews()
 	}

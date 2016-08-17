@@ -27,8 +27,8 @@ class PreferencesViewController: UIViewController {
         super.viewDidLoad()
         prepareView()
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        
         if let preferencesTableViewController = segue.destination as? PreferencesTableViewController {
             preferencesTableViewController.speciesObservation = speciesObservation
         }

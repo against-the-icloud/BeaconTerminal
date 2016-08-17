@@ -31,7 +31,7 @@
 import UIKit
 
 @IBDesignable
-public class NavigationController : UINavigationController, UIGestureRecognizerDelegate {
+open class NavigationController : UINavigationController, UIGestureRecognizerDelegate {
 	/**
 	An initializer that initializes the object with a NSCoder object.
 	- Parameter aDecoder: A NSCoder instance.
@@ -58,7 +58,7 @@ public class NavigationController : UINavigationController, UIGestureRecognizerD
 		setViewControllers([rootViewController], animated: false)
 	}
 	
-	public override func viewWillAppear(_ animated: Bool) {
+	open override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		if let v = interactivePopGestureRecognizer {
 			if let x = navigationDrawerController {
@@ -72,12 +72,12 @@ public class NavigationController : UINavigationController, UIGestureRecognizerD
 		}
 	}
 	
-	public override func viewDidLoad() {
+	open override func viewDidLoad() {
 		super.viewDidLoad()
 		prepareView()
 	}
 	
-	public override func viewDidAppear(_ animated: Bool) {
+	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		// Load the initial topItem.
 		if let v = navigationBar as? NavigationBar {

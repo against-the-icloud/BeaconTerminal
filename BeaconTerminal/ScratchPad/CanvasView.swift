@@ -95,8 +95,8 @@ class CanvasView: DropTargetView {
 
         frozenImage = frozenImage ?? frozenContext.makeImage()
         
-        if let frozenImage = frozenImage {
-            context.draw(in: bounds, image: frozenImage)
+        if frozenImage != nil {
+            //context.draw(in: bounds, image: frozenImage)
         }
         
         for line in lines {

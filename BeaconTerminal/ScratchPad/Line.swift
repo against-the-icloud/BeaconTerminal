@@ -144,31 +144,31 @@ class Line: NSObject {
                 }
             }
             
-            let location = usePreciseLocation ? point.preciseLocation : point.location
-            let priorLocation = usePreciseLocation ? priorPoint.preciseLocation : priorPoint.location
+            _ = usePreciseLocation ? point.preciseLocation : point.location
+            _ = usePreciseLocation ? priorPoint.preciseLocation : priorPoint.location
             
             context.setStrokeColor(color.cgColor)
             
             context.beginPath()
             
-            context.moveTo(x: priorLocation.x, y: priorLocation.y)
-            context.addLineTo(x: location.x, y: location.y)
-            
+//            context.move(x: priorLocation.x, y: priorLocation.y)
+//            context.addLine(x: location.x, y: location.y)
+//            
             context.setLineWidth(point.magnitude)
             context.strokePath()
             
             // Draw azimuith and elevation on all non-coalesced points when debugging.
             if isDebuggingEnabled && !pointType.contains(.Coalesced) && !pointType.contains(.Predicted) && !pointType.contains(.Finger) {
                 context.beginPath()
-                context.setStrokeColor(UIColor.red.cgColor)
-                context.setLineWidth(0.5);
-                context.moveTo(x: location.x, y: location.y)
-                var targetPoint = CGPoint(x:0.5 + 10.0 * cos(point.altitudeAngle), y:0.0)
-                targetPoint = targetPoint.applying(CGAffineTransform(rotationAngle: point.azimuthAngle))
-                targetPoint.x += location.x
-                targetPoint.y += location.y
-                context.addLineTo(x: targetPoint.x, y: targetPoint.y)
-                context.strokePath()
+//                context.setStrokeColor(UIColor.red.cgColor)
+//                context.setLineWidth(0.5);
+//                context.move(x: location.x, y: location.y)
+//                var targetPoint = CGPoint(x:0.5 + 10.0 * cos(point.altitudeAngle), y:0.0)
+//                targetPoint = targetPoint.applying(CGAffineTransform(rotationAngle: point.azimuthAngle))
+//                targetPoint.x += location.x
+//                targetPoint.y += location.y
+//                context.addLine(x: targetPoint.x, y: targetPoint.y)
+//                context.strokePath()
             }
             
             maybePriorPoint = point

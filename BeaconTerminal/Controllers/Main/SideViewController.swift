@@ -16,8 +16,15 @@ class SideViewController: UITableViewController {
     }
 
     override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.white()
+        super.viewDidLoad()
+        //self.view.backgroundColor = UIColor.white()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
 
     // MARK: table
     
@@ -175,9 +182,33 @@ class SideViewController: UITableViewController {
                 break
             }
         }
-
-
-
+    }
+    
+    func showSelectedCell(with applicationState: ApplicationState) {
+        
+        var indexPath: IndexPath?
+        
+        switch applicationState {
+        case .objectGroup:
+            indexPath = IndexPath(row: 0, section: 1)
+            break
+        case .placeTerminal:
+            indexPath = IndexPath(row: 1, section: 0)
+            break
+        case .placeGroup:
+            indexPath = IndexPath(row: 0, section: 0)
+            break
+        default:
+            break
+        }
+        
+        if let indexPath = indexPath {
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.contentView.backgroundColor = Color.blueGrey.base
+           // cell?.selectedBackgroundView?.backgroundColor = Color.blueGrey.base
+            cell?.selectionStyle = .blue
+        }
+        
     }
     
     @IBAction func unwindToSideMenu(segue: UIStoryboardSegue) {

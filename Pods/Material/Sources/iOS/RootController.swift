@@ -31,7 +31,7 @@
 import UIKit
 
 @IBDesignable
-public class RootController: UIViewController {
+open class RootController: UIViewController {
 	/// Device status bar style.
 	public var statusBarStyle: UIStatusBarStyle {
 		get {
@@ -92,7 +92,7 @@ public class RootController: UIViewController {
 		prepareView()
 	}
 	
-	public override func viewWillLayoutSubviews() {
+	open override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		layoutSubviews()
 	}

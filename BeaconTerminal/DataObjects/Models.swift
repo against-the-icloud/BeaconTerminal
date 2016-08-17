@@ -241,7 +241,7 @@ extension Object {
                     let object = nestedListObject._rlmArray[index] as AnyObject
                     objects.append(object.toDictionary())
                 }
-                mutabledic.setObject(objects, forKey: prop.name)
+                mutabledic.setObject(objects, forKey: prop.name as NSCopying)
             }  else if let dateObject = self[prop.name] as? NSDate {
                 let dateString = dateObject.timeIntervalSince1970  //Perform the conversion you want here
                 mutabledic.setValue(dateString, forKey: prop.name)
