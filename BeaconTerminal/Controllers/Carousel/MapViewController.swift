@@ -16,6 +16,10 @@ class MapViewController: UIViewController {
     var previousSize: CGRect?
     
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     deinit {
         if notificationToken != nil {
             notificationToken?.stop()
@@ -24,28 +28,31 @@ class MapViewController: UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        prepareTabBarItem()
+
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        prepareTabBarItem()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()
+        prepareView()        
     }
     
     func prepareView() {
         
     }
     
-    func prepareNavigationView() {
-        self.navigationController?.navigationBar.tintColor = UIColor.blue
-        navigationItem.titleLabel.textAlignment = .left
-        navigationItem.titleLabel.textColor = Color.white
-        
-        navigationItem.detail = "SECTION:"
-        navigationItem.detailLabel.textAlignment = .left
-        navigationItem.detailLabel.textColor = Color.white
+    
+    // MARK: View Life Cycle
+    private func prepareTabBarItem() {
+        tabBarItem.title = Tabs.maps.rawValue
+        let iconImage = UIImage(named: "tb_map")!
+        tabBarItem.image = iconImage
+        Util.prepareTabBar(with: tabBarItem)
     }
 }

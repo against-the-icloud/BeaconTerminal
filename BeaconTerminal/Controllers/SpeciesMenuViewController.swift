@@ -331,6 +331,19 @@ class SpeciesMenuViewController: UIViewController {
         }
     }
     
+    func showSpeciesMenu(showHidden: Bool) {
+        for sv in UIApplication.shared.keyWindow!.subviews {
+            if sv.tag == speciesMenuTag {
+                if showHidden {
+                    sv.fadeIn()
+                } else {
+                    sv.fadeOut()
+                }
+                
+            }
+        }
+    }
+    
     func menuHandler() {
         if speciesMenuView!.menu.isOpened {
             closeMenu()

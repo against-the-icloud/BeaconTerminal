@@ -16,11 +16,16 @@ class AppBottomNavigationController: BottomNavigationController {
         }
     }
     
+    
+    override func prepareView() {
+        super.prepareView()
+        prepareNavigationItem()
+        prepareTabBar()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareNavigationItem()
         prepareNotification()
-        prepareTabBar()
     }
     
     /// Handles the menuButton.
@@ -81,6 +86,9 @@ class AppBottomNavigationController: BottomNavigationController {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     func changeTitle(with group: Group?, and section: Section?) {
         if let g = group, let gt = g.name, let ns = section?.name {
@@ -106,6 +114,37 @@ class AppBottomNavigationController: BottomNavigationController {
             navigationItem.detail = "SECTION: \(ns)"
             navigationItem.detailLabel.textAlignment = .left
             navigationItem.detailLabel.textColor = Color.white
+        }
+    }
+    
+    func selectTab(with index: Int) {
+        self.selectedIndex = index
+        tabBarController?.selectedIndex = index 
+        if let item = tabBar.selectedItem {
+            checkBadges(with: item.title!)
+        }
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.title == Tabs.maps.rawValue {
+            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+            BadgeUtil.badge(shouldShow: false)
+        } else {
+            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: true)
+            BadgeUtil.badge(shouldShow: true)
+        }
+    }
+    
+    func checkBadges(with title: String) {
+        switch title {
+        case Tabs.maps.rawValue:
+            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+            BadgeUtil.badge(shouldShow: false)
+            break
+        default:
+            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: true)
+            BadgeUtil.badge(shouldShow: true)
+            break
         }
     }
 }

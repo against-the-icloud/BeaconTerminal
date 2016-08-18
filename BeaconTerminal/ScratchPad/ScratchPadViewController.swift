@@ -28,7 +28,7 @@ class ScratchPadViewController: UIViewController {
     
     // MARK: View Life Cycle
     private func prepareTabBarItem() {
-        tabBarItem.title = "Scratch Pad"
+        tabBarItem.title = Tabs.scratchPad.rawValue
         let iconImage = UIImage(named: "ic_mode_edit_white")!
         tabBarItem.image = iconImage
         Util.prepareTabBar(with: tabBarItem)

@@ -54,10 +54,12 @@ class SideViewController: UITableViewController {
 
 
                 let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
+                
+                let mapViewController = storyboard.instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
 
                 let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
 
-                bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
+                bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController, mapViewController]
                 bottomNavigationController.selectedIndex = 0
 
                 //create top navigationbar

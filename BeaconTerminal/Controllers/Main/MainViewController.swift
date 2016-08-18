@@ -139,7 +139,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         switch state {
         case .placeGroup:
             prepareTabBarItem()
-            prepareNavigationItem(withTitle: "Place-Group")
+            //prepareNavigationItem(withTitle: "Place-Group")
         case .placeTerminal:
             print()
             break
@@ -184,7 +184,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     /// Prepare tabBarItem.
     private func prepareTabBarItem() {
-        tabBarItem.title = "Species"
+        tabBarItem.title = Tabs.species.rawValue
         let iconImage = UIImage(named: "ic_lightbulb_white")!
         tabBarItem.image = iconImage
         Util.prepareTabBar(with: tabBarItem)
@@ -348,7 +348,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     // Mark: ShowMap Action
     
     func showMap(gesture: UITapGestureRecognizer) {
-        performSegue(withIdentifier: "mapSegue", sender: self)
+        tabBarController?.selectedIndex = 2
+        getAppDelegate().bottomNavigationController.selectedIndex = 2
+        getAppDelegate().bottomNavigationController.checkBadges(with: Tabs.maps.rawValue)
+        
+        
     }
     
     // Mark: Segue

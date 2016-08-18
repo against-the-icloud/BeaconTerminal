@@ -32,7 +32,18 @@ class BadgeUtil {
                 subView.addGestureRecognizer(gesture)
             }
         }
-
+    }
+    
+    class func badge(shouldShow: Bool) {
+        for subView in (UIApplication.shared.keyWindow?.subviews)! {
+            if subView.tag == badgeTag {
+                if shouldShow {
+                    subView.fadeIn()
+                } else {
+                    subView.fadeOut()
+                }
+            }
+        }
     }
     
     class func showBadge(withType type: BadgeTypes) {
@@ -87,16 +98,14 @@ class BadgeUtil {
         badgeView?.backgroundColor = Color.blue.base
         badgeView?.tag = badgeTag
         
-        //round
+       
         
         badgeView?.cornerRadius = Double(cornerRadius)
-      
+    
        // adjustedRect.origin.x = 0
         //adjustedRect.origin.y = 0
         
         if shouldPad {
-            
-            
             let borderView = UIView(frame: (badgeView?.bounds.insetBy(dx: 2.0, dy: 2.0))!)
             borderView.backgroundColor = UIColor.white
             

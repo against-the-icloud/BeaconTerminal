@@ -36,6 +36,15 @@ enum ApplicationState {
     case objectGroup
 }
 
+enum Tabs : String {
+    case species = "Species"
+    case maps = "Place Map"
+    case scratchPad = "Scratch Pad"
+    
+    static let allValues = [species, maps, scratchPad]
+}
+
+
 //init states
 let placeTerminalState = State(ApplicationState.placeTerminal)
 let placeGroupState = State(ApplicationState.placeGroup)
@@ -110,6 +119,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     }
     
     func prepareSubviews() -> AppNavigationDrawerController {
+        
+//        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
+//        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+//        let menuController: AppMenuController = AppMenuController(rootViewController: navigationController)
+//        let statusBarController: StatusBarController = StatusBarController(rootViewController: menuController)
+//        let navigationDrawerController: AppNavigationDrawerController = AppNavigationDrawerController(rootViewController: statusBarController, leftViewController: AppLeftViewController())
+        
+        
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController

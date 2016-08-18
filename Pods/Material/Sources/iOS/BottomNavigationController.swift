@@ -127,7 +127,7 @@ open class BottomNavigationController : UITabBarController, UITabBarControllerDe
 	The super.prepareView method should always be called immediately
 	when subclassing.
 	*/
-	public func prepareView() {
+	open func prepareView() {
 		view.clipsToBounds = true
 		view.contentScaleFactor = Device.scale
 		delegate = self
