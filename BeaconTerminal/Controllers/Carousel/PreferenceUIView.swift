@@ -55,11 +55,9 @@ class PreferenceUIView: UIView {
                 break
             case .Update(let preferences, _, _, let modifications):
                 if !modifications.isEmpty {
-                    
                     for index in modifications {
                         self.updateLabels(preference: preferences[index])
                     }
-                    
                 }
                 break
             case .Error(let error):
@@ -75,7 +73,15 @@ class PreferenceUIView: UIView {
             for label in labels {
                 //look up the preference
                 if preference.type == label.preferenceType {
-                    label.text = preference.value
+                    if let value = preference.value {
+                        if value.isEmpty {
+                            label.text = "Not ready to report"
+                        } else {
+                            label.text = value
+                        }
+                    } else {
+                        label.text = "Not ready to report"
+                    }
                 }
                 
             }

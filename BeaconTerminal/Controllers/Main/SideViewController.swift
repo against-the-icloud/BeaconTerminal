@@ -75,18 +75,22 @@ class SideViewController: UITableViewController {
                             self?.navigationDrawerController?.closeLeftView()
                         })
             case 1:
-                //place terminal
+                
+                
+                // Mark: place terminal
 
 
                 getAppDelegate().changeSystemStateTo(ApplicationState.placeTerminal)
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
+                let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
+                let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
 
-                let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainViewController)
+                let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
 
+                BadgeUtil.badge(shouldShow: false)
+                getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
                 
-                navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
+                navigationDrawerController!.transitionFromRootViewController(toViewController: terminalViewController,
                         duration: 0,
                         options: [],
                         animations: nil,

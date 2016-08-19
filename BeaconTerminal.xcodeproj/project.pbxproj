@@ -11,7 +11,10 @@
 		700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */; };
 		701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */; };
 		701841011D6041AF003921A1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701841001D6041AF003921A1 /* MapViewController.swift */; };
-		70389A091D5CEDE6005DF200 /* LoginGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70389A081D5CEDE6005DF200 /* LoginGroupTableViewController.swift */; };
+		7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7031DB191D65E18B000DCC61 /* Terminal.storyboard */; };
+		7031DB1C1D65E3E5000DCC61 /* TerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */; };
+		7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */; };
+		7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */; };
 		70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */; };
 		70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
@@ -32,7 +35,7 @@
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
-		70C1CF361D592E2800CB687E /* LoginSectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionTableViewController.swift */; };
+		70C1CF361D592E2800CB687E /* LoginSectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */; };
 		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D142691D414E2700A588B3 /* DragUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D142681D414E2700A588B3 /* DragUtil.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
@@ -41,6 +44,8 @@
 		70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F801CFCF03D006F6997 /* DragViewController.swift */; };
 		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
 		70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D84A0B1D343125003C36DF /* DraggableSpeciesImageView.swift */; };
+		70D9C1B21D6650B700FAF080 /* LoginGroupCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B11D6650B700FAF080 /* LoginGroupCollectionViewController.swift */; };
+		70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */; };
 		70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */; };
 		70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */; };
 		70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */; };
@@ -85,7 +90,10 @@
 		700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		701841001D6041AF003921A1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		70389A081D5CEDE6005DF200 /* LoginGroupTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupTableViewController.swift; path = Login/LoginGroupTableViewController.swift; sourceTree = "<group>"; };
+		7031DB191D65E18B000DCC61 /* Terminal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Terminal.storyboard; sourceTree = "<group>"; };
+		7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalViewController.swift; path = Terminal/TerminalViewController.swift; sourceTree = "<group>"; };
+		7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCollectionController.swift; path = Login/LoginSpeciesCollectionController.swift; sourceTree = "<group>"; };
+		7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCell.swift; path = Login/LoginSpeciesCell.swift; sourceTree = "<group>"; };
 		70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeUtil.swift; sourceTree = "<group>"; };
 		70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesMenuViewController.swift; path = BeaconTerminal/Controllers/SpeciesMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
@@ -106,7 +114,7 @@
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
-		70C1CF351D592E2800CB687E /* LoginSectionTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionTableViewController.swift; path = Login/LoginSectionTableViewController.swift; sourceTree = "<group>"; };
+		70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionCollectionViewController.swift; path = Login/LoginSectionCollectionViewController.swift; sourceTree = "<group>"; };
 		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
 		70D142681D414E2700A588B3 /* DragUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragUtil.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -115,6 +123,8 @@
 		70D62F801CFCF03D006F6997 /* DragViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragViewController.swift; sourceTree = "<group>"; };
 		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
 		70D84A0B1D343125003C36DF /* DraggableSpeciesImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableSpeciesImageView.swift; sourceTree = "<group>"; };
+		70D9C1B11D6650B700FAF080 /* LoginGroupCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupCollectionViewController.swift; path = Login/LoginGroupCollectionViewController.swift; sourceTree = "<group>"; };
+		70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupCell.swift; path = Login/LoginGroupCell.swift; sourceTree = "<group>"; };
 		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationDrawerController.swift; sourceTree = "<group>"; };
@@ -204,6 +214,15 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		7031DB181D65E156000DCC61 /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				7031DB191D65E18B000DCC61 /* Terminal.storyboard */,
+				7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */,
+			);
+			name = Terminal;
+			sourceTree = "<group>";
+		};
 		704204201CE8E98B00C09FD0 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,8 +261,11 @@
 		70C1CF341D592DEB00CB687E /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				70C1CF351D592E2800CB687E /* LoginSectionTableViewController.swift */,
-				70389A081D5CEDE6005DF200 /* LoginGroupTableViewController.swift */,
+				70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */,
+				70D9C1B11D6650B700FAF080 /* LoginGroupCollectionViewController.swift */,
+				7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */,
+				7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */,
+				70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -369,6 +391,7 @@
 		C0A7D28976CF55BCDC92A3AB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7031DB181D65E156000DCC61 /* Terminal */,
 				70C1CF341D592DEB00CB687E /* Login */,
 				C0A7DAF922A5401E5A9F4885 /* Main */,
 				70E8F41A1D162CA8007DF331 /* Setup */,
@@ -508,6 +531,7 @@
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
+				7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */,
 				708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,7 +596,7 @@
 				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
 				70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */,
 				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
-				70C1CF361D592E2800CB687E /* LoginSectionTableViewController.swift in Sources */,
+				70C1CF361D592E2800CB687E /* LoginSectionCollectionViewController.swift in Sources */,
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
 				7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */,
@@ -580,16 +604,21 @@
 				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
+				70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
 				70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */,
+				7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */,
 				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
 				70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */,
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
+				7031DB1C1D65E3E5000DCC61 /* TerminalViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
 				70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */,
 				70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */,
+				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
+				70D9C1B21D6650B700FAF080 /* LoginGroupCollectionViewController.swift in Sources */,
 				70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */,
 				70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */,
 				701841011D6041AF003921A1 /* MapViewController.swift in Sources */,
@@ -598,7 +627,6 @@
 				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
-				70389A091D5CEDE6005DF200 /* LoginGroupTableViewController.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,

@@ -71,13 +71,13 @@ class RelationshipDropView: DropTargetView {
     func rearrangeSpeciesViews() {
         let size : CGFloat = 75.0                
         if self.frame.width > 0.0 {
-            LOG.debug("*** frame is \(self.frame)")
+            //LOG.debug("*** frame is \(self.frame)")
             for sv in self.subviews where ((sv as? DraggableSpeciesImageView) != nil) {
                 let point = Util.generateRandomPoint(UInt32(self.frame.size.width - CGFloat(size)), maxYValue: UInt32(self.frame.size.height - CGFloat(size)))
                 sv.center = point
             }
         } else {
-            LOG.debug("*** ZERO FRAME \(self.frame)")
+            //LOG.debug("*** ZERO FRAME \(self.frame)")
         }
     }
     
