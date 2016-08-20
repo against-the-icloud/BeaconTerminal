@@ -242,6 +242,7 @@ class RealmDataController {
                     relationship.toSpecies = allSpecies[i+2]
                     relationship.lastModified = Date()
                     relationship.note = "hello"
+                    relationship.attachments = "assets-library://asset/asset.JPG?id=106E99A1-4F6A-45A2-B320-B0AD4A8E8473&ext=JPG"
                     relationship.ecosystem = allEcosystems[Randoms.randomInt(0, 4)]
                     
                     
@@ -249,13 +250,13 @@ class RealmDataController {
                         //            case 0:
                     //                relationship.relationshipType = SpeciesRelationships.MUTUAL
                     case 0:
-                        relationship.relationshipType = SpeciesRelationships.PRODUCER
+                        relationship.relationshipType = RelationshipType.producer.rawValue
                     case 1:
-                        relationship.relationshipType = SpeciesRelationships.CONSUMER
+                        relationship.relationshipType = RelationshipType.consumer.rawValue
                     case 3:
-                        relationship.relationshipType = SpeciesRelationships.COMPLETES
+                        relationship.relationshipType = RelationshipType.competes.rawValue
                     default:
-                        relationship.relationshipType = SpeciesRelationships.CONSUMER
+                        relationship.relationshipType = RelationshipType.consumer.rawValue
                     }
                     
                     so.relationships.append(relationship)
@@ -313,6 +314,7 @@ class RealmDataController {
             relationship.toSpecies = toSpecies
             relationship.lastModified = NSDate() as Date
             relationship.note = "NEW"
+            relationship.attachments = getRandomImage(index: Randoms.randomInt(0, 2))
             relationship.ecosystem = speciesObservation.ecosystem
             relationship.relationshipType = relationshipType
             speciesObservation.relationships.append(relationship)
@@ -320,7 +322,10 @@ class RealmDataController {
         }
     }
     
-    
+    func getRandomImage(index: Int) -> String {
+        let images = ["assets-library://asset/asset.PNG?id=E85187CB-3C8D-4B78-92DB-ABF10A7A628B&ext=PNG","assets-library://asset/asset.PNG?id=2D32238F-7ADE-4369-BD59-00BA39EC32B4&ext=PNG","assets-library://asset/asset.PNG?id=6E213370-44F0-4E06-A757-8A743D593539&ext=PNG"]
+        return images[index]
+    }
     
     func createSpeciesObservation(_ fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
@@ -339,6 +344,7 @@ class RealmDataController {
             relationship.toSpecies = allSpecies[i+2]
             relationship.lastModified = Date()
             relationship.note = "hello"
+            relationship.attachments = getRandomImage(index: Randoms.randomInt(0, 2))
             relationship.ecosystem = ecosystem
             
             
@@ -346,13 +352,13 @@ class RealmDataController {
                 //            case 0:
             //                relationship.relationshipType = SpeciesRelationships.MUTUAL
             case 0:
-                relationship.relationshipType = SpeciesRelationships.PRODUCER
+                relationship.relationshipType = RelationshipType.producer.rawValue
             case 1:
-                relationship.relationshipType = SpeciesRelationships.CONSUMER
+                relationship.relationshipType = RelationshipType.consumer.rawValue
             case 3:
-                relationship.relationshipType = SpeciesRelationships.COMPLETES
+                relationship.relationshipType = RelationshipType.competes.rawValue
             default:
-                relationship.relationshipType = SpeciesRelationships.CONSUMER
+                relationship.relationshipType = RelationshipType.consumer.rawValue
             }
             
             speciesObservation.relationships.append(relationship)
@@ -521,20 +527,26 @@ class RealmDataController {
         return foundSpecies
     }
     
-    static func generateImageFileNameFromIndex(_ index: Int) -> String {
+    static func generateImageFileNameFromIndex(_ index: Int, isHighlighted: Bool) -> String {
         var imageName = ""
+        
+        var highlight = ""
+        
+        if !isHighlighted {
+            highlight = "_0"
+        }
+        
         if index < 10 {
-            
-            imageName = "species_0\(index).png"
+            imageName = "species_0\(index)\(highlight).png"
         } else {
             
-            imageName = "species_\(index).png"
+            imageName = "species_\(index)\(highlight).png"
         }
         return imageName
     }
     
-    static func generateImageForSpecies(_ index: Int) -> UIImage? {
-        let imageName = self.generateImageFileNameFromIndex(index)
+    static func generateImageForSpecies(_ index: Int, isHighlighted: Bool) -> UIImage? {
+        let imageName = self.generateImageFileNameFromIndex(index, isHighlighted: isHighlighted)
         return UIImage(named: imageName)
     }
     

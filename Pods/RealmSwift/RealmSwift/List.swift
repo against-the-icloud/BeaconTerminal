@@ -491,8 +491,8 @@ extension List : RealmCollection, RangeReplaceableCollection {
     - parameter subRange:    The range of elements to be replaced.
     - parameter newElements: The new elements to be inserted into the List.
     */
-    public func replaceSubrange<C : Collection>(_ subrange: Range<Int>,
-                                with newElements: C) where C.Iterator.Element == T {
+    public func replaceSubrange<C : Collection>(_ subrange: Range<Int>, with newElements: C)
+        where C.Iterator.Element == T {
         for _ in subrange.lowerBound..<subrange.upperBound {
             remove(objectAtIndex: subrange.lowerBound)
         }
@@ -545,13 +545,13 @@ extension List {
     public func index(of predicate: NSPredicate) -> Int? { fatalError() }
 
     @available(*, unavailable, renamed:"indexOfObject(for:_:)")
-    public func index(of predicateFormat: String, _ args: AnyObject...) -> Int? { fatalError() }
+    public func index(of predicateFormat: String, _ args: Any...) -> Int? { fatalError() }
 
     @available(*, unavailable, renamed:"filter(using:)")
     public func filter(_ predicate: NSPredicate) -> Results<T> { fatalError() }
 
     @available(*, unavailable, renamed:"filter(using:_:)")
-    public func filter(_ predicateFormat: String, _ args: AnyObject...) -> Results<T> { fatalError() }
+    public func filter(_ predicateFormat: String, _ args: Any...) -> Results<T> { fatalError() }
 
     @available(*, unavailable, renamed:"sorted(onProperty:ascending:)")
     public func sorted(_ property: String, ascending: Bool = true) -> Results<T> { fatalError() }

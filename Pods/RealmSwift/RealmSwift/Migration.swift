@@ -108,9 +108,9 @@ public final class Migration {
     - parameter block:           The block providing both the old and new versions of an object in this Realm.
     */
     public func enumerateObjects(ofType typeName: String, _ block: MigrationObjectEnumerateBlock) {
-        rlmMigration.enumerateObjects(typeName) {
-            block(/* oldObject: */ unsafeBitCast($0, to: MigrationObject.self),
-                  /* newObject: */ unsafeBitCast($1, to: MigrationObject.self))
+        rlmMigration.enumerateObjects(typeName) { oldObject, newObject in
+            block(unsafeBitCast(oldObject, to: MigrationObject.self),
+                  unsafeBitCast(newObject, to: MigrationObject.self))
         }
     }
 
@@ -193,7 +193,7 @@ internal func accessorMigrationBlock(_ migrationBlock: MigrationBlock)
         }
 
         // run migration
-        migrationBlock(/* migration: */ Migration(migration), /* oldSchemaVersion: */ oldVersion)
+        migrationBlock(Migration(migration), oldVersion)
     }
 }
 
@@ -204,7 +204,7 @@ extension Migration {
     public func enumerate(_ objectClassName: String, _ block: MigrationObjectEnumerateBlock) { }
 
     @available(*, unavailable, renamed:"createObject(ofType:populatedWith:)")
-    public func create(_ className: String, value: AnyObject = [:] as NSDictionary) -> MigrationObject {
+    public func create(_ className: String, value: Any = [:]) -> MigrationObject {
         fatalError()
     }
 

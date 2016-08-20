@@ -88,12 +88,10 @@ extension UIColor {
             throw UIColorInputError.missingHashMarkAsPrefix
         }
         
-        guard let hexString: String = rgba.substring(from: rgba.characters.index(rgba.startIndex, offsetBy: 1)),
-            var   hexValue:  UInt32 = 0
-            , Scanner(string: hexString).scanHexInt32(&hexValue) else {
-                throw UIColorInputError.unableToScanHexValue
-        }
+        let hexString: String = rgba.substring(from: rgba.characters.index(rgba.startIndex, offsetBy: 1))
+        var hexValue:  UInt32 = 0
         
+        Scanner(string: hexString).scanHexInt32(&hexValue)
         switch (hexString.characters.count) {
         case 3:
             self.init(hex3: UInt16(hexValue))

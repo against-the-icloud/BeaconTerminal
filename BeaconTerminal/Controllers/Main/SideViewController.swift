@@ -85,7 +85,7 @@ class SideViewController: UITableViewController {
                 let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
                 let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
 
-                let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+                //let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
 
                 BadgeUtil.badge(shouldShow: false)
                 getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)

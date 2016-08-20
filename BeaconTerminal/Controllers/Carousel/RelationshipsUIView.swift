@@ -61,7 +61,7 @@ class RelationshipsUIView: UIView {
                 dView.isUserInteractionEnabled = true
                 
                 if let species = relationship.toSpecies {
-                    let speciesImage = RealmDataController.generateImageForSpecies(species.index)
+                    let speciesImage = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
                     dView.image = speciesImage
                     dView.species = species
                     
@@ -73,29 +73,8 @@ class RelationshipsUIView: UIView {
                 }
                 
             }
-        
-        }
-    
-    }
-    
-
-    func ringColor() -> UIColor {
-        switch relationshipType! {
-        case "producer":
-            //left side mid
-            return UIColor.red
-        case "consumer":
-            //left side mid
-            return UIColor.blue
-        case "mutual":
-            //left side mid
-            return UIColor.brown
-        default:
-            //nothing
-            print()
+            
         }
         
-        return UIColor.yellow
     }
-    
 }

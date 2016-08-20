@@ -32,10 +32,10 @@ import UIKit
 
 extension UIViewController {
 	/**
-	A convenience property that provides access to the ToolbarController.
-	This is the recommended method of accessing the ToolbarController
-	through child UIViewControllers.
-	*/
+     A convenience property that provides access to the ToolbarController.
+     This is the recommended method of accessing the ToolbarController
+     through child UIViewControllers.
+     */
 	public var toolbarController: ToolbarController? {
 		var viewController: UIViewController? = self
 		while nil != viewController {
@@ -49,7 +49,7 @@ extension UIViewController {
 }
 
 @objc(ToolbarControllerDelegate)
-public protocol ToolbarControllerDelegate : MaterialDelegate {
+public protocol ToolbarControllerDelegate: MaterialDelegate {
 	/// Delegation method that executes when the floatingViewController will open.
 	@objc
     optional func toolbarControllerWillOpenFloatingViewController(toolbarController: ToolbarController)
@@ -68,18 +68,18 @@ public protocol ToolbarControllerDelegate : MaterialDelegate {
 }
 
 @objc(ToolbarController)
-public class ToolbarController: RootController {
+open class ToolbarController: RootController {
 	/// Internal reference to the floatingViewController.
 	private var internalFloatingViewController: UIViewController?
 	
 	/// Reference to the Toolbar.
-	public private(set) var toolbar: Toolbar!
+	open internal(set) var toolbar: Toolbar!
 	
 	/// Delegation handler.
 	public weak var delegate: ToolbarControllerDelegate?
 	
 	/// A floating UIViewController.
-	public var floatingViewController: UIViewController? {
+	open var floatingViewController: UIViewController? {
 		get {
 			return internalFloatingViewController
 		}
@@ -156,40 +156,42 @@ public class ToolbarController: RootController {
 	}
 	
 	/**
-	To execute in the order of the layout chain, override this
-	method. LayoutSubviews should be called immediately, unless you
-	have a certain need.
-	*/
-	public override func layoutSubviews() {
+     To execute in the order of the layout chain, override this
+     method. LayoutSubviews should be called immediately, unless you
+     have a certain need.
+     */
+	open override func layoutSubviews() {
 		super.layoutSubviews()
-		if let v: Toolbar = toolbar {
-			v.grid.layoutEdgeInsets.top = .phone == Device.userInterfaceIdiom && Device.isLandscape ? 0 : 20
-			
-			let h: CGFloat = Device.height
-			let w: CGFloat = Device.width
-			let p: CGFloat = v.intrinsicContentSize.height + v.grid.layoutEdgeInsets.top + v.grid.layoutEdgeInsets.bottom
-			
-			v.width = w + v.grid.layoutEdgeInsets.left + v.grid.layoutEdgeInsets.right
-			v.height = p
-			
-			rootViewController.view.frame.origin.y = p
-			rootViewController.view.frame.size.height = h - p
-		}
+		guard let v = toolbar else {
+            return
+        }
+        
+        v.grid.layoutEdgeInsets.top = .phone == Device.userInterfaceIdiom && Device.isLandscape ? 0 : 20
+        
+        let h = Device.height
+        let w = Device.width
+        let p = v.intrinsicContentSize.height + v.grid.layoutEdgeInsets.top + v.grid.layoutEdgeInsets.bottom
+        
+        v.width = w + v.grid.layoutEdgeInsets.left + v.grid.layoutEdgeInsets.right
+        v.height = p
+        
+        rootViewController.view.frame.origin.y = p
+        rootViewController.view.frame.size.height = h - p
 	}
 	
 	/**
-	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
-	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
-	when subclassing.
-	*/
-	public override func prepareView() {
+     Prepares the view instance when intialized. When subclassing,
+     it is recommended to override the prepareView method
+     to initialize property values and other setup operations.
+     The super.prepareView method should always be called immediately
+     when subclassing.
+     */
+	open override func prepareView() {
 		super.prepareView()
 		prepareToolbar()
 	}
 	
-	/// Prepares the Toolbar.
+	/// Prepares the toolbar.
 	private func prepareToolbar() {
 		if nil == toolbar {
 			toolbar = Toolbar()

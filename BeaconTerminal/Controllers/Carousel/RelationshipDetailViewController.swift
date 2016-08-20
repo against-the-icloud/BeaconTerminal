@@ -23,7 +23,7 @@ class RelationshipDetailViewController: UIViewController {
                 if let ecosystemIndex = r.ecosystem?.ecosystemNumber {
                     self.ecosystemIndex = ecosystemIndex
                 } else {
-                    self.ecosystemIndex = -1
+                    self.ecosystemIndex = 0
                 }
                 
                
@@ -106,12 +106,12 @@ class RelationshipDetailViewController: UIViewController {
             
             //from species
             
-            let fromSpeciesImage = RealmDataController.generateImageForSpecies(species.index)
+            let fromSpeciesImage = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
             
             fromSpecies.contentMode = .scaleAspectFit
             fromSpecies.image = fromSpeciesImage
             
-            let toSpeciesImage = RealmDataController.generateImageForSpecies((r.toSpecies?.index)!)
+            let toSpeciesImage = RealmDataController.generateImageForSpecies((r.toSpecies?.index)!, isHighlighted: true)
             
             self.toSpecies.contentMode = .scaleAspectFit
             self.toSpecies.image = toSpeciesImage

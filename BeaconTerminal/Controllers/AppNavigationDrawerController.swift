@@ -2,8 +2,11 @@ import UIKit
 import Material
 
 class AppNavigationDrawerController: NavigationDrawerController, NavigationDrawerControllerDelegate {
-	override func prepareView() {
-		super.prepareView()
-		delegate = self
-	}	
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        delegate = self
+
+    }
 }

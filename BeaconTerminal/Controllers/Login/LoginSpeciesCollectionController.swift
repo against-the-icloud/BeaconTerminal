@@ -79,7 +79,7 @@ extension LoginSpeciesCollectionViewController {
                 
         let foundSpecies = species[indexPath.row]
         
-        cell.speciesImageView.image = RealmDataController.generateImageForSpecies(foundSpecies.index)
+        cell.speciesImageView.image = RealmDataController.generateImageForSpecies(foundSpecies.index, isHighlighted: true)
         cell.speciesIndex = indexPath.row
         return cell
     }

@@ -399,7 +399,7 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 	}
 	
 	/// Layout subviews.
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		if opened {
 			hideStatusBar()
 		} else {

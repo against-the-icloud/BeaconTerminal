@@ -1,6 +1,16 @@
 import Foundation
 import RealmSwift
 
+
+enum RelationshipType: String {
+    case producer = "producer"
+    case consumer = "consumer"
+    case mutual = "mutual"
+    case competes = "competes"
+    static let allRelationships : [RelationshipType] = [.producer, .consumer, .mutual, .competes]
+}
+
+
 class Member: Object {
     dynamic var id : String? = nil
     dynamic var name : String? = nil
@@ -53,13 +63,6 @@ class SpeciesObservation: Object {
         return "id"
     }
     
-}
-
-struct SpeciesRelationships {
-    static let PRODUCER = "producer"
-    static let CONSUMER = "consumer"
-    static let COMPLETES = "completes"
-    static let MUTUAL = "mutual"
 }
 
 class Relationship: Object {

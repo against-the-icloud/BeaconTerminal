@@ -30,151 +30,49 @@
 
 import UIKit
 
-public class Material {
-    /// A reference to the UIView.
-    internal weak var view: UIView?
-    
-    /**
-     Initializer that takes in a UIView.
-     - Parameter view: A UIView reference.
-     */
-    internal init(view: UIView?) {
-        self.view = view
-    }
-    
-    /// A property that sets the cornerRadius of the backing layer.
-    public var cornerRadiusPreset: CornerRadiusPreset = .none {
-        didSet {
-            guard let v = view else {
-                return
-            }
-            v.cornerRadius = CornerRadiusPresetToValue(preset: cornerRadiusPreset)
-        }
-    }
-    
-    /// A preset property to set the borderWidth.
-    public var borderWidthPreset: BorderWidthPreset = .none {
-        didSet {
-            guard let v = view else {
-                return
-            }
-            v.borderWidth = BorderWidthPresetToValue(preset: borderWidthPreset)
-        }
-    }
-    
-    /// A preset property to set the shape.
-    public var shapePreset: ShapePreset = .none
-    
-    /// A preset value for Depth.
-    public var depthPreset: DepthPreset {
-        get {
-            return depth.preset
-        }
-        set(value) {
-            depth.preset = value
-        }
-    }
-
-    /// Grid reference.
-    public var depth: Depth = Depth.zero {
-        didSet {
-            guard let v = view else {
-                return
-            }
-            
-            v.layer.shadowOffset = depth.offset.asSize
-            v.layer.shadowOpacity = depth.opacity
-            v.layer.shadowRadius = depth.radius
-            v.layoutShadowPath()
-        }
-    }
-    
-    /// Enables automatic shadowPath sizing.
-    public var isShadowPathAutoSizing: Bool = false {
-        didSet {
-            if isShadowPathAutoSizing {
-                view?.layoutShadowPath()
-            }
-        }
-    }
-}
-
-/// A memory reference to the Depth instance for UIView extensions.
-private var MaterialKey: UInt8 = 0
-
 /// Grid extension for UIView.
 extension UIView {
-    /// Material Reference.
-    internal var material: Material {
-        get {
-            return AssociatedObject(base: self, key: &MaterialKey) {
-                return Material(view: self)
-            }
-        }
-        set(value) {
-            AssociateObject(base: self, key: &MaterialKey, value: value)
-        }
-    }
-    
     /// A property that accesses the frame.origin.x property.
     @IBInspectable
-    public var x: CGFloat {
+    open var x: CGFloat {
         get {
-            return frame.origin.x
+            return layer.x
         }
         set(value) {
-            frame.origin.x = value
-            
-            layoutShadowPath()
+            layer.x = value
         }
     }
     
     /// A property that accesses the frame.origin.y property.
     @IBInspectable
-    public var y: CGFloat {
+    open var y: CGFloat {
         get {
-            return frame.origin.y
+            return layer.y
         }
         set(value) {
-            frame.origin.y = value
-            
-            layoutShadowPath()
+            layer.y = value
         }
     }
     
     /// A property that accesses the frame.size.width property.
     @IBInspectable
-    public var width: CGFloat {
+    open var width: CGFloat {
         get {
-            return frame.size.width
+            return layer.width
         }
         set(value) {
-            frame.size.width = value
-            
-            if .none != shapePreset {
-                frame.size.height = value
-                layoutShape()
-            }
-            
-            layoutShadowPath()
+            layer.width = value
         }
     }
     
     /// A property that accesses the frame.size.height property.
     @IBInspectable
-    public var height: CGFloat {
+    open var height: CGFloat {
         get {
-            return frame.size.height
+            return layer.height
         }
         set(value) {
-            frame.size.height = value
-            
-            if .none != shapePreset {
-                frame.size.width = value
-                layoutShape()
-            }
-            
-            layoutShadowPath()
+            layer.height = value
         }
     }
     
@@ -183,21 +81,38 @@ extension UIView {
      width or height property is set, the other will be automatically adjusted
      to maintain the shape of the object.
      */
-    public var shapePreset: ShapePreset {
+    open var shapePreset: ShapePreset {
         get {
-            return material.shapePreset
+            return layer.shapePreset
         }
         set(value) {
-            material.shapePreset = value
-            
-            layoutShape()
-            layoutShadowPath()
+            layer.shapePreset = value
+        }
+    }
+    
+    /// A preset value for Depth.
+    open var depthPreset: DepthPreset {
+        get {
+            return layer.depthPreset
+        }
+        set(value) {
+            layer.depthPreset = value
+        }
+    }
+    
+    /// Grid reference.
+    open var depth: Depth {
+        get {
+            return layer.depth
+        }
+        set(value) {
+            layer.depth = value
         }
     }
     
     /// A property that accesses the backing layer's shadowColor.
     @IBInspectable
-    public var shadowColor: UIColor? {
+    open var shadowColor: UIColor? {
         get {
             guard let v = layer.shadowColor else {
                 return nil
@@ -212,7 +127,7 @@ extension UIView {
     
     /// A property that accesses the backing layer's shadowOffset.
     @IBInspectable
-    public var shadowOffset: CGSize {
+    open var shadowOffset: CGSize {
         get {
             return layer.shadowOffset
         }
@@ -223,7 +138,7 @@ extension UIView {
     
     /// A property that accesses the backing layer's shadowOpacity.
     @IBInspectable
-    public var shadowOpacity: Float {
+    open var shadowOpacity: Float {
         get {
             return layer.shadowOpacity
         }
@@ -234,7 +149,7 @@ extension UIView {
     
     /// A property that accesses the backing layer's shadowRadius.
     @IBInspectable
-    public var shadowRadius: CGFloat {
+    open var shadowRadius: CGFloat {
         get {
             return layer.shadowRadius
         }
@@ -245,7 +160,7 @@ extension UIView {
     
     /// A property that accesses the backing layer's shadowPath.
     @IBInspectable
-    public var shadowPath: CGPath? {
+    open var shadowPath: CGPath? {
         get {
             return layer.shadowPath
         }
@@ -256,55 +171,49 @@ extension UIView {
     
     /// Enables automatic shadowPath sizing.
     @IBInspectable
-    public var isShadowPathAutoSizing: Bool {
+    open var isShadowPathAutoSizing: Bool {
         get {
-            return material.isShadowPathAutoSizing
+            return layer.isShadowPathAutoSizing
         }
         set(value) {
-            material.isShadowPathAutoSizing = value
+            layer.isShadowPathAutoSizing = value
         }
     }
     
     /// A property that sets the cornerRadius of the backing layer.
-    public var cornerRadiusPreset: CornerRadiusPreset {
+    open var cornerRadiusPreset: CornerRadiusPreset {
         get {
-            return material.cornerRadiusPreset
+            return layer.cornerRadiusPreset
         }
         set(value) {
-            material.cornerRadiusPreset = value
+            layer.cornerRadiusPreset = value
         }
     }
     
     /// A property that accesses the layer.cornerRadius.
     @IBInspectable
-    public var cornerRadius: CGFloat {
+    open var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
         }
         set(value) {
             layer.cornerRadius = value
-            
-            if .circle == shapePreset {
-                shapePreset = .none
-            } else {
-                layoutShadowPath()
-            }
         }
     }
     
     /// A preset property to set the borderWidth.
-    public var borderWidthPreset: BorderWidthPreset {
+    open var borderWidthPreset: BorderWidthPreset {
         get {
-            return material.borderWidthPreset
+            return layer.borderWidthPreset
         }
         set(value) {
-            material.borderWidthPreset = value
+            layer.borderWidthPreset = value
         }
     }
     
     /// A property that accesses the layer.borderWith.
     @IBInspectable
-    public var borderWidth: CGFloat {
+    open var borderWidth: CGFloat {
         get {
             return layer.borderWidth
         }
@@ -315,7 +224,7 @@ extension UIView {
     
     /// A property that accesses the layer.borderColor property.
     @IBInspectable
-    public var borderColor: UIColor? {
+    open var borderColor: UIColor? {
         get {
             guard let v = layer.borderColor else {
                 return nil
@@ -329,7 +238,7 @@ extension UIView {
     
     /// A property that accesses the layer.position property.
     @IBInspectable
-    public var position: CGPoint {
+    open var position: CGPoint {
         get {
             return layer.position
         }
@@ -340,7 +249,7 @@ extension UIView {
     
     /// A property that accesses the layer.zPosition property.
     @IBInspectable
-    public var zPosition: CGFloat {
+    open var zPosition: CGFloat {
         get {
             return layer.zPosition
         }
@@ -354,17 +263,8 @@ extension UIView {
      view's backing layer.
      - Parameter animation: A CAAnimation instance.
      */
-    public func animate(animation: CAAnimation) {
-        if let a = animation as? CABasicAnimation {
-            a.fromValue = (nil == layer.presentation() ? layer : layer.presentation()!).value(forKeyPath: a.keyPath!)
-        }
-        if let a = animation as? CAPropertyAnimation {
-            layer.add(a, forKey: a.keyPath!)
-        } else if let a = animation as? CAAnimationGroup {
-            layer.add(a, forKey: nil)
-        } else if let a = animation as? CATransition {
-            layer.add(a, forKey: kCATransition)
-        }
+    open func animate(animation: CAAnimation) {
+        layer.animate(animation: animation)
     }
     
     /**
@@ -375,48 +275,17 @@ extension UIView {
      because it was completed or interrupted. True if completed, false
      if interrupted.
      */
-    public func animationDidStop(_ animation: CAAnimation, finished flag: Bool) {
-        if let a = animation as? CAPropertyAnimation {
-            if let b = a as? CABasicAnimation {
-                if let v = b.toValue {
-                    if let k = b.keyPath {
-                        layer.setValue(v, forKeyPath: k)
-                        layer.removeAnimation(forKey: k)
-                    }
-                }
-            }
-        } else if let a = animation as? CAAnimationGroup {
-            for x in a.animations! {
-                animationDidStop(x, finished: true)
-            }
-        }
+    open func animationDidStop(_ animation: CAAnimation, finished flag: Bool) {
+        layer.animationDidStop(animation, finished: flag)
     }
     
     /// Manages the layout for the shape of the view instance.
-    public func layoutShape() {
-        if .none != shapePreset {
-            if width < height {
-                frame.size.width = height
-            } else if width > height {
-                frame.size.height = width
-            }
-        }
-        
-        if .circle == shapePreset {
-            layer.cornerRadius = width / 2
-        }
+    open func layoutShape() {
+        layer.layoutShape()
     }
     
     /// Sets the shadow path.
-    public func layoutShadowPath() {
-        if isShadowPathAutoSizing {
-            if .none == depthPreset {
-                shadowPath = nil
-            } else if nil == shadowPath {
-                shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-            } else {
-                animate(animation: Animation.shadowPath(path: UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath, duration: 0))
-            }
-        }
+    open func layoutShadowPath() {
+        layer.layoutShadowPath()
     }
 }

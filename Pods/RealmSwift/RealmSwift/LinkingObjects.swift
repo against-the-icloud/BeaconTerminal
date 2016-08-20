@@ -301,7 +301,7 @@ public final class LinkingObjects<T: Object>: LinkingObjectsBase {
      - returns: The sum of the given property over all objects in the collection.
      */
     public func sum<U: AddableType>(ofProperty property: String) -> U {
-        return U.bridging(rlmResults.sum(ofProperty: property))
+        return U.bridging(objCValue: rlmResults.sum(ofProperty: property))
     }
 
     /**
@@ -432,13 +432,13 @@ extension LinkingObjects {
     public func index(of predicate: NSPredicate) -> Int? { fatalError() }
 
     @available(*, unavailable, renamed:"indexOfObject(for:_:)")
-    public func index(of predicateFormat: String, _ args: AnyObject...) -> Int? { fatalError() }
+    public func index(of predicateFormat: String, _ args: Any...) -> Int? { fatalError() }
 
     @available(*, unavailable, renamed:"filter(using:)")
     public func filter(_ predicate: NSPredicate) -> Results<T> { fatalError() }
 
     @available(*, unavailable, renamed:"filter(using:_:)")
-    public func filter(_ predicateFormat: String, _ args: AnyObject...) -> Results<T> { fatalError() }
+    public func filter(_ predicateFormat: String, _ args: Any...) -> Results<T> { fatalError() }
 
     @available(*, unavailable, renamed:"sorted(onProperty:ascending:)")
     public func sorted(_ property: String, ascending: Bool = true) -> Results<T> { fatalError() }

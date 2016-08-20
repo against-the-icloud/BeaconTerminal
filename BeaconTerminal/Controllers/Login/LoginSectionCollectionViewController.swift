@@ -56,7 +56,7 @@ class LoginSectionCollectionViewController: UICollectionViewController {
         } else if segue.identifier == "speciesSegue" {
             let selectedCell = sender as? LoginGroupCell
             let selectedIndexPath = collectionView?.indexPath(for: selectedCell!)
-            let gvc = segue.destination as? LoginGroupCollectionViewController
+            let gvc = segue.destination as? LoginSpeciesCollectionViewController
             
             let selectedSection = sections[(selectedIndexPath?.row)!]
             gvc?.selectedSection = selectedSection

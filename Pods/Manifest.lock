@@ -10,8 +10,8 @@ PODS:
 
 DEPENDENCIES:
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
-  - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `jg-swift-3-beta-6`)
-  - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `jg-swift-3-beta-6`)
+  - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
+  - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
   - Transporter (from `https://github.com/DenHeadless/Transporter.git`, branch `swift3`)
   - XCGLogger (from `https://github.com/aperritano/XCGLogger.git`, branch `swift3_xcode8_6`)
 
@@ -20,11 +20,11 @@ EXTERNAL SOURCES:
     :branch: development
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :branch: jg-swift-3-beta-6
+    :branch: master
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :branch: jg-swift-3-beta-6
+    :branch: master
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   Transporter:
@@ -36,14 +36,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: 6c813dcfc5e56980d725955c45e9ca27e68bdd5d
+    :commit: 55ab6425d7b3abb714f0e5e1bd4580cf3d97cf35
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :commit: 2d7c60150da6998a083853bc8356db842b4e2263
+    :commit: ce49657c343c3c07e4359810f83c26350a7f1503
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :commit: 2d7c60150da6998a083853bc8356db842b4e2263
+    :commit: ce49657c343c3c07e4359810f83c26350a7f1503
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   Transporter:
@@ -55,11 +55,11 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Material: 61dcd49507c32d07c1557267ec360ce35bd0b1c5
-  Realm: 97aac1f75da832fce7d5fc89ffebee770b32997f
+  Realm: 2948cfa3a05b7acc446abc4c124d443df646c8de
   RealmSwift: 4816c8608630a9a00bba6d726bb30b4bab6dd6bf
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: 57f4a1da025ffe700872644e651e471b813aeadd
+PODFILE CHECKSUM: d7ccbd45a36a6f2a68b01d397d6f048bc2738cac
 
 COCOAPODS: 1.0.1

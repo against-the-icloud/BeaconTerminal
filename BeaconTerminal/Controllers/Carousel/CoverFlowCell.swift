@@ -11,13 +11,6 @@ import RealmSwift
 import UIKit
 import Material
 
-enum RelationshipType: String {
-    case producer = "producer"
-    case consumer = "consumer"
-    case mutual = "mutual"
-    case completes = "competes"
-}
-
 protocol PreferenceEditDelegate {
     func preferenceEdit(_ speciesObservation: SpeciesObservation, sender: UIButton)
 }
@@ -75,7 +68,7 @@ class CoverFlowCell: UICollectionViewCell {
         
         self.fromSpecies = fromSpecies
         
-        let speciesImage = RealmDataController.generateImageForSpecies(fromSpecies.index)
+        let speciesImage = RealmDataController.generateImageForSpecies(fromSpecies.index, isHighlighted: true)
         
         self.profileView.contentMode = .scaleAspectFit
         self.profileView.image = speciesImage

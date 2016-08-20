@@ -31,28 +31,28 @@
 import UIKit
 
 @IBDesignable
-open class NavigationController : UINavigationController, UIGestureRecognizerDelegate {
+open class NavigationController: UINavigationController, UIGestureRecognizerDelegate {
 	/**
-	An initializer that initializes the object with a NSCoder object.
-	- Parameter aDecoder: A NSCoder instance.
-	*/
+     An initializer that initializes the object with a NSCoder object.
+     - Parameter aDecoder: A NSCoder instance.
+     */
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
 	/**
-	An initializer that initializes the object with an Optional nib and bundle.
-	- Parameter nibNameOrNil: An Optional String for the nib.
-	- Parameter bundle: An Optional NSBundle where the nib is located.
-	*/
+     An initializer that initializes the object with an Optional nib and bundle.
+     - Parameter nibNameOrNil: An Optional String for the nib.
+     - Parameter bundle: An Optional NSBundle where the nib is located.
+     */
 	public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	
 	/**
-	An initializer that initializes the object with a rootViewController.
-	- Parameter rootViewController: A UIViewController for the rootViewController.
-	*/
+     An initializer that initializes the object with a rootViewController.
+     - Parameter rootViewController: A UIViewController for the rootViewController.
+     */
 	public override init(rootViewController: UIViewController) {
 		super.init(navigationBarClass: NavigationBar.self, toolbarClass: nil)
 		setViewControllers([rootViewController], animated: false)
@@ -88,25 +88,25 @@ open class NavigationController : UINavigationController, UIGestureRecognizerDel
 	}
 	
 	/**
-	Detects the gesture recognizer being used. This is necessary when using 
-	NavigationDrawerController. It eliminates the conflict in panning.
-	- Parameter gestureRecognizer: A UIGestureRecognizer to detect.
-	- Parameter touch: The UITouch event.
-	- Returns: A Boolean of whether to continue the gesture or not, true yes, false no.
-	*/
-	public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+     Detects the gesture recognizer being used. This is necessary when using
+     NavigationDrawerController. It eliminates the conflict in panning.
+     - Parameter gestureRecognizer: A UIGestureRecognizer to detect.
+     - Parameter touch: The UITouch event.
+     - Returns: A Boolean of whether to continue the gesture or not, true yes, false no.
+     */
+	open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 		return interactivePopGestureRecognizer == gestureRecognizer && nil != navigationBar.backItem
 	}
 	
 	/**
-	Delegation method that is called when a new UINavigationItem is about to be pushed.
-	This is used to prepare the transitions between UIViewControllers on the stack.
-	- Parameter navigationBar: A UINavigationBar that is used in the NavigationController.
-	- Parameter item: The UINavigationItem that will be pushed on the stack.
-	- Returns: A Boolean value that indicates whether to push the item on to the stack or not. 
-	True is yes, false is no.
-	*/
-	public func navigationBar(navigationBar: UINavigationBar, shouldPushItem item: UINavigationItem) -> Bool {
+     Delegation method that is called when a new UINavigationItem is about to be pushed.
+     This is used to prepare the transitions between UIViewControllers on the stack.
+     - Parameter navigationBar: A UINavigationBar that is used in the NavigationController.
+     - Parameter item: The UINavigationItem that will be pushed on the stack.
+     - Returns: A Boolean value that indicates whether to push the item on to the stack or not.
+     True is yes, false is no.
+     */
+	open func navigationBar(navigationBar: UINavigationBar, shouldPushItem item: UINavigationItem) -> Bool {
 		if let v = navigationBar as? NavigationBar {
 			let backButton = IconButton()
 			backButton.pulseColor = Color.white
@@ -133,13 +133,13 @@ open class NavigationController : UINavigationController, UIGestureRecognizerDel
 	}
 	
 	/**
-	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
-	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
-	when subclassing.
-	*/
-	public func prepareView() {
+     Prepares the view instance when intialized. When subclassing,
+     it is recommended to override the prepareView method
+     to initialize property values and other setup operations.
+     The super.prepareView method should always be called immediately
+     when subclassing.
+     */
+	open func prepareView() {
 		view.clipsToBounds = true
 		view.contentScaleFactor = Device.scale
 		

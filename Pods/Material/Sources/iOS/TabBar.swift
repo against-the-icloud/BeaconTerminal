@@ -36,24 +36,67 @@ public enum TabBarLineAlignment: Int {
 	case bottom
 }
 
-public class TabBar: View {
+open class TabBar: View {
 	/// A reference to the line UIView.
-	public private(set) var line: UIView!
+	open internal(set) var line: UIView!
 	
 	/// A value for the line alignment.
-	public var lineAlignment: TabBarLineAlignment = .bottom {
+	open var lineAlignment: TabBarLineAlignment = .bottom {
 		didSet {
 			layoutSubviews()
 		}
 	}
 	
 	/// Will render the view.
-	public var willRenderView: Bool {
-		return 0 < width
+	open var willRenderView: Bool {
+		return 0 < width && 0 < height && nil != superview
 	}
+    
+    /// A preset wrapper around contentInset.
+    open var contentEdgeInsetsPreset: EdgeInsetsPreset {
+        get {
+            return grid.contentEdgeInsetsPreset
+        }
+        set(value) {
+            grid.contentEdgeInsetsPreset = value
+        }
+    }
+    
+    /// A wrapper around grid.contentInset.
+    @IBInspectable
+    open var contentInset: EdgeInsets {
+        get {
+            return grid.contentEdgeInsets
+        }
+        set(value) {
+            grid.contentEdgeInsets = value
+        }
+    }
+    
+    /// A preset wrapper around interimSpace.
+    open var interimSpacePreset: InterimSpacePreset = .none {
+        didSet {
+            interimSpace = InterimSpacePresetToValue(preset: interimSpacePreset)
+        }
+    }
+    
+    /// A wrapper around grid.interimSpace.
+    @IBInspectable
+    open var interimSpace: InterimSpace {
+        get {
+            return grid.interimSpace
+        }
+        set(value) {
+            grid.interimSpace = value
+        }
+    }
 	
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: width, height: 44)
+    }
+    
 	/// Buttons.
-	public var buttons: [UIButton]? {
+	open var buttons: [UIButton]? {
 		didSet {
 			if let v: [UIButton] = oldValue {
 				for b in v {
@@ -70,10 +113,10 @@ public class TabBar: View {
 		}
 	}
 	
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		super.layoutSubviews()
 		if willRenderView {
-			if let v: [UIButton] = buttons {
+			if let v = buttons {
 				if 0 < v.count {
 					let columns: Int = grid.axis.columns / v.count
 					for b in v {
@@ -102,21 +145,22 @@ public class TabBar: View {
 	}
 	
 	/**
-	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
-	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
-	when subclassing.
-	*/
-	public override func prepareView() {
+     Prepares the view instance when intialized. When subclassing,
+     it is recommended to override the prepareView method
+     to initialize property values and other setup operations.
+     The super.prepareView method should always be called immediately
+     when subclassing.
+     */
+	open override func prepareView() {
 		super.prepareView()
-		autoresizingMask = .flexibleWidth
-		contentScaleFactor = Device.scale
-		prepareBottomLayer()
+        interimSpacePreset = .interimSpace1
+        contentEdgeInsetsPreset = .square1
+        autoresizingMask = .flexibleWidth
+        prepareLine()
 	}
 	
-	// Prepares the bottomLayer.
-	private func prepareBottomLayer() {
+	// Prepares the line.
+	private func prepareLine() {
 		line = UIView()
 		line.backgroundColor = Color.yellow.base
 		addSubview(line)
