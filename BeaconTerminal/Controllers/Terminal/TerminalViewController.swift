@@ -19,7 +19,6 @@ struct RelationshipResult {
     var relationshipType: RelationshipType?
 }
 
-
 class TerminalViewController: UIViewController {
     @IBOutlet var imageViews: [UIImageView]!
     
@@ -36,8 +35,6 @@ class TerminalViewController: UIViewController {
     
     var notificationTokens = [NotificationToken]()
     
-    var relationshipCount = 0
-    
     deinit {
         for token in notificationTokens {
             token.stop()
@@ -51,6 +48,10 @@ class TerminalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showSpeciesLogin()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func showSpeciesLogin() {
@@ -95,7 +96,6 @@ class TerminalViewController: UIViewController {
                     relationshipResult.speciesObservation = speciesObservations.first
                     relationshipResult.relationships = speciesObservations.first?.relationships.filter(using: "relationshipType = '\(relationshipType)'")
                     
-                    relationshipCount += (relationshipResult.relationships?.count)!
                     
                     distributeToImageViews(relationships: relationshipResult.relationships!)
                     relationshipResult.relationshipType = relationshipType
@@ -105,8 +105,7 @@ class TerminalViewController: UIViewController {
             
             //distribute the results to the appropriate controllers
             distributeToControllers()
-            
-            sectionLabel.text = "Reporting \(relationshipCount) relationships from \(section.groups.count) of 5 groups"
+  
        
             
         }
@@ -193,4 +192,9 @@ class TerminalViewController: UIViewController {
         rvc.relationshipType = relationshipType
         relationshipControllers.append(rvc)
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+ 
 }

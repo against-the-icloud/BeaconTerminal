@@ -2,7 +2,7 @@ import UIKit
 import RealmSwift
 import Material
 import XCGLogger
-//import Nutella
+import Nutella
 import Transporter
 
 let DEBUG = true
@@ -81,23 +81,23 @@ func getAppDelegate() -> AppDelegate {
 class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     var window: UIWindow?
-    //var nutella: Nutella?
+    var nutella: Nutella?
     var collectionView: UICollectionView?
     var speciesViewController: SpeciesMenuViewController = SpeciesMenuViewController()
     
     let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
     
-//    var beaconIDs = [
-//        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
-//        BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: Color.yellow.base),
-//        BeaconID(index: 2, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 15252, minor: 24173, beaconColor: Color.green.base)
-//    ]
-//    
+    //    var beaconIDs = [
+    //        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
+    //        BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: Color.yellow.base),
+    //        BeaconID(index: 2, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 15252, minor: 24173, beaconColor: Color.green.base)
+    //    ]
+    //
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-//        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
+        //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
         prepareDB()
-        //setupNutellaConnection(HOST)
+       // setupNutellaConnection(HOST)
         
         initStateMachine()
         
@@ -120,11 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     func prepareSubviews() -> AppNavigationDrawerController {
         
-//        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-//        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-//        let menuController: AppMenuController = AppMenuController(rootViewController: navigationController)
-//        let statusBarController: StatusBarController = StatusBarController(rootViewController: menuController)
-//        let navigationDrawerController: AppNavigationDrawerController = AppNavigationDrawerController(rootViewController: statusBarController, leftViewController: AppLeftViewController())
+        //        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
+        //        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+        //        let menuController: AppMenuController = AppMenuController(rootViewController: navigationController)
+        //        let statusBarController: StatusBarController = StatusBarController(rootViewController: menuController)
+        //        let navigationDrawerController: AppNavigationDrawerController = AppNavigationDrawerController(rootViewController: statusBarController, leftViewController: AppLeftViewController())
         
         
         
@@ -135,7 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        
+        navigationController.navigationBar.statusBarStyle = .lightContent
+
         // create drawer
         
         let navigationDrawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
@@ -171,14 +172,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
             }
             
             //checks
-            //nutella config
-            //            realmDataController?.checkNutellaConfigs()
-           _ = realmDataController?.checkGroups()
+//            nutella config
+            
+            //= realmDataController?.checkGroups()
             if let symConfig = realmDataController?.loadSystemConfiguration() {
                 realmDataController?.generateTestData()
                 let section = symConfig.sections[1]
                 let group = section.groups[1]
-             
+                
                 realmDataController?.updateUser(withGroup: group, section: section)
                 //update bottombar
                 //realmDataController?.updateBottomBar(withRuntime: runtime)
@@ -187,28 +188,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
     }
     
-    //    func setupNutellaConnection(_ host: String) {
-    //
-    //        let nutellaConfigs : Results<NutellaConfig> = realm!.objects(NutellaConfig).filter("id = '\(host)'")
-    //
-    //        if nutellaConfigs.count > 0 {
-    //
-    //            let config = nutellaConfigs[0]
-    //
-    //            nutella = Nutella(brokerHostname: config.host!,
-    //                              appId: config.appId!,
-    //                              runId: config.runId!,
-    //                              componentId: config.componentId!)
-    //            nutella?.netDelegate = self
-    //            nutella?.resourceId = config.resourceId
-    //
-    //            for channel in config.outChannels{
-    //                nutella?.net.subscribe(channel.name!)
-    //            }
-    //
-    //            nutella?.net.publish("echo_in", message: "READY!")
-    //        }
-    //    }
+    func setupNutellaConnection(_ host: String) {
+        realmDataController?.checkNutellaConfigs()
+        let nutellaConfigs : Results<NutellaConfig> = realm!.allObjects(ofType: NutellaConfig.self).filter(using: "id = '\(host)'")
+        
+        if nutellaConfigs.count > 0 {
+            
+            let config = nutellaConfigs[0]
+            
+            nutella = Nutella(brokerHostname: config.host!,
+                              appId: config.appId!,
+                              runId: config.runId!,
+                              componentId: config.componentId!)
+            nutella?.netDelegate = self
+            nutella?.resourceId = config.resourceId
+            
+            for channel in config.outChannels{
+                nutella?.net.subscribe(channel.name!)
+            }
+            
+            nutella?.net.publish("echo_in", message: "READY!" as AnyObject)
+        }
+    }
     
     func makeToast(_ message: String) {
         if let presentWindow = UIApplication.shared.keyWindow {
@@ -236,7 +237,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
             LOG.debug("We didn't transition")
         } else {
             //successful
-           
+            
         }
     }
     
@@ -266,11 +267,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     }
     
     func preparePlaceTerminal() {
-
+        
     }
     
     func preparePlaceGroup() {
-   
+        
     }
     
     func prepareObjectGroup() {
@@ -305,55 +306,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
 }
 
-//extension AppDelegate: NutellaNetDelegate {
-//
-//    /**
-//     Called when a message is received from a publish.
-//
-//     - parameter channel: The name of the Nutella chennal on which the message is received.
-//     - parameter message: The message.
-//     - parameter from: The actor name of the client that sent the message.
-//     */
-//    func messageReceived(_ channel: String, message: AnyObject, componentId: String?, resourceId: String?) {
-//        if let message = message as? String, componentId = componentId, resourceId = resourceId {
-//            let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
-//            LOG.debug(s)
-//            self.makeToast(s)
-//        }
-//    }
-//
-//    /**
-//     A response to a previos request is received.
-//
-//     - parameter channelName: The Nutella channel on which the message is received.
-//     - parameter requestName: The optional name of request.
-//     - parameter response: The dictionary/array/string containing the JSON representation.
-//     */
-//    func responseReceived(_ channelName: String, requestName: String?, response: AnyObject) {
-//        if let response = response as? String, requestName = requestName {
-//            let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
-//            LOG.debug(s)
-//            self.makeToast(s)
-//        }
-//    }
-//
-//    /**
-//     A request is received on a Nutella channel that was previously handled (with the handleRequest).
-//
-//     - parameter channelName: The name of the Nutella chennal on which the request is received.
-//     - parameter request: The dictionary/array/string containing the JSON representation of the request.
-//     */
-//    func requestReceived(_ channelName: String, request: AnyObject?, componentId: String?, resourceId: String?) -> AnyObject? {
-//
-//        if let request = request as? String, resourceId = resourceId, componentId = componentId {
-//            let s = "responseReceived \(channelName) request: \(request) componentId: \(componentId) resourceId: \(resourceId)"
-//            LOG.debug(s)
-//            self.makeToast(s)
-//        }
-//
-//        return nil
-//    }
-//}
+extension AppDelegate: NutellaNetDelegate {
+    
+    /**
+     Called when a message is received from a publish.
+     
+     - parameter channel: The name of the Nutella chennal on which the message is received.
+     - parameter message: The message.
+     - parameter from: The actor name of the client that sent the message.
+     */
+    func messageReceived(_ channel: String, message: AnyObject, componentId: String?, resourceId: String?) {
+        if let message = message as? String, let componentId = componentId, let resourceId = resourceId {
+            let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
+            LOG.debug(s)
+            self.makeToast(s)
+        }
+    }
+    
+    /**
+     A response to a previos request is received.
+     
+     - parameter channelName: The Nutella channel on which the message is received.
+     - parameter requestName: The optional name of request.
+     - parameter response: The dictionary/array/string containing the JSON representation.
+     */
+    func responseReceived(_ channelName: String, requestName: String?, response: AnyObject) {
+        if let response = response as? String, let requestName = requestName {
+            let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
+            LOG.debug(s)
+            self.makeToast(s)
+        }
+    }
+    
+    /**
+     A request is received on a Nutella channel that was previously handled (with the handleRequest).
+     
+     - parameter channelName: The name of the Nutella chennal on which the request is received.
+     - parameter request: The dictionary/array/string containing the JSON representation of the request.
+     */
+    func requestReceived(_ channelName: String, request: AnyObject?, componentId: String?, resourceId: String?) -> AnyObject? {
+        
+        if let request = request as? String, let resourceId = resourceId, let componentId = componentId {
+            let s = "responseReceived \(channelName) request: \(request) componentId: \(componentId) resourceId: \(resourceId)"
+            LOG.debug(s)
+            self.makeToast(s)
+        }
+        
+        return nil
+    }
+}
 //
 //extension AppDelegate: NutellaLocationDelegate {
 //    func resourceUpdated(_ resource: NLManagedResource) {

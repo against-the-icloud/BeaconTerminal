@@ -62,7 +62,7 @@ class LoginSectionCollectionViewController: UICollectionViewController {
             gvc?.selectedSection = selectedSection
             if (sections.count) > 0 {
                 let sectionName = sections[(selectedIndexPath?.row)!].name
-                gvc?.title = "Choose A Species"
+                gvc?.title = "Choose a Species"
                 navigationItem.backBarButtonItem?.tintColor = UIColor.white
                 navigationItem.backBarButtonItem?.title = sectionName
             }

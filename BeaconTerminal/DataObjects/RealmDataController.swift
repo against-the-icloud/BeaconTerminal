@@ -323,7 +323,7 @@ class RealmDataController {
     }
     
     func getRandomImage(index: Int) -> String {
-        let images = ["assets-library://asset/asset.PNG?id=E85187CB-3C8D-4B78-92DB-ABF10A7A628B&ext=PNG","assets-library://asset/asset.PNG?id=2D32238F-7ADE-4369-BD59-00BA39EC32B4&ext=PNG","assets-library://asset/asset.PNG?id=6E213370-44F0-4E06-A757-8A743D593539&ext=PNG"]
+        let images = ["assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG","assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG","assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG"]
         return images[index]
     }
     

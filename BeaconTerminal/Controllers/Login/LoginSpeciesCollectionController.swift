@@ -81,6 +81,7 @@ extension LoginSpeciesCollectionViewController {
         
         cell.speciesImageView.image = RealmDataController.generateImageForSpecies(foundSpecies.index, isHighlighted: true)
         cell.speciesIndex = indexPath.row
+        cell.speciesLabel.text = "Species \(indexPath.row)"
         return cell
     }
 

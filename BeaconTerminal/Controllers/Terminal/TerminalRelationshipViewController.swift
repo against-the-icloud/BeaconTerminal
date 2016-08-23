@@ -18,6 +18,9 @@ class TerminalRelationshipViewController: UIViewController {
     @IBOutlet var speciesCell: [TerminalSpeciesCell]!
     
     
+    var relationshipCount = 0
+
+    
     var relationshipType: RelationshipType?
     var relationshipResults: [RelationshipResult] = [RelationshipResult]()
     
@@ -52,6 +55,9 @@ class TerminalRelationshipViewController: UIViewController {
             
             //go through all the relationships
             if let relationships = rr.relationships {
+                
+                relationshipCount += (rr.relationships?.count)!
+
                 for r in relationships {
                     if let index = r.toSpecies?.index {
                         let terminalCell = speciesCell.filter({ (sc:TerminalSpeciesCell) -> Bool in
@@ -63,6 +69,11 @@ class TerminalRelationshipViewController: UIViewController {
                 }
             }
         }
+        
+        
+        
+        
+        relationshipStatusLabel.text = "Reporting \(relationshipCount) relationships from 5 of 5 groups"
     }
     
     // Mark: Gestures

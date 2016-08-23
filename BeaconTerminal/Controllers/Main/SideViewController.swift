@@ -64,6 +64,8 @@ class SideViewController: UITableViewController {
 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+                
+                navigationController.navigationBar.statusBarStyle = .lightContent
 
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
@@ -85,12 +87,16 @@ class SideViewController: UITableViewController {
                 let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
                 let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
 
-                //let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+                let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+                navigationController.isNavigationBarHidden = true
+                navigationController.navigationBar.statusBarStyle = .default
+                
+
 
                 BadgeUtil.badge(shouldShow: false)
                 getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
                 
-                navigationDrawerController!.transitionFromRootViewController(toViewController: terminalViewController,
+                navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
                         options: [],
                         animations: nil,
@@ -123,6 +129,8 @@ class SideViewController: UITableViewController {
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
+                navigationController.navigationBar.statusBarStyle = .lightContent
+
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                                                                              duration: 0,
                                                                              options: [],

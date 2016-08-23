@@ -297,6 +297,7 @@ extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINa
                     _ = PHAsset.fetchAssets(withALAssetURLs: [imageURL], options: nil)
                     attachmentImageUrl = imageURL.absoluteString
                     if let attachUrl =  attachmentImageUrl {
+                        LOG.debug("url \(attachUrl)")
                         self.attachments.insert(attachUrl, at: 0)
                         
                         UIImageWriteToSavedPhotosAlbum(image, self, #selector(RelationshipDetailViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
