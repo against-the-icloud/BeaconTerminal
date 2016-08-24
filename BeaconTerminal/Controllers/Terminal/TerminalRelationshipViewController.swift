@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 
 class TerminalRelationshipViewController: UIViewController {
@@ -17,10 +18,10 @@ class TerminalRelationshipViewController: UIViewController {
     
     @IBOutlet var speciesCell: [TerminalSpeciesCell]!
     
+    var selectedSpeciesCell: TerminalSpeciesCell?
     
     var relationshipCount = 0
 
-    
     var relationshipType: RelationshipType?
     var relationshipResults: [RelationshipResult] = [RelationshipResult]()
     
@@ -69,10 +70,7 @@ class TerminalRelationshipViewController: UIViewController {
                 }
             }
         }
-        
-        
-        
-        
+                            
         relationshipStatusLabel.text = "Reporting \(relationshipCount) relationships from 5 of 5 groups"
     }
     
@@ -80,27 +78,43 @@ class TerminalRelationshipViewController: UIViewController {
     
     func showResultPopover(_ sender: UITapGestureRecognizer) {
         if sender.view is TerminalSpeciesCell {
-            let tcell = super.view as? TerminalSpeciesCell
-            performSegue(withIdentifier: "resultsSegue", sender: tcell)
+            let tcell = sender.view as? TerminalSpeciesCell
+            self.selectedSpeciesCell = tcell
+            
+            performSegue(withIdentifier: "resultsSegue", sender: self)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "resultsSegue"?:
-            if let tcell = sender as? TerminalSpeciesCell {
-                
-                if let pop = segue.destination.popoverPresentationController {
-                    pop.sourceView = tcell
-                    pop.sourceRect = tcell.bounds
-                    pop.permittedArrowDirections = .any
-                    segue.destination.preferredContentSize = CGSize(width: 600, height: 612)
+            
+                if let terminalRelationshipController = segue.source as? TerminalRelationshipViewController, let fromSpecies = self.relationshipResults.first?.speciesObservation?.fromSpecies {
+                    
+                    let selectedSpeciesCell = terminalRelationshipController.selectedSpeciesCell
+
+                    if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let toSpecies = realmDataController?.findSpecies((selectedSpeciesCell?.speciesIndex!)!), let relationshipType = self.relationshipType
+                    {
+                        
+                        
+                        
+                        let title = "Comparison of \(fromSpecies.name) \(StringUtil.relationshipString(with: relationshipType)) \(toSpecies.name)"
+                        
+                        tcvc.title = title
+                        tcvc.navigationController?.navigationBar.tintColor = Util.flatBlack
+                        tcvc.navigationItem.backBarButtonItem?.tintColor = UIColor.white
+                        tcvc.doneButton.tintColor = UIColor.white
+                        tcvc.navigationController?.toolbar.tintColor =  Util.flatBlack
+                    }
+                    
+                    
                 }
-            }            
+        
+           
             break
         default:
-            print("you are nothing")
+            print("you know nothing")
         }
     }
-    
 }
+

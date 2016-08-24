@@ -29,7 +29,7 @@ let LOG: XCGLogger = {
 
 //state machine
 
-enum ApplicationState {
+enum ApplicationType {
     case start
     case placeTerminal
     case placeGroup
@@ -46,17 +46,17 @@ enum Tabs : String {
 
 
 //init states
-let placeTerminalState = State(ApplicationState.placeTerminal)
-let placeGroupState = State(ApplicationState.placeGroup)
-let objectGroupState = State(ApplicationState.objectGroup)
+let placeTerminalState = State(ApplicationType.placeTerminal)
+let placeGroupState = State(ApplicationType.placeGroup)
+let objectGroupState = State(ApplicationType.objectGroup)
 let applicationStateMachine = StateMachine(initialState: placeGroupState, states: [objectGroupState,placeTerminalState])
 //init events
 
-let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationState.objectGroup, ApplicationState.placeGroup],
-                               destinationValue: ApplicationState.placeTerminal)
+let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.objectGroup, ApplicationType.placeGroup],
+                               destinationValue: ApplicationType.placeTerminal)
 
-let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationState.objectGroup, ApplicationState.placeTerminal], destinationValue: ApplicationState.placeGroup)
-let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationState.placeGroup, ApplicationState.placeTerminal], destinationValue: ApplicationState.objectGroup)
+let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.placeGroup)
+let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.placeGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.objectGroup)
 
 var realmDataController : RealmDataController?
 
@@ -99,9 +99,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         prepareDB()
        // setupNutellaConnection(HOST)
         
-        initStateMachine()
         
-        prepareViews()
+        prepareViews(applicationType: ApplicationType.placeTerminal)
         
         
         
@@ -111,23 +110,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         return true
     }
     
-    func prepareViews() {
-        // Configure the window with the SideNavigationController as the root view controller
+    func prepareViews(applicationType: ApplicationType) {
         window = UIWindow(frame:UIScreen.main.bounds)
-        window?.rootViewController = prepareSubviews()
+        
+        var application: AppNavigationDrawerController?
+        
+        switch applicationType {
+        case .placeTerminal:
+            initStateMachine(applicaitonState: applicationType)
+            application = prepareTerminalUI()
+            break
+        case .placeGroup:
+            initStateMachine(applicaitonState: applicationType)
+            application = prepareBasicGroupUI()
+            break
+        default:
+            //object group
+            initStateMachine(applicaitonState: applicationType)
+            application = prepareBasicGroupUI()
+        }
+        
+        
+        // Configure the window with the SideNavigationController as the root view controller
+        window?.rootViewController = application
         window?.makeKeyAndVisible()
     }
-    
-    func prepareSubviews() -> AppNavigationDrawerController {
-        
-        //        let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-        //        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        //        let menuController: AppMenuController = AppMenuController(rootViewController: navigationController)
-        //        let statusBarController: StatusBarController = StatusBarController(rootViewController: menuController)
-        //        let navigationDrawerController: AppNavigationDrawerController = AppNavigationDrawerController(rootViewController: statusBarController, leftViewController: AppLeftViewController())
-        
-        
-        
+
+    func prepareBasicGroupUI() -> AppNavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
@@ -135,8 +144,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-        navigationController.navigationBar.statusBarStyle = .lightContent
-
+        navigationController.statusBarStyle = .lightContent
+        
         // create drawer
         
         let navigationDrawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
@@ -150,6 +159,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         return navigationDrawerController
     }
+    
+    func prepareTerminalUI() -> AppNavigationDrawerController{
+        let terminalStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
+        let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
+        
+        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+        let sideViewController = mainStoryBoard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
+        
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+        let navigationDrawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        
+        navigationController.isNavigationBarHidden = true
+        navigationController.statusBarStyle = .default
+        
+        BadgeUtil.badge(shouldShow: false)
+        getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+        sideViewController.showSelectedCell(with: checkApplicationState())
+        
+        return navigationDrawerController
+    }
+    
     
     func prepareDB() {
         
@@ -224,7 +254,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     }
     
     // MARK: StateMachine
-    func initStateMachine() {
+    func initStateMachine(applicaitonState: ApplicationType) {
         
         applicationStateMachine.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent])
         
@@ -232,16 +262,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         placeGroupState.didEnterState = { state in self.preparePlaceGroup() }
         objectGroupState.didEnterState = { state in self.prepareObjectGroup() }
         
-        //init with group termainal
-        if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
-            LOG.debug("We didn't transition")
-        } else {
-            //successful
-            
+        switch applicaitonState {
+        case .placeGroup:
+            if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
+                LOG.debug("We didn't transition")
+            }
+        case .placeTerminal:
+            if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
+                LOG.debug("We didn't transition")
+            }
+        default:
+            if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
+                LOG.debug("We didn't transition")
+            }
         }
     }
     
-    func changeSystemStateTo(_ state: ApplicationState) {
+    func changeSystemStateTo(_ state: ApplicationType) {
         
         
         switch state {
@@ -262,7 +299,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         }
     }
     
-    func checkApplicationState() -> ApplicationState {
+    func checkApplicationState() -> ApplicationType {
         return applicationStateMachine.currentState.value
     }
     

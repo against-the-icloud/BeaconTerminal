@@ -30,9 +30,21 @@
 
 import UIKit
 
+extension UINavigationController {
+    /// Device status bar style.
+    open var statusBarStyle: UIStatusBarStyle {
+        get {
+            return Device.statusBarStyle
+        }
+        set(value) {
+            Device.statusBarStyle = value
+        }
+    }
+}
+
 @IBDesignable
 open class NavigationController: UINavigationController, UIGestureRecognizerDelegate {
-	/**
+    /**
      An initializer that initializes the object with a NSCoder object.
      - Parameter aDecoder: A NSCoder instance.
      */
@@ -86,7 +98,7 @@ open class NavigationController: UINavigationController, UIGestureRecognizerDele
 			}
 		}
 	}
-	
+    
 	/**
      Detects the gesture recognizer being used. This is necessary when using
      NavigationDrawerController. It eliminates the conflict in panning.
@@ -108,11 +120,9 @@ open class NavigationController: UINavigationController, UIGestureRecognizerDele
      */
 	open func navigationBar(navigationBar: UINavigationBar, shouldPushItem item: UINavigationItem) -> Bool {
 		if let v = navigationBar as? NavigationBar {
-			let backButton = IconButton()
+            let backButton = IconButton(image: v.backButtonImage)
 			backButton.pulseColor = Color.white
-            backButton.setImage(v.backButtonImage, for: .normal)
-            backButton.setImage(v.backButtonImage, for: .highlighted)
-			backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
+            backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
 			
 			if var c = item.leftControls {
 				c.append(backButton)

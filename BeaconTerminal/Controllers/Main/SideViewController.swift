@@ -45,7 +45,7 @@ class SideViewController: UITableViewController {
             switch (indexPath as NSIndexPath).row {
             case 0:
                 
-                getAppDelegate().changeSystemStateTo(ApplicationState.placeGroup)
+                getAppDelegate().changeSystemStateTo(.placeGroup)
                 
                 //place group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -65,7 +65,7 @@ class SideViewController: UITableViewController {
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
-                navigationController.navigationBar.statusBarStyle = .lightContent
+                navigationController.statusBarStyle = .lightContent
 
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                         duration: 0,
@@ -82,14 +82,14 @@ class SideViewController: UITableViewController {
                 // Mark: place terminal
 
 
-                getAppDelegate().changeSystemStateTo(ApplicationState.placeTerminal)
+                getAppDelegate().changeSystemStateTo(.placeTerminal)
                 
                 let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
                 let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
 
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
                 navigationController.isNavigationBarHidden = true
-                navigationController.navigationBar.statusBarStyle = .default
+                navigationController.statusBarStyle = .default
                 
 
 
@@ -113,7 +113,7 @@ class SideViewController: UITableViewController {
             switch (indexPath as NSIndexPath).row {
             case 0:
                 
-                getAppDelegate().changeSystemStateTo(ApplicationState.objectGroup)
+                getAppDelegate().changeSystemStateTo(.objectGroup)
                 
                 //object group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -129,7 +129,7 @@ class SideViewController: UITableViewController {
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
-                navigationController.navigationBar.statusBarStyle = .lightContent
+                navigationController.statusBarStyle = .lightContent
 
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                                                                              duration: 0,
@@ -198,7 +198,7 @@ class SideViewController: UITableViewController {
         }
     }
     
-    func showSelectedCell(with applicationState: ApplicationState) {
+    func showSelectedCell(with applicationState: ApplicationType) {
         
         var indexPath: IndexPath?
         

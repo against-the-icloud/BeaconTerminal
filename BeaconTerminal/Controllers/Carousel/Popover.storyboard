@@ -363,11 +363,11 @@
             </objects>
             <point key="canvasLocation" x="338" y="-1090"/>
         </scene>
-        <!--Login Species Collection View Controller-->
+        <!--LoginSpeciesCollectionViewController-->
         <scene sceneID="ZVH-gc-H3a">
             <objects>
-                <collectionViewController storyboardIdentifier="loginSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="at7-XY-YOa" customClass="LoginSpeciesCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="Y2e-hw-qON">
+                <collectionViewController storyboardIdentifier="loginSpeciesCollectionViewController" title="LoginSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="at7-XY-YOa" customClass="LoginSpeciesCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Y2e-hw-qON">
                         <rect key="frame" x="0.0" y="44" width="320" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -395,7 +395,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="xS5-DE-OfE"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -410,10 +410,13 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="0.0"/>
+                                        <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -428,16 +431,19 @@
                         </connections>
                     </collectionView>
                     <toolbarItems>
-                        <barButtonItem title="Cancel" id="S5C-6z-vij">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="1TZ-Z1-6Ce"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Choose a Species" id="rBF-OG-IhO">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="S5C-6z-vij">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelAction:" destination="at7-XY-YOa" id="Gro-U7-2cA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="1TZ-Z1-6Ce"/>
-                    </toolbarItems>
+                    </navigationItem>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="512"/>
                     <connections>
@@ -453,17 +459,16 @@
         <!--LoginNavigationController-->
         <scene sceneID="P5h-w4-Z3b">
             <objects>
-                <navigationController storyboardIdentifier="loginNavigationController" title="LoginNavigationController" modalPresentationStyle="formSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="Hs1-HZ-BNG" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="loginNavigationController" title="LoginNavigationController" modalPresentationStyle="formSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hs1-HZ-BNG" sceneMemberID="viewController">
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
                     <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="512"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aQs-ja-HPW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.1019607843" green="0.1019607843" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="g3d-sr-aYf">
                         <rect key="frame" x="0.0" y="468" width="320" height="44"/>
@@ -478,11 +483,11 @@
             </objects>
             <point key="canvasLocation" x="282" y="930"/>
         </scene>
-        <!--Login Group Collection View Controller-->
+        <!--LoginGroupCollectionViewController-->
         <scene sceneID="Prp-r4-Eye">
             <objects>
-                <collectionViewController storyboardIdentifier="loginGroupCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="az7-JJ-joz" customClass="LoginGroupCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="fA8-m7-GUE">
+                <collectionViewController storyboardIdentifier="loginGroupCollectionViewController" title="LoginGroupCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="az7-JJ-joz" customClass="LoginGroupCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fA8-m7-GUE">
                         <rect key="frame" x="0.0" y="44" width="320" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -502,20 +507,14 @@
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="CGq-2r-HJl">
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ECOSYSTEM 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-xp-o4a">
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ECOSYSTEM 1" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="2" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-xp-o4a">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AG-Q2-gcD">
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Label">
-                                                            <attributes>
-                                                                <font key="NSFont" size="12" name=".SFNSDisplay-Regular"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="2" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8AG-Q2-gcD">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -537,13 +536,13 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -559,16 +558,19 @@
                         </connections>
                     </collectionView>
                     <toolbarItems>
-                        <barButtonItem title="Cancel" id="CVu-yN-J4i">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ur0-TF-QHa"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Choose Your Group" id="7Wb-l7-TSP">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="CVu-yN-J4i">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelAction:" destination="az7-JJ-joz" id="aT4-51-GvC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ur0-TF-QHa"/>
-                    </toolbarItems>
+                    </navigationItem>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d15-Ci-c3B" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="q4p-DO-irS" userLabel="Exit" sceneMemberID="exit"/>
@@ -579,8 +581,8 @@
         <scene sceneID="Uy7-ev-pEI">
             <objects>
                 <collectionViewController title="Login SectionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwI-3k-tFr" customClass="LoginSectionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="vN5-lh-QHi">
-                        <rect key="frame" x="0.0" y="44" width="320" height="424"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vN5-lh-QHi">
+                        <rect key="frame" x="0.0" y="44" width="320" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="YHz-8c-FUR">
@@ -598,7 +600,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ABCD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Lm-L6-2Oo">
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -613,13 +615,13 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -633,16 +635,16 @@
                         </connections>
                     </collectionView>
                     <toolbarItems>
-                        <barButtonItem title="Cancel" id="5Tr-a2-nfq">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="UjH-2N-q5R"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Choose Your Class" id="XGN-Ze-EkN">
+                        <barButtonItem key="backBarButtonItem" title="back" id="UUS-Bd-DTk"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="5Tr-a2-nfq">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelAction:" destination="MwI-3k-tFr" id="cOk-A0-2f1"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="UjH-2N-q5R"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Choose Your Class" id="XGN-Ze-EkN">
-                        <barButtonItem key="backBarButtonItem" title="back" id="UUS-Bd-DTk"/>
                     </navigationItem>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

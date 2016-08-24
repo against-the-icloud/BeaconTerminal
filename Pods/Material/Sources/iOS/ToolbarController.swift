@@ -49,7 +49,7 @@ extension UIViewController {
 }
 
 @objc(ToolbarControllerDelegate)
-public protocol ToolbarControllerDelegate: MaterialDelegate {
+public protocol ToolbarControllerDelegate {
 	/// Delegation method that executes when the floatingViewController will open.
 	@objc
     optional func toolbarControllerWillOpenFloatingViewController(toolbarController: ToolbarController)
@@ -168,8 +168,8 @@ open class ToolbarController: RootController {
         
         v.grid.layoutEdgeInsets.top = .phone == Device.userInterfaceIdiom && Device.isLandscape ? 0 : 20
         
-        let h = Device.height
-        let w = Device.width
+        let h = view.height
+        let w = view.width
         let p = v.intrinsicContentSize.height + v.grid.layoutEdgeInsets.top + v.grid.layoutEdgeInsets.bottom
         
         v.width = w + v.grid.layoutEdgeInsets.left + v.grid.layoutEdgeInsets.right
@@ -177,6 +177,8 @@ open class ToolbarController: RootController {
         
         rootViewController.view.frame.origin.y = p
         rootViewController.view.frame.size.height = h - p
+        
+        v.divider.reload()
 	}
 	
 	/**

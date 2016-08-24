@@ -38,12 +38,12 @@ class LoginGroupCell: UICollectionViewCell {
     }
     
     func prepareView() {
-        self.contentView.layer.cornerRadius = 10.0;
+        self.contentView.layer.cornerRadius = 5.0;
         self.contentView.layer.borderWidth = 1.0;
         self.contentView.layer.borderColor = UIColor.white.cgColor
         self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-        self.layer.shadowRadius = 2.0
+        self.layer.shadowRadius = 1.0
         self.layer.shadowOpacity = 0.9
         self.layer.masksToBounds = false
         self.layer.shadowPath = UIBezierPath(roundedRect:self.bounds, cornerRadius:self.contentView.layer.cornerRadius).cgPath

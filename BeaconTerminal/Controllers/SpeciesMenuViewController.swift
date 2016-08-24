@@ -284,7 +284,7 @@ class SpeciesMenuViewController: UIViewController {
                             })
                             
                         }
-  
+                        
                     }
                 }
             }
@@ -332,14 +332,17 @@ class SpeciesMenuViewController: UIViewController {
     }
     
     func showSpeciesMenu(showHidden: Bool) {
-        for sv in UIApplication.shared.keyWindow!.subviews {
-            if sv.tag == speciesMenuTag {
-                if showHidden {
-                    sv.fadeIn()
-                } else {
-                    sv.fadeOut()
+        if UIApplication.shared.keyWindow != nil {
+            
+            for sv in UIApplication.shared.keyWindow!.subviews {
+                if sv.tag == speciesMenuTag {
+                    if showHidden {
+                        sv.fadeIn()
+                    } else {
+                        sv.fadeOut()
+                    }
+                    
                 }
-                
             }
         }
     }

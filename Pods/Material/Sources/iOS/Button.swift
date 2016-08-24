@@ -39,38 +39,63 @@ open class Button: UIButton {
      allows the dropshadow effect on the backing layer, while clipping
      the image to a desired shape within the visualLayer.
      */
-	public private(set) var visualLayer: CAShapeLayer!
-	
-	/**
-     A base delegate reference used when subclassing View.
-     */
-	public weak var delegate: MaterialDelegate?
+	open private(set) var visualLayer: CAShapeLayer!
 	
 	/// An Array of pulse layers.
 	public private(set) lazy var pulseLayers = [CAShapeLayer]()
 	
 	/// The opacity value for the pulse animation.
-	@IBInspectable open var pulseOpacity: CGFloat = 0.25
+	@IBInspectable
+    open var pulseOpacity: CGFloat = 0.25
 	
 	/// The color of the pulse effect.
-	@IBInspectable open var pulseColor = Color.grey.base
+	@IBInspectable
+    open var pulseColor = Color.grey.base
 	
 	/// The type of PulseAnimation.
-	public var pulseAnimation: PulseAnimation = .pointWithBacking
+	public var pulseAnimation = PulseAnimation.pointWithBacking
 	
 	/// A property that accesses the backing layer's backgroundColor.
-	@IBInspectable open override var backgroundColor: UIColor? {
+	@IBInspectable
+    open override var backgroundColor: UIColor? {
 		didSet {
 			layer.backgroundColor = backgroundColor?.cgColor
 		}
 	}
 	
 	/// A preset property for updated contentEdgeInsets.
-	open var contentEdgeInsetsPreset: EdgeInsetsPreset = .none {
+	open var contentEdgeInsetsPreset = EdgeInsetsPreset.none {
 		didSet {
 			contentEdgeInsets = EdgeInsetsPresetToValue(preset: contentEdgeInsetsPreset)
 		}
 	}
+    
+    /// Sets the normal and highlighted image for the button.
+    @IBInspectable
+    open var image: UIImage? {
+        didSet {
+            setImage(image, for: .normal)
+            setImage(image, for: .highlighted)
+        }
+    }
+    
+    /// Sets the normal and highlighted title for the button.
+    @IBInspectable
+    open var title: String? {
+        didSet {
+            setTitle(title, for: .normal)
+            setTitle(title, for: .highlighted)
+        }
+    }
+    
+    /// Sets the normal and highlighted titleColor for the button.
+    @IBInspectable
+    open var titleColor: UIColor? {
+        didSet {
+            setTitleColor(titleColor, for: .normal)
+            setTitleColor(titleColor, for: .highlighted)
+        }
+    }
     
 	/**
      An initializer that initializes the object with a NSCoder object.
@@ -94,8 +119,46 @@ open class Button: UIButton {
 	
 	/// A convenience initializer.
 	public convenience init() {
-		self.init(frame: CGRect.zero)
+		self.init(frame: .zero)
 	}
+    
+    /**
+     A convenience initializer that acceps an image.
+     - Parameter image: A UIImage.
+    */
+    public convenience init(image: UIImage?) {
+        self.init()
+        prepare(with: image, tintColor: nil)
+    }
+    
+    /**
+     A convenience initializer that acceps an image and tintColor.
+     - Parameter image: A UIImage.
+     - Parameter tintColor: A UIColor.
+     */
+    public convenience init(image: UIImage?, tintColor: UIColor?) {
+        self.init()
+        prepare(with: image, tintColor: tintColor)
+    }
+    
+    /**
+     A convenience initializer that acceps a title.
+     - Parameter title: A String.
+     */
+    public convenience init(title: String?) {
+        self.init()
+        prepare(with: title, titleColor: nil)
+    }
+    
+    /**
+     A convenience initializer that acceps a title and titleColor.
+     - Parameter title: A String.
+     - Parameter titleColor: A UIColor.
+     */
+    public convenience init(title: String?, titleColor: UIColor?) {
+        self.init()
+        prepare(with: title, titleColor: titleColor)
+    }
 	
     open override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
@@ -185,4 +248,24 @@ open class Button: UIButton {
 		visualLayer.frame = bounds
 		visualLayer.cornerRadius = cornerRadius
 	}
+    
+    /**
+     Prepares the Button with an image and tintColor.
+     - Parameter image: A UIImage.
+     - Parameter tintColor: A UIColor.
+     */
+    private func prepare(with image: UIImage?, tintColor: UIColor?) {
+        self.image = image
+        self.tintColor = tintColor
+    }
+    
+    /**
+     Prepares the Button with a title and titleColor.
+     - Parameter title: A String.
+     - Parameter titleColor: A UIColor.
+     */
+    private func prepare(with title: String?, titleColor: UIColor?) {
+        self.title = title
+        self.titleColor = titleColor
+    }
 }

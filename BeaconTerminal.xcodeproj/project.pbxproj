@@ -50,6 +50,8 @@
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
 		70D3D7131D66B37500A57B92 /* TerminalSpeciesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */; };
 		70D3D7151D66C22B00A57B92 /* TerminalSpeciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */; };
+		70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */; };
+		70D4E2341D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2331D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift */; };
 		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
 		70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F801CFCF03D006F6997 /* DragViewController.swift */; };
 		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
@@ -152,6 +154,8 @@
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TerminalSpeciesCell.xib; path = Terminal/TerminalSpeciesCell.xib; sourceTree = "<group>"; };
 		70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalSpeciesCell.swift; path = Terminal/TerminalSpeciesCell.swift; sourceTree = "<group>"; };
+		70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalComparsionController.swift; path = Terminal/TerminalComparsionController.swift; sourceTree = "<group>"; };
+		70D4E2331D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalRelationshipDetailTableViewController.swift; sourceTree = "<group>"; };
 		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
 		70D62F801CFCF03D006F6997 /* DragViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragViewController.swift; sourceTree = "<group>"; };
 		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
@@ -251,7 +255,9 @@
 				7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */,
 				70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */,
 				70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */,
+				70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */,
 				7064CAA11D67802800B77ADA /* TerminalRelationshipViewController.swift */,
+				70D4E2331D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift */,
 			);
 			name = Terminal;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 				70F29A661D57E15F0057A497 /* PreferenceUIView.swift */,
 			);
 			name = Preferences;
+			path = Carousel;
 			sourceTree = "<group>";
 		};
 		70F29A581D57D8080057A497 /* Relationships */ = {
@@ -426,6 +433,7 @@
 		C0A7D28976CF55BCDC92A3AB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				70F29A571D57D7F60057A497 /* Preferences */,
 				7031DB181D65E156000DCC61 /* Terminal */,
 				70C1CF341D592DEB00CB687E /* Login */,
 				C0A7DAF922A5401E5A9F4885 /* Main */,
@@ -481,7 +489,6 @@
 				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
 				70F29A581D57D8080057A497 /* Relationships */,
 				7070C4D41D4E77BA00AB47FF /* Popover.storyboard */,
-				70F29A571D57D7F60057A497 /* Preferences */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -649,6 +656,7 @@
 				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
 				7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */,
+				70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */,
 				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
 				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,
@@ -684,6 +692,7 @@
 				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
 				70F29A5A1D57D8200057A497 /* PreferenceUILabel.swift in Sources */,
 				70F29A541D57655E0057A497 /* GradientView.swift in Sources */,
+				70D4E2341D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,

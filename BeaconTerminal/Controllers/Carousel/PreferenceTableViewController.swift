@@ -32,6 +32,10 @@ class PreferencesTableViewController: UITableViewController {
         
     }
     
+}
+
+extension PreferencesTableViewController {
+    
     // MARK: table
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,11 +88,11 @@ class PreferencesTableViewController: UITableViewController {
                         preference.lastModified = NSDate() as Date
                         realmDataController!.realm.add(preference, update: true)
                     }
-                                  }
+                }
             }
             
         }
     }
-
+    
 }
 

@@ -34,7 +34,6 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     func prepareView() {
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.white
-        navigationController?.toolbar.barTintColor = Util.flatBlack
     }
     
     

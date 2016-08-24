@@ -33,76 +33,70 @@ import UIKit
 /// NavigationBar styles.
 @objc(NavigationBarStyle)
 public enum NavigationBarStyle: Int {
-	case Tiny
-	case Default
-	case Medium
-}
-
-extension UINavigationBar {
-	/// Device status bar style.
-	public var statusBarStyle: UIStatusBarStyle {
-		get {
-			return Device.statusBarStyle
-		}
-		set(value) {
-			Device.statusBarStyle = value
-		}
-	}
+	case small
+	case medium
+	case large
 }
 
 @IBDesignable
-public class NavigationBar: UINavigationBar {
-    public override var intrinsicContentSize: CGSize {
+open class NavigationBar: UINavigationBar {
+    /// A reference to the divider.
+    open internal(set) var divider: Divider!
+    
+    open override var intrinsicContentSize: CGSize {
         switch navigationBarStyle {
-        case .Tiny:
+        case .small:
             return CGSize(width: Device.width, height: 32)
-        case .Default:
+        case .medium:
             return CGSize(width: Device.width, height: 44)
-        case .Medium:
+        case .large:
             return CGSize(width: Device.width, height: 56)
         }
     }
     
 	/// NavigationBarStyle value.
-	public var navigationBarStyle: NavigationBarStyle = .Default
+	open var navigationBarStyle = NavigationBarStyle.medium
 	
-	internal var animating: Bool = false
+	internal var animating = false
 	
 	/// Will render the view.
-	public var willRenderView: Bool {
+	open var willRenderView: Bool {
 		return 0 < width && 0 < height && nil != superview
 	}
 	
 	/// A preset wrapper around contentInset.
-	public var contentEdgeInsetsPreset: EdgeInsetsPreset = .none {
+	open var contentEdgeInsetsPreset = EdgeInsetsPreset.none {
 		didSet {
             contentInset = EdgeInsetsPresetToValue(preset: contentEdgeInsetsPreset)
 		}
 	}
 	
 	/// A wrapper around grid.contentInset.
-	@IBInspectable public var contentInset: EdgeInsets = EdgeInsets.zero {
+	@IBInspectable
+    open var contentInset = EdgeInsets.zero {
 		didSet {
 			layoutSubviews()
 		}
 	}
 	
 	/// A preset wrapper around interimSpace.
-	public var interimSpacePreset: InterimSpacePreset = .none {
+	open var interimSpacePreset = InterimSpacePreset.none {
 		didSet {
             interimSpace = InterimSpacePresetToValue(preset: interimSpacePreset)
 		}
 	}
 	
 	/// A wrapper around grid.interimSpace.
-	@IBInspectable public var interimSpace: InterimSpace = 0 {
+	@IBInspectable
+    open var interimSpace: InterimSpace = 0 {
 		didSet {
 			layoutSubviews()
 		}
 	}
 	
 	/// Grid cell factor.
-	@IBInspectable public var gridFactor: CGFloat = 24 {
+	@IBInspectable
+    open var gridFactor: CGFloat = 24 {
 		didSet {
 			assert(0 < gridFactor, "[Material Error: gridFactor must be greater than 0.]")
 			layoutSubviews()
@@ -110,10 +104,11 @@ public class NavigationBar: UINavigationBar {
 	}
 	
 	/**
-	The back button image writes to the backIndicatorImage property and
-	backIndicatorTransitionMaskImage property.
-	*/
-	@IBInspectable public var backButtonImage: UIImage? {
+     The back button image writes to the backIndicatorImage property and
+     backIndicatorTransitionMaskImage property.
+     */
+	@IBInspectable
+    open var backButtonImage: UIImage? {
 		get {
 			return backIndicatorImage
 		}
@@ -125,27 +120,28 @@ public class NavigationBar: UINavigationBar {
 	}
 	
 	/// A property that accesses the backing layer's backgroundColor.
-	@IBInspectable public override var backgroundColor: UIColor? {
+	@IBInspectable
+    open override var backgroundColor: UIColor? {
 		didSet {
 			barTintColor = backgroundColor
 		}
 	}
 	
 	/**
-	An initializer that initializes the object with a NSCoder object.
-	- Parameter aDecoder: A NSCoder instance.
-	*/
+     An initializer that initializes the object with a NSCoder object.
+     - Parameter aDecoder: A NSCoder instance.
+     */
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		prepareView()
 	}
 	
 	/**
-	An initializer that initializes the object with a CGRect object.
-	If AutoLayout is used, it is better to initilize the instance
-	using the init() initializer.
-	- Parameter frame: A CGRect instance.
-	*/
+     An initializer that initializes the object with a CGRect object.
+     If AutoLayout is used, it is better to initilize the instance
+     using the init() initializer.
+     - Parameter frame: A CGRect instance.
+     */
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
 		prepareView()
@@ -153,21 +149,21 @@ public class NavigationBar: UINavigationBar {
 	
 	/// A convenience initializer.
 	public convenience init() {
-		self.init(frame: CGRect.zero)
+		self.init(frame: .zero)
 	}
 	
-	public override func sizeThatFits(_ size: CGSize) -> CGSize {
+	open override func sizeThatFits(_ size: CGSize) -> CGSize {
 		return intrinsicContentSize
 	}
     
-    public override func layoutSublayers(of layer: CALayer) {
+    open override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         if self.layer == layer {
             layoutShape()
         }
     }
 	
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		super.layoutSubviews()
         layoutShadowPath()
 		
@@ -178,17 +174,19 @@ public class NavigationBar: UINavigationBar {
 		if let v = backItem {
 			layoutNavigationItem(item: v)
 		}
+        
+        divider?.reload()
 	}
 	
-	public override func pushItem(_ item: UINavigationItem, animated: Bool) {
+	open override func pushItem(_ item: UINavigationItem, animated: Bool) {
 		super.pushItem(item, animated: animated)
 		layoutNavigationItem(item: item)
 	}
 	
 	/**
-	Lays out the UINavigationItem.
-	- Parameter item: A UINavigationItem to layout.
-	*/
+     Lays out the UINavigationItem.
+     - Parameter item: A UINavigationItem to layout.
+     */
 	internal func layoutNavigationItem(item: UINavigationItem) {
 		if willRenderView {
 			prepareItem(item: item)
@@ -199,7 +197,7 @@ public class NavigationBar: UINavigationBar {
             let g = Int(width / gridFactor)
             let columns = g + 1
                 
-            titleView.frame.origin = CGPoint.zero
+            titleView.frame.origin = .zero
             titleView.frame.size = intrinsicContentSize
             titleView.grid.views = []
             titleView.grid.axis.columns = columns
@@ -210,8 +208,8 @@ public class NavigationBar: UINavigationBar {
             if let v = item.leftControls {
                 for c in v {
                     let w = c.intrinsicContentSize.width
-                    (c as? UIButton)?.contentEdgeInsets = UIEdgeInsets.zero
-                    c.frame.size.height = titleView.frame.size.height - contentInset.top - contentInset.bottom
+                    (c as? UIButton)?.contentEdgeInsets = .zero
+                    c.height = titleView.height - contentInset.top - contentInset.bottom
                     
                     c.grid.columns = Int(w / gridFactor) + 1
                     
@@ -229,8 +227,8 @@ public class NavigationBar: UINavigationBar {
             if let v = item.rightControls {
                 for c in v {
                     let w = c.intrinsicContentSize.width
-                    (c as? UIButton)?.contentEdgeInsets = UIEdgeInsets.zero
-                    c.frame.size.height = titleView.frame.size.height - contentInset.top - contentInset.bottom
+                    (c as? UIButton)?.contentEdgeInsets = .zero
+                    c.height = titleView.height - contentInset.top - contentInset.bottom
                     
                     c.grid.columns = Int(w / gridFactor) + 1
                     
@@ -284,12 +282,12 @@ public class NavigationBar: UINavigationBar {
 	}
 	
 	/**
-	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
-	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
-	when subclassing.
-	*/
+     Prepares the view instance when intialized. When subclassing,
+     it is recommended to override the prepareView method
+     to initialize property values and other setup operations.
+     The super.prepareView method should always be called immediately
+     when subclassing.
+     */
 	public func prepareView() {
         barStyle = .black
 		isTranslucent = false
@@ -298,43 +296,50 @@ public class NavigationBar: UINavigationBar {
 		contentEdgeInsetsPreset = .square1
 		contentScaleFactor = Device.scale
 		backButtonImage = Icon.cm.arrowBack
-        let image: UIImage? = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
+        let image = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
 		shadowImage = image
 		setBackgroundImage(image, for: .default)
 		backgroundColor = Color.white
+        prepareDivider()
 	}
 	
 	/**
-	Prepare the item by setting the title property to equal an empty string.
-	- Parameter item: A UINavigationItem to layout.
-	*/
+     Prepare the item by setting the title property to equal an empty string.
+     - Parameter item: A UINavigationItem to layout.
+     */
 	private func prepareItem(item: UINavigationItem) {
 		item.hidesBackButton = false
 		item.setHidesBackButton(true, animated: false)
 	}
 	
 	/**
-	Prepare the titleView.
-	- Parameter item: A UINavigationItem to layout.
-	- Returns: A UIView, which is the item.titleView.
-	*/
+     Prepare the titleView.
+     - Parameter item: A UINavigationItem to layout.
+     - Returns: A UIView, which is the item.titleView.
+     */
 	private func prepareTitleView(item: UINavigationItem) -> UIView {
 		if nil == item.titleView {
-			item.titleView = UIView(frame: CGRect.zero)
+			item.titleView = UIView(frame: .zero)
 		}
 		return item.titleView!
 	}
 	
 	/**
-	Prepare the contentView.
-	- Parameter item: A UINavigationItem to layout.
-	- Returns: A UIView, which is the item.contentView.
-	*/
+     Prepare the contentView.
+     - Parameter item: A UINavigationItem to layout.
+     - Returns: A UIView, which is the item.contentView.
+     */
 	private func prepareContentView(item: UINavigationItem) -> UIView {
 		if nil == item.contentView {
-			item.contentView = UIView(frame: CGRect.zero)
+			item.contentView = UIView(frame: .zero)
 		}
 		item.contentView!.grid.axis.direction = .vertical
 		return item.contentView!
 	}
+    
+    /// Prepares the divider.
+    private func prepareDivider() {
+        divider = Divider(view: self)
+        divider.alignment = .bottom
+    }
 }

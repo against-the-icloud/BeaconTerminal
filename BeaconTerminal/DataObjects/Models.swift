@@ -8,6 +8,8 @@ enum RelationshipType: String {
     case mutual = "mutual"
     case competes = "competes"
     static let allRelationships : [RelationshipType] = [.producer, .consumer, .mutual, .competes]
+    
+    
 }
 
 

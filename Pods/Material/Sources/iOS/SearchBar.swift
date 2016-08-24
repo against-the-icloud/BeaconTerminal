@@ -159,12 +159,8 @@ public class SearchBar: BarView {
 	
 	/// Prepares the clearButton.
 	private func prepareClearButton() {
-		let image: UIImage? = Icon.cm.close
-		clearButton = IconButton()
-		clearButton.contentEdgeInsets = UIEdgeInsets.zero
-		clearButton.tintColor = placeholderColor
-        clearButton.setImage(image, for: .normal)
-        clearButton.setImage(image, for: .highlighted)
+        clearButton = IconButton(image: Icon.cm.close, tintColor: placeholderColor)
+		clearButton.contentEdgeInsets = .zero
 		clearButtonAutoHandleEnabled = true
 		textField.clearButtonMode = .never
 		textField.rightViewMode = .whileEditing

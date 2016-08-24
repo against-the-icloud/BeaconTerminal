@@ -40,9 +40,6 @@ open class TableViewCell: UITableViewCell {
      */
 	open internal(set) var visualLayer: CAShapeLayer!
 	
-	/// A base delegate reference used when subclassing View.
-	public weak var delegate: MaterialDelegate?
-	
     /// An Array of pulse layers.
     open private(set) lazy var pulseLayers = [CAShapeLayer]()
     
@@ -55,7 +52,7 @@ open class TableViewCell: UITableViewCell {
     open var pulseColor = Color.grey.base
     
     /// The type of PulseAnimation.
-    open var pulseAnimation: PulseAnimation = .pointWithBacking
+    open var pulseAnimation = PulseAnimation.pointWithBacking
     
 	/// A property that accesses the backing layer's backgroundColor.
 	@IBInspectable
@@ -155,7 +152,7 @@ open class TableViewCell: UITableViewCell {
      */
 	open func prepareView() {
 		selectionStyle = .none
-		separatorInset = UIEdgeInsets.zero
+		separatorInset = .zero
 		contentScaleFactor = Device.scale
 		imageView?.isUserInteractionEnabled = false
 		textLabel?.isUserInteractionEnabled = false

@@ -50,7 +50,7 @@ public class Menu {
 	}
 
 	/// A preset wrapper around interimSpace.
-	public var interimSpacePreset: InterimSpacePreset = .none {
+	public var interimSpacePreset = InterimSpacePreset.none {
 		didSet {
             interimSpace = InterimSpacePresetToValue(preset: interimSpacePreset)
 		}
@@ -98,7 +98,7 @@ public class Menu {
 	
 	/// Convenience initializer.
 	public convenience init() {
-		self.init(origin: CGPoint.zero)
+		self.init(origin: .zero)
 	}
 
 	/// Reload the view layout.

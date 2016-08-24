@@ -19,31 +19,37 @@ class BadgeUtil {
     static let badgeTag = 99
     
     class func removeBadge() {
-        for subView in (UIApplication.shared.keyWindow?.subviews)! {
-            if subView.tag == badgeTag {
-                subView.removeFromSuperview()
+        if UIApplication.shared.keyWindow != nil {
+            for subView in (UIApplication.shared.keyWindow?.subviews)! {
+                if subView.tag == badgeTag {
+                    subView.removeFromSuperview()
+                }
             }
         }
     }
     
     class func addGesture(gesture: UITapGestureRecognizer) {
-        for subView in (UIApplication.shared.keyWindow?.subviews)! {
-            if subView.tag == badgeTag {
-                subView.addGestureRecognizer(gesture)
+        if UIApplication.shared.keyWindow != nil {
+            for subView in (UIApplication.shared.keyWindow?.subviews)! {
+                if subView.tag == badgeTag {
+                    subView.addGestureRecognizer(gesture)
+                }
             }
         }
     }
     
     class func badge(shouldShow: Bool) {
-        for subView in (UIApplication.shared.keyWindow?.subviews)! {
-            if subView.tag == badgeTag {
-                if shouldShow {
-                    subView.fadeIn()
-                } else {
-                    subView.fadeOut()
+        if UIApplication.shared.keyWindow != nil {
+            for subView in (UIApplication.shared.keyWindow?.subviews)! {
+                if subView.tag == badgeTag {
+                    if shouldShow {
+                        subView.fadeIn()
+                    } else {
+                        subView.fadeOut()
+                    }
                 }
             }
-        }
+        }        
     }
     
     class func showBadge(withType type: BadgeTypes) {
@@ -91,18 +97,18 @@ class BadgeUtil {
         
         
         let badgeCenter = CGPoint(x: (screenWidth - badgeWidth - 5.0), y: (navHeight + 20.0))
-       
+        
         badgeView = UIView(frame: CGRect(x: badgeCenter.x, y: badgeCenter.y, width: badgeWidth, height: badgeHeight))
         
         badgeView?.center = badgeCenter
         badgeView?.backgroundColor = Color.blue.base
         badgeView?.tag = badgeTag
         
-       
+        
         
         badgeView?.cornerRadius = Double(cornerRadius)
-    
-       // adjustedRect.origin.x = 0
+        
+        // adjustedRect.origin.x = 0
         //adjustedRect.origin.y = 0
         
         if shouldPad {
@@ -131,7 +137,7 @@ class BadgeUtil {
             
             badgeView?.addSubview(imageView)
         }
-     
+        
         
         UIApplication.shared.keyWindow!.addSubview(badgeView!)
     }

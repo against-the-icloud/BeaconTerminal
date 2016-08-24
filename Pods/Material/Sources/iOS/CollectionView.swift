@@ -62,7 +62,7 @@ open class CollectionView: UICollectionView {
 	}
 	
 	/// A preset wrapper around interimSpace.
-	open var interimSpacePreset: InterimSpacePreset = .none {
+	open var interimSpacePreset = InterimSpacePreset.none {
 		didSet {
             interimSpace = InterimSpacePresetToValue(preset: interimSpacePreset)
 		}
@@ -108,7 +108,7 @@ open class CollectionView: UICollectionView {
 	
 	/// A convenience initializer that initializes the object.
 	public convenience init() {
-		self.init(frame: CGRect.zero)
+		self.init(frame: .zero)
 	}
 	
 	/**

@@ -38,12 +38,13 @@ extension UITabBarItem {
 }
 
 @IBDesignable
-public class BottomTabBar: UITabBar {
-	/// Automatically aligns the BottomNavigationBar to the superview.
-	public var autoLayoutToSuperview: Bool = true
+open class BottomTabBar: UITabBar {
+    /// Automatically aligns the BottomNavigationBar to the superview.
+	open var isAlignedToParentAutomatically = true
 	
 	/// A property that accesses the backing layer's backgroundColor.
-	@IBInspectable public override var backgroundColor: UIColor? {
+	@IBInspectable
+    open override var backgroundColor: UIColor? {
 		didSet {
 			barTintColor = backgroundColor
 		}
@@ -62,7 +63,7 @@ public class BottomTabBar: UITabBar {
 	
 	/// A convenience initializer.
 	public convenience init() {
-		self.init(frame: CGRect.zero)
+		self.init(frame: .zero)
 	}
     
     public required init?(coder aDecoder: NSCoder) {
@@ -70,17 +71,18 @@ public class BottomTabBar: UITabBar {
         prepareView()
     }
 	
-    public override func layoutSublayers(of layer: CALayer) {
+    open override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         if self.layer == layer {
             layoutShape()
         }
     }
     
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		super.layoutSubviews()
         layoutShadowPath()
-		if let v: Array<UITabBarItem> = items {
+        
+		if let v = items {
 			for item in v {
 				if .phone == Device.userInterfaceIdiom {
 					if nil == item.title {
@@ -90,72 +92,60 @@ public class BottomTabBar: UITabBar {
 						let inset: CGFloat = 6
 						item.titlePositionAdjustment.vertical = -inset
 					}
-				} else {
-					if nil == item.title {
-						let inset: CGFloat = 9
-						item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
-					} else {
-						let inset: CGFloat = 3
-						item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
-						item.titlePositionAdjustment.vertical = -inset
-					}
-				}
+				} else if nil == item.title {
+                    let inset: CGFloat = 9
+                    item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
+                } else {
+                    let inset: CGFloat = 3
+                    item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
+                    item.titlePositionAdjustment.vertical = -inset
+                }
 			}
 		}
+        
+        divider.reload()
 	}
 	
-	public override func didMoveToSuperview() {
+	open override func didMoveToSuperview() {
 		super.didMoveToSuperview()
-		if autoLayoutToSuperview {
-			if let v: UIView = superview {
+		if isAlignedToParentAutomatically {
+			if let v = superview {
 				_ = v.layout(self).bottom().horizontally()
 			}
 		}
 	}
 	
 	/**
-	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
-	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
-	when subclassing.
-	*/
+     Prepares the view instance when intialized. When subclassing,
+     it is recommended to override the prepareView method
+     to initialize property values and other setup operations.
+     The super.prepareView method should always be called immediately
+     when subclassing.
+     */
 	public func prepareView() {
 		depthPreset = .depth1
 		contentScaleFactor = Device.scale
 		backgroundColor = Color.white
-        let image: UIImage? = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
+        let image = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
 		shadowImage = image
 		backgroundImage = image
 	}
 }
 
 /// A memory reference to the TabBarItem instance.
-private var MaterialAssociatedObjectTabBarKey: UInt8 = 0
-
-public class MaterialAssociatedObjectTabBar {
-	/**
-     A property that sets the shadowOffset, shadowOpacity, and shadowRadius
-     for the backing layer. This is the preferred method of setting depth
-     in order to maintain consitency across UI objects.
-     */
-    public var depthPreset: DepthPreset
-	
-    public init(depthPreset: DepthPreset) {
-		self.depthPreset = depthPreset
-	}
-}
+private var TabBarKey: UInt8 = 0
 
 extension UITabBar {
-	/// TabBarItem reference.
-	public internal(set) var item: MaterialAssociatedObjectTabBar {
-		get {
-			return AssociatedObject(base: self, key: &MaterialAssociatedObjectTabBarKey) {
-				return MaterialAssociatedObjectTabBar(depthPreset: .none)
-			}
-		}
-		set(value) {
-			AssociateObject(base: self, key: &MaterialAssociatedObjectTabBarKey, value: value)
-		}
-	}
+    /// TabBarItem reference.
+    public internal(set) var divider: Divider! {
+        get {
+            return AssociatedObject(base: self, key: &TabBarKey) {
+                return Divider(view: self)
+            }
+        }
+        set(value) {
+            AssociateObject(base: self, key: &TabBarKey, value: value)
+        }
+    }
 }
+

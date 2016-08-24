@@ -41,9 +41,6 @@ open class View: UIView {
      */
 	open private(set) var visualLayer: CAShapeLayer!
 	
-	/// A base delegate reference used when subclassing View.
-	public weak var delegate: MaterialDelegate?
-	
 	/**
      A property that manages an image for the visualLayer's contents
      property. Images should not be set to the backing layer's contents
@@ -152,7 +149,7 @@ open class View: UIView {
 	
 	/// A convenience initializer.
 	public convenience init() {
-		self.init(frame: CGRect.zero)
+		self.init(frame: .zero)
 	}
 	
 	open override func layoutSublayers(of layer: CALayer) {

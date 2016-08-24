@@ -41,11 +41,6 @@ open class CollectionViewCell: UICollectionViewCell {
 	*/
     open private(set) var visualLayer: CAShapeLayer!
 	
-	/**
-	A base delegate reference used when subclassing View.
-	*/
-	public weak var delegate: MaterialDelegate?
-	
 	/// An Array of pulse layers.
 	open private(set) lazy var pulseLayers = [CAShapeLayer]()
 	
@@ -56,7 +51,7 @@ open class CollectionViewCell: UICollectionViewCell {
 	@IBInspectable open var pulseColor: UIColor = Color.grey.base
 	
 	/// The type of PulseAnimation.
-	open var pulseAnimation: PulseAnimation = .pointWithBacking
+	open var pulseAnimation = PulseAnimation.pointWithBacking
 	
 	/**
 	A property that manages an image for the visualLayer's contents
@@ -155,7 +150,7 @@ open class CollectionViewCell: UICollectionViewCell {
 	}
 	
 	/// A preset wrapper around interimSpace.
-	open var interimSpacePreset: InterimSpacePreset = .none {
+	open var interimSpacePreset = InterimSpacePreset.none {
 		didSet {
             interimSpace = InterimSpacePresetToValue(preset: interimSpacePreset)
 		}
@@ -204,7 +199,7 @@ open class CollectionViewCell: UICollectionViewCell {
 	
 	/// A convenience initializer.
 	public convenience init() {
-		self.init(frame: CGRect.zero)
+		self.init(frame: .zero)
 	}
 	
 	open override func layoutSublayers(of layer: CALayer) {
