@@ -76,7 +76,7 @@ open class ToolbarController: RootController {
 	open internal(set) var toolbar: Toolbar!
 	
 	/// Delegation handler.
-	public weak var delegate: ToolbarControllerDelegate?
+	open weak var delegate: ToolbarControllerDelegate?
 	
 	/// A floating UIViewController.
 	open var floatingViewController: UIViewController? {
@@ -175,8 +175,8 @@ open class ToolbarController: RootController {
         v.width = w + v.grid.layoutEdgeInsets.left + v.grid.layoutEdgeInsets.right
         v.height = p
         
-        rootViewController.view.frame.origin.y = p
-        rootViewController.view.frame.size.height = h - p
+        rootViewController.view.y = p
+        rootViewController.view.height = h - p
         
         v.divider.reload()
 	}

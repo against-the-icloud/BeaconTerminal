@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     func prepareViews(applicationType: ApplicationType) {
         window = UIWindow(frame:UIScreen.main.bounds)
         
-        var application: AppNavigationDrawerController?
+        var application: NavigationDrawerController?
         
         switch applicationType {
         case .placeTerminal:
@@ -136,19 +136,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         window?.makeKeyAndVisible()
     }
 
-    func prepareBasicGroupUI() -> AppNavigationDrawerController {
+    func prepareBasicGroupUI() -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
-        let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
+        let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: bottomNavigationController)
         navigationController.statusBarStyle = .lightContent
         
         // create drawer
         
-        let navigationDrawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         //tabbar
         
@@ -160,7 +160,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         return navigationDrawerController
     }
     
-    func prepareTerminalUI() -> AppNavigationDrawerController{
+    func prepareTerminalUI() -> NavigationDrawerController{
         let terminalStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
         let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
         
@@ -168,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         let sideViewController = mainStoryBoard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
-        let navigationDrawerController = AppNavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .default

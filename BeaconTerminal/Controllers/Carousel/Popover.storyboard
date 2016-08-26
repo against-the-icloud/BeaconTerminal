@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="16A304a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -263,13 +263,13 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="700" height="425"/>
+                    <size key="freeformSize" width="384" height="425"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UTz-Nt-Nvv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="jTX-Mg-9h4">
-                        <rect key="frame" x="0.0" y="381" width="700" height="44"/>
+                        <rect key="frame" x="0.0" y="381" width="384" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -288,13 +288,13 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="612"/>
+                    <size key="freeformSize" width="384" height="612"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="p0Q-b8-1Ta">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="g7w-5J-nDn">
-                        <rect key="frame" x="0.0" y="568" width="600" height="44"/>
+                        <rect key="frame" x="0.0" y="568" width="384" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -367,8 +367,8 @@
         <scene sceneID="ZVH-gc-H3a">
             <objects>
                 <collectionViewController storyboardIdentifier="loginSpeciesCollectionViewController" title="LoginSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="at7-XY-YOa" customClass="LoginSpeciesCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Y2e-hw-qON">
-                        <rect key="frame" x="0.0" y="44" width="320" height="468"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="Y2e-hw-qON">
+                        <rect key="frame" x="0.0" y="44" width="384" height="336"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="8Gs-Vj-ugT">
@@ -391,7 +391,7 @@
                                                 <constraint firstAttribute="width" constant="75" id="nJd-eh-JQc"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5C-CG-RjG">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C5C-CG-RjG">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="xS5-DE-OfE"/>
                                             </constraints>
@@ -445,7 +445,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="512"/>
+                    <size key="freeformSize" width="384" height="380"/>
                     <connections>
                         <segue destination="WiA-Ap-aq5" kind="unwind" identifier="unwindToTerminalView" unwindAction="unwindToTerminalViewWithSegue:" id="oxa-xK-Jb2"/>
                         <segue destination="WiA-Ap-aq5" kind="unwind" identifier="unwindToSideMenu" unwindAction="unwindToSideMenuWithSegue:" id="PL4-Ji-xfk"/>
@@ -454,7 +454,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pYw-k5-Gy9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WiA-Ap-aq5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="564.84375" y="1746.875"/>
+            <point key="canvasLocation" x="576" y="2118"/>
         </scene>
         <!--LoginNavigationController-->
         <scene sceneID="P5h-w4-Z3b">
@@ -465,7 +465,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="512"/>
+                    <size key="freeformSize" width="384" height="512"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aQs-ja-HPW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -481,14 +481,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="thV-7o-X7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="282" y="930"/>
+            <point key="canvasLocation" x="154" y="882"/>
         </scene>
         <!--LoginGroupCollectionViewController-->
         <scene sceneID="Prp-r4-Eye">
             <objects>
                 <collectionViewController storyboardIdentifier="loginGroupCollectionViewController" title="LoginGroupCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="az7-JJ-joz" customClass="LoginGroupCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fA8-m7-GUE">
-                        <rect key="frame" x="0.0" y="44" width="320" height="468"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="fA8-m7-GUE">
+                        <rect key="frame" x="0.0" y="44" width="384" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="rcE-sD-dzb">
@@ -507,13 +507,13 @@
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="CGq-2r-HJl">
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ECOSYSTEM 1" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="2" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-xp-o4a">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ECOSYSTEM 1" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-xp-o4a">
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="2" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8AG-Q2-gcD">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8AG-Q2-gcD">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -575,14 +575,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d15-Ci-c3B" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="q4p-DO-irS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="565" y="1320"/>
+            <point key="canvasLocation" x="1061" y="1437"/>
         </scene>
         <!--Login SectionCollectionViewController-->
         <scene sceneID="Uy7-ev-pEI">
             <objects>
                 <collectionViewController title="Login SectionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwI-3k-tFr" customClass="LoginSectionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vN5-lh-QHi">
-                        <rect key="frame" x="0.0" y="44" width="320" height="468"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="vN5-lh-QHi">
+                        <rect key="frame" x="0.0" y="44" width="384" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="YHz-8c-FUR">
@@ -599,7 +599,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ABCD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Lm-L6-2Oo">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ABCD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Lm-L6-2Oo">
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -648,7 +648,7 @@
                     </navigationItem>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="512"/>
+                    <size key="freeformSize" width="384" height="512"/>
                     <connections>
                         <segue destination="az7-JJ-joz" kind="show" identifier="groupSegue" id="tQW-8w-WK7"/>
                         <segue destination="at7-XY-YOa" kind="show" identifier="speciesSegue" id="yi8-Oi-iWE"/>
@@ -959,7 +959,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not ready to report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sSd-Ca-RXz" userLabel="notReady">
                                                     <frame key="frameInset" minX="15" width="246" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

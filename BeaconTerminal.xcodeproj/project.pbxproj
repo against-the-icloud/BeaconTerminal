@@ -60,7 +60,6 @@
 		70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */; };
 		70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */; };
 		70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */; };
-		70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */; };
 		70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF4FF91CE6135200AC8AD5 /* Models.swift */; };
 		70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3EB1CE652E700A0E752 /* CanvasView.swift */; };
 		70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3ED1CE652ED00A0E752 /* Line.swift */; };
@@ -164,7 +163,6 @@
 		70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupCell.swift; path = Login/LoginGroupCell.swift; sourceTree = "<group>"; };
 		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationDrawerController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		70F0A3EB1CE652E700A0E752 /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		70F0A3ED1CE652ED00A0E752 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
@@ -326,7 +324,6 @@
 			children = (
 				C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */,
 				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
-				70E8F4141D162C08007DF331 /* AppNavigationDrawerController.swift */,
 				70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */,
 				705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */,
 			);
@@ -538,7 +535,7 @@
 				TargetAttributes = {
 					AE9764881C22C1BF0058A4DC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 9GV5R5P45B;
+						DevelopmentTeam = CN8G286W67;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
@@ -671,7 +668,6 @@
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
-				70E8F4191D162C08007DF331 /* AppNavigationDrawerController.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
 				7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */,
 				70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */,
@@ -822,7 +818,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9GV5R5P45B;
+				DEVELOPMENT_TEAM = CN8G286W67;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
@@ -849,7 +845,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9GV5R5P45B;
+				DEVELOPMENT_TEAM = CN8G286W67;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",

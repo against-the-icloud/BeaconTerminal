@@ -122,7 +122,7 @@ public protocol NavigationDrawerControllerDelegate {
 
 @IBDesignable
 @objc(NavigationDrawerController)
-open class NavigationDrawerController: RootController, UIGestureRecognizerDelegate {
+public class NavigationDrawerController: RootController, UIGestureRecognizerDelegate {
 	/**
 	A CGFloat property that is used internally to track
 	the original (x) position of the container view when panning.
@@ -179,7 +179,7 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 	A NavigationDrawerControllerDelegate property used to bind
 	the delegation object.
 	*/
-	public weak var delegate: NavigationDrawerControllerDelegate?
+	open weak var delegate: NavigationDrawerControllerDelegate?
 	
 	/**
 	A CGFloat property that sets the animation duration of the
@@ -391,7 +391,7 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 	The super.prepareView method should always be called immediately
 	when subclassing.
 	*/
-	open override func prepareView() {
+	public override func prepareView() {
 		super.prepareView()
 		prepareContentViewController()
 		prepareLeftView()
@@ -399,7 +399,7 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 	}
 	
 	/// Layout subviews.
-	open override func layoutSubviews() {
+	public override func layoutSubviews() {
 		if opened {
 			hideStatusBar()
 		} else {
@@ -411,8 +411,8 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 			v.height = view.bounds.height
 			leftViewThreshold = leftViewWidth / 2
 			if let vc: UIViewController = leftViewController {
-				vc.view.frame.size.width = v.width
-				vc.view.frame.size.height = v.height
+				vc.view.width = v.width
+				vc.view.height = v.height
                 vc.view.center = CGPoint(x: v.width / 2, y: v.height / 2)
 			}
 		}
@@ -422,14 +422,14 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 			v.height = view.bounds.height
 			rightViewThreshold = view.bounds.width - rightViewWidth / 2
 			if let vc: UIViewController = rightViewController {
-				vc.view.frame.size.width = v.width
-				vc.view.frame.size.height = v.height
+				vc.view.width = v.width
+				vc.view.height = v.height
                 vc.view.center = CGPoint(x: v.width / 2, y: v.height / 2)
 			}
 		}
 	}
 	
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 		// Ensures the view is hidden.
 		if let v: View = rightView {
@@ -903,7 +903,7 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 		
 		leftViewWidth = .phone == Device.userInterfaceIdiom ? 280 : 320
 		leftView = View()
-        leftView!.frame = CGRect(x: 0, y: 0, width: leftViewWidth, height: view.frame.height)
+        leftView!.frame = CGRect(x: 0, y: 0, width: leftViewWidth, height: view.height)
 		leftView!.backgroundColor = Color.clear
 		view.addSubview(leftView!)
 		
@@ -923,7 +923,7 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
 		
 		rightViewWidth = .phone == Device.userInterfaceIdiom ? 280 : 320
 		rightView = View()
-        rightView!.frame = CGRect(x: 0, y: 0, width: rightViewWidth, height: view.frame.height)
+        rightView!.frame = CGRect(x: 0, y: 0, width: rightViewWidth, height: view.height)
 		rightView!.backgroundColor = Color.clear
 		view.addSubview(rightView!)
 		

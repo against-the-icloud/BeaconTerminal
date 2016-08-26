@@ -8,13 +8,13 @@ import UIKit
 import Material
 
 class SideViewController: UITableViewController {
-
-
+    
+    
     // MARK: View Methods
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.view.backgroundColor = UIColor.white()
@@ -25,13 +25,13 @@ class SideViewController: UITableViewController {
         
     }
     
-
+    
     // MARK: table
     
     /// Select item at row in tableView.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-
+        
+        
         for cell in tableView.visibleCells {
             cell.selectionStyle = .default
         }
@@ -51,61 +51,58 @@ class SideViewController: UITableViewController {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
                 //mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
-
-
+                
+                
                 let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
                 
                 let mapViewController = storyboard.instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
-
+                
                 let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-
+                
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController, mapViewController]
                 bottomNavigationController.selectedIndex = 0
-
+                
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
                 navigationController.statusBarStyle = .lightContent
-
+                
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-                        duration: 0,
-                        options: [],
-                        animations: nil,
-                        completion: {
-                            [weak self] _ in
-
-                            self?.navigationDrawerController?.closeLeftView()
-                        })
-            case 1:
-                
-                
+                                                                             duration: 0,
+                                                                             options: [],
+                                                                             animations: nil,
+                                                                             completion: {
+                                                                                [weak self] _ in
+                                                                                
+                                                                                self?.navigationDrawerController?.closeLeftView()
+                    })
+            case 1:                                
                 // Mark: place terminal
-
-
+                
                 getAppDelegate().changeSystemStateTo(.placeTerminal)
                 
                 let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
                 let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
-
+                
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
                 navigationController.isNavigationBarHidden = true
                 navigationController.statusBarStyle = .default
                 
-
-
+                
+                
                 BadgeUtil.badge(shouldShow: false)
                 getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
                 
                 navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
-                        duration: 0,
-                        options: [],
-                        animations: nil,
-                        completion: {
-                            [weak self] _ in
-                            self?.navigationDrawerController?.closeLeftView()
-                        })
-
-
+                                                                             duration: 0,
+                                                                             options: [],
+                                                                             animations: nil,
+                                                                             completion: {
+                                                                                [weak self] _ in
+                                                                                self?.navigationDrawerController?.closeLeftView()
+                    })
+                
+                
             default:
                 break
             }
@@ -118,19 +115,19 @@ class SideViewController: UITableViewController {
                 //object group tablet
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
-       
-
+                
+                
                 let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
-
+                
                 let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-
+                
                 bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
                 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
                 
                 navigationController.statusBarStyle = .lightContent
-
+                
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
                                                                              duration: 0,
                                                                              options: [],
@@ -139,8 +136,8 @@ class SideViewController: UITableViewController {
                                                                                 [weak self] _ in
                                                                                 self?.navigationDrawerController?.closeLeftView()
                     })
-
-
+                
+                
             default:
                 break
             }
@@ -153,16 +150,16 @@ class SideViewController: UITableViewController {
                 
                 //create top navigationbar
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
-
+                
                 
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-                        duration: 0,
-                        options: [],
-                        animations: nil,
-                        completion: {
-                            [weak self] _ in
-                            self?.navigationDrawerController?.closeLeftView()
-                        })
+                                                                             duration: 0,
+                                                                             options: [],
+                                                                             animations: nil,
+                                                                             completion: {
+                                                                                [weak self] _ in
+                                                                                self?.navigationDrawerController?.closeLeftView()
+                    })
             case 1:
                 
                 //debug
@@ -173,13 +170,13 @@ class SideViewController: UITableViewController {
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
                 
                 navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-                        duration: 0,
-                        options: [],
-                        animations: nil,
-                        completion: {
-                            [weak self] _ in
-                            self?.navigationDrawerController?.closeLeftView()
-                        })
+                                                                             duration: 0,
+                                                                             options: [],
+                                                                             animations: nil,
+                                                                             completion: {
+                                                                                [weak self] _ in
+                                                                                self?.navigationDrawerController?.closeLeftView()
+                    })
             default:
                 break
             }
@@ -219,7 +216,7 @@ class SideViewController: UITableViewController {
         if let indexPath = indexPath {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.contentView.backgroundColor = Color.blueGrey.base
-           // cell?.selectedBackgroundView?.backgroundColor = Color.blueGrey.base
+            // cell?.selectedBackgroundView?.backgroundColor = Color.blueGrey.base
             cell?.selectionStyle = .blue
         }
         
@@ -228,5 +225,5 @@ class SideViewController: UITableViewController {
     @IBAction func unwindToSideMenu(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
     }
-
+    
 }
