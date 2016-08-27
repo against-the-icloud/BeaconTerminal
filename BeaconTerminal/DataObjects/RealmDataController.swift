@@ -11,26 +11,21 @@ import RealmSwift
 
 class RealmDataController {
     
-    let realm: Realm!
     var systemConfiguration: SystemConfiguration?
     
-    init(realm: Realm) {
-        self.realm = realm
-    }
     
-    convenience init() {
-        self.init(realm: try! Realm())
+    init() {
     }
     
     func add(_ realmObject: Object, shouldUpdate: Bool) {
-        try! realm.write {
-            self.realm.add(realmObject, update: shouldUpdate)
+        try! realm?.write {
+            realm?.add(realmObject, update: shouldUpdate)
         }
     }
     
     func delete(_ realmObject: Object) {
-        try! realm.write {
-            self.realm.delete(realmObject)
+        try! realm?.write {
+            realm?.delete(realmObject)
         }
     }
     
@@ -59,24 +54,24 @@ class RealmDataController {
     func updateUser(withGroup group: Group?, section: Section?) {
         if let g = group, let s = section {
                         
-            let runtimeObjs = realm.allObjects(ofType: Runtime.self)
-            for r in runtimeObjs {
+            let runtimeObjs = realm?.allObjects(ofType: Runtime.self)
+            for r in runtimeObjs! {
                 LOG.debug("DELETE runtime obj \(r.id)")
             }
             //create a new one
             
-            try! realm.write {                
-                realm.delete(realm.allObjects(ofType: Runtime.self))
+            try! realm?.write {                
+                realm?.delete((realm?.allObjects(ofType: Runtime.self))!)
                 
                 let runtime = Runtime()
                 runtime.id = UUID().uuidString
                 runtime.currentGroup = g
                 runtime.currentSection = s
-                realm.add(runtime)
+                realm?.add(runtime)
                 
                 //update bottombar
                 
-                getAppDelegate().bottomNavigationController.changeTitle(with: group, and: s)
+                getAppDelegate().bottomNavigationController?.changeTitle(with: group, and: s)
             }
         }
         
@@ -218,7 +213,10 @@ class RealmDataController {
             
             for section in simConfig.sections {
                 for group in section.groups {
-                    populateWithSpeciesObservationTestData(for: group)
+                    
+                    if group.index != 0 {
+                        populateWithSpeciesObservationTestData(for: group)
+                    }
                 }
             }
             
@@ -235,14 +233,14 @@ class RealmDataController {
             for so in group.speciesObservations {
                 so.realm?.beginWrite()
                 so.lastModified = Date()
-                for i in 0...3 {
+                for i in 0...Randoms.randomInt(0, 4) {
                     
                     let relationship = Relationship()
                     relationship.id = UUID().uuidString
-                    relationship.toSpecies = allSpecies[i+2]
+                    relationship.toSpecies = allSpecies[Randoms.randomInt(0, 10)]
                     relationship.lastModified = Date()
-                    relationship.note = "hello"
-                    relationship.attachments = "assets-library://asset/asset.JPG?id=106E99A1-4F6A-45A2-B320-B0AD4A8E8473&ext=JPG"
+                    relationship.note = Randoms.randomFakeConversation()
+                    relationship.attachments = getRandomImage(index: i)
                     relationship.ecosystem = allEcosystems[Randoms.randomInt(0, 4)]
                     
                     
@@ -308,22 +306,27 @@ class RealmDataController {
     
     //update species relationship
     func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
-        try! realm.write {
+        try! realm?.write {
             let relationship = Relationship()
             relationship.id = NSUUID().uuidString
             relationship.toSpecies = toSpecies
             relationship.lastModified = NSDate() as Date
-            relationship.note = "NEW"
+            relationship.note = Randoms.randomFakeConversation()
             relationship.attachments = getRandomImage(index: Randoms.randomInt(0, 2))
             relationship.ecosystem = speciesObservation.ecosystem
             relationship.relationshipType = relationshipType
             speciesObservation.relationships.append(relationship)
-            self.realm.add(relationship, update: true)
+            realm?.add(relationship, update: true)
         }
     }
     
     func getRandomImage(index: Int) -> String {
+        
         let images = ["assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG","assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG","assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG"]
+        
+        if index >= images.count {
+            return images[0]
+        }
         return images[index]
     }
     

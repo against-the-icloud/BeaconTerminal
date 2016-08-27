@@ -12,7 +12,7 @@ import RealmSwift
 
 class LoginSpeciesCollectionViewController: UICollectionViewController {
     
-    var species: Results<Species> = realmDataController!.realm.allObjects(ofType: Species.self)
+    var species: Results<Species> = realm!.allObjects(ofType: Species.self)
     
     var selectedSection: Section?
     
@@ -41,7 +41,7 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
         if segue.identifier == "unwindToTerminalView" {
             if let selectedCell = sender as? LoginSpeciesCell {
                 let selectedSpecies = species[selectedCell.speciesIndex]
-                let tvc = segue.destination as? TerminalViewController
+                let tvc = segue.destination as? TerminalMainViewController
                 tvc?.species = selectedSpecies
                 tvc?.section = selectedSection
             }

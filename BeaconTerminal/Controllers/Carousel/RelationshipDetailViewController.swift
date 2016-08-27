@@ -182,7 +182,7 @@ class RelationshipDetailViewController: UIViewController {
             let ecosystem = realm!.allObjects(ofType: Ecosystem.self)[self.ecosystemSegmentedControl.selectedSegmentIndex]
             
             dispatch_on_main {
-                try! realmDataController!.realm.write {
+                try! realm!.write {
                     
                     if self.isDirty {
                         r.note = self.textView.text
@@ -195,7 +195,7 @@ class RelationshipDetailViewController: UIViewController {
                     
                     r.ecosystem = ecosystem
                     r.lastModified = NSDate() as Date
-                    realmDataController!.realm.add(r, update: true)
+                    realm!.add(r, update: true)
                 }
             }
         }
@@ -232,10 +232,10 @@ class RelationshipDetailViewController: UIViewController {
                         
                         getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop as AnyObject)
                         
-                        try! realmDataController!.realm.write {
+                        try! realm!.write {
                             so.relationships.remove(at: rIndex)
                             
-                            realmDataController!.realm.add(so, update: true)
+                            realm!.add(so, update: true)
                         }
                         
                         realmDataController!.delete(r)
@@ -262,10 +262,10 @@ class RelationshipDetailViewController: UIViewController {
             let ecosystem = realm!.allObjects(ofType: Ecosystem.self)[sender.selectedSegmentIndex]
             
             dispatch_on_main {
-                try! realmDataController!.realm.write {
+                try! realm?.write {
                     r.ecosystem = ecosystem
                     r.lastModified = NSDate() as Date
-                    realmDataController!.realm.add(r, update: true)
+                    realm?.add(r, update: true)
                 }
             }
         }
@@ -305,10 +305,10 @@ extension RelationshipDetailViewController:UIImagePickerControllerDelegate, UINa
                         
                         if let r = self.relationship {
                             dispatch_on_main {
-                                try! realmDataController!.realm.write {
+                                try! realm!.write {
                                     r.attachments = attachUrl
                                     r.lastModified = NSDate() as Date
-                                    realmDataController!.realm.add(r, update: true)
+                                    realm!.add(r, update: true)
                                     self.imagePickerController.dismiss(animated: true, completion: nil)
                                     
                                 }

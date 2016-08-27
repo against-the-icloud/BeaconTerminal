@@ -17,7 +17,7 @@ enum LoginType {
 
 class LoginSectionCollectionViewController: UICollectionViewController {
     
-    var sections: Results<Section> = realmDataController!.realm.allObjects(ofType: Section.self)
+    var sections: Results<Section> = realm!.allObjects(ofType: Section.self)
     var notificationToken: NotificationToken? = nil
     var selectedSectionIndex: Int?
     

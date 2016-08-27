@@ -8,11 +8,14 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class TerminalComparsionController: UIViewController {
-    @IBOutlet var doneAction: [UIBarButtonItem]!
-    
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    var foundRelationships = [Int:Relationship]()
+    var groups:List<Group>?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -24,12 +27,27 @@ class TerminalComparsionController: UIViewController {
     // Mark: View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()
     }
     
-    func prepareView() {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        
+        
+        
+        if let segueId = segue.identifier {
+            
+             let id = NSNumber.init( value: Int32(segueId)!).intValue
+    
+            
+            if let relationship = foundRelationships[id], let detailvc = segue.destination as? TerminalRelationshipDetailTableViewController, let group = groups?.filter(using: "index = \(id)") {
+                
+                
+                detailvc.group = group.first
+                detailvc.relationship = relationship
+            }
+        }
     }
+    
     
     @IBAction func doneAction(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)

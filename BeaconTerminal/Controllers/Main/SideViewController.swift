@@ -82,7 +82,7 @@ class SideViewController: UITableViewController {
                 getAppDelegate().changeSystemStateTo(.placeTerminal)
                 
                 let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
-                let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
+                let terminalViewController = storyboard.instantiateViewController(withIdentifier: "terminalMainViewController") as! TerminalMainViewController
                 
                 let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
                 navigationController.isNavigationBarHidden = true
@@ -91,7 +91,11 @@ class SideViewController: UITableViewController {
                 
                 
                 BadgeUtil.badge(shouldShow: false)
-                getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+                
+                if let sm = getAppDelegate().speciesViewController {
+                    sm.showSpeciesMenu(showHidden: false)
+                }
+                
                 
                 navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
                                                                              duration: 0,

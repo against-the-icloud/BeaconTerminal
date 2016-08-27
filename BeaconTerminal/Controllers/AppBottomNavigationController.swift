@@ -49,7 +49,7 @@ class AppBottomNavigationController: BottomNavigationController {
     }
     
     func prepareNotification() {
-        runtimeResults = realmDataController?.realm.allObjects(ofType: Runtime.self)
+        runtimeResults = realm!.allObjects(ofType: Runtime.self)
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
@@ -127,10 +127,10 @@ class AppBottomNavigationController: BottomNavigationController {
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.title == Tabs.maps.rawValue {
-            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+            getAppDelegate().speciesViewController?.showSpeciesMenu(showHidden: false)
             BadgeUtil.badge(shouldShow: false)
         } else {
-            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: true)
+            getAppDelegate().speciesViewController?.showSpeciesMenu(showHidden: true)
             BadgeUtil.badge(shouldShow: true)
         }
     }
@@ -138,11 +138,11 @@ class AppBottomNavigationController: BottomNavigationController {
     func checkBadges(with title: String) {
         switch title {
         case Tabs.maps.rawValue:
-            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+            getAppDelegate().speciesViewController?.showSpeciesMenu(showHidden: false)
             BadgeUtil.badge(shouldShow: false)
             break
         default:
-            getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: true)
+            getAppDelegate().speciesViewController?.showSpeciesMenu(showHidden: true)
             BadgeUtil.badge(shouldShow: true)
             break
         }

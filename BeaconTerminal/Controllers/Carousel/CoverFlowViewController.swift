@@ -65,7 +65,7 @@ class CoverFlowViewController: UIViewController {
     func loadData() {
         //load test group
         
-        runtimeResults = realmDataController?.realm.allObjects(ofType: Runtime.self)
+        runtimeResults = realm?.allObjects(ofType: Runtime.self)
         
         
         // Observe Notifications
@@ -86,7 +86,7 @@ class CoverFlowViewController: UIViewController {
             }
         }
         
-        getAppDelegate().speciesViewController.openAction = {
+        getAppDelegate().speciesViewController?.openAction = {
             let centeredIndexPath = self.findCenterIndexPath()
             self.collectionView.scrollToItem(at: centeredIndexPath!, at: .centeredHorizontally, animated: true)
             let cell = self.collectionView.cellForItem(at: centeredIndexPath!) as! CoverFlowCell
@@ -289,8 +289,8 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
     func minimizeCell(_ sender: UIButton) {
         
         //if it is  open
-        if getAppDelegate().speciesViewController.isOpen() {
-            getAppDelegate().speciesViewController.closeMenu()
+        if (getAppDelegate().speciesViewController?.isOpen())! {
+            getAppDelegate().speciesViewController?.closeMenu()
         }
         
         //remove minimize cell target
@@ -301,7 +301,7 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
         
         if let indexPathExpanded = findCenterIndexPath() {
             
-            getAppDelegate().speciesViewController.dropTargets.removeAll()
+            getAppDelegate().speciesViewController?.dropTargets.removeAll()
             
             let cell = self.collectionView.cellForItem(at: indexPathExpanded) as! CoverFlowCell
             LOG.debug("MINI \(cell.titleLabel.text)")
@@ -309,7 +309,7 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseIn, animations: ({
                 
                 cell.expandButton.transform = cell.expandButton.transform.rotated(by: CGFloat(M_PI));
-                getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: true)
+                getAppDelegate().speciesViewController?.enableSpecies((cell.fromSpecies?.index)!, isEnabled: true)
                 cell.frame = self.previousSize!
                 self.collectionView.isScrollEnabled = true
                 cell.isFullscreen = false
@@ -331,8 +331,8 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
     func expandCell(_ sender: UIButton) {
         
         //if it is not open
-        if !getAppDelegate().speciesViewController.isOpen() {
-            getAppDelegate().speciesViewController.openMenu()
+        if !(getAppDelegate().speciesViewController?.isOpen())! {
+            getAppDelegate().speciesViewController?.openMenu()
         }
         
         //remove expand cell target
@@ -354,14 +354,14 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
                     
                     //add droptargets
                     for rv in cell.relationshipViews {
-                        getAppDelegate().speciesViewController.dropTargets.append(rv.dropView)
+                        getAppDelegate().speciesViewController?.dropTargets.append(rv.dropView)
                         //add delegate
                         rv.dropView.delegate = self
                     }
                     
                     if !cell.isFullscreen {
                         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: ({
-                            getAppDelegate().speciesViewController.enableSpecies((cell.fromSpecies?.index)!, isEnabled: false)
+                            getAppDelegate().speciesViewController?.enableSpecies((cell.fromSpecies?.index)!, isEnabled: false)
                             cell.expandButton.transform = cell.expandButton.transform.rotated(by:CGFloat(M_PI));
                             self.previousSize = cell.frame
                             cell.frame = self.collectionView.bounds

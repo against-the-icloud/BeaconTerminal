@@ -173,10 +173,10 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     func speciesMenu(shouldShow: Bool) {
         if shouldShow {
-            getAppDelegate().speciesViewController.prepareSpeciesMenu()
-            getAppDelegate().speciesViewController.showMenu()
+            getAppDelegate().speciesViewController?.prepareSpeciesMenu()
+            getAppDelegate().speciesViewController?.showMenu()
         } else {
-            getAppDelegate().speciesViewController.removeSpeciesMenu()
+            getAppDelegate().speciesViewController?.removeSpeciesMenu()
         }
       
     }
@@ -349,8 +349,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     func showMap(gesture: UITapGestureRecognizer) {
         tabBarController?.selectedIndex = 2
-        getAppDelegate().bottomNavigationController.selectedIndex = 2
-        getAppDelegate().bottomNavigationController.checkBadges(with: Tabs.maps.rawValue)
+        getAppDelegate().bottomNavigationController?.selectedIndex = 2
+        getAppDelegate().bottomNavigationController?.checkBadges(with: Tabs.maps.rawValue)
         
         
     }

@@ -46,8 +46,9 @@ class TerminalSpeciesCell: UIView {
     func loadViewFromNib() -> UIView {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: String(describing: type(of:self)), bundle: bundle)
-        let nibView = nib.instantiate(withOwner: self, options: nil).first as! UIView
         
+        let nibView = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        //nibView.translatesAutoresizingMaskIntoConstraints = false
         return nibView
         
     }
@@ -55,6 +56,7 @@ class TerminalSpeciesCell: UIView {
     func nibSetup() {
         let view = loadViewFromNib()
         view.frame = bounds
+        
         view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         self.addSubview(view)
     }
@@ -66,11 +68,17 @@ class TerminalSpeciesCell: UIView {
         }
     }
     
-    func groupStatusView(highlighted highlight: Bool = true, for index: Int) {
+    func groupStatusView(highlighted highlight: Bool = false, for groupIndex: Int) {
         for (index,statusView) in groupStatusViews.enumerated() {
-            if !highlight {
-                statusView.borderColor = UIColor.white
+            if highlight == false {
+                statusView.borderColor = UIColor.lightGray
                 statusView.backgroundColor = UIColor.white
+                
+                
+                if let speciesIndex = self.speciesIndex {
+                    self.speciesImage.image = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: false)
+                }
+                
             } else {
                 
                 

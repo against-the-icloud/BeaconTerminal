@@ -82,11 +82,11 @@ extension PreferencesTableViewController {
                 
                 if foundPreferences.count > 0 {
                     let preference = foundPreferences[0]
-                    try! realmDataController!.realm.write {
+                    try! realm!.write {
                         preference.type = cell.preferenceType!
                         preference.value = cell.textLabel?.text
                         preference.lastModified = NSDate() as Date
-                        realmDataController!.realm.add(preference, update: true)
+                        realm!.add(preference, update: true)
                     }
                 }
             }

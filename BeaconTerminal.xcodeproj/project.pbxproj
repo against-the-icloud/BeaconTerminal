@@ -10,9 +10,12 @@
 		700A3AB61D4BC7D8009B540D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB51D4BC7D8009B540D /* Photos.framework */; };
 		700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */; };
 		701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */; };
+		701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */; };
+		701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */; };
+		701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */; };
 		701841011D6041AF003921A1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701841001D6041AF003921A1 /* MapViewController.swift */; };
 		7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7031DB191D65E18B000DCC61 /* Terminal.storyboard */; };
-		7031DB1C1D65E3E5000DCC61 /* TerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */; };
+		7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */; };
 		7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */; };
 		7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */; };
 		70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */; };
@@ -115,9 +118,12 @@
 		700A3AB51D4BC7D8009B540D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalRelationshipTableViewController.swift; path = Terminal/TerminalRelationshipTableViewController.swift; sourceTree = "<group>"; };
+		701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GraveYard.storyboard; sourceTree = "<group>"; };
+		701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalCellController.swift; path = Terminal/TerminalCellController.swift; sourceTree = "<group>"; };
 		701841001D6041AF003921A1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7031DB191D65E18B000DCC61 /* Terminal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Terminal.storyboard; sourceTree = "<group>"; };
-		7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalViewController.swift; path = Terminal/TerminalViewController.swift; sourceTree = "<group>"; };
+		7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalMainViewController.swift; path = Terminal/TerminalMainViewController.swift; sourceTree = "<group>"; };
 		7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCollectionController.swift; path = Login/LoginSpeciesCollectionController.swift; sourceTree = "<group>"; };
 		7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCell.swift; path = Login/LoginSpeciesCell.swift; sourceTree = "<group>"; };
 		70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeUtil.swift; sourceTree = "<group>"; };
@@ -250,12 +256,14 @@
 			isa = PBXGroup;
 			children = (
 				7031DB191D65E18B000DCC61 /* Terminal.storyboard */,
-				7031DB1B1D65E3E5000DCC61 /* TerminalViewController.swift */,
 				70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */,
 				70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */,
 				70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */,
+				7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */,
 				7064CAA11D67802800B77ADA /* TerminalRelationshipViewController.swift */,
 				70D4E2331D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift */,
+				701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */,
+				701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */,
 			);
 			name = Terminal;
 			sourceTree = "<group>";
@@ -423,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				C0A7D849BE92350EC6614884 /* TestUITableViewController.swift */,
+				701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -578,6 +587,7 @@
 				708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */,
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
 				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
+				701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */,
 				70F29A691D582AAD0057A497 /* system_configuration.json in Resources */,
 				70D3D7131D66B37500A57B92 /* TerminalSpeciesCell.xib in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
@@ -655,6 +665,7 @@
 				7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */,
 				70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */,
 				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
+				701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */,
 				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,
 				70D3D7151D66C22B00A57B92 /* TerminalSpeciesCell.swift in Sources */,
@@ -664,9 +675,10 @@
 				70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */,
 				7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */,
 				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
+				701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */,
 				70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */,
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
-				7031DB1C1D65E3E5000DCC61 /* TerminalViewController.swift in Sources */,
+				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
 				7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */,

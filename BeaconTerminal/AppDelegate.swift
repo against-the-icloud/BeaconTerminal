@@ -83,10 +83,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     var window: UIWindow?
     var nutella: Nutella?
     var collectionView: UICollectionView?
-    var speciesViewController: SpeciesMenuViewController = SpeciesMenuViewController()
+    var speciesViewController: SpeciesMenuViewController?
     
-    let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-    
+    var bottomNavigationController: AppBottomNavigationController?
     //    var beaconIDs = [
     //        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
     //        BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: Color.yellow.base),
@@ -97,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
         prepareDB()
-       // setupNutellaConnection(HOST)
+        // setupNutellaConnection(HOST)
         
         
         prepareViews(applicationType: ApplicationType.placeTerminal)
@@ -135,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         window?.rootViewController = application
         window?.makeKeyAndVisible()
     }
-
+    
     func prepareBasicGroupUI() -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
@@ -143,7 +142,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
-        let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: bottomNavigationController)
+        bottomNavigationController = AppBottomNavigationController()
+
+        let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: bottomNavigationController!)
         navigationController.statusBarStyle = .lightContent
         
         // create drawer
@@ -152,8 +153,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         //tabbar
         
-        bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController]
-        bottomNavigationController.selectedIndex = 0
+        bottomNavigationController?.viewControllers = [mainViewController, scratchPadViewController]
+        bottomNavigationController?.selectedIndex = 0
         
         sideViewController.showSelectedCell(with: checkApplicationState())
         
@@ -162,7 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     func prepareTerminalUI() -> NavigationDrawerController{
         let terminalStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
-        let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "terminalViewController") as! TerminalViewController
+        let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "terminalMainViewController") as! TerminalMainViewController
         
         let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
         let sideViewController = mainStoryBoard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
@@ -174,7 +175,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         navigationController.statusBarStyle = .default
         
         BadgeUtil.badge(shouldShow: false)
-        getAppDelegate().speciesViewController.showSpeciesMenu(showHidden: false)
+        
+        speciesViewController = SpeciesMenuViewController()
+        speciesViewController!.showSpeciesMenu(showHidden: false)
+        
         sideViewController.showSelectedCell(with: checkApplicationState())
         
         return navigationDrawerController
@@ -183,38 +187,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     func prepareDB() {
         
+        func initDB() {
+            realmDataController = RealmDataController()
+            
+            
+            if REFRESH_DB {
+                if let realm = realm {
+                    realm.beginWrite()
+                    realm.deleteAllObjects()
+                    try! realm.commitWrite()
+                    
+                    
+                    //checks
+                    //            nutella config
+                    
+                    //= realmDataController?.checkGroups()
+                    if let symConfig = realmDataController?.loadSystemConfiguration() {
+                        realmDataController?.generateTestData()
+                        let section = symConfig.sections[1]
+                        let group = section.groups[1]
+                        
+                        realmDataController?.updateUser(withGroup: group, section: section)
+                        //update bottombar
+                        //realmDataController?.updateBottomBar(withRuntime: runtime)
+                    }
+                }
+            }
+            
+        }
+        
         if Platform.isSimulator {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
             try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+            initDB()
         } else {
             //TODO
             //device config
             try! realm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "InMemoryRealm"))
+            
+            initDB()
         }
         
-        realmDataController = RealmDataController(realm: realm!)
         
-        if REFRESH_DB {
-            if let realm = realmDataController?.realm {
-                realm.beginWrite()
-                realm.deleteAllObjects()
-                try! realm.commitWrite()
-            }
-            
-            //checks
-//            nutella config
-            
-            //= realmDataController?.checkGroups()
-            if let symConfig = realmDataController?.loadSystemConfiguration() {
-                realmDataController?.generateTestData()
-                let section = symConfig.sections[1]
-                let group = section.groups[1]
-                
-                realmDataController?.updateUser(withGroup: group, section: section)
-                //update bottombar
-                //realmDataController?.updateBottomBar(withRuntime: runtime)
-            }
-        }
         
     }
     

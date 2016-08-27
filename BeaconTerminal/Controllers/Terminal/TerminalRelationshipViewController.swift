@@ -19,11 +19,16 @@ class TerminalRelationshipViewController: UIViewController {
     @IBOutlet var speciesCell: [TerminalSpeciesCell]!
     
     var selectedSpeciesCell: TerminalSpeciesCell?
+    var groups: List<Group>?
     
     var relationshipCount = 0
-
+    
     var relationshipType: RelationshipType?
-    var relationshipResults: [RelationshipResult] = [RelationshipResult]()
+    var relationshipResults: [RelationshipResult]? {
+        didSet {
+            updateUI()
+        }
+    }
     
     // Mark: UIViewController methonds
     override func viewDidLoad() {
@@ -38,40 +43,87 @@ class TerminalRelationshipViewController: UIViewController {
         }
         
         //setup species TerminalSpeciesCell
-        for (index,terminalCell) in speciesCell.enumerated() {
-            terminalCell.speciesImage.image = RealmDataController.generateImageForSpecies(index, isHighlighted: false)
-            terminalCell.speciesIndex = index
-            terminalCell.allGroupStatusViewsOff()
-            
-            
-             let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(showResultPopover(_:)))
-            
-            
-            terminalCell.addGestureRecognizer(tapGestureRecognizer)
-        }
+//        for (index,terminalCell) in speciesCell.enumerated() {
+//            terminalCell.speciesImage.image = RealmDataController.generateImageForSpecies(index, isHighlighted: false)
+//            terminalCell.speciesIndex = index
+//            terminalCell.allGroupStatusViewsOff()
+//            
+//            
+//            let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(showResultPopover(_:)))
+//            
+//            
+//            terminalCell.addGestureRecognizer(tapGestureRecognizer)
+//        }
     }
     
     func updateUI() {
-        for rr in relationshipResults {
-            
-            //go through all the relationships
-            if let relationships = rr.relationships {
+        
+        
+        
+        if let relationshipResults =  self.relationshipResults {
+            let countedSet = NSCountedSet()
+            if !relationshipResults.isEmpty {
                 
-                relationshipCount += (rr.relationships?.count)!
-
-                for r in relationships {
-                    if let index = r.toSpecies?.index {
-                        let terminalCell = speciesCell.filter({ (sc:TerminalSpeciesCell) -> Bool in
-                            return sc.speciesIndex == index
-                        }).first
+                for rr in relationshipResults {
+                    
+                    
+                    //go through all the relationships
+                    
+                    
+                    if let relationships = rr.relationships, let group = rr.group {
                         
-                        terminalCell?.groupStatusView(highlighted: true, for:  (rr.group?.index)!)
+                        let groupIndex = group.index
+                        
+                        countedSet.add(groupIndex)
+                        
+                        relationshipCount += (rr.relationships?.count)!
+                        
+                        
+                        //for each cell see if there is a species
+//                        for cell in speciesCell {
+//                            
+//                            let cellSpeciesIndex = cell.speciesIndex
+//                            
+//                            let foundRelationships = relationships.filter(using: "toSpecies.index = \(cellSpeciesIndex!)")
+//                            
+//                                if !foundRelationships.isEmpty {
+//                                    
+//                                    LOG.debug("GROUP INDEX \(groupIndex) RELATIONSHIP type \(rr.relationshipType) number\(rr.relationships!.count) for SPECIES \(foundRelationships.first?.toSpecies?.name)")
+//                                    
+//                                    cell.groupStatusView(highlighted: true, for: groupIndex)
+//                                } else {
+//                                    cell.groupStatusView(highlighted: false, for: groupIndex)
+//                                }
+//                            
+//                            
+//                            
+//                            
+//                        }
+                        
+                        
                     }
                 }
+                
+                
+                //updateLabel(withRelationshipCount: relationshipCount, groupCount: 0, groupMax: (groups?.count)!)
+                
+            } else {
+                updateLabel(withRelationshipCount: relationshipCount, groupCount: 0, groupMax: (groups?.count)!)
+                
+                for (_,terminalCell) in speciesCell.enumerated() {
+                    
+                    terminalCell.allGroupStatusViewsOff()
+                }
+                
             }
         }
-                            
-        relationshipStatusLabel.text = "Reporting \(relationshipCount) relationships from 5 of 5 groups"
+    }
+    
+    func updateLabel(withRelationshipCount relationshipCount: Int = 0, groupCount: Int = 0, groupMax: Int = 0 ) {
+        if relationshipCount == 0 && groupCount == 0 && groupMax == 0 {
+            relationshipStatusLabel.text = "Nothing to report"
+        }
+        relationshipStatusLabel.text = "Reporting \(relationshipCount) relationships from \(groupCount) of \(groupMax) groups"
     }
     
     // Mark: Gestures
@@ -89,32 +141,64 @@ class TerminalRelationshipViewController: UIViewController {
         switch segue.identifier {
         case "resultsSegue"?:
             
-                if let terminalRelationshipController = segue.source as? TerminalRelationshipViewController, let fromSpecies = self.relationshipResults.first?.speciesObservation?.fromSpecies {
+            if let terminalRelationshipController = segue.source as? TerminalRelationshipViewController, let fromSpecies = self.relationshipResults?.first?.speciesObservation?.fromSpecies {
+                
+                let selectedSpeciesCell = terminalRelationshipController.selectedSpeciesCell
+                
+                if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let toSpecies = realmDataController?.findSpecies((selectedSpeciesCell?.speciesIndex!)!), let relationshipType = self.relationshipType
+                {
                     
-                    let selectedSpeciesCell = terminalRelationshipController.selectedSpeciesCell
-
-                    if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let toSpecies = realmDataController?.findSpecies((selectedSpeciesCell?.speciesIndex!)!), let relationshipType = self.relationshipType
-                    {
-                        
-                        
-                        
-                        let title = "Comparison of \(fromSpecies.name) \(StringUtil.relationshipString(with: relationshipType)) \(toSpecies.name)"
-                        
-                        tcvc.title = title
-                        tcvc.navigationController?.navigationBar.tintColor = Util.flatBlack
-                        tcvc.navigationItem.backBarButtonItem?.tintColor = UIColor.white
-                        tcvc.doneButton.tintColor = UIColor.white
-                        tcvc.navigationController?.toolbar.tintColor =  Util.flatBlack
-                    }
+                    //find all the relationships that have
                     
+                    let foundRelationships = findRelationships(withSpecies: toSpecies)
                     
+                    let title = "\(fromSpecies.name) \(StringUtil.relationshipString(with: relationshipType)) \(toSpecies.name)"
+                    tcvc.foundRelationships = foundRelationships
+                    tcvc.groups = groups
+                    tcvc.title = title
+                    tcvc.navigationController?.navigationBar.tintColor = Util.flatBlack
+                    tcvc.navigationItem.backBarButtonItem?.tintColor = UIColor.white
+                    tcvc.doneButton.tintColor = UIColor.white
+                    tcvc.navigationController?.toolbar.tintColor =  Util.flatBlack
                 }
-        
-           
+                
+                
+            }
+            
+            
             break
         default:
             print("you know nothing")
         }
     }
+    
+    
+    func findRelationships(withSpecies species: Species) -> [Int:Relationship] {
+        
+        var foundRelationships = [Int:Relationship]()
+        
+        if let relationshipResults = self.relationshipResults {
+            
+            for rr in relationshipResults {
+                
+                //go through all the relationships
+                if let relationships = rr.relationships {
+                    
+                    for r in relationships {
+                        if let index = r.toSpecies?.index {
+                            if index ==  species.index, let groupId =  rr.group?.index {
+                                foundRelationships[groupId] = r
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        return foundRelationships
+    }
+    
+    
 }
 

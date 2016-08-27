@@ -19,7 +19,7 @@ struct RelationshipResult {
     var relationshipType: RelationshipType?
 }
 
-class TerminalViewController: UIViewController {
+class TerminalMainViewController: UIViewController {
     @IBOutlet var imageViews: [UIImageView]!
     
     @IBOutlet weak var sectionLabel: UILabel!
@@ -31,8 +31,6 @@ class TerminalViewController: UIViewController {
     var section: Section?
     
     var relationshipResults = [RelationshipResult]()
-    var relationshipControllers = [TerminalRelationshipViewController]()
-    
     var notificationTokens = [NotificationToken]()
     
     deinit {
@@ -68,14 +66,15 @@ class TerminalViewController: UIViewController {
     }
     
     
-
+    
     
     // Mark: Unwind Actions
     
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
-        updateUI()
+        updateHeader()
         queryDB()
+        updateUI()
     }
     
     // Mark: updates
@@ -97,32 +96,34 @@ class TerminalViewController: UIViewController {
                     relationshipResult.relationships = speciesObservations.first?.relationships.filter(using: "relationshipType = '\(relationshipType)'")
                     
                     
-                    distributeToImageViews(relationships: relationshipResult.relationships!)
+                    //distributeToImageViews(relationships: relationshipResult.relationships!)
                     relationshipResult.relationshipType = relationshipType
                     relationshipResults.append(relationshipResult)
                 }
             }
-            
-            //distribute the results to the appropriate controllers
-            distributeToControllers()
-  
-       
-            
+        }
+    }
+    
+    func updateUI() {
+        
+        for childController in self.childViewControllers {
+            if let terminalRelationshipController = childController as? TerminalRelationshipViewController {
+                
+                let results = relationshipResults.filter({ (rr:RelationshipResult) -> Bool in
+                    return rr.relationshipType == terminalRelationshipController.relationshipType
+                })
+                
+                if let section = self.section {
+                   // LOG.debug("GROUPS \(section.groups)")
+                    terminalRelationshipController.groups = section.groups
+                }
+                
+                terminalRelationshipController.relationshipResults = results
+            }
         }
     }
     
     @IBAction func testSpeciesAdd(_ sender: UIButton) {
-    }
-    
-    func distributeToControllers() {
-        for rvc in relationshipControllers {
-            let results = relationshipResults.filter({ (rr:RelationshipResult) -> Bool in
-                return rr.relationshipType == rvc.relationshipType
-            })
-            
-            rvc.relationshipResults = results
-            rvc.updateUI()
-        }
     }
     
     func distributeToImageViews(relationships: Results<Relationship>) {
@@ -139,26 +140,24 @@ class TerminalViewController: UIViewController {
     
     
     func loadImageAsset(attachment: String, imageView: UIImageView) {
-        
-        
-                    if let url = URL(string: attachment) {
-                        if let assets : PHAsset = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil).firstObject {
-                            let targetSize = CGSize(width: imageView.frame.width,height: imageView.frame.height)
-                            let options = PHImageRequestOptions()
-                            
-                            PHImageManager.default().requestImage(for: assets, targetSize: targetSize, contentMode: PHImageContentMode.aspectFit, options: options, resultHandler: {
-                                (result, info) in
-                                imageView
-                                    .image = result
-                            })
-                        }
-                    }
+        if let url = URL(string: attachment) {
+            if let assets : PHAsset = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil).firstObject {
+                let targetSize = CGSize(width: imageView.frame.width,height: imageView.frame.height)
+                let options = PHImageRequestOptions()
+                
+                PHImageManager.default().requestImage(for: assets, targetSize: targetSize, contentMode: PHImageContentMode.aspectFit, options: options, resultHandler: {
+                    (result, info) in
+                    imageView
+                        .image = result
+                })
+            }
+        }
         
         
     }
     
     
-    func updateUI() {
+    func updateHeader() {
         if let species = species {
             profileImageView.image = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
             profileLabel.text = species.name
@@ -173,28 +172,25 @@ class TerminalViewController: UIViewController {
     // Mark: segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "terminalProducerRelationship" {
-            if let tvc = segue.destination as? TerminalRelationshipViewController {
-                updateRelationshipViews(with: .producer, rvc: tvc)
-            }
-        } else if segue.identifier == "terminalCompetesRelationship" {
-            if let tvc = segue.destination as? TerminalRelationshipViewController {
-                updateRelationshipViews(with: .competes, rvc: tvc)
-            }
-        } else if segue.identifier == "terminalConsumerRelationship" {
-            if let tvc = segue.destination as? TerminalRelationshipViewController {
-                updateRelationshipViews(with: .consumer, rvc: tvc)
+        
+        if let tvc = segue.destination as? TerminalRelationshipTableViewController, let segueId = segue.identifier {
+            
+            switch segueId {
+            case "terminalProducerRelationship":
+                tvc.relationshipType = .producer
+            case "terminalCompetesRelationship":
+                tvc.relationshipType = .competes
+            case "terminalConsumerRelationship":
+                tvc.relationshipType = .consumer
+            default:
+                print("you know nothing")
             }
         }
-    }
-    
-    func updateRelationshipViews(with relationshipType: RelationshipType, rvc: TerminalRelationshipViewController) {
-        rvc.relationshipType = relationshipType
-        relationshipControllers.append(rvc)
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
- 
+    
 }
