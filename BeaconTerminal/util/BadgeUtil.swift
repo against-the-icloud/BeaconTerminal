@@ -43,7 +43,7 @@ class BadgeUtil {
             for subView in (UIApplication.shared.keyWindow?.subviews)! {
                 if subView.tag == badgeTag {
                     if shouldShow {
-                        subView.fadeIn()
+                        subView.fadeIn(toAlpha: 1.0)
                     } else {
                         subView.fadeOut()
                     }

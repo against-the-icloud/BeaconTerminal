@@ -47,6 +47,7 @@
 		70C00A6D1D6825A40021099B /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A6A1D6825A40021099B /* Nutella.framework */; };
 		70C00A6E1D6825A40021099B /* Nutella.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A6A1D6825A40021099B /* Nutella.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70C1CF361D592E2800CB687E /* LoginSectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */; };
+		70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */; };
 		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D142691D414E2700A588B3 /* DragUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D142681D414E2700A588B3 /* DragUtil.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
@@ -153,6 +154,7 @@
 		70C00A691D6825A40021099B /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = ../SimpleMQTTClient.framework; sourceTree = "<group>"; };
 		70C00A6A1D6825A40021099B /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nutella.framework; path = ../Nutella.framework; sourceTree = "<group>"; };
 		70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionCollectionViewController.swift; path = Login/LoginSectionCollectionViewController.swift; sourceTree = "<group>"; };
+		70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Speciescolors.swift"; sourceTree = "<group>"; };
 		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
 		70D142681D414E2700A588B3 /* DragUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragUtil.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				704204191CE8E94D00C09FD0 /* LoadingView.swift */,
 				70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */,
 				70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */,
+				70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */,
 				C0A7DAD61205D9767DB6FF97 /* Util.swift */,
 				C0A7D6AC0D72ADF2FA28B555 /* Random.swift */,
 				70D142681D414E2700A588B3 /* DragUtil.swift */,
@@ -691,6 +694,7 @@
 				701841011D6041AF003921A1 /* MapViewController.swift in Sources */,
 				701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */,
 				C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */,
+				70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */,
 				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,

@@ -337,7 +337,7 @@ class SpeciesMenuViewController: UIViewController {
             for sv in UIApplication.shared.keyWindow!.subviews {
                 if sv.tag == speciesMenuTag {
                     if showHidden {
-                        sv.fadeIn()
+                        sv.fadeIn(toAlpha: 1.0)
                     } else {
                         sv.fadeOut()
                     }

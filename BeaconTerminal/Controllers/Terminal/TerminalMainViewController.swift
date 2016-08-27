@@ -104,21 +104,21 @@ class TerminalMainViewController: UIViewController {
         }
     }
     
-    func updateUI() {
-        
+    func updateUI() {        
+        //setup the columans
         for childController in self.childViewControllers {
-            if let terminalRelationshipController = childController as? TerminalRelationshipViewController {
-                
-                let results = relationshipResults.filter({ (rr:RelationshipResult) -> Bool in
-                    return rr.relationshipType == terminalRelationshipController.relationshipType
-                })
+            if let rvc = childController as? TerminalRelationshipTableViewController {
                 
                 if let section = self.section {
-                   // LOG.debug("GROUPS \(section.groups)")
-                    terminalRelationshipController.groups = section.groups
+                    rvc.groups = section.groups
+                    rvc.species = species
                 }
                 
-                terminalRelationshipController.relationshipResults = results
+                let results = relationshipResults.filter({ (rr:RelationshipResult) -> Bool in
+                    return rr.relationshipType == rvc.relationshipType
+                })
+
+                rvc.relationshipResults = results
             }
         }
     }

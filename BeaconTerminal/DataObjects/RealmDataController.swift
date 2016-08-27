@@ -214,9 +214,9 @@ class RealmDataController {
             for section in simConfig.sections {
                 for group in section.groups {
                     
-                    if group.index != 0 {
-                        populateWithSpeciesObservationTestData(for: group)
-                    }
+                    
+                    populateWithSpeciesObservationTestData(for: group)
+                
                 }
             }
             
@@ -240,7 +240,7 @@ class RealmDataController {
                     relationship.toSpecies = allSpecies[Randoms.randomInt(0, 10)]
                     relationship.lastModified = Date()
                     relationship.note = Randoms.randomFakeConversation()
-                    relationship.attachments = getRandomImage(index: i)
+                    relationship.attachments = getRandomImage()
                     relationship.ecosystem = allEcosystems[Randoms.randomInt(0, 4)]
                     
                     
@@ -312,7 +312,7 @@ class RealmDataController {
             relationship.toSpecies = toSpecies
             relationship.lastModified = NSDate() as Date
             relationship.note = Randoms.randomFakeConversation()
-            relationship.attachments = getRandomImage(index: Randoms.randomInt(0, 2))
+            relationship.attachments = getRandomImage()
             relationship.ecosystem = speciesObservation.ecosystem
             relationship.relationshipType = relationshipType
             speciesObservation.relationships.append(relationship)
@@ -320,14 +320,11 @@ class RealmDataController {
         }
     }
     
-    func getRandomImage(index: Int) -> String {
+    func getRandomImage() -> String {
         
-        let images = ["assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG","assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG","assets-library://asset/asset.PNG?id=9EDF71E6-A5B4-4F44-9A20-88255779D9CB&ext=PNG"]
+        let images = ["graph1","graph2","graph3","graph4","graph5","graph6","screenshot1","screenshot2","screenshot3"]
         
-        if index >= images.count {
-            return images[0]
-        }
-        return images[index]
+        return images[Randoms.randomInt(0, (images.count-1))]
     }
     
     func createSpeciesObservation(_ fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
@@ -347,7 +344,7 @@ class RealmDataController {
             relationship.toSpecies = allSpecies[i+2]
             relationship.lastModified = Date()
             relationship.note = "hello"
-            relationship.attachments = getRandomImage(index: Randoms.randomInt(0, 2))
+            relationship.attachments = getRandomImage()
             relationship.ecosystem = ecosystem
             
             

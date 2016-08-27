@@ -195,11 +195,11 @@ public struct Randoms {
 
 
     public static func randomFakeGroupName() -> String {
-        return ["ECOSYSTEM 1","ECOSYSTEM 2","ECOSYSTEM 3","ECOSYSTEM 4","ECOSYSTEM 5"].randomItem()
+        return ["Team Tundra","Team Rainforest","Team Rainforest","Team Alpine","Team Desert"].randomItem()
     }
     
     public static func randomFakeGroups() -> [String] {
-        return ["ECOSYSTEM 1","ECOSYSTEM 2","ECOSYSTEM 3","ECOSYSTEM 4","ECOSYSTEM 5"]
+        return ["Team Tundra","Team Rainforest","Team Rainforest","Team Alpine","Team Desert"]
     }
 
     public static func randomFakeCreatureNames() -> String {

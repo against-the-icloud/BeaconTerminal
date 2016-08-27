@@ -105,6 +105,11 @@ extension UIImage {
 
 extension UIView {
     
+    func fadeIn(toAlpha alpha: CGFloat = 1.0, duration: TimeInterval = 0.5, delay: TimeInterval = 0.0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.alpha = alpha
+            }, completion: completion)  }
+    
     func fadeIn(_ duration: TimeInterval = 0.5, delay: TimeInterval = 0.0, completion: ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
         UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.alpha = 1.0
