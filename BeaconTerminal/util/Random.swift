@@ -238,7 +238,7 @@ public struct Randoms {
     }
 
     public static func randomFakeConversation() -> String {
-        let convoList = ["You embarrassed me this evening.","You don't think that was just lemonade in your glass, do you?","Do you ever think we should just stop doing this?","Why didn't he come and talk to me himself?","Promise me you'll look after your mother.","If you get me his phone, I might reconsider.","I think the room is bugged.","No! I'm tired of doing what you say.","For some reason, I'm attracted to you."]
+        let convoList = ["You embarrassed me this evening.","Always remember that you are absolutely unique. Just like everyone else.","You don't think that was just lemonade in your glass, do you?","Do you ever think we should just stop doing this?","Why didn't he come and talk to me himself?","Promise me you'll look after your mother.","If you get me his phone, I might reconsider.","I think the room is bugged.","I believe that if life gives you lemons, you should make lemonade... And try to find somebody whose life has given them vodka, and have a party."]
         return convoList.randomItem()
     }
 

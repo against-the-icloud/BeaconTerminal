@@ -367,7 +367,7 @@
         <scene sceneID="ZVH-gc-H3a">
             <objects>
                 <collectionViewController storyboardIdentifier="loginSpeciesCollectionViewController" title="LoginSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="at7-XY-YOa" customClass="LoginSpeciesCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="Y2e-hw-qON">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Y2e-hw-qON">
                         <rect key="frame" x="0.0" y="44" width="384" height="336"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -385,7 +385,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7II-pI-ESf">
+                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7II-pI-ESf">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="75" id="4Gl-Wc-M9N"/>
                                                 <constraint firstAttribute="width" constant="75" id="nJd-eh-JQc"/>
@@ -487,7 +487,7 @@
         <scene sceneID="Prp-r4-Eye">
             <objects>
                 <collectionViewController storyboardIdentifier="loginGroupCollectionViewController" title="LoginGroupCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="az7-JJ-joz" customClass="LoginGroupCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="fA8-m7-GUE">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fA8-m7-GUE">
                         <rect key="frame" x="0.0" y="44" width="384" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -581,7 +581,7 @@
         <scene sceneID="Uy7-ev-pEI">
             <objects>
                 <collectionViewController title="Login SectionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwI-3k-tFr" customClass="LoginSectionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="vN5-lh-QHi">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vN5-lh-QHi">
                         <rect key="frame" x="0.0" y="44" width="384" height="468"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -12,9 +12,17 @@ import RealmSwift
 
 class TerminalComparsionController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
+
+    var cellItems: [CellItem]?
+    var species: Species?
+    var fromSpecies: Species?
+    var groups: List<Group>?
+    var relationshipType: RelationshipType?
     
-    var foundRelationships = [Int:Relationship]()
-    var groups:List<Group>?
+    @IBOutlet weak var fromSpeciesImageView: UIImageView!    
+    @IBOutlet weak var relationshipLabel: UILabel!
+    @IBOutlet weak var toSpeciesImageView: UIImageView!
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -27,23 +35,41 @@ class TerminalComparsionController: UIViewController {
     // Mark: View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        prepareView()
+    }
+    
+    
+    func prepareView() {
+        if let toSpecies = species, let fromSpecies = self.fromSpecies, let relationshipType = self.relationshipType {
+            
+            fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpecies.index, isHighlighted: true)
+            toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpecies.index, isHighlighted: true)
+            
+            relationshipLabel.text = StringUtil.relationshipString(withType: relationshipType)
+            
+            
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        
-        
+        prepareView()
         
         if let segueId = segue.identifier {
             
              let id = NSNumber.init( value: Int32(segueId)!).intValue
     
             
-            if let relationship = foundRelationships[id], let detailvc = segue.destination as? TerminalRelationshipDetailTableViewController, let group = groups?.filter(using: "index = \(id)") {
+            if let detailvc = segue.destination as? TerminalRelationshipDetailTableViewController, let cellItems = self.cellItems {
                 
-                
-                detailvc.group = group.first
-                detailvc.relationship = relationship
+                if let found = cellItems.filter( { (cellItem: CellItem) -> Bool in
+                    return cellItem.group?.index == id
+                }).first {
+                  detailvc.cellItem = found
+                  detailvc.group = found.group
+                } else {
+                  detailvc.group = groups?[id]
+                }
             }
         }
     }

@@ -12,8 +12,8 @@ import UIKit
 class TerminalRelationshipDetailTableViewController: UITableViewController {
     
     
-    var relationship: Relationship?
-    var group: Group?
+    var cellItem: CellItem?
+    var group:Group?
     
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
@@ -53,9 +53,13 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
             groupNameLabel.text = group.name
         }
         
-        if let relationship = self.relationship {
+        if let cellItem = self.cellItem, let relationship = cellItem.relationship {
             if let ecosystemIndex = relationship.ecosystem?.ecosystemNumber {
                 ecosystemSegmentedControl.selectedSegmentIndex = ecosystemIndex
+            }
+            
+            if let attachment = relationship.attachments {
+                evidenceImageView.image = UIImage(named: attachment)
             }
             
             if let note = relationship.note {
@@ -64,7 +68,10 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
                 reasoningTextView.text = "no reason"
             }
         } else {
-            
+            ecosystemSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
+            reasoningTextView.text = ""
+            evidenceImageView.image = nil
+            evidenceImageView.backgroundColor = UIColor.clear
         }
     }
 }

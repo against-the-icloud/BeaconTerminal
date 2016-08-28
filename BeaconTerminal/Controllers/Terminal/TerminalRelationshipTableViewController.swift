@@ -37,7 +37,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
     }
     
     func updateHeader() {
@@ -51,8 +51,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
     }
     
     
-    func updateCell(withRelationship relationship: Relationship, group: Group) {
+    func updateCell(withRelationship relationship: Relationship, group: Group, relationshipType: RelationshipType) {
         //find the controller with that species
+        
+        self.relationshipType = relationshipType
         
         if let cells = self.childViewControllers as? [TerminalCellController] {
             
@@ -64,16 +66,28 @@ class TerminalRelationshipTableViewController: UITableViewController {
             if let cell = found {
                 LOG.debug("FOUND \(found)")
                 //update
-                cell.updateCell(withGroup: group, andRelationship: relationship)
-                
+                cell.updateCell(withGroup: group, andRelationship: relationship, relationshipType: self.relationshipType!)
+                cell.fromSpecies = species 
+                cell.groups = groups
             }
-            
-            
-            
-            
-
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let segueId = segue.identifier {
+            switch segueId {
+            case "embedCell":
+                
+                if let cellController = segue.destination as? TerminalCellController {
+                    cellController.relationshipType = relationshipType
+                }
+                                
+                break
+            default:
+                break
+            }
+        }
     }
     
     func updateResults() {
@@ -93,8 +107,8 @@ class TerminalRelationshipTableViewController: UITableViewController {
                     return rr.group?.index == group.index
                 })
                 
-                 reportingGroups[group.index] = 0
-           
+                reportingGroups[group.index] = 0
+                
                 
                 //all the relationsip results for group
                 for relResult in groupResults {
@@ -108,10 +122,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
                             
                         }
                         
-                        LOG.debug("count for group \(group.index) \(groupResults.count) TYPE \(relationshipType?.rawValue) relationships \(relationships)")
-
+                        //LOG.debug("count for group \(group.index) \(groupResults.count) TYPE \(relationshipType?.rawValue) relationships \(relationships)")
+                        
                         for r in relationships {
-                            updateCell(withRelationship: r, group: group)
+                            updateCell(withRelationship: r, group: group, relationshipType: relResult.relationshipType!)
                         }
                     }
                 }
@@ -120,7 +134,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
             var groupCount = 0
             
             for (_, value) in reportingGroups {
-               groupCount += value
+                groupCount += value
             }
             
             updateLabel(withRelationshipCount: relationshipCount, groupCount: groupCount, groupMax: groups.count)
@@ -144,7 +158,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
         if let currentSpecies = species {
             //update title
             if let relationshipType = self.relationshipType {
-                relationshipHeaderLabel.text = StringUtil.relationshipString(with: relationshipType)
+                relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
             }
             
             let allSpecies = realm!.allObjects(ofType: Species.self)
