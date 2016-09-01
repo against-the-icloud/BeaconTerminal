@@ -79,6 +79,16 @@ class SideViewController: UITableViewController {
             case 1:                                
                 // Mark: place terminal
                 
+                let runtimeResults = realm?.allObjects(ofType: Runtime.self)
+                if let currentRuntime = runtimeResults?.first {
+                    try! realm?.write {
+                        currentRuntime.currentSpecies = nil
+                        realm?.add(currentRuntime, update: true)
+                    }
+
+                    
+                }
+                
                 getAppDelegate().changeSystemStateTo(.placeTerminal)
                 
                 let storyboard = UIStoryboard(name: "Terminal", bundle: nil)
@@ -148,39 +158,41 @@ class SideViewController: UITableViewController {
         } else if (indexPath as NSIndexPath).section == 2 {
             switch (indexPath as NSIndexPath).row {
             case 0:
-                //control panel
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
-                
-                //create top navigationbar
-                let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
-                
-                
-                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-                                                                             duration: 0,
-                                                                             options: [],
-                                                                             animations: nil,
-                                                                             completion: {
-                                                                                [weak self] _ in
-                                                                                self?.navigationDrawerController?.closeLeftView()
-                    })
+//                //control panel
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
+//                
+//                //create top navigationbar
+//                let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
+//                
+//                
+//                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
+//                                                                             duration: 0,
+//                                                                             options: [],
+//                                                                             animations: nil,
+//                                                                             completion: {
+//                                                                                [weak self] _ in
+//                                                                                self?.navigationDrawerController?.closeLeftView()
+//                    })
+                break
             case 1:
                 
-                //debug
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
-                
-                //create top navigationbar
-                let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
-                
-                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-                                                                             duration: 0,
-                                                                             options: [],
-                                                                             animations: nil,
-                                                                             completion: {
-                                                                                [weak self] _ in
-                                                                                self?.navigationDrawerController?.closeLeftView()
-                    })
+//                //debug
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
+//                
+//                //create top navigationbar
+//                let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
+//                
+//                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
+//                                                                             duration: 0,
+//                                                                             options: [],
+//                                                                             animations: nil,
+//                                                                             completion: {
+//                                                                                [weak self] _ in
+//                                                                                self?.navigationDrawerController?.closeLeftView()
+//                    })
+                break
             default:
                 break
             }

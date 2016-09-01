@@ -230,7 +230,7 @@ class RelationshipDetailViewController: UIViewController {
                 dispatch_on_main {
                     if let rIndex = so.relationships.index(of: r) {
                         
-                        getAppDelegate().makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop as AnyObject)
+                        Util.makeToast("Deleted \(self.title!)", duration: HRToastDefaultDuration, position: HRToastPositionTop as AnyObject)
                         
                         try! realm!.write {
                             so.relationships.remove(at: rIndex)
@@ -278,9 +278,9 @@ class RelationshipDetailViewController: UIViewController {
 extension RelationshipDetailViewController {
     func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
         if error == nil {
-            getAppDelegate().makeToast("Your image has been saved.")
+            Util.makeToast("Your image has been saved.")
         } else {
-            getAppDelegate().makeToast("There was an error saving your photo \(error)")
+            Util.makeToast("There was an error saving your photo \(error)")
         }
         
     }

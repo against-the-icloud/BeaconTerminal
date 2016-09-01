@@ -4,6 +4,19 @@ import Material
 
 class Util {
     
+    class func makeToast(_ message: String) {
+        if let presentWindow = UIApplication.shared.keyWindow {
+            presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop as AnyObject)
+        }
+    }
+    
+    class func makeToast(_ message: String, duration: Double = 3.0, position: AnyObject) {
+        if let presentWindow = UIApplication.shared.keyWindow {
+            presentWindow.makeToast(message: message, duration: duration, position: HRToastPositionTop as AnyObject)
+        }
+    }
+    
+    
     static let flatBlack: UIColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.00)
     
     
@@ -232,7 +245,6 @@ extension UIView {
         self.layer.addSublayer(shapeLayer)
         
     }
-    
     
     class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> UIView? {
         return UINib(

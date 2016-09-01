@@ -53,10 +53,10 @@ public class NavigationItem {
 	public private(set) var detailLabel: UILabel!
 	
 	/// Left controls.
-	public var leftControls: [UIView]?
+	public var leftControls = [UIView]()
 	
 	/// Right controls.
-	public var rightControls: [UIView]?
+	public var rightControls = [UIView]()
 	
 	/// Initializer.
 	public init() {
@@ -75,14 +75,14 @@ public class NavigationItem {
 	/// Prepares the titleLabel.
 	private func prepareTitleLabel() {
 		titleLabel = UILabel()
-		titleLabel.font = RobotoFont.mediumWithSize(size: 17)
+		titleLabel.font = RobotoFont.medium(with: 17)
 		titleLabel.textAlignment = .center
 	}
 	
 	/// Prepares the detailLabel.
 	private func prepareDetailLabel() {
 		detailLabel = UILabel()
-		detailLabel.font = RobotoFont.regularWithSize(size: 12)
+		detailLabel.font = RobotoFont.regular(with: 12)
 		detailLabel.textAlignment = .center
 	}
 }
@@ -153,7 +153,7 @@ extension UINavigationItem {
 	}
 	
 	/// Left side UIViews.
-	public var leftControls: [UIView]? {
+	public var leftControls: [UIView] {
 		get {
 			return navigationItem.leftControls
 		}
@@ -163,7 +163,7 @@ extension UINavigationItem {
 	}
 	
 	/// Right side UIViews.
-	public var rightControls: [UIView]? {
+	public var rightControls: [UIView] {
 		get {
 			return navigationItem.rightControls
 		}

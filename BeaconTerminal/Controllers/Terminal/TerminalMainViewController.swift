@@ -33,6 +33,8 @@ class TerminalMainViewController: UIViewController {
     var relationshipResults = [RelationshipResult]()
     var notificationTokens = [NotificationToken]()
     
+    var runtimeResults: Results<Runtime>?
+    
     deinit {
         for token in notificationTokens {
             token.stop()
@@ -45,12 +47,68 @@ class TerminalMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showSpeciesLogin()
+        prepareNotifications()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func prepareView() {
+        updateHeader()
+        queryDB()
+        updateUI()
     }
+    
+    func prepareNotifications() {
+        
+        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        
+        
+        // Observe Notifications
+        let notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let terminalController = self else { return }
+            switch changes {
+            case .Initial(let runtimeResults):
+                terminalController.updateUI(withRuntimeResults: runtimeResults)
+                break
+            case .Update(let runtimeResults, _, _, _):
+                terminalController.updateUI(withRuntimeResults: runtimeResults)
+                break
+            case .Error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+        }
+        
+        if let nt = notificationToken {
+            notificationTokens.append(nt)
+        }
+    }
+    
+    func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
+        self.runtimeResults = runtimeResults
+        
+        if let rt = runtimeResults.first {
+            
+            if rt.currentSection != nil {
+                self.section = rt.currentSection
+                updateHeader()
+            } else {
+                showSpeciesLogin()
+            }
+            
+            if rt.currentSpecies == nil {
+                showSpeciesLogin()
+                //TODO: if the section is set before jump to the species login page
+            } else {
+                self.species = rt.currentSpecies
+                prepareView()
+            }
+            
+        } else {
+            showSpeciesLogin()
+        }
+    }
+    
     
     func showSpeciesLogin() {
         let storyboard = UIStoryboard(name: "Popover", bundle: nil)
@@ -59,6 +117,10 @@ class TerminalMainViewController: UIViewController {
         if let loginSectionCollectionViewController = loginNavigationController.viewControllers[0] as? LoginSectionCollectionViewController {
             
             loginSectionCollectionViewController.loginType = LoginType.species
+            if let selectedSection = self.section {
+                loginSectionCollectionViewController.selectedSection = selectedSection
+            }
+            
             
         }
         
@@ -72,9 +134,7 @@ class TerminalMainViewController: UIViewController {
     
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
-        updateHeader()
-        queryDB()
-        updateUI()
+        prepareView()
     }
     
     // Mark: updates
@@ -87,6 +147,8 @@ class TerminalMainViewController: UIViewController {
             for group in section.groups {
                 
                 let speciesObservations: Results<SpeciesObservation> = group.speciesObservations.filter(using: "fromSpecies.index = \(species.index)")
+                
+                LOG.debug("SPECIESOB \(RealmDataController.exportJson(withSpeciesObservation: speciesObservations.first!, group: group))")
                 
                 //iterate over each relationship type
                 for relationshipType in RelationshipType.allRelationships {

@@ -53,10 +53,12 @@ class Group: Object {
 
 class SpeciesObservation: Object {
     dynamic var id : String? = nil
-    dynamic var authors : Group? = nil
+    dynamic var authors : String? = nil
+    dynamic var groupId = 0
     dynamic var lastModified = Date()
     dynamic var fromSpecies: Species?
     dynamic var ecosystem: Ecosystem?
+    
     var relationships = List<Relationship>()
     var preferences = List<Preference>()
     
@@ -66,6 +68,8 @@ class SpeciesObservation: Object {
     }
     
 }
+
+
 
 class Relationship: Object {
     dynamic var id : String? = nil
@@ -114,20 +118,40 @@ class Preference: Object {
 class NutellaConfig: Object {
     dynamic var id : String? = nil
     dynamic var last_modified = Date()
-    
-    dynamic var appId: String? = nil
-    dynamic var runId: String? = nil
-    dynamic var host: String? = nil
-    dynamic var componentId: String? = nil
-    dynamic var resourceId: String? = nil
-    var outChannels = List<Channel>()
-    var inChannels = List<Channel>()
+    var hosts = List<Host>()
+    var conditions = List<Condition>()
     
     override static func primaryKey() -> String? {
         return "id"
     }
 }
 
+class Host: Object {
+    dynamic var id : String? = nil
+    dynamic var last_modified = Date()
+    
+    dynamic var appId: String? = nil
+    dynamic var runId: String? = nil
+    dynamic var url: String? = nil
+    dynamic var componentId: String? = nil
+    dynamic var resourceId: String? = nil
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class Condition: Object {
+    dynamic var id : String? = nil
+    dynamic var last_modified = Date()
+    dynamic var name: String? = nil
+    dynamic var subscribes: String? = nil
+    dynamic var publishes: String? = nil
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
 class Channel: Object {
     dynamic var name: String? = nil
 }
@@ -148,6 +172,7 @@ class Runtime: Object {
     dynamic var id : String? = nil
     dynamic var currentGroup: Group? = nil
     dynamic var currentSection: Section? = nil
+    dynamic var currentSpecies: Species? = nil
     
     override static func primaryKey() -> String? {
         return "id"

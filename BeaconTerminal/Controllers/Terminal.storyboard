@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="16A304a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="DrH-U8-XET" userLabel="MainStackView">
@@ -46,6 +46,16 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cFa-Wl-Kyl">
                                                 <subviews>
                                                     <view contentMode="scaleToFill" horizontalHuggingPriority="247" horizontalCompressionResistancePriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-6b-cz6" userLabel="Spacer">
+                                                        <subviews>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-4j-IpX">
+                                                                <frame key="frameInset" minX="256" minY="11" width="121" height="29"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <segments>
+                                                                    <segment title="First"/>
+                                                                    <segment title="Second"/>
+                                                                </segments>
+                                                            </segmentedControl>
+                                                        </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </view>
                                                 </subviews>
@@ -175,7 +185,7 @@
             <objects>
                 <tableViewController id="LsQ-zI-Xai" customClass="TerminalRelationshipTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" id="yGr-Mh-tS0">
-                        <rect key="frame" x="0.0" y="0.0" width="333" height="675"/>
+                        <rect key="frame" x="0.0" y="0.0" width="333" height="931"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.53725490200000003" green="0.47058823529999999" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -489,8 +499,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2UM-GY-f3R" userLabel="RelationshipView">
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="D27-Ow-RUX">
-                                                <frame key="frameInset" minX="252" width="292" height="45"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="D27-Ow-RUX">
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3cl-Pc-E92" userLabel="toSpecies">
                                                         <constraints>
@@ -542,7 +551,7 @@
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rob-ZX-erL" userLabel="5">
                                                 <connections>
-                                                    <segue destination="eVA-zu-Ea9" kind="embed" identifier="4" id="4Xt-oV-0go"/>
+                                                    <segue destination="eVA-zu-Ea9" kind="embed" identifier="4" id="HYR-UU-7QS"/>
                                                 </connections>
                                             </containerView>
                                         </subviews>
@@ -564,26 +573,27 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="wkd-ej-0LK"/>
-                        <barButtonItem systemItem="action" id="gJd-gc-Ids">
-                            <color key="tintColor" red="1" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="shareButton:" destination="Rkw-Ke-W46" id="9R2-ze-CWO"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="DATA COMPARSION" id="jdd-Pp-QO4">
-                        <barButtonItem key="backBarButtonItem" title="back" id="1uJ-O6-M9N"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="MD0-7O-xdU">
+                        <barButtonItem systemItem="done" id="MD0-7O-xdU">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="doneAction:" destination="Rkw-Ke-W46" id="NRk-ZJ-wVR"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Preferences" id="d0w-Tb-swo">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="DATA COMPARSION" id="jdd-Pp-QO4">
+                        <barButtonItem key="backBarButtonItem" title="back" id="1uJ-O6-M9N"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="gJd-gc-Ids">
+                            <color key="tintColor" red="1" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="shareButton:" destination="Rkw-Ke-W46" id="9R2-ze-CWO"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="750" height="500"/>
                     <connections>
                         <outlet property="doneButton" destination="MD0-7O-xdU" id="Gvq-3P-tfa"/>
                         <outlet property="fromSpeciesImageView" destination="3cl-Pc-E92" id="axu-B0-2Q8"/>
@@ -1030,6 +1040,40 @@
             </objects>
             <point key="canvasLocation" x="397.55859375" y="678.515625"/>
         </scene>
+        <!--Preference Comparsion-->
+        <scene sceneID="xNW-z3-OID">
+            <objects>
+                <viewController id="xRt-GV-eOl" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RFs-Lm-sZI"/>
+                        <viewControllerLayoutGuide type="bottom" id="pTq-5a-P6R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MAv-se-iOc">
+                        <rect key="frame" x="0.0" y="44" width="750" height="412"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.53725490200000003" green="0.47058823529999999" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <toolbarItems>
+                        <barButtonItem systemItem="action" id="QQ3-CD-euR">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="rXy-uz-kYH"/>
+                        <barButtonItem title="Done" id="yza-oF-tJ5">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Preference Comparsion" id="zNd-ns-47J"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="750" height="500"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U25-8H-lZ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="954" y="1512"/>
+        </scene>
     </scenes>
     <resources>
         <image name="1" width="2880" height="1800"/>
@@ -1037,9 +1081,9 @@
         <image name="species_06" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ysu-l4-Tav"/>
-        <segue reference="8vf-Eg-HQT"/>
+        <segue reference="HYR-UU-7QS"/>
         <segue reference="mW9-Ea-kj7"/>
-        <segue reference="4Xt-oV-0go"/>
+        <segue reference="8vf-Eg-HQT"/>
+        <segue reference="ysu-l4-Tav"/>
     </inferredMetricsTieBreakers>
 </document>

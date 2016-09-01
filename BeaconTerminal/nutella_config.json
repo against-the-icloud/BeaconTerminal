@@ -1,31 +1,25 @@
-{ "configs" : [{
-               "id": "localhost",
-               "appId": "wallcology",
-               "runId": "default",
-               "host": "localhost",
-               "componentId": "BeaconTerminal",
-               "resourceId": "BeaconTerminal",
-               "outChannels": [
-                               "note_changes",
-                               "echo_out"
-                               ],
-               "inChannels": [
-                              "echo_in"
-                              ]
-               },
-               
-               {
-               "id": "remote",
-               "appId": "wallcology",
-               "runId": "default",
-               "host": "http://ltg.evl.uic.edu",
-               "componentId": "BeaconTerminal",
-               "resourceId": "BeaconTerminal",
-               "outChannels": [
-                               "echo_out"
-                               ],
-               "inChannels": [
-                              "echo_in"
-                              ]
-               }]
+{ "config" : { "hosts": [{
+                         "id": "localhost",
+                         "appId": "wallcology",
+                         "runId": "default",
+                         "url": "localhost",
+                         "componentId": "BeaconTerminal",
+                         "resourceId": "BeaconTerminal"
+                         },
+                         
+                         {
+                         "id": "remote",
+                         "appId": "wallcology",
+                         "runId": "default",
+                         "url": "http://ltg.evl.uic.edu",
+                         "componentId": "BeaconTerminal",
+                         "resourceId": "BeaconTerminal"
+                         
+                         }],
+    "conditions": [ { "id":"placeTerminal",
+                   "subscribes": "note_changes, echo_out",
+                   "publishes":  "echo_in"
+                   }
+                   ]
+}
 }

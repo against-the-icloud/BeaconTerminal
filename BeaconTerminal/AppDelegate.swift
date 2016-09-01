@@ -6,7 +6,7 @@ import Nutella
 import Transporter
 
 let DEBUG = true
-let REFRESH_DB = true
+let REFRESH_DB = false
 
 // localhost || remote
 let HOST = "localhost"
@@ -29,7 +29,7 @@ let LOG: XCGLogger = {
 
 //state machine
 
-enum ApplicationType {
+enum ApplicationType: String {
     case start
     case placeTerminal
     case placeGroup
@@ -84,7 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     var nutella: Nutella?
     var collectionView: UICollectionView?
     var speciesViewController: SpeciesMenuViewController?
-    
     var bottomNavigationController: AppBottomNavigationController?
     //    var beaconIDs = [
     //        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
@@ -92,15 +91,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     //        BeaconID(index: 2, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 15252, minor: 24173, beaconColor: Color.green.base)
     //    ]
     //
+    
+    //delegates
+    weak var controlPanelDelegate: ControlPanelDelegate?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
+        //1.
         prepareDB()
-        // setupNutellaConnection(HOST)
-        
-        
+        //2.
         prepareViews(applicationType: ApplicationType.placeTerminal)
-        
+        //3.
+        setupNutellaConnection(HOST)
         
         
         
@@ -143,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
         bottomNavigationController = AppBottomNavigationController()
-
+        
         let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: bottomNavigationController!)
         navigationController.statusBarStyle = .lightContent
         
@@ -204,10 +207,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
                     //= realmDataController?.checkGroups()
                     if let symConfig = realmDataController?.loadSystemConfiguration() {
                         realmDataController?.generateTestData()
-                        let section = symConfig.sections[1]
-                        let group = section.groups[1]
+                        //let section = symConfig.sections[1]
+                        //let group = section.groups[1]
                         
-                        realmDataController?.updateUser(withGroup: group, section: section)
+                        //realmDataController?.updateUser(withGroup: group, section: section)
                         //update bottombar
                         //realmDataController?.updateBottomBar(withRuntime: runtime)
                     }
@@ -234,36 +237,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     
     func setupNutellaConnection(_ host: String) {
         realmDataController?.checkNutellaConfigs()
-        let nutellaConfigs : Results<NutellaConfig> = realm!.allObjects(ofType: NutellaConfig.self).filter(using: "id = '\(host)'")
+        let nutellaConfig : Results<NutellaConfig> = realm!.allObjects(ofType: NutellaConfig.self)
         
-        if nutellaConfigs.count > 0 {
+        if let config = nutellaConfig.first {
             
-            let config = nutellaConfigs[0]
-            
-            nutella = Nutella(brokerHostname: config.host!,
-                              appId: config.appId!,
-                              runId: config.runId!,
-                              componentId: config.componentId!)
-            nutella?.netDelegate = self
-            nutella?.resourceId = config.resourceId
-            
-            for channel in config.outChannels{
-                nutella?.net.subscribe(channel.name!)
+            if let host = config.hosts.filter(using: "id = '\(HOST)'").first {
+                
+                nutella = Nutella(brokerHostname: host.url!,
+                                  appId: host.appId!,
+                                  runId: host.runId!,
+                                  componentId: host.componentId!)
+                nutella?.netDelegate = self
+                nutella?.resourceId = host.resourceId
+                
+                //config.
+                
+                let appState: ApplicationType = checkApplicationState()
+                
+                for condition in config.conditions {
+                    if condition.id == "placeTerminal" {
+                        if let channels = condition.subscribes?.components(separatedBy: ",") {
+                            for channel in channels {
+                                nutella?.net.subscribe(channel)
+                            }
+                            
+                            Util.makeToast("Subscribed to \(channels)")
+                        }
+                        
+                        
+                        if let channels = condition.publishes?.components(separatedBy: ",") {
+                            for channel in channels {
+                                //nutella?.net.publish(channel)
+                            }
+                            
+                            
+                            Util.makeToast("Publishes on \(channels)")
+                        }
+                        
+                        
+                    }
+                }
             }
-            
-            nutella?.net.publish("echo_in", message: "READY!" as AnyObject)
-        }
-    }
-    
-    func makeToast(_ message: String) {
-        if let presentWindow = UIApplication.shared.keyWindow {
-            presentWindow.makeToast(message: message, duration: 3.0, position: HRToastPositionTop as AnyObject)
-        }
-    }
-    
-    func makeToast(_ message: String, duration: Double = 3.0, position: AnyObject) {
-        if let presentWindow = UIApplication.shared.keyWindow {
-            presentWindow.makeToast(message: message, duration: duration, position: HRToastPositionTop as AnyObject)
         }
     }
     
@@ -354,6 +368,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func resetDB() {
+        //check nutella connection
+        
+        //handle_requests: all_notes
+        if let nutella = self.nutella {
+            
+            let block = DispatchWorkItem {
+                var m = "Hello Major Tom, are you receiving this? Turn the thrusters on, we're standing by"
+                var dict = [String:String]()
+                dict["group"] = "1"
+                
+                nutella.net.asyncRequest("all_notes", message: dict as AnyObject, requestName: "all_notes")
+                //nutella.net.publish("all_notes", message: dict as AnyObject)
+            }
+            
+            DispatchQueue.main.async(execute: block)
+            
+            
+        } else {
+            //we have been disconnected
+        }
+    }
+    
     
 }
 
@@ -367,10 +404,13 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter from: The actor name of the client that sent the message.
      */
     func messageReceived(_ channel: String, message: AnyObject, componentId: String?, resourceId: String?) {
-        if let message = message as? String, let componentId = componentId, let resourceId = resourceId {
-            let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
-            LOG.debug(s)
-            self.makeToast(s)
+        if message != nil {
+            if let componentId = componentId, let resourceId = resourceId {
+                let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
+                LOG.debug("MESSAGE RECEIVED on channel \(channel)")
+                LOG.debug("MESSAGE IS: \(message)")
+            }
+            //Util.makeToast("GOT IT")
         }
     }
     
@@ -382,10 +422,21 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter response: The dictionary/array/string containing the JSON representation.
      */
     func responseReceived(_ channelName: String, requestName: String?, response: AnyObject) {
-        if let response = response as? String, let requestName = requestName {
-            let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
-            LOG.debug(s)
-            self.makeToast(s)
+        if response != nil {
+            if let requestName = requestName {
+                let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
+                LOG.debug("RESPONSE RECEIVED on channel \(channelName)")
+                //LOG.debug("RESPONSE IS: \(response)")
+                //Util.makeToast(s)
+                
+                let json = JSON(response)
+                LOG.debug("RECIEVED ALL NOTES \(json)")
+                //let noteCount = realmDataController.parseAllNotes(withJson: json)
+
+//                if let cpd = controlPanelDelegate {
+//                    cpd.resetDidFinish(withRecordCount: noteCount)
+//                }
+            }
         }
     }
     
@@ -400,7 +451,7 @@ extension AppDelegate: NutellaNetDelegate {
         if let request = request as? String, let resourceId = resourceId, let componentId = componentId {
             let s = "responseReceived \(channelName) request: \(request) componentId: \(componentId) resourceId: \(resourceId)"
             LOG.debug(s)
-            self.makeToast(s)
+            Util.makeToast(s)
         }
         
         return nil

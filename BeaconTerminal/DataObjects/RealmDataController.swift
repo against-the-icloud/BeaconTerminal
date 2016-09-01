@@ -48,19 +48,30 @@ class RealmDataController {
     }
     
     
-
+    static func exportJson(withSpeciesObservation speciesObservation: SpeciesObservation, group: Group) -> String {
+        
+        let speciesObsJSON = JSON(speciesObservation.toDictionary())
+        if let string = speciesObsJSON.rawString() {
+            return string
+        }
+        
+        return ""
+    }
+    
+    
+    // MARK: Update Methods
     
     
     func updateUser(withGroup group: Group?, section: Section?) {
         if let g = group, let s = section {
-                        
+            
             let runtimeObjs = realm?.allObjects(ofType: Runtime.self)
             for r in runtimeObjs! {
                 LOG.debug("DELETE runtime obj \(r.id)")
             }
             //create a new one
             
-            try! realm?.write {                
+            try! realm?.write {
                 realm?.delete((realm?.allObjects(ofType: Runtime.self))!)
                 
                 let runtime = Runtime()
@@ -77,6 +88,47 @@ class RealmDataController {
         
         
     }
+    
+    func updateRuntimeSection(withSection section: Section?, andOrSpecies species:Species?) {
+        
+        //get all the current runtimes
+        if let currentRuntime = realm?.allObjects(ofType: Runtime.self).first {
+            if currentRuntime != nil {
+                if let s = section {
+                    try! realm?.write {
+                        currentRuntime.currentSection = s
+                        realm?.add(currentRuntime, update: true)
+                    }
+                }
+                
+                if let s = species {
+                    try! realm?.write {
+                        currentRuntime.currentSpecies = s
+                        realm?.add(currentRuntime, update: true)
+                    }
+                }
+            }
+        } else {
+            //create a new one
+            let currentRuntime = Runtime()
+            if let s = section {
+                try! realm?.write {
+                    currentRuntime.currentSection = s
+                    realm?.add(currentRuntime, update: true)
+                }
+            }
+            if let s = species {
+                try! realm?.write {
+                    currentRuntime.currentSpecies = s
+                    realm?.add(currentRuntime, update: true)
+                }
+            }
+        }
+        
+    }
+    
+    
+    // MARK: json read config methods
     
     //step 1. load system config
     func loadSystemConfiguration() -> SystemConfiguration {
@@ -166,6 +218,7 @@ class RealmDataController {
                 speciesObservation.id = UUID().uuidString
                 speciesObservation.fromSpecies = fromSpecies
                 speciesObservation.lastModified = Date()
+                speciesObservation.groupId = group.index
                 
                 preparePreferences(for: speciesObservation)
                 
@@ -216,7 +269,7 @@ class RealmDataController {
                     
                     
                     populateWithSpeciesObservationTestData(for: group)
-                
+                    
                 }
             }
             
@@ -233,6 +286,7 @@ class RealmDataController {
             for so in group.speciesObservations {
                 so.realm?.beginWrite()
                 so.lastModified = Date()
+                so.groupId = group.index
                 for i in 0...Randoms.randomInt(0, 4) {
                     
                     let relationship = Relationship()
@@ -296,6 +350,7 @@ class RealmDataController {
         for fromSpecies in allSpecies {
             // var makeRelationship : (String, Group) -> List<SpeciesObservation>
             let s : SpeciesObservation = createSpeciesObservation(fromSpecies, allSpecies: allSpecies, allEcosystems: allEcosystems)
+            s.groupId = group.index
             group.speciesObservations.append(s)
         }
         
@@ -375,77 +430,92 @@ class RealmDataController {
     func checkNutellaConfigs() -> Bool {
         let foundConfigs = realm!.allObjects(ofType: NutellaConfig.self)
         
-        if foundConfigs.count == 0 {
-            let nutellaConfigs = addNutellaConfigs()
-            for config in nutellaConfigs {
-                add(config, shouldUpdate: false)
-            }
-            if DEBUG {
-                LOG.debug("Added Nutella Configs, not present")
-            }
+        if foundConfigs.isEmpty {
+            let nutellaConfig = addNutellaConfigs()
+            add(nutellaConfig, shouldUpdate: false)
             return false
         }
+        if DEBUG {
+            LOG.debug("Added Nutella Configs, not present")
+        }
+        
+        
         
         return true
     }
     
-    func addNutellaConfigs() -> [NutellaConfig] {
+    func addNutellaConfigs() -> NutellaConfig {
         let path = Bundle.main.path(forResource: "nutella_config", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
         let json = JSON(data: jsonData!)
         
-        var nutellaConfigs = [NutellaConfig]()
+        let nutellaConfig = NutellaConfig()
+        nutellaConfig.id = UUID().uuidString
+        nutellaConfig.last_modified = Date()
         
-        if let configs = json["configs"].array {
-            for (_,item) in configs.enumerated() {
-                let nutellaConfig = NutellaConfig()
+        if let hosts = json["config"]["hosts"].array {
+            for (_,item) in hosts.enumerated() {
+                
+                let host = Host()
                 
                 if let id = item["id"].string {
-                    nutellaConfig.id = id
+                    host.id = id
                 }
                 
                 if let appId = item["appId"].string {
-                    nutellaConfig.appId = appId
+                    host.appId = appId
                 }
                 
                 if let runId = item["runId"].string {
-                    nutellaConfig.runId = runId
+                    host.runId = runId
                 }
                 
-                if let host = item["host"].string {
-                    nutellaConfig.host = host
+                if let url = item["url"].string {
+                    host.url = url
                 }
                 
                 if let componentId = item["componentId"].string {
-                    nutellaConfig.componentId = componentId
+                    host.componentId = componentId
                 }
                 
                 if let resourceId = item["resourceId"].string {
-                    nutellaConfig.resourceId = resourceId
+                    host.resourceId = resourceId
                 }
+                host.last_modified = Date()
                 
-                if let outChannels = item["outChannels"].array {
-                    for (_, item) in outChannels.enumerated() {
-                        let channel = Channel()
-                        channel.name = item.string
-                        nutellaConfig.outChannels.append(channel)
-                    }
-                }
-                
-                if let inChannels = item["inChannels"].array {
-                    for (_, item) in inChannels.enumerated() {
-                        let channel = Channel()
-                        channel.name = item.string
-                        nutellaConfig.inChannels.append(channel)
-                        
-                    }
-                }
-                nutellaConfigs.append(nutellaConfig)
+                nutellaConfig.hosts.append(host)
             }
         }
         
+        if let conditions = json["config"]["conditions"].array {
+            for (_,item) in conditions.enumerated() {
+                
+                let condition = Condition()
+                
+                if let id = item["id"].string {
+                    condition.id = id
+                }
+                
+                if let subscribes = item["subscribes"].string {
+                    condition.subscribes = subscribes
+                }
+                
+                if let publishes = item["publishes"].string {
+                    condition.publishes = publishes
+                }
+                
+                condition.last_modified = Date()
+                
+                nutellaConfig.conditions.append(condition)
+            }
+        }
         
-        return nutellaConfigs
+        try! realm!.write {
+            realm!.add(nutellaConfig)
+        }
+        
+        
+        return nutellaConfig
     }
     
     // Mark: Configuration

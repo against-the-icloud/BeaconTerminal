@@ -28,7 +28,7 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()
+        prepareView()        
     }
     
     func prepareView() {
@@ -39,12 +39,12 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindToTerminalView" {
-            if let selectedCell = sender as? LoginSpeciesCell {
-                let selectedSpecies = species[selectedCell.speciesIndex]
-                let tvc = segue.destination as? TerminalMainViewController
-                tvc?.species = selectedSpecies
-                tvc?.section = selectedSection
-            }
+//            if let selectedCell = sender as? LoginSpeciesCell {
+//                let selectedSpecies = species[selectedCell.speciesIndex]
+//                let tvc = segue.destination as? TerminalMainViewController
+//                tvc?.species = selectedSpecies
+//                tvc?.section = selectedSection
+//            }
         }
     }
     
@@ -68,9 +68,13 @@ extension LoginSpeciesCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let cell = collectionView.cellForItem(at: indexPath)
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            let s = species[indexPath.row]
+            realmDataController?.updateRuntimeSection(withSection: nil, andOrSpecies: s)
+            self.dismiss(animated: true, completion: nil)
+            //performSegue(withIdentifier: "unwindToTerminalView", sender: cell)
+        }
         
-        performSegue(withIdentifier: "unwindToTerminalView", sender: cell)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
