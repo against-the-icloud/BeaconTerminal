@@ -1,7 +1,6 @@
 import Foundation
 import RealmSwift
 
-
 enum RelationshipType: String {
     case producer = "producer"
     case consumer = "consumer"
@@ -52,7 +51,7 @@ class Group: Object {
 }
 
 class SpeciesObservation: Object {
-    dynamic var id : String? = nil
+    dynamic var id : String = NSUUID().uuidString
     dynamic var authors : String? = nil
     dynamic var groupId = 0
     dynamic var lastModified = Date()
@@ -62,10 +61,37 @@ class SpeciesObservation: Object {
     var relationships = List<Relationship>()
     var preferences = List<Preference>()
     
-    
     override static func primaryKey() -> String? {
         return "id"
     }
+    
+    func update(withJson json:JSON){
+        if let id = json["id"].string {
+            self.id = id
+        }
+        if let authors = json["authors"].string {
+            self.authors = authors
+        }
+        
+        if let groupId = json["groupId"].int {
+            self.groupId = groupId
+        }
+
+        if let speciesIndex = json["fromSpecies"]["index"].int {            
+            if let foundSpecies = realmDataController?.findSpecies(withSpeciesIndex: speciesIndex) {
+            self.fromSpecies = foundSpecies
+            }
+        }
+        
+        
+        if let ecoSystemIndex = json["ecosystem"]["ecosystemNumber"].int {
+            if let foundEcosystem = realmDataController?.findEcosystem(withEcosystemIndex: ecoSystemIndex) {
+                self.ecosystem = foundEcosystem
+            }
+
+        }
+    }
+    
     
 }
 
@@ -194,7 +220,6 @@ class SimulationConfiguration: Object {
 }
 
 class Ecosystem: Object {
-    
     dynamic var temperature = 0
     dynamic var pipelength = 0
     dynamic var brickarea = 0

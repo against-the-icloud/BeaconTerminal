@@ -68,7 +68,7 @@ extension LoginSpeciesCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let cell = collectionView.cellForItem(at: indexPath) {
+        if collectionView.cellForItem(at: indexPath) != nil {
             let s = species[indexPath.row]
             realmDataController?.updateRuntimeSection(withSection: nil, andOrSpecies: s)
             self.dismiss(animated: true, completion: nil)

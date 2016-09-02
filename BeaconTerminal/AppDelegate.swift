@@ -6,7 +6,7 @@ import Nutella
 import Transporter
 
 let DEBUG = true
-let REFRESH_DB = false
+let REFRESH_DB = true
 
 // localhost || remote
 let HOST = "localhost"
@@ -66,6 +66,29 @@ struct Platform {
     }
 }
 
+
+
+//Mark: Nutella supports
+
+let nutellaNotificationKey = NSNotification.Name(rawValue: "net.nutella.notification")
+enum NutellaMessageType: String {
+    case request
+    case response
+    case message
+}
+
+struct NutellaUpdate {
+    var channel: String?
+    var message: AnyObject?
+    var updateType:  NutellaMessageType?
+    var response: AnyObject?
+}
+
+enum NutellaChannelType: String {
+    case allNotes = "all_notes"
+    case allNotesWithSpecies = "all_notes_with_species"
+}
+
 var realm: Realm?
 
 func dispatch_on_main(_ block: @escaping ()->()) {
@@ -75,7 +98,6 @@ func dispatch_on_main(_ block: @escaping ()->()) {
 func getAppDelegate() -> AppDelegate {
     return UIApplication.shared.delegate as! AppDelegate
 }
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
@@ -98,12 +120,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
-        //1.
+     
+        
+        
         prepareDB()
-        //2.
-        prepareViews(applicationType: ApplicationType.placeTerminal)
-        //3.
+        
+        setupSystemNotifications()
+        
         setupNutellaConnection(HOST)
+        
+        prepareViews(applicationType: ApplicationType.placeTerminal)
+        
+      
+        
         
         
         
@@ -206,7 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
                     
                     //= realmDataController?.checkGroups()
                     if let symConfig = realmDataController?.loadSystemConfiguration() {
-                        realmDataController?.generateTestData()
+                        //realmDataController?.generateTestData()
                         //let section = symConfig.sections[1]
                         //let group = section.groups[1]
                         
@@ -232,6 +261,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         }
         
         
+        
+    }
+    
+    func setupSystemNotifications() {
         
     }
     
@@ -375,7 +408,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         if let nutella = self.nutella {
             
             let block = DispatchWorkItem {
-                var m = "Hello Major Tom, are you receiving this? Turn the thrusters on, we're standing by"
+                _ = "Hello Major Tom, are you receiving this? Turn the thrusters on, we're standing by"
                 var dict = [String:String]()
                 dict["group"] = "1"
                 
@@ -404,14 +437,11 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter from: The actor name of the client that sent the message.
      */
     func messageReceived(_ channel: String, message: AnyObject, componentId: String?, resourceId: String?) {
-        if message != nil {
-            if let componentId = componentId, let resourceId = resourceId {
-                let s = "messageReceived \(channel) message: \(message) componentId: \(componentId) resourceId: \(resourceId)"
-                LOG.debug("MESSAGE RECEIVED on channel \(channel)")
-                LOG.debug("MESSAGE IS: \(message)")
-            }
-            //Util.makeToast("GOT IT")
-        }
+        var nutellaUpdate = NutellaUpdate()
+        nutellaUpdate.channel = channel
+        nutellaUpdate.message = message
+        nutellaUpdate.updateType = .message
+        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
     }
     
     /**
@@ -422,22 +452,12 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter response: The dictionary/array/string containing the JSON representation.
      */
     func responseReceived(_ channelName: String, requestName: String?, response: AnyObject) {
-        if response != nil {
-            if let requestName = requestName {
-                let s = "responseReceived \(channelName) requestName: \(requestName) response: \(response)"
-                LOG.debug("RESPONSE RECEIVED on channel \(channelName)")
-                //LOG.debug("RESPONSE IS: \(response)")
-                //Util.makeToast(s)
-                
-                let json = JSON(response)
-                LOG.debug("RECIEVED ALL NOTES \(json)")
-                //let noteCount = realmDataController.parseAllNotes(withJson: json)
-
-//                if let cpd = controlPanelDelegate {
-//                    cpd.resetDidFinish(withRecordCount: noteCount)
-//                }
-            }
-        }
+        var nutellaUpdate = NutellaUpdate()
+        nutellaUpdate.channel = channelName
+        nutellaUpdate.message = response
+        nutellaUpdate.response =  response
+        nutellaUpdate.updateType = .response
+        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
     }
     
     /**
@@ -447,41 +467,7 @@ extension AppDelegate: NutellaNetDelegate {
      - parameter request: The dictionary/array/string containing the JSON representation of the request.
      */
     func requestReceived(_ channelName: String, request: AnyObject?, componentId: String?, resourceId: String?) -> AnyObject? {
-        
-        if let request = request as? String, let resourceId = resourceId, let componentId = componentId {
-            let s = "responseReceived \(channelName) request: \(request) componentId: \(componentId) resourceId: \(resourceId)"
-            LOG.debug(s)
-            Util.makeToast(s)
-        }
-        
+        //not used
         return nil
     }
 }
-//
-//extension AppDelegate: NutellaLocationDelegate {
-//    func resourceUpdated(_ resource: NLManagedResource) {
-//
-//    }
-//    func resourceEntered(_ dynamicResource: NLManagedResource, staticResource: NLManagedResource) {
-//
-//    }
-//    func resourceExited(_ dynamicResource: NLManagedResource, staticResource: NLManagedResource) {
-//
-//    }
-//
-//    func ready() {
-//        print("NutellaLocationDelegate:READY")
-//        //self.nutella?.net.subscribe("echo_out")
-//        //    })
-//
-//        //        if let nutella = self.nutella {
-//        //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-//        //                // ... do any setup ...
-//        //            nutella.net.subscribe("echo_out")            })
-//        //
-//        //        }
-//
-//    }
-//}
-//
-//

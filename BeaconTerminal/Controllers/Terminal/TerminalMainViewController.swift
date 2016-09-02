@@ -11,6 +11,7 @@ import UIKit
 import RealmSwift
 import Photos
 import MobileCoreServices
+import Nutella
 
 struct RelationshipResult {
     var group: Group?
@@ -19,7 +20,7 @@ struct RelationshipResult {
     var relationshipType: RelationshipType?
 }
 
-class TerminalMainViewController: UIViewController {
+class TerminalMainViewController: UIViewController, NutellaDelegate {
     @IBOutlet var imageViews: [UIImageView]!
     
     @IBOutlet weak var sectionLabel: UILabel!
@@ -34,7 +35,8 @@ class TerminalMainViewController: UIViewController {
     var notificationTokens = [NotificationToken]()
     
     var runtimeResults: Results<Runtime>?
-    
+    var speciesObservationResults: Results<SpeciesObservation>?
+
     deinit {
         for token in notificationTokens {
             token.stop()
@@ -50,6 +52,8 @@ class TerminalMainViewController: UIViewController {
         prepareNotifications()
     }
     
+    // Mark: Prepare
+    
     func prepareView() {
         updateHeader()
         queryDB()
@@ -57,12 +61,11 @@ class TerminalMainViewController: UIViewController {
     }
     
     func prepareNotifications() {
-        
         runtimeResults = realm?.allObjects(ofType: Runtime.self)
         
         
         // Observe Notifications
-        let notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        let runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let terminalController = self else { return }
             switch changes {
@@ -79,18 +82,54 @@ class TerminalMainViewController: UIViewController {
             }
         }
         
-        if let nt = notificationToken {
+        if let nt = runtimeNotificationToken {
+            notificationTokens.append(nt)
+        }
+        
+        speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
+
+        let soNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let terminalController = self else { return }
+            switch changes {
+            case .Initial(let speciesObservationResults):
+                terminalController.updateUI(withSpeciesObservationResults: speciesObservationResults)
+                break
+            case .Update(let speciesObservationResults, _, _, _):
+                terminalController.updateUI(withSpeciesObservationResults: speciesObservationResults)
+                break
+            case .Error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+        }
+        
+        if let nt = soNotificationToken {
             notificationTokens.append(nt)
         }
     }
     
+    // Mark: Update UI
+    
+    func updateHeader() {
+        if let species = species {
+            profileImageView.image = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
+            profileLabel.text = species.name
+        }
+        
+        if let section = self.section {
+            sectionLabel.text = section.name
+        }
+    }
+    
+    
     func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
-        self.runtimeResults = runtimeResults
         
         if let rt = runtimeResults.first {
             
-            if rt.currentSection != nil {
-                self.section = rt.currentSection
+            if let section = rt.currentSection, rt.currentSection != nil {
+                self.section = section                
                 updateHeader()
             } else {
                 showSpeciesLogin()
@@ -98,14 +137,48 @@ class TerminalMainViewController: UIViewController {
             
             if rt.currentSpecies == nil {
                 showSpeciesLogin()
-                //TODO: if the section is set before jump to the species login page
             } else {
                 self.species = rt.currentSpecies
+                //we are good time to check nutella
                 prepareView()
+                queryAllSpeciesNutella()
             }
             
         } else {
             showSpeciesLogin()
+        }
+    }
+    
+    func updateUI(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
+//        for so in speciesObservationResults {
+//            
+//        }
+        
+        queryDB()
+        updateUI()
+    }
+    
+    func queryAllSpeciesNutella() {
+        if let nutella = getAppDelegate().nutella {
+            
+            let block = DispatchWorkItem {
+                
+                
+                if let species = self.species {
+                    var dict = [String:String]()
+                    dict["speciesIndex"] = "\(species.index)"
+                    
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
+
+                }
+                
+                
+                //nutella.net.publish("all_notes", message: dict as AnyObject)
+            }
+            
+            DispatchQueue.main.async(execute: block)
         }
     }
     
@@ -135,6 +208,7 @@ class TerminalMainViewController: UIViewController {
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
         prepareView()
+        //queryAllSpeciesNutella()
     }
     
     // Mark: updates
@@ -148,8 +222,8 @@ class TerminalMainViewController: UIViewController {
                 
                 let speciesObservations: Results<SpeciesObservation> = group.speciesObservations.filter(using: "fromSpecies.index = \(species.index)")
                 
-                LOG.debug("SPECIESOB \(RealmDataController.exportJson(withSpeciesObservation: speciesObservations.first!, group: group))")
-                
+//                LOG.debug("SPECIESOB \(RealmDataController.exportJson(withSpeciesObservation: speciesObservations.first!, group: group))")
+//                
                 //iterate over each relationship type
                 for relationshipType in RelationshipType.allRelationships {
                     var relationshipResult = RelationshipResult()
@@ -166,7 +240,7 @@ class TerminalMainViewController: UIViewController {
         }
     }
     
-    func updateUI() {        
+    func updateUI() {
         //setup the columans
         for childController in self.childViewControllers {
             if let rvc = childController as? TerminalRelationshipTableViewController {
@@ -179,7 +253,7 @@ class TerminalMainViewController: UIViewController {
                 let results = relationshipResults.filter({ (rr:RelationshipResult) -> Bool in
                     return rr.relationshipType == rvc.relationshipType
                 })
-
+                
                 rvc.relationshipResults = results
             }
         }
@@ -219,18 +293,7 @@ class TerminalMainViewController: UIViewController {
     }
     
     
-    func updateHeader() {
-        if let species = species {
-            profileImageView.image = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
-            profileLabel.text = species.name
-        }
-        
-        if let section = self.section {
-            sectionLabel.text = section.name
-        }
-        
-    }
-    
+
     // Mark: segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -254,5 +317,4 @@ class TerminalMainViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
-    
 }

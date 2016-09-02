@@ -59,8 +59,170 @@ class RealmDataController {
     }
     
     
+    // Mark: Nutella updates
+    
+    func processNutellaUpdate(nutellaUpdate: NutellaUpdate) {
+        //what condition are we in?
+        
+        switch getAppDelegate().checkApplicationState() {
+        case .placeTerminal:
+            
+            
+            if let response = nutellaUpdate.response, let channel = nutellaUpdate.channel, nutellaUpdate.updateType == .response {
+                switch channel {
+                case NutellaChannelType.allNotesWithSpecies.rawValue:
+                    
+                    let json = JSON(response)
+                    
+                    if let runtime = realm?.allObjects(ofType: Runtime.self).first {
+
+                    //If json is .Array
+                    //The `index` is 0..<json.count's string value
+                    for (index,soJson):(String, JSON) in json {
+                        //Do something you want
+                        LOG.debug("__________________ subjso: \(index) \(soJson)")
+                        
+                            if let currentSpecies = runtime.currentSpecies, let currentSection = runtime.currentSection {
+                                updateSpeciesObservation(forSpecies: currentSpecies.index, andSection: currentSection,withJson: soJson)
+                            }
+                        }
+                    }
+                    break
+                case NutellaChannelType.allNotes.rawValue:
+                    break
+                default:
+                    break
+                }
+            }
+            
+            
+            break
+        default:
+            break
+        }
+        
+        
+    }
+    
+    //    {
+    //    "groupId" : 2,
+    //    "lastModified" : 1472579172.724776,
+    //    "preferences" : [
+    //    {
+    //    "value" : "Not ready to report",
+    //    "lastModified" : 1472579172.324841,
+    //    "id" : "06441E26-9095-4B67-868E-31882E752E74",
+    //    "type" : "trophic_level"
+    //    },
+    //    {
+    //    "value" : "Not ready to report",
+    //    "lastModified" : 1472579172.324844,
+    //    "id" : "0C54982F-040A-4E5C-98CA-623923C8963D",
+    //    "type" : "behaviors"
+    //    },
+    //    {
+    //    "value" : "Not ready to report",
+    //    "lastModified" : 1472579172.324847,
+    //    "id" : "02A1AB9B-AEA5-4CA2-8B0D-1150EA727CA4",
+    //    "type" : "predation_resistence"
+    //    },
+    //    {
+    //    "value" : "Not ready to report",
+    //    "lastModified" : 1472579172.324849,
+    //    "id" : "8AD58647-ABE4-4288-95C3-C809FA011F56",
+    //    "type" : "heat_sensitivity"
+    //    },
+    //    {
+    //    "value" : "Not ready to report",
+    //    "lastModified" : 1472579172.324855,
+    //    "id" : "591979F1-DDA9-4C69-9776-56748AE67D47",
+    //    "type" : "humidity_sensitivity"
+    //    },
+    //    {
+    //    "value" : "",
+    //    "lastModified" : 1472579172.324858,
+    //    "id" : "9FF151FB-ABF0-4582-8DBE-BB728188BD27",
+    //    "type" : "habitat_preference"
+    //    }
+    //    ],
+    //    "id" : "B3F842B3-1F04-4B71-A773-F3140B9BF309",
+    //    "fromSpecies" : {
+    //    "imgUrl" : "https:\/\/ltg.cs.uic.edu\/WC\/icons\/species_01.svg",
+    //    "color" : "#5A6372",
+    //    "name" : "Sumbrao",
+    //    "last_modified" : 1472579172.322159,
+    //    "index" : 1
+    //},
+    //"timestamp" : 1472761665582,
+    //"relationships" : [
+    //{
+    //"ecosystem" : {
+    //"temperature" : 0,
+    //"last_modified" : 1472579172.321726,
+    //"brickarea" : 0,
+    //"pipelength" : 0,
+    //"name" : "Ecosystem 4",
+    //"ecosystemNumber" : 3
+    //},
+    //"toSpecies" : {
+    //"imgUrl" : "https:\/\/ltg.cs.uic.edu\/WC\/icons\/species_07.svg",
+    //"color" : "#FAAA19",
+    //"name" : "Purple cabbage",
+    //"last_modified" : 1472579172.322335,
+    //"index" : 8
+    //},
+    //"note" : "You embarrassed me this evening.",
+    //"id" : "133CCA36-7410-4B1D-8248-309EFE08F093",
+    //"relationshipType" : "producer",
+    //"attachments" : "screenshot1",
+    //"lastModified" : 1472579172.724842
+    //}
+    //]
+    
     // MARK: Update Methods
     
+    func updateSpeciesObservation(forSpecies speciesIndex:Int, andSection section: Section, withJson json: JSON) {
+        
+        if json != nil {
+            
+            if let fromIndex = json["fromSpecies"]["index"].int {
+                if speciesIndex == fromIndex {
+                
+                    //does it exist? 
+                    if let soId = json["id"].string {
+                        
+                        if let foundSO = realm?.allObjects(ofType: SpeciesObservation.self).filter(using: "id = '\(soId)'").first {
+                            
+                        } else {
+                            if let groupId = json["groupId"].int, let foundGroup = section.groups.filter(using: "index = \(groupId)").first {
+                            
+                            
+                            //create a new one
+                            try! realm?.write {
+                                let speciesObservation = SpeciesObservation()
+                                    speciesObservation.update(withJson: json)
+                                    realm?.add(speciesObservation)
+
+                                    foundGroup.speciesObservations.append(speciesObservation)
+                              
+                                realm?.add(foundGroup)
+                            }
+                            }
+                        }
+
+                        
+                        
+                    } else {
+                        //print error
+                        print(json["id"])
+
+                    }
+                } else {
+                    LOG.debug("Wrong Species Card!! fromSpecies: \(speciesIndex) id: \(json["id"].stringValue)")
+                }
+            }
+        }
+    }
     
     func updateUser(withGroup group: Group?, section: Section?) {
         if let g = group, let s = section {
@@ -193,7 +355,7 @@ class RealmDataController {
                         }
                         
                         //create speciesObservation place holders for group
-                        prepareSpeciesObservations(for: group)
+                        //prepareSpeciesObservations(for: group)
                     }
                 }
                 
@@ -592,10 +754,18 @@ class RealmDataController {
     
     // Mark: Species
     
-    func findSpecies(_ speciesIndex: Int) -> Species? {
-        let foundSpecies = realm!.allObjects(ofType: Species.self).filter(using:"index = \(speciesIndex)")[0] as Species!
+    func findSpecies(withSpeciesIndex speciesIndex: Int) -> Species? {
+        let foundSpecies = realm!.allObjects(ofType: Species.self).filter(using:"index = \(speciesIndex)").first as Species!
         return foundSpecies
     }
+    
+    // Mark Ecosytem
+    
+    func findEcosystem(withEcosystemIndex ecosystemIndex: Int) -> Ecosystem? {
+        let foundEcosystem = realm!.allObjects(ofType: Ecosystem.self).filter(using:"ecosystemNumber = \(ecosystemIndex)").first
+        return foundEcosystem
+    }
+
     
     static func generateImageFileNameFromIndex(_ index: Int, isHighlighted: Bool) -> String {
         var imageName = ""
