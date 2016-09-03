@@ -54,7 +54,7 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
         }
         
         if let cellItem = self.cellItem, let relationship = cellItem.relationship {
-            if let ecosystemIndex = relationship.ecosystem?.ecosystemNumber {
+            if let ecosystemIndex = relationship.ecosystem?.index {
                 ecosystemSegmentedControl.selectedSegmentIndex = ecosystemIndex
             }
             

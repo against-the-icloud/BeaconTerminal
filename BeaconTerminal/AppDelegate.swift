@@ -7,6 +7,7 @@ import Transporter
 
 let DEBUG = true
 let REFRESH_DB = true
+let EXPORT_DB = true
 
 // localhost || remote
 let HOST = "localhost"
@@ -70,12 +71,17 @@ struct Platform {
 
 //Mark: Nutella supports
 
-let nutellaNotificationKey = NSNotification.Name(rawValue: "net.nutella.notification")
 enum NutellaMessageType: String {
     case request
     case response
     case message
 }
+
+enum NutellaChannelType: String {
+    case allNotes = "all_notes"
+    case allNotesWithSpecies = "all_notes_with_species"
+}
+
 
 struct NutellaUpdate {
     var channel: String?
@@ -84,10 +90,6 @@ struct NutellaUpdate {
     var response: AnyObject?
 }
 
-enum NutellaChannelType: String {
-    case allNotes = "all_notes"
-    case allNotesWithSpecies = "all_notes_with_species"
-}
 
 var realm: Realm?
 
@@ -100,7 +102,7 @@ func getAppDelegate() -> AppDelegate {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
+class AppDelegate: UIResponder, UIApplicationDelegate { 
     
     var window: UIWindow?
     var nutella: Nutella?
@@ -123,15 +125,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
      
         
         
-        prepareDB()
-        
-        setupSystemNotifications()
-        
-        setupNutellaConnection(HOST)
+     
         
         prepareViews(applicationType: ApplicationType.placeTerminal)
         
-      
+        prepareDB()
+        
+        setupNutellaConnection(HOST)
         
         
         
@@ -140,6 +140,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
         return true
     }
+    
+    // Mark: View setup
     
     func prepareViews(applicationType: ApplicationType) {
         window = UIWindow(frame:UIScreen.main.bounds)
@@ -216,60 +218,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         return navigationDrawerController
     }
     
+    // Mark: db setup
     
     func prepareDB() {
-        
-        func initDB() {
-            realmDataController = RealmDataController()
-            
-            
-            if REFRESH_DB {
-                if let realm = realm {
-                    realm.beginWrite()
-                    realm.deleteAllObjects()
-                    try! realm.commitWrite()
-                    
-                    
-                    //checks
-                    //            nutella config
-                    
-                    //= realmDataController?.checkGroups()
-                    if let symConfig = realmDataController?.loadSystemConfiguration() {
-                        //realmDataController?.generateTestData()
-                        //let section = symConfig.sections[1]
-                        //let group = section.groups[1]
-                        
-                        //realmDataController?.updateUser(withGroup: group, section: section)
-                        //update bottombar
-                        //realmDataController?.updateBottomBar(withRuntime: runtime)
-                    }
-                }
-            }
-            
-        }
         
         if Platform.isSimulator {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
             try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
-            initDB()
         } else {
             //TODO
             //device config
             try! realm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "InMemoryRealm"))
-            
-            initDB()
         }
         
+        realmDataController = RealmDataController()
         
-        
+        switch checkApplicationState() {
+        case .placeGroup:
+            break
+        case .placeTerminal:
+            realmDataController?.deleteAllConfigurationAndGroups()
+            
+            //re-up
+            _ = realmDataController?.parseNutellaConfigurationJson()
+            _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
+            break
+        default:
+            break
+        }
     }
     
-    func setupSystemNotifications() {
+    func resetDB() {
+        //check nutella connection
         
+        //handle_requests: reset
+        if let nutella = self.nutella {
+            
+            let block = DispatchWorkItem {
+                var dict = [String:String]()
+                dict["group"] = "1"
+                
+                nutella.net.asyncRequest("all_notes", message: dict as AnyObject, requestName: "all_notes")
+            }
+            
+            DispatchQueue.main.async(execute: block)
+            
+            
+        } else {
+            //we have been disconnected
+        }
     }
+
+    
+    // Mark: Nutella setup
     
     func setupNutellaConnection(_ host: String) {
-        realmDataController?.checkNutellaConfigs()
+        _ = realmDataController?.validateNutellaConfiguration()
         let nutellaConfig : Results<NutellaConfig> = realm!.allObjects(ofType: NutellaConfig.self)
         
         if let config = nutellaConfig.first {
@@ -285,7 +289,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
                 
                 //config.
                 
-                let appState: ApplicationType = checkApplicationState()
+                //let appState: ApplicationType = checkApplicationState()
                 
                 for condition in config.conditions {
                     if condition.id == "placeTerminal" {
@@ -298,23 +302,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
                         }
                         
                         
-                        if let channels = condition.publishes?.components(separatedBy: ",") {
-                            for channel in channels {
-                                //nutella?.net.publish(channel)
-                            }
-                            
-                            
-                            Util.makeToast("Publishes on \(channels)")
-                        }
-                        
-                        
+//                        if let channels = condition.publishes?.components(separatedBy: ",") {
+//                            for _ in channels {
+//                                //nutella?.net.publish(channel)
+//                            }
+//                            
+//                            
+//                            Util.makeToast("Publishes on \(channels)")
+//                        }
                     }
                 }
             }
         }
     }
     
-    // MARK: StateMachine
+    // Mark: StateMachine
+    
     func initStateMachine(applicaitonState: ApplicationType) {
         
         applicationStateMachine.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent])
@@ -340,8 +343,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     }
     
     func changeSystemStateTo(_ state: ApplicationType) {
-        
-        
         switch state {
         case .placeGroup:
             if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
@@ -376,9 +377,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
         
     }
     
-    
-    
-    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -400,31 +398,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate { /* NutellaDelegate */
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    func resetDB() {
-        //check nutella connection
-        
-        //handle_requests: all_notes
-        if let nutella = self.nutella {
-            
-            let block = DispatchWorkItem {
-                _ = "Hello Major Tom, are you receiving this? Turn the thrusters on, we're standing by"
-                var dict = [String:String]()
-                dict["group"] = "1"
-                
-                nutella.net.asyncRequest("all_notes", message: dict as AnyObject, requestName: "all_notes")
-                //nutella.net.publish("all_notes", message: dict as AnyObject)
-            }
-            
-            DispatchQueue.main.async(execute: block)
-            
-            
-        } else {
-            //we have been disconnected
-        }
-    }
-    
-    
 }
 
 extension AppDelegate: NutellaNetDelegate {

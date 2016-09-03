@@ -54,9 +54,7 @@ class TerminalCellController: UIViewController {
                 
                 //find all the relationships that have
                 if !cellItems.isEmpty {
-                    if let rtype = cellItems.first?.relationship?.relationshipType {
-                        let title = "\(fromSpecies.name.uppercased()) \(StringUtil.relationshipString(withString: rtype)) \(cellItems.first?.relationship?.toSpecies?.name.uppercased())"
-                        
+                    if (cellItems.first?.relationship?.relationshipType) != nil {
                         tcvc.cellItems = cellItems
                         tcvc.fromSpecies = fromSpecies
                         tcvc.species = species

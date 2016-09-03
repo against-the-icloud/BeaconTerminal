@@ -36,14 +36,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: 957a1bdfe5d6ea2f7d3306d2a014433576d298a3
+    :commit: c57e2d7960bf8f811eed5bb925cfb260e4ad52d0
     :git: https://github.com/CosmicMind/Material.git
   Realm:
-    :commit: 50c1effdec86bcc9a09fe66dc1bd090a303ea1d0
+    :commit: bb03378817264f0fff58b6e41f979da813b6ec39
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   RealmSwift:
-    :commit: 50c1effdec86bcc9a09fe66dc1bd090a303ea1d0
+    :commit: bb03378817264f0fff58b6e41f979da813b6ec39
     :git: git@github.com:realm/realm-cocoa.git
     :submodules: true
   Transporter:
@@ -60,6 +60,6 @@ SPEC CHECKSUMS:
   Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: d7ccbd45a36a6f2a68b01d397d6f048bc2738cac
+PODFILE CHECKSUM: 789e772704cbfaca33a00d2a9b4a2cf8879081d3
 
 COCOAPODS: 1.0.1

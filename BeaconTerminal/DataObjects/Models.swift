@@ -7,13 +7,10 @@ enum RelationshipType: String {
     case mutual = "mutual"
     case competes = "competes"
     static let allRelationships : [RelationshipType] = [.producer, .consumer, .mutual, .competes]
-    
-    
 }
 
-
 class Member: Object {
-    dynamic var id : String? = nil
+    dynamic var id : String = UUID().uuidString
     dynamic var name : String? = nil
     dynamic var last_modified = Date()
     
@@ -23,7 +20,7 @@ class Member: Object {
 }
 
 class Section: Object {
-    dynamic var id : String? = nil
+    dynamic var id : String = UUID().uuidString
     dynamic var name : String? = nil
     dynamic var teacher : String? = nil
     dynamic var last_modified = Date()
@@ -37,7 +34,7 @@ class Section: Object {
 }
 
 class Group: Object {
-    dynamic var id : String? = nil
+    dynamic var id : String = UUID().uuidString
     dynamic var name : String? = nil
     dynamic var index = 0
     dynamic var last_modified = Date()
@@ -51,9 +48,9 @@ class Group: Object {
 }
 
 class SpeciesObservation: Object {
-    dynamic var id : String = NSUUID().uuidString
+    dynamic var id : String? = nil
     dynamic var authors : String? = nil
-    dynamic var groupId = 0
+    dynamic var groupIndex = 0
     dynamic var lastModified = Date()
     dynamic var fromSpecies: Species?
     dynamic var ecosystem: Ecosystem?
@@ -65,31 +62,23 @@ class SpeciesObservation: Object {
         return "id"
     }
     
-    func update(withJson json:JSON){
-        if let id = json["id"].string {
-            self.id = id
+    func update(withJson json:JSON, withId: Bool){
+        
+        if withId {
+            if let id = json["id"].string {
+                self.id = id
+            } else {
+                self.id = UUID().uuidString
+            }
         }
         if let authors = json["authors"].string {
             self.authors = authors
         }
         
-        if let groupId = json["groupId"].int {
-            self.groupId = groupId
-        }
-
-        if let speciesIndex = json["fromSpecies"]["index"].int {            
-            if let foundSpecies = realmDataController?.findSpecies(withSpeciesIndex: speciesIndex) {
-            self.fromSpecies = foundSpecies
-            }
+        if let groupIndex = json["groupIndex"].int {
+            self.groupIndex = groupIndex
         }
         
-        
-        if let ecoSystemIndex = json["ecosystem"]["ecosystemNumber"].int {
-            if let foundEcosystem = realmDataController?.findEcosystem(withEcosystemIndex: ecoSystemIndex) {
-                self.ecosystem = foundEcosystem
-            }
-
-        }
     }
     
     
@@ -98,7 +87,7 @@ class SpeciesObservation: Object {
 
 
 class Relationship: Object {
-    dynamic var id : String? = nil
+    dynamic var id : String = UUID().uuidString
     dynamic var note: String? = nil
     dynamic var attachments : String? = nil
     dynamic var authors : Group? = nil
@@ -109,6 +98,24 @@ class Relationship: Object {
     
     override static func primaryKey() -> String? {
         return "id"
+    }
+    
+    func update(withJson json:JSON){
+        if let id = json["id"].string {
+            self.id = id
+        }
+        if let attachments = json["attachments"].string {
+            self.attachments = attachments
+        }
+        
+        if let note = json["note"].string {
+            self.note = note
+        }
+        
+        if let relationshipType = json["relationshipType"].string {
+            self.relationshipType = relationshipType
+        }
+        
     }
     
 }
@@ -123,9 +130,9 @@ struct Preferences {
 }
 
 class Preference: Object {
-    dynamic var id : String? = nil
+    dynamic var id: String = UUID().uuidString
     dynamic var note: String? = nil
-    dynamic var value : String? = nil
+    dynamic var value: String? = nil
     dynamic var attachments : String? = nil
     dynamic var type: String = ""
     dynamic var lastModified = Date()
@@ -134,15 +141,14 @@ class Preference: Object {
         return "id"
     }
     
-    func configure(id: String, type: String, value: String) {
-        self.id = id
+    func configure(type: String, value: String) {
         self.type = type
         self.value = value
     }
 }
 
 class NutellaConfig: Object {
-    dynamic var id : String? = nil
+    dynamic var id: String = UUID().uuidString
     dynamic var last_modified = Date()
     var hosts = List<Host>()
     var conditions = List<Condition>()
@@ -153,7 +159,7 @@ class NutellaConfig: Object {
 }
 
 class Host: Object {
-    dynamic var id : String? = nil
+    dynamic var id:String  = UUID().uuidString
     dynamic var last_modified = Date()
     
     dynamic var appId: String? = nil
@@ -161,14 +167,14 @@ class Host: Object {
     dynamic var url: String? = nil
     dynamic var componentId: String? = nil
     dynamic var resourceId: String? = nil
-
+    
     override static func primaryKey() -> String? {
         return "id"
     }
 }
 
 class Condition: Object {
-    dynamic var id : String? = nil
+    dynamic var id: String = UUID().uuidString
     dynamic var last_modified = Date()
     dynamic var name: String? = nil
     dynamic var subscribes: String? = nil
@@ -183,7 +189,7 @@ class Channel: Object {
 }
 
 class SystemConfiguration: Object {
-    dynamic var id : String? = nil
+    dynamic var id = UUID().uuidString
     dynamic var last_modified = Date()
     dynamic var simulationConfiguration : SimulationConfiguration? = nil
     
@@ -195,7 +201,7 @@ class SystemConfiguration: Object {
 }
 
 class Runtime: Object {
-    dynamic var id : String? = nil
+    dynamic var id = UUID().uuidString
     dynamic var currentGroup: Group? = nil
     dynamic var currentSection: Section? = nil
     dynamic var currentSpecies: Species? = nil
@@ -207,7 +213,7 @@ class Runtime: Object {
 
 
 class SimulationConfiguration: Object {
-    dynamic var id : String? = nil
+    dynamic var id = UUID().uuidString
     dynamic var last_modified = Date()
     
     let ecosystems = List<Ecosystem>()
@@ -224,7 +230,7 @@ class Ecosystem: Object {
     dynamic var pipelength = 0
     dynamic var brickarea = 0
     dynamic var name = ""
-    dynamic var ecosystemNumber = 0
+    dynamic var index = 0
     dynamic var last_modified = Date()
     
 }
@@ -237,13 +243,13 @@ class Species: Object {
     dynamic var index = 0
     dynamic var last_modified = Date()
     
-//    func convertHexColor() -> UIColor {
-//        if !color.isEmpty {
-//            return UIColor.init(hex: self.c)
-//        }
-//        
-//        return UIColor.whiteColor()
-//    }
+    //    func convertHexColor() -> UIColor {
+    //        if !color.isEmpty {
+    //            return UIColor.init(hex: self.c)
+    //        }
+    //
+    //        return UIColor.whiteColor()
+    //    }
 }
 
 class User: Object {
@@ -266,13 +272,62 @@ class User: Object {
 
 extension Realm {
     
-    
     var species: Results<Species> {
         return allObjects(ofType: Species.self)
     }
     
-    func critterWithIndex(_ index: Int) -> Species {
-        return allObjects(ofType: Species.self).filter(using: "index = \(index)")[0] as Species!
+    func speciesWithIndex(withIndex index: Int) -> Species? {
+        return allObjects(ofType: Species.self).filter(using: "index = \(index)").first
+    }
+   
+    func ecosystem(withIndex index: Int) -> Ecosystem? {
+        return allObjects(ofType: Ecosystem.self).filter(using: "index = \(index)").first
+    }
+    
+    func runtime() -> Runtime? {
+        return allObjects(ofType: Runtime.self).first
+    }
+    
+    func systemConfiguration() -> SystemConfiguration? {
+        return allObjects(ofType: SystemConfiguration.self).first
+    }
+    
+    func section(withName name: String) -> Section? {
+        return allObjects(ofType: Section.self).filter(using: "name = '\(name)'").first
+    }
+    
+    func group(withSectionName sectionName: String, withGroupIndex index: Int) -> Group? {
+        if let section = self.section(withName: sectionName) {
+            return section.groups.filter(using: "index = \(index)").first
+        }
+        return nil
+    }
+    
+    func allSpeciesObservations(withSectionName sectionName: String, withGroupIndex index: Int) -> List<SpeciesObservation>? {
+        if let group = self.group(withSectionName: sectionName, withGroupIndex: index) {
+            return group.speciesObservations
+        }
+        return nil
+    }
+    
+    func speciesObservation(withId id: String) -> SpeciesObservation? {
+        return allObjects(ofType: SpeciesObservation.self).filter(using: "id = '\(id)'").first
+    }
+    
+    func speciesObservation(withGroup group: Group?, withFromSpeciesIndex index: Int) -> SpeciesObservation? {
+        if let group = group {
+            return group.speciesObservations.filter(using: "fromSpecies.index = \(index)").first
+        }
+        return nil
+    }
+    
+    
+    func relationship(withId id: String) -> Relationship? {
+        return allObjects(ofType: Relationship.self).filter(using: "id = '\(id)'").first
+    }
+    
+    func relationships(withSpeciesObservation speciesObservation: SpeciesObservation, withRelationshipType relationshipType: String) -> Results<Relationship>? {
+        return speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'")
     }
 }
 

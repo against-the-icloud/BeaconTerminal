@@ -37,7 +37,7 @@ class LoginSectionCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         prepareView()
         
-        if let selectedSection = self.selectedSection {
+        if selectedSection != nil {
             performSegue(withIdentifier: "shortCurcuitSpeciesSegue", sender: self)
         }
     }

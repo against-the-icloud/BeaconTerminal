@@ -20,7 +20,7 @@ class RelationshipDetailViewController: UIViewController {
     var relationship: Relationship? = nil {
         didSet {
             if let r = relationship {
-                if let ecosystemIndex = r.ecosystem?.ecosystemNumber {
+                if let ecosystemIndex = r.ecosystem?.index {
                     self.ecosystemIndex = ecosystemIndex
                 } else {
                     self.ecosystemIndex = 0

@@ -32,12 +32,61 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
+    var speciesObservationResults: Results<SpeciesObservation>?
+    
+        var notificationToken: NotificationToken? = nil
+    deinit {
+        if notificationToken != nil {
+            notificationToken?.stop()
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        prepareNotifications()
+        
+        
+    }
+    
+    func prepareNotifications() {
+        speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
+        
+        notificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let controller = self else { return }
+            switch changes {
+            case .Initial(let speciesObservationResults):
+                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
+                break
+            case .Update(let speciesObservationResults, _, _, _):
+                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
+                break
+            case .Error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+        }
+    
+    }
+    
+    func updateCells(withSpeciesObservationResults speciesObsResults: Results<SpeciesObservation>) {
+        
+        LOG.debug("SPECIES RESULTS \(speciesObsResults)")
+        
+        for spObs in speciesObsResults {
+            //all of relationships of this type
+            let rResults = spObs.relationships.filter(using: "relationshipType = '\(relationshipType?.rawValue)'")
+            
+                for rel in rResults {
+                    LOG.debug("FOUND \(rel)")
+                }
+            
+        }
     }
     
     func updateHeader() {
@@ -59,16 +108,21 @@ class TerminalRelationshipTableViewController: UITableViewController {
         if let cells = self.childViewControllers as? [TerminalCellController] {
             
             //find the controller
-            let found = cells.filter( { (c: TerminalCellController) -> Bool in
-                return c.species!.index == relationship.toSpecies!.index
-            }).first
-            
-            if let cell = found {
-                LOG.debug("FOUND \(found)")
-                //update
-                cell.updateCell(withGroup: group, andRelationship: relationship, relationshipType: self.relationshipType!)
-                cell.fromSpecies = species 
-                cell.groups = groups
+            if let cell = cells.filter( { (c: TerminalCellController) -> Bool in
+                if relationship.toSpecies != nil {
+                    return c.species!.index == relationship.toSpecies!.index
+                }
+                
+                return false
+                
+            }).first {
+                
+                    LOG.debug("FOUND \(cell)")
+                    //update
+                    cell.updateCell(withGroup: group, andRelationship: relationship, relationshipType: self.relationshipType!)
+                    cell.fromSpecies = species
+                    cell.groups = groups
+                
             }
         }
         
@@ -82,7 +136,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 if let cellController = segue.destination as? TerminalCellController {
                     cellController.relationshipType = relationshipType
                 }
-                                
+                
                 break
             default:
                 break

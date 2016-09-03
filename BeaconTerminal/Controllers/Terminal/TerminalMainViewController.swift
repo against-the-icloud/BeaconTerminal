@@ -37,9 +37,10 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     var runtimeResults: Results<Runtime>?
     var speciesObservationResults: Results<SpeciesObservation>?
 
+    var notificationToken: NotificationToken? = nil
     deinit {
-        for token in notificationTokens {
-            token.stop()
+        if notificationToken != nil {
+            notificationToken?.stop()
         }
     }
     
@@ -54,18 +55,12 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     
     // Mark: Prepare
     
-    func prepareView() {
-        updateHeader()
-        queryDB()
-        updateUI()
-    }
-    
     func prepareNotifications() {
         runtimeResults = realm?.allObjects(ofType: Runtime.self)
         
         
         // Observe Notifications
-        let runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let terminalController = self else { return }
             switch changes {
@@ -80,33 +75,6 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
                 fatalError("\(error)")
                 break
             }
-        }
-        
-        if let nt = runtimeNotificationToken {
-            notificationTokens.append(nt)
-        }
-        
-        speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
-
-        let soNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-            
-            guard let terminalController = self else { return }
-            switch changes {
-            case .Initial(let speciesObservationResults):
-                terminalController.updateUI(withSpeciesObservationResults: speciesObservationResults)
-                break
-            case .Update(let speciesObservationResults, _, _, _):
-                terminalController.updateUI(withSpeciesObservationResults: speciesObservationResults)
-                break
-            case .Error(let error):
-                // An error occurred while opening the Realm file on the background worker thread
-                fatalError("\(error)")
-                break
-            }
-        }
-        
-        if let nt = soNotificationToken {
-            notificationTokens.append(nt)
         }
     }
     
@@ -140,22 +108,13 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
             } else {
                 self.species = rt.currentSpecies
                 //we are good time to check nutella
-                prepareView()
+                updateHeader()
                 queryAllSpeciesNutella()
             }
             
         } else {
             showSpeciesLogin()
         }
-    }
-    
-    func updateUI(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
-//        for so in speciesObservationResults {
-//            
-//        }
-        
-        queryDB()
-        updateUI()
     }
     
     func queryAllSpeciesNutella() {
@@ -167,15 +126,10 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
                 if let species = self.species {
                     var dict = [String:String]()
                     dict["speciesIndex"] = "\(species.index)"
-                    
                     let json = JSON(dict)
                     let jsonObject: Any = json.object
                     nutella.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
-
                 }
-                
-                
-                //nutella.net.publish("all_notes", message: dict as AnyObject)
             }
             
             DispatchQueue.main.async(execute: block)
@@ -207,7 +161,6 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
-        prepareView()
         //queryAllSpeciesNutella()
     }
     

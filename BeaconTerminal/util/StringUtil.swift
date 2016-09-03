@@ -18,10 +18,8 @@ class StringUtil {
             return "IS A PRODUCER FOR"
         case .mutual:
             return "IS DEPENDENT ON"
-        case .competes:
-            return "COMPETES WITH"
         default:
-            return ""
+            return "COMPETES WITH"
         }
     }
     

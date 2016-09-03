@@ -47,6 +47,14 @@ internal func gsub(pattern: String, template: String, string: String, error: NSE
                                            withTemplate: template)
 }
 
+extension Object {
+    // Must *only* be used to call Realm Objective-C APIs that are exposed on `RLMObject`
+    // but actually operate on `RLMObjectBase`. Do not expose cast value to user.
+    internal func unsafeCastToRLMObject() -> RLMObject {
+        return unsafeBitCast(self, to: RLMObject.self)
+    }
+}
+
 // MARK: CustomObjectiveCBridgeable
 
 internal func dynamicBridgeCast<T>(fromObjectiveC x: Any) -> T {
@@ -66,7 +74,7 @@ internal func dynamicBridgeCast<T>(fromSwift x: T) -> Any {
 }
 
 // Used for conversion from Objective-C types to Swift types
-internal protocol CustomObjectiveCBridgeable  {
+internal protocol CustomObjectiveCBridgeable {
     /* FIXME: Remove protocol once SR-2393 bridges all integer types to `NSNumber`
      *        At this point, use `as! [SwiftType]` to cast between. */
     static func bridging(objCValue: Any) -> Self
@@ -125,6 +133,14 @@ internal func gsub(pattern: String, template: String, string: String, error: NSE
                                                    withTemplate: template)
 }
 
+extension Object {
+    // Must *only* be used to call Realm Objective-C APIs that are exposed on `RLMObject`
+    // but actually operate on `RLMObjectBase`. Do not expose cast value to user.
+    internal func unsafeCastToRLMObject() -> RLMObject {
+        return unsafeBitCast(self, RLMObject.self)
+    }
+}
+
 // MARK: CustomObjectiveCBridgeable
 
 internal func dynamicBridgeCast<T>(fromObjectiveC x: AnyObject) -> T {
@@ -144,7 +160,7 @@ internal func dynamicBridgeCast<T>(fromSwift x: T) -> AnyObject {
 }
 
 // Used for conversion from Objective-C types to Swift types
-internal protocol CustomObjectiveCBridgeable  {
+internal protocol CustomObjectiveCBridgeable {
     /* FIXME: Remove protocol once SR-2393 bridges all integer types to `NSNumber`
      *        At this point, use `as! [SwiftType]` to cast between. */
     static func bridging(objCValue objCValue: AnyObject) -> Self

@@ -17,6 +17,15 @@ target 'BeaconTerminal' do
     pod 'Transporter', :git => 'https://github.com/DenHeadless/Transporter.git', :branch => 'swift3'
 end
 
+target 'BeaconTerminalModelTests' do
+    #db
+    pod 'Realm', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
+    pod 'RealmSwift', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
+    
+    #pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
+    pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
+end
+
 post_install do |installer|
     installer.pods_project.build_configurations.each do |config|
         # Configure Pod targets for Xcode 8 compatibility

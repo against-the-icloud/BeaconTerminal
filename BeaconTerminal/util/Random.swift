@@ -236,6 +236,12 @@ public struct Randoms {
     public static func randomFakeGender() -> String {
         return Bool.random() ? "Male" : "Female"
     }
+    
+    public static func getRandomImage() -> String {
+        let images = ["graph1","graph2","graph3","graph4","graph5","graph6","screenshot1","screenshot2","screenshot3"]
+        
+        return images[Randoms.randomInt(0, (images.count-1))]
+    }
 
     public static func randomFakeConversation() -> String {
         let convoList = ["Holla. Science","The evidence is real.","Real talk, real data.","The critter looks like pokeman"]
