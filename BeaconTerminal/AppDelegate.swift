@@ -80,6 +80,7 @@ enum NutellaMessageType: String {
 enum NutellaChannelType: String {
     case allNotes = "all_notes"
     case allNotesWithSpecies = "all_notes_with_species"
+    case noteChanges = "note_changes"
 }
 
 
@@ -92,6 +93,7 @@ struct NutellaUpdate {
 
 
 var realm: Realm?
+var nutella: Nutella?
 
 func dispatch_on_main(_ block: @escaping ()->()) {
     DispatchQueue.main.async(execute: block)
@@ -105,7 +107,7 @@ func getAppDelegate() -> AppDelegate {
 class AppDelegate: UIResponder, UIApplicationDelegate { 
     
     var window: UIWindow?
-    var nutella: Nutella?
+    
     var collectionView: UICollectionView?
     var speciesViewController: SpeciesMenuViewController?
     var bottomNavigationController: AppBottomNavigationController?
@@ -121,20 +123,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
-        
-     
-        
-        
-     
-        
+                
         prepareViews(applicationType: ApplicationType.placeTerminal)
         
         prepareDB()
         
         setupNutellaConnection(HOST)
-        
-        
-        
         
         UIView.hr_setToastThemeColor(UIColor.black())
         
@@ -252,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //check nutella connection
         
         //handle_requests: reset
-        if let nutella = self.nutella {
+        if let nutella = nutella {
             
             let block = DispatchWorkItem {
                 var dict = [String:String]()
@@ -292,7 +286,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //let appState: ApplicationType = checkApplicationState()
                 
                 for condition in config.conditions {
-                    if condition.id == "placeTerminal" {
+                    if condition.id == checkApplicationState().rawValue {
                         if let channels = condition.subscribes?.components(separatedBy: ",") {
                             for channel in channels {
                                 nutella?.net.subscribe(channel)
@@ -428,7 +422,6 @@ extension AppDelegate: NutellaNetDelegate {
         var nutellaUpdate = NutellaUpdate()
         nutellaUpdate.channel = channelName
         nutellaUpdate.message = response
-        nutellaUpdate.response =  response
         nutellaUpdate.updateType = .response
         realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
     }

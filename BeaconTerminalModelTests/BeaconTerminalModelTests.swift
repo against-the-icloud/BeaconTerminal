@@ -11,27 +11,30 @@ import RealmSwift
 import Nutella
 @testable import BeaconTerminal
 
-class BeaconTerminalModelTests: XCTestCase {
+class BeaconTerminalModelTests: XCTestCase, NutellaNetDelegate {
     
-    var nutella: Nutella?
-    var realmDataController = RealmDataController()
-    
+    var simConfig: SimulationConfiguration?
     override func setUp() {
         super.setUp()
         
         let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
         try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         
-        self.realmDataController.deleteAllConfigurationAndGroups()
-        _ = self.realmDataController.parseSimulationConfigurationJson()
+        realmDataController = RealmDataController()
+        realmDataController?.deleteAllConfigurationAndGroups()
+        let _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
+
+        //_ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
+        //elf.realmDataController.generateTestData()
         self.setupNutella()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
     }
     
     func setupNutella() {
-        _ = realmDataController.validateNutellaConfiguration()
+        _ = realmDataController?.validateNutellaConfiguration()
         let nutellaConfig : Results<NutellaConfig> = realm!.allObjects(ofType: NutellaConfig.self)
+        
         
         if let config = nutellaConfig.first {
             
@@ -43,21 +46,12 @@ class BeaconTerminalModelTests: XCTestCase {
                                   componentId: host.componentId!)
                 nutella?.netDelegate = self
                 nutella?.resourceId = host.resourceId
+                nutella?.net.subscribe("note_changes")
                 
-                
-                for condition in config.conditions {
-                    if condition.id == "placeTerminal" {
-                        if let channels = condition.subscribes?.components(separatedBy: ",") {
-                            for channel in channels {
-                                nutella?.net.subscribe(channel)
-                            }
-                        }
-                    }
-                }
             }
             
         }
-        
+
     }
     
     override func tearDown() {
@@ -69,33 +63,33 @@ class BeaconTerminalModelTests: XCTestCase {
     
     
     func testNutellaConfigurationParseJson() {
-        let _ = self.realmDataController.parseNutellaConfigurationJson()
+        let _ = realmDataController?.parseNutellaConfigurationJson()
     }
     
     func testSimulationConfigurationParseJson() {
-        let _ = self.realmDataController.parseSimulationConfigurationJson()
+        let _ = realmDataController?.parseSimulationConfigurationJson()
     }
     
     func testParseUserGroupConfigurationJson() {
-        let _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
+        let _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig:
+            (realmDataController?.parseSimulationConfigurationJson())!)
     }
     
     func testPopulateData() {
-        let _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
-        self.realmDataController.generateTestData()
+        realmDataController?.deleteAllUserData()
+        let _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
+        realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
     }
     
     func testExportJsonWithPath() {
-        let _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
-        self.realmDataController.generateTestData()
+        let _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
+        realmDataController?.generateTestData()
         
-        self.realmDataController.exportSection(withName: "DEFAULT", andFilePath: "/Users/aperritano/Desktop/test_data.json")
+        realmDataController?.exportSection(withName: "DEFAULT", andFilePath: "/Users/aperritano/Desktop/test_data.json")
     }
     
     func testExportJsonWithNutella() {
         
-        _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
-        self.realmDataController.generateTestData()
         
         let defaultSection = realm?.section(withName: "DEFAULT")
         
@@ -108,28 +102,28 @@ class BeaconTerminalModelTests: XCTestCase {
                 let dict = so.toDictionary()
                 let json = JSON(dict)
                 let jsonObject: Any = json.object
-                self.nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+                nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
             }
         }
     }
     
     func testSimulator() {
-        self.realmDataController.deleteAllConfigurationAndGroups()
-        _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
+        realmDataController?.deleteAllConfigurationAndGroups()
+        _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
         
         
-        realmDataController.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
+        realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
         
         if let soResults = realm?.speciesObservation(withFromSpeciesIndex: 1) {
             LOG.debug("so results \(soResults.count)")
         }
         
         
-        //        _ = self.realmDataController.findSpecies(withSpeciesIndex: 0)
+        //        _ = realmDataController.findSpecies(withSpeciesIndex: 0)
         //
         //        for so in speciesObservations {
         //            if so.fromSpecies?.index == 1 {
-        //                self.sendSpeciesObversations(speciesObervation: so)
+        //                sendSpeciesObversations(speciesObervation: so)
         //            }
         //        }
     }
@@ -140,8 +134,38 @@ class BeaconTerminalModelTests: XCTestCase {
         dict["speciesIndex"] = "\(1)"
         let json = JSON(dict)
         let jsonObject: Any = json.object
-        self.nutella?.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
+        nutella?.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
         
+    }
+    
+    
+    func testSaveNote() {
+        
+        nutella?.netDelegate = self
+
+        realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
+        
+
+        
+        if let soResults = realm?.speciesObservation(withFromSpeciesIndex: 1) {
+            LOG.debug("so results \(soResults.count)")
+            
+            for so in soResults {
+                
+                //let block = DispatchWorkItem {
+                    let json = JSON(so.toDictionary())
+                    let jsonObject: Any = json.object
+                    nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+                    LOG.debug("MESSAGE SENT")
+                    sleep(1)
+               // }
+                
+               // DispatchQueue.main.async(execute: block)
+            }
+         
+        }
+
+
     }
     
     func sendSpeciesObversations(speciesObervation: SpeciesObservation) {
@@ -150,14 +174,15 @@ class BeaconTerminalModelTests: XCTestCase {
         let dict = speciesObervation.toDictionary()
         let json = JSON(dict)
         let jsonObject: Any = json.object
-        self.nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+        nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+        
         sleep(5)
     }
     
     
 }
 
-extension BeaconTerminalModelTests: NutellaNetDelegate {
+extension BeaconTerminalModelTests {
     
     /**
      Called when a message is received from a publish.
@@ -171,7 +196,7 @@ extension BeaconTerminalModelTests: NutellaNetDelegate {
         nutellaUpdate.channel = channel
         nutellaUpdate.message = message
         nutellaUpdate.updateType = .message
-        realmDataController.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
+        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
     }
     
     /**
@@ -187,7 +212,7 @@ extension BeaconTerminalModelTests: NutellaNetDelegate {
         nutellaUpdate.message = response
         nutellaUpdate.response =  response
         nutellaUpdate.updateType = .response
-        realmDataController.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
+        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
     }
     
     /**

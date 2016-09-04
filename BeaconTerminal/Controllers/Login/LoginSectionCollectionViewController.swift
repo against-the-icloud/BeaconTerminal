@@ -35,7 +35,7 @@ class LoginSectionCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         prepareView()
         
-        guard let currrentSectionName = realm?.runtimeSectionName() else {
+        guard (realm?.runtimeSectionName()) != nil else {
             return
         }
         

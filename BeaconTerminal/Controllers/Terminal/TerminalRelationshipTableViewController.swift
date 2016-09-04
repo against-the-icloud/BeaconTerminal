@@ -85,7 +85,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
     
     func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
         //find the controller with that species
-   
+        
         
         if let cells = self.childViewControllers as? [TerminalCellController] {
             
@@ -128,7 +128,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
             if relationshipCount == 0 && groupReportCounts.count == 0 {
                 relationshipReportLabel.text = "Nothing to report."
             } else {
-                  relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupReportCounts.count) of \(groups.count) groups"
+                relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupReportCounts.count) of \(groups.count) groups"
             }
         }
     }
@@ -162,7 +162,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
             }
         }
     }
-
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier {
@@ -180,7 +180,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
-       
-
+    
+    
     
 }

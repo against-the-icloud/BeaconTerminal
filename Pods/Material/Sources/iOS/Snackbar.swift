@@ -40,16 +40,16 @@ open class Snackbar: BarView {
     /// A convenience property to set the titleLabel text.
     public var text: String? {
         get {
-            return textLabel?.text
+            return textLabel.text
         }
         set(value) {
-            textLabel?.text = value
+            textLabel.text = value
             layoutSubviews()
         }
     }
     
     /// Text label.
-    public internal(set) var textLabel: UILabel!
+    public internal(set) lazy var textLabel = UILabel()
     
     open override var intrinsicContentSize: CGSize {
         return CGSize(width: width, height: 49)
@@ -77,6 +77,13 @@ open class Snackbar: BarView {
         return super.hitTest(point, with: event)
     }
     
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        if willRenderView {
+            textLabel.frame = contentView.bounds
+        }
+    }
+    
     /**
      Prepares the view instance when intialized. When subclassing,
      it is recommended to override the prepareView method
@@ -97,11 +104,11 @@ open class Snackbar: BarView {
     
     /// Prepares the textLabel.
     private func prepareTextLabel() {
-        textLabel = UILabel()
         textLabel.contentScaleFactor = Device.scale
         textLabel.font = RobotoFont.medium(with: 14)
         textLabel.textAlignment = .left
         textLabel.textColor = Color.white
-        contentView.grid.views.append(textLabel)
+        textLabel.numberOfLines = 0
+        contentView.addSubview(textLabel)
     }
 }

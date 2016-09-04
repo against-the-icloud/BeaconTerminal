@@ -122,7 +122,7 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     }
     
     func queryAllSpeciesNutella() {
-        if let nutella = getAppDelegate().nutella {
+        if let nutella = nutella {
             let block = DispatchWorkItem {
                 if let speciesIndex = realm?.runtimeSpeciesIndex() {
                     var dict = [String:String]()

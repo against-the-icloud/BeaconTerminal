@@ -50,6 +50,7 @@ class Group: Object {
 class SpeciesObservation: Object {
     dynamic var id : String? = nil
     dynamic var authors : String? = nil
+    dynamic var isSynced = false
     dynamic var groupIndex = 0
     dynamic var lastModified = Date()
     dynamic var fromSpecies: Species?
@@ -77,6 +78,10 @@ class SpeciesObservation: Object {
         
         if let groupIndex = json["groupIndex"].int {
             self.groupIndex = groupIndex
+        }
+        
+        if let isSynced = json["isSynced"].bool {
+            self.isSynced = isSynced
         }
         
         if let fromSpecies = realmDataController?.parseSpecies(withJson: json)  {

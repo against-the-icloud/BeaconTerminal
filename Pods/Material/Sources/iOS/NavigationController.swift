@@ -112,7 +112,6 @@ open class NavigationController: UINavigationController {
      when subclassing.
      */
 	open func prepareView() {
-        edgesForExtendedLayout = []
         view.clipsToBounds = true
 		view.backgroundColor = Color.white
         view.contentScaleFactor = Device.scale
@@ -136,18 +135,18 @@ extension NavigationController: UINavigationBarDelegate {
      */
     public func navigationBar(_ navigationBar: UINavigationBar, shouldPush item: UINavigationItem) -> Bool {
         if let v = navigationBar as? NavigationBar {
-            let backButton = IconButton(image: v.backButtonImage, tintColor: Color.blue.base)
-            backButton.pulseColor = Color.white
+            let backButton = IconButton(image: v.backButtonImage, tintColor: Color.blueGrey.base)
             backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
             
-            item.leftControls.append(backButton)
             item.backButton = backButton
+            item.leftControls.append(backButton)
             v.layoutNavigationItem(item: item)
         }
         return true
     }
     
     /// Handler for the back button.
+    @objc
     internal func handleBackButton() {
         popViewController(animated: true)
     }
