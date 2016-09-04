@@ -55,10 +55,12 @@ class CoverFlowViewController: UIViewController {
     func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
         self.runtimeResults = runtimeResults
         
-        if runtimeResults[0].currentGroup != nil {
-            currentGroup = runtimeResults[0].currentGroup
-            guard let collectionView = self.collectionView else { return }
-            collectionView.reloadData()
+        if let currentGroupIndex =  realm?.runtimeGroupIndex(), let currentSectionName = realm?.runtimeSectionName() {
+            if let group = realm?.group(withSectionName: currentSectionName, withGroupIndex: currentGroupIndex) {
+                currentGroup = group
+                guard let collectionView = self.collectionView else { return }
+                collectionView.reloadData()
+            }
         }
     }
     

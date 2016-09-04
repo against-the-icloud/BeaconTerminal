@@ -12,10 +12,6 @@ import RealmSwift
 
 class LoginSpeciesCollectionViewController: UICollectionViewController {
     
-    var species: Results<Species> = realm!.allObjects(ofType: Species.self)
-    
-    var selectedSection: Section?
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -28,7 +24,7 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()        
+        prepareView()
     }
     
     func prepareView() {
@@ -39,12 +35,7 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindToTerminalView" {
-//            if let selectedCell = sender as? LoginSpeciesCell {
-//                let selectedSpecies = species[selectedCell.speciesIndex]
-//                let tvc = segue.destination as? TerminalMainViewController
-//                tvc?.species = selectedSpecies
-//                tvc?.section = selectedSection
-//            }
+  
         }
     }
     
@@ -59,7 +50,11 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
 extension LoginSpeciesCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.species.count
+        if let allSpecies = realm?.species {
+            return allSpecies.count
+        } else {
+            return 0
+        }
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -68,24 +63,22 @@ extension LoginSpeciesCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if collectionView.cellForItem(at: indexPath) != nil {
-            let s = species[indexPath.row]
-            realmDataController?.updateRuntimeSection(withSection: nil, andOrSpecies: s)
-            self.dismiss(animated: true, completion: nil)
-            //performSegue(withIdentifier: "unwindToTerminalView", sender: cell)
+        if let allSpecies = realm?.species {
+            if indexPath.row <=  allSpecies.count {
+                realmDataController?.updateRuntime(withSectionName: nil, withSpeciesIndex: indexPath.row, withGroupIndex: nil)
+                performSegue(withIdentifier: "unwindToTerminalView", sender: nil)
+            }
         }
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoginSpeciesCell.reuseIdentifier, for: indexPath) as! LoginSpeciesCell
-                
-        let foundSpecies = species[indexPath.row]
         
-        cell.speciesImageView.image = RealmDataController.generateImageForSpecies(foundSpecies.index, isHighlighted: true)
+        cell.speciesImageView.image = RealmDataController.generateImageForSpecies(indexPath.row, isHighlighted: true)
         cell.speciesIndex = indexPath.row
         cell.speciesLabel.text = "Species \(indexPath.row)"
         return cell
     }
-
+    
 }

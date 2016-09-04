@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 import Material
+import RealmSwift
 
 class SideViewController: UITableViewController {
     
@@ -79,15 +80,16 @@ class SideViewController: UITableViewController {
             case 1:                                
                 // Mark: place terminal
                 
-                let runtimeResults = realm?.allObjects(ofType: Runtime.self)
-                if let currentRuntime = runtimeResults?.first {
+                if let runtime = realm?.runtime() {
                     try! realm?.write {
-                        currentRuntime.currentSpecies = nil
-                        realm?.add(currentRuntime, update: true)
+                        runtime.currentSpeciesIndex.value = nil
+                        runtime.currentGroupIndex.value = nil
+                        realm?.add(runtime, update: true)
                     }
-
+                } else {
                     
                 }
+            
                 
                 getAppDelegate().changeSystemStateTo(.placeTerminal)
                 

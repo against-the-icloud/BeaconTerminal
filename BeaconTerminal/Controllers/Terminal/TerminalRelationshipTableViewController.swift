@@ -16,25 +16,14 @@ class TerminalRelationshipTableViewController: UITableViewController {
     @IBOutlet weak var relationshipHeaderLabel: UILabel!
     @IBOutlet weak var relationshipReportLabel: UILabel!
     
-    var reportingGroups:[Int:Int] = [Int:Int]()
-    
-    var species: Species? {
-        didSet {
-            updateHeader()
-        }
-    }
-    var groups: List<Group>?
-    
     var relationshipType: RelationshipType?
-    var relationshipResults: [RelationshipResult]? {
-        didSet {
-            updateResults()
-        }
-    }
+    
+    var groupReportCounts = [Int]()
+    var relationshipCount = 0
     
     var speciesObservationResults: Results<SpeciesObservation>?
     
-        var notificationToken: NotificationToken? = nil
+    var notificationToken: NotificationToken? = nil
     deinit {
         if notificationToken != nil {
             notificationToken?.stop()
@@ -48,8 +37,6 @@ class TerminalRelationshipTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNotifications()
-        
-        
     }
     
     func prepareNotifications() {
@@ -71,62 +58,111 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 break
             }
         }
-    
+        
     }
     
-    func updateCells(withSpeciesObservationResults speciesObsResults: Results<SpeciesObservation>) {
-        
-        LOG.debug("SPECIES RESULTS \(speciesObsResults)")
-        
-        for spObs in speciesObsResults {
-            //all of relationships of this type
-            let rResults = spObs.relationships.filter(using: "relationshipType = '\(relationshipType?.rawValue)'")
-            
-                for rel in rResults {
-                    LOG.debug("FOUND \(rel)")
+    func updateCells(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
+        guard let type = relationshipType else {
+            return
+        }
+        for so in speciesObservationResults {
+            if let foundRelationships = realm?.relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
+                
+                if !groupReportCounts.contains(so.groupIndex) {
+                    groupReportCounts.append(so.groupIndex)
                 }
-            
+                
+                relationshipCount += foundRelationships.count
+                
+                for r in foundRelationships {
+                    updateCell(withRelationship: r, groupIndex: so.groupIndex)
+                }
+                
+                updateReportLabel()
+            }
         }
     }
     
-    func updateHeader() {
-        if let species = species {
-            relationshipHeaderLabel.backgroundColor = UIColor.speciesColor(forIndex: species.index, isLight: false)
-            relationshipHeaderLabel.borderColor = UIColor.speciesColor(forIndex: species.index, isLight: true)
-            
-            prepareView()
-        }
-        
-    }
-    
-    
-    func updateCell(withRelationship relationship: Relationship, group: Group, relationshipType: RelationshipType) {
+    func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
         //find the controller with that species
-        
-        self.relationshipType = relationshipType
+   
         
         if let cells = self.childViewControllers as? [TerminalCellController] {
             
             //find the controller
             if let cell = cells.filter( { (c: TerminalCellController) -> Bool in
                 if relationship.toSpecies != nil {
-                    return c.species!.index == relationship.toSpecies!.index
+                    
+                    guard let species = c.species else {
+                        return false
+                    }
+                    
+                    return species.index == relationship.toSpecies!.index
                 }
                 
                 return false
                 
             }).first {
-                
-                    LOG.debug("FOUND \(cell)")
-                    //update
-                    cell.updateCell(withGroup: group, andRelationship: relationship, relationshipType: self.relationshipType!)
-                    cell.fromSpecies = species
-                    cell.groups = groups
-                
+                //update
+                cell.updateCell(withGroupIndex: groupIndex, andRelationship: relationship)
             }
         }
-        
     }
+    
+    // Mark: updates
+    
+    func updateHeader() {
+        if let speciesIndex = realm?.runtimeSpeciesIndex() {
+            relationshipHeaderLabel.backgroundColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
+            relationshipHeaderLabel.borderColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
+            prepareView()
+        } else {
+            relationshipHeaderLabel.backgroundColor = UIColor.black
+            relationshipHeaderLabel.borderColor = UIColor.black
+        }
+    }
+    
+    func updateReportLabel() {
+        if let groups = realm?.currentGroups() {
+            
+            if relationshipCount == 0 && groupReportCounts.count == 0 {
+                relationshipReportLabel.text = "Nothing to report."
+            } else {
+                  relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupReportCounts.count) of \(groups.count) groups"
+            }
+        }
+    }
+    
+    // Mark: Prepare
+    func prepareView() {
+        
+        if let currentSpeciesIndex = realm?.runtimeSpeciesIndex() {
+            //update title
+            if let relationshipType = self.relationshipType {
+                relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
+            }
+            
+            guard let allSpecies = realm?.species else {
+                return
+            }
+            
+            var adder = 0
+            for (index, cc) in self.childViewControllers.enumerated() {
+                if let tcc = cc as? TerminalCellController {
+                    
+                    if index == currentSpeciesIndex {
+                        adder = 1
+                    } else {
+                        adder = 0
+                    }
+                    
+                    tcc.prepareView(withSpecies: allSpecies[index+adder])
+                    
+                }
+            }
+        }
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier {
@@ -144,93 +180,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
-    func updateResults() {
-        
-        //go through all the groups
-        
-        var relationshipCount = 0
-        
-        if let groups = self.groups, let relationshipResults = self.relationshipResults {
-            for group in groups {
-                //find all the relationships for group with that species
-                
-                //let temp = []
-                
-                
-                let groupResults = relationshipResults.filter( { (rr: RelationshipResult) -> Bool in
-                    return rr.group?.index == group.index
-                })
-                
-                reportingGroups[group.index] = 0
-                
-                
-                //all the relationsip results for group
-                for relResult in groupResults {
-                    //cycle through all the relationships
-                    
-                    if let relationships = relResult.relationships {
-                        
-                        if relationships.count > 0 {
-                            relationshipCount += relationships.count
-                            reportingGroups[group.index] = 1
-                            
-                        }
-                        
-                        //LOG.debug("count for group \(group.index) \(groupResults.count) TYPE \(relationshipType?.rawValue) relationships \(relationships)")
-                        
-                        for r in relationships {
-                            updateCell(withRelationship: r, group: group, relationshipType: relResult.relationshipType!)
-                        }
-                    }
-                }
-            }
-            
-            var groupCount = 0
-            
-            for (_, value) in reportingGroups {
-                groupCount += value
-            }
-            
-            updateLabel(withRelationshipCount: relationshipCount, groupCount: groupCount, groupMax: groups.count)
-        } else {
-            updateLabel(withRelationshipCount: 0, groupCount: 0, groupMax: 0)
-        }
-        
-        
-        
-    }
+       
+
     
-    func updateLabel(withRelationshipCount relationshipCount: Int = 0, groupCount: Int = 0, groupMax: Int = 0 ) {
-        if relationshipCount == 0 && groupCount == 0 && groupMax == 0 {
-            relationshipReportLabel.text = "Nothing to report."
-        }
-        relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupCount) of \(groupMax) groups"
-    }
-    
-    func prepareView() {
-        
-        if let currentSpecies = species {
-            //update title
-            if let relationshipType = self.relationshipType {
-                relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
-            }
-            
-            let allSpecies = realm!.allObjects(ofType: Species.self)
-            
-            var adder = 0
-            for (index, cc) in self.childViewControllers.enumerated() {
-                if let tcc = cc as? TerminalCellController {
-                    
-                    if index == currentSpecies.index {
-                        adder = 1
-                    } else {
-                        adder = 0
-                    }
-                    
-                    tcc.prepareView(withSpecies: allSpecies[index+adder])
-                    
-                }
-            }
-        }
-    }
 }

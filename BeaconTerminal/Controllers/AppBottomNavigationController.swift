@@ -79,11 +79,12 @@ class AppBottomNavigationController: BottomNavigationController {
     func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
         self.runtimeResults = runtimeResults
         
-        if runtimeResults[0].currentGroup != nil {
-            let group = runtimeResults[0].currentGroup
-            let section = runtimeResults[0].currentSection
-            changeTitle(with: group, and: section)
-        }
+        
+//        if runtimeResults[0].currentGroup != nil {
+//            let group = runtimeResults[0].currentGroup
+//            let section = runtimeResults[0].currentSection
+//            changeTitle(with: group, and: section)
+//        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

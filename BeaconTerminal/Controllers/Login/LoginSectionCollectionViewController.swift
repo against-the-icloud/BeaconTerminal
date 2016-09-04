@@ -17,9 +17,7 @@ enum LoginType {
 
 class LoginSectionCollectionViewController: UICollectionViewController {
     
-    var sections: Results<Section> = realm!.allObjects(ofType: Section.self)
     var notificationToken: NotificationToken? = nil
-    var selectedSection: Section?
     
     // determined at runtime
     var loginType: LoginType = .group
@@ -37,9 +35,16 @@ class LoginSectionCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         prepareView()
         
-        if selectedSection != nil {
-            performSegue(withIdentifier: "shortCurcuitSpeciesSegue", sender: self)
+        guard let currrentSectionName = realm?.runtimeSectionName() else {
+            return
         }
+        
+        performSegue(withIdentifier: "shortCurcuitSpeciesSegue", sender: self)
+    }
+    
+    func updateNavigatonItems() {
+        navigationItem.backBarButtonItem?.tintColor = UIColor.white
+        navigationItem.backBarButtonItem?.title = realm?.runtimeSectionName()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,52 +52,27 @@ class LoginSectionCollectionViewController: UICollectionViewController {
         if let id = segue.identifier {
             switch id {
             case "groupSegue":
-                let selectedCell = sender as? LoginGroupCell
-                let selectedIndexPath = collectionView?.indexPath(for: selectedCell!)
                 if let gvc = segue.destination as? LoginGroupCollectionViewController {
-                
-                selectedSection = sections[(selectedIndexPath?.row)!]
-                gvc.groups = sections[(selectedIndexPath?.row)!].groups
-                gvc.selectedSection = selectedSection
-                if (sections.count) > 0 {
-                    let sectionName = sections[(selectedIndexPath?.row)!].name
                     gvc.title = "Choose Your Group"
-                    navigationItem.backBarButtonItem?.tintColor = UIColor.white
-                    navigationItem.backBarButtonItem?.title = sectionName
-                }
+                    updateNavigatonItems()
                 }
                 break
             case "speciesSegue":
-                let selectedCell = sender as? LoginGroupCell
-                let selectedIndexPath = collectionView?.indexPath(for: selectedCell!)
                 if let gvc = segue.destination as? LoginSpeciesCollectionViewController {
-                    selectedSection = sections[(selectedIndexPath?.row)!]
-                    gvc.selectedSection = selectedSection
-                    if (sections.count) > 0 {
-                        let sectionName = sections[(selectedIndexPath?.row)!].name
-                        gvc.title = "Choose a Species"
-                        navigationItem.backBarButtonItem?.tintColor = UIColor.white
-                        navigationItem.backBarButtonItem?.title = sectionName
-                    }
+                    gvc.title = "Choose a Species"
+                    updateNavigatonItems()
                 }
                 break
             case "shortCurcuitSpeciesSegue":
-                
                 if let gvc = segue.destination as? LoginSpeciesCollectionViewController {
-                    gvc.selectedSection = selectedSection
-                    if (sections.count) > 0 {
-                        let sectionName = selectedSection?.name
-                        gvc.title = "Choose a Species"
-                        navigationItem.backBarButtonItem?.tintColor = UIColor.white
-                        navigationItem.backBarButtonItem?.title = sectionName
-                    }
+                    gvc.title = "Choose a Species"
+                    updateNavigatonItems()
                 }
-                break
             default:
                 break
             }
         }
-
+        
     }
     
     func prepareView() {
@@ -108,7 +88,11 @@ class LoginSectionCollectionViewController: UICollectionViewController {
 extension LoginSectionCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections.count
+        if let sections = realm?.sections() {
+            return sections.count
+        } else {
+            return 0
+        }
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -120,24 +104,23 @@ extension LoginSectionCollectionViewController {
         
         if let cell = collectionView.cellForItem(at: indexPath) {
             
-            realmDataController?.updateRuntimeSection(withSection: sections[indexPath.row], andOrSpecies: nil)
-
-            
-            switch self.loginType {
-            case LoginType.species:
-                self.performSegue(withIdentifier: "speciesSegue", sender: cell)
-            default:
-                self.performSegue(withIdentifier: "groupSegue", sender: cell)
+            if let sections = realm?.sections() {
+                realmDataController?.updateRuntime(withSectionName: sections[indexPath.row].name, withSpeciesIndex: nil, withGroupIndex: nil)
+                switch self.loginType {
+                case LoginType.species:
+                    self.performSegue(withIdentifier: "speciesSegue", sender: cell)
+                default:
+                    self.performSegue(withIdentifier: "groupSegue", sender: cell)
+                }
             }
         }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoginGroupCell.reuseIdentifier, for: indexPath) as? LoginGroupCell
-   
+        if let sections = realm?.sections() {
             cell?.groupLabel.text = sections[indexPath.row].name
-      
-        
+        }
         return cell!
     }
 }

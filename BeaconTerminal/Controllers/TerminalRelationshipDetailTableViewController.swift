@@ -13,7 +13,7 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
     
     
     var cellItem: CellItem?
-    var group:Group?
+    var groupIndex: Int?
     
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
@@ -49,8 +49,13 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
     }
     
     func prepareView() {
-        if let group = self.group {
-            groupNameLabel.text = group.name
+        if let groupIndex = self.groupIndex {
+            
+            if let sectionName = realm?.runtimeSectionName() {
+                if let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex) {
+                    groupNameLabel.text = group.name
+                }
+            }
         }
         
         if let cellItem = self.cellItem, let relationship = cellItem.relationship {

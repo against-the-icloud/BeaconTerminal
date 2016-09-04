@@ -6,7 +6,7 @@ enum RelationshipType: String {
     case consumer = "consumer"
     case mutual = "mutual"
     case competes = "competes"
-    static let allRelationships : [RelationshipType] = [.producer, .consumer, .mutual, .competes]
+    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes]
 }
 
 class Member: Object {
@@ -79,6 +79,14 @@ class SpeciesObservation: Object {
             self.groupIndex = groupIndex
         }
         
+        if let fromSpecies = realmDataController?.parseSpecies(withJson: json)  {
+            self.fromSpecies = fromSpecies
+        }
+        
+        if let ecosystem = realmDataController?.parseEcosystem(withJson: json)  {
+            self.ecosystem = ecosystem
+        }
+        
     }
     
     
@@ -87,7 +95,7 @@ class SpeciesObservation: Object {
 
 
 class Relationship: Object {
-    dynamic var id : String = UUID().uuidString
+    dynamic var id : String? = nil
     dynamic var note: String? = nil
     dynamic var attachments : String? = nil
     dynamic var authors : Group? = nil
@@ -100,9 +108,13 @@ class Relationship: Object {
         return "id"
     }
     
-    func update(withJson json:JSON){
-        if let id = json["id"].string {
-            self.id = id
+    func update(withJson json:JSON, withId: Bool){
+        if withId {
+            if let id = json["id"].string {
+                self.id = id
+            } else {
+                self.id = UUID().uuidString
+            }
         }
         if let attachments = json["attachments"].string {
             self.attachments = attachments
@@ -116,8 +128,16 @@ class Relationship: Object {
             self.relationshipType = relationshipType
         }
         
+        if let toSpecies = realmDataController?.parseSpecies(withJson: json)  {
+            self.toSpecies = toSpecies
+        }
+        
+        if let ecosystem = realmDataController?.parseEcosystem(withJson: json)  {
+            self.ecosystem = ecosystem
+        }
+        
+        
     }
-    
 }
 
 struct Preferences {
@@ -202,9 +222,9 @@ class SystemConfiguration: Object {
 
 class Runtime: Object {
     dynamic var id = UUID().uuidString
-    dynamic var currentGroup: Group? = nil
-    dynamic var currentSection: Section? = nil
-    dynamic var currentSpecies: Species? = nil
+    dynamic var currentSectionName: String? = nil
+    let currentGroupIndex = RealmOptional<Int>()
+    let currentSpeciesIndex =  RealmOptional<Int>()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -288,12 +308,33 @@ extension Realm {
         return allObjects(ofType: Runtime.self).first
     }
     
-    func systemConfiguration() -> SystemConfiguration? {
-        return allObjects(ofType: SystemConfiguration.self).first
+    func runtimeSectionName() -> String? {
+        if let rt = runtime() {
+            return rt.currentSectionName
+        }
+        return nil
+    }
+    
+    func runtimeGroupIndex() -> Int? {
+        if let rt = runtime() {
+            return rt.currentGroupIndex.value
+        }
+        return nil
+    }
+    
+    func runtimeSpeciesIndex() -> Int? {
+        if let rt = runtime() {
+            return rt.currentSpeciesIndex.value
+        }
+        return nil
     }
     
     func section(withName name: String) -> Section? {
         return allObjects(ofType: Section.self).filter(using: "name = '\(name)'").first
+    }
+    
+    func sections() -> Results<Section> {
+        return allObjects(ofType: Section.self)
     }
     
     func group(withSectionName sectionName: String, withGroupIndex index: Int) -> Group? {
@@ -302,12 +343,33 @@ extension Realm {
         }
         return nil
     }
+    func groups(withSectionName sectionName: String) -> List<Group>? {
+        if let section = self.section(withName: sectionName) {
+            return section.groups
+        }
+        return nil
+    }
+    
+    func currentGroups() -> List<Group>? {
+        if let sectionName = runtimeSectionName() {
+            return groups(withSectionName: sectionName)
+        }
+        return nil
+    }
+    
+    func systemConfiguration() -> SystemConfiguration? {
+        return allObjects(ofType: SystemConfiguration.self).first
+    }
     
     func allSpeciesObservations(withSectionName sectionName: String, withGroupIndex index: Int) -> List<SpeciesObservation>? {
         if let group = self.group(withSectionName: sectionName, withGroupIndex: index) {
             return group.speciesObservations
         }
         return nil
+    }
+    
+    func  speciesObservation(withFromSpeciesIndex speciesIndex: Int) -> Results<SpeciesObservation> {
+        return allObjects(ofType: SpeciesObservation.self).filter(using: "fromSpecies.index = \(speciesIndex)")
     }
     
     func speciesObservation(withId id: String) -> SpeciesObservation? {

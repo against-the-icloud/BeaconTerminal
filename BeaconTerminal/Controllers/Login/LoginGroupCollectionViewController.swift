@@ -12,9 +12,6 @@ import RealmSwift
 
 class LoginGroupCollectionViewController: UICollectionViewController {
     
-    var groups: List<Group>?
-    var selectedSection: Section?
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -67,30 +64,35 @@ extension LoginGroupCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let groups = self.groups {
-            return groups.count
+        if let sectionName = realm?.runtimeSectionName(), let section = realm?.section(withName: sectionName)  {
+            return section.groups.count
+        } else {
+            return 0
         }
-        return 0
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let group = groups![indexPath.row]
-        realmDataController?.updateUser(withGroup: group, section: selectedSection!)
-        self.performSegue(withIdentifier: "unwindToSideMenu", sender: self)
-        
+        if let sectionName = realm?.runtimeSectionName(), let section = realm?.section(withName: sectionName)  {
+            if section.groups.count <= indexPath.row {
+                realmDataController?.updateRuntime(withSectionName: nil, withSpeciesIndex: nil, withGroupIndex: indexPath.row)
+                //TODO
+                //realmDataController?.updateUser(withGroup: group, section: selectedSection!)
+                self.performSegue(withIdentifier: "unwindToSideMenu", sender: self)
+            }
+        }
         self.dismiss(animated: true, completion: {})
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoginGroupCell.reuseIdentifier, for: indexPath) as? LoginGroupCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoginGroupCell.reuseIdentifier, for: indexPath) as! LoginGroupCell
         
-        if groups?[indexPath.row] != nil {
-            let group = groups![indexPath.row]
-            cell?.groupLabel.text = group.name
-            cell?.groupMemberLabel.text = constructLabel(with: group)
-            return cell!
+        if let sectionName = realm?.runtimeSectionName(), let section = realm?.section(withName: sectionName) {
+            if indexPath.row <= section.groups.count {
+                let group = section.groups[indexPath.row]
+                cell.groupLabel.text = group.name
+                cell.groupMemberLabel.text = constructLabel(with: group)
+            }
         }
-        return cell!
+        return cell
     }
 }

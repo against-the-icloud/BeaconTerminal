@@ -11,9 +11,8 @@ import UIKit
 import RealmSwift
 
 struct CellItem {
-    var group: Group?
+    var groupIndex: Int? 
     var relationship: Relationship?
-    var relationshipType: RelationshipType?
 }
 
 class TerminalCellController: UIViewController {
@@ -81,16 +80,15 @@ class TerminalCellController: UIViewController {
         }
     }
     
-    func updateCell(withGroup group: Group, andRelationship relationship: Relationship, relationshipType: RelationshipType) {
+    func updateCell(withGroupIndex groupIndex: Int, andRelationship relationship: Relationship) {
         
         for tap in tapCollection {
             tap.isEnabled = true
         }
         
         var cellItem = CellItem()
-        cellItem.group = group
+        cellItem.groupIndex = groupIndex
         cellItem.relationship = relationship
-        cellItem.relationshipType = relationshipType
         cellItems.append(cellItem)
         
         
@@ -101,9 +99,9 @@ class TerminalCellController: UIViewController {
             
             if let attachment = relationship.attachments {
                 let evidenceImage = UIImage(named: attachment)
-                imageViewCells[group.index].image = evidenceImage
+                imageViewCells[groupIndex].image = evidenceImage
             } else {
-                imageViewCells[group.index].backgroundColor = UIColor.red
+                imageViewCells[groupIndex].backgroundColor = UIColor.red
             }
         }
         

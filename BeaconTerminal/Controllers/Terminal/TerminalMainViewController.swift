@@ -28,9 +28,6 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     @IBOutlet weak var profileLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     
-    var species: Species?
-    var section: Section?
-    
     var relationshipResults = [RelationshipResult]()
     var notificationTokens = [NotificationToken]()
     
@@ -65,14 +62,22 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
             guard let terminalController = self else { return }
             switch changes {
             case .Initial(let runtimeResults):
-                terminalController.updateUI(withRuntimeResults: runtimeResults)
+                //we have nothing
+                if runtimeResults.isEmpty {
+                    terminalController.showLogin()
+                } else {
+                    terminalController.updateHeader()
+                    terminalController.showLogin()
+                }
                 break
-            case .Update(let runtimeResults, _, _, _):
-                terminalController.updateUI(withRuntimeResults: runtimeResults)
+            case .Update( _, _, _, _):
+                LOG.debug("UPDATE Runtime -- TERMINAL")
+                terminalController.updateHeader()
+                //terminalController.updateUI(withRuntimeResults: runtimeResults)
                 break
             case .Error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
-                fatalError("\(error)")
+                LOG.error("\(error)")
                 break
             }
         }
@@ -81,51 +86,47 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     // Mark: Update UI
     
     func updateHeader() {
-        if let species = species {
-            profileImageView.image = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
-            profileLabel.text = species.name
-        }
-        
-        if let section = self.section {
-            sectionLabel.text = section.name
-        }
-    }
-    
-    
-    func updateUI(withRuntimeResults runtimeResults: Results<Runtime>) {
-        
-        if let rt = runtimeResults.first {
+        if let speciesIndex = realm?.runtimeSpeciesIndex() {
+            profileImageView.image = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
             
-            if let section = rt.currentSection, rt.currentSection != nil {
-                self.section = section                
-                updateHeader()
-            } else {
-                showSpeciesLogin()
+            if let species = realm?.speciesWithIndex(withIndex: speciesIndex) {
+                profileLabel.text = species.name
             }
-            
-            if rt.currentSpecies == nil {
-                showSpeciesLogin()
-            } else {
-                self.species = rt.currentSpecies
-                //we are good time to check nutella
-                updateHeader()
-                queryAllSpeciesNutella()
-            }
-            
         } else {
-            showSpeciesLogin()
+            //no species image
         }
+        
+        if let sectionName = realm?.runtimeSectionName() {
+            sectionLabel.text = sectionName
+        } else {
+            sectionLabel.text = "XYZ"
+        }
+        
+        for (index, controller) in self.childViewControllers.enumerated() {
+            guard let relationshipController = controller as? TerminalRelationshipTableViewController else {
+                break
+            }
+            
+            if index < RelationshipType.allRelationships.count {
+                relationshipController.relationshipType = RelationshipType.allRelationships[index]
+                relationshipController.updateHeader()
+            }
+        }
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.short
+        dateformatter.timeStyle = DateFormatter.Style.short
+        
+        timestampLabel.text = dateformatter.string(from: Date())
+        
     }
     
     func queryAllSpeciesNutella() {
         if let nutella = getAppDelegate().nutella {
-            
             let block = DispatchWorkItem {
-                
-                
-                if let species = self.species {
+                if let speciesIndex = realm?.runtimeSpeciesIndex() {
                     var dict = [String:String]()
-                    dict["speciesIndex"] = "\(species.index)"
+                    dict["speciesIndex"] = "\(speciesIndex)"
                     let json = JSON(dict)
                     let jsonObject: Any = json.object
                     nutella.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
@@ -137,82 +138,22 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     }
     
     
-    func showSpeciesLogin() {
+    func showLogin() {
         let storyboard = UIStoryboard(name: "Popover", bundle: nil)
         let loginNavigationController = storyboard.instantiateViewController(withIdentifier: "loginNavigationController") as! UINavigationController
         
         if let loginSectionCollectionViewController = loginNavigationController.viewControllers[0] as? LoginSectionCollectionViewController {
-            
             loginSectionCollectionViewController.loginType = LoginType.species
-            if let selectedSection = self.section {
-                loginSectionCollectionViewController.selectedSection = selectedSection
-            }
-            
-            
         }
         
         self.present(loginNavigationController, animated: true, completion: {})
     }
     
-    
-    
-    
     // Mark: Unwind Actions
     
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
-        //queryAllSpeciesNutella()
-    }
-    
-    // Mark: updates
-    
-    func queryDB() {
-        if let species = self.species, let section = self.section {
-            
-            //go through all the groups and grab the speciesObservations
-            
-            for group in section.groups {
-                
-                let speciesObservations: Results<SpeciesObservation> = group.speciesObservations.filter(using: "fromSpecies.index = \(species.index)")
-                
-//                LOG.debug("SPECIESOB \(RealmDataController.exportJson(withSpeciesObservation: speciesObservations.first!, group: group))")
-//                
-                //iterate over each relationship type
-                for relationshipType in RelationshipType.allRelationships {
-                    var relationshipResult = RelationshipResult()
-                    relationshipResult.group = group
-                    relationshipResult.speciesObservation = speciesObservations.first
-                    relationshipResult.relationships = speciesObservations.first?.relationships.filter(using: "relationshipType = '\(relationshipType)'")
-                    
-                    
-                    //distributeToImageViews(relationships: relationshipResult.relationships!)
-                    relationshipResult.relationshipType = relationshipType
-                    relationshipResults.append(relationshipResult)
-                }
-            }
-        }
-    }
-    
-    func updateUI() {
-        //setup the columans
-        for childController in self.childViewControllers {
-            if let rvc = childController as? TerminalRelationshipTableViewController {
-                
-                if let section = self.section {
-                    rvc.groups = section.groups
-                    rvc.species = species
-                }
-                
-                let results = relationshipResults.filter({ (rr:RelationshipResult) -> Bool in
-                    return rr.relationshipType == rvc.relationshipType
-                })
-                
-                rvc.relationshipResults = results
-            }
-        }
-    }
-    
-    @IBAction func testSpeciesAdd(_ sender: UIButton) {
+        queryAllSpeciesNutella()
     }
     
     func distributeToImageViews(relationships: Results<Relationship>) {

@@ -63,12 +63,12 @@ class TerminalComparsionController: UIViewController {
             if let detailvc = segue.destination as? TerminalRelationshipDetailTableViewController, let cellItems = self.cellItems {
                 
                 if let found = cellItems.filter( { (cellItem: CellItem) -> Bool in
-                    return cellItem.group?.index == id
+                    return cellItem.groupIndex == id
                 }).first {
                   detailvc.cellItem = found
-                  detailvc.group = found.group
+                  detailvc.groupIndex = found.groupIndex
                 } else {
-                  detailvc.group = groups?[id]
+                  detailvc.groupIndex = id
                 }
             }
         }

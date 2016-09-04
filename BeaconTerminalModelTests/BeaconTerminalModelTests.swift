@@ -15,20 +15,15 @@ class BeaconTerminalModelTests: XCTestCase {
     
     var nutella: Nutella?
     var realmDataController = RealmDataController()
-
+    
     override func setUp() {
         super.setUp()
-
+        
         let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
         try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         
-        if let realm = realm {
-            realm.beginWrite()
-            realm.deleteAllObjects()
-            try! realm.commitWrite()            
-        }
-
-        self.testNutellaConfigurationParseJson()
+        self.realmDataController.deleteAllConfigurationAndGroups()
+        _ = self.realmDataController.parseSimulationConfigurationJson()
         self.setupNutella()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
@@ -60,9 +55,9 @@ class BeaconTerminalModelTests: XCTestCase {
                     }
                 }
             }
-      
+            
         }
-
+        
     }
     
     override func tearDown() {
@@ -70,11 +65,11 @@ class BeaconTerminalModelTests: XCTestCase {
         super.tearDown()
     }
     
-
+    
     
     
     func testNutellaConfigurationParseJson() {
-       let _ = self.realmDataController.parseNutellaConfigurationJson()
+        let _ = self.realmDataController.parseNutellaConfigurationJson()
     }
     
     func testSimulationConfigurationParseJson() {
@@ -98,7 +93,7 @@ class BeaconTerminalModelTests: XCTestCase {
     }
     
     func testExportJsonWithNutella() {
-    
+        
         _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
         self.realmDataController.generateTestData()
         
@@ -119,29 +114,44 @@ class BeaconTerminalModelTests: XCTestCase {
     }
     
     func testSimulator() {
-                
+        self.realmDataController.deleteAllConfigurationAndGroups()
         _ = self.realmDataController.parseUserGroupConfigurationJson(withSimConfig: self.realmDataController.parseSimulationConfigurationJson())
         
         
-        let speciesObservations = realmDataController.importJsonDB(forSectionName: "", withJson: nil, write: false)
+        realmDataController.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
         
-        
-        _ = self.realmDataController.findSpecies(withSpeciesIndex: 0)
-        
-        for so in speciesObservations {            
-            if so.fromSpecies?.index == 1 {
-                self.sendSpeciesObversations(speciesObervation: so)
-            }
+        if let soResults = realm?.speciesObservation(withFromSpeciesIndex: 1) {
+            LOG.debug("so results \(soResults.count)")
         }
+        
+        
+        //        _ = self.realmDataController.findSpecies(withSpeciesIndex: 0)
+        //
+        //        for so in speciesObservations {
+        //            if so.fromSpecies?.index == 1 {
+        //                self.sendSpeciesObversations(speciesObervation: so)
+        //            }
+        //        }
+    }
+    
+    
+    func testRetrieveSpeciesNutella() {        
+        var dict = [String:String]()
+        dict["speciesIndex"] = "\(1)"
+        let json = JSON(dict)
+        let jsonObject: Any = json.object
+        self.nutella?.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
+        
     }
     
     func sendSpeciesObversations(speciesObervation: SpeciesObservation) {
-        sleep(1)
+       
         LOG.debug("sending out SO with group \(speciesObervation.groupIndex) and species \(speciesObervation.fromSpecies?.index)")
         let dict = speciesObervation.toDictionary()
         let json = JSON(dict)
         let jsonObject: Any = json.object
         self.nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+        sleep(5)
     }
     
     
