@@ -153,7 +153,14 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
+        resetReports()
         queryAllSpeciesNutella()
+    }
+    
+    func resetReports() {
+        for tvc in self.childViewControllers as! [TerminalRelationshipTableViewController] {
+            tvc.updateReportLabel(shouldReset: true)
+        }
     }
     
     func distributeToImageViews(relationships: Results<Relationship>) {

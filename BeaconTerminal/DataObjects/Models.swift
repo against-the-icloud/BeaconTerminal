@@ -63,9 +63,9 @@ class SpeciesObservation: Object {
         return "id"
     }
     
-    func update(withJson json:JSON, withId: Bool){
+    func update(withJson json:JSON, shouldParseId: Bool){
         
-        if withId {
+        if shouldParseId {
             if let id = json["id"].string {
                 self.id = id
             } else {
@@ -84,11 +84,11 @@ class SpeciesObservation: Object {
             self.isSynced = isSynced
         }
         
-        if let fromSpecies = realmDataController?.parseSpecies(withJson: json)  {
+        if let fromSpecies = realmDataController?.parseSpeciesJSON(withJson: json)  {
             self.fromSpecies = fromSpecies
         }
         
-        if let ecosystem = realmDataController?.parseEcosystem(withJson: json)  {
+        if let ecosystem = realmDataController?.parseEcosystemJSON(withJson: json)  {
             self.ecosystem = ecosystem
         }
         
@@ -113,8 +113,8 @@ class Relationship: Object {
         return "id"
     }
     
-    func update(withJson json:JSON, withId: Bool){
-        if withId {
+    func update(withJson json:JSON, shouldParseId: Bool){
+        if shouldParseId {
             if let id = json["id"].string {
                 self.id = id
             } else {
@@ -133,11 +133,11 @@ class Relationship: Object {
             self.relationshipType = relationshipType
         }
         
-        if let toSpecies = realmDataController?.parseSpecies(withJson: json)  {
+        if let toSpecies = realmDataController?.parseSpeciesJSON(withJson: json)  {
             self.toSpecies = toSpecies
         }
         
-        if let ecosystem = realmDataController?.parseEcosystem(withJson: json)  {
+        if let ecosystem = realmDataController?.parseEcosystemJSON(withJson: json)  {
             self.ecosystem = ecosystem
         }
         
@@ -155,7 +155,7 @@ struct Preferences {
 }
 
 class Preference: Object {
-    dynamic var id: String = UUID().uuidString
+    dynamic var id : String? = nil
     dynamic var note: String? = nil
     dynamic var value: String? = nil
     dynamic var attachments : String? = nil
@@ -170,6 +170,29 @@ class Preference: Object {
         self.type = type
         self.value = value
     }
+    
+    func update(withJson json:JSON, shouldParseId: Bool){
+        if shouldParseId {
+            if let id = json["id"].string {
+                self.id = id
+            } else {
+                self.id = UUID().uuidString
+            }
+        }
+        if let attachments = json["attachments"].string {
+            self.attachments = attachments
+        }
+        if let note = json["note"].string {
+            self.note = note
+        }
+        if let value = json["value"].string {
+            self.value = value
+        }
+        if let type = json["type"].string {
+            self.type = type
+        }        
+    }
+
 }
 
 class NutellaConfig: Object {
@@ -373,6 +396,10 @@ extension Realm {
         return nil
     }
     
+    func allSpeciesObservations() -> Results<SpeciesObservation> {
+        return allObjects(ofType: SpeciesObservation.self)
+    }
+    
     func  speciesObservation(withFromSpeciesIndex speciesIndex: Int) -> Results<SpeciesObservation> {
         return allObjects(ofType: SpeciesObservation.self).filter(using: "fromSpecies.index = \(speciesIndex)")
     }
@@ -388,6 +415,9 @@ extension Realm {
         return nil
     }
     
+    func allRelationships() -> Results<Relationship> {
+        return allObjects(ofType: Relationship.self)
+    }
     
     func relationship(withId id: String) -> Relationship? {
         return allObjects(ofType: Relationship.self).filter(using: "id = '\(id)'").first
@@ -396,6 +426,15 @@ extension Realm {
     func relationships(withSpeciesObservation speciesObservation: SpeciesObservation, withRelationshipType relationshipType: String) -> Results<Relationship>? {
         return speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'")
     }
+    
+    func preference(withId id: String) -> Preference? {
+        return allObjects(ofType: Preference.self).filter(using: "id = '\(id)'").first
+    }
+    
+    func allPreferences() -> Results<Preference> {
+        return allObjects(ofType: Preference.self)
+    }
+
 }
 
 // MARK: object extension for

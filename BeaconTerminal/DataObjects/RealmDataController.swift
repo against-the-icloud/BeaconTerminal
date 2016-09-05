@@ -69,13 +69,13 @@ class RealmDataController {
     }
     
     func handlePlaceGroupMessages(withMessage message: AnyObject, withChannel channel: String) {
-
+        
     }
     
     func handleObjectGroupMessages(withMessage message: AnyObject, withChannel channel: String) {
         
     }
-
+    
     func handlePlaceMessages(withMessage message: AnyObject, withChannel channel: String) {
         guard let currentSpeciesIndex = realm?.runtimeSpeciesIndex() else {
             //need species for this message
@@ -119,7 +119,7 @@ class RealmDataController {
         }
         
         if currentSpeciesIndex == speciesIndex {
-            importJsonDB(forSectionName: currentSectionName, withJson: json["savedNotes"])
+            importJsonJSON(forSectionName: currentSectionName, withJson: json["savedNotes"])
         } else {
             LOG.error("MESSAGE IS FOR SPECIES \(speciesIndex) not \(currentSpeciesIndex)")
         }
@@ -129,49 +129,70 @@ class RealmDataController {
     
     //import from a file or from a string
     //expects array[speciesObservations]
-    func importJsonDB(forSectionName sectionName: String, withJson json: JSON) {
+    func importJsonJSON(forSectionName sectionName: String, withJson json: JSON) {
         
         if let speciesObservations = json.array {
             
             for (_,soJson) in speciesObservations.enumerated() {
                 
+                var speciesObservation:SpeciesObservation?
+                
+                //first check to see if there is already one with a groupIndex ==
+                
+
                 if let id = soJson["id"].string {
                     
                     if let foundSO = realm?.speciesObservation(withId: id) {
+                        
                         try! realm?.write {
-                            foundSO.update(withJson: soJson, withId: false)
+                            speciesObservation = foundSO
+                            speciesObservation?.update(withJson: soJson, shouldParseId: false)
                             
                             //process the relationships
                             if let relationshipsJson = soJson["relationships"].array {
-                                importRelationshipDB(withSpeciesObservation: foundSO, withRelationshipsJson: relationshipsJson)
+                                importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson)
                             } else {
-                                LOG.debug("FOUND NO RELATIONSHIPS SO: \(foundSO.id)")
+                                LOG.debug("FOUND NO RELATIONSHIPS SO: \(speciesObservation?.id)")
                             }
                             
-                            realm?.add(foundSO, update: true)
+                            if let preferencesJson = soJson["preferences"].array {
+                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson)
+                            } else {
+                                //found nothing
+                                LOG.debug("FOUND NO PREFERENCES SO: \(speciesObservation?.id)")
+                            }
+                            
+                            realm?.add(speciesObservation!, update: true)
                         }
                     } else {
                         //new object
                         try! realm?.write {
-                            let newSO = SpeciesObservation()
-                            newSO.update(withJson: soJson, withId: true)
+                            speciesObservation = SpeciesObservation()
+                            speciesObservation?.update(withJson: soJson, shouldParseId: true)
                             
                             //lets double check to see if there isnt another species card like this
                             if let relationshipsJson = soJson["relationships"].array {
-                                importRelationshipDB(withSpeciesObservation: newSO, withRelationshipsJson: relationshipsJson)
+                                importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson)
                             } else {
                                 //found nothing
-                                LOG.debug("FOUND NO RELATIONSHIPS SO: \(newSO.id)")
+                                LOG.debug("FOUND NO RELATIONSHIPS SO: \(speciesObservation?.id)")
                             }
                             
-                            realm?.add(newSO, update: true)
+                            if let preferencesJson = soJson["preferences"].array {
+                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson)
+                            } else {
+                                //found nothing
+                                LOG.debug("FOUND NO PREFERENCES SO: \(speciesObservation?.id)")
+                            }
+                            
+                            realm?.add(speciesObservation!, update: true)
                             //find its group
-                            if let group = realm?.group(withSectionName: sectionName, withGroupIndex: newSO.groupIndex) {
-                                if let needToMerge = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: newSO.fromSpecies!.index) {
+                            if let group = realm?.group(withSectionName: sectionName, withGroupIndex: speciesObservation!.groupIndex) {
+                                if let fromSpecies = speciesObservation?.fromSpecies, let needToMerge = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
                                     //check timestamps
                                     LOG.debug("NEED TO MERGE \(needToMerge)")
                                 } else {
-                                    group.speciesObservations.append(newSO)
+                                    group.speciesObservations.append(speciesObservation!)
                                     realm?.add(group, update: true)
                                 }
                             }
@@ -184,30 +205,57 @@ class RealmDataController {
     
     
     //in a write transaction
-    func importRelationshipDB(withSpeciesObservation speciesObservation:SpeciesObservation, withRelationshipsJson relationshipsJson: [JSON]) {
+    func importRelationshipJSON(withSpeciesObservation speciesObservation:SpeciesObservation, withRelationshipsJson relationshipsJson: [JSON]) {
         for (_,rJson) in relationshipsJson.enumerated() {
             
+            var relationship: Relationship?
+            
             if let id = rJson["id"].string {
-                
                 //try to find an old one
-                if let foundRelationship = realm?.relationship(withId: id) {
-                    foundRelationship.update(withJson: rJson, withId: false)
-                    
+                if let r = realm?.relationship(withId: id) {
+                    relationship = r
+                    relationship?.update(withJson: rJson, shouldParseId: false)
+                    realm?.add(relationship!, update: true)
                 } else {
-                    let relationship = Relationship()
-                    relationship.update(withJson: rJson, withId: true)
-                    realm?.add(relationship)
-                    speciesObservation.relationships.append(relationship)
+                    relationship = Relationship()
+                    relationship?.update(withJson: rJson, shouldParseId: true)
+                    realm?.add(relationship!, update: true)
+                    speciesObservation.relationships.append(relationship!)
                 }
-                
-                realm?.add(speciesObservation, update: true)
-                //TODO: need to check whether it exist and the ids are different
+            } else {
+                relationship = Relationship()
+                relationship?.update(withJson: rJson, shouldParseId: true)
+                realm?.add(relationship!, update: true)
+                speciesObservation.relationships.append(relationship!)
             }
         }
-        
     }
     
-    func parseSpecies(withJson json: JSON) -> Species? {
+    func importPreferenceJSON(withSpeciesObservation speciesObservation:SpeciesObservation, withPreferencesJson preferencesJson: [JSON]) {
+        for (_,pJson) in preferencesJson.enumerated() {
+            
+            var preference: Preference?
+            if let id = pJson["id"].string {
+                //try to find it
+                if let p = realm?.preference(withId: id) {
+                    preference = p
+                    preference?.update(withJson: pJson, shouldParseId: false)
+                } else {
+                    preference = Preference()
+                    preference?.update(withJson: pJson, shouldParseId: true)
+                    realm?.add(preference!)
+                    speciesObservation.preferences.append(preference!)
+                }
+            } else {
+                preference = Preference()
+                preference?.update(withJson: pJson, shouldParseId: true)
+                realm?.add(preference!)
+                speciesObservation.preferences.append(preference!)
+            }
+        }
+    }
+    
+    func parseSpeciesJSON(withJson json: JSON) -> Species? {
         if let speciesIndex = json["fromSpecies"]["index"].int {
             return realm?.speciesWithIndex(withIndex: speciesIndex)
         }
@@ -218,7 +266,7 @@ class RealmDataController {
         return nil
     }
     
-    func parseEcosystem(withJson json: JSON) -> Ecosystem? {
+    func parseEcosystemJSON(withJson json: JSON) -> Ecosystem? {
         if let ecoSystemIndex = json["ecosystem"]["index"].int {
             return realm?.ecosystem(withIndex: ecoSystemIndex)
         }
@@ -752,6 +800,22 @@ extension RealmDataController {
         }
         
         return true
+    }
+    
+    func deleteAllSpeciesObservations() {
+        try! realm?.write {
+            if let allRelationships = realm?.allRelationships() {
+                realm?.delete(allRelationships)
+            }
+            
+            if let allPreferences = realm?.allPreferences() {
+                realm?.delete(allPreferences)
+            }
+            
+            if let allSpeciesObservations = realm?.allSpeciesObservations() {
+                realm?.delete(allSpeciesObservations)
+            }
+        }
     }
     
     func deleteAllConfigurationAndGroups() {

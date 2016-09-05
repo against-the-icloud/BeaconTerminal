@@ -16,7 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="DrH-U8-XET" userLabel="MainStackView">
@@ -178,14 +178,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2T-to-sI4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-195" y="793"/>
+            <point key="canvasLocation" x="1464" y="1384"/>
         </scene>
         <!--Terminal Relationship Table View Controller-->
         <scene sceneID="WJq-Qa-Fd9">
             <objects>
                 <tableViewController id="LsQ-zI-Xai" customClass="TerminalRelationshipTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" id="yGr-Mh-tS0">
-                        <rect key="frame" x="0.0" y="0.0" width="333" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="333" height="675"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.53725490200000003" green="0.47058823529999999" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -592,8 +592,6 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="750" height="500"/>
                     <connections>
                         <outlet property="doneButton" destination="MD0-7O-xdU" id="Gvq-3P-tfa"/>
                         <outlet property="fromSpeciesImageView" destination="3cl-Pc-E92" id="axu-B0-2Q8"/>
@@ -603,7 +601,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="phW-vc-qLx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="337.5" y="1548.4375"/>
+            <point key="canvasLocation" x="1003" y="2076"/>
         </scene>
         <!--Terminal Relationship Detail Table View Controller-->
         <scene sceneID="DbI-Ss-3Jz">
@@ -859,9 +857,6 @@
                                             <constraint firstAttribute="width" secondItem="4E8-zT-OAW" secondAttribute="height" multiplier="1:1" id="XiN-gM-AiU"/>
                                             <constraint firstAttribute="width" constant="50" id="ufW-MN-MvE"/>
                                         </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="GL2-US-xeU" appends="YES" id="yCo-bY-u7b"/>
-                                        </connections>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="MIX-Xz-RXy" userLabel="GroupStack">
                                         <subviews>
@@ -884,7 +879,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="sI4-EQ-CS9" appends="YES" id="BVh-AG-3AA"/>
+                                                    <outletCollection property="gestureRecognizers" destination="8Q1-uW-MuM" appends="YES" id="4YE-Fi-tGS"/>
                                                 </connections>
                                             </imageView>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mlj-3b-Qkp">
@@ -906,7 +901,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="Sl3-ca-NgV" appends="YES" id="g2W-Pb-cX6"/>
+                                                    <outletCollection property="gestureRecognizers" destination="u7J-gw-bzZ" appends="YES" id="7hS-EU-dI8"/>
                                                 </connections>
                                             </imageView>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uIS-iK-R7Z">
@@ -928,7 +923,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="2wa-QF-wnv" appends="YES" id="bSv-3R-f3Y"/>
+                                                    <outletCollection property="gestureRecognizers" destination="LBY-Sr-KU8" appends="YES" id="8y9-CF-Oj3"/>
                                                 </connections>
                                             </imageView>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bRT-bk-BOn">
@@ -950,7 +945,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="mjk-k0-2EN" appends="YES" id="T3j-G9-03f"/>
+                                                    <outletCollection property="gestureRecognizers" destination="ZcJ-dP-2n1" appends="YES" id="Eha-0c-8X0"/>
                                                 </connections>
                                             </imageView>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OVy-6w-ZNx">
@@ -972,7 +967,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="mEM-9j-e94" appends="YES" id="ZMs-NW-Jab"/>
+                                                    <outletCollection property="gestureRecognizers" destination="EQo-kp-S0d" appends="YES" id="AWY-Cr-z39"/>
                                                 </connections>
                                             </imageView>
                                         </subviews>
@@ -998,47 +993,36 @@
                         <outletCollection property="imageViewCells" destination="uIS-iK-R7Z" collectionClass="NSMutableArray" id="51U-6L-Wty"/>
                         <outletCollection property="imageViewCells" destination="bRT-bk-BOn" collectionClass="NSMutableArray" id="h5Y-NX-KLe"/>
                         <outletCollection property="imageViewCells" destination="OVy-6w-ZNx" collectionClass="NSMutableArray" id="dwK-j4-t6f"/>
-                        <outletCollection property="tapCollection" destination="GL2-US-xeU" collectionClass="NSMutableArray" id="rJZ-eo-d3O"/>
-                        <outletCollection property="tapCollection" destination="sI4-EQ-CS9" collectionClass="NSMutableArray" id="VSQ-kH-6KY"/>
-                        <outletCollection property="tapCollection" destination="Sl3-ca-NgV" collectionClass="NSMutableArray" id="oc2-o1-kgK"/>
-                        <outletCollection property="tapCollection" destination="2wa-QF-wnv" collectionClass="NSMutableArray" id="uG0-0m-0uB"/>
-                        <outletCollection property="tapCollection" destination="mjk-k0-2EN" collectionClass="NSMutableArray" id="iLv-RM-oHq"/>
-                        <outletCollection property="tapCollection" destination="mEM-9j-e94" collectionClass="NSMutableArray" id="j91-mK-58K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9i-sJ-tWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="mEM-9j-e94">
+                <tapGestureRecognizer id="8Q1-uW-MuM">
                     <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="fTb-3l-5cg"/>
+                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="QhF-bt-pYN"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="mjk-k0-2EN">
+                <tapGestureRecognizer id="u7J-gw-bzZ">
                     <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="aDZ-Jf-RMZ"/>
+                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="Q3z-XJ-g7k"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="2wa-QF-wnv">
+                <tapGestureRecognizer id="LBY-Sr-KU8">
                     <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="mW9-Ea-kj7"/>
+                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="xKz-I6-nhv"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="Sl3-ca-NgV">
+                <tapGestureRecognizer id="ZcJ-dP-2n1">
                     <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="hvt-lR-ICj"/>
+                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="jNp-aE-DEC"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="sI4-EQ-CS9">
+                <tapGestureRecognizer id="EQo-kp-S0d">
                     <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="csp-cT-Gus"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="GL2-US-xeU">
-                    <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="u5K-af-OPc"/>
+                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="formSheet" id="lHA-ZO-up4"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="397.55859375" y="678.515625"/>
+            <point key="canvasLocation" x="1465" y="815"/>
         </scene>
         <!--Preference Comparsion-->
         <scene sceneID="xNW-z3-OID">
@@ -1080,9 +1064,9 @@
         <image name="species_02_0" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HYR-UU-7QS"/>
-        <segue reference="mW9-Ea-kj7"/>
-        <segue reference="8vf-Eg-HQT"/>
         <segue reference="ysu-l4-Tav"/>
+        <segue reference="mdd-hs-eP9"/>
+        <segue reference="lHA-ZO-up4"/>
+        <segue reference="tOI-bw-ITv"/>
     </inferredMetricsTieBreakers>
 </document>

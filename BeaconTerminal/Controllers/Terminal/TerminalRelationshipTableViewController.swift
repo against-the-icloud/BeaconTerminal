@@ -12,13 +12,12 @@ import RealmSwift
 
 class TerminalRelationshipTableViewController: UITableViewController {
     
-    
     @IBOutlet weak var relationshipHeaderLabel: UILabel!
     @IBOutlet weak var relationshipReportLabel: UILabel!
     
     var relationshipType: RelationshipType?
     
-    var groupReportCounts = [Int]()
+    var groupsReported:[Int:Int] = [:]
     var relationshipCount = 0
     
     var speciesObservationResults: Results<SpeciesObservation>?
@@ -58,50 +57,46 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 break
             }
         }
-        
     }
     
     func updateCells(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
         guard let type = relationshipType else {
             return
         }
+        updateReportLabel(shouldReset: true)
         for so in speciesObservationResults {
             if let foundRelationships = realm?.relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
                 
-                if !groupReportCounts.contains(so.groupIndex) {
-                    groupReportCounts.append(so.groupIndex)
-                }
+                groupsReported[so.groupIndex] = so.groupIndex
                 
                 relationshipCount += foundRelationships.count
                 
                 for r in foundRelationships {
+                   
                     updateCell(withRelationship: r, groupIndex: so.groupIndex)
                 }
                 
-                updateReportLabel()
             }
         }
+        updateReportLabel(shouldReset: false)
     }
     
     func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
-        //find the controller with that species
-        
-        
+        //find the controller with that species            
         if let cells = self.childViewControllers as? [TerminalCellController] {
             
             //find the controller
-            if let cell = cells.filter( { (c: TerminalCellController) -> Bool in
-                if relationship.toSpecies != nil {
-                    
-                    guard let species = c.species else {
+            if let cell = cells.filter( { (terminalCell: TerminalCellController) -> Bool in
+                
+                    guard let relationshipToSpeciesIndex = relationship.toSpecies?.index else {
                         return false
                     }
                     
-                    return species.index == relationship.toSpecies!.index
-                }
-                
-                return false
-                
+                    guard let cellSpeciesIndex = terminalCell.toSpeciesIndex else {
+                        return false
+                    }
+                    
+                    return cellSpeciesIndex == relationshipToSpeciesIndex                
             }).first {
                 //update
                 cell.updateCell(withGroupIndex: groupIndex, andRelationship: relationship)
@@ -122,13 +117,22 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
-    func updateReportLabel() {
+    func updateReportLabel(shouldReset reset: Bool) {
+        
+        if reset {
+            groupsReported = [:]
+            relationshipCount = 0
+            relationshipReportLabel.text = "Nothing to report."
+            return
+        }
+        
         if let groups = realm?.currentGroups() {
             
-            if relationshipCount == 0 && groupReportCounts.count == 0 {
+            if relationshipCount == 0 && groupsReported.keys.count == 0 {
                 relationshipReportLabel.text = "Nothing to report."
             } else {
-                relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupReportCounts.count) of \(groups.count) groups"
+              
+                relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupsReported.keys.count) of \(groups.count) groups"
             }
         }
     }
@@ -146,20 +150,20 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 return
             }
             
-            var adder = 0
-            for (index, cc) in self.childViewControllers.enumerated() {
-                if let tcc = cc as? TerminalCellController {
-                    
-                    if index == currentSpeciesIndex {
-                        adder = 1
-                    } else {
-                        adder = 0
-                    }
-                    
-                    tcc.prepareView(withSpecies: allSpecies[index+adder])
-                    
+            //make all the cells
+            
+            //create array with int 0...10
+            var array = (0...allSpecies.count-1).map { $0 }
+            
+            array.remove(at: currentSpeciesIndex)
+            
+            for (index,speciesIndex) in array.enumerated() {
+                if let cell = childViewControllers[index] as? TerminalCellController {
+                    cell.toSpeciesIndex = speciesIndex
                 }
             }
+            
+            
         }
     }
     
@@ -169,9 +173,9 @@ class TerminalRelationshipTableViewController: UITableViewController {
             switch segueId {
             case "embedCell":
                 
-                if let cellController = segue.destination as? TerminalCellController {
-                    cellController.relationshipType = relationshipType
-                }
+//                if let cellController = segue.destination as? TerminalCellController {
+//                    cellController.relationshipType = relationshipType
+//                }
                 
                 break
             default:

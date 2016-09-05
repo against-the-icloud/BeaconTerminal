@@ -14,10 +14,8 @@ class TerminalComparsionController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
     var cellItems: [CellItem]?
-    var species: Species?
-    var fromSpecies: Species?
-    var groups: List<Group>?
-    var relationshipType: RelationshipType?
+    var fromSpeciesIndex: Int?
+    var relationship: Relationship?
     
     @IBOutlet weak var fromSpeciesImageView: UIImageView!    
     @IBOutlet weak var relationshipLabel: UILabel!
@@ -40,15 +38,26 @@ class TerminalComparsionController: UIViewController {
     
     
     func prepareView() {
-        if let toSpecies = species, let fromSpecies = self.fromSpecies, let relationshipType = self.relationshipType {
-            
-            fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpecies.index, isHighlighted: true)
-            toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpecies.index, isHighlighted: true)
-            
-            relationshipLabel.text = StringUtil.relationshipString(withType: relationshipType)
-            
-            
+        
+        guard let relationship = self.relationship else {
+            return
         }
+
+        guard let toSpeciesIndex = relationship.toSpecies?.index else {
+            return
+        }
+        
+        guard let fromSpeciesIndex = realm?.runtimeSpeciesIndex() else {
+            return
+        }
+        
+     
+            
+            fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
+            toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
+            
+            relationshipLabel.text = StringUtil.relationshipString(withString: relationship.relationshipType)
+            
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -86,10 +86,9 @@ class SideViewController: UITableViewController {
                         runtime.currentGroupIndex.value = nil
                         realm?.add(runtime, update: true)
                     }
-                } else {
                     
+                    realmDataController?.deleteAllSpeciesObservations()
                 }
-            
                 
                 getAppDelegate().changeSystemStateTo(.placeTerminal)
                 

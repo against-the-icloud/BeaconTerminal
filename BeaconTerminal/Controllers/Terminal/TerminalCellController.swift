@@ -11,7 +11,7 @@ import UIKit
 import RealmSwift
 
 struct CellItem {
-    var groupIndex: Int? 
+    var groupIndex: Int?
     var relationship: Relationship?
 }
 
@@ -21,11 +21,13 @@ class TerminalCellController: UIViewController {
     @IBOutlet var imageViewCells: [UIImageView]!
     @IBOutlet var tapCollection: [UITapGestureRecognizer]!
     
-    var species: Species?
-    var fromSpecies: Species?
+    var toSpeciesIndex: Int? {
+        didSet {
+            prepareView()
+        }
+    }
     var cellItems = [CellItem]()
-    var groups: List<Group>?
-    var relationshipType: RelationshipType?
+    var relationship: Relationship?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,45 +37,40 @@ class TerminalCellController: UIViewController {
         super.viewDidLoad()
     }
     
-    func prepareView(withSpecies species: Species) {
-        self.species = species
-        let disabledImage = RealmDataController.generateImageForSpecies(species.index, isHighlighted: false)
+    func prepareView() {
+        guard let toSpeciesIndex = self.toSpeciesIndex else {
+            return
+        }
+        
+        let disabledImage = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: false)
         
         profileImageView.image = disabledImage
-        self.view.fadeIn(toAlpha: 0.3)
-        for tap in tapCollection {
-            tap.isEnabled = false
+        self.view.fadeIn(toAlpha: 0.3) {_ in
+//            for tap in self.tapCollection {
+//                tap.isEnabled = false
+//            }
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case "comparsionSegue":
-            if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let species = self.species, let fromSpecies = self.fromSpecies {
-                
-                //find all the relationships that have
-                if !cellItems.isEmpty {
-                    if (cellItems.first?.relationship?.relationshipType) != nil {
-                        tcvc.cellItems = cellItems
-                        tcvc.fromSpecies = fromSpecies
-                        tcvc.species = species
-                        tcvc.groups = groups
-                        tcvc.relationshipType = relationshipType
-                        
-                        //tcvc.title = title
-                        tcvc.navigationController?.navigationBar.tintColor = Util.flatBlack
-                        tcvc.navigationItem.backBarButtonItem?.tintColor = UIColor.white
-                        tcvc.doneButton.tintColor = UIColor.white
-                        tcvc.navigationController?.toolbar.tintColor =  Util.flatBlack
-                        
-                    }
-                    
-                }
+            if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let relationship = self.relationship {
                 
                 
-               
+                tcvc.cellItems = cellItems
+                tcvc.relationship = relationship
+                
+                
+                //tcvc.title = title
+                tcvc.navigationController?.navigationBar.tintColor = Util.flatBlack
+                tcvc.navigationItem.backBarButtonItem?.tintColor = UIColor.white
+                tcvc.doneButton.tintColor = UIColor.white
+                tcvc.navigationController?.toolbar.tintColor =  Util.flatBlack
+                
+                
             }
-
             break
         default:
             print("you know nothing jon snow")
@@ -82,27 +79,31 @@ class TerminalCellController: UIViewController {
     
     func updateCell(withGroupIndex groupIndex: Int, andRelationship relationship: Relationship) {
         
-        for tap in tapCollection {
-            tap.isEnabled = true
+        guard let toSpeciesIndex = self.toSpeciesIndex else {
+            return
         }
+        
+        
+        
+        self.relationship = relationship
+//        for tap in tapCollection {
+//            tap.isEnabled = true
+//        }
         
         var cellItem = CellItem()
         cellItem.groupIndex = groupIndex
         cellItem.relationship = relationship
         cellItems.append(cellItem)
         
+        let enabledImage = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
         
-        if let species = self.species {
-            let enabledImage = RealmDataController.generateImageForSpecies(species.index, isHighlighted: true)
-            
-            profileImageView.image = enabledImage
-            
-            if let attachment = relationship.attachments {
-                let evidenceImage = UIImage(named: attachment)
-                imageViewCells[groupIndex].image = evidenceImage
-            } else {
-                imageViewCells[groupIndex].backgroundColor = UIColor.red
-            }
+        profileImageView.image = enabledImage
+        
+        if let attachment = relationship.attachments {
+            let evidenceImage = UIImage(named: attachment)
+            imageViewCells[groupIndex].image = evidenceImage
+        } else {
+            imageViewCells[groupIndex].backgroundColor = UIColor.red
         }
         
         if self.view.alpha < 1.0 {
