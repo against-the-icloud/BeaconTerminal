@@ -13,31 +13,26 @@ import Photos
 import MobileCoreServices
 import Nutella
 
-struct RelationshipResult {
-    var group: Group?
-    var speciesObservation: SpeciesObservation?
-    var relationships: Results<Relationship>?
-    var relationshipType: RelationshipType?
-}
-
-class TerminalMainViewController: UIViewController, NutellaDelegate {
-    @IBOutlet var imageViews: [UIImageView]!
-    
+class TerminalMainViewController: UIViewController {
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     
-    var relationshipResults = [RelationshipResult]()
+    @IBOutlet weak var viewSegmentedControl: UISegmentedControl!
+    
+    @IBOutlet var containerViews: [UIView]!
+    
     var notificationTokens = [NotificationToken]()
     
     var runtimeResults: Results<Runtime>?
+    var runtimeNotificationToken: NotificationToken? = nil
+    var speciesObsNotificationToken: NotificationToken? = nil
     var speciesObservationResults: Results<SpeciesObservation>?
-
-    var notificationToken: NotificationToken? = nil
+    
     deinit {
-        if notificationToken != nil {
-            notificationToken?.stop()
+        for notificationToken in notificationTokens {
+            notificationToken.stop()
         }
     }
     
@@ -57,7 +52,7 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
         
         
         // Observe Notifications
-        notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let terminalController = self else { return }
             switch changes {
@@ -81,6 +76,31 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
                 break
             }
         }
+        
+        notificationTokens.append(runtimeNotificationToken!)
+        
+        speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
+        
+        speciesObsNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let controller = self else { return }
+            switch changes {
+            case .Initial( _):
+                controller.updateTimestamp()
+                break
+            case .Update( _, _, _, _):
+                controller.updateTimestamp()
+                break
+            case .Error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+        }
+        
+        notificationTokens.append(speciesObsNotificationToken!)
+        
+        
     }
     
     // Mark: Update UI
@@ -92,6 +112,8 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
             if let species = realm?.speciesWithIndex(withIndex: speciesIndex) {
                 profileLabel.text = species.name
             }
+            
+            viewSegmentedControl.tintColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
         } else {
             //no species image
         }
@@ -101,24 +123,15 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
         } else {
             sectionLabel.text = "XYZ"
         }
-        
-        for (index, controller) in self.childViewControllers.enumerated() {
-            guard let relationshipController = controller as? TerminalRelationshipTableViewController else {
-                break
-            }
-            
-            if index < RelationshipType.allRelationships.count {
-                relationshipController.relationshipType = RelationshipType.allRelationships[index]
-                relationshipController.updateHeader()
-            }
-        }
-        
+        updateTimestamp()
+    }
+    
+    func updateTimestamp(withDate date: Date = Date()) {
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = DateFormatter.Style.short
         dateformatter.timeStyle = DateFormatter.Style.short
         
-        timestampLabel.text = dateformatter.string(from: Date())
-        
+        timestampLabel.text = dateformatter.string(from: date)
     }
     
     func queryAllSpeciesNutella() {
@@ -153,67 +166,44 @@ class TerminalMainViewController: UIViewController, NutellaDelegate {
     
     @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
         self.navigationDrawerController?.closeLeftView()
-        resetReports()
         queryAllSpeciesNutella()
     }
     
-    func resetReports() {
-        for tvc in self.childViewControllers as! [TerminalRelationshipTableViewController] {
-            tvc.updateReportLabel(shouldReset: true)
-        }
-    }
+    //Mark: Segment Switch
     
-    func distributeToImageViews(relationships: Results<Relationship>) {
-        for r in relationships {
-            if let attachments = r.attachments {
-                for imageView in imageViews {
-                    if imageView.image == nil {
-                        loadImageAsset(attachment: attachments, imageView: imageView)
-                    }
+    @IBAction func switchSegment(_ sender: UISegmentedControl) {
+        
+        let showView = containerViews[sender.selectedSegmentIndex]
+        
+        for (index,containerView) in containerViews.enumerated() {
+            if index == sender.selectedSegmentIndex {
+                containerView.isHidden = false
+                containerView.fadeIn(toAlpha: 1.0) {_ in
+                    
+                }
+
+            } else {
+                containerView.isHidden = true
+                containerView.fadeOut(0.0) {_ in
+                    
                 }
             }
         }
-    }
-    
-    
-    func loadImageAsset(attachment: String, imageView: UIImageView) {
-        if let url = URL(string: attachment) {
-            if let assets : PHAsset = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil).firstObject {
-                let targetSize = CGSize(width: imageView.frame.width,height: imageView.frame.height)
-                let options = PHImageRequestOptions()
-                
-                PHImageManager.default().requestImage(for: assets, targetSize: targetSize, contentMode: PHImageContentMode.aspectFit, options: options, resultHandler: {
-                    (result, info) in
-                    imageView
-                        .image = result
-                })
-            }
+        
+        //var filtered = myList.filter { $0 != sender.selectedSegmentIndex }
+        
+        showView.fadeIn(toAlpha: 1.0) {_ in
+            //            for tap in self.tapCollection {
+            //                tap.isEnabled = false
+           
         }
         
         
-    }
-    
-    
-
-    // Mark: segue
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let tvc = segue.destination as? TerminalRelationshipTableViewController, let segueId = segue.identifier {
-            
-            switch segueId {
-            case "terminalProducerRelationship":
-                tvc.relationshipType = .producer
-            case "terminalCompetesRelationship":
-                tvc.relationshipType = .competes
-            case "terminalConsumerRelationship":
-                tvc.relationshipType = .consumer
-            default:
-                print("you know nothing")
-            }
-        }
+      
         
     }
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default

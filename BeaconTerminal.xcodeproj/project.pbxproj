@@ -40,6 +40,7 @@
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
+		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */; };
 		70C00A671D6825930021099B /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A651D6825930021099B /* SimpleMQTTClient.framework */; };
 		70C00A681D6825930021099B /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A661D6825930021099B /* Nutella.framework */; };
 		70C00A6B1D6825A40021099B /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A691D6825A40021099B /* SimpleMQTTClient.framework */; };
@@ -52,8 +53,6 @@
 		70D142691D414E2700A588B3 /* DragUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D142681D414E2700A588B3 /* DragUtil.swift */; };
 		70D3BCB71CD85E43003F52CE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */; };
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
-		70D3D7131D66B37500A57B92 /* TerminalSpeciesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */; };
-		70D3D7151D66C22B00A57B92 /* TerminalSpeciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */; };
 		70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */; };
 		70D4E2341D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2331D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift */; };
 		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
@@ -165,6 +164,7 @@
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
+		70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalContainerController.swift; path = Terminal/TerminalContainerController.swift; sourceTree = "<group>"; };
 		70C00A651D6825930021099B /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = ../../../../../../Desktop/SimpleMQTTClient.framework; sourceTree = "<group>"; };
 		70C00A661D6825930021099B /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nutella.framework; path = ../../../../../../Desktop/Nutella.framework; sourceTree = "<group>"; };
 		70C00A691D6825A40021099B /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = ../SimpleMQTTClient.framework; sourceTree = "<group>"; };
@@ -175,8 +175,6 @@
 		70D142681D414E2700A588B3 /* DragUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragUtil.swift; sourceTree = "<group>"; };
 		70D3BCB61CD85E43003F52CE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TerminalSpeciesCell.xib; path = Terminal/TerminalSpeciesCell.xib; sourceTree = "<group>"; };
-		70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalSpeciesCell.swift; path = Terminal/TerminalSpeciesCell.swift; sourceTree = "<group>"; };
 		70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalComparsionController.swift; path = Terminal/TerminalComparsionController.swift; sourceTree = "<group>"; };
 		70D4E2331D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalRelationshipDetailTableViewController.swift; sourceTree = "<group>"; };
 		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
@@ -293,9 +291,8 @@
 			isa = PBXGroup;
 			children = (
 				7031DB191D65E18B000DCC61 /* Terminal.storyboard */,
-				70D3D7121D66B37500A57B92 /* TerminalSpeciesCell.xib */,
-				70D3D7141D66C22B00A57B92 /* TerminalSpeciesCell.swift */,
 				7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */,
+				70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */,
 				701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */,
 				701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */,
 				70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */,
@@ -678,7 +675,6 @@
 				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
 				701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */,
 				70F29A691D582AAD0057A497 /* system_configuration.json in Resources */,
-				70D3D7131D66B37500A57B92 /* TerminalSpeciesCell.xib in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
@@ -811,7 +807,6 @@
 				701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */,
 				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,
-				70D3D7151D66C22B00A57B92 /* TerminalSpeciesCell.swift in Sources */,
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
 				70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
@@ -820,6 +815,7 @@
 				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
 				701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */,
 				70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */,
+				70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */,
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,

@@ -47,16 +47,21 @@
                                                 <subviews>
                                                     <view contentMode="scaleToFill" horizontalHuggingPriority="247" horizontalCompressionResistancePriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-6b-cz6" userLabel="Spacer">
                                                         <subviews>
-                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-4j-IpX">
-                                                                <frame key="frameInset" minX="256" minY="11" width="121" height="29"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BGh-4j-IpX">
                                                                 <segments>
-                                                                    <segment title="First"/>
-                                                                    <segment title="Second"/>
+                                                                    <segment title="SUMMARY"/>
+                                                                    <segment title="PREFERENCES"/>
+                                                                    <segment title="EXPERIMENTS"/>
                                                                 </segments>
+                                                                <connections>
+                                                                    <action selector="switchSegment:" destination="BYZ-38-t0r" eventType="valueChanged" id="TCr-Ks-AWT"/>
+                                                                </connections>
                                                             </segmentedControl>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstItem="BGh-4j-IpX" firstAttribute="centerY" secondItem="2AR-6b-cz6" secondAttribute="centerY" id="M6J-cS-pd9"/>
+                                                        </constraints>
                                                     </view>
                                                 </subviews>
                                             </stackView>
@@ -84,53 +89,52 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                    </stackView>
-                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i65-cq-2sp" userLabel="CenteringView">
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Afn-Fq-mS7" userLabel="RelationshipsStackView">
-                                                <subviews>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yq0-TZ-7IY" userLabel="ProducerContainerView">
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalProducerRelationship" id="ysu-l4-Tav"/>
-                                                        </connections>
-                                                    </containerView>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u79-Zw-c8K" userLabel="ConsumerContainerView">
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <connections>
-                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalConsumerRelationship" id="t5C-uV-pFg"/>
-                                                        </connections>
-                                                    </containerView>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kb8-m2-q9y" userLabel="CompetesContainerView">
-                                                        <connections>
-                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalCompetesRelationship" id="RDx-hP-lMn"/>
-                                                        </connections>
-                                                    </containerView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="u79-Zw-c8K" firstAttribute="leading" secondItem="Afn-Fq-mS7" secondAttribute="leading" constant="338" id="YPO-62-S6I"/>
-                                                </constraints>
-                                            </stackView>
-                                        </subviews>
                                         <constraints>
-                                            <constraint firstItem="Afn-Fq-mS7" firstAttribute="height" secondItem="i65-cq-2sp" secondAttribute="height" id="RIv-lV-kf4"/>
-                                            <constraint firstItem="Afn-Fq-mS7" firstAttribute="top" secondItem="i65-cq-2sp" secondAttribute="top" id="SyI-oP-hZP"/>
-                                            <constraint firstAttribute="bottom" secondItem="Afn-Fq-mS7" secondAttribute="bottom" id="gnc-fV-s1x"/>
-                                            <constraint firstItem="Afn-Fq-mS7" firstAttribute="leading" secondItem="i65-cq-2sp" secondAttribute="leading" id="vQY-pN-Ny4"/>
+                                            <constraint firstItem="BGh-4j-IpX" firstAttribute="centerX" secondItem="YvX-wT-gDR" secondAttribute="centerX" id="cgo-Du-9ot"/>
+                                        </constraints>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aaq-KO-HOf" userLabel="CenterView">
+                                        <subviews>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yq0-TZ-7IY" userLabel="SummaryView">
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <segue destination="LnJ-4V-KhF" kind="embed" id="KNS-ed-EE6"/>
+                                                </connections>
+                                            </containerView>
+                                            <containerView hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b93-UZ-y4B" userLabel="PreferencesView">
+                                                <connections>
+                                                    <segue destination="TeF-C7-qIt" kind="embed" id="Rm0-2I-TOm"/>
+                                                </connections>
+                                            </containerView>
+                                            <containerView hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OEN-mQ-anf" userLabel="ExperimentsView"/>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Yq0-TZ-7IY" firstAttribute="width" secondItem="aaq-KO-HOf" secondAttribute="width" id="AP7-hs-I7e"/>
+                                            <constraint firstItem="Yq0-TZ-7IY" firstAttribute="height" secondItem="aaq-KO-HOf" secondAttribute="height" id="D94-4F-rBn"/>
+                                            <constraint firstItem="Yq0-TZ-7IY" firstAttribute="centerX" secondItem="aaq-KO-HOf" secondAttribute="centerX" id="DU5-eQ-O0k"/>
+                                            <constraint firstItem="b93-UZ-y4B" firstAttribute="width" secondItem="aaq-KO-HOf" secondAttribute="width" id="JZU-eK-JnK"/>
+                                            <constraint firstItem="Yq0-TZ-7IY" firstAttribute="centerY" secondItem="aaq-KO-HOf" secondAttribute="centerY" id="PXX-Ug-gVq"/>
+                                            <constraint firstItem="OEN-mQ-anf" firstAttribute="centerX" secondItem="aaq-KO-HOf" secondAttribute="centerX" id="U4Y-UE-P01"/>
+                                            <constraint firstItem="b93-UZ-y4B" firstAttribute="centerY" secondItem="aaq-KO-HOf" secondAttribute="centerY" id="W52-RS-nyk"/>
+                                            <constraint firstItem="b93-UZ-y4B" firstAttribute="centerX" secondItem="aaq-KO-HOf" secondAttribute="centerX" id="Wej-hc-Ln9"/>
+                                            <constraint firstItem="OEN-mQ-anf" firstAttribute="height" secondItem="aaq-KO-HOf" secondAttribute="height" id="e5l-Z5-A6Y"/>
+                                            <constraint firstItem="OEN-mQ-anf" firstAttribute="centerY" secondItem="aaq-KO-HOf" secondAttribute="centerY" id="gDc-gn-Vfr"/>
+                                            <constraint firstItem="b93-UZ-y4B" firstAttribute="height" secondItem="aaq-KO-HOf" secondAttribute="height" id="vA0-a9-gFy"/>
+                                            <constraint firstItem="OEN-mQ-anf" firstAttribute="width" secondItem="aaq-KO-HOf" secondAttribute="width" id="wCI-gI-IWi"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="i65-cq-2sp" firstAttribute="width" secondItem="DrH-U8-XET" secondAttribute="width" identifier="centerWidth" id="0ZB-Jg-WGS"/>
-                                    <constraint firstItem="i65-cq-2sp" firstAttribute="leading" secondItem="DrH-U8-XET" secondAttribute="leading" id="tRx-G6-wa7"/>
+                                    <constraint firstItem="aaq-KO-HOf" firstAttribute="width" secondItem="DrH-U8-XET" secondAttribute="width" id="1zv-IM-0kf"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -148,11 +152,15 @@
                         <outlet property="profileLabel" destination="XyW-yE-tfB" id="F22-QJ-Jzs"/>
                         <outlet property="sectionLabel" destination="y6F-VW-byX" id="DWx-12-Q3w"/>
                         <outlet property="timestampLabel" destination="4QX-MT-Iml" id="bUK-rO-rZW"/>
+                        <outlet property="viewSegmentedControl" destination="BGh-4j-IpX" id="Gpi-wu-dh4"/>
+                        <outletCollection property="containerViews" destination="Yq0-TZ-7IY" collectionClass="NSMutableArray" id="iq3-ig-92e"/>
+                        <outletCollection property="containerViews" destination="b93-UZ-y4B" collectionClass="NSMutableArray" id="Wtb-Yg-ilg"/>
+                        <outletCollection property="containerViews" destination="OEN-mQ-anf" collectionClass="NSMutableArray" id="WGr-4G-dvx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="596" y="48"/>
+            <point key="canvasLocation" x="517.96875" y="-89.0625"/>
         </scene>
         <!--TerminalComparsionController-->
         <scene sceneID="zMW-7o-LYe">
@@ -164,7 +172,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="750" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="izh-6g-oeE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="izh-6g-oeE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -185,7 +193,7 @@
             <objects>
                 <tableViewController id="LsQ-zI-Xai" customClass="TerminalRelationshipTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" id="yGr-Mh-tS0">
-                        <rect key="frame" x="0.0" y="0.0" width="333" height="754"/>
+                        <rect key="frame" x="0.0" y="0.0" width="333" height="675"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.53725490200000003" green="0.47058823529999999" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -492,7 +500,7 @@
                         <viewControllerLayoutGuide type="bottom" id="IIs-bj-AS4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MoL-od-Xsk">
-                        <rect key="frame" x="0.0" y="44" width="750" height="412"/>
+                        <rect key="frame" x="0.0" y="44" width="1024" height="680"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FkF-57-8TM" userLabel="MainStackView">
@@ -902,7 +910,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieP-xY-bub">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ieP-xY-bub">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1135,86 +1143,82 @@
             </objects>
             <point key="canvasLocation" x="954" y="1512"/>
         </scene>
-        <!--View Controller-->
+        <!--TerminalContainerView-->
         <scene sceneID="tD1-3s-Vn5">
             <objects>
-                <viewController storyboardIdentifier="terminalMainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LnJ-4V-KhF" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="terminalContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LnJ-4V-KhF" userLabel="TerminalContainerView" customClass="TerminalContainerViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VsO-lw-Pg1"/>
                         <viewControllerLayoutGuide type="bottom" id="W2a-0s-47K"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DYs-qC-5Ug">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1008" height="675"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="a4V-bT-NER" userLabel="MainStackView">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Eei-yk-1Gc" userLabel="RelationshipsStackView">
                                 <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1S7-g0-Gn4" userLabel="CenteringView">
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Eei-yk-1Gc" userLabel="RelationshipsStackView">
-                                                <subviews>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r0z-mo-MZ2" userLabel="ProducerContainerView">
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="0.0"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalProducerRelationship" id="CkJ-QG-US2"/>
-                                                        </connections>
-                                                    </containerView>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-G1-Hjk" userLabel="ConsumerContainerView">
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <connections>
-                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalConsumerRelationship" id="8OU-Dl-e0x"/>
-                                                        </connections>
-                                                    </containerView>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c03-em-mzp" userLabel="CompetesContainerView">
-                                                        <connections>
-                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalCompetesRelationship" id="PSt-TO-Hg0"/>
-                                                        </connections>
-                                                    </containerView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="NYg-G1-Hjk" firstAttribute="leading" secondItem="Eei-yk-1Gc" secondAttribute="leading" constant="338" id="DLA-DO-5gn"/>
-                                                </constraints>
-                                            </stackView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="Eei-yk-1Gc" secondAttribute="bottom" id="LSG-kf-daj"/>
-                                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="leading" secondItem="1S7-g0-Gn4" secondAttribute="leading" id="V6t-dm-AAi"/>
-                                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="height" secondItem="1S7-g0-Gn4" secondAttribute="height" id="hAQ-in-UfI"/>
-                                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="top" secondItem="1S7-g0-Gn4" secondAttribute="top" id="uWJ-u9-sws"/>
-                                        </constraints>
-                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r0z-mo-MZ2" userLabel="ProducerContainerView">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalProducerRelationship" id="CkJ-QG-US2"/>
+                                        </connections>
+                                    </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-G1-Hjk" userLabel="ConsumerContainerView">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalConsumerRelationship" id="8OU-Dl-e0x"/>
+                                        </connections>
+                                    </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c03-em-mzp" userLabel="CompetesContainerView">
+                                        <connections>
+                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalCompetesRelationship" id="PSt-TO-Hg0"/>
+                                        </connections>
+                                    </containerView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="1S7-g0-Gn4" firstAttribute="leading" secondItem="a4V-bT-NER" secondAttribute="leading" id="HyE-mD-XvZ"/>
-                                    <constraint firstItem="1S7-g0-Gn4" firstAttribute="width" secondItem="a4V-bT-NER" secondAttribute="width" identifier="centerWidth" id="fUj-Bn-Bvp"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="a4V-bT-NER" firstAttribute="top" secondItem="VsO-lw-Pg1" secondAttribute="bottom" constant="8" id="6vm-M3-UnG"/>
-                            <constraint firstAttribute="trailing" secondItem="a4V-bT-NER" secondAttribute="trailing" constant="8" id="IbN-09-4vL"/>
-                            <constraint firstItem="a4V-bT-NER" firstAttribute="leading" secondItem="DYs-qC-5Ug" secondAttribute="leading" constant="8" id="W6t-VD-Y9Y"/>
-                            <constraint firstItem="W2a-0s-47K" firstAttribute="top" secondItem="a4V-bT-NER" secondAttribute="bottom" constant="6" id="juD-tJ-FUX"/>
+                            <constraint firstAttribute="trailing" secondItem="Eei-yk-1Gc" secondAttribute="trailing" id="4Hn-9p-DFo"/>
+                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="leading" secondItem="DYs-qC-5Ug" secondAttribute="leading" id="FTj-gy-Wsr"/>
+                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="width" secondItem="DYs-qC-5Ug" secondAttribute="width" id="MEU-d1-h8B"/>
+                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="top" secondItem="VsO-lw-Pg1" secondAttribute="bottom" id="RPj-ZA-3Ex"/>
+                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="height" secondItem="DYs-qC-5Ug" secondAttribute="height" id="bIB-Vd-cX3"/>
+                            <constraint firstItem="W2a-0s-47K" firstAttribute="top" secondItem="Eei-yk-1Gc" secondAttribute="bottom" id="g7J-tO-C28"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1024" height="768"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mdS-zr-NIw" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-101" y="88"/>
+            <point key="canvasLocation" x="-396" y="320"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="FHh-9j-Uqe">
+            <objects>
+                <viewController id="TeF-C7-qIt" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="awE-pl-g1o">
+                        <rect key="frame" x="0.0" y="0.0" width="1008" height="675"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fPh-Hc-3eF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1242" y="295"/>
         </scene>
     </scenes>
     <resources>
@@ -1222,9 +1226,9 @@
         <image name="species_02_0" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HYR-UU-7QS"/>
         <segue reference="lHA-ZO-up4"/>
         <segue reference="mdd-hs-eP9"/>
         <segue reference="PSt-TO-Hg0"/>
+        <segue reference="HYR-UU-7QS"/>
     </inferredMetricsTieBreakers>
 </document>

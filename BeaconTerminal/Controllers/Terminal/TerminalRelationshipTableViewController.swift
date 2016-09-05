@@ -21,11 +21,15 @@ class TerminalRelationshipTableViewController: UITableViewController {
     var relationshipCount = 0
     
     var speciesObservationResults: Results<SpeciesObservation>?
+    var runtimeResults: Results<Runtime>?
+    var runtimeNotificationToken: NotificationToken? = nil
+    var speciesObsNotificationToken: NotificationToken? = nil
     
-    var notificationToken: NotificationToken? = nil
+    var notificationTokens = [NotificationToken]()
+
     deinit {
-        if notificationToken != nil {
-            notificationToken?.stop()
+        for notificationToken in notificationTokens {
+            notificationToken.stop()
         }
     }
     
@@ -39,9 +43,39 @@ class TerminalRelationshipTableViewController: UITableViewController {
     }
     
     func prepareNotifications() {
+        
+        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        
+        
+        // Observe Notifications
+        runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let tableController = self else { return }
+            switch changes {
+            case .Initial(let runtimeResults):
+                if let runtime = runtimeResults.first, let speciesIndex = runtime.currentSpeciesIndex.value {
+                    tableController.updateHeader(withSpeciesIndex: speciesIndex)
+                    tableController.updateReportLabel()
+                }
+                break
+            case .Update(let runtimeResults, _, _, _):
+                if let runtime = runtimeResults.first, let speciesIndex = runtime.currentSpeciesIndex.value {
+                    tableController.updateHeader(withSpeciesIndex: speciesIndex)
+                    tableController.updateReportLabel()
+                }
+                break
+            case .Error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                LOG.error("\(error)")
+                break
+            }
+        }
+        
+        notificationTokens.append(runtimeNotificationToken!)
+        
         speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
         
-        notificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        speciesObsNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let controller = self else { return }
             switch changes {
@@ -57,6 +91,9 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 break
             }
         }
+        
+        notificationTokens.append(speciesObsNotificationToken!)
+
     }
     
     func updateCells(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
@@ -106,7 +143,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
     
     // Mark: updates
     
-    func updateHeader() {
+    func updateHeader(withSpeciesIndex speciesIndex: Int) {
         if let speciesIndex = realm?.runtimeSpeciesIndex() {
             relationshipHeaderLabel.backgroundColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
             relationshipHeaderLabel.borderColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
@@ -117,7 +154,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
-    func updateReportLabel(shouldReset reset: Bool) {
+    func updateReportLabel(shouldReset reset: Bool = true) {
         
         if reset {
             groupsReported = [:]
