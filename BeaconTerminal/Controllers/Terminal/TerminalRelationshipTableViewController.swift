@@ -67,12 +67,12 @@ class TerminalRelationshipTableViewController: UITableViewController {
         for so in speciesObservationResults {
             if let foundRelationships = realm?.relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
                 
-                groupsReported[so.groupIndex] = so.groupIndex
                 
                 relationshipCount += foundRelationships.count
                 
                 for r in foundRelationships {
-                   
+                    groupsReported[so.groupIndex] = so.groupIndex
+
                     updateCell(withRelationship: r, groupIndex: so.groupIndex)
                 }
                 

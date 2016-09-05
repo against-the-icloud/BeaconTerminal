@@ -164,7 +164,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="750" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="izh-6g-oeE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="izh-6g-oeE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -603,6 +603,54 @@
             </objects>
             <point key="canvasLocation" x="1003" y="2076"/>
         </scene>
+        <!--Evidence-->
+        <scene sceneID="ywM-Vv-fr0">
+            <objects>
+                <viewController storyboardIdentifier="evidenceViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CGR-2g-52S" customClass="EvidenceViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oae-Q6-C49"/>
+                        <viewControllerLayoutGuide type="bottom" id="Y9N-Ep-Yli"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X9y-nG-GqI">
+                        <rect key="frame" x="0.0" y="44" width="1024" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T6D-sd-hcF">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="T6D-sd-hcF" secondAttribute="height" multiplier="16:9" id="ifi-1q-KGo"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="T6D-sd-hcF" secondAttribute="trailing" constant="20" id="Wdm-x6-1Bm"/>
+                            <constraint firstItem="T6D-sd-hcF" firstAttribute="leading" secondItem="X9y-nG-GqI" secondAttribute="leading" constant="20" id="apD-ty-DtO"/>
+                            <constraint firstItem="T6D-sd-hcF" firstAttribute="centerX" secondItem="X9y-nG-GqI" secondAttribute="centerX" id="ieU-eY-h7U"/>
+                            <constraint firstItem="T6D-sd-hcF" firstAttribute="centerY" secondItem="X9y-nG-GqI" secondAttribute="centerY" id="okJ-fb-jbu"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Evidence" id="iRm-32-6c9">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Hrb-zb-q50">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="doneAction:" destination="CGR-2g-52S" id="SXN-bD-gsQ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="a5z-TF-Uul">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="evidenceImageView" destination="T6D-sd-hcF" id="9rE-Da-AUS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bXN-im-nUT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="261" y="2720"/>
+        </scene>
         <!--Terminal Relationship Detail Table View Controller-->
         <scene sceneID="DbI-Ss-3Jz">
             <objects>
@@ -784,11 +832,15 @@
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <gestureRecognizers/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="sEi-w3-nJq" secondAttribute="trailing" constant="8" id="CSz-kz-4a7"/>
                                                                 <constraint firstItem="sEi-w3-nJq" firstAttribute="centerY" secondItem="h0P-Gr-U4g" secondAttribute="centerY" id="V57-zI-M6I"/>
                                                                 <constraint firstItem="sEi-w3-nJq" firstAttribute="centerX" secondItem="h0P-Gr-U4g" secondAttribute="centerX" id="Ymv-20-hs1"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <outletCollection property="gestureRecognizers" destination="Fnl-w6-o2i" appends="YES" id="Fes-RF-Tj1"/>
+                                                            </connections>
                                                         </view>
                                                     </subviews>
                                                 </stackView>
@@ -830,12 +882,37 @@
                         <outlet property="ecosystemSegmentedControl" destination="ydJ-Ac-xKB" id="s6n-6v-yOZ"/>
                         <outlet property="evidenceImageView" destination="sEi-w3-nJq" id="zhi-vv-LW9"/>
                         <outlet property="groupNameLabel" destination="CqB-6X-a5D" id="yZX-OL-FTH"/>
+                        <outlet property="imageTapGesture" destination="Fnl-w6-o2i" id="LUb-ir-IHN"/>
                         <outlet property="reasoningTextView" destination="vt4-ED-7Nk" id="EZW-NA-3j8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxp-GV-qJq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Fnl-w6-o2i">
+                    <connections>
+                        <segue destination="TMX-X6-Bel" kind="presentation" identifier="showEvidenceSegue" id="NHb-5y-2EN"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="194.53125" y="2136.71875"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="y4x-DA-71j">
+            <objects>
+                <navigationController id="TMX-X6-Bel" sceneMemberID="viewController">
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieP-xY-bub">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="CGR-2g-52S" kind="relationship" relationship="rootViewController" id="Jmp-DD-KMx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rpg-7s-XPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-594" y="2664"/>
         </scene>
         <!--Terminal Cell Controller-->
         <scene sceneID="fCR-TH-3hK">
@@ -1067,6 +1144,6 @@
         <segue reference="ysu-l4-Tav"/>
         <segue reference="mdd-hs-eP9"/>
         <segue reference="lHA-ZO-up4"/>
-        <segue reference="tOI-bw-ITv"/>
+        <segue reference="HYR-UU-7QS"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,6 +19,7 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
     @IBOutlet weak var reasoningTextView: UITextView!
     @IBOutlet weak var evidenceImageView: UIImageView!
+    @IBOutlet var imageTapGesture: UITapGestureRecognizer!
     
     var showAlternate = false {
         didSet {
@@ -64,7 +65,10 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
             }
             
             if let attachment = relationship.attachments {
+                 imageTapGesture.isEnabled = true
                 evidenceImageView.image = UIImage(named: attachment)
+            } else {
+                 imageTapGesture.isEnabled = false
             }
             
             if let note = relationship.note {
@@ -77,6 +81,28 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
             reasoningTextView.text = ""
             evidenceImageView.image = nil
             evidenceImageView.backgroundColor = UIColor.clear
+            imageTapGesture.isEnabled = false
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier else {
+            return
+        }
+        
+        switch id {
+        case "showEvidenceSegue":
+            guard let attachment = cellItem?.relationship?.attachments else {
+                return
+            }
+            
+            if let uinavigationController = segue.destination as? UINavigationController, let evidenceController = uinavigationController.topViewController as? EvidenceViewController {
+                evidenceController.evidenceImageName = attachment
+            }
+        default:
+            break
+        }
+        
+        
     }
 }
