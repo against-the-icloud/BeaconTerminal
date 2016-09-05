@@ -152,7 +152,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.77343749999999" y="122.65625"/>
+            <point key="canvasLocation" x="596" y="48"/>
         </scene>
         <!--TerminalComparsionController-->
         <scene sceneID="zMW-7o-LYe">
@@ -185,7 +185,7 @@
             <objects>
                 <tableViewController id="LsQ-zI-Xai" customClass="TerminalRelationshipTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" id="yGr-Mh-tS0">
-                        <rect key="frame" x="0.0" y="0.0" width="333" height="675"/>
+                        <rect key="frame" x="0.0" y="0.0" width="333" height="754"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" red="0.53725490200000003" green="0.47058823529999999" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1135,15 +1135,96 @@
             </objects>
             <point key="canvasLocation" x="954" y="1512"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="tD1-3s-Vn5">
+            <objects>
+                <viewController storyboardIdentifier="terminalMainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LnJ-4V-KhF" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VsO-lw-Pg1"/>
+                        <viewControllerLayoutGuide type="bottom" id="W2a-0s-47K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DYs-qC-5Ug">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="a4V-bT-NER" userLabel="MainStackView">
+                                <subviews>
+                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1S7-g0-Gn4" userLabel="CenteringView">
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Eei-yk-1Gc" userLabel="RelationshipsStackView">
+                                                <subviews>
+                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r0z-mo-MZ2" userLabel="ProducerContainerView">
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalProducerRelationship" id="CkJ-QG-US2"/>
+                                                        </connections>
+                                                    </containerView>
+                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-G1-Hjk" userLabel="ConsumerContainerView">
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <connections>
+                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalConsumerRelationship" id="8OU-Dl-e0x"/>
+                                                        </connections>
+                                                    </containerView>
+                                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c03-em-mzp" userLabel="CompetesContainerView">
+                                                        <connections>
+                                                            <segue destination="LsQ-zI-Xai" kind="embed" identifier="terminalCompetesRelationship" id="PSt-TO-Hg0"/>
+                                                        </connections>
+                                                    </containerView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="NYg-G1-Hjk" firstAttribute="leading" secondItem="Eei-yk-1Gc" secondAttribute="leading" constant="338" id="DLA-DO-5gn"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Eei-yk-1Gc" secondAttribute="bottom" id="LSG-kf-daj"/>
+                                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="leading" secondItem="1S7-g0-Gn4" secondAttribute="leading" id="V6t-dm-AAi"/>
+                                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="height" secondItem="1S7-g0-Gn4" secondAttribute="height" id="hAQ-in-UfI"/>
+                                            <constraint firstItem="Eei-yk-1Gc" firstAttribute="top" secondItem="1S7-g0-Gn4" secondAttribute="top" id="uWJ-u9-sws"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="1S7-g0-Gn4" firstAttribute="leading" secondItem="a4V-bT-NER" secondAttribute="leading" id="HyE-mD-XvZ"/>
+                                    <constraint firstItem="1S7-g0-Gn4" firstAttribute="width" secondItem="a4V-bT-NER" secondAttribute="width" identifier="centerWidth" id="fUj-Bn-Bvp"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="a4V-bT-NER" firstAttribute="top" secondItem="VsO-lw-Pg1" secondAttribute="bottom" constant="8" id="6vm-M3-UnG"/>
+                            <constraint firstAttribute="trailing" secondItem="a4V-bT-NER" secondAttribute="trailing" constant="8" id="IbN-09-4vL"/>
+                            <constraint firstItem="a4V-bT-NER" firstAttribute="leading" secondItem="DYs-qC-5Ug" secondAttribute="leading" constant="8" id="W6t-VD-Y9Y"/>
+                            <constraint firstItem="W2a-0s-47K" firstAttribute="top" secondItem="a4V-bT-NER" secondAttribute="bottom" constant="6" id="juD-tJ-FUX"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1024" height="768"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mdS-zr-NIw" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-101" y="88"/>
+        </scene>
     </scenes>
     <resources>
         <image name="1" width="2880" height="1800"/>
         <image name="species_02_0" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ysu-l4-Tav"/>
-        <segue reference="mdd-hs-eP9"/>
-        <segue reference="lHA-ZO-up4"/>
         <segue reference="HYR-UU-7QS"/>
+        <segue reference="lHA-ZO-up4"/>
+        <segue reference="mdd-hs-eP9"/>
+        <segue reference="PSt-TO-Hg0"/>
     </inferredMetricsTieBreakers>
 </document>

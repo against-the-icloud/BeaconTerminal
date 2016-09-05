@@ -78,7 +78,7 @@ class BeaconTerminalModelTests: XCTestCase, NutellaNetDelegate {
     func testPopulateData() {
         realmDataController?.deleteAllUserData()
         let _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
-        realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
+       // realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
     }
     
     func testExportJsonWithPath() {
@@ -112,7 +112,7 @@ class BeaconTerminalModelTests: XCTestCase, NutellaNetDelegate {
         _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
         
         
-        realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
+       // realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
         
         if let soResults = realm?.speciesObservation(withFromSpeciesIndex: 1) {
             LOG.debug("so results \(soResults.count)")
@@ -143,27 +143,27 @@ class BeaconTerminalModelTests: XCTestCase, NutellaNetDelegate {
         
         nutella?.netDelegate = self
 
-        realmDataController?.importJsonDB(forSectionName: "DEFAULT", withJson: nil)
+      // realmDataController?.importJsonDB(testExportJsonWithNutella()
         
 
         
-        if let soResults = realm?.speciesObservation(withFromSpeciesIndex: 1) {
-            LOG.debug("so results \(soResults.count)")
-            
-            for so in soResults {
-                
-                //let block = DispatchWorkItem {
-                    let json = JSON(so.toDictionary())
-                    let jsonObject: Any = json.object
-                    nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
-                    LOG.debug("MESSAGE SENT")
-                    sleep(1)
-               // }
-                
-               // DispatchQueue.main.async(execute: block)
-            }
-         
-        }
+//        if let soResults = realm?.speciesObservation(withFromSpeciesIndex: 1) {
+//            LOG.debug("so results \(soResults.count)")
+//            
+//            for so in soResults {
+//                
+//                //let block = DispatchWorkItem {
+//                    let json = JSON(so.toDictionary())
+//                    let jsonObject: Any = json.object
+//                    nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+//                    LOG.debug("MESSAGE SENT")
+//                    sleep(1)
+//               // }
+//                
+//               // DispatchQueue.main.async(execute: block)
+//            }
+//    
+//        }
 
 
     }
