@@ -87,10 +87,18 @@ class RealmDataController {
         }
         switch channel {
         case NutellaChannelType.allNotesWithSpecies.rawValue:
-            parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
+            let header = parseHeader(withMessage: message)
+            if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                // import the message
+                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
+            }
             break
         case NutellaChannelType.noteChanges.rawValue:
-            parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
+            let header = parseHeader(withMessage: message)
+            if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                // import the message
+                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
+            }
             break
         case NutellaChannelType.allNotes.rawValue:
             break
@@ -99,31 +107,35 @@ class RealmDataController {
         }
     }
     
-    //{ 'speciedIndex': 1, 'savedNotes':[speciesObs]}
+    func parseHeader(withMessage message: AnyObject) -> Header? {
+        let json = JSON(message)
+        guard let speciesIndex = json["header"]["speciesIndex"].int else {
+            //no speciesIndex
+            return nil
+        }
+        guard let groupIndex = json["header"]["groupIndex"].int else {
+            //no speciesIndex
+            return nil
+        }
+        var header = Header()
+        header.speciesIndex = speciesIndex
+        header.groupIndex = groupIndex
+        return header
+    }
+    
+    //header = {'speciesIndex':1, 'groupIndex':2}
+    //{ 'header': header, 'notes': parsedNotes});
     func parseMessage(withMessage message: AnyObject, withSpeciesIndex currentSpeciesIndex:Int, withSectionName currentSectionName: String) {
         let json = JSON(message)
-        
         if json == nil {
             //json is invalid
             return
         }
-        
-        guard let speciesIndex = json["speciesIndex"].int else {
-            //no speciesIndex
-            return
-        }
-        
-        guard json["savedNotes"].array != nil else {
+        guard json["notes"].array != nil else {
             //no notes param
             return
         }
-        
-        if currentSpeciesIndex == speciesIndex {
-            importJsonJSON(forSectionName: currentSectionName, withJson: json["savedNotes"])
-        } else {
-            LOG.error("MESSAGE IS FOR SPECIES \(speciesIndex) not \(currentSpeciesIndex)")
-        }
-        
+        importJsonJSON(forSectionName: currentSectionName, withJson: json["notes"])
     }
     
     
@@ -139,7 +151,7 @@ class RealmDataController {
                 
                 //first check to see if there is already one with a groupIndex ==
                 
-
+                
                 if let id = soJson["id"].string {
                     
                     if let foundSO = realm?.speciesObservation(withId: id) {

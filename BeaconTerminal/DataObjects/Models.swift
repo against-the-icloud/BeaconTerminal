@@ -1,6 +1,11 @@
 import Foundation
 import RealmSwift
 
+struct Header {
+    var speciesIndex: Int?
+    var groupIndex: Int?
+}
+
 enum RelationshipType: String {
     case producer = "producer"
     case consumer = "consumer"
