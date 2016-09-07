@@ -68,15 +68,15 @@ class RealmDataController {
         }
     }
     
-    func handlePlaceGroupMessages(withMessage message: AnyObject, withChannel channel: String) {
+    func handlePlaceGroupMessages(withMessage message: Any, withChannel channel: String) {
         
     }
     
-    func handleObjectGroupMessages(withMessage message: AnyObject, withChannel channel: String) {
+    func handleObjectGroupMessages(withMessage message: Any, withChannel channel: String) {
         
     }
     
-    func handlePlaceMessages(withMessage message: AnyObject, withChannel channel: String) {
+    func handlePlaceMessages(withMessage message: Any, withChannel channel: String) {
         guard let currentSpeciesIndex = realm?.runtimeSpeciesIndex() else {
             //need species for this message
             return
@@ -107,7 +107,7 @@ class RealmDataController {
         }
     }
     
-    func parseHeader(withMessage message: AnyObject) -> Header? {
+    func parseHeader(withMessage message: Any) -> Header? {
         let json = JSON(message)
         guard let speciesIndex = json["header"]["speciesIndex"].int else {
             //no speciesIndex
@@ -125,7 +125,7 @@ class RealmDataController {
     
     //header = {'speciesIndex':1, 'groupIndex':2}
     //{ 'header': header, 'notes': parsedNotes});
-    func parseMessage(withMessage message: AnyObject, withSpeciesIndex currentSpeciesIndex:Int, withSectionName currentSectionName: String) {
+    func parseMessage(withMessage message: Any, withSpeciesIndex currentSpeciesIndex:Int, withSectionName currentSectionName: String) {
         let json = JSON(message)
         if json == nil {
             //json is invalid
@@ -378,12 +378,12 @@ class RealmDataController {
         
     }
     
-    func exportSpeciesObservation(withNutella nutella: Nutella, withSpeciesObservation speciesObservation: SpeciesObservation) {
+    func exportSpeciesObservation(withNutella nutella: Nutella?, withSpeciesObservation speciesObservation: SpeciesObservation) {
         if nutella != nil {
             let block = DispatchWorkItem {
                 let json = JSON(speciesObservation)
                 let jsonObject: Any = json.object
-                nutella.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
+                nutella?.net.asyncRequest("save_note", message: jsonObject as AnyObject, requestName: "save_note")
             }
             DispatchQueue.main.async(execute: block)
         }
@@ -539,7 +539,7 @@ extension RealmDataController {
     
     // Mark: JSON Parsing
     
-    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration) -> SystemConfiguration {
+    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false) -> SystemConfiguration {
         realm!.beginWrite()
         
         let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
@@ -594,7 +594,9 @@ extension RealmDataController {
                         }
                         
                         //create speciesObservation place holders for group
-                        //prepareSpeciesObservations(for: group, simConfig: simConfig)
+                        if placeHolders {
+                          prepareSpeciesObservations(for: group, simConfig: simConfig)
+                        }
                     }
                 }
                 
@@ -686,11 +688,7 @@ extension RealmDataController {
                 
                 if let componentId = item["componentId"].string {
                     host.componentId = componentId
-                }
-                
-                if let resourceId = item["resourceId"].string {
-                    host.resourceId = resourceId
-                }
+                }        
                 
                 nutellaConfig.hosts.append(host)
             }

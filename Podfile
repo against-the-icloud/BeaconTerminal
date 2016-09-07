@@ -14,7 +14,7 @@ target 'BeaconTerminal' do
     pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
 
     #state machinepod
-    pod 'Transporter', :git => 'https://github.com/DenHeadless/Transporter.git', :branch => 'swift3'
+    pod 'Transporter', :git => 'https://github.com/DenHeadless/Transporter.git', :branch => 'swift3'    
 end
 
 target 'BeaconTerminalModelTests' do

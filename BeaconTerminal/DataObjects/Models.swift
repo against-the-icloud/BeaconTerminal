@@ -428,6 +428,10 @@ extension Realm {
         return allObjects(ofType: Relationship.self).filter(using: "id = '\(id)'").first
     }
     
+    func nutellaConfig() -> NutellaConfig? {
+        return allObjects(ofType: NutellaConfig.self).first
+    }
+    
     func relationships(withSpeciesObservation speciesObservation: SpeciesObservation, withRelationshipType relationshipType: String) -> Results<Relationship>? {
         return speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'")
     }

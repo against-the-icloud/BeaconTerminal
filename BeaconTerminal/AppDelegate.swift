@@ -10,7 +10,9 @@ let REFRESH_DB = true
 let EXPORT_DB = true
 
 // localhost || remote
-let HOST = "localhost"
+let HOST = "remote"
+let REMOTE = "ltg.evl.uic.edu"
+let LOCAL = "localhost"
 
 let LOG: XCGLogger = {
     
@@ -28,7 +30,7 @@ let LOG: XCGLogger = {
     return LOG
 }()
 
-//state machine
+//Mark: State Machine
 
 enum ApplicationType: String {
     case start
@@ -44,7 +46,6 @@ enum Tabs : String {
     
     static let allValues = [species, maps, scratchPad]
 }
-
 
 //init states
 let placeTerminalState = State(ApplicationType.placeTerminal)
@@ -68,7 +69,6 @@ struct Platform {
 }
 
 
-
 //Mark: Nutella supports
 
 enum NutellaMessageType: String {
@@ -86,9 +86,9 @@ enum NutellaChannelType: String {
 
 struct NutellaUpdate {
     var channel: String?
-    var message: AnyObject?
+    var message: Any?
     var updateType:  NutellaMessageType?
-    var response: AnyObject?
+    var response: Any?
 }
 
 
@@ -104,7 +104,7 @@ func getAppDelegate() -> AppDelegate {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate { 
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
@@ -123,14 +123,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
-                
+        
         prepareViews(applicationType: ApplicationType.placeTerminal)
         
         prepareDB()
         
-        setupNutellaConnection(HOST)
-        
         UIView.hr_setToastThemeColor(UIColor.black())
+        
+        setupConnection(withHost: REMOTE)
         
         return true
     }
@@ -229,10 +229,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch checkApplicationState() {
         case .placeGroup:
+            realmDataController?.deleteAllConfigurationAndGroups()
+            _ = realmDataController?.parseNutellaConfigurationJson()
+            _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!, withPlaceHolders: true)
             break
         case .placeTerminal:
             realmDataController?.deleteAllConfigurationAndGroups()
-            
             //re-up
             _ = realmDataController?.parseNutellaConfigurationJson()
             _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
@@ -262,52 +264,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //we have been disconnected
         }
     }
-
+    
     
     // Mark: Nutella setup
     
-    func setupNutellaConnection(_ host: String) {
-        _ = realmDataController?.validateNutellaConfiguration()
-        let nutellaConfig : Results<NutellaConfig> = realm!.allObjects(ofType: NutellaConfig.self)
+    func setupConnection(withHost host: String) {
         
-        if let config = nutellaConfig.first {
-            
-            if let host = config.hosts.filter(using: "id = '\(HOST)'").first {
-                
-                nutella = Nutella(brokerHostname: host.url!,
-                                  appId: host.appId!,
-                                  runId: host.runId!,
-                                  componentId: host.componentId!)
-                nutella?.netDelegate = self
-                nutella?.resourceId = host.resourceId
-                
-                //config.
-                
-                //let appState: ApplicationType = checkApplicationState()
-                
-                for condition in config.conditions {
-                    if condition.id == checkApplicationState().rawValue {
-                        if let channels = condition.subscribes?.components(separatedBy: ",") {
-                            for channel in channels {
-                                nutella?.net.subscribe(channel)
-                            }
-                            
-                            Util.makeToast("Subscribed to \(channels)")
-                        }
-                        
-                        
-//                        if let channels = condition.publishes?.components(separatedBy: ",") {
-//                            for _ in channels {
-//                                //nutella?.net.publish(channel)
-//                            }
-//                            
-//                            
-//                            Util.makeToast("Publishes on \(channels)")
-//                        }
-                    }
-                }
-            }
-        }
+        nutella = Nutella(brokerHostname: host,
+                          appId: "wallcology",
+                          runId: "default",
+                          componentId: "BeaconTerminal", netDelegate: self)
+        
+        let sub_1 = "note_changes"
+        let sub_2 = "echo_out"
+        nutella?.net.subscribe(sub_1)
+        nutella?.net.subscribe(sub_2)
+        Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
     }
     
     // Mark: StateMachine
@@ -396,44 +368,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: NutellaNetDelegate {
     
-    /**
-     Called when a message is received from a publish.
-     
-     - parameter channel: The name of the Nutella chennal on which the message is received.
-     - parameter message: The message.
-     - parameter from: The actor name of the client that sent the message.
-     */
-    func messageReceived(_ channel: String, message: AnyObject, componentId: String?, resourceId: String?) {
+    func requestReceived(_ channel: String, request: Any?, from: [String : String]) -> AnyObject? {
+        LOG.debug("----- Request Recieved Returning nil -----")
+        return nil
+    }
+    
+    func responseReceived(_ channel: String, requestName: String?, response: Any, from: [String : String]) {
+        var nutellaUpdate = NutellaUpdate()
+        nutellaUpdate.channel = channel
+        nutellaUpdate.message = response
+        nutellaUpdate.updateType = .response
+        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
+        LOG.debug("----- Response Recieved on: \(channel) from: \(from) -----")
+    }
+    
+    func messageReceived(_ channel: String, message: Any, from: [String : String]) {
         var nutellaUpdate = NutellaUpdate()
         nutellaUpdate.channel = channel
         nutellaUpdate.message = message
         nutellaUpdate.updateType = .message
         realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
+        LOG.debug("----- PubSub Recieved on: \(channel) from: \(from) -----")
     }
     
-    /**
-     A response to a previos request is received.
-     
-     - parameter channelName: The Nutella channel on which the message is received.
-     - parameter requestName: The optional name of request.
-     - parameter response: The dictionary/array/string containing the JSON representation.
-     */
-    func responseReceived(_ channelName: String, requestName: String?, response: AnyObject) {
-        var nutellaUpdate = NutellaUpdate()
-        nutellaUpdate.channel = channelName
-        nutellaUpdate.message = response
-        nutellaUpdate.updateType = .response
-        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
-    }
-    
-    /**
-     A request is received on a Nutella channel that was previously handled (with the handleRequest).
-     
-     - parameter channelName: The name of the Nutella chennal on which the request is received.
-     - parameter request: The dictionary/array/string containing the JSON representation of the request.
-     */
-    func requestReceived(_ channelName: String, request: AnyObject?, componentId: String?, resourceId: String?) -> AnyObject? {
-        //not used
-        return nil
-    }
 }

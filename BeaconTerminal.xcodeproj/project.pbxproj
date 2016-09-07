@@ -15,6 +15,10 @@
 		701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */; };
 		701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */; };
 		701841011D6041AF003921A1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701841001D6041AF003921A1 /* MapViewController.swift */; };
+		702FDD8C1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */; };
+		702FDD8D1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		702FDD901D805BEA00B0EEDE /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702FDD8F1D805BEA00B0EEDE /* Nutella.framework */; };
+		702FDD921D805BF200B0EEDE /* Nutella.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 702FDD8F1D805BEA00B0EEDE /* Nutella.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7031DB191D65E18B000DCC61 /* Terminal.storyboard */; };
 		7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */; };
 		7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */; };
@@ -41,12 +45,6 @@
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
 		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */; };
-		70C00A671D6825930021099B /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A651D6825930021099B /* SimpleMQTTClient.framework */; };
-		70C00A681D6825930021099B /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A661D6825930021099B /* Nutella.framework */; };
-		70C00A6B1D6825A40021099B /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A691D6825A40021099B /* SimpleMQTTClient.framework */; };
-		70C00A6C1D6825A40021099B /* SimpleMQTTClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A691D6825A40021099B /* SimpleMQTTClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		70C00A6D1D6825A40021099B /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A6A1D6825A40021099B /* Nutella.framework */; };
-		70C00A6E1D6825A40021099B /* Nutella.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A6A1D6825A40021099B /* Nutella.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70C1CF361D592E2800CB687E /* LoginSectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */; };
 		70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */; };
 		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
@@ -62,8 +60,6 @@
 		70D9C1B21D6650B700FAF080 /* LoginGroupCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B11D6650B700FAF080 /* LoginGroupCollectionViewController.swift */; };
 		70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */; };
 		70DC484B1D79CD0800E11064 /* BeaconTerminalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DC484A1D79CD0800E11064 /* BeaconTerminalModelTests.swift */; };
-		70DC48521D79D66A00E11064 /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A691D6825A40021099B /* SimpleMQTTClient.framework */; };
-		70DC48531D79D66E00E11064 /* Nutella.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C00A6A1D6825A40021099B /* Nutella.framework */; };
 		70DC48541D79F40B00E11064 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */; };
 		70DC48561D7A0CF700E11064 /* species_note_test_db.json in Resources */ = {isa = PBXBuildFile; fileRef = 70DC48551D7A0CF700E11064 /* species_note_test_db.json */; };
 		70DC48571D7A0CF700E11064 /* species_note_test_db.json in Resources */ = {isa = PBXBuildFile; fileRef = 70DC48551D7A0CF700E11064 /* species_note_test_db.json */; };
@@ -115,14 +111,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		70C00A6F1D6825A40021099B /* Embed Frameworks */ = {
+		702FDD8E1D805BDE00B0EEDE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				70C00A6E1D6825A40021099B /* Nutella.framework in Embed Frameworks */,
-				70C00A6C1D6825A40021099B /* SimpleMQTTClient.framework in Embed Frameworks */,
+				702FDD921D805BF200B0EEDE /* Nutella.framework in Embed Frameworks */,
+				702FDD8D1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +135,8 @@
 		701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GraveYard.storyboard; sourceTree = "<group>"; };
 		701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalCellController.swift; path = Terminal/TerminalCellController.swift; sourceTree = "<group>"; };
 		701841001D6041AF003921A1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SimpleMQTTClient.framework; sourceTree = "<group>"; };
+		702FDD8F1D805BEA00B0EEDE /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nutella.framework; sourceTree = "<group>"; };
 		7031DB191D65E18B000DCC61 /* Terminal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Terminal.storyboard; sourceTree = "<group>"; };
 		7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalMainViewController.swift; path = Terminal/TerminalMainViewController.swift; sourceTree = "<group>"; };
 		7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCollectionController.swift; path = Login/LoginSpeciesCollectionController.swift; sourceTree = "<group>"; };
@@ -165,10 +163,6 @@
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
 		70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalContainerController.swift; path = Terminal/TerminalContainerController.swift; sourceTree = "<group>"; };
-		70C00A651D6825930021099B /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = ../../../../../../Desktop/SimpleMQTTClient.framework; sourceTree = "<group>"; };
-		70C00A661D6825930021099B /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nutella.framework; path = ../../../../../../Desktop/Nutella.framework; sourceTree = "<group>"; };
-		70C00A691D6825A40021099B /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleMQTTClient.framework; path = ../SimpleMQTTClient.framework; sourceTree = "<group>"; };
-		70C00A6A1D6825A40021099B /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nutella.framework; path = ../Nutella.framework; sourceTree = "<group>"; };
 		70C1CF351D592E2800CB687E /* LoginSectionCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionCollectionViewController.swift; path = Login/LoginSectionCollectionViewController.swift; sourceTree = "<group>"; };
 		70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Speciescolors.swift"; sourceTree = "<group>"; };
 		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
@@ -235,9 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70DC48531D79D66E00E11064 /* Nutella.framework in Frameworks */,
 				6491E646F8A6D6CB4BA350FB /* Pods_BeaconTerminalModelTests.framework in Frameworks */,
-				70DC48521D79D66A00E11064 /* SimpleMQTTClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,12 +238,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */,
+				702FDD8C1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Frameworks */,
 				700A3AB61D4BC7D8009B540D /* Photos.framework in Frameworks */,
-				70C00A671D6825930021099B /* SimpleMQTTClient.framework in Frameworks */,
-				70C00A681D6825930021099B /* Nutella.framework in Frameworks */,
-				70C00A6D1D6825A40021099B /* Nutella.framework in Frameworks */,
 				CBA9CAD8C8FD48EE867C994C /* Pods_BeaconTerminal.framework in Frameworks */,
-				70C00A6B1D6825A40021099B /* SimpleMQTTClient.framework in Frameworks */,
+				702FDD901D805BEA00B0EEDE /* Nutella.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,8 +251,6 @@
 		351FCE10601876F58D4A23C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				70C00A651D6825930021099B /* SimpleMQTTClient.framework */,
-				70C00A661D6825930021099B /* Nutella.framework */,
 				700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */,
 				700A3AB51D4BC7D8009B540D /* Photos.framework */,
 				E88A1C1CBB05E4DB3693708A /* Pods_BeaconTerminal.framework */,
@@ -274,6 +262,8 @@
 		701380D41D1C7B5400C0EDDB /* SupportFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				702FDD8F1D805BEA00B0EEDE /* Nutella.framework */,
+				702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */,
 			);
 			name = SupportFrameworks;
 			path = Storyboard;
@@ -328,8 +318,6 @@
 		70920D0C1CD57B3F001B582F /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				70C00A691D6825A40021099B /* SimpleMQTTClient.framework */,
-				70C00A6A1D6825A40021099B /* Nutella.framework */,
 				70F29A651D57DB8C0057A497 /* Fonts */,
 				704204201CE8E98B00C09FD0 /* Sounds */,
 				70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */,
@@ -591,7 +579,7 @@
 				AE9764871C22C1BF0058A4DC /* Resources */,
 				50D286FD496FE984E4D6B351 /* [CP] Embed Pods Frameworks */,
 				85B49BC250861258E287251E /* [CP] Copy Pods Resources */,
-				70C00A6F1D6825A40021099B /* Embed Frameworks */,
+				702FDD8E1D805BDE00B0EEDE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1023,7 +1011,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6A27FBCB4C2DB3439725EB5A /* Pods-BeaconTerminal.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1033,6 +1020,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BeaconTerminal/Estimote",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/BeaconTerminal/Storyboard",
 				);
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -1050,7 +1038,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B59A5ABBDC2F3406224EF4B /* Pods-BeaconTerminal.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
