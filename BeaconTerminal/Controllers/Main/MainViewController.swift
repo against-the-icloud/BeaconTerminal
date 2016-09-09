@@ -156,9 +156,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         switch state {
         case .placeGroup:
             speciesMenu(shouldShow: true)
-            BadgeUtil.showBadge(withType: .mapBadge)
-            let gestureRecongizer = UITapGestureRecognizer(target: self, action: #selector(showMap))
-            BadgeUtil.addGesture(gesture: gestureRecongizer)
         case .placeTerminal:
             speciesMenu(shouldShow: false)
             BadgeUtil.showBadge(withType: .terminalBadge)

@@ -49,7 +49,7 @@ class AppBottomNavigationController: BottomNavigationController {
     }
     
     func prepareNotification() {
-        runtimeResults = realm!.allObjects(ofType: Runtime.self)
+        runtimeResults = realm?.allObjects(ofType: Runtime.self)
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
@@ -80,6 +80,16 @@ class AppBottomNavigationController: BottomNavigationController {
         self.runtimeResults = runtimeResults
         
         
+       
+    navigationItem.title = "GROUP: hello"
+    
+    navigationItem.titleLabel.textAlignment = .left
+    navigationItem.titleLabel.textColor = Color.black
+    
+    navigationItem.detail = "SECTION: bob"
+    navigationItem.detailLabel.textAlignment = .left
+    navigationItem.detailLabel.textColor = Color.black
+    
 //        if runtimeResults[0].currentGroup != nil {
 //            let group = runtimeResults[0].currentGroup
 //            let section = runtimeResults[0].currentSection

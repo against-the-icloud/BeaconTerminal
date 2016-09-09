@@ -101,7 +101,7 @@ class CoverFlowViewController: UIViewController {
     
     
     func readSpeciesAndUpdate() {
-        self.allSpecies = realm!.allObjects(ofType: Species.self)
+        self.allSpecies = realm?.allObjects(ofType: Species.self)
         self.collectionView.reloadData()
     }
     
@@ -122,7 +122,7 @@ class CoverFlowViewController: UIViewController {
         loadData()
         prepareCollectionViewCells()
         
-        allSpecies = realm!.allObjects(ofType: Species.self)
+        allSpecies = realm?.allObjects(ofType: Species.self)
         
         let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
         

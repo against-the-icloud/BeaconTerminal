@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
-        prepareViews(applicationType: ApplicationType.placeTerminal)
+        prepareViews(applicationType: ApplicationType.placeGroup )
         
         prepareDB()
         
@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         case .placeGroup:
             initStateMachine(applicaitonState: applicationType)
-            application = prepareBasicGroupUI()
+            application = preparePlaceGroupUI()
             break
         default:
             //object group
@@ -163,26 +163,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
     }
     
-    func prepareBasicGroupUI() -> NavigationDrawerController {
+    func preparePlaceGroupUI() -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
-        let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
         
         bottomNavigationController = AppBottomNavigationController()
         
-        let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: bottomNavigationController!)
+        let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: mainViewController)
         navigationController.statusBarStyle = .lightContent
         
         // create drawer
         
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
-        //tabbar
         
-        bottomNavigationController?.viewControllers = [mainViewController, scratchPadViewController]
-        bottomNavigationController?.selectedIndex = 0
+        sideViewController.showSelectedCell(with: checkApplicationState())
+        
+        return navigationDrawerController
+    }
+
+    
+    func prepareBasicGroupUI() -> NavigationDrawerController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
+        let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
+        
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainViewController)
+        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        
+        navigationController.isNavigationBarHidden = true
+        navigationController.statusBarStyle = .default
+        
+        BadgeUtil.badge(shouldShow: false)
+        
+        speciesViewController = SpeciesMenuViewController()
+        speciesViewController!.showSpeciesMenu(showHidden: false)
         
         sideViewController.showSelectedCell(with: checkApplicationState())
         
@@ -256,10 +273,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 nutella.net.asyncRequest("all_notes", message: dict as AnyObject, requestName: "all_notes")
             }
-            
             DispatchQueue.main.async(execute: block)
-            
-            
         } else {
             //we have been disconnected
         }
@@ -269,12 +283,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Mark: Nutella setup
     
     func setupConnection(withHost host: String) {
-        
         nutella = Nutella(brokerHostname: host,
                           appId: "wallcology",
                           runId: "default",
                           componentId: "BeaconTerminal", netDelegate: self)
-        
         let sub_1 = "note_changes"
         let sub_2 = "echo_out"
         nutella?.net.subscribe(sub_1)

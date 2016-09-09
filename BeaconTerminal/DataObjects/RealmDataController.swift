@@ -564,6 +564,7 @@ extension RealmDataController {
                     section.teacher = teacher
                 }
                 
+                realm?.add(section, update:true)
                 //add system config
                 systemConfigruation.sections.append(section)
                 
@@ -577,6 +578,7 @@ extension RealmDataController {
                         }
                         
                         group.index = groupIndex
+                        realm?.add(group)
                         
                         //add groups
                         section.groups.append(group)
@@ -595,7 +597,7 @@ extension RealmDataController {
                         
                         //create speciesObservation place holders for group
                         if placeHolders {
-                          prepareSpeciesObservations(for: group, simConfig: simConfig)
+                          prepareSpeciesObservations(for: group)
                         }
                     }
                 }
@@ -608,20 +610,21 @@ extension RealmDataController {
         return systemConfigruation
     }
     
-    func prepareSpeciesObservations(for group: Group, simConfig: SimulationConfiguration) {
-        let allSpecies = simConfig.species
-        
-        //create a speciesObservation for each species
-        for fromSpecies in allSpecies {
-            // var makeRelationship : (String, Group) -> List<SpeciesObservation>
-            
-            let speciesObservation = SpeciesObservation()
-            speciesObservation.fromSpecies = fromSpecies
-            speciesObservation.groupIndex = group.index
-            
-            preparePreferences(for: speciesObservation)
-            
-            group.speciesObservations.append(speciesObservation)
+    func prepareSpeciesObservations(for group: Group) {
+        if let allSpecies = realm?.species {
+            //create a speciesObservation for each species
+            for fromSpecies in allSpecies {
+                // var makeRelationship : (String, Group) -> List<SpeciesObservation>
+                
+                let speciesObservation = SpeciesObservation()
+                speciesObservation.id = UUID().uuidString
+                speciesObservation.fromSpecies = fromSpecies
+                speciesObservation.groupIndex = group.index
+                realm?.add(speciesObservation, update: true)
+                //preparePreferences(for: speciesObservation)
+                
+                group.speciesObservations.append(speciesObservation)
+            }
         }
     }
     
