@@ -596,7 +596,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="7ep-h8-Hzi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="7ep-h8-Hzi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -815,8 +815,8 @@
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BCg-8I-yeD" customClass="TabSegmentedControl" customModule="BeaconTerminal" customModuleProvider="target">
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <segments>
-                                                    <segment title="Species Accounts"/>
-                                                    <segment title="ScratchPad"/>
+                                                    <segment title="SPECIES ACCOUNTS"/>
+                                                    <segment title="SCRATCH PAD"/>
                                                 </segments>
                                                 <color key="tintColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                             </segmentedControl>
@@ -863,8 +863,6 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="groupLabel" destination="RAS-vP-gsC" id="LIL-Eo-lDt"/>
                         <outlet property="sectionLabel" destination="MSr-Jv-G38" id="wWt-Uc-22N"/>

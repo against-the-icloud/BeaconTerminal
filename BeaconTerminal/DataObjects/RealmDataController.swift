@@ -339,9 +339,9 @@ class RealmDataController {
             }
         }
         
-        if let speciesIndex = speciesIndex {
+        if let groupIndex = groupIndex {
             try! realm?.write {
-                currentRuntime?.currentSpeciesIndex.value = speciesIndex
+                currentRuntime?.currentGroupIndex.value = groupIndex
                 realm?.add(currentRuntime!, update: true)
             }
         }

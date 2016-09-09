@@ -15,14 +15,10 @@ class MainContainerController: UIViewController {
     @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var topTabbar: TabSegmentedControl!
-
     
     var notificationTokens = [NotificationToken]()
-    
     var runtimeResults: Results<Runtime>?
     var runtimeNotificationToken: NotificationToken? = nil
-    
-    
     
     deinit {
         for notificationToken in notificationTokens {
@@ -72,9 +68,12 @@ class MainContainerController: UIViewController {
     }
     
     func updateHeader() {
-        if let groupIndex = realm?.runtimeGroupIndex(), let sectionName = realm?.runtimeSectionName(), let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex) {
-            groupLabel.text = group.name
+        if let sectionName = realm?.runtimeSectionName() {
             sectionLabel.text = "SECTION: \(sectionName)"
+        }
+        
+        if let groupIndex = realm?.runtimeGroupIndex(), let sectionName = realm?.runtimeSectionName(), let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex) {
+            groupLabel.text = group.name        
         }
     }
     

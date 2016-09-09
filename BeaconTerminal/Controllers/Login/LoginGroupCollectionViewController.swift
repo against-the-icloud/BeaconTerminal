@@ -72,14 +72,13 @@ extension LoginGroupCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let sectionName = realm?.runtimeSectionName(), let section = realm?.section(withName: sectionName)  {
-            if section.groups.count <= indexPath.row {
-                realmDataController?.updateRuntime(withSectionName: nil, withSpeciesIndex: nil, withGroupIndex: indexPath.row)
-                //TODO
-                //realmDataController?.updateUser(withGroup: group, section: selectedSection!)
-                self.performSegue(withIdentifier: "unwindToSideMenu", sender: self)
-            }
-        }
+        
+        realmDataController?.updateRuntime(withSectionName: nil, withSpeciesIndex: nil, withGroupIndex: indexPath.row)
+        //TODO
+        //realmDataController?.updateUser(withGroup: group, section: selectedSection!)
+        self.performSegue(withIdentifier: "unwindToSideMenu", sender: self)
+        
+        
         self.dismiss(animated: true, completion: {})
     }
     

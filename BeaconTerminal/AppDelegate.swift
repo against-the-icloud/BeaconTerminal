@@ -163,28 +163,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
     }
     
-    func preparePlaceGroupUI() -> NavigationDrawerController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
-        let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
-        
-        
-        bottomNavigationController = AppBottomNavigationController()
-        
-        let navigationController: NavigationDrawerController = NavigationDrawerController(rootViewController: mainViewController)
-        navigationController.statusBarStyle = .lightContent
-        
-        // create drawer
-        
-        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
-        
-        
-        sideViewController.showSelectedCell(with: checkApplicationState())
-        
-        return navigationDrawerController
-    }
-
-    
     func prepareBasicGroupUI() -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
@@ -200,6 +178,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         speciesViewController = SpeciesMenuViewController()
         speciesViewController!.showSpeciesMenu(showHidden: false)
+        
+        sideViewController.showSelectedCell(with: checkApplicationState())
+        
+        return navigationDrawerController
+    }
+    
+    func preparePlaceGroupUI() -> NavigationDrawerController{
+        let terminalStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
+        
+        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+        let sideViewController = mainStoryBoard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
+        
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        
+        navigationController.isNavigationBarHidden = true
+        navigationController.statusBarStyle = .default
         
         sideViewController.showSelectedCell(with: checkApplicationState())
         
