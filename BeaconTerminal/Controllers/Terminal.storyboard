@@ -141,9 +141,9 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DrH-U8-XET" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="BOm-N5-BPR"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DrH-U8-XET" secondAttribute="bottom" constant="6" id="Kvm-OC-EvL"/>
+                            <constraint firstItem="DrH-U8-XET" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="EQV-Ek-1Lg"/>
                             <constraint firstAttribute="trailing" secondItem="DrH-U8-XET" secondAttribute="trailing" constant="8" id="R9z-TP-sQu"/>
-                            <constraint firstItem="DrH-U8-XET" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="oqE-pf-s94"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DrH-U8-XET" secondAttribute="bottom" constant="6" id="xYi-KL-hv5"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -172,7 +172,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="750" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="izh-6g-oeE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="izh-6g-oeE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -500,7 +500,7 @@
                         <viewControllerLayoutGuide type="bottom" id="IIs-bj-AS4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MoL-od-Xsk">
-                        <rect key="frame" x="0.0" y="44" width="750" height="412"/>
+                        <rect key="frame" x="0.0" y="44" width="1024" height="680"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FkF-57-8TM" userLabel="MainStackView">
@@ -910,7 +910,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieP-xY-bub">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ieP-xY-bub">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

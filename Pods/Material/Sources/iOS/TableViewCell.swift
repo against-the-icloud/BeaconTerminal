@@ -30,7 +30,6 @@
 
 import UIKit
 
-@IBDesignable
 open class TableViewCell: UITableViewCell {
 	/**
      A CAShapeLayer used to manage elements that would be affected by
@@ -38,7 +37,7 @@ open class TableViewCell: UITableViewCell {
      allows the dropshadow effect on the backing layer, while clipping
      the image to a desired shape within the visualLayer.
      */
-	open internal(set) var visualLayer: CAShapeLayer!
+	open private(set) lazy var visualLayer = CAShapeLayer()
 	
     /// An Array of pulse layers.
     open private(set) lazy var pulseLayers = [CAShapeLayer]()
@@ -68,7 +67,7 @@ open class TableViewCell: UITableViewCell {
      */
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		prepareView()
+		prepare()
 	}
 	
 	/**
@@ -78,7 +77,7 @@ open class TableViewCell: UITableViewCell {
      */
 	public override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		prepareView()
+		prepare()
 	}
 	
 	open override func layoutSublayers(of layer: CALayer) {
@@ -145,12 +144,12 @@ open class TableViewCell: UITableViewCell {
 	
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open func prepareView() {
+	open func prepare() {
 		selectionStyle = .none
 		separatorInset = .zero
 		contentScaleFactor = Device.scale

@@ -30,63 +30,33 @@
 
 import UIKit
 
-extension UIViewController {
-	/**
-     A convenience property that provides access to the SearchBarController.
-     This is the recommended method of accessing the SearchBarController
-     through child UIViewControllers.
-     */
-	public var searchBarController: SearchBarController? {
-		var viewController: UIViewController? = self
-		while nil != viewController {
-			if viewController is SearchBarController {
-				return viewController as? SearchBarController
-			}
-			viewController = viewController?.parent
-		}
-		return nil
-	}
-}
-
-open class SearchBarController: RootController {
-	/// Reference to the SearchBar.
-    open private(set) lazy var searchBar: SearchBar = SearchBar()
-	
-	/**
-     To execute in the order of the layout chain, override this
-     method. LayoutSubviews should be called immediately, unless you
-     have a certain need.
-     */
-	open override func layoutSubviews() {
-		super.layoutSubviews()
-        
-        searchBar.grid.layoutEdgeInsets.top = .phone == Device.userInterfaceIdiom && Device.isLandscape ? 0 : 20
-        
-        let p = searchBar.intrinsicContentSize.height + searchBar.grid.layoutEdgeInsets.top + searchBar.grid.layoutEdgeInsets.bottom
-        
-        searchBar.width = view.width + searchBar.grid.layoutEdgeInsets.left + searchBar.grid.layoutEdgeInsets.right
-        searchBar.height = p
-        
-        rootViewController.view.y = p
-        rootViewController.view.height = view.height - p
-	}
-	
-	/**
+open class RemindersController: UIViewController {
+    /// A reference to a Reminder.
+    open private(set) lazy var reminders: Reminders = Reminders()
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        prepare()
+    }
+    
+    /**
      Prepares the view instance when intialized. When subclassing,
      it is recommended to override the prepare method
      to initialize property values and other setup operations.
      The super.prepare method should always be called immediately
      when subclassing.
      */
-	open override func prepare() {
-		super.prepare()
-		prepareSearchBar()
-	}
-	
-	/// Prepares the searchBar.
-	private func prepareSearchBar() {
-        searchBar.depthPreset = .depth1
-        searchBar.zPosition = 1000
-        view.addSubview(searchBar)
-	}
+    open func prepare() {
+        view.clipsToBounds = true
+        view.backgroundColor = Color.white
+        view.contentScaleFactor = Device.scale
+        prepareReminder()
+    }
+    
+    /// Prepares the reminder.
+    private func prepareReminder() {
+        reminders.delegate = self
+    }
 }
+
+extension RemindersController: RemindersDelegate {}

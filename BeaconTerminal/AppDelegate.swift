@@ -10,7 +10,7 @@ let REFRESH_DB = true
 let EXPORT_DB = true
 
 // localhost || remote
-let HOST = "remote"
+let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
 
@@ -130,7 +130,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIView.hr_setToastThemeColor(UIColor.black())
         
-        setupConnection(withHost: REMOTE)
+        setupConnection(withHost: LOCAL)
+        
+        UIApplication.shared.statusBarStyle = .lightContent
         
         return true
     }
@@ -285,8 +287,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                           componentId: "BeaconTerminal", netDelegate: self)
         let sub_1 = "note_changes"
         let sub_2 = "echo_out"
+       // let sub_3 = "set_current_run"
         nutella?.net.subscribe(sub_1)
         nutella?.net.subscribe(sub_2)
+        //nutella?.net.subscribe(sub_3)
         Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
     }
     
@@ -372,6 +376,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    
+    func checkCurrentRun(run:String) {
+        
+    }
 }
 
 extension AppDelegate: NutellaNetDelegate {
@@ -397,6 +406,10 @@ extension AppDelegate: NutellaNetDelegate {
         nutellaUpdate.updateType = .message
         realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
         LOG.debug("----- PubSub Recieved on: \(channel) from: \(from) -----")
+        //once recieved set_run runid
+        //check run, async 'get_current_run"
+        //if cool, request 'roster', give portal types 'group', get list of groups,
+        //get species names - terminal 
     }
     
 }

@@ -129,29 +129,31 @@ open class TabBar: BarView {
     
     open override func layoutSubviews() {
 		super.layoutSubviews()
-		if willRenderView {
-            guard 0 < buttons.count else {
-                return
-            }
-            
-            let columns: Int = contentView.grid.axis.columns / buttons.count
-            for b in buttons {
-                b.grid.columns = columns
-                b.contentEdgeInsets = .zero
-                b.cornerRadius = 0
-                
-                if isLineAnimated {
-                    prepareLineAnimationHandler(button: b)
-                }
-            }
-            contentView.grid.reload()
-                
-            if nil == selected {
-                selected = buttons.first
-            }
-                
-            line.frame = CGRect(x: selected!.x, y: .bottom == lineAlignment ? height - lineHeight : 0, width: selected!.width, height: lineHeight)
+        guard willLayout else {
+            return
         }
+        
+        guard 0 < buttons.count else {
+            return
+        }
+            
+        let columns: Int = contentView.grid.axis.columns / buttons.count
+        for b in buttons {
+            b.grid.columns = columns
+            b.contentEdgeInsets = .zero
+            b.cornerRadius = 0
+            
+            if isLineAnimated {
+                prepareLineAnimationHandler(button: b)
+            }
+        }
+        contentView.grid.reload()
+            
+        if nil == selected {
+            selected = buttons.first
+        }
+            
+        line.frame = CGRect(x: selected!.x, y: .bottom == lineAlignment ? height - lineHeight : 0, width: selected!.width, height: lineHeight)
 	}
 	
 	/// Handles the button touch event.
@@ -199,13 +201,13 @@ open class TabBar: BarView {
     
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open override func prepareView() {
-		super.prepareView()
+	open override func prepare() {
+		super.prepare()
         
         autoresizingMask = .flexibleWidth
         prepareLine()

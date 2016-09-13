@@ -92,7 +92,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
         NotificationCenter.default.removeObserver(self)
     }
 
-    var toolsMenuView : MenuView = MenuView()
+    var toolsMenuView : Menu = Menu()
 
     var scanButton: FabButton?
 
@@ -115,7 +115,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationDrawerController?.enabled = true
+        navigationDrawerController?.isEnabled = true
         let scannerViewController = self.storyboard?.instantiateViewController(withIdentifier: "scannerViewController")
         scannerViewController!.modalPresentationStyle = .overFullScreen
         
@@ -395,7 +395,7 @@ extension MainViewController: ToolMenuDelegate {
 //                self.view.bringSubviewToFront(self.toolsMenuView)
 //            }
 //        }
-        if toolsMenuView.menu.isOpened == false {
+        if toolsMenuView.isOpened == false {
             self.handleToolsMenuSelection()
         }
     }
@@ -584,10 +584,10 @@ extension MainViewController {
         }
 
         // Initialize the menu and setup the configuration options.
-        toolsMenuView.menu.direction = .up
-        toolsMenuView.menu.baseSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
-        toolsMenuView.menu.itemSize = CGSize(width: toolsButtonDiameter, height: toolsButtonDiameter)
-        toolsMenuView.menu.views = toolMenuButtons
+        toolsMenuView.direction = .up
+        toolsMenuView.baseSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
+        toolsMenuView.itemSize = CGSize(width: toolsButtonDiameter, height: toolsButtonDiameter)
+        toolsMenuView.views = toolMenuButtons
 
 
         toolsMenuView.center = toolsMenuButtonCenter

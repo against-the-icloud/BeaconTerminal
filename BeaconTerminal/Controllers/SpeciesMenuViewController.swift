@@ -48,7 +48,7 @@ class SpeciesMenuViewController: UIViewController {
         }
     }
     
-    var speciesMenuView: MenuView?
+    var speciesMenuView: Menu?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -78,9 +78,9 @@ class SpeciesMenuViewController: UIViewController {
         
         if let sv = speciesMenuView {
             sv.removeFromSuperview()
-            speciesMenuView = MenuView()
+            speciesMenuView = Menu()
         } else {
-            speciesMenuView = MenuView()
+            speciesMenuView = Menu()
         }
         
         /// Diameter for FabButtons.
@@ -143,11 +143,11 @@ class SpeciesMenuViewController: UIViewController {
         
         
         // Initialize the menu and setup the configuration options.
-        speciesMenuView!.menu.direction = .up
-        speciesMenuView!.menu.interimSpace = sideMenuButtonSpacing
-        speciesMenuView!.menu.baseSize = CGSize(width: speciesDiameter, height: speciesDiameter)
-        speciesMenuView!.menu.itemSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
-        speciesMenuView!.menu.views = speciesMenuButtons
+        speciesMenuView!.direction = .up
+        speciesMenuView!.interimSpace = sideMenuButtonSpacing
+        speciesMenuView!.baseSize = CGSize(width: speciesDiameter, height: speciesDiameter)
+        speciesMenuView!.itemSize = CGSize(width: sideMenuButtonDiameter, height: sideMenuButtonDiameter)
+        speciesMenuView!.views = speciesMenuButtons
         speciesMenuView!.backgroundColor = UIColor.blue
         
         speciesMenuView!.center = speciesMenuButtonCenter
@@ -307,28 +307,28 @@ class SpeciesMenuViewController: UIViewController {
     }
     
     func isOpen() -> Bool {
-        return speciesMenuView!.menu.isOpened
+        return speciesMenuView!.isOpened
     }
     
     func openMenu() {
-        if !speciesMenuView!.menu.isOpened {
-            speciesMenuView!.open(completion: {
-                (self.speciesMenuView!.menu.views?.first as? Button)?.backgroundColor = Color.green.base
-            })
-            
-            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0.125))
-        }
+//        if !speciesMenuView!.isOpened {
+//            speciesMenuView!.open(completion: {
+//                (self.speciesMenuView!.views?.first as? Button)?.backgroundColor = Color.green.base
+//            })
+//            
+//            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0.125))
+//        }
     }
     
     func closeMenu() {
-        if speciesMenuView!.menu.isOpened {
-            speciesMenuView!.close(completion: {
-                (self.speciesMenuView!.menu.views?.first as? Button)?.backgroundColor = Color.blue.base
-                (self.speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0))
-            })
-            
-            
-        }
+//        if speciesMenuView!.isOpened {
+//            speciesMenuView!.close(completion: {
+//                (self.speciesMenuView!.menu.views?.first as? Button)?.backgroundColor = Color.blue.base
+//                (self.speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0))
+//            })
+//            
+//            
+//        }
     }
     
     func showSpeciesMenu(showHidden: Bool) {
@@ -348,7 +348,7 @@ class SpeciesMenuViewController: UIViewController {
     }
     
     func menuHandler() {
-        if speciesMenuView!.menu.isOpened {
+        if speciesMenuView!.isOpened {
             closeMenu()
             openAction()
         } else {
@@ -359,15 +359,15 @@ class SpeciesMenuViewController: UIViewController {
     
     /// Handle the menuView touch event.
     func handleSpeciesMenuSelection() {
-        if speciesMenuView!.menu.isOpened {
-            speciesMenuView!.menu.close()
-            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0))
+        if speciesMenuView!.isOpened {
+            speciesMenuView!.close()
+            (speciesMenuView!.views.first as? Button)?.animate(animation: Animation.rotate(rotation: 0))
         } else {
-            speciesMenuView!.menu.open() {
+            speciesMenuView!.open() {
                 (v: UIView) in
                 (v as? Button)?.pulse()
             }
-            (speciesMenuView!.menu.views?.first as? Button)?.animate(animation: Animation.rotate(rotation: 0.125))
+            (speciesMenuView!.views.first as? Button)?.animate(animation: Animation.rotate(rotation: 0.125))
         }
     }
     

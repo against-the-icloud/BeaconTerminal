@@ -16,16 +16,11 @@ class AppBottomNavigationController: BottomNavigationController {
         }
     }
     
-    
-    override func prepareView() {
-        super.prepareView()
-        prepareNavigationItem()
-        prepareTabBar()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNotification()
+        prepareNavigationItem()
+        prepareTabBar()
     }
     
     /// Handles the menuButton.

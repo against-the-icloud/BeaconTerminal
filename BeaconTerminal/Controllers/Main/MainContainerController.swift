@@ -10,11 +10,21 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class MainContainerController: UIViewController {
+@objc protocol TopToolbarDelegate {
+    func changeAppearance(withColor color: UIColor)
+}
+
+class MainContainerController: UIViewController{
+    @IBOutlet var containerViews: [UIView]!
     
     @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var topTabbar: TabSegmentedControl!
+    @IBOutlet weak var topPanel: UIView!
+    
+    @IBOutlet weak var badgeView: UIView!
+    
+    
     
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
@@ -69,12 +79,19 @@ class MainContainerController: UIViewController {
     
     func updateHeader() {
         if let sectionName = realm?.runtimeSectionName() {
-            sectionLabel.text = "SECTION: \(sectionName)"
+            sectionLabel.text = "\(sectionName)"
         }
         
-        if let groupIndex = realm?.runtimeGroupIndex(), let sectionName = realm?.runtimeSectionName(), let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex) {
-            groupLabel.text = group.name        
+        if let groupIndex = realm?.runtimeGroupIndex(), let sectionName = realm?.runtimeSectionName(), let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
+            topTabbar.setTitle("\(groupName.uppercased()) SPECIES ACCOUNTS", forSegmentAt: 0)
         }
+        
+//        badgeView.layer.cornerRadius = badgeView.frame.width/2.0
+        
+        for sv in badgeView.subviews {
+            sv.layer.cornerRadius = sv.bounds.width / 2.0
+        }
+        
     }
     
     func showLogin() {
@@ -83,5 +100,64 @@ class MainContainerController: UIViewController {
         
         self.present(loginNavigationController, animated: true, completion: {})
     }
+    @IBAction func tabChanged(_ sender: UISegmentedControl) {
+        
+        if sender.selectedSegmentIndex < containerViews.count {
+        
+        let showView = containerViews[sender.selectedSegmentIndex]
+        
+        for (index,containerView) in containerViews.enumerated() {
+            if index == sender.selectedSegmentIndex {
+                containerView.isHidden = false
+                containerView.fadeIn(toAlpha: 1.0) {_ in
+                    
+                }
+                
+            } else {
+                containerView.isHidden = true
+                containerView.fadeOut(0.0) {_ in
+                    
+                }
+            }
+        }
+        
+
+        showView.fadeIn(toAlpha: 1.0) {_ in
+            //            for tap in self.tapCollection {
+            //                tap.isEnabled = false
+            
+        }
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let id = segue.identifier else {
+            return
+        }
+        
+            switch id {
+            case "speciesPageContainerController":
+                if let svc = segue.destination as? SpeciePageContainerController {
+                    svc.topToolbarDelegate = self
+                }
+                break
+            default:
+                break
+            }
+        
+    }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
+extension MainContainerController: TopToolbarDelegate {
+    func changeAppearance(withColor color: UIColor) {        
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.topTabbar.backgroundColor = color
+            self.topPanel.backgroundColor = color
+            }, completion: nil)
+    }
 }

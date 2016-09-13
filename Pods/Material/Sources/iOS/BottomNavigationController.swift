@@ -59,10 +59,9 @@ public enum BottomNavigationTransitionAnimation: Int {
 	case fade
 }
 
-@IBDesignable
 open class BottomNavigationController: UITabBarController, UITabBarControllerDelegate {
 	/// The transition animation to use when selecting a new tab.
-	open var transitionAnimation: BottomNavigationTransitionAnimation = .fade
+	open var transitionAnimation = BottomNavigationTransitionAnimation.fade
 	
 	/**
      An initializer that initializes the object with a NSCoder object.
@@ -87,7 +86,7 @@ open class BottomNavigationController: UITabBarController, UITabBarControllerDel
 	
 	open override func viewDidLoad() {
 		super.viewDidLoad()
-		prepareView()
+		prepare()
 	}
 	
 	open override func viewWillLayoutSubviews() {
@@ -124,16 +123,16 @@ open class BottomNavigationController: UITabBarController, UITabBarControllerDel
 	
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open func prepareView() {
+	open func prepare() {
 		view.clipsToBounds = true
 		view.contentScaleFactor = Device.scale
 		delegate = self
-		prepareTabBar()
+        prepareTabBar()
 	}
 	
 	/// Handles transitions when tabBarItems are pressed.

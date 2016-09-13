@@ -30,7 +30,6 @@
 
 import UIKit
 
-@IBDesignable
 @objc(View)
 open class View: UIView {
 	/**
@@ -39,7 +38,7 @@ open class View: UIView {
      allows the dropshadow effect on the backing layer, while clipping
      the image to a desired shape within the visualLayer.
      */
-	open private(set) var visualLayer: CAShapeLayer!
+	open private(set) lazy var visualLayer = CAShapeLayer()
 	
 	/**
      A property that manages an image for the visualLayer's contents
@@ -132,7 +131,7 @@ open class View: UIView {
 	public required init?(coder aDecoder: NSCoder) {
 		contentsGravityPreset = .ResizeAspectFill
 		super.init(coder: aDecoder)
-		prepareView()
+		prepare()
 	}
 	
 	/**
@@ -144,7 +143,7 @@ open class View: UIView {
 	public override init(frame: CGRect) {
 		contentsGravityPreset = .ResizeAspectFill
 		super.init(frame: frame)
-		prepareView()
+		prepare()
 	}
 	
 	/// A convenience initializer.
@@ -167,12 +166,12 @@ open class View: UIView {
 	
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open func prepareView() {
+	open func prepare() {
 		contentScaleFactor = Device.scale
 		backgroundColor = Color.white
 		prepareVisualLayer()
@@ -180,8 +179,7 @@ open class View: UIView {
 	
 	/// Prepares the visualLayer property.
 	internal func prepareVisualLayer() {
-		visualLayer = CAShapeLayer()
-        visualLayer.zPosition = 0
+		visualLayer.zPosition = 0
 		visualLayer.masksToBounds = true
 		layer.addSublayer(visualLayer)
 	}

@@ -30,7 +30,6 @@
 
 import UIKit
 
-@IBDesignable
 @objc(MaterialCollectionReusableView)
 open class MaterialCollectionReusableView: UICollectionReusableView {
 	/**
@@ -39,16 +38,18 @@ open class MaterialCollectionReusableView: UICollectionReusableView {
      allows the dropshadow effect on the backing layer, while clipping
      the image to a desired shape within the visualLayer.
      */
-	open private(set) var visualLayer: CAShapeLayer!
+	open private(set) lazy var visualLayer = CAShapeLayer()
 	
 	/// An Array of pulse layers.
 	open private(set) lazy var pulseLayers = [CAShapeLayer]()
 	
 	/// The opcaity value for the pulse animation.
-	@IBInspectable open var pulseOpacity: CGFloat = 0.25
+	@IBInspectable
+    open var pulseOpacity: CGFloat = 0.25
 	
 	/// The color of the pulse effect.
-	@IBInspectable open var pulseColor = Color.grey.base
+	@IBInspectable
+    open var pulseColor = Color.grey.base
 	
 	/// The type of PulseAnimation.
 	open var pulseAnimation = PulseAnimation.pointWithBacking
@@ -58,7 +59,8 @@ open class MaterialCollectionReusableView: UICollectionReusableView {
      property. Images should not be set to the backing layer's contents
      property to avoid conflicts when using clipsToBounds.
      */
-	@IBInspectable open var image: UIImage? {
+	@IBInspectable
+    open var image: UIImage? {
 		didSet {
 			visualLayer.contents = image?.cgImage
 		}
@@ -174,7 +176,7 @@ open class MaterialCollectionReusableView: UICollectionReusableView {
 	public required init?(coder aDecoder: NSCoder) {
 		contentsGravityPreset = .ResizeAspectFill
 		super.init(coder: aDecoder)
-		prepareView()
+		prepare()
 	}
 	
 	/**
@@ -186,7 +188,7 @@ open class MaterialCollectionReusableView: UICollectionReusableView {
 	public override init(frame: CGRect) {
 		contentsGravityPreset = .ResizeAspectFill
 		super.init(frame: frame)
-		prepareView()
+		prepare()
 	}
 	
 	/// A convenience initializer.
@@ -258,12 +260,12 @@ open class MaterialCollectionReusableView: UICollectionReusableView {
 	
 	/**
 	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
+	it is recommended to override the prepare method
 	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
+	The super.prepare method should always be called immediately
 	when subclassing.
 	*/
-	open func prepareView() {
+	open func prepare() {
 		contentScaleFactor = Device.scale
 		pulseAnimation = .none
 		prepareVisualLayer()
@@ -271,7 +273,6 @@ open class MaterialCollectionReusableView: UICollectionReusableView {
 	
 	/// Prepares the visualLayer property.
 	internal func prepareVisualLayer() {
-        visualLayer = CAShapeLayer()
 		visualLayer.zPosition = 0
 		visualLayer.masksToBounds = true
 		layer.addSublayer(visualLayer)

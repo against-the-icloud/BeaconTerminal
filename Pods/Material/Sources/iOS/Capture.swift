@@ -221,19 +221,19 @@ open class Capture: View, UIGestureRecognizerDelegate {
 	}
 	
 	/// A reference to the CapturePreview view.
-	open private(set) var previewView: CapturePreview!
+	open internal(set) var previewView: CapturePreview!
 	
 	/// A reference to the CaptureSession.
-	open private(set) var captureSession: CaptureSession!
+	open internal(set) var captureSession: CaptureSession!
 	
 	/// A reference to the focus layer used in focus animations.
-	open private(set) var focusLayer: Layer?
+	open internal(set) var focusLayer: Layer?
 	
     /// A reference to the exposure layer used in exposure animations.
-    open private(set) var exposureLayer: Layer?
+    open internal(set) var exposureLayer: Layer?
 	
     /// A reference to the reset layer used in reset animations.
-    open private(set) var resetLayer: Layer?
+    open internal(set) var resetLayer: Layer?
 	
 	/// A reference to the cameraButton.
 	open var cameraButton: UIButton? {
@@ -312,13 +312,13 @@ open class Capture: View, UIGestureRecognizerDelegate {
 	
     /**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open override func prepareView() {
-		super.prepareView()
+	open override func prepare() {
+		super.prepare()
 		backgroundColor = Color.black
         prepareCaptureSession()
 		preparePreviewView()

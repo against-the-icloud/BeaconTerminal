@@ -55,7 +55,7 @@ class Group: Object {
 class SpeciesObservation: Object {
     dynamic var id : String? = nil
     dynamic var authors : String? = nil
-    dynamic var isSynced = false
+    let isSynced = RealmOptional<Bool>()
     dynamic var groupIndex = 0
     dynamic var lastModified = Date()
     dynamic var fromSpecies: Species?
@@ -86,7 +86,7 @@ class SpeciesObservation: Object {
         }
         
         if let isSynced = json["isSynced"].bool {
-            self.isSynced = isSynced
+            self.isSynced.value = isSynced
         }
         
         if let fromSpecies = realmDataController?.parseSpeciesJSON(withJson: json)  {
@@ -401,6 +401,13 @@ extension Realm {
         return nil
     }
     
+    func allSpeciesObservationsForCurrentSectionAndGroup() -> List<SpeciesObservation>? {        
+        if let groupIndex = runtimeGroupIndex(), let sectionName = runtimeSectionName() {
+            return allSpeciesObservations(withSectionName: sectionName, withGroupIndex: groupIndex)
+        }
+        return nil
+    }
+    
     func allSpeciesObservations() -> Results<SpeciesObservation> {
         return allObjects(ofType: SpeciesObservation.self)
     }
@@ -411,6 +418,27 @@ extension Realm {
     
     func speciesObservation(withId id: String) -> SpeciesObservation? {
         return allObjects(ofType: SpeciesObservation.self).filter(using: "id = '\(id)'").first
+    }
+    
+    func speciesObservation(FromCollection speciesObservations: List<SpeciesObservation>, withSpeciesIndex speciesIndex: Int) -> SpeciesObservation? {
+        
+        if speciesObservations.isEmpty {
+            return nil
+        }
+        
+        guard let found = speciesObservations.filter(using: "fromSpecies.index = \(speciesIndex)").first else {
+            return nil
+        }
+        
+        return found
+    }
+    
+    
+    func speciesObservations(withSectionName sectionName: String, withGroupIndex groupIndex: Int) -> List<SpeciesObservation>? {
+        if let group = group(withSectionName: sectionName, withGroupIndex: groupIndex) {
+            return group.speciesObservations
+        }
+        return nil
     }
     
     func speciesObservation(withGroup group: Group?, withFromSpeciesIndex index: Int) -> SpeciesObservation? {

@@ -36,7 +36,7 @@ public enum ContentViewAlignment: Int {
     case center
 }
 
-open class ControlView: View {
+open class ContentView: View {
     /// Should center the contentView.
     open var contentViewAlignment = ContentViewAlignment.any {
         didSet {
@@ -45,7 +45,7 @@ open class ControlView: View {
     }
     
 	/// Will render the view.
-	open var willRenderView: Bool {
+	open var willLayout: Bool {
 		return 0 < width && 0 < height && nil != superview
 	}
 	
@@ -93,7 +93,8 @@ open class ControlView: View {
     }
     
 	/// Grid cell factor.
-	@IBInspectable open var gridFactor: CGFloat = 24 {
+	@IBInspectable
+    open var gridFactor: CGFloat = 24 {
 		didSet {
 			assert(0 < gridFactor, "[Material Error: gridFactor must be greater than 0.]")
 			layoutSubviews()
@@ -101,7 +102,7 @@ open class ControlView: View {
 	}
 
 	/// ContentView that holds the any desired subviews.
-	open private(set) lazy var contentView: UIView = UIView()
+	open private(set) lazy var contentView = View()
 	
 	/// Left side UIControls.
 	open var leftControls = [UIView]() {
@@ -161,67 +162,70 @@ open class ControlView: View {
 	
 	open override func layoutSubviews() {
 		super.layoutSubviews()
-		if willRenderView {
-            var lc = 0
-            var rc = 0
-            let l = (CGFloat(leftControls.count) * interimSpace)
-            let r = (CGFloat(rightControls.count) * interimSpace)
-            let p = width - l - r - contentEdgeInsets.left - contentEdgeInsets.right
-			let columns = Int(p / gridFactor)
-            
-            grid.begin()
-            grid.views.removeAll()
-            grid.axis.columns = columns
-            
-            for v in leftControls {
-                (v as? UIButton)?.contentEdgeInsets = .zero
-                v.sizeToFit()
-                v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
-                
-                lc += v.grid.columns
-                
-                grid.views.append(v)
-            }
-            
-            grid.views.append(contentView)
-            
-            for v in rightControls {
-                (v as? UIButton)?.contentEdgeInsets = .zero
-                v.sizeToFit()
-                v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
-                
-                rc += v.grid.columns
-                
-                grid.views.append(v)
-            }
-            
-            contentView.grid.begin()
-            if .center == contentViewAlignment {
-                if lc < rc {
-                    contentView.grid.columns = columns - 2 * rc
-                    contentView.grid.offset.columns = rc - lc
-                } else {
-                    contentView.grid.columns = columns - 2 * lc
-                    rightControls.first?.grid.offset.columns = lc - rc
-                }
-            } else {
-                contentView.grid.columns = columns - lc - rc
-            }
-            
-            grid.commit()
-            contentView.grid.commit()
+        guard willLayout else {
+            return
         }
+        
+        var lc = 0
+        var rc = 0
+        let l = (CGFloat(leftControls.count) * interimSpace)
+        let r = (CGFloat(rightControls.count) * interimSpace)
+        let p = width - l - r - contentEdgeInsets.left - contentEdgeInsets.right
+        let columns = Int(p / gridFactor)
+        
+        grid.begin()
+        grid.views.removeAll()
+        grid.axis.columns = columns
+        
+        for v in leftControls {
+            (v as? UIButton)?.contentEdgeInsets = .zero
+            v.sizeToFit()
+            v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
+            
+            lc += v.grid.columns
+            
+            grid.views.append(v)
+        }
+        
+        grid.views.append(contentView)
+        
+        for v in rightControls {
+            (v as? UIButton)?.contentEdgeInsets = .zero
+            v.sizeToFit()
+            v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
+            
+            rc += v.grid.columns
+            
+            grid.views.append(v)
+        }
+        
+        contentView.grid.begin()
+        
+        if .center == contentViewAlignment {
+            if lc < rc {
+                contentView.grid.columns = columns - 2 * rc
+                contentView.grid.offset.columns = rc - lc
+            } else {
+                contentView.grid.columns = columns - 2 * lc
+                rightControls.first?.grid.offset.columns = lc - rc
+            }
+        } else {
+            contentView.grid.columns = columns - lc - rc
+        }
+        
+        grid.commit()
+        contentView.grid.commit()
     }
     
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open override func prepareView() {
-		super.prepareView()
+	open override func prepare() {
+		super.prepare()
 		prepareContentView()
 	}
 	

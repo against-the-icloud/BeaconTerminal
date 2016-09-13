@@ -30,7 +30,6 @@
 
 import UIKit
 
-@IBDesignable
 @objc(Button)
 open class Button: UIButton {
 	/**
@@ -39,10 +38,10 @@ open class Button: UIButton {
      allows the dropshadow effect on the backing layer, while clipping
      the image to a desired shape within the visualLayer.
      */
-	open private(set) var visualLayer: CAShapeLayer!
+	open private(set) lazy var visualLayer = CAShapeLayer()
 	
 	/// An Array of pulse layers.
-	public private(set) lazy var pulseLayers = [CAShapeLayer]()
+	open private(set) lazy var pulseLayers = [CAShapeLayer]()
 	
 	/// The opacity value for the pulse animation.
 	@IBInspectable
@@ -103,7 +102,7 @@ open class Button: UIButton {
      */
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		prepareView()
+		prepare()
 	}
 	
 	/**
@@ -114,7 +113,7 @@ open class Button: UIButton {
      */
 	public override init(frame: CGRect) {
 		super.init(frame: frame)
-		prepareView()
+		prepare()
 	}
 	
 	/// A convenience initializer.
@@ -224,12 +223,12 @@ open class Button: UIButton {
 	
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open func prepareView() {
+	open func prepare() {
         contentScaleFactor = Device.scale
         contentEdgeInsetsPreset = .none
 		prepareVisualLayer()
@@ -237,7 +236,6 @@ open class Button: UIButton {
 	
 	/// Prepares the visualLayer property.
 	internal func prepareVisualLayer() {
-        visualLayer = CAShapeLayer()
         visualLayer.zPosition = 0
 		visualLayer.masksToBounds = true
 		layer.addSublayer(visualLayer)

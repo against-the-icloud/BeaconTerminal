@@ -69,11 +69,11 @@ public protocol ToolbarControllerDelegate {
 
 @objc(ToolbarController)
 open class ToolbarController: RootController {
-	/// Internal reference to the floatingViewController.
+    /// Reference to the Toolbar.
+    open private(set) lazy var toolbar: Toolbar = Toolbar()
+    
+    /// Internal reference to the floatingViewController.
 	private var internalFloatingViewController: UIViewController?
-	
-	/// Reference to the Toolbar.
-    open internal(set) lazy var toolbar: Toolbar = Toolbar()
 	
 	/// Delegation handler.
 	open weak var delegate: ToolbarControllerDelegate?
@@ -176,13 +176,13 @@ open class ToolbarController: RootController {
 	
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open override func prepareView() {
-		super.prepareView()
+	open override func prepare() {
+		super.prepare()
 		prepareToolbar()
 	}
 	

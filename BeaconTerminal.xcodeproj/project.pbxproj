@@ -13,9 +13,15 @@
 		700A3AB61D4BC7D8009B540D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB51D4BC7D8009B540D /* Photos.framework */; };
 		700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */; };
 		701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */; };
+		701385C71D83334C0081FEB1 /* SpeciesPages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701385C61D83334C0081FEB1 /* SpeciesPages.storyboard */; };
+		701385CA1D8334BA0081FEB1 /* SpeciesPageContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701385C91D8334BA0081FEB1 /* SpeciesPageContainerController.swift */; };
+		701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701385CB1D8336890081FEB1 /* SpeciesPageContentController.swift */; };
 		701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */; };
 		701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */; };
 		701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */; };
+		7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */; };
+		7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */; };
+		7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EF1D865A6400C31119 /* SyncViewController.swift */; };
 		701841011D6041AF003921A1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701841001D6041AF003921A1 /* MapViewController.swift */; };
 		702FDD8C1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */; };
 		702FDD8D1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -28,11 +34,15 @@
 		70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */; };
 		70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
+		704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */; };
+		704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */; };
 		705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */; };
 		7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7064CAA31D6783FB00B77ADA /* StringUtil.swift */; };
 		706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */; };
 		7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7070C4D41D4E77BA00AB47FF /* Popover.storyboard */; };
 		7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */; };
+		708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */; };
+		708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */; };
 		708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D70631D2EFEF70032F422 /* CoverFlowCell.swift */; };
 		708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708D70651D2F03070032F422 /* CoverFlowCell.xib */; };
 		708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */; };
@@ -135,9 +145,15 @@
 		700A3AB51D4BC7D8009B540D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		701385C61D83334C0081FEB1 /* SpeciesPages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SpeciesPages.storyboard; path = SpeicesPages/SpeciesPages.storyboard; sourceTree = "<group>"; };
+		701385C91D8334BA0081FEB1 /* SpeciesPageContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesPageContainerController.swift; path = SpeicesPages/SpeciesPageContainerController.swift; sourceTree = "<group>"; };
+		701385CB1D8336890081FEB1 /* SpeciesPageContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesPageContentController.swift; path = SpeicesPages/SpeciesPageContentController.swift; sourceTree = "<group>"; };
 		701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalRelationshipTableViewController.swift; path = Terminal/TerminalRelationshipTableViewController.swift; sourceTree = "<group>"; };
 		701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GraveYard.storyboard; sourceTree = "<group>"; };
 		701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalCellController.swift; path = Terminal/TerminalCellController.swift; sourceTree = "<group>"; };
+		7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidenceSpeciesViewController.swift; path = SpeicesPages/EvidenceSpeciesViewController.swift; sourceTree = "<group>"; };
+		7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesCellDetailController.swift; path = SpeicesPages/SpeciesCellDetailController.swift; sourceTree = "<group>"; };
+		7017A2EF1D865A6400C31119 /* SyncViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncViewController.swift; path = Login/SyncViewController.swift; sourceTree = "<group>"; };
 		701841001D6041AF003921A1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		702FDD8A1D805BD500B0EEDE /* SimpleMQTTClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SimpleMQTTClient.framework; sourceTree = "<group>"; };
 		702FDD8F1D805BEA00B0EEDE /* Nutella.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nutella.framework; sourceTree = "<group>"; };
@@ -148,11 +164,15 @@
 		70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeUtil.swift; sourceTree = "<group>"; };
 		70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesMenuViewController.swift; path = BeaconTerminal/Controllers/SpeciesMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
+		704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesViewController.swift; path = SpeicesPages/ChooseSpeciesViewController.swift; sourceTree = "<group>"; };
+		704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesHeader.swift; path = SpeicesPages/ChooseSpeciesHeader.swift; sourceTree = "<group>"; };
 		705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBottomNavigationController.swift; sourceTree = "<group>"; };
 		7064CAA31D6783FB00B77ADA /* StringUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipDetailViewController.swift; sourceTree = "<group>"; };
 		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popover.storyboard; sourceTree = "<group>"; };
 		7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelationshipDropView.swift; path = BeaconTerminal/Controllers/Carousel/RelationshipDropView.swift; sourceTree = SOURCE_ROOT; };
+		708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesRelationshipTableController.swift; path = SpeicesPages/SpeciesRelationshipTableController.swift; sourceTree = "<group>"; };
+		708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesRelationshipContrainerController.swift; path = SpeicesPages/SpeciesRelationshipContrainerController.swift; sourceTree = "<group>"; };
 		708D70631D2EFEF70032F422 /* CoverFlowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowCell.swift; sourceTree = "<group>"; };
 		708D70651D2F03070032F422 /* CoverFlowCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverFlowCell.xib; sourceTree = "<group>"; };
 		708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CoverFlow.storyboard; path = BeaconTerminal/Controllers/Carousel/CoverFlow.storyboard; sourceTree = SOURCE_ROOT; };
@@ -273,6 +293,22 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
+		701385C81D8333560081FEB1 /* SpeciesPages */ = {
+			isa = PBXGroup;
+			children = (
+				701385C61D83334C0081FEB1 /* SpeciesPages.storyboard */,
+				701385C91D8334BA0081FEB1 /* SpeciesPageContainerController.swift */,
+				701385CB1D8336890081FEB1 /* SpeciesPageContentController.swift */,
+				708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */,
+				708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */,
+				704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */,
+				704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */,
+				7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */,
+				7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */,
+			);
+			name = SpeciesPages;
+			sourceTree = "<group>";
+		};
 		701840FF1D604181003921A1 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +376,7 @@
 				7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */,
 				7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */,
 				70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */,
+				7017A2EF1D865A6400C31119 /* SyncViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -482,6 +519,7 @@
 				70C1CF341D592DEB00CB687E /* Login */,
 				C0A7DAF922A5401E5A9F4885 /* Main */,
 				70E8F41A1D162CA8007DF331 /* Setup */,
+				701385C81D8333560081FEB1 /* SpeciesPages */,
 				C0A7DC783C6B08701103D5EF /* Carousel */,
 				C0A7D0A9DAF73012903BE55B /* Test */,
 			);
@@ -661,6 +699,7 @@
 				70A06DD31CE3F84D008FC11F /* click.wav in Resources */,
 				AE9764941C22C1BF0058A4DC /* Assets.xcassets in Resources */,
 				70F29A641D57DB820057A497 /* Roboto-Thin.ttf in Resources */,
+				701385C71D83334C0081FEB1 /* SpeciesPages.storyboard in Resources */,
 				70A06DD41CE3F84D008FC11F /* coin.wav in Resources */,
 				70A06DD61CE3FB54008FC11F /* tap.wav in Resources */,
 				708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */,
@@ -807,6 +846,7 @@
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
 				70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */,
 				7003BEE21D81F96C0029B0EE /* TabSegmentedControl.swift in Sources */,
+				7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */,
 				7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */,
 				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
 				701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */,
@@ -817,10 +857,12 @@
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
 				7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */,
+				704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */,
 				70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */,
 				70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */,
 				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
 				70D9C1B21D6650B700FAF080 /* LoginGroupCollectionViewController.swift in Sources */,
+				704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */,
 				70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */,
 				70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */,
 				701841011D6041AF003921A1 /* MapViewController.swift in Sources */,
@@ -832,20 +874,26 @@
 				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
+				701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
 				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
 				70F29A5A1D57D8200057A497 /* PreferenceUILabel.swift in Sources */,
+				701385CA1D8334BA0081FEB1 /* SpeciesPageContainerController.swift in Sources */,
 				70F29A541D57655E0057A497 /* GradientView.swift in Sources */,
 				70D4E2341D6CF925003102AC /* TerminalRelationshipDetailTableViewController.swift in Sources */,
+				708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
 				C0A7D3406B5149858C3801A4 /* TestUITableViewController.swift in Sources */,
+				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
+				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
 				C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */,
 				70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */,
 				C0A7DDEB47B86F12E4714985 /* PlaceTerminalViewController.swift in Sources */,
+				708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

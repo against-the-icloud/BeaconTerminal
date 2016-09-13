@@ -41,42 +41,46 @@ class SideViewController: UITableViewController {
             cell.selectionStyle = .blue
         }
         
-        
         if (indexPath as NSIndexPath).section == 0 {
             switch (indexPath as NSIndexPath).row {
             case 0:
+                // Mark: Place Group
+                
+                if let runtime = realm?.runtime() {
+                    try! realm?.write {
+                        runtime.currentSpeciesIndex.value = nil
+                        runtime.currentGroupIndex.value = nil
+                        realm?.add(runtime, update: true)
+                    }
+                    
+                    realmDataController?.deleteAllSpeciesObservations()
+                }
                 
                 getAppDelegate().changeSystemStateTo(.placeGroup)
+        
                 
-                //place group tablet
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
-                //mainViewController.changeApplicationState(ApplicationState.PLACE_GROUP)
+                let terminalStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
                 
+                let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+                let sideViewController = mainStoryBoard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
                 
-                let scratchPadViewController = storyboard.instantiateViewController(withIdentifier: "scratchPadViewController") as! ScratchPadViewController
+                let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+                _ = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
                 
-                let mapViewController = storyboard.instantiateViewController(withIdentifier: "mapViewController") as! MapViewController
+                navigationController.isNavigationBarHidden = true
+                navigationController.statusBarStyle = .default
                 
-                let bottomNavigationController: AppBottomNavigationController = AppBottomNavigationController()
-                
-                bottomNavigationController.viewControllers = [mainViewController, scratchPadViewController, mapViewController]
-                bottomNavigationController.selectedIndex = 0
-                
-                //create top navigationbar
-                let navigationController: AppNavigationController = AppNavigationController(rootViewController: bottomNavigationController)
-                
-                navigationController.statusBarStyle = .lightContent
-                
-                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
+                navigationDrawerController!.transitionFromRootViewController(toViewController: navigationController,
                                                                              duration: 0,
                                                                              options: [],
                                                                              animations: nil,
                                                                              completion: {
                                                                                 [weak self] _ in
-                                                                                
                                                                                 self?.navigationDrawerController?.closeLeftView()
                     })
+                
+                break
             case 1:                                
                 // Mark: place terminal
                 
@@ -159,40 +163,8 @@ class SideViewController: UITableViewController {
         } else if (indexPath as NSIndexPath).section == 2 {
             switch (indexPath as NSIndexPath).row {
             case 0:
-//                //control panel
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
-//                
-//                //create top navigationbar
-//                let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
-//                
-//                
-//                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-//                                                                             duration: 0,
-//                                                                             options: [],
-//                                                                             animations: nil,
-//                                                                             completion: {
-//                                                                                [weak self] _ in
-//                                                                                self?.navigationDrawerController?.closeLeftView()
-//                    })
                 break
             case 1:
-                
-//                //debug
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let controlPanelViewController = storyboard.instantiateViewController(withIdentifier: "controlPanelViewController") as! ControlPanelViewController
-//                
-//                //create top navigationbar
-//                let navigationController: AppNavigationController = AppNavigationController(rootViewController: controlPanelViewController)
-//                
-//                navigationDrawerController?.transitionFromRootViewController(toViewController: navigationController,
-//                                                                             duration: 0,
-//                                                                             options: [],
-//                                                                             animations: nil,
-//                                                                             completion: {
-//                                                                                [weak self] _ in
-//                                                                                self?.navigationDrawerController?.closeLeftView()
-//                    })
                 break
             default:
                 break
@@ -205,7 +177,6 @@ class SideViewController: UITableViewController {
                 let loginNavigationController = storyboard.instantiateViewController(withIdentifier: "loginNavigationController") as! UINavigationController
                 
                 self.present(loginNavigationController, animated: true, completion: {})
-                
             default:
                 break
             }

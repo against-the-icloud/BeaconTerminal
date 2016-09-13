@@ -30,7 +30,6 @@
 
 import UIKit
 
-@IBDesignable
 open class RootController: UIViewController {
 	/// Device status bar style.
 	open var statusBarStyle: UIStatusBarStyle {
@@ -70,7 +69,7 @@ open class RootController: UIViewController {
      */
 	public required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		prepareView()
+		prepare()
 	}
 	
 	/**
@@ -80,7 +79,7 @@ open class RootController: UIViewController {
      */
 	public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		prepareView()
+		prepare()
 	}
 	
 	/**
@@ -90,7 +89,7 @@ open class RootController: UIViewController {
 	public init(rootViewController: UIViewController) {
 		super.init(nibName: nil, bundle: nil)
 		self.rootViewController = rootViewController
-		prepareView()
+		prepare()
 	}
 	
 	open override func viewWillLayoutSubviews() {
@@ -145,12 +144,12 @@ open class RootController: UIViewController {
 	
 	/**
      Prepares the view instance when intialized. When subclassing,
-     it is recommended to override the prepareView method
+     it is recommended to override the prepare method
      to initialize property values and other setup operations.
-     The super.prepareView method should always be called immediately
+     The super.prepare method should always be called immediately
      when subclassing.
      */
-	open func prepareView() {
+	open func prepare() {
         view.clipsToBounds = true
         view.backgroundColor = Color.white
         view.contentScaleFactor = Device.scale
@@ -160,7 +159,7 @@ open class RootController: UIViewController {
 	
 	/// A method that prepares the rootViewController.
 	internal func prepareRootViewController() {
-		prepareViewControllerWithinContainer(viewController: rootViewController, container: view)
+		prepareControllerWithinContainer(viewController: rootViewController, container: view)
 	}
 	
 	/**
@@ -171,7 +170,7 @@ open class RootController: UIViewController {
 	- Parameter container: A UIView that is the parent of the
 	passed in controller view within the view hierarchy.
 	*/
-	internal func prepareViewControllerWithinContainer(viewController: UIViewController?, container: UIView) {
+	internal func prepareControllerWithinContainer(viewController: UIViewController?, container: UIView) {
 		if let v: UIViewController = viewController {
 			addChildViewController(v)
 			container.addSubview(v.view)

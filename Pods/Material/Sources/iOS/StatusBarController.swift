@@ -48,10 +48,9 @@ extension UIViewController {
 	}
 }
 
-@IBDesignable
 open class StatusBarController: RootController {
 	/// A reference to the statusBarView.
-	open internal(set) lazy var statusBarView = View()
+	open private(set) lazy var statusBarView = View()
 	
 	/**
 	To execute in the order of the layout chain, override this
@@ -66,13 +65,13 @@ open class StatusBarController: RootController {
 	
 	/**
 	Prepares the view instance when intialized. When subclassing,
-	it is recommended to override the prepareView method
+	it is recommended to override the prepare method
 	to initialize property values and other setup operations.
-	The super.prepareView method should always be called immediately
+	The super.prepare method should always be called immediately
 	when subclassing.
 	*/
-	open override func prepareView() {
-        super.prepareView()
+	open override func prepare() {
+        super.prepare()
 		prepareStatusBarView()
 	}
 	
