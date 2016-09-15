@@ -127,9 +127,7 @@ class SpeciesRelationshipTableController: UITableViewController {
                 
                 updateCell(relationshipResults: relationshipResults)
             }
-            break
-        default:
-            break
+            break      
         }
     }
     
@@ -172,22 +170,10 @@ class SpeciesRelationshipTableController: UITableViewController {
                     ev.fromSpeciesIndex = speciesIndex
                     ev.toSpeciesIndex = foundRelationship.toSpecies?.index
                     ev.relationship = foundRelationship
+                    ev.deleteButton.isEnabled = true
                     ev.title = "EDIT EVIDENCE"
-                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased()) RELATIONSHIP'"
+                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
                 }
-                
-                
-                
-//                if let ev = segue.destination as? EvidenceSpeciesViewController, let speciesIndex = self.speciesIndex, let relationshipType = self.relationshipType, let speciesCell = sender as? LoginSpeciesCell {
-//                    
-//                    ev.relationshipType = relationshipType
-//                    ev.fromSpeciesIndex = speciesIndex
-//                    ev.toSpeciesIndex = speciesCell.speciesIndex
-//                    
-//                    ev.title = "2. ADD EVIDENCE"
-//                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased()) RELATIONSHIP'"
-//                }
-
                 break
             case "chooseSpeciesSegue":
                 
@@ -196,7 +182,7 @@ class SpeciesRelationshipTableController: UITableViewController {
                     csvc.relationshipType = relationshipType
                     csvc.speciesIndex = speciesIndex
                     csvc.title = "1. CHOOSE A SPECIES"
-                    csvc.navigationItem.prompt = "CREATE '\(StringUtil.relationshipString(withType: relationshipType).uppercased()) RELATIONSHIP'"
+                    csvc.navigationItem.prompt = "CREATE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
                 }
                 break
             default:

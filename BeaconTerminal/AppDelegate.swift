@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
-        prepareViews(applicationType: ApplicationType.placeGroup )
+        prepareViews(applicationType: ApplicationType.placeTerminal )
         
         prepareDB()
         

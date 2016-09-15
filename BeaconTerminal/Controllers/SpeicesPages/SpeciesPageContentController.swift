@@ -81,9 +81,9 @@ class SpeciesPageContentController: UIViewController {
             speciesLabel.textColor = UIColor.black
         } else {
             contentView.borderColor = UIColor.red
-            contentView.backgroundColor = #colorLiteral(red: 0.9450979829, green: 0.2705881894, blue: 0.2392157018, alpha: 0.7328895246)
-            tabSegmentedControl.tintColor = UIColor.white
-            speciesLabel.textColor = UIColor.white
+            contentView.backgroundColor = #colorLiteral(red: 0.9994968772, green: 0.8941870332, blue: 0.962585628, alpha: 1)
+            tabSegmentedControl.tintColor = UIColor.black
+            speciesLabel.textColor = UIColor.black
         }
     }
     

@@ -35,8 +35,6 @@ class EvidenceSpeciesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareTitlePanel()
-        
-      
     }
     
     func prepareTitlePanel() {
@@ -54,7 +52,7 @@ class EvidenceSpeciesViewController: UIViewController {
         
         fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
         
-         toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
+        toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
         
         relationshipTypeLabel.text = "\(StringUtil.relationshipString(withType: relationshipType))"
     }
