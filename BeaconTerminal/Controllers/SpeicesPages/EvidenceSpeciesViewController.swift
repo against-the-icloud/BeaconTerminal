@@ -15,12 +15,13 @@ class EvidenceSpeciesViewController: UIViewController {
     var fromSpeciesIndex: Int?
     var toSpeciesIndex: Int?
     var relationshipType: RelationshipType?
+    var relationship: Relationship?
     
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var fromSpeciesImageView: UIImageView!
     @IBOutlet weak var relationshipTypeLabel: UILabel!
     @IBOutlet weak var toSpeciesImageView: UIImageView!
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -34,6 +35,8 @@ class EvidenceSpeciesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareTitlePanel()
+        
+      
     }
     
     func prepareTitlePanel() {
@@ -56,31 +59,80 @@ class EvidenceSpeciesViewController: UIViewController {
         relationshipTypeLabel.text = "\(StringUtil.relationshipString(withType: relationshipType))"
     }
     
+    
+    @IBAction func deleteAction(_ sender: AnyObject) {
+        
+        self.dismiss(animated: true, completion: {
+            
+            guard let fromIndex = self.fromSpeciesIndex else {
+                return
+            }
+            
+            
+            guard let toSpeciesIndex = self.toSpeciesIndex else {
+                return
+            }
+            
+            
+            let newRelationship = Relationship()
+            
+            if let r = self.relationship {
+                newRelationship.id = r.id
+            } else {
+                
+            }
+            
+            
+            if let toSpecies = realm?.speciesWithIndex(withIndex: toSpeciesIndex) {
+                newRelationship.toSpecies = toSpecies
+            }
+            
+            newRelationship.note = self.noteTextView.text
+            
+            if let relationshipType = self.relationshipType {
+                newRelationship.relationshipType = relationshipType.rawValue
+            }
+            
+            realmDataController?.delete(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
+
+        })
+                
+    }
+    
+    
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
         
-        guard let fromIndex = self.fromSpeciesIndex else {
-            return
-        }
-        
-        guard let toSpeciesIndex = self.toSpeciesIndex else {
-            return
-        }
-        
-        let relationship = Relationship()
-        
-        if let toSpecies = realm?.speciesWithIndex(withIndex: toSpeciesIndex) {
-            relationship.toSpecies = toSpecies                        
-        }
-        
-        relationship.note = noteTextView.text
+        self.dismiss(animated: true, completion: {
+            guard let fromIndex = self.fromSpeciesIndex else {
+                return
+            }
+            
+            guard let toSpeciesIndex = self.toSpeciesIndex else {
+                return
+            }
+            
 
-        if let relationshipType = self.relationshipType {
-            relationship.relationshipType = relationshipType.rawValue
-        }
-        
-        realmDataController?.add(withRelationship: relationship, withSpeciesIndex: fromIndex)
-        
-        self.dismiss(animated: true, completion: nil)
+            let newRelationship = Relationship()
+            
+            if let r = self.relationship {
+                newRelationship.id = r.id
+            } else {
+                
+            }
+            
+            
+            if let toSpecies = realm?.speciesWithIndex(withIndex: toSpeciesIndex) {
+                newRelationship.toSpecies = toSpecies
+            }
+            
+            newRelationship.note = self.noteTextView.text
+            
+            if let relationshipType = self.relationshipType {
+                newRelationship.relationshipType = relationshipType.rawValue
+            }
+            
+            realmDataController?.add(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
+        })
         
     }
     

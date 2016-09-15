@@ -177,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VfI-ar-93M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1593" y="-334"/>
+            <point key="canvasLocation" x="327" y="196"/>
         </scene>
         <!--PreferencesView-->
         <scene sceneID="AaW-nk-GGY">
@@ -366,7 +366,7 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpg-a9-kh9">
                                                     <connections>
-                                                        <segue destination="cDp-LH-ngx" kind="embed" identifier="speciesCellSegue" id="Pch-sf-nrk"/>
+                                                        <segue destination="cDp-LH-ngx" kind="embed" identifier="speciesCellSegue" id="vXQ-Ow-r9r"/>
                                                     </connections>
                                                 </containerView>
                                             </subviews>
@@ -516,6 +516,7 @@
                     <connections>
                         <outlet property="addRelationshipButton" destination="45O-VT-imP" id="Qbl-t1-0kV"/>
                         <outlet property="relationshipHeaderLabel" destination="U5J-10-Zbf" id="MX0-Gk-YbI"/>
+                        <segue destination="CIf-FG-GKy" kind="presentation" identifier="editSpeciesSegue" modalPresentationStyle="formSheet" id="Gkr-z7-gWe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORn-ls-vW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -571,6 +572,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j4s-mS-vzr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1200" y="1629"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ubg-gz-Vvd">
+            <objects>
+                <navigationController id="CIf-FG-GKy" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qwB-EF-C5j">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7DK-j9-BqG" kind="relationship" relationship="rootViewController" id="UHa-zh-QfJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sV8-Kp-pmY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1653" y="1591"/>
         </scene>
         <!--CHOOSE SPECIES-->
         <scene sceneID="taC-gb-vZo">
@@ -861,6 +878,12 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="EVIDENCE" prompt="support prompt" id="OxB-cU-2wA">
                         <barButtonItem key="backBarButtonItem" title="Back" id="4HF-g2-Az8"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="zef-qi-Dni">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="deleteAction:" destination="7DK-j9-BqG" id="HZQ-Un-TiK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Ut0-w3-GLZ">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -870,6 +893,7 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="deleteButton" destination="zef-qi-Dni" id="S7M-80-LWU"/>
                         <outlet property="fromSpeciesImageView" destination="kRF-e0-tO4" id="E9M-3q-Hpk"/>
                         <outlet property="noteTextView" destination="J6b-4g-YHC" id="Qjs-fh-Y8B"/>
                         <outlet property="relationshipTypeLabel" destination="xE2-Yu-qbz" id="fBO-Xd-adO"/>
@@ -887,6 +911,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="csQ-8q-xhl"/>
-        <segue reference="NVi-4Q-kq5"/>
+        <segue reference="vXQ-Ow-r9r"/>
+        <segue reference="UHa-zh-QfJ"/>
     </inferredMetricsTieBreakers>
 </document>

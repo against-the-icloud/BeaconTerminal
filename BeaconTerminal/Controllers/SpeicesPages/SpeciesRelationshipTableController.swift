@@ -82,8 +82,11 @@ class SpeciesRelationshipTableController: UITableViewController {
     
     func  updateCell(relationshipResults: Results<Relationship>) {
         for (index, relationship) in relationshipResults.enumerated() {
-            if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
-                cell.updateCell(withRelationship: relationship)
+            for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
+                if !cell.used {
+                    cell.updateCell(withRelationship: relationship)
+                    break
+                }
             }
         }
     }
@@ -96,8 +99,11 @@ class SpeciesRelationshipTableController: UITableViewController {
                 //find the relationship
                 let relationship = relationshipResults[index]
                 
-                if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
-                    cell.updateCell(withRelationship: relationship)
+                for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
+                    if !cell.used {
+                        cell.updateCell(withRelationship: relationship)
+                        break
+                    }
                 }
             }
             break
@@ -114,11 +120,12 @@ class SpeciesRelationshipTableController: UITableViewController {
             }
             break
         case .delete:
-            for index in indexes {
-                if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
-                    let relationship = relationshipResults[index]
+            if indexes.count > 0 {
+                for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
                     cell.delete()
                 }
+                
+                updateCell(relationshipResults: relationshipResults)
             }
             break
         default:
@@ -157,7 +164,30 @@ class SpeciesRelationshipTableController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier {
             switch segueId {
-            case "embedCell":
+            case "editSpeciesSegue":
+                
+                if let uinav = segue.destination as? UINavigationController, let ev = uinav.viewControllers.first as? EvidenceSpeciesViewController, let speciesIndex = self.speciesIndex, let relationshipType = self.relationshipType, let cell = sender as? SpeciesCellDetailController, let foundRelationship = cell.relationship {
+                    
+                    ev.relationshipType = relationshipType
+                    ev.fromSpeciesIndex = speciesIndex
+                    ev.toSpeciesIndex = foundRelationship.toSpecies?.index
+                    ev.relationship = foundRelationship
+                    ev.title = "EDIT EVIDENCE"
+                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased()) RELATIONSHIP'"
+                }
+                
+                
+                
+//                if let ev = segue.destination as? EvidenceSpeciesViewController, let speciesIndex = self.speciesIndex, let relationshipType = self.relationshipType, let speciesCell = sender as? LoginSpeciesCell {
+//                    
+//                    ev.relationshipType = relationshipType
+//                    ev.fromSpeciesIndex = speciesIndex
+//                    ev.toSpeciesIndex = speciesCell.speciesIndex
+//                    
+//                    ev.title = "2. ADD EVIDENCE"
+//                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased()) RELATIONSHIP'"
+//                }
+
                 break
             case "chooseSpeciesSegue":
                 
@@ -174,8 +204,20 @@ class SpeciesRelationshipTableController: UITableViewController {
             }
         }
     }
+}
+
+extension SpeciesRelationshipTableController {
     
-    
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = self.childViewControllers[indexPath.item] as? SpeciesCellDetailController {
+            
+            guard let r = cell.relationship else {
+                return
+            }
+            
+            performSegue(withIdentifier: "editSpeciesSegue", sender: cell)
+        }
+    }
     
 }
+

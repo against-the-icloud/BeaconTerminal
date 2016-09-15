@@ -431,6 +431,28 @@ class RealmDataController {
     
     //Mark: UPDATE SPECIES OBSERVATION
     
+    
+    func delete(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int) {
+        
+        guard let speciesObservations = realm?.allSpeciesObservationsForCurrentSectionAndGroup() else {
+            return
+        }
+        
+        //couldn't find the species relationship
+        guard let foundSO = realm?.speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
+            return
+        }
+        
+        if let toSpecies = relationship.toSpecies,
+            let foundRelationship = realm?.relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
+            
+            
+            try! realm?.write {
+                realm?.delete(foundRelationship)                
+            }
+        }
+    }
+    
     func add(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int) {
         //get all the observations for the context
         guard let speciesObservations = realm?.allSpeciesObservationsForCurrentSectionAndGroup() else {

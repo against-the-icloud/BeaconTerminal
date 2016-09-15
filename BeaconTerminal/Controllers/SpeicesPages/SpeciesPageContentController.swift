@@ -39,27 +39,6 @@ class SpeciesPageContentController: UIViewController {
     }
     
     func prepareNotifications() {
-        
-//        speciesObservationResults = realm?.allSpeciesObservationsForCurrentSectionAndGroup()?.sorted(onProperty: "fromSpecies.index")
-//        
-//        speciesObsNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-//            
-//            guard let controller = self else { return }
-//            switch changes {
-//            case .Initial(let speciesObservationResults):
-////                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
-//                break
-//            case .Update(let _, _, _, _):
-////                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
-//                break
-//            case .Error(let error):
-//                // An error occurred while opening the Realm file on the background worker thread
-//                fatalError("\(error)")
-//                break
-//            }
-//        }
-        UIColor(red:0.76, green:0.57, blue:0.73, alpha:1.00)
-        
         if let allSO = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let speciesIndex = speciesIndex{
             shouldSync = allSO.filter(using: "fromSpecies.index = \(speciesIndex) AND isSynced = false")
             
@@ -82,8 +61,6 @@ class SpeciesPageContentController: UIViewController {
                         } else {
                             controller.colors(forSynced: false)
                         }
-                        
-                        //                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                         break
                     case .Error(let error):
                         // An error occurred while opening the Realm file on the background worker thread
