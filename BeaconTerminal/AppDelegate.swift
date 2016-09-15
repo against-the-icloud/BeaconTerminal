@@ -130,7 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIView.hr_setToastThemeColor(UIColor.black())
         
-        setupConnection(withHost: LOCAL)
+        setupConnection(withHost: REMOTE)
         
         UIApplication.shared.statusBarStyle = .lightContent
         
@@ -281,15 +281,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Mark: Nutella setup
     
     func setupConnection(withHost host: String) {
-        nutella = Nutella(brokerHostname: host,
-                          appId: "wallcology",
-                          runId: "default",
-                          componentId: "BeaconTerminal", netDelegate: self)
+        
+        switch checkApplicationState() {
+        case .placeGroup:
+            nutella = Nutella(brokerHostname: host,
+                              appId: "wallcology",
+                              runId: "default",
+                              componentId: ApplicationType.placeGroup.rawValue, netDelegate: self)
+            break
+        case .placeTerminal:
+            nutella = Nutella(brokerHostname: host,
+                              appId: "wallcology",
+                              runId: "default",
+                              componentId: ApplicationType.placeTerminal.rawValue, netDelegate: self)
+            break
+        default:
+            break
+        }
+        
+        
+     
         let sub_1 = "note_changes"
         let sub_2 = "echo_out"
        // let sub_3 = "set_current_run"
         nutella?.net.subscribe(sub_1)
         nutella?.net.subscribe(sub_2)
+        
+        var dict = [String:String]()
+        dict["HEY_NOW_MAN"] = "HELLO"
+        
+        nutella?.net.publish("echo_in", message: dict as AnyObject)
         //nutella?.net.subscribe(sub_3)
         Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
     }

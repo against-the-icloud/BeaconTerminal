@@ -69,9 +69,7 @@ class EvidenceSpeciesViewController: UIViewController {
         let relationship = Relationship()
         
         if let toSpecies = realm?.speciesWithIndex(withIndex: toSpeciesIndex) {
-            relationship.toSpecies = toSpecies
-            
-            
+            relationship.toSpecies = toSpecies                        
         }
         
         relationship.note = noteTextView.text

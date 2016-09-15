@@ -29,6 +29,14 @@ class SpeciesCellDetailController: UIViewController {
         super.viewDidLoad()
     }
     
+    func delete() {
+        self.relationship = nil
+        self.used = false
+        self.fromSpeciesIndex = -1
+        self.toSpeciesImageView.image = nil
+        self.toSpeciesImageView.isHidden = true
+    }
+    
     func updateCell(withRelationship relationship: Relationship) {
         self.relationship = relationship
         self.used = true

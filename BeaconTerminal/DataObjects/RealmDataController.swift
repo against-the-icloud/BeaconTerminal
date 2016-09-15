@@ -55,7 +55,7 @@ class RealmDataController {
         
         switch getAppDelegate().checkApplicationState() {
         case .placeTerminal:
-            handlePlaceMessages(withMessage: message, withChannel: channel)
+            handlePlaceTerminalMessages(withMessage: message, withChannel: channel)
             break
         case .placeGroup:
             handlePlaceGroupMessages(withMessage: message, withChannel: channel)
@@ -96,7 +96,7 @@ class RealmDataController {
         
     }
     
-    func handlePlaceMessages(withMessage message: Any, withChannel channel: String) {
+    func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {
         guard let currentSpeciesIndex = realm?.runtimeSpeciesIndex() else {
             //need species for this message
             return
@@ -109,6 +109,7 @@ class RealmDataController {
         case NutellaChannelType.allNotesWithSpecies.rawValue:
             let header = parseHeader(withMessage: message)
             if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                
                 // import the message
                 parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
             }
@@ -133,10 +134,12 @@ class RealmDataController {
             //no speciesIndex
             return nil
         }
+        
         guard let groupIndex = json["header"]["groupIndex"].int else {
             //no speciesIndex
             return nil
         }
+        
         var header = Header()
         header.speciesIndex = speciesIndex
         header.groupIndex = groupIndex
@@ -244,6 +247,7 @@ class RealmDataController {
                             realm?.add(speciesObservation!, update: true)
                         }
                     } else {
+                        
                         //new object
                         try! realm?.write {
                             speciesObservation = SpeciesObservation()
@@ -267,13 +271,20 @@ class RealmDataController {
                             realm?.add(speciesObservation!, update: true)
                             //find its group
                             if let group = realm?.group(withSectionName: sectionName, withGroupIndex: speciesObservation!.groupIndex) {
-                                if let fromSpecies = speciesObservation?.fromSpecies, let needToMerge = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
-                                    //check timestamps
-                                    LOG.debug("NEED TO MERGE \(needToMerge)")
-                                } else {
-                                    group.speciesObservations.append(speciesObservation!)
-                                    realm?.add(group, update: true)
-                                }
+                                
+                             if let fromSpecies = speciesObservation?.fromSpecies, let needToDelete = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
+                                //check timestamps
+                                LOG.debug("NEED TO DELETE \(needToDelete)")
+                                realm?.delete(needToDelete)
+                                realm?.add(speciesObservation!, update: true)
+                                group.speciesObservations.append(speciesObservation!)
+                                realm?.add(group, update: true)
+                            } else {
+                                group.speciesObservations.append(speciesObservation!)
+                                realm?.add(group, update: true)
+                                
+                                
+                            }
                             }
                         }
                     }
@@ -426,18 +437,29 @@ class RealmDataController {
             return
         }
         
-        guard let found = realm?.speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
+        //couldn't find the species relationship
+        guard let foundSO = realm?.speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
             return
         }
         
-        try! realm?.write {
-            realm?.add(relationship, update: true)
-            found.relationships.append(relationship)
-            found.isSynced.value = false
-            realm?.add(found, update: true)
+        if let toSpecies = relationship.toSpecies,
+            let foundRelationship = realm?.relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
+            
+            relationship.id = foundRelationship.id
+            try! realm?.write {
+                realm?.add(relationship, update: true)
+                foundSO.isSynced.value = false
+                realm?.add(foundSO, update: true)
+            }
+        } else {
+            relationship.generateId()
+            try! realm?.write {
+                realm?.add(relationship, update: true)
+                foundSO.relationships.append(relationship)
+                foundSO.isSynced.value = false
+                realm?.add(foundSO, update: true)
+            }
         }
-        
-        
     }
     
     func generateTestData() {

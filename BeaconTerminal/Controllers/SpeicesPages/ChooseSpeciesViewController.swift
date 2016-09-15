@@ -14,6 +14,7 @@ class ChooseSpeciesViewController: UICollectionViewController {
     
     var speciesIndex: Int?
     var relationshipType: RelationshipType?
+    var speciesFilterd: Results<Species>?
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     required init?(coder aDecoder: NSCoder) {
@@ -32,7 +33,30 @@ class ChooseSpeciesViewController: UICollectionViewController {
     }
     
     func prepareView() {
-        
+        if let speciesIndex = self.speciesIndex, let speciesObs = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let rType = self.relationshipType?.rawValue {
+            
+            if let so = speciesObs.filter(using: "fromSpecies.index = \(speciesIndex)").first {
+                let relationshipResults = so.relationships.filter(using: "relationshipType = '\(rType)'")
+                
+                if relationshipResults.isEmpty {
+                    speciesFilterd = realm?.species.filter(using: "index != \(speciesIndex)")
+                } else {
+                    
+                    
+                    //all the species that have been used
+                    var query = "index != \(speciesIndex)"
+                    for (index,r) in relationshipResults.enumerated() {
+                        if let toSpecies = r.toSpecies {
+                            query.append(" AND index != \(toSpecies.index)")
+                        }
+                    }
+                    
+                    speciesFilterd = realm?.species.filter(using: query)
+
+                }
+                
+            }
+        }
     }
     
     
@@ -65,21 +89,21 @@ class ChooseSpeciesViewController: UICollectionViewController {
 }
 
 extension ChooseSpeciesViewController {
-
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
         let headerView: ChooseSpeciesHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ChooseSpeciesHeader.chooseSpeciesHeaderIdentifier, for: indexPath) as! ChooseSpeciesHeader
-                
+        
         if let fromSpeciesIndex = self.speciesIndex, let rType = self.relationshipType {
             headerView.fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
             headerView.relationshipLabel.text = StringUtil.relationshipString(withType: rType).uppercased()
         }
-
+        
         return headerView
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let allSpecies = realm?.species {
+        if let allSpecies = speciesFilterd {
             return allSpecies.count
         } else {
             return 0
@@ -90,25 +114,16 @@ extension ChooseSpeciesViewController {
         return 1
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        
-//        if let allSpecies = realm?.species {
-//            if indexPath.row <=  allSpecies.count {
-//                realmDataController?.updateRuntime(withSectionName: nil, withSpeciesIndex: indexPath.row, withGroupIndex: nil)
-//                performSegue(withIdentifier: "unwindToTerminalView", sender: nil)
-//            }
-//        }
-//        self.dismiss(animated: true, completion: nil)
-//    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoginSpeciesCell.reuseIdentifier, for: indexPath) as! LoginSpeciesCell
         
-        if let fromSpecies = realm?.speciesWithIndex(withIndex: indexPath.row) {
-        
-        cell.speciesImageView.image = RealmDataController.generateImageForSpecies(fromSpecies.index, isHighlighted: true)
-        cell.speciesIndex = fromSpecies.index
-        cell.speciesLabel.text = "Species \(fromSpecies.index)"
+        if let filtered = speciesFilterd {
+            let toSpecies = filtered[indexPath.row]
+            
+            cell.speciesImageView.image = RealmDataController.generateImageForSpecies(toSpecies.index, isHighlighted: true)
+            cell.speciesIndex = toSpecies.index
+            cell.speciesLabel.text = "Species \(toSpecies.index)"
+            
         }
         return cell
     }

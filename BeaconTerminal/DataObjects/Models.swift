@@ -118,6 +118,10 @@ class Relationship: Object {
         return "id"
     }
     
+    func generateId() {
+        self.id = UUID().uuidString
+    }
+    
     func update(withJson json:JSON, shouldParseId: Bool){
         if shouldParseId {
             if let id = json["id"].string {
@@ -431,6 +435,18 @@ extension Realm {
         }
         
         return found
+    }
+    
+    func relationship(withSpeciesObservation speciesObservation: SpeciesObservation, withRelationshipType relationshipType: String, forSpeciesIndex speciesIndex: Int) -> Relationship? {
+        
+        let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'")
+        
+        if let toSpeciesFound = foundRelationships.filter(using: "toSpecies.index = \(speciesIndex)").first {
+            return toSpeciesFound
+        }
+
+        
+        return nil
     }
     
     

@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 import RealmSwift
 
+enum UpdateType: String {
+    case insert
+    case update
+    case delete
+}
+
+
 class SpeciesRelationshipTableController: UITableViewController {
     
     @IBOutlet weak var relationshipHeaderLabel: UILabel!
@@ -50,14 +57,17 @@ class SpeciesRelationshipTableController: UITableViewController {
                     guard let controller = self else { return }
                     switch changes {
                     case .Initial(let relationshipResults):
-                        for relationship in relationshipResults {
-                            controller.updateCell(withRelationship: relationship)
-                        }
+                        controller.updateCell(relationshipResults: relationshipResults)
                         break
-                    case .Update(let relationshipResults, _, _, _):
-                        for relationship in relationshipResults {
-                            controller.updateCell(withRelationship: relationship)
-                        }
+                    case .Update(let relationshipResults, let deletions, let insertions, let modifications):
+                        
+                        controller.updateCell(relationshipResults: relationshipResults, type: .insert, indexes: insertions)
+                        
+                        controller.updateCell(relationshipResults: relationshipResults, type: .update, indexes: modifications)
+                        
+                        controller.updateCell(relationshipResults: relationshipResults, type: .delete, indexes: deletions)
+
+
                         break
                     case .Error(let error):
                         // An error occurred while opening the Realm file on the background worker thread
@@ -70,17 +80,49 @@ class SpeciesRelationshipTableController: UITableViewController {
         }
     }
     
-    func updateCell(withRelationship relationship: Relationship) {
-        for cvc in self.childViewControllers {
-            if let cell = cvc as? SpeciesCellDetailController {
-                if cell.fromSpeciesIndex == speciesIndex && cell.toSpeciesIndex == relationship.toSpecies?.index {
+    func  updateCell(relationshipResults: Results<Relationship>) {
+        for (index, relationship) in relationshipResults.enumerated() {
+            if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
+                cell.updateCell(withRelationship: relationship)
+            }
+        }
+    }
+    
+    func updateCell(relationshipResults: Results<Relationship>, type: UpdateType, indexes: [Int]) {
+        switch type {
+        case .insert:
+            for index in indexes {
+                
+                //find the relationship
+                let relationship = relationshipResults[index]
+                
+                if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
                     cell.updateCell(withRelationship: relationship)
-                    return
-                } else if cell.used == false {
-                    cell.updateCell(withRelationship: relationship)
-                    return
                 }
             }
+            break
+        case .update:
+            for index in indexes {
+                
+                //find the relationship 
+                let relationship = relationshipResults[index]
+                
+                //find that cell
+                if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
+                    cell.updateCell(withRelationship: relationship)
+                }
+            }
+            break
+        case .delete:
+            for index in indexes {
+                if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
+                    let relationship = relationshipResults[index]
+                    cell.delete()
+                }
+            }
+            break
+        default:
+            break
         }
     }
     

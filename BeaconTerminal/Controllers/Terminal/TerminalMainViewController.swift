@@ -138,8 +138,8 @@ class TerminalMainViewController: UIViewController {
         if let nutella = nutella {
             let block = DispatchWorkItem {
                 if let speciesIndex = realm?.runtimeSpeciesIndex() {
-                    var dict = [String:String]()
-                    dict["speciesIndex"] = "\(speciesIndex)"
+                    var dict = [String:Int]()
+                    dict["speciesIndex"] = speciesIndex
                     let json = JSON(dict)
                     let jsonObject: Any = json.object
                     nutella.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
