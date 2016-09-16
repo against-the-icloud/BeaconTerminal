@@ -694,7 +694,7 @@ extension RealmDataController {
     
     // Mark: JSON Parsing
     
-    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "DEFAULT") -> SystemConfiguration {
+    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false) -> SystemConfiguration {
         realm!.beginWrite()
         
         let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
@@ -719,7 +719,6 @@ extension RealmDataController {
                     section.teacher = teacher
                 }
                 
-                if section.name == sectionName {
                     realm?.add(section, update:true)
                     //add system config
                     systemConfigruation.sections.append(section)
@@ -757,7 +756,7 @@ extension RealmDataController {
                             }
                         }
                     }
-                }
+            
                 
             }
         }
@@ -765,6 +764,69 @@ extension RealmDataController {
         realm?.add(systemConfigruation)
         try! realm?.commitWrite()
         return systemConfigruation
+    }
+    
+    class func parseUserGroupConfigurationJsonWithGroupRealm(){
+        groupSectionRealm!.beginWrite()
+        
+        let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
+        let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
+        let json = JSON(data: jsonData!)
+        
+        let systemConfigruation = SystemConfiguration()
+                
+        if let sections = json["sections"].array {
+            
+            for (_,sectionItem) in sections.enumerated() {
+                let section = Section()
+                
+                if let name = sectionItem["name"].string {
+                    section.name = name
+                }
+                
+                if let teacher = sectionItem["teacher"].string {
+                    section.teacher = teacher
+                }
+                
+                groupSectionRealm?.add(section, update:true)
+                //add system config
+                systemConfigruation.sections.append(section)
+                
+                if let groups = sectionItem["groups"].array {
+                    for (groupIndex,groupItem) in groups.enumerated() {
+                        
+                        let group = Group()
+                        
+                        if let name = groupItem["name"].string {
+                            group.name = name
+                        }
+                        
+                        group.index = groupIndex
+                        groupSectionRealm?.add(group, update:true)
+                        
+                        //add groups
+                        section.groups.append(group)
+                        
+                        if let groupMembers = groupItem["members"].array {
+                            for (_,memberItem) in groupMembers.enumerated() {
+                                
+                                let member = Member()
+                                member.name = memberItem.string
+                                
+                                //add members
+                                group.members.append(member)
+                                section.members.append(member)
+                            }
+                        }
+                    }
+                }
+                
+                
+            }
+        }
+        
+        groupSectionRealm?.add(systemConfigruation)
+        try! groupSectionRealm?.commitWrite()
     }
     
     func prepareSpeciesObservations(for group: Group) {
@@ -992,6 +1054,12 @@ extension RealmDataController {
     func deleteAllConfigurationAndGroups() {
         try! realm?.write {
             realm?.deleteAllObjects()
+        }
+    }
+    
+    class func deleteAllConfigurationAndGroupsSectionGroupRealm() {
+        try! groupSectionRealm?.write {
+            groupSectionRealm?.deleteAllObjects()
         }
     }
     func deleteAllUserData() {

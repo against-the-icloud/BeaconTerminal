@@ -96,6 +96,8 @@ struct NutellaUpdate {
 }
 
 
+var groupSectionRealm: Realm?
+    
 var realm: Realm?
 var nutella: Nutella?
 
@@ -128,9 +130,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
+        
+        
+        
         prepareViews(applicationType: ApplicationType.placeGroup)
         
-        prepareDB(withSectionName: SECTION_NAME)
+        prepareGroupSectionDB()
+        
+        //prepareDB(withSectionName: SECTION_NAME)
         
         UIView.hr_setToastThemeColor(UIColor.black())
         
@@ -239,6 +246,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Mark: db setup
     
+    func prepareGroupSectionDB() {
+        if Platform.isSimulator {
+            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalGroupSection.realm")
+            try! groupSectionRealm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+        } else {
+            //TODO
+            //device config
+            setDefaultGroupSectionRealm()
+        }
+        
+        
+        RealmDataController.deleteAllConfigurationAndGroupsSectionGroupRealm()
+        //re-up
+        RealmDataController.parseUserGroupConfigurationJsonWithGroupRealm()
+    }
+    
     func prepareDB(withSectionName sectionName: String) {
         
         if Platform.isSimulator {
@@ -268,6 +291,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         }
     }
+    func setDefaultGroupSectionRealm() {
+        var config = Realm.Configuration()
+        
+        // Use the default directory, but replace the filename with the username
+        config.fileURL = config.fileURL!.deletingLastPathComponent()
+            .appendingPathComponent("GroupSection.realm")
+        
+        // Set this as the configuration used for the default Realm
+        //Realm.Configuration.defaultConfiguration = config
+        
+        try! groupSectionRealm = Realm(configuration: config)
+    }
+
     
     func setDefaultRealm(withSectionName sectionName: String) {
         var config = Realm.Configuration()

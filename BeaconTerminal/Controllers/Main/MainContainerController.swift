@@ -44,6 +44,7 @@ class MainContainerController: UIViewController{
         super.viewDidLoad()
         topTabbar.initUI()
         prepareNotifications()
+        showLogin()
     }
     
     func prepareNotifications() {
