@@ -70,13 +70,6 @@ class SpeciesObservation: Object {
     
     func update(withJson json:JSON, shouldParseId: Bool){
         
-        if shouldParseId {
-            if let id = json["id"].string {
-                self.id = id
-            } else {
-                self.id = UUID().uuidString
-            }
-        }
         if let authors = json["authors"].string {
             self.authors = authors
         }
@@ -95,6 +88,14 @@ class SpeciesObservation: Object {
         
         if let ecosystem = realmDataController?.parseEcosystemJSON(withJson: json)  {
             self.ecosystem = ecosystem
+        }
+        
+        if shouldParseId {
+            if let id = json["id"].string {
+                self.id = id
+            } else {
+                self.id = "\(self.groupIndex)-\(self.fromSpecies?.index)"
+            }
         }
         
     }
@@ -460,6 +461,25 @@ extension Realm {
     func speciesObservation(withGroup group: Group?, withFromSpeciesIndex index: Int) -> SpeciesObservation? {
         if let group = group {
             return group.speciesObservations.filter(using: "fromSpecies.index = \(index)").first
+        }
+        return nil
+    }
+    
+    func speciesObservationCurrentSectionGroup(withFromSpeciesIndex fromSpeciesIndex: Int) -> SpeciesObservation? {
+        if let currentSection = realm?.runtimeSectionName(), let groupIndex = realm?.runtimeGroupIndex() {
+            if let group = group(withSectionName: currentSection, withGroupIndex: groupIndex) {
+                return speciesObservation(FromCollection: group.speciesObservations, withSpeciesIndex: fromSpeciesIndex)
+
+            }
+        }
+        return nil
+    }
+    
+    func speciesObservationsCurrentSectionGroup() -> List<SpeciesObservation>? {
+        if let currentSection = realm?.runtimeSectionName(), let groupIndex = realm?.runtimeGroupIndex() {
+            if let group = group(withSectionName: currentSection, withGroupIndex: groupIndex) {
+                return group.speciesObservations
+            }
         }
         return nil
     }

@@ -1,4 +1,4 @@
-import UIKit
+    import UIKit
 import RealmSwift
 import Material
 import XCGLogger
@@ -13,6 +13,9 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
+let LOCAL_IP = "10.0.1.6"
+var CURRENT_HOST = REMOTE
+var SECTION_NAME = "default"
 
 let LOG: XCGLogger = {
     
@@ -80,6 +83,7 @@ enum NutellaMessageType: String {
 enum NutellaChannelType: String {
     case allNotes = "all_notes"
     case allNotesWithSpecies = "all_notes_with_species"
+    case allNotesWithGroup = "all_notes_with_group"
     case noteChanges = "note_changes"
 }
 
@@ -124,13 +128,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
-        prepareViews(applicationType: ApplicationType.placeTerminal )
+        prepareViews(applicationType: ApplicationType.placeGroup)
         
-        prepareDB()
+        prepareDB(withSectionName: SECTION_NAME)
         
         UIView.hr_setToastThemeColor(UIColor.black())
         
-        setupConnection(withHost: REMOTE)
+        
+        CURRENT_HOST = LOCAL
+        
+        setupConnection()
         
         UIApplication.shared.statusBarStyle = .lightContent
         
@@ -152,6 +159,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .placeGroup:
             initStateMachine(applicaitonState: applicationType)
             application = preparePlaceGroupUI()
+            
+            //show login for section and group
+            
             break
         default:
             //object group
@@ -229,15 +239,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Mark: db setup
     
-    func prepareDB() {
+    func prepareDB(withSectionName sectionName: String) {
         
         if Platform.isSimulator {
-            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalRealm.realm")
+            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(sectionName).realm")
             try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         } else {
             //TODO
             //device config
-            try! realm = Realm(configuration: Realm.Configuration(inMemoryIdentifier: "InMemoryRealm"))
+            setDefaultRealm(withSectionName: sectionName)
         }
         
         realmDataController = RealmDataController()
@@ -259,17 +269,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func resetDB() {
+    func setDefaultRealm(withSectionName sectionName: String) {
+        var config = Realm.Configuration()
+        
+        // Use the default directory, but replace the filename with the username
+        config.fileURL = config.fileURL!.deletingLastPathComponent()
+            .appendingPathComponent("\(sectionName).realm")
+        
+        // Set this as the configuration used for the default Realm
+        Realm.Configuration.defaultConfiguration = config
+        
+        try! realm = Realm(configuration: Realm.Configuration.defaultConfiguration)
+    }
+
+    
+    
+    func resetDB(withGroupIndex groupIndex: Int = 0) {
+        
+        
         //check nutella connection
         
         //handle_requests: reset
         if let nutella = nutella {
             
             let block = DispatchWorkItem {
-                var dict = [String:String]()
-                dict["group"] = "1"
+                var dict = [String: Int]()
                 
-                nutella.net.asyncRequest("all_notes", message: dict as AnyObject, requestName: "all_notes")
+                dict["groupIndex"] = groupIndex
+                let json = JSON(dict)
+                let jsonObject: Any = json.object
+                nutella.net.asyncRequest("all_notes_with_group", message: jsonObject as AnyObject, requestName: "all_notes_with_group")
             }
             DispatchQueue.main.async(execute: block)
         } else {
@@ -280,17 +309,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Mark: Nutella setup
     
-    func setupConnection(withHost host: String) {
+    func setupConnection() {
         
         switch checkApplicationState() {
         case .placeGroup:
-            nutella = Nutella(brokerHostname: host,
+            nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
                               runId: "default",
                               componentId: ApplicationType.placeGroup.rawValue, netDelegate: self)
             break
         case .placeTerminal:
-            nutella = Nutella(brokerHostname: host,
+            nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
                               runId: "default",
                               componentId: ApplicationType.placeTerminal.rawValue, netDelegate: self)
@@ -313,6 +342,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nutella?.net.publish("echo_in", message: dict as AnyObject)
         //nutella?.net.subscribe(sub_3)
         Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
+        resetDB()
     }
     
     // Mark: StateMachine
@@ -328,15 +358,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch applicaitonState {
         case .placeGroup:
             if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
-                LOG.debug("We didn't transition")
+                //LOG.debug("We didn't transition")
             }
         case .placeTerminal:
             if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
-                LOG.debug("We didn't transition")
+                //LOG.debug("We didn't transition")
             }
         default:
             if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
-                LOG.debug("We didn't transition")
+                //LOG.debug("We didn't transition")
             }
         }
     }
@@ -345,15 +375,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch state {
         case .placeGroup:
             if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
-                LOG.debug("We didn't transition")
+                //LOG.debug("We didn't transition")
             }
         case .placeTerminal:
             if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
-                LOG.debug("We didn't transition")
+                //LOG.debug("We didn't transition")
             }
         case .objectGroup:
             if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
-                LOG.debug("We didn't transition")
+                //LOG.debug("We didn't transition")
             }
         default:
             break
@@ -426,7 +456,7 @@ extension AppDelegate: NutellaNetDelegate {
         nutellaUpdate.message = message
         nutellaUpdate.updateType = .message
         realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
-        LOG.debug("----- PubSub Recieved on: \(channel) from: \(from) -----")
+        LOG.debug("----- PubSub Recieved on: \(channel) from: \(from) with: \(message)-----")
         //once recieved set_run runid
         //check run, async 'get_current_run"
         //if cool, request 'roster', give portal types 'group', get list of groups,

@@ -87,6 +87,14 @@ class RealmDataController {
                 parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex)
             }
             break
+        case NutellaChannelType.allNotesWithGroup.rawValue:
+            let header = parseHeader(withMessage: message)
+            if let groupIndex = header?.groupIndex {
+                if currentGroupIndex == groupIndex {
+                    parseMessage(withMessage: message, withGroupIndex: groupIndex)
+                }
+            }
+            break
         default:
             break
         }
@@ -144,6 +152,21 @@ class RealmDataController {
         header.speciesIndex = speciesIndex
         header.groupIndex = groupIndex
         return header
+    }
+    
+    func parseMessage(withMessage message: Any, withGroupIndex groupIndex: Int) {
+        if let sectionName = realm?.runtimeSectionName() {
+            let json = JSON(message)
+            if json == nil {
+                //json is invalid
+                return
+            }
+            guard json["notes"].array != nil else {
+                //no notes param
+                return
+            }
+            importJsonJSON(forSectionName: sectionName, withJson: json["notes"])
+        }
     }
     
     func parseSyncFlag(withMessage message: Any, withSpeciesIndex speciesIndex: Int){
@@ -221,7 +244,6 @@ class RealmDataController {
                 
                 //first check to see if there is already one with a groupIndex ==
                 
-                
                 if let id = soJson["id"].string {
                     
                     if let foundSO = realm?.speciesObservation(withId: id) {
@@ -272,19 +294,19 @@ class RealmDataController {
                             //find its group
                             if let group = realm?.group(withSectionName: sectionName, withGroupIndex: speciesObservation!.groupIndex) {
                                 
-                             if let fromSpecies = speciesObservation?.fromSpecies, let needToDelete = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
-                                //check timestamps
-                                LOG.debug("NEED TO DELETE \(needToDelete)")
-                                realm?.delete(needToDelete)
-                                realm?.add(speciesObservation!, update: true)
-                                group.speciesObservations.append(speciesObservation!)
-                                realm?.add(group, update: true)
-                            } else {
-                                group.speciesObservations.append(speciesObservation!)
-                                realm?.add(group, update: true)
-                                
-                                
-                            }
+                                if let fromSpecies = speciesObservation?.fromSpecies, let needToDelete = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
+                                    //check timestamps
+                                    LOG.debug("NEED TO DELETE \(needToDelete)")
+                                    realm?.delete(needToDelete)
+                                    realm?.add(speciesObservation!, update: true)
+                                    group.speciesObservations.append(speciesObservation!)
+                                    realm?.add(group, update: true)
+                                } else {
+                                    group.speciesObservations.append(speciesObservation!)
+                                    realm?.add(group, update: true)
+                                    
+                                    
+                                }
                             }
                         }
                     }
@@ -448,7 +470,7 @@ class RealmDataController {
             
             
             try! realm?.write {
-                realm?.delete(foundRelationship)                
+                realm?.delete(foundRelationship)
             }
         }
     }
@@ -575,7 +597,6 @@ extension RealmDataController {
         
     }
     
-    
     //update species relationship
     func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
         try! realm?.write {
@@ -591,8 +612,6 @@ extension RealmDataController {
             realm?.add(relationship, update: true)
         }
     }
-    
-    
     
     func createSpeciesObservation(_ fromSpecies: Species, allSpecies: List<Species>, allEcosystems: List<Ecosystem>) -> SpeciesObservation {
         let speciesObservation = SpeciesObservation()
@@ -675,7 +694,7 @@ extension RealmDataController {
     
     // Mark: JSON Parsing
     
-    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false) -> SystemConfiguration {
+    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "DEFAULT") -> SystemConfiguration {
         realm!.beginWrite()
         
         let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
@@ -700,40 +719,42 @@ extension RealmDataController {
                     section.teacher = teacher
                 }
                 
-                realm?.add(section, update:true)
-                //add system config
-                systemConfigruation.sections.append(section)
-                
-                if let groups = sectionItem["groups"].array {
-                    for (groupIndex,groupItem) in groups.enumerated() {
-                        
-                        let group = Group()
-                        
-                        if let name = groupItem["name"].string {
-                            group.name = name
-                        }
-                        
-                        group.index = groupIndex
-                        realm?.add(group)
-                        
-                        //add groups
-                        section.groups.append(group)
-                        
-                        if let groupMembers = groupItem["members"].array {
-                            for (_,memberItem) in groupMembers.enumerated() {
-                                
-                                let member = Member()
-                                member.name = memberItem.string
-                                
-                                //add members
-                                group.members.append(member)
-                                section.members.append(member)
+                if section.name == sectionName {
+                    realm?.add(section, update:true)
+                    //add system config
+                    systemConfigruation.sections.append(section)
+                    
+                    if let groups = sectionItem["groups"].array {
+                        for (groupIndex,groupItem) in groups.enumerated() {
+                            
+                            let group = Group()
+                            
+                            if let name = groupItem["name"].string {
+                                group.name = name
                             }
-                        }
-                        
-                        //create speciesObservation place holders for group
-                        if placeHolders {
-                            prepareSpeciesObservations(for: group)
+                            
+                            group.index = groupIndex
+                            realm?.add(group)
+                            
+                            //add groups
+                            section.groups.append(group)
+                            
+                            if let groupMembers = groupItem["members"].array {
+                                for (_,memberItem) in groupMembers.enumerated() {
+                                    
+                                    let member = Member()
+                                    member.name = memberItem.string
+                                    
+                                    //add members
+                                    group.members.append(member)
+                                    section.members.append(member)
+                                }
+                            }
+                            
+                            //create speciesObservation place holders for group
+                            if placeHolders {
+                                prepareSpeciesObservations(for: group)
+                            }
                         }
                     }
                 }
@@ -753,13 +774,14 @@ extension RealmDataController {
                 // var makeRelationship : (String, Group) -> List<SpeciesObservation>
                 
                 let speciesObservation = SpeciesObservation()
-                speciesObservation.id = UUID().uuidString
+                speciesObservation.id = "\(group.index)-\(fromSpecies.index)"
                 speciesObservation.fromSpecies = fromSpecies
                 speciesObservation.groupIndex = group.index
                 realm?.add(speciesObservation, update: true)
                 //preparePreferences(for: speciesObservation)
                 
                 group.speciesObservations.append(speciesObservation)
+                realm?.add(group, update: true)
             }
         }
     }

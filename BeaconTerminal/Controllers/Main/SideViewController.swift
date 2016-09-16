@@ -77,6 +77,8 @@ class SideViewController: UITableViewController {
                                                                              animations: nil,
                                                                              completion: {
                                                                                 [weak self] _ in
+                                                                                  getAppDelegate().prepareDB(withSectionName: SECTION_NAME)
+                                                                                getAppDelegate().setupConnection()
                                                                                 self?.navigationDrawerController?.closeLeftView()
                     })
                 
@@ -119,6 +121,12 @@ class SideViewController: UITableViewController {
                                                                              completion: {
                                                                                 [weak self] _ in
                                                                                 self?.navigationDrawerController?.closeLeftView()
+                                                                                
+                                                                                getAppDelegate().prepareDB(withSectionName: SECTION_NAME)
+                                                                                getAppDelegate().setupConnection()
+                                                                                
+                                                                                
+                                                                                
                     })
                 
                 
