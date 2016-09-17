@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A319" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -433,7 +433,7 @@
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="1TZ-Z1-6Ce"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Choose a Species" id="rBF-OG-IhO">
+                    <navigationItem key="navigationItem" title="CHOOSE YOUR SPECIES" id="rBF-OG-IhO">
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="S5C-6z-vij">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -454,19 +454,18 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pYw-k5-Gy9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="WiA-Ap-aq5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="576" y="2118"/>
+            <point key="canvasLocation" x="260" y="1740"/>
         </scene>
         <!--LoginNavigationController-->
         <scene sceneID="P5h-w4-Z3b">
             <objects>
                 <navigationController storyboardIdentifier="loginNavigationController" title="LoginNavigationController" modalPresentationStyle="formSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hs1-HZ-BNG" sceneMemberID="viewController">
-                    <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="384" height="512"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aQs-ja-HPW">
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="aQs-ja-HPW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -476,190 +475,120 @@
                         <color key="backgroundColor" red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="calibratedRGB"/>
                     </toolbar>
                     <connections>
-                        <segue destination="MwI-3k-tFr" kind="relationship" relationship="rootViewController" id="sDz-NS-Nh3"/>
+                        <segue destination="ALQ-pU-Vpa" kind="relationship" relationship="rootViewController" id="hMR-SL-2en"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="thV-7o-X7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="154" y="882"/>
         </scene>
-        <!--LoginGroupCollectionViewController-->
-        <scene sceneID="Prp-r4-Eye">
+        <!--CHOOSE YOUR GROUP-->
+        <scene sceneID="MkL-97-XRC">
             <objects>
-                <collectionViewController storyboardIdentifier="loginGroupCollectionViewController" title="LoginGroupCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="az7-JJ-joz" customClass="LoginGroupCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="fA8-m7-GUE">
-                        <rect key="frame" x="0.0" y="44" width="384" height="468"/>
+                <tableViewController storyboardIdentifier="loginGroupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7ZA-ae-7Af" customClass="LoginGroupViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="ppK-zB-8yj">
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="rcE-sD-dzb">
-                            <size key="itemSize" width="100" height="100"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loginGroupCell" id="Zq7-cx-q4X" customClass="LoginGroupCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="5" y="5" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="JVq-nu-lls" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JVq-nu-lls" id="zgc-ti-raL">
+                                    <frame key="frameInset" width="540" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="CGq-2r-HJl">
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ECOSYSTEM 1" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcN-xp-o4a">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8AG-Q2-gcD">
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="gcN-xp-o4a" firstAttribute="width" secondItem="CGq-2r-HJl" secondAttribute="width" id="K4c-e3-TVA"/>
-                                                <constraint firstItem="8AG-Q2-gcD" firstAttribute="width" secondItem="CGq-2r-HJl" secondAttribute="width" id="qc4-Vp-X3J"/>
-                                            </constraints>
-                                        </stackView>
-                                    </subviews>
-                                </view>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="CGq-2r-HJl" firstAttribute="top" secondItem="Zq7-cx-q4X" secondAttribute="top" id="3Qr-Xg-DS1"/>
-                                    <constraint firstItem="CGq-2r-HJl" firstAttribute="leading" secondItem="Zq7-cx-q4X" secondAttribute="leading" id="Ecn-f6-fLJ"/>
-                                    <constraint firstItem="CGq-2r-HJl" firstAttribute="height" secondItem="Zq7-cx-q4X" secondAttribute="height" id="LUW-TB-mhZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="CGq-2r-HJl" secondAttribute="bottom" id="WoQ-c7-CvA"/>
-                                    <constraint firstAttribute="trailing" secondItem="CGq-2r-HJl" secondAttribute="trailing" id="jHF-i4-S2G"/>
-                                    <constraint firstItem="CGq-2r-HJl" firstAttribute="width" secondItem="Zq7-cx-q4X" secondAttribute="width" id="vEH-uq-tmU"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="groupLabel" destination="gcN-xp-o4a" id="Ihb-CV-e3c"/>
-                                    <outlet property="groupMemberLabel" destination="8AG-Q2-gcD" id="kov-4b-aav"/>
-                                    <segue destination="q4p-DO-irS" kind="unwind" identifier="unwindToSideMenu" unwindAction="unwindToSideMenuWithSegue:" id="pJq-UP-czC"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="az7-JJ-joz" id="D6V-5w-1I1"/>
-                            <outlet property="delegate" destination="az7-JJ-joz" id="jm1-92-lHV"/>
-                        </connections>
-                    </collectionView>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ur0-TF-QHa"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Choose Your Group" id="7Wb-l7-TSP">
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="CVu-yN-J4i">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="cancelAction:" destination="az7-JJ-joz" id="aT4-51-GvC"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d15-Ci-c3B" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="q4p-DO-irS" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="690" y="1430"/>
-        </scene>
-        <!--Login SectionCollectionViewController-->
-        <scene sceneID="Uy7-ev-pEI">
-            <objects>
-                <collectionViewController title="Login SectionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MwI-3k-tFr" customClass="LoginSectionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="vN5-lh-QHi">
-                        <rect key="frame" x="0.0" y="44" width="384" height="468"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="YHz-8c-FUR">
-                            <size key="itemSize" width="100" height="100"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loginGroupCell" id="g3v-9k-SWH" customClass="LoginGroupCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="5" y="5" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ABCD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Lm-L6-2Oo">
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="IhM-mQ-O8w">
+                                            <frame key="frameInset" minY="-1" width="540" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                </view>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="6Lm-L6-2Oo" firstAttribute="leading" secondItem="g3v-9k-SWH" secondAttribute="leading" id="1bY-im-puY"/>
-                                    <constraint firstAttribute="trailing" secondItem="6Lm-L6-2Oo" secondAttribute="trailing" id="CMh-or-6em"/>
-                                    <constraint firstItem="6Lm-L6-2Oo" firstAttribute="width" secondItem="g3v-9k-SWH" secondAttribute="width" id="Iif-a9-cg6"/>
-                                    <constraint firstItem="6Lm-L6-2Oo" firstAttribute="centerY" secondItem="g3v-9k-SWH" secondAttribute="centerY" id="btC-nz-W0s"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                                </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="groupLabel" destination="6Lm-L6-2Oo" id="0xD-1m-MhJ"/>
+                                    <outlet property="titleLabel" destination="IhM-mQ-O8w" id="WHS-rB-B8m"/>
                                 </connections>
-                            </collectionViewCell>
-                        </cells>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="MwI-3k-tFr" id="qxO-U4-DJY"/>
-                            <outlet property="delegate" destination="MwI-3k-tFr" id="HEL-pq-lTI"/>
+                            <outlet property="dataSource" destination="7ZA-ae-7Af" id="ClU-G7-Inu"/>
+                            <outlet property="delegate" destination="7ZA-ae-7Af" id="qiR-nd-tLk"/>
                         </connections>
-                    </collectionView>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="UjH-2N-q5R"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Choose Your Class" id="XGN-Ze-EkN">
-                        <barButtonItem key="backBarButtonItem" title="back" id="UUS-Bd-DTk"/>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="5Tr-a2-nfq">
+                    </tableView>
+                    <navigationItem key="navigationItem" title="CHOOSE YOUR GROUP" id="whZ-h0-ZX8">
+                        <barButtonItem key="backBarButtonItem" title="back" id="Ejh-jU-Eln"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="CVu-yN-J4i">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="cancelAction:" destination="MwI-3k-tFr" id="cOk-A0-2f1"/>
+                                <action selector="cancelAction:" destination="7ZA-ae-7Af" id="hlB-8p-p5E"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <value key="contentSizeForViewInPopover" type="size" width="320" height="512"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="384" height="512"/>
-                    <connections>
-                        <segue destination="az7-JJ-joz" kind="show" identifier="groupSegue" id="tQW-8w-WK7"/>
-                        <segue destination="at7-XY-YOa" kind="show" identifier="speciesSegue" id="yi8-Oi-iWE"/>
-                        <segue destination="hmO-EH-PkZ" kind="unwind" identifier="unwindToSideMenu" unwindAction="unwindToSideMenuWithSegue:" id="cXo-dZ-zeJ"/>
-                        <segue destination="at7-XY-YOa" kind="show" identifier="shortCurcuitSpeciesSegue" id="EXa-Aj-HYW"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CDK-7J-SUD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="hmO-EH-PkZ" userLabel="Exit" sceneMemberID="exit"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yf8-BP-eB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="282" y="1437"/>
+            <point key="canvasLocation" x="618" y="1321"/>
+        </scene>
+        <!--CHOOSE YOUR SECTION-->
+        <scene sceneID="R95-gf-3X9">
+            <objects>
+                <tableViewController id="tGg-qr-HgA" customClass="LoginSectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="UfT-mp-oAp">
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="qmN-MV-Rh0" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qmN-MV-Rh0" id="fUx-a4-1d9">
+                                    <frame key="frameInset" width="540" height="99"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="m85-zV-H21">
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="m85-zV-H21" firstAttribute="width" secondItem="fUx-a4-1d9" secondAttribute="width" id="0HB-GL-W54"/>
+                                        <constraint firstItem="m85-zV-H21" firstAttribute="centerX" secondItem="fUx-a4-1d9" secondAttribute="centerX" id="Aw7-b9-GT7"/>
+                                        <constraint firstItem="m85-zV-H21" firstAttribute="centerY" secondItem="fUx-a4-1d9" secondAttribute="centerY" id="dpl-Zh-VrL"/>
+                                        <constraint firstItem="m85-zV-H21" firstAttribute="height" secondItem="fUx-a4-1d9" secondAttribute="height" id="nMB-Cj-bOB"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="m85-zV-H21" id="IJJ-jA-Jxs"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="tGg-qr-HgA" id="GuB-5B-wUB"/>
+                            <outlet property="delegate" destination="tGg-qr-HgA" id="kTc-1y-FTK"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="CHOOSE YOUR SECTION" id="ip4-vo-7kq">
+                        <barButtonItem key="backBarButtonItem" title="back" id="rMO-gD-E9d"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="XUf-wD-hlS">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="tGg-qr-HgA" id="Rdw-Jl-yYf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="7ZA-ae-7Af" kind="show" identifier="groupSegue" id="O9V-3h-AUK"/>
+                        <segue destination="at7-XY-YOa" kind="show" identifier="speciesSegue" id="vLp-tb-mex"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5oE-Pg-K5m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="344" y="1321"/>
         </scene>
         <!--Preferences Table View Controller-->
         <scene sceneID="tqZ-Cl-1Wy">
@@ -1213,12 +1142,68 @@
             </objects>
             <point key="canvasLocation" x="1386" y="-456"/>
         </scene>
+        <!--CHOOSE YOUR CONDITION-->
+        <scene sceneID="swx-1K-ja2">
+            <objects>
+                <tableViewController storyboardIdentifier="loginConditionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ALQ-pU-Vpa" customClass="LoginConditionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="wSv-sh-aYS">
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="2hZ-JL-iJC" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2hZ-JL-iJC" id="CB5-Gm-Tjw">
+                                    <frame key="frameInset" width="540" height="99"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="IFs-rR-HBL">
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="width" secondItem="CB5-Gm-Tjw" secondAttribute="width" id="7wi-Xm-zcb"/>
+                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="centerY" secondItem="CB5-Gm-Tjw" secondAttribute="centerY" id="Mgg-Fb-cRy"/>
+                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="height" secondItem="CB5-Gm-Tjw" secondAttribute="height" id="di5-Kh-bnV"/>
+                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="centerX" secondItem="CB5-Gm-Tjw" secondAttribute="centerX" id="jIL-5A-2A1"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="IFs-rR-HBL" id="Q0m-2j-Ygc"/>
+                                    <segue destination="tGg-qr-HgA" kind="show" identifier="showSectionSegue" id="gcG-O8-acJ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ALQ-pU-Vpa" id="Tr3-sS-J9p"/>
+                            <outlet property="delegate" destination="ALQ-pU-Vpa" id="afe-1y-Mve"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="CHOOSE YOUR CONDITION" id="DKw-Kw-gfs">
+                        <barButtonItem key="backBarButtonItem" title="CONDITION" id="zbC-rb-JoF">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="b6k-ai-mSs">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="ALQ-pU-Vpa" id="r8s-yB-hUT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zb7-HR-ZtF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3" y="1416"/>
+        </scene>
     </scenes>
     <resources>
         <image name="tb_camera_black" width="48" height="48"/>
         <image name="tb_photo_library_black" width="48" height="48"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="EXa-Aj-HYW"/>
-    </inferredMetricsTieBreakers>
 </document>

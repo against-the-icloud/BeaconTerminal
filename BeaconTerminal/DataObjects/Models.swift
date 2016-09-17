@@ -82,11 +82,11 @@ class SpeciesObservation: Object {
             self.isSynced.value = isSynced
         }
         
-        if let fromSpecies = realmDataController?.parseSpeciesJSON(withJson: json)  {
+        if let fromSpecies = realmDataController.parseSpeciesJSON(withJson: json)  {
             self.fromSpecies = fromSpecies
         }
         
-        if let ecosystem = realmDataController?.parseEcosystemJSON(withJson: json)  {
+        if let ecosystem = realmDataController.parseEcosystemJSON(withJson: json)  {
             self.ecosystem = ecosystem
         }
         
@@ -143,11 +143,11 @@ class Relationship: Object {
             self.relationshipType = relationshipType
         }
         
-        if let toSpecies = realmDataController?.parseSpeciesJSON(withJson: json)  {
+        if let toSpecies = realmDataController.parseSpeciesJSON(withJson: json)  {
             self.toSpecies = toSpecies
         }
         
-        if let ecosystem = realmDataController?.parseEcosystemJSON(withJson: json)  {
+        if let ecosystem = realmDataController.parseEcosystemJSON(withJson: json)  {
             self.ecosystem = ecosystem
         }
         

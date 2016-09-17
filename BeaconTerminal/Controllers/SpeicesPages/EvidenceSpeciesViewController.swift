@@ -91,7 +91,7 @@ class EvidenceSpeciesViewController: UIViewController {
                 newRelationship.relationshipType = relationshipType.rawValue
             }
             
-            realmDataController?.delete(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
+            realmDataController.delete(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
 
         })
                 
@@ -129,7 +129,7 @@ class EvidenceSpeciesViewController: UIViewController {
                 newRelationship.relationshipType = relationshipType.rawValue
             }
             
-            realmDataController?.add(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
+            realmDataController.add(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
         })
         
     }

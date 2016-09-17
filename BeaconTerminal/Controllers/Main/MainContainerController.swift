@@ -43,7 +43,7 @@ class MainContainerController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         topTabbar.initUI()
-        prepareNotifications()
+        realmDataController.realmDataControllerDelegate = self
         showLogin()
     }
     
@@ -59,10 +59,10 @@ class MainContainerController: UIViewController{
             case .Initial(let runtimeResults):
                 //we have nothing
                 if runtimeResults.isEmpty {
-                    mainController.showLogin()
+                    //mainController.showLogin()
                 } else {
                     mainController.updateHeader()
-                    mainController.showLogin()
+                    //mainController.showLogin()
                 }
                 break
             case .Update( _, _, _, _):
@@ -160,5 +160,11 @@ extension MainContainerController: TopToolbarDelegate {
             self.topTabbar.backgroundColor = color
             self.topPanel.backgroundColor = color
             }, completion: nil)
+    }
+}
+
+extension MainContainerController: RealmDataControllerDelegate {
+    func doesHaveData() {
+        prepareNotifications()
     }
 }

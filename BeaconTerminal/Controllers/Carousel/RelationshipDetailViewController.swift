@@ -238,7 +238,7 @@ class RelationshipDetailViewController: UIViewController {
                             realm!.add(so, update: true)
                         }
                         
-                        realmDataController!.delete(r)
+                        realmDataController.delete(r)
                         
                         if let sourceView = self.sourceView {
                             sourceView.fadeOut(0.4, delay: 0.0, completion: {_ in

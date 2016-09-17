@@ -94,7 +94,7 @@ class RelationshipDropView: DropTargetView {
         self.addSubview(speciesImageView)
         
         dispatch_on_main {
-            realmDataController?.updateSpeciesObservation(speciesImageView.species!, speciesObservation: self.speciesObservation!, relationshipType: self.relationshipType!)
+            realmDataController.updateSpeciesObservation(speciesImageView.species!, speciesObservation: self.speciesObservation!, relationshipType: self.relationshipType!)
             self.showRelationshipDetail(sender: speciesImageView)
         }
         return true
@@ -115,7 +115,7 @@ class RelationshipDropView: DropTargetView {
             if !foundRelationships.isEmpty {
                 
                 dispatch_on_main {
-                    realmDataController!.delete(foundRelationships.first!)
+                    realmDataController.delete(foundRelationships.first!)
                     
                     speciesView?.fadeOut(0.4, delay: 0.0, completion: {_ in
                         speciesView?.removeFromSuperview()

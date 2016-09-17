@@ -11,13 +11,11 @@ import UIKit
 import RealmSwift
 
 class LoginSpeciesCollectionViewController: UICollectionViewController {
-    
+
+    let allSpecies = realmDataController.parseSpeciesConfigurationJson()
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     // Mark: View Methods
@@ -35,26 +33,25 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindToTerminalView" {
-  
+            
         }
     }
     
     // Mark: Action
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: {})
-        self.performSegue(withIdentifier: "unwindToSideMenu", sender: self)
+        self.dismiss(animated: true, completion: {
+            
+            getAppDelegate().loadCondition()
+            
+        })
     }
 }
 
 extension LoginSpeciesCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let allSpecies = realm?.species {
-            return allSpecies.count
-        } else {
-            return 0
-        }
+        return allSpecies.count
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -63,11 +60,9 @@ extension LoginSpeciesCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let allSpecies = realm?.species {
-            if indexPath.row <=  allSpecies.count {
-                realmDataController?.updateRuntime(withSectionName: nil, withSpeciesIndex: indexPath.row, withGroupIndex: nil)
-                performSegue(withIdentifier: "unwindToTerminalView", sender: nil)
-            }
+        if indexPath.row <=  allSpecies.count {
+            realmDataController.updateRuntime(withSectionName: nil, withSpeciesIndex: indexPath.row, withGroupIndex: nil)
+            performSegue(withIdentifier: "unwindToTerminalView", sender: nil)
         }
         self.dismiss(animated: true, completion: nil)
     }

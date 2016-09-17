@@ -53,7 +53,7 @@ class SideViewController: UITableViewController {
                         realm?.add(runtime, update: true)
                     }
                     
-                    realmDataController?.deleteAllSpeciesObservations()
+                    realmDataController.deleteAllSpeciesObservations()
                 }
                 
                 getAppDelegate().changeSystemStateTo(.placeGroup)
@@ -93,7 +93,7 @@ class SideViewController: UITableViewController {
                         realm?.add(runtime, update: true)
                     }
                     
-                    realmDataController?.deleteAllSpeciesObservations()
+                    realmDataController.deleteAllSpeciesObservations()
                 }
                 
                 getAppDelegate().changeSystemStateTo(.placeTerminal)

@@ -1,4 +1,4 @@
-    import UIKit
+import UIKit
 import RealmSwift
 import Material
 import XCGLogger
@@ -36,10 +36,12 @@ let LOG: XCGLogger = {
 //Mark: State Machine
 
 enum ApplicationType: String {
-    case start
-    case placeTerminal
-    case placeGroup
-    case objectGroup
+    case login = "Login"
+    case placeTerminal = "PLACE TERMINAL"
+    case placeGroup = "PLACE GROUP"
+    case objectGroup = "ARTIFACT"
+    
+    static let allValues = [placeTerminal, placeGroup, objectGroup]
 }
 
 enum Tabs : String {
@@ -63,7 +65,7 @@ let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [Application
 let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.placeGroup)
 let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.placeGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.objectGroup)
 
-var realmDataController : RealmDataController?
+var realmDataController : RealmDataController = RealmDataController()
 
 struct Platform {
     static var isSimulator: Bool {
@@ -130,12 +132,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
         
+        realmDataController = RealmDataController()
+
+        let defaults = UserDefaults.standard
+        
+        let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
+        let sectionDict = ["default":groupNames,"guest":groupNames, "6BM":groupNames,"6MT":groupNames,"6DF":groupNames]
+        
+        defaults.set(sectionDict, forKey: "sections")
+        defaults.synchronize()
         
         
-        
-        prepareViews(applicationType: ApplicationType.placeGroup)
-        
-        prepareGroupSectionDB()
+        prepareViews(applicationType: ApplicationType.login)
         
         //prepareDB(withSectionName: SECTION_NAME)
         
@@ -144,7 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         CURRENT_HOST = LOCAL
         
-        setupConnection()
+        //setupConnection()
         
         UIApplication.shared.statusBarStyle = .lightContent
         
@@ -166,20 +174,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .placeGroup:
             initStateMachine(applicaitonState: applicationType)
             application = preparePlaceGroupUI()
-            
             //show login for section and group
-            
             break
         default:
-            //object group
+            //login
             initStateMachine(applicaitonState: applicationType)
-            application = prepareBasicGroupUI()
+            application = prepareLoginUI()
         }
         
         
         // Configure the window with the SideNavigationController as the root view controller
         window?.rootViewController = application
         window?.makeKeyAndVisible()
+    }
+    
+    func prepareLoginUI() -> NavigationDrawerController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+ 
+        let defaultViewController = DefaultViewController()
+        
+        let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
+        
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: defaultViewController)
+        
+        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        
+        navigationController.isNavigationBarHidden = true
+        navigationController.statusBarStyle = .default
+        
+        BadgeUtil.badge(shouldShow: false)
+        
+        speciesViewController = SpeciesMenuViewController()
+        speciesViewController!.showSpeciesMenu(showHidden: false)
+        
+        sideViewController.showSelectedCell(with: checkApplicationState())
+        
+        return navigationDrawerController
     }
     
     func prepareBasicGroupUI() -> NavigationDrawerController {
@@ -246,23 +276,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Mark: db setup
     
-    func prepareGroupSectionDB() {
-        if Platform.isSimulator {
-            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminalGroupSection.realm")
-            try! groupSectionRealm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+    func loadCondition() {
+        let defaults = UserDefaults.standard
+        if let sectionName = defaults.string(forKey: "sectionName") {
+            prepareDB(withSectionName: sectionName)
+            setupConnection(withSectionName: sectionName)
         } else {
-            //TODO
-            //device config
-            setDefaultGroupSectionRealm()
+            prepareDB()
+            setupConnection()
         }
-        
-        
-        RealmDataController.deleteAllConfigurationAndGroupsSectionGroupRealm()
-        //re-up
-        RealmDataController.parseUserGroupConfigurationJsonWithGroupRealm()
     }
     
-    func prepareDB(withSectionName sectionName: String) {
+    func prepareDB(withSectionName sectionName: String = "default") {
         
         if Platform.isSimulator {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(sectionName).realm")
@@ -273,39 +298,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setDefaultRealm(withSectionName: sectionName)
         }
         
-        realmDataController = RealmDataController()
-        
         switch checkApplicationState() {
         case .placeGroup:
-            realmDataController?.deleteAllConfigurationAndGroups()
-            _ = realmDataController?.parseNutellaConfigurationJson()
-            _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!, withPlaceHolders: true)
+            realmDataController.deleteAllConfigurationAndGroups()
+            _ = realmDataController.parseNutellaConfigurationJson()
+            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
+            
+            let defaults = UserDefaults.standard
+            let groupIndex = defaults.integer(forKey: "groupIndex")
+            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
+            realmDataController.realmDataControllerDelegate?.doesHaveData()
+          
             break
         case .placeTerminal:
-            realmDataController?.deleteAllConfigurationAndGroups()
+            realmDataController.deleteAllConfigurationAndGroups()
             //re-up
-            _ = realmDataController?.parseNutellaConfigurationJson()
-            _ = realmDataController?.parseUserGroupConfigurationJson(withSimConfig: (realmDataController?.parseSimulationConfigurationJson())!)
+            _ = realmDataController.parseNutellaConfigurationJson()
+            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()))
             break
         default:
             break
         }
     }
-    func setDefaultGroupSectionRealm() {
-        var config = Realm.Configuration()
-        
-        // Use the default directory, but replace the filename with the username
-        config.fileURL = config.fileURL!.deletingLastPathComponent()
-            .appendingPathComponent("GroupSection.realm")
-        
-        // Set this as the configuration used for the default Realm
-        //Realm.Configuration.defaultConfiguration = config
-        
-        try! groupSectionRealm = Realm(configuration: config)
-    }
-
     
-    func setDefaultRealm(withSectionName sectionName: String) {
+    func setDefaultRealm(withSectionName sectionName: String = "default") {
         var config = Realm.Configuration()
         
         // Use the default directory, but replace the filename with the username
@@ -345,19 +361,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Mark: Nutella setup
     
-    func setupConnection() {
+    func setupConnection(withSectionName sectionName: String = "default") {
         
         switch checkApplicationState() {
         case .placeGroup:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
-                              runId: "default",
+                              runId: sectionName,
                               componentId: ApplicationType.placeGroup.rawValue, netDelegate: self)
             break
         case .placeTerminal:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
-                              runId: "default",
+                              runId: sectionName,
                               componentId: ApplicationType.placeTerminal.rawValue, netDelegate: self)
             break
         default:
@@ -482,7 +498,7 @@ extension AppDelegate: NutellaNetDelegate {
         nutellaUpdate.channel = channel
         nutellaUpdate.message = response
         nutellaUpdate.updateType = .response
-        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
+        realmDataController.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
         LOG.debug("----- Response Recieved on: \(channel) from: \(from) -----")
     }
     
@@ -491,7 +507,7 @@ extension AppDelegate: NutellaNetDelegate {
         nutellaUpdate.channel = channel
         nutellaUpdate.message = message
         nutellaUpdate.updateType = .message
-        realmDataController?.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
+        realmDataController.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
         LOG.debug("----- PubSub Recieved on: \(channel) from: \(from) with: \(message)-----")
         //once recieved set_run runid
         //check run, async 'get_current_run"
@@ -500,3 +516,4 @@ extension AppDelegate: NutellaNetDelegate {
     }
     
 }
+

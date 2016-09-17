@@ -93,7 +93,7 @@ extension SyncViewController {
         }
         let sync = shouldSync[indexPath.row]
         
-        realmDataController?.exportSpeciesObservation(withNutella: nutella, withSpeciesObservation: sync)
+        realmDataController.exportSpeciesObservation(withNutella: nutella, withSpeciesObservation: sync)
         
     }
     
