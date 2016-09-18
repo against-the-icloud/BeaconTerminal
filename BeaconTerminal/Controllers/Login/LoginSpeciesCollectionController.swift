@@ -12,6 +12,7 @@ import RealmSwift
 
 class LoginSpeciesCollectionViewController: UICollectionViewController {
 
+    let defaults = UserDefaults.standard
     let allSpecies = realmDataController.parseSpeciesConfigurationJson()
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,10 +62,19 @@ extension LoginSpeciesCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.row <=  allSpecies.count {
-            realmDataController.updateRuntime(withSectionName: nil, withSpeciesIndex: indexPath.row, withGroupIndex: nil)
-            performSegue(withIdentifier: "unwindToTerminalView", sender: nil)
+            
+            if let cell = collectionView.cellForItem(at: indexPath) as? LoginSpeciesCell {
+                defaults.set(Int(cell.speciesIndex), forKey: "speciesIndex")
+                defaults.synchronize()
+                
+                self.dismiss(animated: true, completion: {
+                    //realm for section $0
+                    //load configuration
+                    //contact nutella for section $0
+                    getAppDelegate().loadCondition()
+                })
+            }
         }
-        self.dismiss(animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -465,7 +465,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="aQs-ja-HPW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aQs-ja-HPW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -526,6 +526,8 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yf8-BP-eB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -580,7 +582,8 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="7ZA-ae-7Af" kind="show" identifier="groupSegue" id="O9V-3h-AUK"/>
                         <segue destination="at7-XY-YOa" kind="show" identifier="speciesSegue" id="vLp-tb-mex"/>
@@ -1158,20 +1161,34 @@
                                     <frame key="frameInset" width="540" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="IFs-rR-HBL">
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="XNw-9E-WW6">
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="objectGroup" translatesAutoresizingMaskIntoConstraints="NO" id="KHN-iB-MvT">
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="KHN-iB-MvT" secondAttribute="height" multiplier="1:1" id="0gS-es-bdj"/>
+                                                        <constraint firstAttribute="width" constant="50" id="Qtm-lU-x9v"/>
+                                                        <constraint firstAttribute="height" constant="50" id="kSl-Iu-Aro"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="IFs-rR-HBL">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="350" id="5hN-Yd-2ho"/>
+                                            </constraints>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="width" secondItem="CB5-Gm-Tjw" secondAttribute="width" id="7wi-Xm-zcb"/>
-                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="centerY" secondItem="CB5-Gm-Tjw" secondAttribute="centerY" id="Mgg-Fb-cRy"/>
-                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="height" secondItem="CB5-Gm-Tjw" secondAttribute="height" id="di5-Kh-bnV"/>
-                                        <constraint firstItem="IFs-rR-HBL" firstAttribute="centerX" secondItem="CB5-Gm-Tjw" secondAttribute="centerX" id="jIL-5A-2A1"/>
+                                        <constraint firstItem="XNw-9E-WW6" firstAttribute="centerX" secondItem="CB5-Gm-Tjw" secondAttribute="centerX" id="VUi-bs-k6P"/>
+                                        <constraint firstItem="XNw-9E-WW6" firstAttribute="centerY" secondItem="CB5-Gm-Tjw" secondAttribute="centerY" id="yie-Q5-dax"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="badgeImageView" destination="KHN-iB-MvT" id="GeC-gB-tjN"/>
                                     <outlet property="titleLabel" destination="IFs-rR-HBL" id="Q0m-2j-Ygc"/>
                                     <segue destination="tGg-qr-HgA" kind="show" identifier="showSectionSegue" id="gcG-O8-acJ"/>
                                 </connections>
@@ -1194,15 +1211,17 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zb7-HR-ZtF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3" y="1416"/>
+            <point key="canvasLocation" x="-40" y="1257"/>
         </scene>
     </scenes>
     <resources>
+        <image name="objectGroup" width="560" height="560"/>
         <image name="tb_camera_black" width="48" height="48"/>
         <image name="tb_photo_library_black" width="48" height="48"/>
     </resources>

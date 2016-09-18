@@ -40,6 +40,11 @@ class TerminalRelationshipTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareNotifications()
+        
+        //set up toast
+        
+        //dark grey
+        UIView.hr_setToastThemeColor(UIColor.white)
     }
     
     func prepareNotifications() {
@@ -97,11 +102,17 @@ class TerminalRelationshipTableViewController: UITableViewController {
     }
     
     func updateCells(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
+        
         guard let type = relationshipType else {
             return
         }
+        
         updateReportLabel(shouldReset: true)
+        
         for so in speciesObservationResults {
+            
+          
+            
             if let foundRelationships = realm?.relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
                 
                 
@@ -118,7 +129,21 @@ class TerminalRelationshipTableViewController: UITableViewController {
         updateReportLabel(shouldReset: false)
     }
     
+    func makeToast(relationship: Relationship, groupIndex: Int) {
+        if let speciesName = relationship.toSpecies?.name, let speciesIndex = relationship.toSpecies?.index, let si = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true){
+        
+            
+            Util.makeToast("Species Observation \(speciesName) from Group \(groupIndex)", title: "Update for Species Observation", image: si)
+         
+        }
+    }
+    
     func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
+        
+        
+        makeToast(relationship: relationship, groupIndex: groupIndex)
+        
+        
         //find the controller with that species            
         if let cells = self.childViewControllers as? [TerminalCellController] {
             

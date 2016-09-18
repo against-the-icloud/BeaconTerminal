@@ -11,6 +11,7 @@ import UIKit
 
 class LoginConditionCell : UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var badgeImageView: UIImageView!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

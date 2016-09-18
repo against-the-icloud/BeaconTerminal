@@ -19,7 +19,7 @@ func /(lhs: CGFloat, rhs: Int) -> CGFloat {
 /*
 *  Toast Config
 */
-let HRToastDefaultDuration  =   2.0
+let HRToastDefaultDuration  =   4.0
 let HRToastFadeDuration     =   0.2
 let HRToastHorizontalMargin : CGFloat  =   10.0
 let HRToastVerticalMargin   : CGFloat  =   10.0
@@ -40,17 +40,17 @@ let HRToastImageViewHeight:  CGFloat  = 80.0
 // label setting
 let HRToastMaxWidth       :  CGFloat  = 0.8;      // 80% of parent view width
 let HRToastMaxHeight      :  CGFloat  = 0.8;
-let HRToastFontSize       :  CGFloat  = 16.0
+let HRToastFontSize       :  CGFloat  = 20.0
 let HRToastMaxTitleLines              = 0
 let HRToastMaxMessageLines            = 0
 
 // shadow appearance
-let HRToastShadowOpacity  : CGFloat   = 0.8
+let HRToastShadowOpacity  : CGFloat   = 0.7
 let HRToastShadowRadius   : CGFloat   = 6.0
 let HRToastShadowOffset   : CGSize    = CGSize(width: CGFloat(4.0), height: CGFloat(4.0))
 
 let HRToastOpacity        : CGFloat   = 0.9
-let HRToastCornerRadius   : CGFloat   = 10.0
+let HRToastCornerRadius   : CGFloat   = 5.0
 
 var HRToastActivityView: UnsafePointer<UIView>?    =   nil
 var HRToastTimer: UnsafePointer<Timer>?          =   nil

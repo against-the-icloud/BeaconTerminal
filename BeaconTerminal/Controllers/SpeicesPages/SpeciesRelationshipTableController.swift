@@ -81,7 +81,7 @@ class SpeciesRelationshipTableController: UITableViewController {
     }
     
     func  updateCell(relationshipResults: Results<Relationship>) {
-        for (index, relationship) in relationshipResults.enumerated() {
+        for (_, relationship) in relationshipResults.enumerated() {
             for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
                 if !cell.used {
                     cell.updateCell(withRelationship: relationship)
@@ -182,7 +182,7 @@ class SpeciesRelationshipTableController: UITableViewController {
                     csvc.relationshipType = relationshipType
                     csvc.speciesIndex = speciesIndex
                     csvc.title = "1. CHOOSE A SPECIES"
-                    csvc.navigationItem.prompt = "CREATE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
+                    csvc.navigationItem.prompt = "CREATE THE RELATIONSHIP"
                 }
                 break
             default:
@@ -197,7 +197,7 @@ extension SpeciesRelationshipTableController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.childViewControllers[indexPath.item] as? SpeciesCellDetailController {
             
-            guard let r = cell.relationship else {
+            guard cell.relationship != nil else {
                 return
             }
             

@@ -43,8 +43,7 @@ class MainContainerController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         topTabbar.initUI()
-        realmDataController.realmDataControllerDelegate = self
-        showLogin()
+        prepareNotifications()
     }
     
     func prepareNotifications() {
@@ -160,11 +159,5 @@ extension MainContainerController: TopToolbarDelegate {
             self.topTabbar.backgroundColor = color
             self.topPanel.backgroundColor = color
             }, completion: nil)
-    }
-}
-
-extension MainContainerController: RealmDataControllerDelegate {
-    func doesHaveData() {
-        prepareNotifications()
     }
 }

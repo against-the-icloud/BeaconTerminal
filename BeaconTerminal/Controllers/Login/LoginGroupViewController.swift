@@ -77,8 +77,8 @@ extension LoginGroupViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? LoginConditionCell, let groupIndex = cell.titleLabel.text {
-            defaults.set(Int(groupIndex), forKey: "groupIndex")
+        if let cell = tableView.cellForRow(at: indexPath) as? LoginConditionCell, let _ = cell.titleLabel.text {
+            defaults.set(indexPath.row, forKey: "groupIndex")
             defaults.synchronize()
             
             self.dismiss(animated: true, completion: {

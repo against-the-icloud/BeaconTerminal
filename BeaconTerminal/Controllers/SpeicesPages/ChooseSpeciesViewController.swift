@@ -33,6 +33,12 @@ class ChooseSpeciesViewController: UICollectionViewController {
     }
     
     func prepareView() {
+        
+        
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.white
+        
+        
         if let speciesIndex = self.speciesIndex, let speciesObs = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let rType = self.relationshipType?.rawValue {
             
             if let so = speciesObs.filter(using: "fromSpecies.index = \(speciesIndex)").first {
@@ -45,14 +51,14 @@ class ChooseSpeciesViewController: UICollectionViewController {
                     
                     //all the species that have been used
                     var query = "index != \(speciesIndex)"
-                    for (index,r) in relationshipResults.enumerated() {
+                    for (_,r) in relationshipResults.enumerated() {
                         if let toSpecies = r.toSpecies {
                             query.append(" AND index != \(toSpecies.index)")
                         }
                     }
                     
                     speciesFilterd = realm?.species.filter(using: query)
-
+                    
                 }
                 
             }
@@ -72,7 +78,7 @@ class ChooseSpeciesViewController: UICollectionViewController {
                     ev.toSpeciesIndex = speciesCell.speciesIndex
                     
                     ev.title = "2. ADD EVIDENCE"
-                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased()) RELATIONSHIP'"
+                    ev.navigationItem.prompt = "SUPPORT THE RELATIONSHIP"
                 }
                 break
             default:

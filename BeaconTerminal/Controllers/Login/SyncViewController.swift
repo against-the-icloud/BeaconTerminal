@@ -45,10 +45,10 @@ class SyncViewController: UICollectionViewController {
             
             guard let cv = self?.collectionView else { return }
             switch changes {
-            case .Initial(let speciesObservationResults):
+            case .Initial( _):
                 cv.reloadData()
                 break
-            case .Update(let _, let deletions, let insertions, let modifications):
+            case .Update( _, let deletions, let insertions, let modifications):
                 cv.performBatchUpdates({
                     cv.insertItems(at: insertions.map { IndexPath(row: $0, section: 0) })
                     cv.deleteItems(at: deletions.map { IndexPath(row: $0, section: 0) })
@@ -92,6 +92,10 @@ extension SyncViewController {
             return
         }
         let sync = shouldSync[indexPath.row]
+        
+        if let fromSpeciesIndex = sync.fromSpecies?.index, let sName = sync.fromSpecies?.name {
+            Util.makeToast("PERFORMING SYNC FOR \(fromSpeciesIndex):\(sName)")
+        }
         
         realmDataController.exportSpeciesObservation(withNutella: nutella, withSpeciesObservation: sync)
         

@@ -16,9 +16,7 @@ class DefaultViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    init() {
-    
-        
+    init() {            
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,9 +30,5 @@ class DefaultViewController: UIViewController {
         let loginNavigationController = storyboard.instantiateViewController(withIdentifier: "loginNavigationController") as! UINavigationController
         
         self.present(loginNavigationController, animated: true, completion: {})
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
     }
 }

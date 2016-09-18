@@ -54,7 +54,7 @@ class SpeciesPageContentController: UIViewController {
                             controller.colors(forSynced: true)
                         }
                         break
-                    case .Update(let speciesObservationResults, let deletions, let insertions, let modifications):
+                    case .Update( _, let deletions, _, _):
                         
                         if deletions.count > 0 {
                             controller.colors(forSynced: true)
@@ -149,6 +149,10 @@ class SpeciesPageContentController: UIViewController {
         showView.fadeIn(toAlpha: 1.0) {_ in
 
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
     
 }

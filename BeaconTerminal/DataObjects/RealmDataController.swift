@@ -10,13 +10,7 @@ import Foundation
 import RealmSwift
 import Nutella
 
-@objc protocol RealmDataControllerDelegate {
-    func doesHaveData()
-}
-
 class RealmDataController {
-    
-    weak var realmDataControllerDelegate : RealmDataControllerDelegate?
     
     init() {
     }
@@ -45,6 +39,46 @@ class RealmDataController {
         return ""
     }
     
+    // Mark: Nutella Queries
+    
+    func queryNutellaAllNotes(withType type: String) {
+        switch type {
+        case "group":
+            if let index = realm?.runtimeGroupIndex() {
+                if let nutella = nutella {
+                    let block = DispatchWorkItem {
+                        
+                        var dict = [String:Int]()
+                        dict["groupIndex"] = index
+                        let json = JSON(dict)
+                        let jsonObject: Any = json.object
+                        nutella.net.asyncRequest("all_notes_with_group", message: jsonObject as AnyObject, requestName: "all_notes_with_group")
+                    }
+                    
+                    DispatchQueue.main.async(execute: block)
+                }
+            }
+        case "species":
+            
+            if let index = realm?.runtimeSpeciesIndex() {
+                if let nutella = nutella {
+                    let block = DispatchWorkItem {
+                        
+                        var dict = [String:Int]()
+                        dict["speciesIndex"] = index
+                        let json = JSON(dict)
+                        let jsonObject: Any = json.object
+                        nutella.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
+                    }
+                    
+                    DispatchQueue.main.async(execute: block)
+                }
+            }
+        default:
+            break
+        }
+    }
+
     
     // Mark: Nutella updates
     
@@ -726,7 +760,7 @@ extension RealmDataController {
                 }
                 
                 if section.name == sectionName {
-                
+                    
                     realm?.add(section, update:true)
                     //add system config
                     systemConfigruation.sections.append(section)
@@ -926,7 +960,7 @@ extension RealmDataController {
             }
             
         }
-
+        
         return allSpecies
     }
     

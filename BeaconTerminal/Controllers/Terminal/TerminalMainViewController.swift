@@ -59,10 +59,9 @@ class TerminalMainViewController: UIViewController {
             case .Initial(let runtimeResults):
                 //we have nothing
                 if runtimeResults.isEmpty {
-                    terminalController.showLogin()
+                    //terminalController.showLogin()
                 } else {
                     terminalController.updateHeader()
-                    terminalController.showLogin()
                 }
                 break
             case .Update( _, _, _, _):
@@ -134,22 +133,6 @@ class TerminalMainViewController: UIViewController {
         timestampLabel.text = dateformatter.string(from: date)
     }
     
-    func queryAllSpeciesNutella() {
-        if let nutella = nutella {
-            let block = DispatchWorkItem {
-                if let speciesIndex = realm?.runtimeSpeciesIndex() {
-                    var dict = [String:Int]()
-                    dict["speciesIndex"] = speciesIndex
-                    let json = JSON(dict)
-                    let jsonObject: Any = json.object
-                    nutella.net.asyncRequest("all_notes_with_species", message: jsonObject as AnyObject, requestName: "all_notes_with_species")
-                }
-            }
-            
-            DispatchQueue.main.async(execute: block)
-        }
-    }
-    
     
     func showLogin() {
         let storyboard = UIStoryboard(name: "Popover", bundle: nil)
@@ -160,13 +143,6 @@ class TerminalMainViewController: UIViewController {
         }
         
         self.present(loginNavigationController, animated: true, completion: {})
-    }
-    
-    // Mark: Unwind Actions
-    
-    @IBAction func unwindToTerminalView(segue: UIStoryboardSegue) {
-        self.navigationDrawerController?.closeLeftView()
-        queryAllSpeciesNutella()
     }
     
     //Mark: Segment Switch

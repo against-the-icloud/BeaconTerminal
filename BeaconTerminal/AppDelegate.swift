@@ -13,8 +13,8 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
-let LOCAL_IP = "10.0.1.6"
-var CURRENT_HOST = REMOTE
+let LOCAL_IP = "131.193.79.203"
+var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
 let LOG: XCGLogger = {
@@ -39,7 +39,7 @@ enum ApplicationType: String {
     case login = "Login"
     case placeTerminal = "PLACE TERMINAL"
     case placeGroup = "PLACE GROUP"
-    case objectGroup = "ARTIFACT"
+    case objectGroup = "ARTIFACT GROUP"
     
     static let allValues = [placeTerminal, placeGroup, objectGroup]
 }
@@ -184,6 +184,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         // Configure the window with the SideNavigationController as the root view controller
+        
         window?.rootViewController = application
         window?.makeKeyAndVisible()
     }
@@ -191,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func prepareLoginUI() -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
  
-        let defaultViewController = DefaultViewController()
+        let defaultViewController = storyboard.instantiateViewController(withIdentifier: "defaultViewController") as! DefaultViewController
         
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
@@ -207,7 +208,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         speciesViewController = SpeciesMenuViewController()
         speciesViewController!.showSpeciesMenu(showHidden: false)
         
-        sideViewController.showSelectedCell(with: checkApplicationState())
+        navigationController.statusBarStyle = .lightContent
         
         return navigationDrawerController
     }
@@ -221,7 +222,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
-        navigationController.statusBarStyle = .default
+        navigationController.statusBarStyle = .lightContent
         
         BadgeUtil.badge(shouldShow: false)
         
@@ -244,7 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
-        navigationController.statusBarStyle = .default
+        navigationController.statusBarStyle = .lightContent
         
         sideViewController.showSelectedCell(with: checkApplicationState())
         
@@ -266,11 +267,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         BadgeUtil.badge(shouldShow: false)
         
-        speciesViewController = SpeciesMenuViewController()
-        speciesViewController!.showSpeciesMenu(showHidden: false)
-        
-        sideViewController.showSelectedCell(with: checkApplicationState())
-        
         return navigationDrawerController
     }
     
@@ -278,6 +274,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func loadCondition() {
         let defaults = UserDefaults.standard
+            
+           prepareViews(applicationType: checkApplicationState())
         if let sectionName = defaults.string(forKey: "sectionName") {
             prepareDB(withSectionName: sectionName)
             setupConnection(withSectionName: sectionName)
@@ -288,6 +286,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func prepareDB(withSectionName sectionName: String = "default") {
+        
+        let defaults = UserDefaults.standard
         
         if Platform.isSimulator {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(sectionName).realm")
@@ -304,10 +304,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             _ = realmDataController.parseNutellaConfigurationJson()
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
             
-            let defaults = UserDefaults.standard
             let groupIndex = defaults.integer(forKey: "groupIndex")
+
+            
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
-            realmDataController.realmDataControllerDelegate?.doesHaveData()
+           // realmDataController.realmDataControllerDelegate?.doesHaveData()
           
             break
         case .placeTerminal:
@@ -315,6 +316,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //re-up
             _ = realmDataController.parseNutellaConfigurationJson()
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()))
+            
+            let speciesIndex = defaults.integer(forKey: "speciesIndex")
+
+            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil)
+            
+            
             break
         default:
             break
@@ -333,12 +340,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         try! realm = Realm(configuration: Realm.Configuration.defaultConfiguration)
     }
-
-    
     
     func resetDB(withGroupIndex groupIndex: Int = 0) {
-        
-        
         //check nutella connection
         
         //handle_requests: reset
@@ -375,7 +378,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                               appId: "wallcology",
                               runId: sectionName,
                               componentId: ApplicationType.placeTerminal.rawValue, netDelegate: self)
-            break
         default:
             break
         }
@@ -391,10 +393,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var dict = [String:String]()
         dict["HEY_NOW_MAN"] = "HELLO"
         
-        nutella?.net.publish("echo_in", message: dict as AnyObject)
+        //nutella?.net.publish("echo_in", message: dict as AnyObject)
         //nutella?.net.subscribe(sub_3)
         Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
-        resetDB()
+        
+        switch checkApplicationState() {
+        case .placeGroup:            
+            realmDataController.queryNutellaAllNotes(withType: "group")
+            break
+        case .placeTerminal:
+            realmDataController.queryNutellaAllNotes(withType: "species")
+        default:
+            break
+        }
+        
+        //resetDB()
     }
     
     // Mark: StateMachine

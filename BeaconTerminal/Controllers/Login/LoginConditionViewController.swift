@@ -72,13 +72,33 @@ extension LoginConditionCollectionViewController {
             let defaults = UserDefaults.standard
             defaults.set(condition.rawValue, forKey: "condition")
             defaults.synchronize()
+            
+            getAppDelegate().changeSystemStateTo(condition)
+
         }
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:LoginConditionCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! LoginConditionCell
-        cell.titleLabel.text = ApplicationType.allValues[indexPath.row].rawValue
+        
+        let appType = ApplicationType.allValues[indexPath.row]
+        
+        cell.titleLabel.text = appType.rawValue
+        
+        switch appType {
+        case .placeGroup:
+            cell.badgeImageView.image = UIImage(named: "placeGroup")
+        case .objectGroup:
+            cell.badgeImageView.image = UIImage(named: "objectGroup")
+        case .placeTerminal:
+            cell.badgeImageView.image = UIImage(named: "placeTerminal")
+        default:
+            break
+        }
+        
+        
+        
         return cell
     }
     
