@@ -5,6 +5,7 @@ import XCGLogger
 import Nutella
 import Transporter
 
+
 let DEBUG = true
 let REFRESH_DB = true
 let EXPORT_DB = true
@@ -13,7 +14,8 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
-let LOCAL_IP = "131.193.79.203"
+let LOCAL_IP = "10.0.1.6"
+//let LOCAL_IP = "131.193.79.203"
 var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
@@ -98,8 +100,9 @@ struct NutellaUpdate {
 }
 
 
-var groupSectionRealm: Realm?
-    
+var beaconNotificationsManager: BeaconNotificationsManager?
+
+
 var realm: Realm?
 var nutella: Nutella?
 
@@ -114,7 +117,10 @@ func getAppDelegate() -> AppDelegate {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    let defaults = UserDefaults.standard
+    
     var window: UIWindow?
+    
     
     var collectionView: UICollectionView?
     var speciesViewController: SpeciesMenuViewController?
@@ -130,11 +136,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     weak var controlPanelDelegate: ControlPanelDelegate?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        //        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
+        
+        beaconNotificationsManager = BeaconNotificationsManager()
+        
+        
+        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
+        
+        
+        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
+        
+        //SPECIES-0
+        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B0407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 1),
+                                                                   enterMessage: "enter species 0",
+                                                                   exitMessage: "exit species 0"
+        )
+        
+        
+        //SPECIES-1
+        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B1407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2),
+                                                                   enterMessage: "enter species 1",
+                                                                   exitMessage: "exit species 1"
+        )
+        
         
         realmDataController = RealmDataController()
-
-        let defaults = UserDefaults.standard
         
         let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
         let sectionDict = ["default":groupNames,"guest":groupNames, "6BM":groupNames,"6MT":groupNames,"6DF":groupNames]
@@ -142,15 +167,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.set(sectionDict, forKey: "sections")
         defaults.synchronize()
         
+        CURRENT_HOST = LOCAL_IP
         
-        prepareViews(applicationType: ApplicationType.login)
+        
+        
+        //prepareViews(applicationType: ApplicationType.login)
+        
+        
+        shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
-        UIView.hr_setToastThemeColor(UIColor.black())
+        UIView.hr_setToastThemeColor(#colorLiteral(red: 0.9022639394, green: 0.9022851586, blue: 0.9022737145, alpha: 1))
         
         
-        CURRENT_HOST = LOCAL
+        
         
         //setupConnection()
         
@@ -159,7 +190,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func shortCircuitLogin() {
+        let defaults = UserDefaults.standard
+        defaults.set(2, forKey: "condition")
+        defaults.set("default", forKey: "sectionName")
+        defaults.set(0, forKey: "groupIndex")
+        defaults.synchronize()
+        
+        getAppDelegate().changeSystemStateTo(.placeGroup)
+        
+        
+        loadCondition()
+    }
+    
     // Mark: View setup
+    
+    // Mark: db setup
+    
+    func loadCondition() {
+        
+        prepareViews(applicationType: checkApplicationState())
+        if let sectionName = defaults.string(forKey: "sectionName") {
+            prepareDB(withSectionName: sectionName)
+            setupConnection(withSectionName: sectionName)
+        } else {
+            prepareDB()
+            setupConnection()
+        }
+    }
+    
     
     func prepareViews(applicationType: ApplicationType) {
         window = UIWindow(frame:UIScreen.main.bounds)
@@ -191,7 +250,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func prepareLoginUI() -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
- 
+        
         let defaultViewController = storyboard.instantiateViewController(withIdentifier: "defaultViewController") as! DefaultViewController
         
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
@@ -202,8 +261,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .default
-        
-        BadgeUtil.badge(shouldShow: false)
         
         speciesViewController = SpeciesMenuViewController()
         speciesViewController!.showSpeciesMenu(showHidden: false)
@@ -223,9 +280,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .lightContent
-        
-        BadgeUtil.badge(shouldShow: false)
-        
+                
         speciesViewController = SpeciesMenuViewController()
         speciesViewController!.showSpeciesMenu(showHidden: false)
         
@@ -265,25 +320,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .default
         
-        BadgeUtil.badge(shouldShow: false)
-        
         return navigationDrawerController
     }
     
-    // Mark: db setup
-    
-    func loadCondition() {
-        let defaults = UserDefaults.standard
-            
-           prepareViews(applicationType: checkApplicationState())
-        if let sectionName = defaults.string(forKey: "sectionName") {
-            prepareDB(withSectionName: sectionName)
-            setupConnection(withSectionName: sectionName)
-        } else {
-            prepareDB()
-            setupConnection()
-        }
-    }
     
     func prepareDB(withSectionName sectionName: String = "default") {
         
@@ -305,11 +344,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
-
+            
             
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
-           // realmDataController.realmDataControllerDelegate?.doesHaveData()
-          
+            // realmDataController.realmDataControllerDelegate?.doesHaveData()
+            
             break
         case .placeTerminal:
             realmDataController.deleteAllConfigurationAndGroups()
@@ -318,7 +357,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()))
             
             let speciesIndex = defaults.integer(forKey: "speciesIndex")
-
+            
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil)
             
             
@@ -366,7 +405,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupConnection(withSectionName sectionName: String = "default") {
         
-        switch checkApplicationState() {
+        
+        
+        switch self.checkApplicationState() {
         case .placeGroup:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
@@ -383,10 +424,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-     
+        
+        
+        
         let sub_1 = "note_changes"
         let sub_2 = "echo_out"
-       // let sub_3 = "set_current_run"
+        let sub_3 = "place_changes"
+
+        // let sub_3 = "set_current_run"
         nutella?.net.subscribe(sub_1)
         nutella?.net.subscribe(sub_2)
         
@@ -398,7 +443,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
         
         switch checkApplicationState() {
-        case .placeGroup:            
+        case .placeGroup:
             realmDataController.queryNutellaAllNotes(withType: "group")
             break
         case .placeTerminal:

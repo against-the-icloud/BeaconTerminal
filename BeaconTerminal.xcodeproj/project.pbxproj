@@ -38,6 +38,9 @@
 		704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */; };
 		705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */; };
 		7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7064CAA31D6783FB00B77ADA /* StringUtil.swift */; };
+		70663F6F1D8F99B700B5BEC9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */; };
+		70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */; };
+		706CF1391D8FA83500A18927 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CF1381D8FA83500A18927 /* Banner.swift */; };
 		706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */; };
 		7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7070C4D41D4E77BA00AB47FF /* Popover.storyboard */; };
 		7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */; };
@@ -48,6 +51,8 @@
 		708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7099CDA11D0F99050037E56C /* Pulsator.swift */; };
+		709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F926C1D8F7D260057E104 /* BeaconID.swift */; };
+		709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F926E1D8F7D390057E104 /* BeaconNotificationsManager.swift */; };
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
 		70A06DD41CE3F84D008FC11F /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD21CE3F84D008FC11F /* coin.wav */; };
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
@@ -171,6 +176,9 @@
 		704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesHeader.swift; path = SpeicesPages/ChooseSpeciesHeader.swift; sourceTree = "<group>"; };
 		705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBottomNavigationController.swift; sourceTree = "<group>"; };
 		7064CAA31D6783FB00B77ADA /* StringUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
+		70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		706CF1381D8FA83500A18927 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipDetailViewController.swift; sourceTree = "<group>"; };
 		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popover.storyboard; sourceTree = "<group>"; };
 		7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelationshipDropView.swift; path = BeaconTerminal/Controllers/Carousel/RelationshipDropView.swift; sourceTree = SOURCE_ROOT; };
@@ -181,6 +189,8 @@
 		708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CoverFlow.storyboard; path = BeaconTerminal/Controllers/Carousel/CoverFlow.storyboard; sourceTree = SOURCE_ROOT; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = wallcology_configuration.json; path = ../wallcology_configuration.json; sourceTree = "<group>"; };
 		7099CDA11D0F99050037E56C /* Pulsator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pulsator.swift; path = ../Views/Pulsator.swift; sourceTree = "<group>"; };
+		709F926C1D8F7D260057E104 /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
+		709F926E1D8F7D390057E104 /* BeaconNotificationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconNotificationsManager.swift; sourceTree = "<group>"; };
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
@@ -267,6 +277,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */,
+				70663F6F1D8F99B700B5BEC9 /* SystemConfiguration.framework in Frameworks */,
 				700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */,
 				702FDD8C1D805BDE00B0EEDE /* SimpleMQTTClient.framework in Frameworks */,
 				700A3AB61D4BC7D8009B540D /* Photos.framework in Frameworks */,
@@ -281,6 +293,8 @@
 		351FCE10601876F58D4A23C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */,
+				70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */,
 				700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */,
 				700A3AB51D4BC7D8009B540D /* Photos.framework */,
 				E88A1C1CBB05E4DB3693708A /* Pods_BeaconTerminal.framework */,
@@ -507,6 +521,8 @@
 		AEC0A9391C86F6C700F88936 /* Estimote */ = {
 			isa = PBXGroup;
 			children = (
+				709F926E1D8F7D390057E104 /* BeaconNotificationsManager.swift */,
+				709F926C1D8F7D260057E104 /* BeaconID.swift */,
 			);
 			path = Estimote;
 			sourceTree = "<group>";
@@ -538,6 +554,7 @@
 		C0A7D5E1CCBC3F9F3D7FF1EF /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				706CF1381D8FA83500A18927 /* Banner.swift */,
 				C0A7D118835AC334A93CDE75 /* ToolbarView.swift */,
 				70F29A531D57655E0057A497 /* GradientView.swift */,
 				7099CDA11D0F99050037E56C /* Pulsator.swift */,
@@ -800,7 +817,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		D6EF7029447DC3EE7147C62B /* [CP] Check Pods Manifest.lock */ = {
@@ -815,7 +832,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -834,6 +851,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */,
 				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
 				70D142691D414E2700A588B3 /* DragUtil.swift in Sources */,
 				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
@@ -879,6 +897,8 @@
 				701841011D6041AF003921A1 /* MapViewController.swift in Sources */,
 				701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */,
 				C0A7DAFFCDF63F8162BEEF3C /* ToolbarView.swift in Sources */,
+				709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */,
+				706CF1391D8FA83500A18927 /* Banner.swift in Sources */,
 				70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */,
 				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
@@ -1079,7 +1099,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6A27FBCB4C2DB3439725EB5A /* Pods-BeaconTerminal.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1107,7 +1127,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B59A5ABBDC2F3406224EF4B /* Pods-BeaconTerminal.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -628,12 +628,15 @@
         <scene sceneID="Ubg-gz-Vvd">
             <objects>
                 <navigationController toolbarHidden="NO" id="CIf-FG-GKy" sceneMemberID="viewController">
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qwB-EF-C5j">
+                    <value key="contentSizeForViewInPopover" type="size" width="850" height="600"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="qwB-EF-C5j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="wmr-zz-Ual">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="wmr-zz-Ual">
                         <rect key="frame" x="0.0" y="576" width="540" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
@@ -797,7 +800,7 @@
                         <viewControllerLayoutGuide type="bottom" id="5MC-Es-7V6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cR3-Sq-pw4">
-                        <rect key="frame" x="0.0" y="44" width="850" height="576"/>
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="4iH-xO-jQE" userLabel="MainStackView">
@@ -1003,6 +1006,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="csQ-8q-xhl"/>
         <segue reference="ppx-ZJ-qbg"/>
-        <segue reference="X7A-UY-9fB"/>
+        <segue reference="UHa-zh-QfJ"/>
     </inferredMetricsTieBreakers>
 </document>

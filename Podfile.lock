@@ -1,65 +1,39 @@
 PODS:
+  - EstimoteSDK (4.8.1)
   - Material (2.0.0)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
-  - RealmSwift (1.0.2):
-    - Realm (= 1.0.2)
-  - Transporter (2.0.1)
-  - XCGLogger (3.3)
+  - Realm (1.1.0):
+    - Realm/Headers (= 1.1.0)
+  - Realm/Headers (1.1.0)
+  - RealmSwift (1.1.0):
+    - Realm (= 1.1.0)
+  - Transporter (3.0.0)
+  - XCGLogger (3.5.3)
 
 DEPENDENCIES:
+  - EstimoteSDK
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
-  - Realm (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
-  - RealmSwift (from `git@github.com:realm/realm-cocoa.git`, branch `master`)
-  - Transporter (from `https://github.com/DenHeadless/Transporter.git`, branch `swift3`)
-  - XCGLogger (from `https://github.com/aperritano/XCGLogger.git`, branch `swift3_xcode8_6`)
+  - RealmSwift
+  - Transporter
+  - XCGLogger
 
 EXTERNAL SOURCES:
   Material:
     :branch: development
     :git: https://github.com/CosmicMind/Material.git
-  Realm:
-    :branch: master
-    :git: git@github.com:realm/realm-cocoa.git
-    :submodules: true
-  RealmSwift:
-    :branch: master
-    :git: git@github.com:realm/realm-cocoa.git
-    :submodules: true
-  Transporter:
-    :branch: swift3
-    :git: https://github.com/DenHeadless/Transporter.git
-  XCGLogger:
-    :branch: swift3_xcode8_6
-    :git: https://github.com/aperritano/XCGLogger.git
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: 09cdb27c84fafbff4eb7ff1ad293b95663a345c2
+    :commit: fecfd6a19e076a033e2b867241a12a8466704021
     :git: https://github.com/CosmicMind/Material.git
-  Realm:
-    :commit: 216333cf82e1afcba5e6c4547e6fb983165d510f
-    :git: git@github.com:realm/realm-cocoa.git
-    :submodules: true
-  RealmSwift:
-    :commit: 216333cf82e1afcba5e6c4547e6fb983165d510f
-    :git: git@github.com:realm/realm-cocoa.git
-    :submodules: true
-  Transporter:
-    :commit: 19732c18015b5aac3ab1714d8549d03f43c0bf86
-    :git: https://github.com/DenHeadless/Transporter.git
-  XCGLogger:
-    :commit: 8c36469e563d04ad598c8149ef9c434d3e22831b
-    :git: https://github.com/aperritano/XCGLogger.git
 
 SPEC CHECKSUMS:
+  EstimoteSDK: 8ea0a0c6f7bee1286aad03b9bf38066e8839b6d9
   Material: 61dcd49507c32d07c1557267ec360ce35bd0b1c5
-  Realm: 2948cfa3a05b7acc446abc4c124d443df646c8de
-  RealmSwift: 4816c8608630a9a00bba6d726bb30b4bab6dd6bf
-  Transporter: a37a287f3b23cea53c61e4d856e8234da74ace63
-  XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
+  Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
+  RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
+  Transporter: b6e906451c22d7119b6556adf3481689a5c30677
+  XCGLogger: dbe4a9c7bbaac73717a34e0b94c64fd151c74d6c
 
-PODFILE CHECKSUM: d482a87953ba839c9c807235ed30265cc7f2c0a4
+PODFILE CHECKSUM: f493810d6caf603f7510fff9948d409ad16b378e
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.rc.2

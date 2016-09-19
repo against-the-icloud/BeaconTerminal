@@ -65,7 +65,6 @@ class LoginSectionViewController: UITableViewController {
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: {})
-        self.performSegue(withIdentifier: "unwindToSideMenu", sender: self)
     }
 }
 

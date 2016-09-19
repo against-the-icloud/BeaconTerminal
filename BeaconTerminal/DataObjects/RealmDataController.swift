@@ -110,10 +110,8 @@ class RealmDataController {
     
     func handlePlaceGroupMessages(withMessage message: Any, withChannel channel: String) {
         
-        guard let currentSectionName = realm?.runtimeSectionName() else {
-            //need sectionName for this message
-            return
-        }
+        _ = realm?.runtimeSectionName()
+        
         guard let currentGroupIndex = realm?.runtimeGroupIndex() else {
             //need sectionName for this message
             return
@@ -1074,11 +1072,6 @@ extension RealmDataController {
         }
     }
     
-    class func deleteAllConfigurationAndGroupsSectionGroupRealm() {
-        try! groupSectionRealm?.write {
-            groupSectionRealm?.deleteAllObjects()
-        }
-    }
     func deleteAllUserData() {
         try! realm?.write {
             realm?.delete((realm?.allObjects(ofType: Runtime.self))!)

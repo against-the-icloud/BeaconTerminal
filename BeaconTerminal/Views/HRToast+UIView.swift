@@ -80,7 +80,7 @@ extension UIView {
     class func hr_toastThemeColor() -> UIColor {
         var color = objc_getAssociatedObject(self, &HRToastThemeColor) as! UIColor?
         if color == nil {
-            color = UIColor.black()
+            color = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             UIView.hr_setToastThemeColor(color!)
         }
         return color!
@@ -123,7 +123,7 @@ extension UIView {
     class func hr_toastFontColor() -> UIColor {
         var color = objc_getAssociatedObject(self, &HRToastFontColor) as! UIColor?
         if color == nil {
-            color = UIColor.white()
+            color = UIColor.black()
             UIView.hr_setToastFontColor(color!)
         }
         
@@ -209,6 +209,7 @@ extension UIView {
         activityView.alpha = 0.0
         activityView.autoresizingMask = ([.flexibleLeftMargin, .flexibleTopMargin, .flexibleRightMargin, .flexibleBottomMargin])
         activityView.layer.cornerRadius = HRToastCornerRadius
+        activityView.layer.borderColor = UIColor.black.cgColor
         
         if HRToastDisplayShadow {
             activityView.layer.shadowColor = UIView.hr_toastThemeColor().cgColor

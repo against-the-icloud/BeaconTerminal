@@ -158,11 +158,9 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
             speciesMenu(shouldShow: true)
         case .placeTerminal:
             speciesMenu(shouldShow: false)
-            BadgeUtil.showBadge(withType: .terminalBadge)
             break
         case .objectGroup:
             speciesMenu(shouldShow: true)
-            BadgeUtil.showBadge(withType: .objectBadge)
         default:
             break
         }

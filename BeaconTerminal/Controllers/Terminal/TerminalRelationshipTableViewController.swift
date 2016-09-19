@@ -76,7 +76,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
             }
         }
         
-        notificationTokens.append(runtimeNotificationToken!)
+        if let n = runtimeNotificationToken {
+            notificationTokens.append(n)
+        }
+        
         
         speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
         
@@ -97,7 +100,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
             }
         }
         
-        notificationTokens.append(speciesObsNotificationToken!)
+        
+        if let s = speciesObsNotificationToken {
+            notificationTokens.append(s)
+        }
 
     }
     
