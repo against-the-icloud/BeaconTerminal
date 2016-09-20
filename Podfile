@@ -7,16 +7,16 @@ target 'BeaconTerminal' do
     pod 'Material', :git => 'https://github.com/CosmicMind/Material.git', :branch => 'development'
     
     #db
-#    pod 'Realm', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
-#	pod 'RealmSwift', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
+    #pod 'Realm', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
+	#pod 'RealmSwift', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
 
     #pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
-#    pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
+    pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
 
-    pod 'RealmSwift'
+#pod 'RealmSwift'
     #Logger
-    pod 'XCGLogger'
-    
+#    pod 'XCGLogger'
+
     #state machinepod
     pod 'Transporter'
     pod 'EstimoteSDK'

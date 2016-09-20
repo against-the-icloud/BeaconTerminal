@@ -41,11 +41,11 @@ class ChooseSpeciesViewController: UICollectionViewController {
         
         if let speciesIndex = self.speciesIndex, let speciesObs = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let rType = self.relationshipType?.rawValue {
             
-            if let so = speciesObs.filter(using: "fromSpecies.index = \(speciesIndex)").first {
-                let relationshipResults = so.relationships.filter(using: "relationshipType = '\(rType)'")
+            if let so = speciesObs.filter("fromSpecies.index = \(speciesIndex)").first {
+                let relationshipResults = so.relationships.filter("relationshipType = '\(rType)'")
                 
                 if relationshipResults.isEmpty {
-                    speciesFilterd = realm?.species.filter(using: "index != \(speciesIndex)")
+                    speciesFilterd = realm?.species.filter("index != \(speciesIndex)")
                 } else {
                     
                     
@@ -57,7 +57,7 @@ class ChooseSpeciesViewController: UICollectionViewController {
                         }
                     }
                     
-                    speciesFilterd = realm?.species.filter(using: query)
+                    speciesFilterd = realm?.species.filter(query)
                     
                 }
                 

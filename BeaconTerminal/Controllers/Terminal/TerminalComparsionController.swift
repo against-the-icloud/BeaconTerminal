@@ -47,7 +47,7 @@ class TerminalComparsionController: UIViewController {
             return
         }
         
-        guard let fromSpeciesIndex = realm?.runtimeSpeciesIndex() else {
+        guard let fromSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
             return
         }
         

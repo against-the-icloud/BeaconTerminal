@@ -79,7 +79,7 @@ class CoverFlowCell: UICollectionViewCell {
         
         //setup RelationshipView
         for relationshipView in relationshipViews {
-            let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipView.relationshipType!)'")
+            let foundRelationships : Results<Relationship> = speciesObservation.relationships.filter("relationshipType = '\(relationshipView.relationshipType!)'")
             
             //LOG.debug("found relationships for \(fromSpecies.index) relationships \(foundRelationships)")
             relationshipView.speciesObservation = speciesObservation

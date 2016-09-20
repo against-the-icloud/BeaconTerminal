@@ -74,7 +74,7 @@ class SpeciesMenuViewController: UIViewController {
     
     /// Prepares the MenuView example.
     func prepareSpeciesMenu() {
-        allSpecies = realm!.allObjects(ofType: Species.self)
+        allSpecies = realm!.objects(Species.self)
         
         if let sv = speciesMenuView {
             sv.removeFromSuperview()

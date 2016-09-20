@@ -48,7 +48,7 @@ class TerminalMainViewController: UIViewController {
     // Mark: Prepare
     
     func prepareNotifications() {
-        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        runtimeResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(Runtime.self)
         
         
         // Observe Notifications
@@ -56,7 +56,7 @@ class TerminalMainViewController: UIViewController {
             
             guard let terminalController = self else { return }
             switch changes {
-            case .Initial(let runtimeResults):
+            case .initial(let runtimeResults):
                 //we have nothing
                 if runtimeResults.isEmpty {
                     //terminalController.showLogin()
@@ -64,12 +64,12 @@ class TerminalMainViewController: UIViewController {
                     terminalController.updateHeader()
                 }
                 break
-            case .Update( _, _, _, _):
+            case .update( _, _, _, _):
                 LOG.debug("UPDATE Runtime -- TERMINAL")
                 terminalController.updateHeader()
                 //terminalController.updateUI(withRuntimeResults: runtimeResults)
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 LOG.error("\(error)")
                 break
@@ -79,19 +79,19 @@ class TerminalMainViewController: UIViewController {
         if let n = runtimeNotificationToken {
             notificationTokens.append(n)
         }
-        speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
+        speciesObservationResults = realmDataController.getRealm().objects(SpeciesObservation.self)
         
         speciesObsNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let controller = self else { return }
             switch changes {
-            case .Initial( _):
+            case .initial( _):
                 controller.updateTimestamp()
                 break
-            case .Update( _, _, _, _):
+            case .update( _, _, _, _):
                 controller.updateTimestamp()
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
                 break
@@ -108,10 +108,10 @@ class TerminalMainViewController: UIViewController {
     // Mark: Update UI
     
     func updateHeader() {
-        if let speciesIndex = realm?.runtimeSpeciesIndex() {
+        if let speciesIndex = realmDataController.getRealm().runtimeSpeciesIndex() {
             profileImageView.image = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
             
-            if let species = realm?.speciesWithIndex(withIndex: speciesIndex) {
+            if let species = realmDataController.getRealm().speciesWithIndex(withIndex: speciesIndex) {
                 profileLabel.text = species.name
             }
             
@@ -120,7 +120,7 @@ class TerminalMainViewController: UIViewController {
             //no species image
         }
         
-        if let sectionName = realm?.runtimeSectionName() {
+        if let sectionName = realmDataController.getRealm().runtimeSectionName() {
             sectionLabel.text = sectionName
         } else {
             sectionLabel.text = "XYZ"

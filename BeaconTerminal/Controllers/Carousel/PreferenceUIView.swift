@@ -47,20 +47,20 @@ class PreferenceUIView: UIView {
         // Observe Results Notifications
         notificationToken = preferences?.addNotificationBlock { (changes: RealmCollectionChange) in
             switch changes {
-            case .Initial(let preferences):
+            case .initial(let preferences):
                 //look up the preference
                 for p in preferences {
                     self.updateLabels(preference: p)
                 }
                 break
-            case .Update(let preferences, _, _, let modifications):
+            case .update(let preferences, _, _, let modifications):
                 if !modifications.isEmpty {
                     for index in modifications {
                         self.updateLabels(preference: preferences[index])
                     }
                 }
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
                 break

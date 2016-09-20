@@ -108,14 +108,14 @@ class RelationshipDropView: DropTargetView {
         if let species = speciesView?.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
             
             //filer all relationship with this type
-            let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'").filter(using: "toSpecies.index = \(species.index)")
+            let foundRelationships = speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'").filter("toSpecies.index = \(species.index)")
             
             //find relationships that have toSpecies equal to species.index
             
             if !foundRelationships.isEmpty {
                 
                 dispatch_on_main {
-                    realmDataController.delete(foundRelationships.first!)
+                    //realmDataController.delete(foundRelationships.first!)
                     
                     speciesView?.fadeOut(0.4, delay: 0.0, completion: {_ in
                         speciesView?.removeFromSuperview()
@@ -140,7 +140,7 @@ class RelationshipDropView: DropTargetView {
         
         if let speciesView = sender, let delegate = self.delegate, let species = speciesView.species, let relationshipType = relationshipType, let speciesObservation = speciesObservation {
             //filer all relationship with this type
-            let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'").filter(using: "toSpecies.index = \(species.index)")
+            let foundRelationships = speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'").filter("toSpecies.index = \(species.index)")
             
             //find relationships that have toSpecies equal to species.index
             if !foundRelationships.isEmpty {

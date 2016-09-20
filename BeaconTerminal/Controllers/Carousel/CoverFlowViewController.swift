@@ -67,7 +67,7 @@ class CoverFlowViewController: UIViewController {
     func loadData() {
         //load test group
         
-        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        runtimeResults = realm?.objects(Runtime.self)
         
         
         // Observe Notifications
@@ -75,13 +75,13 @@ class CoverFlowViewController: UIViewController {
             
             guard let coverFlowController = self else { return }
             switch changes {
-            case .Initial(let runtimeResults):
+            case .initial(let runtimeResults):
                 coverFlowController.updateUI(withRuntimeResults: runtimeResults)
                 break
-            case .Update(let runtimeResults, _, _, _):
+            case .update(let runtimeResults, _, _, _):
                 coverFlowController.updateUI(withRuntimeResults: runtimeResults)
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
                 break
@@ -101,7 +101,7 @@ class CoverFlowViewController: UIViewController {
     
     
     func readSpeciesAndUpdate() {
-        self.allSpecies = realm?.allObjects(ofType: Species.self)
+        self.allSpecies = realm?.objects(Species.self)
         self.collectionView.reloadData()
     }
     
@@ -122,7 +122,7 @@ class CoverFlowViewController: UIViewController {
         loadData()
         prepareCollectionViewCells()
         
-        allSpecies = realm?.allObjects(ofType: Species.self)
+        allSpecies = realm?.objects(Species.self)
         
         let nib = UINib(nibName: "CoverFlowCell", bundle: nil)
         
@@ -263,7 +263,7 @@ extension CoverFlowViewController: UICollectionViewDataSource, UICollectionViewD
             if currentGroup.speciesObservations.count > 0 {
                 let fromSpecies = self.allSpecies![indexPath.row]
                 
-                let speciesObservations: Results<SpeciesObservation> = currentGroup.speciesObservations.filter(using: "fromSpecies.index = \(fromSpecies.index)")
+                let speciesObservations: Results<SpeciesObservation> = currentGroup.speciesObservations.filter("fromSpecies.index = \(fromSpecies.index)")
                 
                 if !fromSpecies.name.isEmpty {
                     cell.titleLabel.text = fromSpecies.name

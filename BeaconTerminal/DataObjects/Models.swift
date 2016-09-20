@@ -331,19 +331,19 @@ class User: Object {
 extension Realm {
     
     var species: Results<Species> {
-        return allObjects(ofType: Species.self)
+        return objects(Species.self)
     }
     
     func speciesWithIndex(withIndex index: Int) -> Species? {
-        return allObjects(ofType: Species.self).filter(using: "index = \(index)").first
+        return objects(Species.self).filter("index = \(index)").first
     }
    
     func ecosystem(withIndex index: Int) -> Ecosystem? {
-        return allObjects(ofType: Ecosystem.self).filter(using: "index = \(index)").first
+        return objects(Ecosystem.self).filter("index = \(index)").first
     }
     
     func runtime() -> Runtime? {
-        return allObjects(ofType: Runtime.self).first
+        return objects(Runtime.self).first
     }
     
     func runtimeSectionName() -> String? {
@@ -368,16 +368,16 @@ extension Realm {
     }
     
     func section(withName name: String) -> Section? {
-        return allObjects(ofType: Section.self).filter(using: "name = '\(name)'").first
+        return objects(Section.self).filter("name = '\(name)'").first
     }
     
     func sections() -> Results<Section> {
-        return allObjects(ofType: Section.self)
+        return objects(Section.self)
     }
     
     func group(withSectionName sectionName: String, withGroupIndex index: Int) -> Group? {
         if let section = self.section(withName: sectionName) {
-            return section.groups.filter(using: "index = \(index)").first
+            return section.groups.filter("index = \(index)").first
         }
         return nil
     }
@@ -396,7 +396,7 @@ extension Realm {
     }
     
     func systemConfiguration() -> SystemConfiguration? {
-        return allObjects(ofType: SystemConfiguration.self).first
+        return objects(SystemConfiguration.self).first
     }
     
     func allSpeciesObservations(withSectionName sectionName: String, withGroupIndex index: Int) -> List<SpeciesObservation>? {
@@ -414,15 +414,15 @@ extension Realm {
     }
     
     func allSpeciesObservations() -> Results<SpeciesObservation> {
-        return allObjects(ofType: SpeciesObservation.self)
+        return objects(SpeciesObservation.self)
     }
     
     func  speciesObservation(withFromSpeciesIndex speciesIndex: Int) -> Results<SpeciesObservation> {
-        return allObjects(ofType: SpeciesObservation.self).filter(using: "fromSpecies.index = \(speciesIndex)")
+        return objects(SpeciesObservation.self).filter("fromSpecies.index = \(speciesIndex)")
     }
     
     func speciesObservation(withId id: String) -> SpeciesObservation? {
-        return allObjects(ofType: SpeciesObservation.self).filter(using: "id = '\(id)'").first
+        return objects(SpeciesObservation.self).filter("id = '\(id)'").first
     }
     
     func speciesObservation(FromCollection speciesObservations: List<SpeciesObservation>, withSpeciesIndex speciesIndex: Int) -> SpeciesObservation? {
@@ -431,7 +431,7 @@ extension Realm {
             return nil
         }
         
-        guard let found = speciesObservations.filter(using: "fromSpecies.index = \(speciesIndex)").first else {
+        guard let found = speciesObservations.filter("fromSpecies.index = \(speciesIndex)").first else {
             return nil
         }
         
@@ -440,9 +440,9 @@ extension Realm {
     
     func relationship(withSpeciesObservation speciesObservation: SpeciesObservation, withRelationshipType relationshipType: String, forSpeciesIndex speciesIndex: Int) -> Relationship? {
         
-        let foundRelationships = speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'")
+        let foundRelationships = speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'")
         
-        if let toSpeciesFound = foundRelationships.filter(using: "toSpecies.index = \(speciesIndex)").first {
+        if let toSpeciesFound = foundRelationships.filter("toSpecies.index = \(speciesIndex)").first {
             return toSpeciesFound
         }
 
@@ -460,7 +460,7 @@ extension Realm {
     
     func speciesObservation(withGroup group: Group?, withFromSpeciesIndex index: Int) -> SpeciesObservation? {
         if let group = group {
-            return group.speciesObservations.filter(using: "fromSpecies.index = \(index)").first
+            return group.speciesObservations.filter("fromSpecies.index = \(index)").first
         }
         return nil
     }
@@ -485,27 +485,27 @@ extension Realm {
     }
     
     func allRelationships() -> Results<Relationship> {
-        return allObjects(ofType: Relationship.self)
+        return objects(Relationship.self)
     }
     
     func relationship(withId id: String) -> Relationship? {
-        return allObjects(ofType: Relationship.self).filter(using: "id = '\(id)'").first
+        return objects(Relationship.self).filter("id = '\(id)'").first
     }
     
     func nutellaConfig() -> NutellaConfig? {
-        return allObjects(ofType: NutellaConfig.self).first
+        return objects(NutellaConfig.self).first
     }
     
     func relationships(withSpeciesObservation speciesObservation: SpeciesObservation, withRelationshipType relationshipType: String) -> Results<Relationship>? {
-        return speciesObservation.relationships.filter(using: "relationshipType = '\(relationshipType)'")
+        return speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'")
     }
     
     func preference(withId id: String) -> Preference? {
-        return allObjects(ofType: Preference.self).filter(using: "id = '\(id)'").first
+        return objects(Preference.self).filter("id = '\(id)'").first
     }
     
     func allPreferences() -> Results<Preference> {
-        return allObjects(ofType: Preference.self)
+        return objects(Preference.self)
     }
 
 }

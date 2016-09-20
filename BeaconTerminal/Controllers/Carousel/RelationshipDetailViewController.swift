@@ -179,7 +179,7 @@ class RelationshipDetailViewController: UIViewController {
         if let r = self.relationship, let so = self.speciesObservation {
             
             LOG.debug("speciesOb \(so.id)")
-            let ecosystem = realm!.allObjects(ofType: Ecosystem.self)[self.ecosystemSegmentedControl.selectedSegmentIndex]
+            let ecosystem = realm!.objects(Ecosystem.self)[self.ecosystemSegmentedControl.selectedSegmentIndex]
             
             dispatch_on_main {
                 try! realm!.write {
@@ -238,7 +238,7 @@ class RelationshipDetailViewController: UIViewController {
                             realm!.add(so, update: true)
                         }
                         
-                        realmDataController.delete(r)
+                        //realmDataController.delete(r)
                         
                         if let sourceView = self.sourceView {
                             sourceView.fadeOut(0.4, delay: 0.0, completion: {_ in
@@ -259,7 +259,7 @@ class RelationshipDetailViewController: UIViewController {
         if let r = self.relationship, let so = self.speciesObservation {
             
             LOG.debug("speciesOb \(so.id)")
-            let ecosystem = realm!.allObjects(ofType: Ecosystem.self)[sender.selectedSegmentIndex]
+            let ecosystem = realm!.objects(Ecosystem.self)[sender.selectedSegmentIndex]
             
             dispatch_on_main {
                 try! realm?.write {

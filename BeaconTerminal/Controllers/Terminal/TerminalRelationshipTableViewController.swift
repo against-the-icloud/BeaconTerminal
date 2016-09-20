@@ -49,7 +49,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
     
     func prepareNotifications() {
         
-        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        runtimeResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(Runtime.self)
         
         
         // Observe Notifications
@@ -57,19 +57,19 @@ class TerminalRelationshipTableViewController: UITableViewController {
             
             guard let tableController = self else { return }
             switch changes {
-            case .Initial(let runtimeResults):
+            case .initial(let runtimeResults):
                 if let runtime = runtimeResults.first, let speciesIndex = runtime.currentSpeciesIndex.value {
                     tableController.updateHeader(withSpeciesIndex: speciesIndex)
                     tableController.updateReportLabel()
                 }
                 break
-            case .Update(let runtimeResults, _, _, _):
+            case .update(let runtimeResults, _, _, _):
                 if let runtime = runtimeResults.first, let speciesIndex = runtime.currentSpeciesIndex.value {
                     tableController.updateHeader(withSpeciesIndex: speciesIndex)
                     tableController.updateReportLabel()
                 }
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 LOG.error("\(error)")
                 break
@@ -81,19 +81,19 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
         
         
-        speciesObservationResults = realm?.allObjects(ofType: SpeciesObservation.self)
+        speciesObservationResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(SpeciesObservation.self)
         
         speciesObsNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let controller = self else { return }
             switch changes {
-            case .Initial(let speciesObservationResults):
+            case .initial(let speciesObservationResults):
                 controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
-            case .Update(let speciesObservationResults, _, _, _):
+            case .update(let speciesObservationResults, _, _, _):
                 controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
                 break
@@ -119,7 +119,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
             
           
             
-            if let foundRelationships = realm?.relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
+            if let foundRelationships = realmDataController.getRealm(withRealmType: RealmType.terminalDB).relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
                 
                 
                 relationshipCount += foundRelationships.count
@@ -175,7 +175,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
     // Mark: updates
     
     func updateHeader(withSpeciesIndex speciesIndex: Int) {
-        if let speciesIndex = realm?.runtimeSpeciesIndex() {
+        if let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
             relationshipHeaderLabel.backgroundColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
             relationshipHeaderLabel.borderColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
             prepareView()
@@ -194,7 +194,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
             return
         }
         
-        if let groups = realm?.currentGroups() {
+        if let groups = realmDataController.getRealm(withRealmType: RealmType.terminalDB).currentGroups() {
             
             if relationshipCount == 0 && groupsReported.keys.count == 0 {
                 relationshipReportLabel.text = "Nothing to report."
@@ -208,16 +208,13 @@ class TerminalRelationshipTableViewController: UITableViewController {
     // Mark: Prepare
     func prepareView() {
         
-        if let currentSpeciesIndex = realm?.runtimeSpeciesIndex() {
+        if let currentSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
             //update title
             if let relationshipType = self.relationshipType {
                 relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
             }
             
-            guard let allSpecies = realm?.species else {
-                return
-            }
-            
+            let allSpecies = realmDataController.getRealm(withRealmType: RealmType.terminalDB).species            
             //make all the cells
             
             //create array with int 0...10

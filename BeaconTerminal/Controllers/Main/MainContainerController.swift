@@ -47,7 +47,7 @@ class MainContainerController: UIViewController{
     }
     
     func prepareNotifications() {
-        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        runtimeResults = realm?.objects(Runtime.self)
         
         
         // Observe Notifications
@@ -55,7 +55,7 @@ class MainContainerController: UIViewController{
             
             guard let mainController = self else { return }
             switch changes {
-            case .Initial(let runtimeResults):
+            case .initial(let runtimeResults):
                 //we have nothing
                 if runtimeResults.isEmpty {
                     //mainController.showLogin()
@@ -64,12 +64,12 @@ class MainContainerController: UIViewController{
                     //mainController.showLogin()
                 }
                 break
-            case .Update( _, _, _, _):
+            case .update( _, _, _, _):
                 LOG.debug("UPDATE Runtime -- TERMINAL")
                 mainController.updateHeader()
                 //terminalController.updateUI(withRuntimeResults: runtimeResults)
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 LOG.error("\(error)")
                 break

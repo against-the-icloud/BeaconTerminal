@@ -44,7 +44,7 @@ class AppBottomNavigationController: BottomNavigationController {
     }
     
     func prepareNotification() {
-        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        runtimeResults = realm?.objects(Runtime.self)
         
         // Observe Notifications
         notificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
@@ -52,18 +52,18 @@ class AppBottomNavigationController: BottomNavigationController {
             guard let bottomNav = self else { return }
             
             switch changes {
-            case .Initial(let runtimeResults):
+            case .initial(let runtimeResults):
                 
                 bottomNav.updateUI(withRuntimeResults: runtimeResults)
                 // Results are now populated and can be accessed without blocking the UI
                 
                 break
-            case .Update(let runtimeResults, _, _, _):
+            case .update(let runtimeResults, _, _, _):
                 
                 bottomNav.updateUI(withRuntimeResults: runtimeResults)
                 
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
                 break

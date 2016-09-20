@@ -14,18 +14,26 @@ class RealmDataController {
     
     init() {
     }
+
     
-    func add(_ realmObject: Object, shouldUpdate: Bool) {
-        try! realm?.write {
-            realm?.add(realmObject, update: shouldUpdate)
+    func getRealm(withRealmType realmType: RealmType? = nil) -> Realm {
+        if let rt = realmType {
+            switch rt {
+            case .terminalDB:
+                return terminalRealm!
+            default:
+                return realm!
+            }
+        } else {
+            switch getAppDelegate().checkApplicationState() {
+            case .placeTerminal:
+                return terminalRealm!
+            default:
+                return realm!
+            }
         }
     }
     
-    func delete(_ realmObject: Object) {
-        try! realm?.write {
-            realm?.delete(realmObject)
-        }
-    }
     
     // Mark: Group
     
@@ -41,10 +49,10 @@ class RealmDataController {
     
     // Mark: Nutella Queries
     
-    func queryNutellaAllNotes(withType type: String) {
+    func queryNutellaAllNotes(withType type: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         switch type {
         case "group":
-            if let index = realm?.runtimeGroupIndex() {
+            if let index = getRealm(withRealmType: realmType).runtimeGroupIndex() {
                 if let nutella = nutella {
                     let block = DispatchWorkItem {
                         
@@ -60,7 +68,7 @@ class RealmDataController {
             }
         case "species":
             
-            if let index = realm?.runtimeSpeciesIndex() {
+            if let index = getRealm(withRealmType: realmType).runtimeSpeciesIndex() {
                 if let nutella = nutella {
                     let block = DispatchWorkItem {
                         
@@ -79,6 +87,18 @@ class RealmDataController {
         }
     }
 
+    // Mark: Sync Observations
+    
+    func syncSpeciesObservations(withIndex index: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
+        
+        if let found = getRealm(withRealmType: realmType).speciesObservationCurrentSectionGroup(withFromSpeciesIndex: index), let synced = found.isSynced.value {
+            
+            if synced == false {
+                exportSpeciesObservation(speciesObservation: found)
+            }
+            
+        }
+    }
     
     // Mark: Nutella updates
     
@@ -108,11 +128,11 @@ class RealmDataController {
         }
     }
     
-    func handlePlaceGroupMessages(withMessage message: Any, withChannel channel: String) {
+    func handlePlaceGroupMessages(withMessage message: Any, withChannel channel: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
-        _ = realm?.runtimeSectionName()
+        _ = getRealm(withRealmType: realmType).runtimeSectionName()
         
-        guard let currentGroupIndex = realm?.runtimeGroupIndex() else {
+        guard let currentGroupIndex = getRealm(withRealmType: realmType).runtimeGroupIndex() else {
             //need sectionName for this message
             return
         }
@@ -122,14 +142,14 @@ class RealmDataController {
             let header = parseHeader(withMessage: message)
             if let speciesIndex = header?.speciesIndex, currentGroupIndex == header?.groupIndex {
                 
-                parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex)
+                parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex, withRealmType: realmType)
             }
             break
         case NutellaChannelType.allNotesWithGroup.rawValue:
             let header = parseHeader(withMessage: message)
             if let groupIndex = header?.groupIndex {
                 if currentGroupIndex == groupIndex {
-                    parseMessage(withMessage: message, withGroupIndex: groupIndex)
+                    parseMessage(withMessage: message, withGroupIndex: groupIndex, withRealmType: realmType)
                 }
             }
             break
@@ -143,11 +163,11 @@ class RealmDataController {
     }
     
     func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {
-        guard let currentSpeciesIndex = realm?.runtimeSpeciesIndex() else {
+        guard let currentSpeciesIndex = getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
             //need species for this message
             return
         }
-        guard let currentSectionName = realm?.runtimeSectionName() else {
+        guard let currentSectionName = getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() else {
             //need sectionName for this message
             return
         }
@@ -157,17 +177,15 @@ class RealmDataController {
             if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
                 
                 // import the message
-                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
+                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName, withRealmType: RealmType.terminalDB)
             }
             break
         case NutellaChannelType.noteChanges.rawValue:
             let header = parseHeader(withMessage: message)
             if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
                 // import the message
-                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName)
+                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName,withRealmType: RealmType.terminalDB)
             }
-            break
-        case NutellaChannelType.allNotes.rawValue:
             break
         default:
             break
@@ -192,8 +210,8 @@ class RealmDataController {
         return header
     }
     
-    func parseMessage(withMessage message: Any, withGroupIndex groupIndex: Int) {
-        if let sectionName = realm?.runtimeSectionName() {
+    func parseMessage(withMessage message: Any, withGroupIndex groupIndex: Int,withRealmType realmType: RealmType = RealmType.defaultDB) {
+        if let sectionName = getRealm(withRealmType: realmType).runtimeSectionName() {
             let json = JSON(message)
             if json == nil {
                 //json is invalid
@@ -203,11 +221,11 @@ class RealmDataController {
                 //no notes param
                 return
             }
-            importJsonJSON(forSectionName: sectionName, withJson: json["notes"])
+            importJsonJSON(forSectionName: sectionName, withJson: json["notes"], withRealmType: realmType)
         }
     }
     
-    func parseSyncFlag(withMessage message: Any, withSpeciesIndex speciesIndex: Int){
+    func parseSyncFlag(withMessage message: Any, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB){
         let json = JSON(message)
         if json == nil {
             //json is invalid
@@ -228,19 +246,19 @@ class RealmDataController {
                         
                         
                         //first check if we can find it by id
-                        if let foundSO = realm?.speciesObservation(withId: id) {
-                            try! realm?.write {
+                        if let foundSO = getRealm(withRealmType: realmType).speciesObservation(withId: id) {
+                            try! getRealm(withRealmType: realmType).write {
                                 foundSO.isSynced.value = isSynced
-                                realm?.add(foundSO, update: true)
+                                getRealm(withRealmType: realmType).add(foundSO, update: true)
                             }
                         }
                     } else {
                         
-                        if let allspeciesobsforthisgroup = realm?.allSpeciesObservationsForCurrentSectionAndGroup() {
-                            if let foundSO = realm?.speciesObservation(FromCollection: allspeciesobsforthisgroup, withSpeciesIndex: speciesIndex) {
-                                try! realm?.write {
+                        if let allspeciesobsforthisgroup = getRealm(withRealmType: realmType).allSpeciesObservationsForCurrentSectionAndGroup() {
+                            if let foundSO = getRealm(withRealmType: realmType).speciesObservation(FromCollection: allspeciesobsforthisgroup, withSpeciesIndex: speciesIndex) {
+                                try! getRealm(withRealmType: realmType).write {
                                     foundSO.isSynced.value = isSynced
-                                    realm?.add(foundSO, update: true)
+                                    getRealm(withRealmType: realmType).add(foundSO, update: true)
                                 }
                             }
                         }
@@ -256,7 +274,7 @@ class RealmDataController {
     
     //header = {'speciesIndex':1, 'groupIndex':2}
     //{ 'header': header, 'notes': parsedNotes});
-    func parseMessage(withMessage message: Any, withSpeciesIndex currentSpeciesIndex:Int, withSectionName currentSectionName: String) {
+    func parseMessage(withMessage message: Any, withSpeciesIndex currentSpeciesIndex:Int, withSectionName currentSectionName: String,withRealmType realmType: RealmType = RealmType.defaultDB) {
         let json = JSON(message)
         if json == nil {
             //json is invalid
@@ -266,13 +284,13 @@ class RealmDataController {
             //no notes param
             return
         }
-        importJsonJSON(forSectionName: currentSectionName, withJson: json["notes"])
+        importJsonJSON(forSectionName: currentSectionName, withJson: json["notes"], withRealmType: realmType)
     }
     
     
     //import from a file or from a string
     //expects array[speciesObservations]
-    func importJsonJSON(forSectionName sectionName: String, withJson json: JSON) {
+    func importJsonJSON(forSectionName sectionName: String, withJson json: JSON,withRealmType realmType: RealmType = RealmType.defaultDB) {
         
         if let speciesObservations = json.array {
             
@@ -284,64 +302,64 @@ class RealmDataController {
                 
                 if let id = soJson["id"].string {
                     
-                    if let foundSO = realm?.speciesObservation(withId: id) {
+                    if let foundSO = getRealm(withRealmType: realmType).speciesObservation(withId: id) {
                         
-                        try! realm?.write {
+                        try! getRealm(withRealmType: realmType).write {
                             speciesObservation = foundSO
                             speciesObservation?.update(withJson: soJson, shouldParseId: false)
                             
                             //process the relationships
                             if let relationshipsJson = soJson["relationships"].array {
-                                importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson)
+                                importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson, withRealmType: realmType)
                             } else {
                                 LOG.debug("FOUND NO RELATIONSHIPS SO: \(speciesObservation?.id)")
                             }
                             
                             if let preferencesJson = soJson["preferences"].array {
-                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson)
+                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson, withRealmType: realmType)
                             } else {
                                 //found nothing
                                 LOG.debug("FOUND NO PREFERENCES SO: \(speciesObservation?.id)")
                             }
                             
-                            realm?.add(speciesObservation!, update: true)
+                            getRealm(withRealmType: realmType).add(speciesObservation!, update: true)
                         }
                     } else {
                         
                         //new object
-                        try! realm?.write {
+                        try! getRealm(withRealmType: realmType).write {
                             speciesObservation = SpeciesObservation()
                             speciesObservation?.update(withJson: soJson, shouldParseId: true)
                             
                             //lets double check to see if there isnt another species card like this
                             if let relationshipsJson = soJson["relationships"].array {
-                                importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson)
+                                importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson, withRealmType: realmType)
                             } else {
                                 //found nothing
                                 LOG.debug("FOUND NO RELATIONSHIPS SO: \(speciesObservation?.id)")
                             }
                             
                             if let preferencesJson = soJson["preferences"].array {
-                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson)
+                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson, withRealmType: realmType)
                             } else {
                                 //found nothing
                                 LOG.debug("FOUND NO PREFERENCES SO: \(speciesObservation?.id)")
                             }
                             
-                            realm?.add(speciesObservation!, update: true)
+                            getRealm(withRealmType: realmType).add(speciesObservation!, update: true)
                             //find its group
-                            if let group = realm?.group(withSectionName: sectionName, withGroupIndex: speciesObservation!.groupIndex) {
+                            if let group = getRealm(withRealmType: realmType).group(withSectionName: sectionName, withGroupIndex: speciesObservation!.groupIndex) {
                                 
-                                if let fromSpecies = speciesObservation?.fromSpecies, let needToDelete = realm?.speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
+                                if let fromSpecies = speciesObservation?.fromSpecies, let needToDelete = getRealm(withRealmType: realmType).speciesObservation(withGroup: group, withFromSpeciesIndex: fromSpecies.index) {
                                     //check timestamps
                                     LOG.debug("NEED TO DELETE \(needToDelete)")
-                                    realm?.delete(needToDelete)
-                                    realm?.add(speciesObservation!, update: true)
+                                    getRealm(withRealmType: realmType).delete(needToDelete)
+                                    getRealm(withRealmType: realmType).add(speciesObservation!, update: true)
                                     group.speciesObservations.append(speciesObservation!)
-                                    realm?.add(group, update: true)
+                                    getRealm(withRealmType: realmType).add(group, update: true)
                                 } else {
                                     group.speciesObservations.append(speciesObservation!)
-                                    realm?.add(group, update: true)
+                                    getRealm(withRealmType: realmType).add(group, update: true)
                                     
                                     
                                 }
@@ -355,51 +373,51 @@ class RealmDataController {
     
     
     //in a write transaction
-    func importRelationshipJSON(withSpeciesObservation speciesObservation:SpeciesObservation, withRelationshipsJson relationshipsJson: [JSON]) {
+    func importRelationshipJSON(withSpeciesObservation speciesObservation:SpeciesObservation, withRelationshipsJson relationshipsJson: [JSON], withRealmType realmType: RealmType = RealmType.defaultDB) {
         for (_,rJson) in relationshipsJson.enumerated() {
             
             var relationship: Relationship?
             
             if let id = rJson["id"].string {
                 //try to find an old one
-                if let r = realm?.relationship(withId: id) {
+                if let r = getRealm(withRealmType: realmType).relationship(withId: id) {
                     relationship = r
                     relationship?.update(withJson: rJson, shouldParseId: false)
-                    realm?.add(relationship!, update: true)
+                    getRealm(withRealmType: realmType).add(relationship!, update: true)
                 } else {
                     relationship = Relationship()
                     relationship?.update(withJson: rJson, shouldParseId: true)
-                    realm?.add(relationship!, update: true)
+                    getRealm(withRealmType: realmType).add(relationship!, update: true)
                     speciesObservation.relationships.append(relationship!)
                 }
             } else {
                 relationship = Relationship()
                 relationship?.update(withJson: rJson, shouldParseId: true)
-                realm?.add(relationship!, update: true)
+                getRealm(withRealmType: realmType).add(relationship!, update: true)
                 speciesObservation.relationships.append(relationship!)
             }
         }
     }
     
-    func importPreferenceJSON(withSpeciesObservation speciesObservation:SpeciesObservation, withPreferencesJson preferencesJson: [JSON]) {
+    func importPreferenceJSON(withSpeciesObservation speciesObservation:SpeciesObservation, withPreferencesJson preferencesJson: [JSON], withRealmType realmType: RealmType = RealmType.defaultDB) {
         for (_,pJson) in preferencesJson.enumerated() {
             
             var preference: Preference?
             if let id = pJson["id"].string {
                 //try to find it
-                if let p = realm?.preference(withId: id) {
+                if let p = getRealm(withRealmType: realmType).preference(withId: id) {
                     preference = p
                     preference?.update(withJson: pJson, shouldParseId: false)
                 } else {
                     preference = Preference()
                     preference?.update(withJson: pJson, shouldParseId: true)
-                    realm?.add(preference!)
+                    getRealm(withRealmType: realmType).add(preference!)
                     speciesObservation.preferences.append(preference!)
                 }
             } else {
                 preference = Preference()
                 preference?.update(withJson: pJson, shouldParseId: true)
-                realm?.add(preference!)
+                getRealm(withRealmType: realmType).add(preference!)
                 speciesObservation.preferences.append(preference!)
             }
         }
@@ -407,82 +425,53 @@ class RealmDataController {
     
     func parseSpeciesJSON(withJson json: JSON) -> Species? {
         if let speciesIndex = json["fromSpecies"]["index"].int {
-            return realm?.speciesWithIndex(withIndex: speciesIndex)
+            return getRealm().speciesWithIndex(withIndex: speciesIndex)
         }
         
         if let speciesIndex = json["toSpecies"]["index"].int {
-            return realm?.speciesWithIndex(withIndex: speciesIndex)
+            return getRealm().speciesWithIndex(withIndex: speciesIndex)
         }
         return nil
     }
     
     func parseEcosystemJSON(withJson json: JSON) -> Ecosystem? {
         if let ecoSystemIndex = json["ecosystem"]["index"].int {
-            return realm?.ecosystem(withIndex: ecoSystemIndex)
+            return getRealm().ecosystem(withIndex: ecoSystemIndex)
         }
         return nil
     }
     
-    // MARK: Update USER
-    
-    func updateUser(withGroup group: Group?, section: Section?) {
-        if let g = group, let s = section {
-            
-            let runtimeObjs = realm?.allObjects(ofType: Runtime.self)
-            for r in runtimeObjs! {
-                LOG.debug("DELETE runtime obj \(r.id)")
-            }
-            //create a new one
-            
-            try! realm?.write {
-                realm?.delete((realm?.allObjects(ofType: Runtime.self))!)
-                
-                let runtime = Runtime()
-                runtime.id = UUID().uuidString
-                runtime.currentGroupIndex.value = g.index
-                runtime.currentSectionName = s.name
-                realm?.add(runtime)
-                
-                //update bottombar
-                
-                getAppDelegate().bottomNavigationController?.changeTitle(with: group, and: s)
-            }
-        }
-        
-        
-    }
-    
     // Mark: UPDATE RUNTIME
     
-    func updateRuntime(withSectionName sectionName: String?, withSpeciesIndex speciesIndex: Int?, withGroupIndex groupIndex: Int?) {
+    func updateRuntime(withSectionName sectionName: String?, withSpeciesIndex speciesIndex: Int?, withGroupIndex groupIndex: Int?, withRealmType realmType: RealmType = RealmType.defaultDB) {
         //get all the current runtimes
         
         var currentRuntime: Runtime?
         
-        if let ct = realm?.runtime() {
+        if let ct = getRealm(withRealmType: realmType).runtime() {
             currentRuntime = ct
         } else {
             currentRuntime = Runtime()
         }
         
         if let sectionName = sectionName {
-            try! realm?.write {
+            try! getRealm(withRealmType: realmType).write {
                 currentRuntime?.currentSectionName = sectionName
-                realm?.add(currentRuntime!, update: true)
+                getRealm(withRealmType: realmType).add(currentRuntime!, update: true)
             }
         }
         
         if let speciesIndex = speciesIndex {
-            try! realm?.write {
+            try! getRealm(withRealmType: realmType).write {
                 currentRuntime?.currentSpeciesIndex.value = speciesIndex
-                realm?.add(currentRuntime!, update: true)
+                getRealm(withRealmType: realmType).add(currentRuntime!, update: true)
             }
         }
         
         if let groupIndex = groupIndex {
-            try! realm?.write {
+            try! getRealm(withRealmType: realmType).write {
                 currentRuntime?.currentGroupIndex.value = groupIndex
-                realm?.add(currentRuntime!, update: true)
+                getRealm(withRealmType: realmType).add(currentRuntime!, update: true)
             }
         }
         
@@ -492,60 +481,60 @@ class RealmDataController {
     //Mark: UPDATE SPECIES OBSERVATION
     
     
-    func delete(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int) {
+    func delete(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int,withRealmType realmType: RealmType = RealmType.defaultDB) {
         
-        guard let speciesObservations = realm?.allSpeciesObservationsForCurrentSectionAndGroup() else {
+        guard let speciesObservations = getRealm(withRealmType: realmType).allSpeciesObservationsForCurrentSectionAndGroup() else {
             return
         }
         
         //couldn't find the species relationship
-        guard let foundSO = realm?.speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
+        guard let foundSO = getRealm(withRealmType: realmType).speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
             return
         }
         
         if let toSpecies = relationship.toSpecies,
-            let foundRelationship = realm?.relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
+            let foundRelationship = getRealm(withRealmType: realmType).relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
             
             
-            try! realm?.write {
-                realm?.delete(foundRelationship)
+            try! getRealm(withRealmType: realmType).write {
+                getRealm(withRealmType: realmType).delete(foundRelationship)
             }
         }
     }
     
-    func add(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int) {
+    func add(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
         //get all the observations for the context
-        guard let speciesObservations = realm?.allSpeciesObservationsForCurrentSectionAndGroup() else {
+        guard let speciesObservations = getRealm(withRealmType: realmType).allSpeciesObservationsForCurrentSectionAndGroup() else {
             return
         }
         
         //couldn't find the species relationship
-        guard let foundSO = realm?.speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
+        guard let foundSO = getRealm(withRealmType: realmType).speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
             return
         }
         
         if let toSpecies = relationship.toSpecies,
-            let foundRelationship = realm?.relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
+            let foundRelationship = getRealm(withRealmType: realmType).relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
             
             relationship.id = foundRelationship.id
-            try! realm?.write {
-                realm?.add(relationship, update: true)
+            try! getRealm(withRealmType: realmType).write {
+                getRealm(withRealmType: realmType).add(relationship, update: true)
                 foundSO.isSynced.value = false
-                realm?.add(foundSO, update: true)
+                getRealm(withRealmType: realmType).add(foundSO, update: true)
             }
         } else {
             relationship.generateId()
-            try! realm?.write {
-                realm?.add(relationship, update: true)
+            try! getRealm(withRealmType: realmType).write {
+                getRealm(withRealmType: realmType).add(relationship, update: true)
                 foundSO.relationships.append(relationship)
                 foundSO.isSynced.value = false
-                realm?.add(foundSO, update: true)
+                getRealm(withRealmType: realmType).add(foundSO, update: true)
             }
         }
     }
     
-    func generateTestData() {
-        if let sysConfig = realm?.systemConfiguration() {
+    func generateTestData(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        if let sysConfig = getRealm(withRealmType: realmType).systemConfiguration() {
             for section in sysConfig.sections {
                 for group in section.groups {
                     populateWithSpeciesObservationTestData(forGroup: group, andSystemConfig: sysConfig)
@@ -556,9 +545,9 @@ class RealmDataController {
     
     
     
-    func exportSection(withName name: String, andFilePath filePath: String) {
+    func exportSection(withName name: String, andFilePath filePath: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
-        if let defaultSection = realm?.section(withName: name){
+        if let defaultSection = getRealm(withRealmType: realmType).section(withName: name){
             let dict = defaultSection.toDictionary()
             let json = JSON(dict)
             let str = json.string
@@ -574,7 +563,7 @@ class RealmDataController {
         
     }
     
-    func exportSpeciesObservation(withNutella nutella: Nutella?, withSpeciesObservation speciesObservation: SpeciesObservation) {
+    func exportSpeciesObservation(speciesObservation: SpeciesObservation) {
         if nutella != nil {
             let block = DispatchWorkItem {
                 let json = JSON(speciesObservation.toDictionary())
@@ -590,9 +579,9 @@ extension RealmDataController {
     
     // Mark: Mock data
     //populate speciesObservation with fake data
-    func populateWithSpeciesObservationTestData(forGroup group: Group, andSystemConfig systemConfig: SystemConfiguration) {
+    func populateWithSpeciesObservationTestData(forGroup group: Group, andSystemConfig systemConfig: SystemConfiguration, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
-        realm!.beginWrite()
+        getRealm(withRealmType: realmType).beginWrite()
         let simConfig = systemConfig.simulationConfiguration
         let allSpecies = simConfig?.species
         let allEcosystems = simConfig?.ecosystems
@@ -624,20 +613,20 @@ extension RealmDataController {
                 
                 so.relationships.append(relationship)
                 
-                realm?.add(so, update: true)
+                getRealm(withRealmType: realmType).add(so, update: true)
                 
             }
             
         }
         
-        try! realm?.commitWrite()
+        try! getRealm(withRealmType: realmType).commitWrite()
         
         
     }
     
     //update species relationship
-    func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String){
-        try! realm?.write {
+    func updateSpeciesObservation(_ toSpecies: Species, speciesObservation: SpeciesObservation, relationshipType: String, withRealmType realmType: RealmType = RealmType.defaultDB){
+        try! getRealm(withRealmType: realmType).write {
             let relationship = Relationship()
             relationship.id = NSUUID().uuidString
             relationship.toSpecies = toSpecies
@@ -647,7 +636,7 @@ extension RealmDataController {
             relationship.ecosystem = speciesObservation.ecosystem
             relationship.relationshipType = relationshipType
             speciesObservation.relationships.append(relationship)
-            realm?.add(relationship, update: true)
+            getRealm(withRealmType: realmType).add(relationship, update: true)
         }
     }
     
@@ -694,15 +683,15 @@ extension RealmDataController {
     
     // Mark: Species
     
-    func findSpecies(withSpeciesIndex speciesIndex: Int) -> Species? {
-        let foundSpecies = realm!.speciesWithIndex(withIndex: speciesIndex)
+    func findSpecies(withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) -> Species? {
+        let foundSpecies = getRealm(withRealmType: realmType).speciesWithIndex(withIndex: speciesIndex)
         return foundSpecies
     }
     
     // Mark Ecosytem
     
-    func findEcosystem(withEcosystemIndex ecosystemIndex: Int) -> Ecosystem? {
-        let foundEcosystem = realm!.ecosystem(withIndex: ecosystemIndex)
+    func findEcosystem(withEcosystemIndex ecosystemIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) -> Ecosystem? {
+        let foundEcosystem = getRealm(withRealmType: realmType).ecosystem(withIndex: ecosystemIndex)
         return foundEcosystem
     }
     
@@ -732,8 +721,11 @@ extension RealmDataController {
     
     // Mark: JSON Parsing
     
-    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "default") -> SystemConfiguration {
-        realm!.beginWrite()
+    func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "default", withRealmType realmType: RealmType = RealmType.defaultDB) -> SystemConfiguration {
+        
+        let r = getRealm(withRealmType: realmType)
+
+        r.beginWrite()
         
         let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
@@ -759,7 +751,7 @@ extension RealmDataController {
                 
                 if section.name == sectionName {
                     
-                    realm?.add(section, update:true)
+                    r.add(section, update:true)
                     //add system config
                     systemConfigruation.sections.append(section)
                     
@@ -773,7 +765,7 @@ extension RealmDataController {
                             }
                             
                             group.index = groupIndex
-                            realm?.add(group)
+                            r.add(group)
                             
                             //add groups
                             section.groups.append(group)
@@ -792,7 +784,21 @@ extension RealmDataController {
                             
                             //create speciesObservation place holders for group
                             if placeHolders {
-                                prepareSpeciesObservations(for: group)
+                                let allSpecies = r.species
+                                //create a speciesObservation for each species
+                                for fromSpecies in allSpecies {
+                                    // var makeRelationship : (String, Group) -> List<SpeciesObservation>
+                                    
+                                    let speciesObservation = SpeciesObservation()
+                                    speciesObservation.id = "\(group.index)-\(fromSpecies.index)"
+                                    speciesObservation.fromSpecies = fromSpecies
+                                    speciesObservation.groupIndex = group.index
+                                    r.add(speciesObservation, update: true)
+                                    //preparePreferences(for: speciesObservation)
+                                    
+                                    group.speciesObservations.append(speciesObservation)
+                                    r.add(group, update: true)
+                                }
                             }
                         }
                     }
@@ -801,30 +807,12 @@ extension RealmDataController {
             }
         }
         
-        realm?.add(systemConfigruation)
-        try! realm?.commitWrite()
+        r.add(systemConfigruation)
+        try! r.commitWrite()
         return systemConfigruation
     }
     
-    func prepareSpeciesObservations(for group: Group) {
-        if let allSpecies = realm?.species {
-            //create a speciesObservation for each species
-            for fromSpecies in allSpecies {
-                // var makeRelationship : (String, Group) -> List<SpeciesObservation>
-                
-                let speciesObservation = SpeciesObservation()
-                speciesObservation.id = "\(group.index)-\(fromSpecies.index)"
-                speciesObservation.fromSpecies = fromSpecies
-                speciesObservation.groupIndex = group.index
-                realm?.add(speciesObservation, update: true)
-                //preparePreferences(for: speciesObservation)
-                
-                group.speciesObservations.append(speciesObservation)
-                realm?.add(group, update: true)
-            }
-        }
-    }
-    
+
     //step 3. prepare preferences
     func preparePreferences(for speciesObservation: SpeciesObservation) {
         //create preferences
@@ -856,8 +844,12 @@ extension RealmDataController {
         speciesObservation.preferences.append(habitatPreference)
     }
     
-    func parseNutellaConfigurationJson() -> NutellaConfig {
-        realm!.beginWrite()
+    func parseNutellaConfigurationJson(withRealmType realmType: RealmType = RealmType.defaultDB) -> NutellaConfig {
+        
+        let r = getRealm(withRealmType: realmType)
+
+        
+        r.beginWrite()
         
         let path = Bundle.main.path(forResource: "nutella_config", ofType: "json")
         let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path!))
@@ -917,8 +909,8 @@ extension RealmDataController {
             }
         }
         
-        realm?.add(nutellaConfig)
-        try! realm?.commitWrite()
+        r.add(nutellaConfig)
+        try! r.commitWrite()
         
         return nutellaConfig
     }
@@ -963,8 +955,11 @@ extension RealmDataController {
     }
     
     
-    func parseSimulationConfigurationJson() -> SimulationConfiguration {
-        realm!.beginWrite()
+    func parseSimulationConfigurationJson(withRealmType realmType: RealmType = RealmType.defaultDB) -> SimulationConfiguration {
+        
+        let r = getRealm(withRealmType: realmType)
+
+        r.beginWrite()
         
         
         let path = Bundle.main.path(forResource: "wallcology_configuration", ofType: "json")
@@ -1026,21 +1021,28 @@ extension RealmDataController {
             
         }
         
-        realm?.add(simulationConfiguration)
+        r.add(simulationConfiguration)
         
-        try! realm?.commitWrite()
+        try! r.commitWrite()
         
         return simulationConfiguration
     }
     
     // Mark: Nutella
     
-    func validateNutellaConfiguration() -> Bool {
-        let foundConfigs = realm!.allObjects(ofType: NutellaConfig.self)
+    func validateNutellaConfiguration(withRealmType realmType: RealmType = RealmType.defaultDB) -> Bool {
+        
+        let r = getRealm(withRealmType: realmType)
+
+        let foundConfigs = r.objects(NutellaConfig.self)
         
         if foundConfigs.isEmpty {
-            let nutellaConfig = parseNutellaConfigurationJson()
-            add(nutellaConfig, shouldUpdate: false)
+            let nutellaConfig = parseNutellaConfigurationJson(withRealmType: realmType)
+            
+            
+            try! r.write {
+                r.add(nutellaConfig)
+            }
             return false
         }
         if DEBUG {
@@ -1050,35 +1052,43 @@ extension RealmDataController {
         return true
     }
     
-    func deleteAllSpeciesObservations() {
-        try! realm?.write {
-            if let allRelationships = realm?.allRelationships() {
-                realm?.delete(allRelationships)
-            }
-            
-            if let allPreferences = realm?.allPreferences() {
-                realm?.delete(allPreferences)
-            }
-            
-            if let allSpeciesObservations = realm?.allSpeciesObservations() {
-                realm?.delete(allSpeciesObservations)
-            }
+    func deleteAllSpeciesObservations(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        let r = getRealm(withRealmType: realmType)
+
+        try! r.write {
+            r.delete(r.allRelationships())
+            r.delete(r.allPreferences())
+            r.delete(r.allSpeciesObservations())
         }
     }
     
-    func deleteAllConfigurationAndGroups() {
-        try! realm?.write {
-            realm?.deleteAllObjects()
+    func deleteAllConfigurationAndGroups(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        let r = getRealm(withRealmType: realmType)
+
+        try! r.write {
+            r.deleteAll()
         }
     }
     
-    func deleteAllUserData() {
-        try! realm?.write {
-            realm?.delete((realm?.allObjects(ofType: Runtime.self))!)
-            realm?.delete((realm?.allObjects(ofType: Section.self))!)
-            realm?.delete((realm?.allObjects(ofType: Member.self))!)
-            realm?.delete((realm?.allObjects(ofType: Group.self))!)
-            realm?.delete((realm?.allObjects(ofType: SpeciesObservation.self))!)
+    func deleteRelationships(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        let r = getRealm(withRealmType: realmType)
+        
+        try! r.write {
+            r.delete(r.objects(Relationship.self))
+        }
+    }
+    
+    func deleteAllUserData(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        
+        let r = getRealm(withRealmType: realmType)
+        
+        try! r.write {
+            r.delete(r.objects(Runtime.self))
+            r.delete(r.objects(Section.self))
+            r.delete(r.objects(Member.self))
+            r.delete(r.objects(Group.self))
+            r.delete(r.objects(SpeciesObservation.self))
+            r.delete(r.objects(Relationship.self))
         }
     }
     

@@ -14,8 +14,8 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
-let LOCAL_IP = "10.0.1.6"
-//let LOCAL_IP = "131.193.79.203"
+//let LOCAL_IP = "10.0.1.6"
+let LOCAL_IP = "131.193.79.203"
 var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
@@ -36,6 +36,11 @@ let LOG: XCGLogger = {
 }()
 
 //Mark: State Machine
+
+enum RealmType: String {
+    case defaultDB = "DEFAULT_DB"
+    case terminalDB = "TERMNAL_DB"
+}
 
 enum ApplicationType: String {
     case login = "Login"
@@ -104,6 +109,9 @@ var beaconNotificationsManager: BeaconNotificationsManager?
 
 
 var realm: Realm?
+var terminalRealm: Realm?
+
+
 var nutella: Nutella?
 
 func dispatch_on_main(_ block: @escaping ()->()) {
@@ -164,17 +172,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
         let sectionDict = ["default":groupNames,"guest":groupNames, "6BM":groupNames,"6MT":groupNames,"6DF":groupNames]
         
+        //defaults.set(false, forKey: "init")
         defaults.set(sectionDict, forKey: "sections")
         defaults.synchronize()
         
-        CURRENT_HOST = LOCAL_IP
+    
+        prepareViews(applicationType: ApplicationType.login)
         
         
-        
-        //prepareViews(applicationType: ApplicationType.login)
-        
-        
-        shortCircuitLogin()
+       // shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
@@ -223,28 +229,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func prepareViews(applicationType: ApplicationType) {
         window = UIWindow(frame:UIScreen.main.bounds)
         
-        var application: NavigationDrawerController?
+        var rootVC: NavigationDrawerController?
         
         switch applicationType {
         case .placeTerminal:
             initStateMachine(applicaitonState: applicationType)
-            application = prepareTerminalUI()
+            rootVC = prepareTerminalUI()
             break
         case .placeGroup:
             initStateMachine(applicaitonState: applicationType)
-            application = preparePlaceGroupUI()
+            rootVC = preparePlaceGroupUI()
             //show login for section and group
             break
         default:
             //login
             initStateMachine(applicaitonState: applicationType)
-            application = prepareLoginUI()
+            rootVC = prepareLoginUI()
         }
         
         
         // Configure the window with the SideNavigationController as the root view controller
         
-        window?.rootViewController = application
+        if let rnc = window?.rootViewController?.navigationController {
+            rnc.pushViewController(rootVC!, animated: true)
+        } else {
+            window?.rootViewController = rootVC
+        }
+        
         window?.makeKeyAndVisible()
     }
     
@@ -328,56 +339,100 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let defaults = UserDefaults.standard
         
-        if Platform.isSimulator {
-            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(sectionName).realm")
-            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
-        } else {
-            //TODO
-            //device config
-            setDefaultRealm(withSectionName: sectionName)
-        }
-        
         switch checkApplicationState() {
         case .placeGroup:
-            realmDataController.deleteAllConfigurationAndGroups()
-            _ = realmDataController.parseNutellaConfigurationJson()
-            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
+            
+            setDefaultRealm(withSectionName: sectionName)
+             
+            let hasInit = defaults.bool(forKey: "init")
+            
+            if !hasInit {
+                realmDataController.deleteAllConfigurationAndGroups()
+                realmDataController.deleteAllUserData()
+                _ = realmDataController.parseNutellaConfigurationJson()
+                _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
+                 defaults.set(true, forKey: "init")
+            }
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
-            
-            
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
-            // realmDataController.realmDataControllerDelegate?.doesHaveData()
-            
             break
         case .placeTerminal:
-            realmDataController.deleteAllConfigurationAndGroups()
+            
+            setTerminalRealm(withSectionName: sectionName)
+            
+            realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
             //re-up
-            _ = realmDataController.parseNutellaConfigurationJson()
-            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()))
+         
+            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)
             
             let speciesIndex = defaults.integer(forKey: "speciesIndex")
             
-            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil)
-            
-            
+            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
             break
+        case .objectGroup:
+            let groupIndex = defaults.integer(forKey: "groupIndex")
+            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
+            
+            setTerminalRealm(withSectionName: sectionName)
+            
+            realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
+            //re-up
+            
+            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)
+            
+            let speciesIndex = defaults.integer(forKey: "speciesIndex")
+            
+            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
         default:
             break
         }
     }
     
     func setDefaultRealm(withSectionName sectionName: String = "default") {
+        
+        if Platform.isSimulator {
+            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(sectionName).realm")
+            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+        } else {
+            
+            var config = Realm.Configuration()
+            
+            // Use the default directory, but replace the filename with the username
+            config.fileURL = config.fileURL!.deletingLastPathComponent()
+                .appendingPathComponent("\(sectionName).realm")
+            
+            // Set this as the configuration used for the default Realm
+            Realm.Configuration.defaultConfiguration = config
+            
+            try! realm = Realm(configuration: Realm.Configuration.defaultConfiguration)
+            
+            LOG.debug("REALM FILE: \(Realm.Configuration.defaultConfiguration.fileURL)")
+        }
+    }
+    
+    func setTerminalRealm(withSectionName sectionName: String = "default") {
+        
+        let dbName = "\(sectionName)-TERMINAL"
+        
+        if Platform.isSimulator {
+            let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(dbName).realm")
+            try! terminalRealm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+        } else {
+        
         var config = Realm.Configuration()
         
         // Use the default directory, but replace the filename with the username
         config.fileURL = config.fileURL!.deletingLastPathComponent()
-            .appendingPathComponent("\(sectionName).realm")
+            .appendingPathComponent("\(dbName).realm")
         
         // Set this as the configuration used for the default Realm
-        Realm.Configuration.defaultConfiguration = config
+        //Realm.Configuration.defaultConfiguration = config
         
-        try! realm = Realm(configuration: Realm.Configuration.defaultConfiguration)
+        try! terminalRealm = Realm(configuration: config)
+        
+        LOG.debug("TerminalRealm FILE: \(config.fileURL)")
+    }
     }
     
     func resetDB(withGroupIndex groupIndex: Int = 0) {
@@ -444,10 +499,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch checkApplicationState() {
         case .placeGroup:
-            realmDataController.queryNutellaAllNotes(withType: "group")
+            //realmDataController.queryNutellaAllNotes(withType: "group")
             break
         case .placeTerminal:
-            realmDataController.queryNutellaAllNotes(withType: "species")
+            realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
         default:
             break
         }

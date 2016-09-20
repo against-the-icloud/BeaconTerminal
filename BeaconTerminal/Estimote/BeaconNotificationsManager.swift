@@ -38,8 +38,13 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
 
     func enableNotificationsForBeaconID(_ beaconID: BeaconID, enterMessage: String?, exitMessage: String?) {
         let beaconRegion = beaconID.asBeaconRegion
+        beaconRegion.notifyEntryStateOnDisplay = true
+        beaconRegion.notifyOnExit = true
+        beaconRegion.notifyOnEntry = true
         self.enterMessages[beaconRegion.identifier] = enterMessage
         self.exitMessages[beaconRegion.identifier] = exitMessage
+        
+    
         self.beaconManager.startMonitoring(for: beaconRegion)
         
         LOG.debug("START MONITORING \(beaconRegion)")
@@ -52,18 +57,20 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
         if let message = self.enterMessages[region.identifier] {
             self.showNotificationWithMessage(message)
             LOG.debug("didEnter \(region)")
-            
-            let gim = RealmDataController.generateImageForSpecies(0, isHighlighted: true)
-            
-            let banner = Banner(title: "DID ENTER", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
-            banner.shouldTintImage = false
-            banner.dismissesOnTap = false
-            banner.dismissesOnSwipe = false
-            banner.show()
-        
-            
-            
-            //Util.makeToast("DID ENTER \(region)")
+            if let minorSpeciesIndex = region.minor?.intValue {
+                //adjust because these ids can't be start 0
+                let speciesIndex = minorSpeciesIndex - 1
+                let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                
+                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                
+                let banner = Banner(title: "DID ENTER", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
+                banner.shouldTintImage = false
+                banner.dismissesOnTap = true
+                banner.dismissesOnSwipe = false
+                banner.show()
+            }
+          
         }
     }
     

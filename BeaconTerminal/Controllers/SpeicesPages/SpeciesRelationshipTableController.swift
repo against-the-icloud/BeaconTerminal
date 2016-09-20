@@ -48,18 +48,18 @@ class SpeciesRelationshipTableController: UITableViewController {
         
         if let speciesIndex = self.speciesIndex, let speciesObs = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let rType = self.relationshipType?.rawValue {
             
-            if let so = speciesObs.filter(using: "fromSpecies.index = \(speciesIndex)").first {
+            if let so = speciesObs.filter("fromSpecies.index = \(speciesIndex)").first {
                 
                 
-                relationshipResults = so.relationships.filter(using: "relationshipType = '\(rType)'")
+                relationshipResults = so.relationships.filter("relationshipType = '\(rType)'")
                 relationshipNotification = relationshipResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
                     
                     guard let controller = self else { return }
                     switch changes {
-                    case .Initial(let relationshipResults):
+                    case .initial(let relationshipResults):
                         controller.updateCell(relationshipResults: relationshipResults)
                         break
-                    case .Update(let relationshipResults, let deletions, let insertions, let modifications):
+                    case .update(let relationshipResults, let deletions, let insertions, let modifications):
                         
                         controller.updateCell(relationshipResults: relationshipResults, type: .insert, indexes: insertions)
                         
@@ -69,7 +69,7 @@ class SpeciesRelationshipTableController: UITableViewController {
 
 
                         break
-                    case .Error(let error):
+                    case .error(let error):
                         // An error occurred while opening the Realm file on the background worker thread
                         fatalError("\(error)")
                         break

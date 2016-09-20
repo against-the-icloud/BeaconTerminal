@@ -42,7 +42,7 @@ extension PreferencesTableViewController {
         if let cell = super.tableView(tableView, cellForRowAt: indexPath) as? PreferenceTableViewCell {
             if let preferenceType = cell.preferenceType, let preferences = speciesObservation?.preferences {
                 
-                let foundPreferences = preferences.filter(using: "type = '\(preferenceType)'")
+                let foundPreferences = preferences.filter("type = '\(preferenceType)'")
                 
                 if !foundPreferences.isEmpty {
                     let preference = foundPreferences[0]
@@ -78,7 +78,7 @@ extension PreferencesTableViewController {
         if let cell = tableView.cellForRow(at: indexPath) as? PreferenceTableViewCell {
             if let preferenceType = cell.preferenceType, let preferences = speciesObservation?.preferences {
                 
-                let foundPreferences = preferences.filter(using: "type = '\(preferenceType)'")
+                let foundPreferences = preferences.filter("type = '\(preferenceType)'")
                 
                 if foundPreferences.count > 0 {
                     let preference = foundPreferences[0]

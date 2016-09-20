@@ -52,8 +52,8 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
     func prepareView() {
         if let groupIndex = self.groupIndex {
             
-            if let sectionName = realm?.runtimeSectionName() {
-                if let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex) {
+            if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
+                if let group = realmDataController.getRealm(withRealmType: RealmType.terminalDB).group(withSectionName: sectionName, withGroupIndex: groupIndex) {
                     groupNameLabel.text = group.name
                 }
             }

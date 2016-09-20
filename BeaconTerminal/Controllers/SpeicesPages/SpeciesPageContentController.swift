@@ -1,3 +1,4 @@
+
 //
 //  SpeciesPageViewController.swift
 //  BeaconTerminal
@@ -40,21 +41,21 @@ class SpeciesPageContentController: UIViewController {
     
     func prepareNotifications() {
         if let allSO = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let speciesIndex = speciesIndex{
-            shouldSync = allSO.filter(using: "fromSpecies.index = \(speciesIndex) AND isSynced = false")
+            shouldSync = allSO.filter("fromSpecies.index = \(speciesIndex) AND isSynced = false")
             
             if let shouldSync = shouldSync {
                     syncNotificationToken = shouldSync.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
                 
                     guard let controller = self else { return }
                     switch changes {
-                    case .Initial(let speciesObservationResults):
+                    case .initial(let speciesObservationResults):
                         if !speciesObservationResults.isEmpty {
                             controller.colors(forSynced: false)
                         } else {
                             controller.colors(forSynced: true)
                         }
                         break
-                    case .Update( _, let deletions, _, _):
+                    case .update( _, let deletions, _, _):
                         
                         if deletions.count > 0 {
                             controller.colors(forSynced: true)
@@ -62,7 +63,7 @@ class SpeciesPageContentController: UIViewController {
                             controller.colors(forSynced: false)
                         }
                         break
-                    case .Error(let error):
+                    case .error(let error):
                         // An error occurred while opening the Realm file on the background worker thread
                         fatalError("\(error)")
                         break

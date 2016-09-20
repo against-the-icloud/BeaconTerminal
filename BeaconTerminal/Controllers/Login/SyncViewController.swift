@@ -39,23 +39,23 @@ class SyncViewController: UICollectionViewController {
     }
     
     func prepareView() {
-        shouldSync = realm?.allSpeciesObservations().filter(using: "isSynced = false")
+        shouldSync = realm?.allSpeciesObservations().filter("isSynced = false")
         
         speciesObsNotificationToken = shouldSync?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let cv = self?.collectionView else { return }
             switch changes {
-            case .Initial( _):
+            case .initial( _):
                 cv.reloadData()
                 break
-            case .Update( _, let deletions, let insertions, let modifications):
+            case .update( _, let deletions, let insertions, let modifications):
                 cv.performBatchUpdates({
                     cv.insertItems(at: insertions.map { IndexPath(row: $0, section: 0) })
                     cv.deleteItems(at: deletions.map { IndexPath(row: $0, section: 0) })
                     cv.reloadItems(at: modifications.map { IndexPath(row: $0, section: 0) })
                     }, completion: nil)
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 fatalError("\(error)")
                 break
@@ -97,7 +97,7 @@ extension SyncViewController {
             Util.makeToast("PERFORMING SYNC FOR \(fromSpeciesIndex):\(sName)")
         }
         
-        realmDataController.exportSpeciesObservation(withNutella: nutella, withSpeciesObservation: sync)
+        realmDataController.exportSpeciesObservation(speciesObservation: sync)
         
     }
     

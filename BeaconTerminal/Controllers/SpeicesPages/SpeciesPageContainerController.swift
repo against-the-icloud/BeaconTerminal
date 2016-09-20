@@ -45,25 +45,25 @@ class SpeciePageContainerController: UIPageViewController {
     }
     
     func prepareNotifications() {
-        runtimeResults = realm?.allObjects(ofType: Runtime.self)
+        runtimeResults = realm?.objects(Runtime.self)
         
         // Observe Notifications
         runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
             guard let pageController = self else { return }
             switch changes {
-            case .Initial(let runtimeResults):
+            case .initial(let runtimeResults):
                 if let runtime = runtimeResults.first {
                     pageController.updateFirstPage(withRuntime: runtime)
                 }
                 break
-            case .Update(let runtimeResults, _, _, _):
+            case .update(let runtimeResults, _, _, _):
                 
                 if let runtime = runtimeResults.first {
                     pageController.updateFirstPage(withRuntime: runtime)
                 }
                 break
-            case .Error(let error):
+            case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
                 LOG.error("\(error)")
                 break

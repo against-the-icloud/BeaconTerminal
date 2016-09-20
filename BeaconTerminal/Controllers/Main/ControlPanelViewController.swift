@@ -23,6 +23,7 @@ class ControlPanelViewController: UIViewController {
     @IBOutlet weak var dbResetButton: UIButton!
     @IBOutlet weak var exportSegment: UISegmentedControl!
     @IBOutlet weak var resetSegment: UISegmentedControl!
+    @IBOutlet weak var initStatus: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         getAppDelegate().controlPanelDelegate = self
@@ -38,6 +39,12 @@ class ControlPanelViewController: UIViewController {
             hostSwitch.selectedSegmentIndex = 1
         }
         
+        let defaults = UserDefaults.standard
+        let initStatusB = defaults.bool(forKey: "init")
+        
+        
+        initStatus.text = "\(initStatusB)"
+        
         
     }
 
@@ -48,12 +55,16 @@ class ControlPanelViewController: UIViewController {
     }
     
     
-    @IBAction func doneAction(_ sender: AnyObject) {        
+    @IBAction func doneAction(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)   
     }
     
     @IBAction func onBurger() {
         navigationDrawerController?.openLeftView()
+    }
+    @IBAction func deleteUserObjects(_ sender: UIButton) {
+        
+        realmDataController.deleteRelationships()
     }
     @IBAction func switchHosts(_ sender: UISegmentedControl) {
         
@@ -70,6 +81,16 @@ class ControlPanelViewController: UIViewController {
             CURRENT_HOST = REMOTE
             getAppDelegate().setupConnection()
         }
+    }
+    @IBAction func initDB(_ sender: UIButton) {
+        
+        let defaults = UserDefaults.standard
+        let initStatusB = defaults.bool(forKey: "init")
+        
+        defaults.set(!initStatusB, forKey: "init")
+        
+        initStatus.text = "\(initStatusB)"
+        
     }
 }
 
