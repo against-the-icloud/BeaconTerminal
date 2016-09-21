@@ -21,14 +21,16 @@ class MainContainerController: UIViewController{
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var topTabbar: TabSegmentedControl!
     @IBOutlet weak var topPanel: UIView!
-    
-    @IBOutlet weak var badgeView: UIView!
+    @IBOutlet weak var badgeImageView: UIImageView!
     
     
     
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
+    var terminalRuntimeResults: Results<Runtime>?
     var runtimeNotificationToken: NotificationToken? = nil
+    var terminalRuntimeNotificationToken: NotificationToken? = nil
+
     
     deinit {
         for notificationToken in notificationTokens {
@@ -44,10 +46,11 @@ class MainContainerController: UIViewController{
         super.viewDidLoad()
         topTabbar.initUI()
         prepareNotifications()
+        prepareTerminalNotifications()
     }
     
     func prepareNotifications() {
-        runtimeResults = realm?.objects(Runtime.self)
+        runtimeResults = realmDataController.getRealm().objects(Runtime.self)
         
         
         // Observe Notifications
@@ -77,21 +80,73 @@ class MainContainerController: UIViewController{
         }
     }
     
+    func prepareTerminalNotifications() {
+        terminalRuntimeResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(Runtime.self)
+        
+        
+        // Observe Notifications
+        terminalRuntimeNotificationToken = terminalRuntimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let mainController = self else { return }
+            switch changes {
+            case .initial(let terminalRuntimeResults):
+                //we have nothing
+                if terminalRuntimeResults.isEmpty {
+                    //mainController.showLogin()
+                } else {
+                    mainController.updateTabs(terminalRuntimeResults: terminalRuntimeResults)
+                }
+                break
+            case .update(let terminalRuntimeResults, _, _, _):
+                LOG.debug("UPDATE terminal Runtime -- TERMINAL RESULTS")
+                mainController.updateTabs(terminalRuntimeResults: terminalRuntimeResults)
+                //terminalController.updateUI(withRuntimeResults: runtimeResults)
+                break
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                LOG.error("\(error)")
+                break
+            }
+        }
+    }
+    
     func updateHeader() {
-        if let sectionName = realm?.runtimeSectionName() {
+        if let sectionName = realmDataController.getRealm().runtimeSectionName() {
             sectionLabel.text = "\(sectionName)"
         }
         
-        if let groupIndex = realm?.runtimeGroupIndex(), let sectionName = realm?.runtimeSectionName(), let group = realm?.group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
+        if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
             topTabbar.setTitle("\(groupName.uppercased()) SPECIES ACCOUNTS", forSegmentAt: 0)
         }
         
-//        badgeView.layer.cornerRadius = badgeView.frame.width/2.0
-        
-        for sv in badgeView.subviews {
-            sv.layer.cornerRadius = sv.bounds.width / 2.0
+        switch getAppDelegate().checkApplicationState() {
+        case .objectGroup:
+            badgeImageView.image = UIImage(named: "objectGroup")
+        default:
+            badgeImageView.image = UIImage(named: "placeGroup")
         }
         
+    }
+    
+    func updateTabs(terminalRuntimeResults: Results<Runtime>) {
+        
+        
+        
+        if let terminalRuntime = terminalRuntimeResults.first, let speciesIndex = terminalRuntime.currentSpeciesIndex.value, let sectionName = terminalRuntime.currentSectionName, let action = terminalRuntime.currentAction {
+            
+            if let atype = ActionType(rawValue: action) {
+                
+                switch atype {
+                case ActionType.entered:
+                    topTabbar.insertSegment(withTitle: "\(sectionName) Species \(speciesIndex)", at: 2, animated: true)
+                    realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
+                default:
+                    topTabbar.removeSegment(at: 2, animated: true)
+                }
+                
+            }
+            
+        }
     }
     
     func showLogin() {

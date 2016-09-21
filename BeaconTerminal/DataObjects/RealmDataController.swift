@@ -159,7 +159,39 @@ class RealmDataController {
     }
     
     func handleObjectGroupMessages(withMessage message: Any, withChannel channel: String) {
-        
+      
+        switch channel {
+        case NutellaChannelType.allNotesWithSpecies.rawValue:
+            guard let currentSpeciesIndex = getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
+                //need species for this message
+                return
+            }
+            guard let currentSectionName = getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() else {
+                //need sectionName for this message
+                return
+            }
+            let header = parseHeader(withMessage: message)
+            if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                
+                // import the message
+                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName, withRealmType: RealmType.terminalDB)
+            }
+            break
+        case NutellaChannelType.noteChanges.rawValue:
+            guard let currentGroupIndex = getRealm().runtimeGroupIndex() else {
+                //need sectionName for this message
+                return
+            }
+            
+            let header = parseHeader(withMessage: message)
+            if let speciesIndex = header?.speciesIndex, currentGroupIndex == header?.groupIndex {
+                
+                parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex)
+            }
+            break
+        default:
+            break
+        }
     }
     
     func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {
@@ -306,7 +338,17 @@ class RealmDataController {
                         
                         try! getRealm(withRealmType: realmType).write {
                             speciesObservation = foundSO
+                            
+                            if let fromSpecies = realmDataController.parseSpeciesJSON(withJson: soJson, withRealmType: realmType)  {
+                                speciesObservation?.fromSpecies = fromSpecies
+                            }
+                            
+                            if let ecosystem = realmDataController.parseEcosystemJSON(withJson: json, withRealmType: realmType)  {
+                                speciesObservation?.ecosystem = ecosystem
+                            }
+                            
                             speciesObservation?.update(withJson: soJson, shouldParseId: false)
+
                             
                             //process the relationships
                             if let relationshipsJson = soJson["relationships"].array {
@@ -330,6 +372,14 @@ class RealmDataController {
                         try! getRealm(withRealmType: realmType).write {
                             speciesObservation = SpeciesObservation()
                             speciesObservation?.update(withJson: soJson, shouldParseId: true)
+                            
+                            if let fromSpecies = realmDataController.parseSpeciesJSON(withJson: soJson, withRealmType: realmType)  {
+                                speciesObservation?.fromSpecies = fromSpecies
+                            }
+                            
+                            if let ecosystem = realmDataController.parseEcosystemJSON(withJson: json, withRealmType: realmType)  {
+                                speciesObservation?.ecosystem = ecosystem
+                            }
                             
                             //lets double check to see if there isnt another species card like this
                             if let relationshipsJson = soJson["relationships"].array {
@@ -383,16 +433,43 @@ class RealmDataController {
                 if let r = getRealm(withRealmType: realmType).relationship(withId: id) {
                     relationship = r
                     relationship?.update(withJson: rJson, shouldParseId: false)
+                    
+                    if let toSpecies = realmDataController.parseSpeciesJSON(withJson: rJson,withRealmType: realmType)  {
+                        relationship?.toSpecies = toSpecies
+                    }
+                    
+                    if let ecosystem = realmDataController.parseEcosystemJSON(withJson: rJson,withRealmType: realmType)  {
+                        relationship?.ecosystem = ecosystem
+                    }
+                    
                     getRealm(withRealmType: realmType).add(relationship!, update: true)
                 } else {
                     relationship = Relationship()
                     relationship?.update(withJson: rJson, shouldParseId: true)
+                    
+                    if let toSpecies = realmDataController.parseSpeciesJSON(withJson: rJson,withRealmType: realmType)  {
+                        relationship?.toSpecies = toSpecies
+                    }
+                    
+                    if let ecosystem = realmDataController.parseEcosystemJSON(withJson: rJson,withRealmType: realmType)  {
+                        relationship?.ecosystem = ecosystem
+                    }
+                    
                     getRealm(withRealmType: realmType).add(relationship!, update: true)
                     speciesObservation.relationships.append(relationship!)
                 }
             } else {
                 relationship = Relationship()
                 relationship?.update(withJson: rJson, shouldParseId: true)
+                
+                if let toSpecies = realmDataController.parseSpeciesJSON(withJson: rJson,withRealmType: realmType)  {
+                    relationship?.toSpecies = toSpecies
+                }
+                
+                if let ecosystem = realmDataController.parseEcosystemJSON(withJson: rJson,withRealmType: realmType)  {
+                    relationship?.ecosystem = ecosystem
+                }
+                
                 getRealm(withRealmType: realmType).add(relationship!, update: true)
                 speciesObservation.relationships.append(relationship!)
             }
@@ -423,27 +500,27 @@ class RealmDataController {
         }
     }
     
-    func parseSpeciesJSON(withJson json: JSON) -> Species? {
+    func parseSpeciesJSON(withJson json: JSON, withRealmType realmType: RealmType = RealmType.defaultDB) -> Species? {
         if let speciesIndex = json["fromSpecies"]["index"].int {
-            return getRealm().speciesWithIndex(withIndex: speciesIndex)
+            return getRealm(withRealmType: realmType).speciesWithIndex(withIndex: speciesIndex)
         }
         
         if let speciesIndex = json["toSpecies"]["index"].int {
-            return getRealm().speciesWithIndex(withIndex: speciesIndex)
+            return getRealm(withRealmType: realmType).speciesWithIndex(withIndex: speciesIndex)
         }
         return nil
     }
     
-    func parseEcosystemJSON(withJson json: JSON) -> Ecosystem? {
+    func parseEcosystemJSON(withJson json: JSON, withRealmType realmType: RealmType = RealmType.defaultDB) -> Ecosystem? {
         if let ecoSystemIndex = json["ecosystem"]["index"].int {
-            return getRealm().ecosystem(withIndex: ecoSystemIndex)
+            return getRealm(withRealmType: realmType).ecosystem(withIndex: ecoSystemIndex)
         }
         return nil
     }
     
     // Mark: UPDATE RUNTIME
     
-    func updateRuntime(withSectionName sectionName: String?, withSpeciesIndex speciesIndex: Int?, withGroupIndex groupIndex: Int?, withRealmType realmType: RealmType = RealmType.defaultDB) {
+    func updateRuntime(withSectionName sectionName: String? = nil, withSpeciesIndex speciesIndex: Int? = nil, withGroupIndex groupIndex: Int? = nil, withRealmType realmType: RealmType = RealmType.defaultDB, withAction action: String? = nil) {
         //get all the current runtimes
         
         var currentRuntime: Runtime?
@@ -471,6 +548,13 @@ class RealmDataController {
         if let groupIndex = groupIndex {
             try! getRealm(withRealmType: realmType).write {
                 currentRuntime?.currentGroupIndex.value = groupIndex
+                getRealm(withRealmType: realmType).add(currentRuntime!, update: true)
+            }
+        }
+        
+        if let action = action, let ct = currentRuntime {
+            try! getRealm(withRealmType: realmType).write {
+                ct.currentAction = action
                 getRealm(withRealmType: realmType).add(currentRuntime!, update: true)
             }
         }

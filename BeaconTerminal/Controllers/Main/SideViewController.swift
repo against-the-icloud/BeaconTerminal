@@ -10,6 +10,8 @@ import RealmSwift
 
 class SideViewController: UITableViewController {
     
+    @IBOutlet weak var exitZoneText: UITextField!
+    @IBOutlet weak var enterZoneText: UITextField!
     
     // MARK: View Methods
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +45,7 @@ class SideViewController: UITableViewController {
                 
         switch indexPath.section {
         case 0:
-            getAppDelegate().prepareViews(applicationType: ApplicationType.login)
+            //getAppDelegate().prepareViews(applicationType: ApplicationType.login)
             break
         case 1:
             self.navigationDrawerController?.closeLeftView()
@@ -79,6 +81,31 @@ class SideViewController: UITableViewController {
             cell?.contentView.backgroundColor = Color.blueGrey.base
             // cell?.selectedBackgroundView?.backgroundColor = Color.blueGrey.base
             cell?.selectionStyle = .blue
+        }
+        
+    }
+    @IBAction func changeZone(_ sender: UIButton) {
+        
+        if let text = sender.titleLabel?.text {
+            
+            let enter = text.contains("ENTER")
+            switch enter {
+            case true:
+                
+                realmDataController.updateRuntime(withAction: ActionType.entered.rawValue)
+                
+                if let zone = enterZoneText.text {
+                    realmDataController.updateRuntime(withSpeciesIndex: Int(zone), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
+                }
+                
+                
+                //ENTER CONDITION
+                break
+            default:
+                //EXIT CONDITION
+                realmDataController.updateRuntime(withAction: ActionType.exited.rawValue)
+                break
+            }
         }
         
     }

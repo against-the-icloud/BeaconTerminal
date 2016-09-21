@@ -14,8 +14,8 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
-//let LOCAL_IP = "10.0.1.6"
-let LOCAL_IP = "131.193.79.203"
+let LOCAL_IP = "10.0.1.6"
+//let LOCAL_IP = "131.193.79.203"
 var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
@@ -63,14 +63,15 @@ enum Tabs : String {
 let placeTerminalState = State(ApplicationType.placeTerminal)
 let placeGroupState = State(ApplicationType.placeGroup)
 let objectGroupState = State(ApplicationType.objectGroup)
-let applicationStateMachine = StateMachine(initialState: placeGroupState, states: [objectGroupState,placeTerminalState])
+let LoginState = State(ApplicationType.login)
+let applicationStateMachine = StateMachine(initialState: LoginState, states: [placeGroupState, objectGroupState,placeTerminalState])
 //init events
 
-let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.objectGroup, ApplicationType.placeGroup],
+let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup],
                                destinationValue: ApplicationType.placeTerminal)
 
-let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.placeGroup)
-let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.placeGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.objectGroup)
+let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.login,ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.placeGroup)
+let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.objectGroup)
 
 var realmDataController : RealmDataController = RealmDataController()
 
@@ -172,15 +173,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
         let sectionDict = ["default":groupNames,"guest":groupNames, "6BM":groupNames,"6MT":groupNames,"6DF":groupNames]
         
-        //defaults.set(false, forKey: "init")
+        defaults.set(false, forKey: "init")
         defaults.set(sectionDict, forKey: "sections")
         defaults.synchronize()
         
-    
-        prepareViews(applicationType: ApplicationType.login)
         
+        //  prepareViews(applicationType: ApplicationType.login)
+        getAppDelegate().changeSystemStateTo(.login)
         
-       // shortCircuitLogin()
+        shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
@@ -202,9 +203,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.set("default", forKey: "sectionName")
         defaults.set(0, forKey: "groupIndex")
         defaults.synchronize()
-        
-        getAppDelegate().changeSystemStateTo(.placeGroup)
-        
+        getAppDelegate().changeSystemStateTo(.objectGroup)
         
         loadCondition()
     }
@@ -238,15 +237,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         case .placeGroup:
             initStateMachine(applicaitonState: applicationType)
-            rootVC = preparePlaceGroupUI()
-            //show login for section and group
+            rootVC = prepareGroupUI()
+            break
+        case .objectGroup:
+            initStateMachine(applicaitonState: applicationType)
+            rootVC = prepareGroupUI()
             break
         default:
             //login
             initStateMachine(applicaitonState: applicationType)
             rootVC = prepareLoginUI()
         }
-        
         
         // Configure the window with the SideNavigationController as the root view controller
         
@@ -281,26 +282,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return navigationDrawerController
     }
     
-    func prepareBasicGroupUI() -> NavigationDrawerController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as! MainViewController
-        let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
-        
-        let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainViewController)
-        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
-        
-        navigationController.isNavigationBarHidden = true
-        navigationController.statusBarStyle = .lightContent
-                
-        speciesViewController = SpeciesMenuViewController()
-        speciesViewController!.showSpeciesMenu(showHidden: false)
-        
-        sideViewController.showSelectedCell(with: checkApplicationState())
-        
-        return navigationDrawerController
-    }
-    
-    func preparePlaceGroupUI() -> NavigationDrawerController{
+    func prepareGroupUI() -> NavigationDrawerController{
         let terminalStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
         
@@ -342,8 +324,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch checkApplicationState() {
         case .placeGroup:
             
+            
             setDefaultRealm(withSectionName: sectionName)
-             
+            
+            checkInitialization()
+
+            
             let hasInit = defaults.bool(forKey: "init")
             
             if !hasInit {
@@ -351,7 +337,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 realmDataController.deleteAllUserData()
                 _ = realmDataController.parseNutellaConfigurationJson()
                 _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
-                 defaults.set(true, forKey: "init")
+                defaults.set(true, forKey: "init")
             }
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
@@ -363,7 +349,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
             //re-up
-         
+            
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)
             
             let speciesIndex = defaults.integer(forKey: "speciesIndex")
@@ -371,6 +357,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
             break
         case .objectGroup:
+            
+            setDefaultRealm(withSectionName: sectionName)
+
+        
+            checkInitialization()
+            
+            
+            
+            
             let groupIndex = defaults.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
             
@@ -381,11 +376,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)
             
-            let speciesIndex = defaults.integer(forKey: "speciesIndex")
+            //let speciesIndex = defaults.integer(forKey: "speciesIndex")
             
-            realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
+            realmDataController.updateRuntime(withSectionName: sectionName, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
         default:
             break
+        }
+    }
+    
+    func checkInitialization() {
+        let sectionName = defaults.string(forKey: "sectionName")
+        let hasInit = defaults.bool(forKey: "init")
+        
+        if !hasInit {
+            realmDataController.deleteAllConfigurationAndGroups()
+            realmDataController.deleteAllUserData()
+            _ = realmDataController.parseNutellaConfigurationJson()
+            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
+            defaults.set(true, forKey: "init")
         }
     }
     
@@ -419,20 +427,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(dbName).realm")
             try! terminalRealm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
         } else {
-        
-        var config = Realm.Configuration()
-        
-        // Use the default directory, but replace the filename with the username
-        config.fileURL = config.fileURL!.deletingLastPathComponent()
-            .appendingPathComponent("\(dbName).realm")
-        
-        // Set this as the configuration used for the default Realm
-        //Realm.Configuration.defaultConfiguration = config
-        
-        try! terminalRealm = Realm(configuration: config)
-        
-        LOG.debug("TerminalRealm FILE: \(config.fileURL)")
-    }
+            
+            var config = Realm.Configuration()
+            
+            // Use the default directory, but replace the filename with the username
+            config.fileURL = config.fileURL!.deletingLastPathComponent()
+                .appendingPathComponent("\(dbName).realm")
+            
+            // Set this as the configuration used for the default Realm
+            //Realm.Configuration.defaultConfiguration = config
+            
+            try! terminalRealm = Realm(configuration: config)
+            
+            LOG.debug("TerminalRealm FILE: \(config.fileURL)")
+        }
     }
     
     func resetDB(withGroupIndex groupIndex: Int = 0) {
@@ -463,7 +471,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         switch self.checkApplicationState() {
-        case .placeGroup:
+        case .placeGroup, .objectGroup:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
                               runId: sectionName,
@@ -485,7 +493,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sub_1 = "note_changes"
         let sub_2 = "echo_out"
         let sub_3 = "place_changes"
-
+        
         // let sub_3 = "set_current_run"
         nutella?.net.subscribe(sub_1)
         nutella?.net.subscribe(sub_2)
@@ -498,7 +506,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
         
         switch checkApplicationState() {
-        case .placeGroup:
+        case .placeGroup, .objectGroup:
             //realmDataController.queryNutellaAllNotes(withType: "group")
             break
         case .placeTerminal:
@@ -525,10 +533,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
                 //LOG.debug("We didn't transition")
             }
+        case .objectGroup:
+            if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
+                //LOG.debug("We didn't transition")
+            }
         case .placeTerminal:
             if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
                 //LOG.debug("We didn't transition")
             }
+            
         default:
             if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
                 //LOG.debug("We didn't transition")

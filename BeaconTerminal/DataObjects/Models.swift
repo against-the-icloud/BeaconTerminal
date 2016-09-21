@@ -14,6 +14,11 @@ enum RelationshipType: String {
     static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes]
 }
 
+enum ActionType: String {
+    case entered = "entered"
+    case exited = "exited"
+}
+
 class Member: Object {
     dynamic var id : String = UUID().uuidString
     dynamic var name : String? = nil
@@ -82,13 +87,6 @@ class SpeciesObservation: Object {
             self.isSynced.value = isSynced
         }
         
-        if let fromSpecies = realmDataController.parseSpeciesJSON(withJson: json)  {
-            self.fromSpecies = fromSpecies
-        }
-        
-        if let ecosystem = realmDataController.parseEcosystemJSON(withJson: json)  {
-            self.ecosystem = ecosystem
-        }
         
         if shouldParseId {
             if let id = json["id"].string {
@@ -143,13 +141,7 @@ class Relationship: Object {
             self.relationshipType = relationshipType
         }
         
-        if let toSpecies = realmDataController.parseSpeciesJSON(withJson: json)  {
-            self.toSpecies = toSpecies
-        }
-        
-        if let ecosystem = realmDataController.parseEcosystemJSON(withJson: json)  {
-            self.ecosystem = ecosystem
-        }
+     
         
         
     }
@@ -263,6 +255,9 @@ class Runtime: Object {
     dynamic var currentSectionName: String? = nil
     let currentGroupIndex = RealmOptional<Int>()
     let currentSpeciesIndex =  RealmOptional<Int>()
+    //ENTERED/EXITED
+    dynamic var currentAction: String? = nil
+    dynamic var condition: String? = nil
     
     override static func primaryKey() -> String? {
         return "id"
@@ -367,6 +362,13 @@ extension Realm {
         return nil
     }
     
+    func runtimeAction() -> String? {
+        if let rt = runtime() {
+            return rt.currentAction
+        }
+        return nil
+    }
+    
     func section(withName name: String) -> Section? {
         return objects(Section.self).filter("name = '\(name)'").first
     }
@@ -466,7 +468,7 @@ extension Realm {
     }
     
     func speciesObservationCurrentSectionGroup(withFromSpeciesIndex fromSpeciesIndex: Int) -> SpeciesObservation? {
-        if let currentSection = realm?.runtimeSectionName(), let groupIndex = realm?.runtimeGroupIndex() {
+        if let currentSection = runtimeSectionName(), let groupIndex = runtimeGroupIndex() {
             if let group = group(withSectionName: currentSection, withGroupIndex: groupIndex) {
                 return speciesObservation(FromCollection: group.speciesObservations, withSpeciesIndex: fromSpeciesIndex)
 
@@ -476,7 +478,7 @@ extension Realm {
     }
     
     func speciesObservationsCurrentSectionGroup() -> List<SpeciesObservation>? {
-        if let currentSection = realm?.runtimeSectionName(), let groupIndex = realm?.runtimeGroupIndex() {
+        if let currentSection = runtimeSectionName(), let groupIndex = runtimeGroupIndex() {
             if let group = group(withSectionName: currentSection, withGroupIndex: groupIndex) {
                 return group.speciesObservations
             }
