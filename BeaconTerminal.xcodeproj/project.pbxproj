@@ -17,7 +17,6 @@
 		701385CA1D8334BA0081FEB1 /* SpeciesPageContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701385C91D8334BA0081FEB1 /* SpeciesPageContainerController.swift */; };
 		701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701385CB1D8336890081FEB1 /* SpeciesPageContentController.swift */; };
 		701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */; };
-		701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */; };
 		701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */; };
 		7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */; };
 		7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */; };
@@ -110,7 +109,6 @@
 		AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */; };
 		AE9764941C22C1BF0058A4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE9764931C22C1BF0058A4DC /* Assets.xcassets */; };
 		C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */; };
-		C0A7D3406B5149858C3801A4 /* TestUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D849BE92350EC6614884 /* TestUITableViewController.swift */; };
 		C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */; };
 		C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */ = {isa = PBXBuildFile; fileRef = C0A7D004FC456D55A564307C /* nutella_config.json */; };
 		C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */; };
@@ -163,7 +161,6 @@
 		701385C91D8334BA0081FEB1 /* SpeciesPageContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesPageContainerController.swift; path = SpeicesPages/SpeciesPageContainerController.swift; sourceTree = "<group>"; };
 		701385CB1D8336890081FEB1 /* SpeciesPageContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesPageContentController.swift; path = SpeicesPages/SpeciesPageContentController.swift; sourceTree = "<group>"; };
 		701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalRelationshipTableViewController.swift; path = Terminal/TerminalRelationshipTableViewController.swift; sourceTree = "<group>"; };
-		701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GraveYard.storyboard; sourceTree = "<group>"; };
 		701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalCellController.swift; path = Terminal/TerminalCellController.swift; sourceTree = "<group>"; };
 		7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidenceSpeciesViewController.swift; path = SpeicesPages/EvidenceSpeciesViewController.swift; sourceTree = "<group>"; };
 		7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesCellDetailController.swift; path = SpeicesPages/SpeciesCellDetailController.swift; sourceTree = "<group>"; };
@@ -265,7 +262,6 @@
 		C0A7D42A074C04107E1DC615 /* Base */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Base; path = BeaconTerminal/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C0A7D6AC0D72ADF2FA28B555 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		C0A7D849BE92350EC6614884 /* TestUITableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUITableViewController.swift; sourceTree = "<group>"; };
 		C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C0A7DAD61205D9767DB6FF97 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowViewController.swift; sourceTree = "<group>"; };
@@ -543,15 +539,6 @@
 			path = Estimote;
 			sourceTree = "<group>";
 		};
-		C0A7D0A9DAF73012903BE55B /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				C0A7D849BE92350EC6614884 /* TestUITableViewController.swift */,
-				701564DC1D7151CF00A0EEA5 /* GraveYard.storyboard */,
-			);
-			path = Test;
-			sourceTree = "<group>";
-		};
 		C0A7D28976CF55BCDC92A3AB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,7 +549,6 @@
 				70E8F41A1D162CA8007DF331 /* Setup */,
 				701385C81D8333560081FEB1 /* SpeciesPages */,
 				C0A7DC783C6B08701103D5EF /* Carousel */,
-				C0A7D0A9DAF73012903BE55B /* Test */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -683,7 +669,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "aperritano@gmail.com";
 				TargetAttributes = {
 					70DC48471D79CD0800E11064 = {
@@ -748,7 +734,6 @@
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
 				70DC48561D7A0CF700E11064 /* species_note_test_db.json in Resources */,
 				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
-				701564DD1D7151CF00A0EEA5 /* GraveYard.storyboard in Resources */,
 				70F29A691D582AAD0057A497 /* system_configuration.json in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */,
@@ -934,7 +919,6 @@
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
-				C0A7D3406B5149858C3801A4 /* TestUITableViewController.swift in Sources */,
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
 				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,

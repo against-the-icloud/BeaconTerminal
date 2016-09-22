@@ -22,7 +22,11 @@ class DefaultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showLogin()
+       
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     func showLogin() {

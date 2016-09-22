@@ -434,8 +434,8 @@ extension CoverFlowViewController: PreferenceEditDelegate {
             navController.modalPresentationStyle = .popover
             
             if let pvc = navController.viewControllers.first as? PreferencesViewController {
-                pvc.speciesObservation = speciesObservation
-                pvc.updateTint(tintColor)
+                //pvc.speciesObservation = speciesObservation
+                //pvc.updateTint(tintColor)
             }
             
             self.present(navController, animated: true, completion: nil)

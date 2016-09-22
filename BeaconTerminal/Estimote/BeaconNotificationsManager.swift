@@ -7,33 +7,16 @@ import UserNotifications
 
 class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
 
-    fileprivate let beaconManager = ESTBeaconManager()
+    let beaconManager = ESTBeaconManager()
 
-    fileprivate var enterMessages = [String: String]()
-    fileprivate var exitMessages = [String: String]()
-
+    var enterMessages = [String: String]()
+    var exitMessages = [String: String]()
+    
     override init() {
         super.init()
 
         self.beaconManager.delegate = self
         self.beaconManager.requestAlwaysAuthorization()
-//        let center = UNUserNotificationCenter.current()
-//        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
-//            if granted {
-//                print("Yay!")
-//            } else {
-//                print("D'oh")
-//            }
-//        }
-     
-        let modifyListAction = UIMutableUserNotificationAction()
-        modifyListAction.identifier = "editList"
-        modifyListAction.title = "Edit list"
-        modifyListAction.activationMode = UIUserNotificationActivationMode.foreground
-        modifyListAction.isDestructive = false
-        modifyListAction.isAuthenticationRequired = true
-        
-        
     }
 
     func enableNotificationsForBeaconID(_ beaconID: BeaconID, enterMessage: String?, exitMessage: String?) {
@@ -41,6 +24,8 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
         beaconRegion.notifyEntryStateOnDisplay = true
         beaconRegion.notifyOnExit = true
         beaconRegion.notifyOnEntry = true
+        
+        
         self.enterMessages[beaconRegion.identifier] = enterMessage
         self.exitMessages[beaconRegion.identifier] = exitMessage
         
@@ -55,16 +40,21 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
     
     func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
         if let message = self.enterMessages[region.identifier] {
+            
             self.showNotificationWithMessage(message)
+            
             LOG.debug("didEnter \(region)")
+            
             if let minorSpeciesIndex = region.minor?.intValue {
                 //adjust because these ids can't be start 0
                 let speciesIndex = minorSpeciesIndex - 1
+                
                 let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
                 
                 realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
                 
                 let banner = Banner(title: "DID ENTER", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
+                
                 banner.shouldTintImage = false
                 banner.dismissesOnTap = true
                 banner.dismissesOnSwipe = false
@@ -87,7 +77,6 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
         notification.alertBody = message
         notification.soundName = UILocalNotificationDefaultSoundName
         UIApplication.shared.presentLocalNotificationNow(notification)
-        
         LOG.debug("showNotificationWithMessage SHOW NOTIFICATION")
     }
     

@@ -11,9 +11,8 @@ import UIKit
 
 class PreferencesViewController: UIViewController {
     
-    var speciesObservation: SpeciesObservation?
+    var speciesIndex: Int?
     
-    @IBOutlet weak var okButton: UIBarButtonItem!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -25,34 +24,20 @@ class PreferencesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        
-        if let preferencesTableViewController = segue.destination as? PreferencesTableViewController {
-            preferencesTableViewController.speciesObservation = speciesObservation
-        }
-    }
-    
-    
-    func prepareView() {
-        if let so = speciesObservation {
-            if let speciesName = so.fromSpecies?.name {
-                self.title = "\(speciesName) Ecosystem Preferences"
-            } else {
-                self.title = "Species Preferences"
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier {
+            switch id {
+            case "preferencesSegue":
+                if let pvc = segue.destination as? PreferencesTableViewController, let fromSpecies = self.speciesIndex {
+                    pvc.speciesIndex = fromSpecies
+                }
+            default:
+                break
             }
         }
-        
     }
     
-    func updateTint(_ tint: UIColor) {
-        okButton.tintColor = tint
-    }
-
-    // Mark: IBAction
-    @IBAction func doneAction(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-    }
     
 }

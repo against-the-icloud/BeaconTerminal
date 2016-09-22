@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11521.1" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11517.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -316,33 +316,7 @@
                     <view key="view" contentMode="scaleToFill" id="M6u-Bl-IWk">
                         <rect key="frame" x="0.0" y="44" width="600" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Prb-sW-S9y">
-                                <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eul-pm-6Hd" userLabel="rightTable">
-                                        <connections>
-                                            <segue destination="AbW-hT-okf" kind="embed" id="By4-GJ-paN"/>
-                                        </connections>
-                                    </containerView>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FLQ-F7-VE0" userLabel="leftTable">
-                                        <connections>
-                                            <segue destination="4PA-9J-TJh" kind="embed" id="734-7y-Sbg"/>
-                                        </connections>
-                                    </containerView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="Eul-pm-6Hd" firstAttribute="height" secondItem="Prb-sW-S9y" secondAttribute="height" id="IEJ-ep-wuf"/>
-                                    <constraint firstItem="FLQ-F7-VE0" firstAttribute="height" secondItem="Prb-sW-S9y" secondAttribute="height" id="R5c-hp-5hm"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
                         <color key="backgroundColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="Prb-sW-S9y" firstAttribute="height" secondItem="M6u-Bl-IWk" secondAttribute="height" id="0OV-wF-pQ1"/>
-                            <constraint firstItem="Prb-sW-S9y" firstAttribute="width" secondItem="M6u-Bl-IWk" secondAttribute="width" id="jb1-hA-W7E"/>
-                            <constraint firstItem="Prb-sW-S9y" firstAttribute="leading" secondItem="M6u-Bl-IWk" secondAttribute="leading" id="lN2-2T-Noh"/>
-                            <constraint firstItem="Prb-sW-S9y" firstAttribute="top" secondItem="dXD-Qg-gw5" secondAttribute="bottom" id="wkI-4I-AJ3"/>
-                        </constraints>
                     </view>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="gec-bd-tab"/>
@@ -361,7 +335,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z5m-aK-0Ay" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="338" y="-1090"/>
+            <point key="canvasLocation" x="662" y="-1083"/>
         </scene>
         <!--LoginSpeciesCollectionViewController-->
         <scene sceneID="ZVH-gc-H3a">
@@ -487,15 +461,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="loginGroupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7ZA-ae-7Af" customClass="LoginGroupViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="ppK-zB-8yj">
-                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="JVq-nu-lls" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JVq-nu-lls" id="zgc-ti-raL">
-                                    <frame key="frameInset" width="540" height="99"/>
+                                    <frame key="frameInset" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="IhM-mQ-O8w">
@@ -538,15 +512,15 @@
             <objects>
                 <tableViewController id="tGg-qr-HgA" customClass="LoginSectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="UfT-mp-oAp">
-                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="qmN-MV-Rh0" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qmN-MV-Rh0" id="fUx-a4-1d9">
-                                    <frame key="frameInset" width="540" height="99"/>
+                                    <frame key="frameInset" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="m85-zV-H21">
@@ -593,572 +567,20 @@
             </objects>
             <point key="canvasLocation" x="344" y="1321"/>
         </scene>
-        <!--Preferences Table View Controller-->
-        <scene sceneID="tqZ-Cl-1Wy">
-            <objects>
-                <tableViewController id="AbW-hT-okf" customClass="PreferencesTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="1" id="Jom-mn-k2v" userLabel="BioticTable">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="612"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <sections>
-                            <tableViewSection headerTitle="TROPHIC LEVEL" id="Vge-Di-kJM">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" textLabel="Gzs-WQ-zdz" style="IBUITableViewCellStyleDefault" id="DIn-jw-Wgm" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DIn-jw-Wgm" id="aAx-hw-gEW">
-                                            <frame key="frameInset" width="261" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not ready to report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gzs-WQ-zdz" userLabel="notReady">
-                                                    <frame key="frameInset" minX="15" width="246" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="trophic_level"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="CvN-Wb-kd1" style="IBUITableViewCellStyleDefault" id="hzd-EU-fae" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hzd-EU-fae" id="d4A-Kz-NnU">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Resource" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CvN-Wb-kd1" userLabel="resource">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="trophic_level"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="EhD-Nq-pjO" style="IBUITableViewCellStyleDefault" id="r0t-4l-9up" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="116" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r0t-4l-9up" id="pE4-rn-uxr">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Herbivore" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EhD-Nq-pjO" userLabel="herbivore">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="trophic_level"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="bkD-DR-N5t" style="IBUITableViewCellStyleDefault" id="wgA-Sr-4OB" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="160" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wgA-Sr-4OB" id="myZ-jo-r4y">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Predator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bkD-DR-N5t" userLabel="predator">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="trophic_level"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="BEHAVIORS" id="Iz3-Ni-T73">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" textLabel="Sqh-rp-RQY" style="IBUITableViewCellStyleDefault" id="Ouu-nv-ELR" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="232" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ouu-nv-ELR" id="f5Z-Kh-r2T">
-                                            <frame key="frameInset" width="261" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not ready to report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sqh-rp-RQY" userLabel="notReady">
-                                                    <frame key="frameInset" minX="15" width="246" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="behaviors"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="aQT-Ny-ZAg" style="IBUITableViewCellStyleDefault" id="6j1-A4-0aw" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="276" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6j1-A4-0aw" id="mvO-Rr-Nbj">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Flight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aQT-Ny-ZAg" userLabel="flight">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="behaviors"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="qRN-9d-m22" style="IBUITableViewCellStyleDefault" id="MxP-rw-qVX" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="320" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MxP-rw-qVX" id="lC7-bQ-Jvi">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Pursuit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qRN-9d-m22" userLabel="pursuit">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="behaviors"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="F7D-Aq-gwa" style="IBUITableViewCellStyleDefault" id="qHJ-s9-CMY" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="364" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qHJ-s9-CMY" id="92g-A1-waP">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Neither" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F7D-Aq-gwa" userLabel="neither">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="behaviors"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="PREDATION RESISTENCE" id="TuF-ps-Xhv">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" textLabel="sdv-Ka-wAm" style="IBUITableViewCellStyleDefault" id="sQP-ft-SmB" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="436" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sQP-ft-SmB" id="2Hj-Vu-aYc">
-                                            <frame key="frameInset" width="261" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not ready to report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sdv-Ka-wAm" userLabel="notReady">
-                                                    <frame key="frameInset" minX="15" width="246" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="predation_resistence"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="zWD-Bx-Leo" style="IBUITableViewCellStyleDefault" id="VBj-ky-qE9" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="480" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VBj-ky-qE9" id="gQj-xO-Uwp">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Flight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zWD-Bx-Leo" userLabel="flight">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="predation_resistence"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="CXT-pF-cXL" style="IBUITableViewCellStyleDefault" id="bjE-Ye-w7L" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="524" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bjE-Ye-w7L" id="2Gb-nc-L0a">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Pursuit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CXT-pF-cXL" userLabel="pursuit">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="predation_resistence"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="MZJ-7W-Yr1" style="IBUITableViewCellStyleDefault" id="e4I-eR-4y5" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="568" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e4I-eR-4y5" id="DN8-Ft-TZU">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Neither" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MZJ-7W-Yr1" userLabel="neither">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="predation_resistence"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="AbW-hT-okf" id="DVf-oj-WxP"/>
-                            <outlet property="delegate" destination="AbW-hT-okf" id="XZX-HI-kV4"/>
-                        </connections>
-                    </tableView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="612"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UNm-Sc-Fd2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="787" y="-480"/>
-        </scene>
-        <!--Preferences Table View Controller-->
-        <scene sceneID="IFA-yV-0Gf">
-            <objects>
-                <tableViewController id="4PA-9J-TJh" customClass="PreferencesTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UNm-hf-pbQ" userLabel="AbioticTable">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="612"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <sections>
-                            <tableViewSection headerTitle="HEAT SENSITIVITY" id="q1u-V9-4r8" userLabel="HeatSensitivity">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" textLabel="sSd-Ca-RXz" style="IBUITableViewCellStyleDefault" id="m5y-82-L1d" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m5y-82-L1d" id="eav-Xs-eHR">
-                                            <frame key="frameInset" width="261" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not ready to report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sSd-Ca-RXz" userLabel="notReady">
-                                                    <frame key="frameInset" minX="15" width="246" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="heat_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Po6-3k-R73" style="IBUITableViewCellStyleDefault" id="W26-WV-2p4" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W26-WV-2p4" id="QnX-RJ-VS1">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sensitive to heat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Po6-3k-R73" userLabel="sensitive">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="heat_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Hee-t8-hYG" style="IBUITableViewCellStyleDefault" id="Pzg-94-Avg" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="116" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pzg-94-Avg" id="Kc6-Ta-8fF">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not sensitive to heat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hee-t8-hYG" userLabel="notSensitive">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="heat_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="jex-WG-rh2" style="IBUITableViewCellStyleDefault" id="8DC-X5-by6" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="160" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8DC-X5-by6" id="iuT-0K-g3n">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Neither" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jex-WG-rh2" userLabel="neither">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="heat_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="HUMIDITY SENSITIVITY" id="UoN-A4-xoP" userLabel="HumiditySensitivity">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" textLabel="RVK-Gn-OuI" style="IBUITableViewCellStyleDefault" id="C84-PJ-jUa" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="232" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C84-PJ-jUa" id="geK-mk-mU8">
-                                            <frame key="frameInset" width="261" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not ready to report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RVK-Gn-OuI" userLabel="notReady">
-                                                    <frame key="frameInset" minX="15" width="246" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="humidity_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="ym4-7u-vtP" style="IBUITableViewCellStyleDefault" id="gdK-yg-sBg" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="276" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gdK-yg-sBg" id="Y0d-kn-Y7s">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sensitive to humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ym4-7u-vtP" userLabel="sensitiveHumidity">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="humidity_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="gSq-za-efC" style="IBUITableViewCellStyleDefault" id="Fg1-iY-dJV" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="320" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fg1-iY-dJV" id="xga-dx-Mjp">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Not senstive to humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gSq-za-efC" userLabel="notSensitive">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="humidity_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="zhk-ND-AkS" style="IBUITableViewCellStyleDefault" id="v0y-Uf-0cf" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="364" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v0y-Uf-0cf" id="WMH-r4-ND1">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Neither" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zhk-ND-AkS" userLabel="neither">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="humidity_sensitivity"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="HABITAT PREFERENCES" id="s7F-3u-Tlr" userLabel="HabitatPreferences">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="MbB-5P-q14" style="IBUITableViewCellStyleDefault" id="vAl-Qe-Ppw" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="436" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vAl-Qe-Ppw" id="i83-Y1-6N6">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Aluminum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MbB-5P-q14" userLabel="aluminum">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="habitat_preference"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="rK9-Zm-bpR" style="IBUITableViewCellStyleDefault" id="Ilq-Qc-c8U" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="480" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ilq-Qc-c8U" id="ZZk-A4-WVC">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Brick" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rK9-Zm-bpR" userLabel="brick">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="habitat_preference"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="5no-eU-V6k" style="IBUITableViewCellStyleDefault" id="xnS-gI-pzL" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="524" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xnS-gI-pzL" id="zf0-Ry-ALR">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Plaster" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5no-eU-V6k" userLabel="plaster">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="habitat_preference"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="a1K-aX-py0" style="IBUITableViewCellStyleDefault" id="iX3-Pg-Ajv" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="568" width="300" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iX3-Pg-Ajv" id="rsZ-vk-8IQ">
-                                            <frame key="frameInset" width="300" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Wood" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a1K-aX-py0" userLabel="wood">
-                                                    <frame key="frameInset" minX="15" width="270" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="preferenceType" value="habitat_preference"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="4PA-9J-TJh" id="Fue-FC-tXM"/>
-                            <outlet property="delegate" destination="4PA-9J-TJh" id="nLD-5d-Tok"/>
-                        </connections>
-                    </tableView>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="612"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0Fp-Ne-IP5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1386" y="-456"/>
-        </scene>
         <!--CHOOSE YOUR CONDITION-->
         <scene sceneID="swx-1K-ja2">
             <objects>
                 <tableViewController storyboardIdentifier="loginConditionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ALQ-pU-Vpa" customClass="LoginConditionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="wSv-sh-aYS">
-                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="2hZ-JL-iJC" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2hZ-JL-iJC" id="CB5-Gm-Tjw">
-                                    <frame key="frameInset" width="540" height="99"/>
+                                    <frame key="frameInset" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="XNw-9E-WW6">

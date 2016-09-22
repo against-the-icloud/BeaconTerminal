@@ -8,12 +8,23 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class PreferencesTableViewController: UITableViewController {
     
+    var speciesIndex: Int?
+    
     var speciesObservation: SpeciesObservation?
     
-    @IBOutlet weak var okButton: UIBarButtonItem!
+    var speciesObservations: Results<SpeciesObservation>?
+    
+    var speciesObsNotificationToken: NotificationToken? = nil
+    
+    deinit {
+        if let sp = self.speciesObsNotificationToken {
+            sp.stop()
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -25,12 +36,40 @@ class PreferencesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()
+        prepareNotification()
     }
     
-    func prepareView() {
-        
+    func prepareNotification() {
+        if let allSO = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let fromSpeciesIndex = speciesIndex {
+            speciesObservations = allSO.filter("fromSpecies.index = \(fromSpeciesIndex)")
+            speciesObsNotificationToken = speciesObservations?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+                
+                guard let controller = self else { return }
+                switch changes {
+                case .initial(let speciesObservationResults):
+                    if let so = speciesObservationResults.first {
+                        controller.update(speciesObservation: so)
+                    }
+                    break
+                case .update(let speciesObservationResults, _, _, _):
+                    if let so = speciesObservationResults.first {
+                        controller.update(speciesObservation: so)
+                    }
+                    break
+                case .error(let error):
+                    // An error occurred while opening the Realm file on the background worker thread
+                    fatalError("\(error)")
+                    break
+                }
+            }
+        }
     }
+    
+    func update(speciesObservation: SpeciesObservation) {
+        self.speciesObservation = speciesObservation
+        tableView.reloadData()
+    }
+    
     
 }
 
@@ -81,12 +120,16 @@ extension PreferencesTableViewController {
                 let foundPreferences = preferences.filter("type = '\(preferenceType)'")
                 
                 if foundPreferences.count > 0 {
-                    let preference = foundPreferences[0]
-                    try! realm!.write {
-                        preference.type = cell.preferenceType!
-                        preference.value = cell.textLabel?.text
-                        preference.lastModified = NSDate() as Date
-                        realm!.add(preference, update: true)
+                    if let preference = foundPreferences.first {
+                        
+                        let r = realmDataController.getRealm()
+                        
+                        try! r.write {
+                            preference.type = cell.preferenceType!
+                            preference.value = cell.textLabel?.text
+                            preference.lastModified = NSDate() as Date
+                            r.add(preference, update: true)
+                        }
                     }
                 }
             }

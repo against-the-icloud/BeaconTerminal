@@ -102,6 +102,9 @@ class SpeciesPageContentController: UIViewController {
             }
             break
         case "preferencesViewSegue":
+            if let srv = segue.destination as? PreferencesViewController {
+                srv.speciesIndex = speciesIndex
+            }
             break
         case "experimentsViewSegue":
             break
@@ -132,18 +135,20 @@ class SpeciesPageContentController: UIViewController {
         let showView = subpageContainerViews[sender.selectedSegmentIndex]
         
         for (index,containerView) in subpageContainerViews.enumerated() {
-            if index == sender.selectedSegmentIndex {
+            
+            switch index {
+            case sender.selectedSegmentIndex:
                 containerView.isHidden = false
                 containerView.fadeIn(toAlpha: 1.0) {_ in
                     
                 }
-                
-            } else {
+            default:
                 containerView.isHidden = true
                 containerView.fadeOut(0.0) {_ in
                     
                 }
             }
+            
         }
         
         
@@ -153,7 +158,7 @@ class SpeciesPageContentController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .lightContent
     }
     
 }

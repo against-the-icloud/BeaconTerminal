@@ -15,7 +15,7 @@ let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "localhost"
 let LOCAL_IP = "10.0.1.6"
-//let LOCAL_IP = "131.193.79.203"
+//  let LOCAL_IP = "131.193.79.203"
 var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
@@ -134,38 +134,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var collectionView: UICollectionView?
     var speciesViewController: SpeciesMenuViewController?
     var bottomNavigationController: AppBottomNavigationController?
-    //    var beaconIDs = [
-    //        BeaconID(index: 0, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 54220, minor: 25460, beaconColor: Color.pink.base),
-    //        BeaconID(index: 1, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 13198, minor: 13180, beaconColor: Color.yellow.base),
-    //        BeaconID(index: 2, UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 15252, minor: 24173, beaconColor: Color.green.base)
-    //    ]
-    //
     
     //delegates
     weak var controlPanelDelegate: ControlPanelDelegate?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
-        beaconNotificationsManager = BeaconNotificationsManager()
-        
-        
-        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
-        
-        
-        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
-        
-        //SPECIES-0
-        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B0407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 1),
-                                                                   enterMessage: "enter species 0",
-                                                                   exitMessage: "exit species 0"
-        )
-        
-        
-        //SPECIES-1
-        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B1407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2),
-                                                                   enterMessage: "enter species 1",
-                                                                   exitMessage: "exit species 1"
-        )
+ 
         
         
         realmDataController = RealmDataController()
@@ -177,9 +152,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.set(sectionDict, forKey: "sections")
         defaults.synchronize()
         
-        
+        initStateMachine(applicaitonState: .placeGroup)
         //  prepareViews(applicationType: ApplicationType.login)
-        getAppDelegate().changeSystemStateTo(.login)
+        //getAppDelegate().changeSystemStateTo(.objectGroup)
         
         shortCircuitLogin()
         
@@ -198,12 +173,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func shortCircuitLogin() {
+        
+        getAppDelegate().changeSystemStateTo(.objectGroup)
+
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
         defaults.set("default", forKey: "sectionName")
         defaults.set(0, forKey: "groupIndex")
         defaults.synchronize()
-        getAppDelegate().changeSystemStateTo(.objectGroup)
         
         loadCondition()
     }
@@ -232,20 +209,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch applicationType {
         case .placeTerminal:
-            initStateMachine(applicaitonState: applicationType)
+          
             rootVC = prepareTerminalUI()
             break
         case .placeGroup:
-            initStateMachine(applicaitonState: applicationType)
+            //initStateMachine(applicaitonState: applicationType)
             rootVC = prepareGroupUI()
+            prepareBeaconManager()
             break
         case .objectGroup:
-            initStateMachine(applicaitonState: applicationType)
+            //initStateMachine(applicaitonState: applicationType)
             rootVC = prepareGroupUI()
             break
         default:
             //login
-            initStateMachine(applicaitonState: applicationType)
+            //initStateMachine(applicaitonState: applicationType)
             rootVC = prepareLoginUI()
         }
         
@@ -258,6 +236,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         window?.makeKeyAndVisible()
+    }
+    
+    func prepareBeaconManager() {
+        beaconNotificationsManager = BeaconNotificationsManager()
+        
+        
+        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
+        
+        
+        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
+        
+        //SPECIES-0
+        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B0407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 1),
+                                                                   enterMessage: "enter species 0",
+                                                                   exitMessage: "exit species 0"
+        )
+        
+        
+        //SPECIES-1
+        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B1407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2),
+                                                                   enterMessage: "enter species 1",
+                                                                   exitMessage: "exit species 1"
+        )
+        
+        //SPECIES-2
+        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B2407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 3),
+                                                                   enterMessage: "enter species 2",
+                                                                   exitMessage: "exit species 2"
+        )
     }
     
     func prepareLoginUI() -> NavigationDrawerController {

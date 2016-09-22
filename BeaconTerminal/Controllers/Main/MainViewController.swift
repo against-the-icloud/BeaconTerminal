@@ -263,12 +263,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBAction func unwindToHereTestTable(_ segue: UIStoryboardSegue) {
         // And we are back
-        let svc = segue.source as! TestUITableViewController
-
-        let simulationIndex = svc.simulationIndex
-        let simulationType = svc.simulationType
+//        let svc = segue.source as! TestUITableViewController
+//
+//        let simulationIndex = svc.simulationIndex
+//        let simulationType = svc.simulationType
 //        self.simulate(simulationIndex, type: simulationType)
-        LOG.debug("UNWINDED TO SIMULATION TYPE, INDEX \(simulationIndex) :TYPE: \(simulationType)")
+        //LOG.debug("UNWINDED TO SIMULATION TYPE, INDEX \(simulationIndex) :TYPE: \(simulationType)")
     }
 
     // MARK: Photo Related

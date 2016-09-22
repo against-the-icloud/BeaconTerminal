@@ -23,8 +23,6 @@ class MainContainerController: UIViewController{
     @IBOutlet weak var topPanel: UIView!
     @IBOutlet weak var badgeImageView: UIImageView!
     
-    
-    
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
     var terminalRuntimeResults: Results<Runtime>?
