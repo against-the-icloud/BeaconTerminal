@@ -13,10 +13,10 @@ let EXPORT_DB = true
 // localhost || remote
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
-let LOCAL = "localhost"
+let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
 //  let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = LOCAL_IP
+var CURRENT_HOST = LOCAL
 var SECTION_NAME = "default"
 
 let LOG: XCGLogger = {

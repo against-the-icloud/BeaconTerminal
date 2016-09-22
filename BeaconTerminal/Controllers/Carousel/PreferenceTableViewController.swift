@@ -115,7 +115,7 @@ extension PreferencesTableViewController {
         }
         
         if let cell = tableView.cellForRow(at: indexPath) as? PreferenceTableViewCell {
-            if let preferenceType = cell.preferenceType, let preferences = speciesObservation?.preferences {
+            if let preferenceType = cell.preferenceType, let so = speciesObservation, let preferences = speciesObservation?.preferences {
                 
                 let foundPreferences = preferences.filter("type = '\(preferenceType)'")
                 
@@ -129,6 +129,10 @@ extension PreferencesTableViewController {
                             preference.value = cell.textLabel?.text
                             preference.lastModified = NSDate() as Date
                             r.add(preference, update: true)
+                            
+                            so.isSynced.value = false
+                            r.add(so, update: true)
+                            
                         }
                     }
                 }

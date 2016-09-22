@@ -14,7 +14,7 @@ class RealmDataController {
     
     init() {
     }
-
+    
     
     func getRealm(withRealmType realmType: RealmType? = nil) -> Realm {
         if let rt = realmType {
@@ -86,7 +86,7 @@ class RealmDataController {
             break
         }
     }
-
+    
     // Mark: Sync Observations
     
     func syncSpeciesObservations(withIndex index: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
@@ -130,38 +130,92 @@ class RealmDataController {
     
     func handlePlaceGroupMessages(withMessage message: Any, withChannel channel: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
-        _ = getRealm(withRealmType: realmType).runtimeSectionName()
-        
-        guard let currentGroupIndex = getRealm(withRealmType: realmType).runtimeGroupIndex() else {
-            //need sectionName for this message
-            return
-        }
-        
-        switch channel {
-        case NutellaChannelType.noteChanges.rawValue:
-            let header = parseHeader(withMessage: message)
-            if let speciesIndex = header?.speciesIndex, currentGroupIndex == header?.groupIndex {
-                
-                parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex, withRealmType: realmType)
+        if let channelType = NutellaChannelType(rawValue: channel) {
+            _ = getRealm(withRealmType: realmType).runtimeSectionName()
+            
+            guard let currentGroupIndex = getRealm(withRealmType: realmType).runtimeGroupIndex() else {
+                //need sectionName for this message
+                return
             }
-            break
-        case NutellaChannelType.allNotesWithGroup.rawValue:
-            let header = parseHeader(withMessage: message)
-            if let groupIndex = header?.groupIndex {
-                if currentGroupIndex == groupIndex {
-                    parseMessage(withMessage: message, withGroupIndex: groupIndex, withRealmType: realmType)
+            
+            switch channelType {
+            case .noteChanges:
+                let header = parseHeader(withMessage: message)
+                if let speciesIndex = header?.speciesIndex, currentGroupIndex == header?.groupIndex {
+                    
+                    parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex, withRealmType: realmType)
                 }
+                break
+            case .allNotesWithGroup:
+                let header = parseHeader(withMessage: message)
+                if let groupIndex = header?.groupIndex {
+                    if currentGroupIndex == groupIndex {
+                        parseMessage(withMessage: message, withGroupIndex: groupIndex, withRealmType: realmType)
+                    }
+                }
+                break
+            default:
+                break
             }
-            break
-        default:
-            break
         }
     }
     
-    func handleObjectGroupMessages(withMessage message: Any, withChannel channel: String) {
-      
-        switch channel {
-        case NutellaChannelType.allNotesWithSpecies.rawValue:
+    func handleObjectGroupMessages(withMessage message: Any, withChannel channel: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
+        
+        if let channelType = NutellaChannelType(rawValue: channel) {
+            
+            
+            switch channelType {
+            case .allNotesWithSpecies:
+                guard let currentSpeciesIndex = getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
+                    //need species for this message
+                    return
+                }
+                guard let currentSectionName = getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() else {
+                    //need sectionName for this message
+                    return
+                }
+                let header = parseHeader(withMessage: message)
+                if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                    
+                    // import the message
+                    parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName, withRealmType: RealmType.terminalDB)
+                }
+                break
+            case .noteChanges:
+                guard let currentGroupIndex = getRealm().runtimeGroupIndex() else {
+                    //need sectionName for this message
+                    return
+                }
+                
+                let header = parseHeader(withMessage: message)
+                if let speciesIndex = header?.speciesIndex, currentGroupIndex == header?.groupIndex {
+                    
+                    parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex)
+                }
+                break
+            case .allNotesWithGroup:
+                
+                guard let currentGroupIndex = getRealm(withRealmType: realmType).runtimeGroupIndex() else {
+                    //need sectionName for this message
+                    return
+                }
+                
+                let header = parseHeader(withMessage: message)
+                if let groupIndex = header?.groupIndex {
+                    if currentGroupIndex == groupIndex {
+                        parseMessage(withMessage: message, withGroupIndex: groupIndex, withRealmType: realmType)
+                    }
+                }
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {                
+        if let channelType = NutellaChannelType(rawValue: channel) {
             guard let currentSpeciesIndex = getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
                 //need species for this message
                 return
@@ -170,57 +224,25 @@ class RealmDataController {
                 //need sectionName for this message
                 return
             }
-            let header = parseHeader(withMessage: message)
-            if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
-                
-                // import the message
-                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName, withRealmType: RealmType.terminalDB)
+            switch channelType {
+            case .allNotesWithSpecies:
+                let header = parseHeader(withMessage: message)
+                if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                    
+                    // import the message
+                    parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName, withRealmType: RealmType.terminalDB)
+                }
+                break
+            case .noteChanges:
+                let header = parseHeader(withMessage: message)
+                if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
+                    // import the message
+                    parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName,withRealmType: RealmType.terminalDB)
+                }
+                break
+            default:
+                break
             }
-            break
-        case NutellaChannelType.noteChanges.rawValue:
-            guard let currentGroupIndex = getRealm().runtimeGroupIndex() else {
-                //need sectionName for this message
-                return
-            }
-            
-            let header = parseHeader(withMessage: message)
-            if let speciesIndex = header?.speciesIndex, currentGroupIndex == header?.groupIndex {
-                
-                parseSyncFlag(withMessage: message, withSpeciesIndex: speciesIndex)
-            }
-            break
-        default:
-            break
-        }
-    }
-    
-    func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {
-        guard let currentSpeciesIndex = getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
-            //need species for this message
-            return
-        }
-        guard let currentSectionName = getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() else {
-            //need sectionName for this message
-            return
-        }
-        switch channel {
-        case NutellaChannelType.allNotesWithSpecies.rawValue:
-            let header = parseHeader(withMessage: message)
-            if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
-                
-                // import the message
-                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName, withRealmType: RealmType.terminalDB)
-            }
-            break
-        case NutellaChannelType.noteChanges.rawValue:
-            let header = parseHeader(withMessage: message)
-            if let speciesIndex = header?.speciesIndex, speciesIndex == currentSpeciesIndex {
-                // import the message
-                parseMessage(withMessage: message, withSpeciesIndex: currentSpeciesIndex, withSectionName: currentSectionName,withRealmType: RealmType.terminalDB)
-            }
-            break
-        default:
-            break
         }
     }
     
@@ -348,7 +370,7 @@ class RealmDataController {
                             }
                             
                             speciesObservation?.update(withJson: soJson, shouldParseId: false)
-
+                            
                             
                             //process the relationships
                             if let relationshipsJson = soJson["relationships"].array {
@@ -808,7 +830,7 @@ extension RealmDataController {
     func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "default", withRealmType realmType: RealmType = RealmType.defaultDB) -> SystemConfiguration {
         
         let r = getRealm(withRealmType: realmType)
-
+        
         r.beginWrite()
         
         let path = Bundle.main.path(forResource: "system_configuration", ofType: "json")
@@ -913,7 +935,7 @@ extension RealmDataController {
                                     speciesObservation.preferences.append(habitatPreference)
                                     
                                     r.add(speciesObservation, update: true)
-
+                                    
                                     
                                     group.speciesObservations.append(speciesObservation)
                                     r.add(group, update: true)
@@ -934,7 +956,7 @@ extension RealmDataController {
     func parseNutellaConfigurationJson(withRealmType realmType: RealmType = RealmType.defaultDB) -> NutellaConfig {
         
         let r = getRealm(withRealmType: realmType)
-
+        
         
         r.beginWrite()
         
@@ -1045,7 +1067,7 @@ extension RealmDataController {
     func parseSimulationConfigurationJson(withRealmType realmType: RealmType = RealmType.defaultDB) -> SimulationConfiguration {
         
         let r = getRealm(withRealmType: realmType)
-
+        
         r.beginWrite()
         
         
@@ -1120,7 +1142,7 @@ extension RealmDataController {
     func validateNutellaConfiguration(withRealmType realmType: RealmType = RealmType.defaultDB) -> Bool {
         
         let r = getRealm(withRealmType: realmType)
-
+        
         let foundConfigs = r.objects(NutellaConfig.self)
         
         if foundConfigs.isEmpty {
@@ -1141,7 +1163,7 @@ extension RealmDataController {
     
     func deleteAllSpeciesObservations(withRealmType realmType: RealmType = RealmType.defaultDB) {
         let r = getRealm(withRealmType: realmType)
-
+        
         try! r.write {
             r.delete(r.allRelationships())
             r.delete(r.allPreferences())
@@ -1151,7 +1173,7 @@ extension RealmDataController {
     
     func deleteAllConfigurationAndGroups(withRealmType realmType: RealmType = RealmType.defaultDB) {
         let r = getRealm(withRealmType: realmType)
-
+        
         try! r.write {
             r.deleteAll()
         }
