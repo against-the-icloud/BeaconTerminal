@@ -20,6 +20,8 @@ class PreferencesTableViewController: UITableViewController {
     
     var speciesObsNotificationToken: NotificationToken? = nil
     
+    var isTerminal = false
+    
     deinit {
         if let sp = self.speciesObsNotificationToken {
             sp.stop()
@@ -36,11 +38,18 @@ class PreferencesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareNotification()
+        if isTerminal {
+            prepareTerminalNotification()
+            tableView.allowsSelection = false
+        } else {
+            prepareNotification()
+        }
     }
     
+    
+    
     func prepareNotification() {
-        if let allSO = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let fromSpeciesIndex = speciesIndex {
+        if let allSO = realmDataController.getRealm().allSpeciesObservationsForCurrentSectionAndGroup(), let fromSpeciesIndex = speciesIndex {
             speciesObservations = allSO.filter("fromSpecies.index = \(fromSpeciesIndex)")
             speciesObsNotificationToken = speciesObservations?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
                 
@@ -65,6 +74,33 @@ class PreferencesTableViewController: UITableViewController {
         }
     }
     
+    func prepareTerminalNotification() {
+        
+        speciesObservations = realmDataController.getRealm().objects(SpeciesObservation.self)
+        
+        speciesObsNotificationToken = speciesObservations?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let controller = self else { return }
+            switch changes {
+            case .initial(let speciesObservationResults):
+                if let so = speciesObservationResults.first {
+                    controller.update(speciesObservation: so)
+                }
+                break
+            case .update(let speciesObservationResults, _, _, _):
+                if let so = speciesObservationResults.first {
+                    controller.update(speciesObservation: so)
+                }
+                break
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+
+        }
+    }
+
     func update(speciesObservation: SpeciesObservation) {
         self.speciesObservation = speciesObservation
         tableView.reloadData()

@@ -174,12 +174,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func shortCircuitLogin() {
         
-        getAppDelegate().changeSystemStateTo(.objectGroup)
+        getAppDelegate().changeSystemStateTo(.placeTerminal)
 
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
         defaults.set("default", forKey: "sectionName")
-        defaults.set(0, forKey: "groupIndex")
+        defaults.set(0, forKey: "speciesIndex")
         defaults.synchronize()
         
         loadCondition()

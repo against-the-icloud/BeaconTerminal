@@ -176,13 +176,24 @@ class TerminalMainViewController: UIViewController {
             //                tap.isEnabled = false
            
         }
-        
-        
-        
-      
-        
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let id = segue.identifier else {
+            return
+        }
+        
+        switch id {
+        case "preferencesViewSegue":
+            if let srv = segue.destination as? PreferencesViewController, let speciesIndex = realmDataController.getRealm().runtimeSpeciesIndex() {
+                srv.speciesIndex = speciesIndex
+            }
+            break
+        default:
+            break
+        }
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
