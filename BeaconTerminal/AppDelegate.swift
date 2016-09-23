@@ -4,6 +4,8 @@ import Material
 import XCGLogger
 import Nutella
 import Transporter
+import Fabric
+import Crashlytics
 
 
 let DEBUG = true
@@ -14,9 +16,9 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
-let LOCAL_IP = "10.0.1.6"
-//  let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = LOCAL
+//let LOCAL_IP = "10.0.1.6"
+  let LOCAL_IP = "131.193.79.203"
+var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
 let LOG: XCGLogger = {
@@ -126,6 +128,7 @@ func getAppDelegate() -> AppDelegate {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    
     let defaults = UserDefaults.standard
     
     var window: UIWindow?
@@ -141,6 +144,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
  
+        //crash analytics
+        Fabric.with([Crashlytics.self])
         
         
         realmDataController = RealmDataController()
@@ -174,16 +179,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func shortCircuitLogin() {
         
-        getAppDelegate().changeSystemStateTo(.placeTerminal)
+        getAppDelegate().changeSystemStateTo(.objectGroup)
 
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
         defaults.set("default", forKey: "sectionName")
         defaults.set(0, forKey: "speciesIndex")
+         //defaults.set(0, forKey: "groupIndex")
         defaults.synchronize()
         
+        // TODO: Move this to where you establish a user session
+        self.logUser()
+
+
         loadCondition()
     }
+    
+    func logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        let defaults = UserDefaults.standard
+        defaults.set(2, forKey: "condition")
+        defaults.set("default", forKey: "sectionName")
+        defaults.set(0, forKey: "groupIndex")
+        
+        if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
+            Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
+        }
+        
+        if let speciesIndex = defaults.value(forKey: "speciesIndex") as? Int {
+            Crashlytics.sharedInstance().setIntValue(Int32(speciesIndex), forKey: "speciesIndex")
+        }
+        
+        if let condition = defaults.value(forKey: "condition") as? Int {
+            Crashlytics.sharedInstance().setIntValue(Int32(condition), forKey: "condition")
+        }
+        
+        if let sectionName = defaults.value(forKey: "sectionName"){
+            Crashlytics.sharedInstance().setObjectValue(sectionName, forKey: "sectionName")
+        }
+    }
+
     
     // Mark: View setup
     

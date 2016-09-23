@@ -78,7 +78,7 @@ class ChooseSpeciesViewController: UICollectionViewController {
                     ev.toSpeciesIndex = speciesCell.speciesIndex
                     
                     ev.title = "2. ADD EVIDENCE"
-                    ev.navigationItem.prompt = "SUPPORT THE RELATIONSHIP"
+//                    ev.navigationItem.prompt = "SUPPORT THE RELATIONSHIP"
                 }
                 break
             default:

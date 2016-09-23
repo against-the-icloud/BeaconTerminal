@@ -181,8 +181,8 @@ class SpeciesRelationshipTableController: UITableViewController {
                     
                     csvc.relationshipType = relationshipType
                     csvc.speciesIndex = speciesIndex
-                    csvc.title = "1. CHOOSE A SPECIES"
-                    csvc.navigationItem.prompt = "CREATE THE RELATIONSHIP"
+                    csvc.title = "CREATE A RELATIONSHIP"
+//                    csvc.navigationItem.prompt = "CREATE THE RELATIONSHIP"
                 }
                 break
             default:

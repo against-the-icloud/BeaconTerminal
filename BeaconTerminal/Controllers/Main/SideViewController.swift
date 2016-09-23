@@ -97,8 +97,6 @@ class SideViewController: UITableViewController {
                 if let zone = enterZoneText.text {
                     realmDataController.updateRuntime(withSpeciesIndex: Int(zone), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
                 }
-                
-                
                 //ENTER CONDITION
                 break
             default:

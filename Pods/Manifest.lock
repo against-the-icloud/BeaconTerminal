@@ -1,11 +1,16 @@
 PODS:
+  - Crashlytics (3.8.1):
+    - Fabric (~> 1.6.3)
   - EstimoteSDK (4.8.1)
+  - Fabric (1.6.8)
   - Material (2.0.0)
   - Transporter (3.0.0)
   - XCGLogger (3.3)
 
 DEPENDENCIES:
+  - Crashlytics
   - EstimoteSDK
+  - Fabric
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
   - Transporter
   - XCGLogger (from `https://github.com/aperritano/XCGLogger.git`, branch `swift3_xcode8_6`)
@@ -27,11 +32,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/aperritano/XCGLogger.git
 
 SPEC CHECKSUMS:
+  Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
   EstimoteSDK: 8ea0a0c6f7bee1286aad03b9bf38066e8839b6d9
+  Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   Material: 61dcd49507c32d07c1557267ec360ce35bd0b1c5
   Transporter: b6e906451c22d7119b6556adf3481689a5c30677
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: c2cfa2129cbf1fea6903c780b62c43f8641dfed3
+PODFILE CHECKSUM: e8257dcb532a253ca39c644ed02a78b0182058b4
 
 COCOAPODS: 1.1.0.rc.2

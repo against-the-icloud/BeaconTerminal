@@ -20,6 +20,10 @@ target 'BeaconTerminal' do
     #state machinepod
     pod 'Transporter'
     pod 'EstimoteSDK'
+    
+    #distribution
+    pod 'Fabric'
+    pod 'Crashlytics'
 end
 
 target 'BeaconTerminalModelTests' do
