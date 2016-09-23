@@ -27,6 +27,7 @@ class DefaultViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        showLogin()
     }
     
     func showLogin() {

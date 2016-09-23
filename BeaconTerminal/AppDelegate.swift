@@ -157,11 +157,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.set(sectionDict, forKey: "sections")
         defaults.synchronize()
         
-        initStateMachine(applicaitonState: .placeGroup)
-        //  prepareViews(applicationType: ApplicationType.login)
+        initStateMachine(applicaitonState: .login)
+        
+        prepareViews(applicationType: ApplicationType.login)
         //getAppDelegate().changeSystemStateTo(.objectGroup)
         
-        shortCircuitLogin()
+        //shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
@@ -189,7 +190,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.synchronize()
         
         // TODO: Move this to where you establish a user session
-        self.logUser()
 
 
         loadCondition()
@@ -199,10 +199,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: Use the current user's information
         // You can call any combination of these three methods
         let defaults = UserDefaults.standard
-        defaults.set(2, forKey: "condition")
-        defaults.set("default", forKey: "sectionName")
-        defaults.set(0, forKey: "groupIndex")
-        
+//        defaults.set(2, forKey: "condition")
+//        defaults.set("default", forKey: "sectionName")
+//        defaults.set(0, forKey: "groupIndex")
+//        
         if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
             Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
         }
@@ -226,6 +226,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Mark: db setup
     
     func loadCondition() {
+        
+        self.logUser()
         
         prepareViews(applicationType: checkApplicationState())
         if let sectionName = defaults.string(forKey: "sectionName") {
@@ -315,10 +317,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
-        navigationController.statusBarStyle = .default
-        
-        speciesViewController = SpeciesMenuViewController()
-        speciesViewController!.showSpeciesMenu(showHidden: false)
         
         navigationController.statusBarStyle = .lightContent
         
