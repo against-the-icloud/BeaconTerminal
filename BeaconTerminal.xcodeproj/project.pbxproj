@@ -59,6 +59,7 @@
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
 		70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */; };
 		70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */; };
+		70A8D8571D984B0D00C1D2B7 /* ToolMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */; };
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
@@ -201,6 +202,7 @@
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
 		70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolMenuController.swift; sourceTree = "<group>"; };
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 			children = (
 				C0A7D628C381C03091617459 /* Main.storyboard */,
 				7003BEDF1D81F3250029B0EE /* MainContainerController.swift */,
+				70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */,
 				C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */,
 				C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */,
 				C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */,
@@ -866,6 +869,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A8D8571D984B0D00C1D2B7 /* ToolMenuController.swift in Sources */,
 				709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */,
 				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
 				70D142691D414E2700A588B3 /* DragUtil.swift in Sources */,

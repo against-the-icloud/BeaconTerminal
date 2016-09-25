@@ -261,7 +261,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         case .objectGroup:
             //initStateMachine(applicaitonState: applicationType)
-            rootVC = prepareGroupUI()
+            rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.allTypes)
             break
         default:
             //login
@@ -395,14 +395,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return navigationDrawerController
     }
     
-    func prepareGroupUI() -> NavigationDrawerController{
+    func prepareGroupUI(withToolMenuTypes toolMenuTypes: [ToolMenuType] = ToolMenuType.defaultTypes) -> NavigationDrawerController{
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let mainContainerController = mainStoryboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
         
         let sideViewController = mainStoryboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainContainerController)
-        let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
+        
+        mainContainerController.toolMenuTypes = toolMenuTypes
+        
+        //menu
+        
+        let toolMenuController = ToolMenuController(rootViewController: navigationController)
+        
+        let navigationDrawerController = NavigationDrawerController(rootViewController: toolMenuController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .lightContent

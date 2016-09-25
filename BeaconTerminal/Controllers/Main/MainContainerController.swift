@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Material
 import RealmSwift
 
 @objc protocol TopToolbarDelegate {
@@ -27,8 +28,11 @@ class MainContainerController: UIViewController{
     var terminalRuntimeResults: Results<Runtime>?
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
-
     var needsTerminal = false
+    
+    //menu items
+    var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
+    var toolMenuItems: [UIView] = [UIView]()
     
     deinit {
         for notificationToken in notificationTokens {
@@ -48,7 +52,33 @@ class MainContainerController: UIViewController{
         if needsTerminal {
             prepareTerminalNotifications()
         }
+        
+        if !toolMenuTypes.isEmpty {
+            toolMenuItems.append(prepareAddButton())
+            
+            for type in toolMenuTypes {
+                switch type {
+                case .CAMERA:
+                    toolMenuItems.append(prepareMenuItem(withTitle: "CAMERA",withImage: Icon.cm.photoCamera!))
+                case .PHOTO_LIB:
+                    toolMenuItems.append(prepareMenuItem(withTitle: "PHOTO LIBRARY",withImage: Icon.cm.photoLibrary!))
+                case .SCREENSHOT:
+                    toolMenuItems.append(prepareMenuItem(withTitle: "TAKE SCREENSHOT",withImage: UIImage(named: "ic_flash_on_white")!))
+                case .SCANNER:
+                    toolMenuItems.append(prepareMenuItem(withTitle: "SCANNER", withImage: UIImage(named: "ic_wifi_white")!))
+                default:
+                    break
+                }
+            }
+        }
+
     }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        prepareMenuController()
+    }
+    
     
     func prepareNotifications() {
         runtimeResults = realmDataController.getRealm().objects(Runtime.self)
@@ -207,7 +237,55 @@ class MainContainerController: UIViewController{
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    //Mark: Toolbar menu
+    
+    /// Handle the menu toggle event.
+    internal func handleToggleMenu(button: Button) {
+        guard let mc = menuController as? ToolMenuController else {
+            return
+        }
+        
+        if mc.menu.isOpened {
+            mc.closeMenu { (view) in
+                (view as? MenuItem)?.hideTitleLabel()
+            }
+        } else {
+            mc.openMenu { (view) in
+                (view as? MenuItem)?.showTitleLabel()
+            }
+        }
+    }
+    
+    /// Prepares the addButton.
+    private func prepareAddButton() -> FabButton {
+        let addButton = FabButton(image: Icon.cm.add, tintColor: Color.white)
+        addButton.backgroundColor = Color.red.base
+        addButton.addTarget(self, action: #selector(handleToggleMenu), for: .touchUpInside)
+        return addButton
+    }
+    
+    /// Prepares the audioLibraryButton.
+    private func prepareMenuItem(withTitle title: String, withImage image: UIImage) -> MenuItem {
+        let menuItem = MenuItem()
+        menuItem.button.image = image
+        menuItem.button.backgroundColor = Color.red.base
+        menuItem.title = title
+        return menuItem
+    }
+    
+    /// Prepares the menuController.
+    private func prepareMenuController() {
+        guard let mc = menuController as? ToolMenuController else {
+            return
+        }
+        
+        mc.menu.delegate = self
+        mc.menu.views = toolMenuItems
+    }
 }
+
+//Mark: TopToolbar
 
 extension MainContainerController: TopToolbarDelegate {
     func changeAppearance(withColor color: UIColor) {        
@@ -217,3 +295,22 @@ extension MainContainerController: TopToolbarDelegate {
             }, completion: nil)
     }
 }
+
+//Mark: ToolMenu 
+
+extension MainContainerController: MenuDelegate {
+    func menu(menu: Menu, tappedAt point: CGPoint, isOutside: Bool) {
+        guard isOutside else {
+            return
+        }
+        
+        guard let mc = menuController as? ToolMenuController else {
+            return
+        }
+        
+        mc.closeMenu { (view) in
+            (view as? MenuItem)?.hideTitleLabel()
+        }
+    }
+}
+
