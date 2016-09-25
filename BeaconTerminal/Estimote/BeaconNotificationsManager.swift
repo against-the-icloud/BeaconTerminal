@@ -57,10 +57,17 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
                 
                 banner.shouldTintImage = false
                 banner.dismissesOnTap = true
-                banner.dismissesOnSwipe = false
+                banner.dismissesOnSwipe = true
                 banner.show()
+                
+                //four sec
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {                     banner.dismiss()
+                }
+                
+                if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                    realmDataController.saveNutellaPlace(withActionType: "enter", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+                }
             }
-          
         }
     }
     
@@ -68,7 +75,31 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
         if let message = self.exitMessages[region.identifier] {
             self.showNotificationWithMessage(message)
             LOG.debug("didExitRegion \(region)")
-            Util.makeToast("DID EXIT: \(region)")
+            
+            if let minorSpeciesIndex = region.minor?.intValue {
+                //adjust because these ids can't be start 0
+                let speciesIndex = minorSpeciesIndex - 1
+                
+                let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                
+                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                
+                let banner = Banner(title: "DID EXIT", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
+                
+                banner.shouldTintImage = false
+                banner.dismissesOnTap = true
+                banner.dismissesOnSwipe = true
+                banner.show()
+                
+                //four sec
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {                     banner.dismiss()
+                }
+                
+                if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                    realmDataController.saveNutellaPlace(withActionType: "exit", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+                }
+            }
+            
         }
     }
 

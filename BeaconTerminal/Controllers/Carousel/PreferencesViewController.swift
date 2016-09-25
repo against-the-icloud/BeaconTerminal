@@ -34,6 +34,11 @@ class PreferencesViewController: UIViewController {
                     pvc.speciesIndex = fromSpecies
                     pvc.isTerminal = true
                 }
+            case "preferencesSpeciesViewSegue":
+                if let pvc = segue.destination as? PreferencesTableViewController, let fromSpecies = self.speciesIndex {
+                    pvc.speciesIndex = fromSpecies
+                    pvc.isTerminal = false
+                }
             default:
                 break
             }

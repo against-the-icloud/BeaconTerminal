@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11521.1" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11521.1" systemVersion="16B2327e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11517.1"/>
@@ -7,341 +7,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--RelationshipDetailViewController-->
-        <scene sceneID="QLv-GK-QTa">
-            <objects>
-                <viewController storyboardIdentifier="relationshipDetailViewController" title="RelationshipDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DXa-Wq-d43" customClass="RelationshipDetailViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fss-Kb-Sfc"/>
-                        <viewControllerLayoutGuide type="bottom" id="iwX-5b-dBp"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Uul-8D-tXD">
-                        <rect key="frame" x="0.0" y="44" width="700" height="337"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5ci-3W-sWE" userLabel="UpperStackView">
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDp-2A-WMv" userLabel="HeaderView">
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JEL-cE-Yg4">
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wvs-y1-RG9">
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="49" id="APP-8H-0jy"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="IS A CONSUMER OF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHw-gm-n3q">
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="156" id="GOS-32-app"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AO8-mR-YJZ"/>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="272" id="6GD-IA-TP1"/>
-                                                </constraints>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="1" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="4Qc-k3-mpD"/>
-                                            <constraint firstItem="JEL-cE-Yg4" firstAttribute="top" secondItem="YDp-2A-WMv" secondAttribute="top" id="60S-Cp-UT5"/>
-                                            <constraint firstItem="JEL-cE-Yg4" firstAttribute="centerX" secondItem="YDp-2A-WMv" secondAttribute="centerX" id="TTB-EZ-YCo"/>
-                                            <constraint firstAttribute="bottom" secondItem="JEL-cE-Yg4" secondAttribute="bottom" id="dy5-Tl-mcG"/>
-                                            <constraint firstItem="JEL-cE-Yg4" firstAttribute="centerY" secondItem="YDp-2A-WMv" secondAttribute="centerY" id="pNP-6K-4zS"/>
-                                        </constraints>
-                                    </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kn2-Va-rFZ" userLabel="BodyStackView">
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9F6-N5-Avm" userLabel="UpperLevelStackView">
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4n1-JA-9A3" userLabel="InputStackView">
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="762" text="In which ecosystem did this occur? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdN-g2-juX">
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="270" id="Psa-y7-z3m"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="255" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="sUD-5P-tDg">
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="50" id="roF-AC-env"/>
-                                                                </constraints>
-                                                                <segments>
-                                                                    <segment title="1"/>
-                                                                    <segment title="2"/>
-                                                                    <segment title="3"/>
-                                                                    <segment title="4"/>
-                                                                    <segment title="5"/>
-                                                                </segments>
-                                                                <connections>
-                                                                    <action selector="ecosystemSelectionChanged:" destination="DXa-Wq-d43" eventType="valueChanged" id="qsT-SE-mae"/>
-                                                                </connections>
-                                                            </segmentedControl>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="What did you see? " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htd-U3-B8u">
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="245" text="hello" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8vg-Vf-sr9">
-                                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                        <real key="value" value="1"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                        <real key="value" value="7"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                            </textView>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wwZ-iw-ea8" userLabel="EvidenceStackView">
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Gsw-z5-mgv">
-                                                                <subviews>
-                                                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iyx-Uf-TzI">
-                                                                        <gestureRecognizers/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="iyx-Uf-TzI" secondAttribute="height" multiplier="4:3" id="Kae-p2-Tu8"/>
-                                                                        </constraints>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                <color key="value" red="0.0" green="0.35294117650000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                <real key="value" value="1"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                <real key="value" value="7"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                        <connections>
-                                                                            <outletCollection property="gestureRecognizers" destination="V1L-ez-oUl" appends="YES" id="EAF-2H-yKR"/>
-                                                                        </connections>
-                                                                    </imageView>
-                                                                    <view contentMode="scaleToFill" verticalHuggingPriority="255" translatesAutoresizingMaskIntoConstraints="NO" id="ZYv-hH-EXY" userLabel="ButtonView">
-                                                                        <subviews>
-                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EA7-Cf-ihp" userLabel="ButtonStackView">
-                                                                                <subviews>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="cameraButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lL-TV-Txi" userLabel="CameraButton">
-                                                                                        <state key="normal" image="tb_camera_black"/>
-                                                                                        <userDefinedRuntimeAttributes>
-                                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                <real key="value" value="10"/>
-                                                                                            </userDefinedRuntimeAttribute>
-                                                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                                <real key="value" value="1"/>
-                                                                                            </userDefinedRuntimeAttribute>
-                                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                            </userDefinedRuntimeAttribute>
-                                                                                        </userDefinedRuntimeAttributes>
-                                                                                        <connections>
-                                                                                            <action selector="cameraAction:" destination="DXa-Wq-d43" eventType="touchUpInside" id="5X0-NP-LHd"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="libraryButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7k-7J-OG4" userLabel="LibraryButton">
-                                                                                        <state key="normal" image="tb_photo_library_black"/>
-                                                                                        <userDefinedRuntimeAttributes>
-                                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                                <real key="value" value="10"/>
-                                                                                            </userDefinedRuntimeAttribute>
-                                                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                                <real key="value" value="1"/>
-                                                                                            </userDefinedRuntimeAttribute>
-                                                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                                                <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                            </userDefinedRuntimeAttribute>
-                                                                                        </userDefinedRuntimeAttributes>
-                                                                                        <connections>
-                                                                                            <action selector="photoLibraryAction:" destination="DXa-Wq-d43" eventType="touchUpInside" id="nyE-VP-lHG"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                </subviews>
-                                                                            </stackView>
-                                                                        </subviews>
-                                                                        <constraints>
-                                                                            <constraint firstItem="EA7-Cf-ihp" firstAttribute="top" secondItem="ZYv-hH-EXY" secondAttribute="top" constant="1" id="4lH-Fj-6IN"/>
-                                                                            <constraint firstAttribute="trailing" secondItem="EA7-Cf-ihp" secondAttribute="trailing" id="9tL-xn-zGA"/>
-                                                                            <constraint firstItem="EA7-Cf-ihp" firstAttribute="height" secondItem="ZYv-hH-EXY" secondAttribute="height" id="DuQ-xq-Nrz"/>
-                                                                            <constraint firstItem="EA7-Cf-ihp" firstAttribute="width" secondItem="ZYv-hH-EXY" secondAttribute="width" id="G1N-m8-0CW"/>
-                                                                            <constraint firstItem="EA7-Cf-ihp" firstAttribute="leading" secondItem="ZYv-hH-EXY" secondAttribute="leading" id="Mqt-Jo-UC0"/>
-                                                                            <constraint firstAttribute="height" constant="50" id="Qc3-jG-1M8"/>
-                                                                        </constraints>
-                                                                    </view>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="ZYv-hH-EXY" firstAttribute="width" secondItem="iyx-Uf-TzI" secondAttribute="width" priority="999" id="e7o-tt-tzv"/>
-                                                                </constraints>
-                                                            </stackView>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="4n1-JA-9A3" firstAttribute="height" secondItem="9F6-N5-Avm" secondAttribute="height" id="q8f-zN-4kj"/>
-                                                </constraints>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.0" green="0.71372549019999998" blue="0.050980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="YDp-2A-WMv" firstAttribute="width" secondItem="5ci-3W-sWE" secondAttribute="width" id="j7G-qk-pdn"/>
-                                    <constraint firstItem="kn2-Va-rFZ" firstAttribute="width" secondItem="5ci-3W-sWE" secondAttribute="width" id="swZ-PR-m1g"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="5ci-3W-sWE" firstAttribute="width" secondItem="Uul-8D-tXD" secondAttribute="width" id="7Do-G0-1zy"/>
-                            <constraint firstItem="5ci-3W-sWE" firstAttribute="top" secondItem="fss-Kb-Sfc" secondAttribute="bottom" id="7wn-Jb-Wsn"/>
-                            <constraint firstItem="5ci-3W-sWE" firstAttribute="height" secondItem="Uul-8D-tXD" secondAttribute="height" id="Wv7-yX-isf"/>
-                            <constraint firstItem="5ci-3W-sWE" firstAttribute="leading" secondItem="Uul-8D-tXD" secondAttribute="leading" id="mYm-cd-38c"/>
-                        </constraints>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <toolbarItems>
-                        <barButtonItem systemItem="trash" id="1Yw-r1-fPi">
-                            <connections>
-                                <action selector="deleteButtonAction:" destination="DXa-Wq-d43" id="Own-zF-uGY"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="TxK-ln-rtX"/>
-                        <barButtonItem title="OK" id="biT-0K-mcV">
-                            <connections>
-                                <action selector="okButtonAction:" destination="DXa-Wq-d43" id="ka0-eR-ng0"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="mHg-7t-3jN"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="700" height="425"/>
-                    <connections>
-                        <outlet property="cameraButton" destination="1lL-TV-Txi" id="s4Q-bY-C05"/>
-                        <outlet property="ecosystemSegementedControl" destination="sUD-5P-tDg" id="f43-WM-WKt"/>
-                        <outlet property="ecosystemSegmentedControl" destination="sUD-5P-tDg" id="oTo-hB-VFJ"/>
-                        <outlet property="evidenceImageView" destination="iyx-Uf-TzI" id="RRH-2w-Hto"/>
-                        <outlet property="fromSpecies" destination="wvs-y1-RG9" id="hlP-Re-CFy"/>
-                        <outlet property="libraryButton" destination="h7k-7J-OG4" id="RN1-6K-Z5V"/>
-                        <outlet property="okButton" destination="biT-0K-mcV" id="hK4-BD-OWR"/>
-                        <outlet property="relationshipLabel" destination="BHw-gm-n3q" id="nIw-Oq-Ya6"/>
-                        <outlet property="textView" destination="8vg-Vf-sr9" id="rpJ-yZ-1kZ"/>
-                        <outlet property="toSpecies" destination="AO8-mR-YJZ" id="pCx-t3-hRx"/>
-                        <outlet property="trashButton" destination="1Yw-r1-fPi" id="hOx-ds-cnL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wdf-4m-iSF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="V1L-ez-oUl">
-                    <connections>
-                        <action selector="evidenceImageTap:" destination="DXa-Wq-d43" id="VgF-2X-zhb"/>
-                        <outlet property="delegate" destination="iyx-Uf-TzI" id="ukl-gI-RZ2"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="565.4296875" y="-1799.609375"/>
-        </scene>
-        <!--RelationshipDetailNavigationController-->
-        <scene sceneID="dHq-tx-2uR">
-            <objects>
-                <navigationController storyboardIdentifier="relationshipDetailNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="2ed-yq-1j9" userLabel="RelationshipDetailNavigationController" sceneMemberID="viewController">
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="384" height="425"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UTz-Nt-Nvv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="jTX-Mg-9h4">
-                        <rect key="frame" x="0.0" y="381" width="384" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="DXa-Wq-d43" kind="relationship" relationship="rootViewController" id="K7P-uv-Hri"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fte-Wj-Tbf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-737" y="-1768"/>
-        </scene>
-        <!--PreferencesNavigationController-->
-        <scene sceneID="P11-cL-W3A">
-            <objects>
-                <navigationController storyboardIdentifier="preferencesNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="BkO-ch-tIE" userLabel="PreferencesNavigationController" sceneMemberID="viewController">
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="384" height="612"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="p0Q-b8-1Ta">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="g7w-5J-nDn">
-                        <rect key="frame" x="0.0" y="568" width="384" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="KGo-PZ-don" kind="relationship" relationship="rootViewController" id="8bd-bz-3dg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="n7u-Wb-RHu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-402" y="-1109"/>
-        </scene>
-        <!--Preferences View Controller-->
-        <scene sceneID="eeo-Yt-lf4">
-            <objects>
-                <viewController storyboardIdentifier="preferencesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KGo-PZ-don" customClass="PreferencesViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="dXD-Qg-gw5"/>
-                        <viewControllerLayoutGuide type="bottom" id="PfQ-fh-FQq"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="M6u-Bl-IWk">
-                        <rect key="frame" x="0.0" y="44" width="600" height="524"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gec-bd-tab"/>
-                        <barButtonItem title="OK" id="SbQ-9M-nwv">
-                            <connections>
-                                <action selector="doneAction:" destination="KGo-PZ-don" id="SRc-rb-8i1"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="4Ap-Yv-fTG"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="612"/>
-                    <connections>
-                        <outlet property="okButton" destination="SbQ-9M-nwv" id="H16-Kw-cwM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="z5m-aK-0Ay" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="662" y="-1083"/>
-        </scene>
         <!--LoginSpeciesCollectionViewController-->
         <scene sceneID="ZVH-gc-H3a">
             <objects>
                 <collectionViewController storyboardIdentifier="loginSpeciesCollectionViewController" title="LoginSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="at7-XY-YOa" customClass="LoginSpeciesCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Y2e-hw-qON">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="Y2e-hw-qON">
                         <rect key="frame" x="0.0" y="44" width="384" height="336"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -439,7 +109,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="aQs-ja-HPW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="aQs-ja-HPW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -461,15 +131,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="loginGroupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7ZA-ae-7Af" customClass="LoginGroupViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="ppK-zB-8yj">
-                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="JVq-nu-lls" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JVq-nu-lls" id="zgc-ti-raL">
-                                    <frame key="frameInset" width="375" height="99"/>
+                                    <frame key="frameInset" width="540" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="IhM-mQ-O8w">
@@ -512,15 +182,15 @@
             <objects>
                 <tableViewController id="tGg-qr-HgA" customClass="LoginSectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="UfT-mp-oAp">
-                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="qmN-MV-Rh0" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qmN-MV-Rh0" id="fUx-a4-1d9">
-                                    <frame key="frameInset" width="375" height="99"/>
+                                    <frame key="frameInset" width="540" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="m85-zV-H21">
@@ -572,15 +242,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="loginConditionCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ALQ-pU-Vpa" customClass="LoginConditionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="wSv-sh-aYS">
-                        <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="44" width="540" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="2hZ-JL-iJC" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2hZ-JL-iJC" id="CB5-Gm-Tjw">
-                                    <frame key="frameInset" width="375" height="99"/>
+                                    <frame key="frameInset" width="540" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="XNw-9E-WW6">
@@ -639,12 +309,83 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zb7-HR-ZtF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-40" y="1257"/>
+            <point key="canvasLocation" x="12" y="1459"/>
+        </scene>
+        <!--CHOOSE YOUR CONDITION-->
+        <scene sceneID="lSs-vD-FZL">
+            <objects>
+                <tableViewController storyboardIdentifier="roomCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KNt-64-y9E" customClass="LoginConditionCollectionViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="29l-aL-Bxo">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="BAA-lm-0j4" customClass="LoginConditionCell" customModule="BeaconTerminal" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="540" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BAA-lm-0j4" id="4Rk-6U-hnX">
+                                    <frame key="frameInset" width="540" height="99"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="uze-Wo-aMh">
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeTerminal" translatesAutoresizingMaskIntoConstraints="NO" id="KTC-D7-oXB">
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="KTC-D7-oXB" secondAttribute="height" multiplier="1:1" id="7cy-Gy-1LO"/>
+                                                        <constraint firstAttribute="width" constant="50" id="NX5-ln-OuS"/>
+                                                        <constraint firstAttribute="height" constant="50" id="OX6-9f-GTX"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="NKD-5j-to5">
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="350" id="FV9-xa-Poh"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="uze-Wo-aMh" firstAttribute="centerX" secondItem="4Rk-6U-hnX" secondAttribute="centerX" id="6WV-Pf-Wii"/>
+                                        <constraint firstItem="uze-Wo-aMh" firstAttribute="centerY" secondItem="4Rk-6U-hnX" secondAttribute="centerY" id="Bng-pl-vjC"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="badgeImageView" destination="KTC-D7-oXB" id="Ica-7Q-3IO"/>
+                                    <outlet property="titleLabel" destination="NKD-5j-to5" id="ZZR-5o-7qw"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KNt-64-y9E" id="J06-bl-nRK"/>
+                            <outlet property="delegate" destination="KNt-64-y9E" id="vcY-q0-Uy0"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="CHOOSE YOUR CONDITION" id="HwF-st-bgk">
+                        <barButtonItem key="backBarButtonItem" title="CONDITION" id="OzW-qg-KNW">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="y9O-8r-cix">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelAction:" destination="KNt-64-y9E" id="wrC-9s-5r6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p4r-FD-mz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12" y="1878"/>
         </scene>
     </scenes>
     <resources>
         <image name="placeTerminal" width="230" height="301"/>
-        <image name="tb_camera_black" width="48" height="48"/>
-        <image name="tb_photo_library_black" width="48" height="48"/>
     </resources>
 </document>

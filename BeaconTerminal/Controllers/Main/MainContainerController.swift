@@ -16,7 +16,6 @@ import RealmSwift
 
 class MainContainerController: UIViewController{
     @IBOutlet var containerViews: [UIView]!
-    
     @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var topTabbar: TabSegmentedControl!
@@ -29,6 +28,7 @@ class MainContainerController: UIViewController{
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
 
+    var needsTerminal = false
     
     deinit {
         for notificationToken in notificationTokens {
@@ -44,7 +44,10 @@ class MainContainerController: UIViewController{
         super.viewDidLoad()
         topTabbar.initUI()
         prepareNotifications()
-        prepareTerminalNotifications()
+        
+        if needsTerminal {
+            prepareTerminalNotifications()
+        }
     }
     
     func prepareNotifications() {

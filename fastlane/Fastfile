@@ -1,0 +1,15 @@
+default_platform :ios
+
+platform :ios do
+  lane :beta do
+    cert
+    sigh
+    gym
+    crashlytics(
+      api_token: "edc8bdc3e62738f894091653db9d30eab1c2acfe",
+      build_secret: "2a2695d2dc14b000c842d2b7d7dd49133e19b863e32aedfb105a9561971c1317",
+      groups: "Admin",
+      notes: "Automatic iOS Build"
+    )
+  end
+end

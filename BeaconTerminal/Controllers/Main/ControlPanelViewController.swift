@@ -23,6 +23,7 @@ class ControlPanelViewController: UIViewController {
     @IBOutlet weak var dbResetButton: UIButton!
     @IBOutlet weak var exportSegment: UISegmentedControl!
     @IBOutlet weak var resetSegment: UISegmentedControl!
+    @IBOutlet weak var syncSegment: UISegmentedControl!
     @IBOutlet weak var initStatus: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +91,20 @@ class ControlPanelViewController: UIViewController {
         defaults.set(!initStatusB, forKey: "init")
         
         initStatus.text = "\(initStatusB)"
+        
+    }
+    
+    @IBAction func reconnectNutella(_ sender: UIButton) {
+        
+       getAppDelegate().setupConnection()
+        
+    }
+    
+    @IBAction func forceSync(_ sender: UIButton) {
+        
+        let index = syncSegment.selectedSegmentIndex
+            
+        realmDataController.forceSync(withIndex: index)
         
     }
 }

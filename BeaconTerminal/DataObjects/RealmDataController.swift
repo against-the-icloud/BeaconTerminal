@@ -49,6 +49,33 @@ class RealmDataController {
     
     // Mark: Nutella Queries
     
+    func forceSync(withIndex index: Int) {
+        if let nutella = nutella {
+            let block = DispatchWorkItem {
+                var json: JSON =  ["groupIndex": index]
+                let jsonObject: Any = json.object
+                nutella.net.publish("forceSync", message: jsonObject as AnyObject)
+            }
+            
+            DispatchQueue.main.async(execute: block)
+        }
+    }
+    
+    func saveNutellaPlace(withActionType type: String,  withPlace place: String, withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
+        
+        if let nutella = nutella {
+            let block = DispatchWorkItem {
+                var json: JSON =  ["type": type, "place": place, "groupIndex":groupIndex, "speciesIndex":speciesIndex, "timestamp": Date().timeIntervalSince1970]
+                let jsonObject: Any = json.object
+                nutella.net.asyncRequest("save_place", message: jsonObject as AnyObject, requestName: "save_place")
+            }
+            
+            DispatchQueue.main.async(execute: block)
+        }
+    }
+    
+    // Mark: Nutella Queries
+    
     func queryNutellaAllNotes(withType type: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         switch type {
         case "group":

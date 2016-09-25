@@ -16,10 +16,12 @@ let EXPORT_DB = true
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
-//let LOCAL_IP = "10.0.1.6"
-  let LOCAL_IP = "131.193.79.203"
+let LOCAL_IP = "10.0.1.6"
+//  let LOCAL_IP = "131.193.79.203"
 var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
+
+let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 
 let LOG: XCGLogger = {
     
@@ -109,6 +111,7 @@ struct NutellaUpdate {
 
 
 var beaconNotificationsManager: BeaconNotificationsManager?
+let beaconIds = [BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 1),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 2),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 3),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 4),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 5),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 6),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 7),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 8),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 9),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 10),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 11),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 12)]
 
 
 var realm: Realm?
@@ -143,10 +146,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
- 
+        ESTConfig.setupAppID("wallcology-2016-emb", andAppToken: "fd9eb675b3f09982fd5c1788f7a437dd")
         //crash analytics
         Fabric.with([Crashlytics.self])
-        
         
         realmDataController = RealmDataController()
         
@@ -174,6 +176,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //setupConnection()
         
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
         
         return true
     }
@@ -279,30 +283,98 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func prepareBeaconManager() {
         beaconNotificationsManager = BeaconNotificationsManager()
         
+        for (index, beaconId) in beaconIds.enumerated() {
+            beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
+                                                                       enterMessage: "enter species \(index)",
+                                                                       exitMessage: "exit species \(index)"
+            )
+        }
         
-        ESTConfig.setupAppID("location-configuration-07n", andAppToken: "f7532cffe8a1a28f9b1ca1345f1d647e")
-        
-        
-        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
-        
-        //SPECIES-0
-        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B0407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 1),
-                                                                   enterMessage: "enter species 0",
-                                                                   exitMessage: "exit species 0"
-        )
-        
-        
-        //SPECIES-1
-        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B1407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2),
-                                                                   enterMessage: "enter species 1",
-                                                                   exitMessage: "exit species 1"
-        )
-        
-        //SPECIES-2
-        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: "B2407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 3),
-                                                                   enterMessage: "enter species 2",
-                                                                   exitMessage: "exit species 2"
-        )
+    
+//        
+//        //SPECIES-0
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 1),
+//                                                                   enterMessage: "enter species 0",
+//                                                                   exitMessage: "exit species 0"
+//        )
+//        
+//        
+//        //SPECIES-1
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 2),
+//                                                                   enterMessage: "enter species 1",
+//                                                                   exitMessage: "exit species 1"
+//        )
+//        
+//        //SPECIES-2
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 3),
+//            enterMessage: "enter species 2",
+//            exitMessage: "exit species 2"
+//        )
+//        
+//        //SPECIES-3
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 4),
+//            enterMessage: "enter species 3",
+//            exitMessage: "exit species 3"
+//        )
+//        
+//        //SPECIES-4
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 5),
+//            enterMessage: "enter species 4",
+//            exitMessage: "enter species 4"
+//        )
+//        
+//        //SPECIES-5
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 6),
+//            enterMessage: "enter species 5",
+//            exitMessage: "enter species 5"
+//        )
+//        
+//        //SPECIES-6
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 7),
+//            enterMessage: "enter species 6",
+//            exitMessage: "enter species 6"
+//        )
+//        
+//        //SPECIES-7
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 8),
+//            enterMessage: "enter species 7",
+//            exitMessage: "enter species 7"
+//        )
+//        
+//        
+//        //SPECIES-8
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 9),
+//            enterMessage: "enter species 8",
+//            exitMessage: "enter species 8"
+//        )
+//        
+//        //SPECIES-9
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 10),
+//            enterMessage: "enter species 9",
+//            exitMessage: "enter species 9"
+//        )
+//
+//        //SPECIES-10
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 11),
+//            enterMessage: "enter species 10",
+//            exitMessage: "enter species 10"
+//        )
+//        
+//        //SPECIES-11
+//        beaconNotificationsManager?.enableNotificationsForBeaconID(
+//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 12),
+//            enterMessage: "enter species 11",
+//            exitMessage: "enter species 11"
+//        )
     }
     
     func prepareLoginUI() -> NavigationDrawerController {
@@ -324,19 +396,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func prepareGroupUI() -> NavigationDrawerController{
-        let terminalStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let terminalViewController = terminalStoryboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainContainerController = mainStoryboard.instantiateViewController(withIdentifier: "mainContainerController") as! MainContainerController
         
-        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-        let sideViewController = mainStoryBoard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
+        let sideViewController = mainStoryboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
-        let navigationController: AppNavigationController = AppNavigationController(rootViewController: terminalViewController)
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainContainerController)
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .lightContent
         
-        sideViewController.showSelectedCell(with: checkApplicationState())
+        switch checkApplicationState() {
+        case .objectGroup:
+            mainContainerController.needsTerminal = true
+        default:
+            mainContainerController.needsTerminal = false
+        }
         
         return navigationDrawerController
     }
