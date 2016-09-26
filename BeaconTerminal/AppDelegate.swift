@@ -189,8 +189,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
         defaults.set("default", forKey: "sectionName")
-        defaults.set(0, forKey: "speciesIndex")
-         //defaults.set(0, forKey: "groupIndex")
+        //defaults.set(0, forKey: "speciesIndex")
+        defaults.set(0, forKey: "groupIndex")
         defaults.synchronize()
         
         // TODO: Move this to where you establish a user session
@@ -730,6 +730,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .landscape
+    }
+
     
     func checkCurrentRun(run:String) {
         

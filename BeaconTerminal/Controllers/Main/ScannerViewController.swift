@@ -13,7 +13,7 @@ import AVFoundation
 import AudioToolbox
 
 class ScannerViewController: UIViewController {
-}
+
 //
 //enum ScanningState: StateType {
 //    case Initial, Stopped, Scanning, Connecting, Error
@@ -31,22 +31,20 @@ class ScannerViewController: UIViewController {
 //    
 //    var connectionRetries = 0
 //    
-//    // MARK: Scanner Border
-//    let _border = CAShapeLayer()
-//    
+    // MARK: Scanner Border
+    let _border = CAShapeLayer()
+//
 //    // MARK: User Interface
-//    
-//    
-//    
-//    @IBOutlet weak var scannerView: UIView!
-//    @IBOutlet weak var statusLabel: UILabel!
-//    
+
+    @IBOutlet weak var scannerView: UIView!
+    @IBOutlet weak var statusLabel: UILabel!
+//
 //    var tapSound : AVAudioPlayer?
 //    var clickSound : AVAudioPlayer?
 //    var coinSound : AVAudioPlayer?
 //    
-//    let pulsator = Pulsator()
-//    
+    let pulsator = Pulsator()
+//
 //    var machine: StateMachine<ScanningState, NoEvent>!
 //    
 //    var tags = [ ["0","#99cc33"], ["1", "#5A6372"], ["6", "#502B6E"] ]
@@ -57,53 +55,53 @@ class ScannerViewController: UIViewController {
 //    // declared system sound here
 //    let systemSoundID: SystemSoundID = 1104
 //    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//    }
-//    
-//    override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated)
-//        scannerView.layer.addSublayer(pulsator)
-//        pulsator.position = CGPointMake(scannerView.frame.width/2, scannerView.frame.height/2)
-//        pulsator.numPulse = 5
-//        pulsator.radius = scannerView.frame.width/2
-//        pulsator.animationDuration = 5
-//        pulsator.backgroundColor = MaterialColor.blue.base.CGColor
-//    }
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        setupSounds()
-//        setupViews()
-//    }
-//    
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        scannerView.layer.addSublayer(pulsator)
+        pulsator.position = CGPoint(x: scannerView.frame.width/2, y: scannerView.frame.height/2)
+        pulsator.numPulse = 5
+        pulsator.radius = scannerView.frame.width/2
+        pulsator.animationDuration = 5
+        pulsator.backgroundColor = Color.blue.base.cgColor
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        scannerView.layer.superlayer?.insertSublayer(pulsator, below: scannerView.layer)
+        pulsator.start()
+    }
+//
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
 //        machine <- .Scanning
 //    }
 //    
-//    override func viewDidDisappear(animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
 //        machine <- .Stopped
 //    }
 //    
 //    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        _border.path = UIBezierPath(roundedRect: scannerView.bounds, cornerRadius:scannerView.frame.width/2).CGPath
-//        _border.frame = scannerView.bounds
-//    }
-//    
-//    
-//    
-//    func setupViews() {
-//        initEstimotes()
-//        renderViews()
-//    }
-//    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        scannerView.layer.layoutIfNeeded()
+        pulsator.position = scannerView.layer.position
+        _border.path = UIBezierPath(roundedRect: scannerView.bounds, cornerRadius:scannerView.frame.width/2).cgPath
+        _border.frame = scannerView.bounds
+        
+        _border.strokeColor = UIColor.black.cgColor
+        _border.fillColor = nil
+        _border.lineDashPattern = [4, 4]
+        scannerView.layer.addSublayer(_border)
+    }
+
 //    func initEstimotes() {
 //        self.immediateBeaconDetector = ImmediateBeaconDetector(delegate: self)
 //        
@@ -164,28 +162,10 @@ class ScannerViewController: UIViewController {
 //        }
 //        
 //    }
-//    
-//    func renderViews() {
-//        if !UIAccessibilityIsReduceTransparencyEnabled() {
-//            self.view.backgroundColor = UIColor.clearColor()
-//            
-//            let blurEffect = UIBlurEffect(style: .ExtraLight)
-//            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-//            
-//            blurEffectView.frame = self.view.bounds
-//            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-//            
-//            self.view.insertSubview(blurEffectView, atIndex: 0)
-//        } else {
-//            self.view.backgroundColor = UIColor.whiteColor()
-//        }
-//        
-//        _border.strokeColor = UIColor.blackColor().CGColor
-//        _border.fillColor = nil
-//        _border.lineDashPattern = [4, 4]
-//        scannerView.layer.addSublayer(_border)
-//    }
-//    
+//
+    
+
+//
 //    // MARK: Immediate Beacon Detector
 //    
 //    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didDiscoverBeacon beacon: ESTDeviceLocationBeacon) {
@@ -309,7 +289,31 @@ class ScannerViewController: UIViewController {
 //        
 //    }
 //    
+
+        @IBAction func closeButton(sender: Any?) {
+            //self.tapSound?.play()
+            LOG.debug("Scanner View Close Button Tapped")
+    
+            self.dismiss(animated: true, completion: {
+//                self.machine <- .Stopped
 //    
+//                if self.immediateBeaconDetector != nil {
+//                    self.immediateBeaconDetector.stop()
+//                    if self.immediateBeacon != nil {
+//                        self.immediateBeacon.disconnect()
+//                    }
+//                }
+//    
+//                LOG.debug("UNWINDE unwindToHereFromScannerView")
+//    
+//                self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: nil)
+                
+                
+            })
+            
+        }
+
+    
 //    @IBAction func closeButton(sender: FabButton) {
 //        //self.tapSound?.play()
 //        LOG.debug("Scanner View Close Button Tapped")
@@ -367,3 +371,5 @@ class ScannerViewController: UIViewController {
 //        return audioPlayer
 //    }
 //}
+
+}

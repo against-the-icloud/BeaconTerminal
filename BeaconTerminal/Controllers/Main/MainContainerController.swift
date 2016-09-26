@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Photos
+import MobileCoreServices
 import Material
 import RealmSwift
 
@@ -53,25 +55,38 @@ class MainContainerController: UIViewController{
             prepareTerminalNotifications()
         }
         
+        prepareToolMenu()
+        
+        
+    }
+    
+    func  prepareToolMenu() {
         if !toolMenuTypes.isEmpty {
             toolMenuItems.append(prepareAddButton())
             
             for type in toolMenuTypes {
                 switch type {
                 case .CAMERA:
-                    toolMenuItems.append(prepareMenuItem(withTitle: "CAMERA",withImage: Icon.cm.photoCamera!))
+                    let item = prepareMenuItem(withTitle: "CAMERA",withImage: Icon.cm.photoCamera!)
+                    item.button.addTarget(self, action: #selector(cameriaAction), for: .touchUpInside)
+                    toolMenuItems.append(item)
                 case .PHOTO_LIB:
-                    toolMenuItems.append(prepareMenuItem(withTitle: "PHOTO LIBRARY",withImage: Icon.cm.photoLibrary!))
+                    let item = prepareMenuItem(withTitle: "PHOTO LIBRARY",withImage: Icon.cm.photoLibrary!)
+                    item.button.addTarget(self, action: #selector(photoAlbumAction), for: .touchUpInside)
+                    toolMenuItems.append(item)
                 case .SCREENSHOT:
-                    toolMenuItems.append(prepareMenuItem(withTitle: "TAKE SCREENSHOT",withImage: UIImage(named: "ic_flash_on_white")!))
+                    let item = prepareMenuItem(withTitle: "TAKE SCREENSHOT",withImage: UIImage(named: "ic_flash_on_white")!)
+                    item.button.addTarget(self, action: #selector(screenShotAction), for: .touchUpInside)
+                    toolMenuItems.append(item)
                 case .SCANNER:
-                    toolMenuItems.append(prepareMenuItem(withTitle: "SCANNER", withImage: UIImage(named: "ic_wifi_white")!))
+                    let item = prepareMenuItem(withTitle: "SCANNER", withImage: UIImage(named: "ic_wifi_white")!)
+                    item.button.addTarget(self, action: #selector(scannerAction), for: .touchUpInside)
+                    toolMenuItems.append(item)
                 default:
                     break
                 }
             }
         }
-
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +94,7 @@ class MainContainerController: UIViewController{
         prepareMenuController()
     }
     
+    //Mark: Notifications
     
     func prepareNotifications() {
         runtimeResults = realmDataController.getRealm().objects(Runtime.self)
@@ -141,6 +157,8 @@ class MainContainerController: UIViewController{
         }
     }
     
+    //Mark: Update
+    
     func updateHeader() {
         if let sectionName = realmDataController.getRealm().runtimeSectionName() {
             sectionLabel.text = "\(sectionName)"
@@ -160,13 +178,9 @@ class MainContainerController: UIViewController{
     }
     
     func updateTabs(terminalRuntimeResults: Results<Runtime>) {
-        
-        
-        
         if let terminalRuntime = terminalRuntimeResults.first, let speciesIndex = terminalRuntime.currentSpeciesIndex.value, let sectionName = terminalRuntime.currentSectionName, let action = terminalRuntime.currentAction {
             
             if let atype = ActionType(rawValue: action) {
-                
                 switch atype {
                 case ActionType.entered:
                     topTabbar.insertSegment(withTitle: "\(sectionName) Species \(speciesIndex)", at: 2, animated: true)
@@ -186,52 +200,47 @@ class MainContainerController: UIViewController{
         
         self.present(loginNavigationController, animated: true, completion: {})
     }
+    
     @IBAction func tabChanged(_ sender: UISegmentedControl) {
         
         if sender.selectedSegmentIndex < containerViews.count {
-        
-        let showView = containerViews[sender.selectedSegmentIndex]
-        
-        for (index,containerView) in containerViews.enumerated() {
-            if index == sender.selectedSegmentIndex {
-                containerView.isHidden = false
-                containerView.fadeIn(toAlpha: 1.0) {_ in
-                    
-                }
-                
-            } else {
-                containerView.isHidden = true
-                containerView.fadeOut(0.0) {_ in
-                    
+            let showView = containerViews[sender.selectedSegmentIndex]
+            for (index,containerView) in containerViews.enumerated() {
+                if index == sender.selectedSegmentIndex {
+                    containerView.isHidden = false
+                    containerView.fadeIn(toAlpha: 1.0) {_ in
+                        
+                    }
+                } else {
+                    containerView.isHidden = true
+                    containerView.fadeOut(0.0) {_ in
+                        
+                    }
                 }
             }
-        }
-        
-
-        showView.fadeIn(toAlpha: 1.0) {_ in
-            //            for tap in self.tapCollection {
-            //                tap.isEnabled = false
             
-        }
+            
+            showView.fadeIn(toAlpha: 1.0) {_ in
+                //            for tap in self.tapCollection {
+                //                tap.isEnabled = false
+                
+            }
         }
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let id = segue.identifier else {
             return
         }
-        
-            switch id {
-            case "speciesPageContainerController":
-                if let svc = segue.destination as? SpeciePageContainerController {
-                    svc.topToolbarDelegate = self
-                }
-                break
-            default:
-                break
+        switch id {
+        case "speciesPageContainerController":
+            if let svc = segue.destination as? SpeciePageContainerController {
+                svc.topToolbarDelegate = self
             }
-        
+            break
+        default:
+            break
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -241,11 +250,10 @@ class MainContainerController: UIViewController{
     //Mark: Toolbar menu
     
     /// Handle the menu toggle event.
-    internal func handleToggleMenu(button: Button) {
+    internal func handleToggleMenu(button: Any?) {
         guard let mc = menuController as? ToolMenuController else {
             return
         }
-        
         if mc.menu.isOpened {
             mc.closeMenu { (view) in
                 (view as? MenuItem)?.hideTitleLabel()
@@ -279,16 +287,76 @@ class MainContainerController: UIViewController{
         guard let mc = menuController as? ToolMenuController else {
             return
         }
-        
         mc.menu.delegate = self
         mc.menu.views = toolMenuItems
     }
+    
+    //Mark: Action
+    func cameriaAction(sender: UIButton) {
+        let imagePicker = UIImagePickerController()
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)) {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            self.present(imagePicker, animated: true, completion: nil)
+        } else {
+            let imagePicker = UIImagePickerController()
+            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func screenShotAction(sender: UIButton) {
+        if let wnd = self.view {
+            
+            let v = UIView(frame: wnd.bounds)
+            v.backgroundColor = UIColor.white()
+            v.alpha = 1
+            
+            wnd.addSubview(v)
+            UIView.animate(withDuration: 1, animations: {
+                v.alpha = 0.0
+                }, completion: {
+                    (finished: Bool) in
+                    
+                    v.removeFromSuperview()
+                    let v = self.view
+                    UIGraphicsBeginImageContextWithOptions((v?.bounds.size)!, true, 1.0)
+                    v?.drawHierarchy(in: (v?.bounds)!, afterScreenUpdates: true)
+                    let img = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    UIImageWriteToSavedPhotosAlbum(img!, nil, nil, nil)
+            })
+        }
+    }
+    
+    func scannerAction(sender: UIButton) {
+        handleToggleMenu(button: nil)
+        self.performSegue(withIdentifier: "scannerSegue", sender: sender)
+    }
+    
+    func photoAlbumAction(sender: UIButton) {
+        let imagePicker = UIImagePickerController()
+        
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.modalPresentationStyle = .overFullScreen
+        imagePicker.modalTransitionStyle = .crossDissolve
+        //imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+        
+        
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
 }
 
 //Mark: TopToolbar
 
 extension MainContainerController: TopToolbarDelegate {
-    func changeAppearance(withColor color: UIColor) {        
+    func changeAppearance(withColor color: UIColor) {
         UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.topTabbar.backgroundColor = color
             self.topPanel.backgroundColor = color
@@ -296,7 +364,7 @@ extension MainContainerController: TopToolbarDelegate {
     }
 }
 
-//Mark: ToolMenu 
+//Mark: ToolMenu
 
 extension MainContainerController: MenuDelegate {
     func menu(menu: Menu, tappedAt point: CGPoint, isOutside: Bool) {
