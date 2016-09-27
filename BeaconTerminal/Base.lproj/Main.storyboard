@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11517.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -224,7 +223,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="7ep-h8-Hzi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="7ep-h8-Hzi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -772,6 +771,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9sf-EA-5I8">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1024" id="Mwm-kj-SHe"/>
+                                    <constraint firstAttribute="height" constant="768" id="U7V-h0-6Jg"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="5"/>
@@ -790,12 +793,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="r0A-hO-mMy" firstAttribute="top" secondItem="9sf-EA-5I8" secondAttribute="bottom" constant="97" id="6Tk-33-5qi"/>
                             <constraint firstItem="9sf-EA-5I8" firstAttribute="centerX" secondItem="SM1-Gb-Rej" secondAttribute="centerX" id="SQf-fg-rqH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9sf-EA-5I8" secondAttribute="trailing" constant="151" id="hLM-Gx-V8o"/>
-                            <constraint firstItem="9sf-EA-5I8" firstAttribute="top" secondItem="r2x-M8-pzT" secondAttribute="bottom" constant="96" id="ldB-xl-z4J"/>
                             <constraint firstItem="9sf-EA-5I8" firstAttribute="centerY" secondItem="SM1-Gb-Rej" secondAttribute="centerY" id="qHF-aZ-4MR"/>
-                            <constraint firstItem="9sf-EA-5I8" firstAttribute="leading" secondItem="SM1-Gb-Rej" secondAttribute="leadingMargin" constant="151" id="vtn-3m-LWb"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -1047,7 +1046,7 @@
         <scene sceneID="D1s-iV-auq">
             <objects>
                 <collectionViewController storyboardIdentifier="syncSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uDt-KF-AWl" customClass="SyncViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="72F-VO-vlj">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="72F-VO-vlj">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1143,7 +1142,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="500" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Htm-O1-sK8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Htm-O1-sK8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

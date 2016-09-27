@@ -185,19 +185,52 @@ class MainContainerController: UIViewController{
             if let atype = ActionType(rawValue: action) {
                 switch atype {
                 case ActionType.entered:
-                    topTabbar.insertSegment(withTitle: "\(sectionName.uppercased()) SPECIES \(speciesIndex)", at: 2, animated: true)
+                    
+                    let speciesImage = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                    
+//                    
+//                    let size = CGSizeApplyAffineTransform((speciesImage?.size)!, CGAffineTransformMakeScale(0.5, 0.5))
+//                    let hasAlpha = false
+//                    let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+//                    
+//                    UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+//                    speciesImage.drawInRect(CGRect(origin: CGPointZero, size: size))
+//                    
+//                    let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+//                    UIGraphicsEndImageContext()
+                    
+                    
+                    
+                    //speciesImage?.resizeToSize(CGSize(width: 10, height: 10))
                     
                     terminalTabColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
                     for v in topTabbar.subviews {
                         v.backgroundColor = mainColor
                     }
                     
-                    topTabbar.subviews.first?.backgroundColor = terminalTabColor
-                   
-                    topTabbar.selectedSegmentIndex = 2
                     
-                    tabChanged(topTabbar)
+                    if topTabbar.numberOfSegments < 3 {
+                        topTabbar.insertSegment(with: speciesImage, at: 2, animated: true)
+                        topTabbar.selectedSegmentIndex = 2
+                        changeTab(withControl: topTabbar)
+                        
+     
+                    } else {
+                        topTabbar.setImage(speciesImage, forSegmentAt: 2)
+                        topTabbar.selectedSegmentIndex = 2
+                        changeTab(withControl: topTabbar)
+                    }
                     
+                    
+                    let sortedViews = topTabbar.subviews.sorted( by: { $0.frame.origin.x < $1.frame.origin.x } )
+                    
+                    for (index, view) in sortedViews.enumerated() {
+                        if index == topTabbar.selectedSegmentIndex {
+                            view.backgroundColor = terminalTabColor
+                        } else {
+                            view.backgroundColor = mainColor
+                        }
+                    }
                     realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
                 default:
                     topTabbar.removeSegment(at: 2, animated: true)
@@ -215,34 +248,46 @@ class MainContainerController: UIViewController{
         self.present(loginNavigationController, animated: true, completion: {})
     }
     
-    @IBAction func tabChanged(_ sender: UISegmentedControl) {
-        
-        if sender.selectedSegmentIndex < containerViews.count {
-            
-            let showView = containerViews[sender.selectedSegmentIndex]
+    
+    func changeTab(withControl tabbar: UISegmentedControl) {
+        if tabbar.selectedSegmentIndex < containerViews.count {
+            let showView = containerViews[tabbar.selectedSegmentIndex]
             for (index,containerView) in containerViews.enumerated() {
-                if index == sender.selectedSegmentIndex {
-                    
+                if index == tabbar.selectedSegmentIndex {
                     containerView.isHidden = false
                     containerView.fadeIn(toAlpha: 1.0) {_ in
-                                                                    
                     }
                 } else {
-                    
                     containerView.isHidden = true
                     containerView.fadeOut(0.0) {_ in
-                        
                     }
                 }
             }
-            
-            
             showView.fadeIn(toAlpha: 1.0) {_ in
-                //            for tap in self.tapCollection {
-                //                tap.isEnabled = false
-                
             }
         }
+    }
+    
+    @IBAction func tabChanged(_ sender: UISegmentedControl) {
+        
+        let sortedViews = topTabbar.subviews.sorted( by: { $0.frame.origin.x < $1.frame.origin.x } )
+        
+        for (index, view) in sortedViews.enumerated() {
+            if index == topTabbar.selectedSegmentIndex {
+                
+                if let terminalTabColor = terminalTabColor, index == 2 {
+                    view.backgroundColor = terminalTabColor
+                } else {
+                    view.backgroundColor = mainColor?.lighterColor
+                }
+                
+                
+            } else {
+                view.backgroundColor = mainColor
+            }
+        }
+        
+        changeTab(withControl: sender)
     }
     
     func colorizeSelectedSegment() {
