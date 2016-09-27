@@ -22,7 +22,7 @@ public enum UIColorInputError : Error {
 extension UIColor {
     
     var lighterColor: UIColor {
-        return lighterColor(removeSaturation: 0.5, resultAlpha: -1)
+        return lighterColor(removeSaturation: 0.2, resultAlpha: -1)
     }
     
     func lighterColor(removeSaturation val: CGFloat, resultAlpha alpha: CGFloat) -> UIColor {

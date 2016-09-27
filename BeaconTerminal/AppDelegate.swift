@@ -161,10 +161,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initStateMachine(applicaitonState: .login)
         
-        prepareViews(applicationType: ApplicationType.login)
+        //prepareViews(applicationType: ApplicationType.objectGroup)
         //getAppDelegate().changeSystemStateTo(.objectGroup)
         
-        //shortCircuitLogin()
+        shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         

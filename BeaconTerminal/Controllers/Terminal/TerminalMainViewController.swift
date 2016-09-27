@@ -79,7 +79,7 @@ class TerminalMainViewController: UIViewController {
         if let n = runtimeNotificationToken {
             notificationTokens.append(n)
         }
-        speciesObservationResults = realmDataController.getRealm().objects(SpeciesObservation.self)
+        speciesObservationResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(SpeciesObservation.self)
         
         speciesObsNotificationToken = speciesObservationResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
@@ -100,18 +100,16 @@ class TerminalMainViewController: UIViewController {
         
         if let s = speciesObsNotificationToken {
             notificationTokens.append(s)
-        }
-        
-        
+        }                
     }
     
     // Mark: Update UI
     
     func updateHeader() {
-        if let speciesIndex = realmDataController.getRealm().runtimeSpeciesIndex() {
+        if let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
             profileImageView.image = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
             
-            if let species = realmDataController.getRealm().speciesWithIndex(withIndex: speciesIndex) {
+            if let species = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesWithIndex(withIndex: speciesIndex) {
                 profileLabel.text = species.name
             }
             
@@ -120,7 +118,7 @@ class TerminalMainViewController: UIViewController {
             //no species image
         }
         
-        if let sectionName = realmDataController.getRealm().runtimeSectionName() {
+        if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
             sectionLabel.text = sectionName
         } else {
             sectionLabel.text = "XYZ"

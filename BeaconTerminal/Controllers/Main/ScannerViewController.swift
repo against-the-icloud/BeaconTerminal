@@ -11,52 +11,77 @@ import UIKit
 import Material
 import AVFoundation
 import AudioToolbox
+import Transporter
 
-class ScannerViewController: UIViewController {
-
-//
-//enum ScanningState: StateType {
-//    case Initial, Stopped, Scanning, Connecting, Error
-//}
-//
-//struct ErrorMessage {
-//    let title: String
-//    let message: String
-//}
-//
-//class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, ESTDeviceConnectableDelegate {
-//    
-//    var immediateBeaconDetector: ImmediateBeaconDetector!
-//    var immediateBeacon: ESTDeviceLocationBeacon!
-//    
-//    var connectionRetries = 0
-//    
+class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, ESTDeviceConnectableDelegate {
+    
+    enum ScanningState: String {
+        case initial = "initial"
+        case stopped = "stopped"
+        case scanning = "scanning"
+        case connecting = "connecting"
+        case error = "error"
+    }
+    
+    //init states
+    let initialScannerState = State(ScanningState.initial)
+    let stoppedState = State(ScanningState.stopped)
+    let scanningState = State(ScanningState.scanning)
+    let connectingState = State(ScanningState.connecting)
+    let errorState = State(ScanningState.error)
+    
+    var scanningStateMachine: StateMachine<ScanningState>?
+    
+    let stopEvent = Event(name: "stopEvent", sourceValues: [ScanningState.scanning, ScanningState.connecting, ScanningState.initial, ScanningState.error],
+                          destinationValue: ScanningState.stopped)
+    
+    let errorEvent = Event(name: "errorEvent", sourceValues: [ScanningState.scanning, ScanningState.connecting, ScanningState.initial],
+                           destinationValue: ScanningState.error)
+    
+    let scanningEvent = Event(name: "scanningEvent", sourceValues: [ScanningState.initial],
+                              destinationValue: ScanningState.scanning)
+    
+    let connectingEvent = Event(name: "connectingEvent", sourceValues: [ScanningState.scanning],
+                                destinationValue: ScanningState.connecting)
+    
+    struct ErrorMessage {
+        let title: String
+        let message: String
+    }
+    
+    var immediateBeaconDetector: ImmediateBeaconDetector!
+    var immediateBeacon: ESTDeviceLocationBeacon!
+    
+    var connectionRetries = 0
+    
     // MARK: Scanner Border
     let _border = CAShapeLayer()
-//
-//    // MARK: User Interface
-
+    
+    // MARK: User Interface
+    
     @IBOutlet weak var scannerView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
-//
-//    var tapSound : AVAudioPlayer?
-//    var clickSound : AVAudioPlayer?
-//    var coinSound : AVAudioPlayer?
-//    
+    //
+    //    var tapSound : AVAudioPlayer?
+    //    var clickSound : AVAudioPlayer?
+    //    var coinSound : AVAudioPlayer?
+    //
     let pulsator = Pulsator()
-//
-//    var machine: StateMachine<ScanningState, NoEvent>!
-//    
-//    var tags = [ ["0","#99cc33"], ["1", "#5A6372"], ["6", "#502B6E"] ]
-//    
-//    var selectedSpeciesIndex = 0
-//    var selectedBeaconDetail : BeaconID?
-//    
-//    // declared system sound here
-//    let systemSoundID: SystemSoundID = 1104
-//    
+    //
+    //    var machine: StateMachine<ScanningState, NoEvent>!
+    //
+    //    var tags = [ ["0","#99cc33"], ["1", "#5A6372"], ["6", "#502B6E"] ]
+    //
+    //    var selectedSpeciesIndex = 0
+    //    var selectedBeaconDetail : BeaconID?
+    //
+    //    // declared system sound here
+    //    let systemSoundID: SystemSoundID = 1104
+    //
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        scanningStateMachine = StateMachine(initialState: initialScannerState, states: [stoppedState, scanningState,connectingState, errorState])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,26 +93,62 @@ class ScannerViewController: UIViewController {
         pulsator.animationDuration = 5
         pulsator.backgroundColor = Color.blue.base.cgColor
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scannerView.layer.superlayer?.insertSublayer(pulsator, below: scannerView.layer)
         pulsator.start()
+        
+        statusLabel.text = ""
+        
+        self.immediateBeaconDetector = ImmediateBeaconDetector(delegate: self)
+        
+        scanningStateMachine?.addEvents([connectingEvent, scanningEvent, errorEvent,stopEvent])
+        
+        initialScannerState.didEnterState = { state in
+            self.statusLabel.text = "Starting scanner..."
+        }
+        
+        scanningState.didEnterState = { state in
+            self.statusLabel.text = "Scanning..."
+            self.immediateBeaconDetector.start()
+        }
+        
+        connectingState.didEnterState = { state in
+            self.statusLabel.text = "Connecting..."
+        }
+        
+        stoppedState.didEnterState = { state in
+            self.statusLabel.text = "Scanning Stopped..."
+            self.immediateBeaconDetector.stop()            
+        }
+        
+        errorState.didEnterState = { state in
+            if (self.scanningStateMachine?.fireEvent(self.stopEvent).successful) != nil {
+                let alertController = UIAlertController(title: "ERROR", message: "ERROR reading beacon", preferredStyle: UIAlertControllerStyle.alert)
+                
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+                    print("OK")
+                }
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
-//
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.scanningStateMachine?.fireEvent(self.scanningEvent)
     }
-//        machine <- .Scanning
-//    }
-//    
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+        self.scanningStateMachine?.fireEvent(self.stopEvent)
+        
     }
-//        machine <- .Stopped
-//    }
-//    
-//    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -101,275 +162,103 @@ class ScannerViewController: UIViewController {
         _border.lineDashPattern = [4, 4]
         scannerView.layer.addSublayer(_border)
     }
-
-//    func initEstimotes() {
-//        self.immediateBeaconDetector = ImmediateBeaconDetector(delegate: self)
-//        
-//        machine = StateMachine<ScanningState, NoEvent>(state: .Initial) { machine in
-//            machine.addRoute(.Any => .Scanning) { context in
-//                
-//                print("Scanning for beacons...")
-//                
-//                
-//                //                self.statusLabel.text = "Scanning for beacons..."
-//                //                self.restartButton.hidden = true
-//                //                self.activityIndicator.hidden = false
-//                
-//                self.pulsator.start()
-//                
-//                self.immediateBeaconDetector.start()
-//            }
-//            
-//            machine.addRoute(.Scanning => .Connecting) { context in
-//                print("Connecting to beacon...")
-//                //self.statusLabel.text = "Connecting to beacon..."
-//                self.statusLabel.text = "Connecting to critter..."
-//                
-//                self.immediateBeaconDetector.stop()
-//                
-//                dispatch_on_main {
-//                    // Do some UI stuff
-//                    AudioServicesPlaySystemSound(1104)
-//                    
-//                    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-//                    
-//                    self.coinSound?.play()
-//                }
-//            }
-//            
-//            machine.addRoute(.Any => .Stopped) { context in
-//                print("Scanning stopped....")
-//                
-//                //                machine <- (.Error, ErrorMessage(title: "There was a problem scanning for beacons", message: "Try starting scanning again. If the problem persists, try turning Bluetooth off, then on again."))
-//                
-//                self.immediateBeaconDetector.stop()
-//            }
-//            
-//            machine.addRoute(.Any => .Error) { context in
-//                let errorMessage = context.userInfo as! ErrorMessage
-//                
-//                let alert = UIAlertController(title: errorMessage.title, message: errorMessage.message, preferredStyle: .Alert)
-//                let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-//                alert.addAction(action)
-//                //self.presentViewController(alert, animated: true, completion: nil)
-//                
-//                machine <- .Stopped
-//            }
-//            
-//            machine.addErrorHandler { event, fromState, toState, userInfo in
-//                print("StateMachine 'error', event = \(event), fromState = \(fromState), toState = \(toState), userInfo = \(userInfo)")
-//            }
-//        }
-//        
-//    }
-//
     
-
-//
-//    // MARK: Immediate Beacon Detector
-//    
-//    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didDiscoverBeacon beacon: ESTDeviceLocationBeacon) {
-//        machine <- .Connecting
-//        
-//        immediateBeacon = beacon
-//        immediateBeacon.delegate = self
-//        immediateBeacon.connect()
-//    }
-//    
-//    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didFailDiscovery error: ImmediateBeaconDetectorError) {
-//        switch error {
-//        case .BluetoothDisabled:
-//            machine <- (.Stopped, "Turn Bluetooth on.")
-//        default:
-//            machine <- (.Error, ErrorMessage(title: "There was a problem scanning for beacons", message: "Try starting scanning again. If the problem persists, try turning Bluetooth off, then on again."))
-//        }
-//    }
-//    
-//    // MARK: Beacon connection
-//    
-//    func retryConnection() -> Bool {
-//        if connectionRetries < 3 {
-//            connectionRetries += 1
-//            immediateBeacon.connect()
-//            return true
-//        } else {
-//            connectionRetries = 0
-//            return false
-//        }
-//    }
-//    
-//    func estDeviceConnectionDidSucceed(device: ESTDeviceConnectable) {
-//        connectionRetries = 0
-//        
-//        immediateBeacon.delegate = nil
-//        
-//        machine <- .Stopped
-//        
-//        //        let sndurl = NSBundle.mainBundle().URLForResource(
-//        //            "coin", withExtension: "wav")!
-//        //        var snd : SystemSoundID = 0
-//        //        AudioServicesCreateSystemSoundID(sndurl, &snd)
-//        // AudioServicesPlaySystemSound(1104)
-//        
-//        //        AudioServicesPlaySystemSoundWithCompletion(systemSoundID) {
-//        //            AudioServicesDisposeSystemSoundID(self.systemSoundID)
-//        //        }
-//        
-//        //        coinSound?.volume = 1.0
-//        //        coinSound?.prepareToPlay()
-////        dispatch_on_main {
-////            // Do some UI stuff
-////            AudioServicesPlaySystemSound(1104)
-////            
-////            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-////            
-////            self.coinSound?.play()
-////        }
-////        
-//        
-//        
-//        
-//        print("FOUND STOPPED")
-//        //self.immediateBeacon.disconnect()
-//                print("tags \(immediateBeacon.settings?.deviceInfo.tags.getValue())")
-//                
-//                let tags = immediateBeacon.settings?.deviceInfo.tags.getValue()
-//                
-//                var hexColor = ""
-//                var index = 0
-//                for tag in tags! {
-//                    
-//                    if tag.containsString("#") {
-//                        hexColor = tag
-//                    } else {
-//                        index = Int(tag)!
-//                        
-//                    }
-//                    //print("\(tag)")
-//                }
-//        
-//        
-//       // var tags = [ ["0","#99cc33"], ["1", "#5A6372"], ["6", "#502B6E"] ]
-//
-//        if index == 0 {
-//            hexColor = "#99cc33"
-//        } else if index == 6 {
-//            hexColor = "#502B6E"
-//        }
-//        //let beaconDetail = BeaconID(index: index, hexColor: hexColor)
-//        
-//        selectedBeaconDetail = BeaconID(index: index, hexColor: hexColor)
-//        
-////        print("\(selectedBeaconDetail!.asSimpleDescription)")
-//        
-//
-//        
-//        self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: self)
-//
-//    }
-//    
-//    func estDevice(device: ESTDeviceConnectable, didFailConnectionWithError error: NSError) {
-//        if error.code == ESTDeviceLocationBeaconError.CloudVerificationFailed.rawValue {
-//            if estimoteCloudReachable() {
-//                machine <- (.Error, ErrorMessage(title: "Couldn't connect to beacon", message: "Beacon ownership verification failed. Try again, and if the problem persists, set this beacon aside and try another one."))
-//            } else {
-//                machine <- (.Error, ErrorMessage(title: "Couldn't connect to beacon", message: "Couldn't reach Estimote Cloud. Check your Internet connection, then try again."))
-//            }
-//        } else {
-//            if !retryConnection() {
-//                machine <- (.Error, ErrorMessage(title: "Couldn't connect to beacon", message: "Try again. If the problem persists, try restarting Bluetooth. If that doesn't help either, set this beacon aside and try another one. [Code \(error.code)]"))
-//            }
-//        }
-//    }
-//    
-//    func estDevice(device: ESTDeviceConnectable, didDisconnectWithError error: NSError?) {
-//        if !retryConnection() {
-//            machine <- (.Error, ErrorMessage(title: "Beacon disconnected while connecting", message: "Try again. If the problem persists, try restarting Bluetooth. If that doesn't help either, set this beacon aside and try another one."))
-//        }
-//        
-//    }
-//    
-
-        @IBAction func closeButton(sender: Any?) {
-            //self.tapSound?.play()
-            LOG.debug("Scanner View Close Button Tapped")
+    // MARK: Navigation
     
-            self.dismiss(animated: true, completion: {
-//                self.machine <- .Stopped
-//    
-//                if self.immediateBeaconDetector != nil {
-//                    self.immediateBeaconDetector.stop()
-//                    if self.immediateBeacon != nil {
-//                        self.immediateBeacon.disconnect()
-//                    }
-//                }
-//    
-//                LOG.debug("UNWINDE unwindToHereFromScannerView")
-//    
-//                self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: nil)
-                
-                
-            })
-            
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    }
+    
+    // MARK: Immediate Beacon Detector
+    
+    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didDiscoverBeacon beacon: ESTDeviceLocationBeacon) {
+        
+        self.scanningStateMachine?.fireEvent(self.connectingEvent)
+        
+        immediateBeacon = beacon
+        immediateBeacon.delegate = self
+        immediateBeacon.connect()
+    }
+    
+    func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didFailDiscovery error: ImmediateBeaconDetectorError) {
+        switch error {
+        case .BluetoothDisabled:
+            self.scanningStateMachine?.fireEvent(self.stopEvent)
+            break
+        default:
+            self.scanningStateMachine?.fireEvent(self.errorEvent)
+            break
         }
-
+    }
     
-//    @IBAction func closeButton(sender: FabButton) {
-//        //self.tapSound?.play()
-//        LOG.debug("Scanner View Close Button Tapped")
-//        
-//        self.dismissViewControllerAnimated(true, completion: {
-//            self.machine <- .Stopped
-//            
-//            if self.immediateBeaconDetector != nil {
-//                self.immediateBeaconDetector.stop()
-//                if self.immediateBeacon != nil {
-//                    self.immediateBeacon.disconnect()
-//                }
-//            }
-//            
-//            LOG.debug("UNWINDE unwindToHereFromScannerView")
-//            
-//            self.performSegueWithIdentifier("unwindToHereFromScannerView", sender: nil)
-//            
-//            
-//        })
-//        
-//    }
-//    
-//    // MARK: Sound Effects
-//    
-//    func setupSounds() {
-//        if let clickSound = self.setupAudioPlayerWithFile("click", type:"wav") {
-//            self.clickSound = clickSound
-//        }
-//        if let coinSound = self.setupAudioPlayerWithFile("coin", type:"wav") {
-//            self.coinSound = coinSound
-//        }
-//        if let tapSound = self.setupAudioPlayerWithFile("tap", type:"wav") {
-//            self.tapSound = tapSound
-//        }
-//    }
-//    
-//    func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer?  {
-//        //1
-//        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
-//        let url = NSURL.fileURLWithPath(path!)
-//        
-//        //2
-//        var audioPlayer:AVAudioPlayer?
-//        
-//        // 3
-//        do {
-//            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
-//            audioPlayer?.prepareToPlay()
-//            audioPlayer?.volume = 1.0
-//        } catch {
-//            print("Player not available")
-//        }
-//        
-//        return audioPlayer
-//    }
-//}
-
+    // MARK: Beacon connection
+    
+    func retryConnection() -> Bool {
+        if connectionRetries < 3 {
+            connectionRetries += 1
+            immediateBeacon.connect()
+            return true
+        } else {
+            connectionRetries = 0
+            return false
+        }
+    }
+    
+    func estDeviceConnectionDidSucceed(_ device: ESTDeviceConnectable) {
+        
+        connectionRetries = 0
+        
+        immediateBeacon.delegate = nil
+        
+        self.scanningStateMachine?.fireEvent(self.stopEvent)
+        
+        
+        self.dismiss(animated: true, completion: {
+            
+            if let setting = self.immediateBeacon.settings {
+                let minor = setting.iBeacon.minor
+                let value = minor.getValue()
+                let speciesIndex = Int(value - 1)
+                
+                guard speciesIndex >= 0 else {
+                    return
+                }
+                
+                realmDataController.updateRuntime(withSpeciesIndex: Int(speciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
+                
+                self.immediateBeacon.disconnect()
+            }
+        })
+    }
+    
+    
+    func estDevice(_ device: ESTDeviceConnectable, didFailConnectionWithError error: Error) {
+        if !retryConnection() {
+            self.scanningStateMachine?.fireEvent(self.errorEvent)
+        }
+    }
+    
+    func estDevice(_ device: ESTDeviceConnectable, didDisconnectWithError error: Error?) {
+        if !retryConnection() {
+            self.scanningStateMachine?.fireEvent(self.errorEvent)
+        }
+    }
+    
+    @IBAction func closeButton(sender: Any?) {
+        
+        LOG.debug("Scanner View Close Button Tapped")
+        
+        self.dismiss(animated: true, completion: {
+            self.scanningStateMachine?.fireEvent(self.stopEvent)
+            
+            if self.immediateBeaconDetector != nil {
+                self.immediateBeaconDetector.stop()
+                if self.immediateBeacon != nil {
+                    self.immediateBeacon.disconnect()
+                }
+            }
+        })
+        
+    }
+    
 }

@@ -31,6 +31,8 @@ class MainContainerController: UIViewController{
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
     var needsTerminal = false
+    var mainColor: UIColor?
+    var terminalTabColor: UIColor?
     
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
@@ -161,7 +163,7 @@ class MainContainerController: UIViewController{
     
     func updateHeader() {
         if let sectionName = realmDataController.getRealm().runtimeSectionName() {
-            sectionLabel.text = "\(sectionName)"
+            sectionLabel.text = "\(sectionName.uppercased())"
         }
         
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
@@ -174,7 +176,7 @@ class MainContainerController: UIViewController{
         default:
             badgeImageView.image = UIImage(named: "placeGroup")
         }
-        
+        colorizeSelectedSegment()
     }
     
     func updateTabs(terminalRuntimeResults: Results<Runtime>) {
@@ -183,7 +185,19 @@ class MainContainerController: UIViewController{
             if let atype = ActionType(rawValue: action) {
                 switch atype {
                 case ActionType.entered:
-                    topTabbar.insertSegment(withTitle: "\(sectionName) Species \(speciesIndex)", at: 2, animated: true)
+                    topTabbar.insertSegment(withTitle: "\(sectionName.uppercased()) SPECIES \(speciesIndex)", at: 2, animated: true)
+                    
+                    terminalTabColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
+                    for v in topTabbar.subviews {
+                        v.backgroundColor = mainColor
+                    }
+                    
+                    topTabbar.subviews.first?.backgroundColor = terminalTabColor
+                   
+                    topTabbar.selectedSegmentIndex = 2
+                    
+                    tabChanged(topTabbar)
+                    
                     realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
                 default:
                     topTabbar.removeSegment(at: 2, animated: true)
@@ -204,14 +218,17 @@ class MainContainerController: UIViewController{
     @IBAction func tabChanged(_ sender: UISegmentedControl) {
         
         if sender.selectedSegmentIndex < containerViews.count {
+            
             let showView = containerViews[sender.selectedSegmentIndex]
             for (index,containerView) in containerViews.enumerated() {
                 if index == sender.selectedSegmentIndex {
+                    
                     containerView.isHidden = false
                     containerView.fadeIn(toAlpha: 1.0) {_ in
-                        
+                                                                    
                     }
                 } else {
+                    
                     containerView.isHidden = true
                     containerView.fadeOut(0.0) {_ in
                         
@@ -226,6 +243,29 @@ class MainContainerController: UIViewController{
                 
             }
         }
+    }
+    
+    func colorizeSelectedSegment() {
+        let selectedSegmented = topTabbar.selectedSegmentIndex
+        
+        for (index, view) in topTabbar.subviews.enumerated() {
+            
+            
+            if let terminalTabColor = terminalTabColor, index == 0 {
+                view.backgroundColor = terminalTabColor
+            } else {
+                
+                if index != selectedSegmented {
+                    view.backgroundColor = mainColor?.lighterColor
+                }else {
+                    view.backgroundColor = mainColor
+
+                }
+            }
+          
+        
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -358,9 +398,11 @@ class MainContainerController: UIViewController{
 extension MainContainerController: TopToolbarDelegate {
     func changeAppearance(withColor color: UIColor) {
         UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-            self.topTabbar.backgroundColor = color
-            self.topPanel.backgroundColor = color
+            self.mainColor = color
+            self.topTabbar.backgroundColor = self.mainColor
+            self.topPanel.backgroundColor = self.mainColor
             }, completion: nil)
+            self.colorizeSelectedSegment()
     }
 }
 

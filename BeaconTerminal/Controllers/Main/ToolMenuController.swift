@@ -34,8 +34,7 @@ class ToolMenuController: MenuController {
     
     open override func prepare() {
         super.prepare()
-        view.backgroundColor = Color.black
-        
+        view.backgroundColor = Color.black        
         prepareMenu()
     }
     

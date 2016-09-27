@@ -2,7 +2,7 @@ PODS:
   - Crashlytics (3.8.2):
     - Fabric (~> 1.6.3)
   - EstimoteSDK (4.8.1)
-  - Fabric (1.6.8)
+  - Fabric (1.6.9)
   - Material (2.0.0)
   - Transporter (3.0.0)
   - XCGLogger (3.3)
@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Material:
-    :commit: ca1719c3370a25459a928902543827eaa809d16b
+    :commit: 01df8779d36de0277da57e64e0c6c662283dd1e3
     :git: https://github.com/CosmicMind/Material.git
   XCGLogger:
     :commit: 8c36469e563d04ad598c8149ef9c434d3e22831b
@@ -34,7 +34,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   EstimoteSDK: 8ea0a0c6f7bee1286aad03b9bf38066e8839b6d9
-  Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
+  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
   Material: 61dcd49507c32d07c1557267ec360ce35bd0b1c5
   Transporter: b6e906451c22d7119b6556adf3481689a5c30677
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31

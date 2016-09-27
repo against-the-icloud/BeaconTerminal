@@ -36,11 +36,12 @@
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */; };
 		704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */; };
-		705F68FD1D94E1E00038C532 /* ToolMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F68FC1D94E1E00038C532 /* ToolMenuViewController.swift */; };
 		705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */; };
 		7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7064CAA31D6783FB00B77ADA /* StringUtil.swift */; };
 		70663F6F1D8F99B700B5BEC9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */; };
 		70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */; };
+		706723A71D999E86008B9DD1 /* RSSINormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706723A61D999E86008B9DD1 /* RSSINormalization.swift */; };
+		706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */; };
 		706CF1391D8FA83500A18927 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CF1381D8FA83500A18927 /* Banner.swift */; };
 		706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */; };
 		7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7070C4D41D4E77BA00AB47FF /* Popover.storyboard */; };
@@ -113,11 +114,9 @@
 		C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */; };
 		C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */; };
 		C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */ = {isa = PBXBuildFile; fileRef = C0A7D004FC456D55A564307C /* nutella_config.json */; };
-		C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */; };
 		C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */; };
 		C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D6AC0D72ADF2FA28B555 /* Random.swift */; };
 		C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */; };
-		C0A7DDEB47B86F12E4714985 /* PlaceTerminalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D0EA135DC06E087DD472 /* PlaceTerminalViewController.swift */; };
 		C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A7D628C381C03091617459 /* Main.storyboard */; };
 		C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DAD61205D9767DB6FF97 /* Util.swift */; };
 		CBA9CAD8C8FD48EE867C994C /* Pods_BeaconTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E88A1C1CBB05E4DB3693708A /* Pods_BeaconTerminal.framework */; };
@@ -179,11 +178,12 @@
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
 		704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesViewController.swift; path = SpeicesPages/ChooseSpeciesViewController.swift; sourceTree = "<group>"; };
 		704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesHeader.swift; path = SpeicesPages/ChooseSpeciesHeader.swift; sourceTree = "<group>"; };
-		705F68FC1D94E1E00038C532 /* ToolMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolMenuViewController.swift; sourceTree = "<group>"; };
 		705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBottomNavigationController.swift; sourceTree = "<group>"; };
 		7064CAA31D6783FB00B77ADA /* StringUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		706723A61D999E86008B9DD1 /* RSSINormalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSSINormalization.swift; sourceTree = "<group>"; };
+		706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateBeaconDetector.swift; sourceTree = "<group>"; };
 		706CF1381D8FA83500A18927 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipDetailViewController.swift; sourceTree = "<group>"; };
 		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popover.storyboard; sourceTree = "<group>"; };
@@ -260,11 +260,9 @@
 		AE9764BC1C22F4B80058A4DC /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
 		C0A7D004FC456D55A564307C /* nutella_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = nutella_config.json; path = ../nutella_config.json; sourceTree = "<group>"; };
 		C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideViewController.swift; path = Main/SideViewController.swift; sourceTree = "<group>"; };
-		C0A7D0EA135DC06E087DD472 /* PlaceTerminalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTerminalViewController.swift; sourceTree = "<group>"; };
 		C0A7D42A074C04107E1DC615 /* Base */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Base; path = BeaconTerminal/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C0A7D6AC0D72ADF2FA28B555 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C0A7DAD61205D9767DB6FF97 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowViewController.swift; sourceTree = "<group>"; };
 		C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
@@ -536,6 +534,8 @@
 		AEC0A9391C86F6C700F88936 /* Estimote */ = {
 			isa = PBXGroup;
 			children = (
+				706723A61D999E86008B9DD1 /* RSSINormalization.swift */,
+				706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */,
 				709F926E1D8F7D390057E104 /* BeaconNotificationsManager.swift */,
 				709F926C1D8F7D260057E104 /* BeaconID.swift */,
 			);
@@ -585,10 +585,7 @@
 				70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */,
 				C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */,
 				C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */,
-				C0A7D9417B0FDF110B7DA6C0 /* MainViewController.swift */,
-				C0A7D0EA135DC06E087DD472 /* PlaceTerminalViewController.swift */,
 				70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */,
-				705F68FC1D94E1E00038C532 /* ToolMenuViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -797,14 +794,14 @@
 		};
 		70B8BEE61D9635DA007F95CC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/Fabric/run edc8bdc3e62738f894091653db9d30eab1c2acfe 2a2695d2dc14b000c842d2b7d7dd49133e19b863e32aedfb105a9561971c1317";
 		};
@@ -900,7 +897,6 @@
 				70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */,
 				70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */,
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
-				705F68FD1D94E1E00038C532 /* ToolMenuViewController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
@@ -910,6 +906,8 @@
 				70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */,
 				70F1B7701D8C9B790020E757 /* LoginConditionViewController.swift in Sources */,
 				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
+				706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */,
+				706723A71D999E86008B9DD1 /* RSSINormalization.swift in Sources */,
 				70D9C1B21D6650B700FAF080 /* LoginGroupViewController.swift in Sources */,
 				704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */,
 				70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */,
@@ -939,9 +937,7 @@
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
 				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
-				C0A7D7A3AF5744DFCBF33A7A /* MainViewController.swift in Sources */,
 				70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */,
-				C0A7DDEB47B86F12E4714985 /* PlaceTerminalViewController.swift in Sources */,
 				708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
