@@ -128,7 +128,7 @@ extension ChooseSpeciesViewController {
             
             cell.speciesImageView.image = RealmDataController.generateImageForSpecies(toSpecies.index, isHighlighted: true)
             cell.speciesIndex = toSpecies.index
-            cell.speciesLabel.text = "Species \(toSpecies.index)"
+            //cell.speciesLabel.text = "Species \(toSpecies.index)"
             
         }
         return cell

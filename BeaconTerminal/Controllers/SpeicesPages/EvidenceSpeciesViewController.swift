@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Material
 import RealmSwift
 
 class EvidenceSpeciesViewController: UIViewController {
@@ -17,6 +18,7 @@ class EvidenceSpeciesViewController: UIViewController {
     var relationshipType: RelationshipType?
     var relationship: Relationship?
     
+    @IBOutlet var images: [UIImageView]!
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var fromSpeciesImageView: UIImageView!
     @IBOutlet weak var relationshipTypeLabel: UILabel!
@@ -35,6 +37,16 @@ class EvidenceSpeciesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareTitlePanel()
+        
+        for iv in images {
+            
+            let url = URL(string: "http://10.0.1.6:57882/d41d8cd98f00b204e9800998ecf8427e.jpg")
+            UIImage.contentsOfURL(url: url!, completion: { found, error in
+                if let image = found  {
+                    iv.image = image
+                }
+            })
+        }
     }
     
     func prepareTitlePanel() {
@@ -132,6 +144,21 @@ class EvidenceSpeciesViewController: UIViewController {
             realmDataController.add(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
         })
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier {
+            switch id {
+            case "imageSegue":
+                if let ivc = segue.destination as? ImageViewController, let tap = sender as? UIGestureRecognizer {
+                    if let iv = tap.view as? UIImageView, let image = iv.image {
+                        ivc.image = image
+                    }
+                }
+            default:
+                break
+            }
+        }
     }
     
     // Mark: Action

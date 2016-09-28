@@ -186,32 +186,58 @@ class MainContainerController: UIViewController{
                 switch atype {
                 case ActionType.entered:
                     
-                    _ = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                    
+                    topTabbar.contentMode = .center
+                    let speciesImage = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                    speciesImage?.resizableImage(withCapInsets: UIEdgeInsets.zero)
+//                    
+//                    let size = CGSizeApplyAffineTransform((speciesImage?.size)!, CGAffineTransformMakeScale(0.5, 0.5))
+//                    let hasAlpha = false
+//                    let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+//                    
+//                    UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+//                    speciesImage.drawInRect(CGRect(origin: CGPointZero, size: size))
+//                    
+//                    let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+//                    UIGraphicsEndImageContext()
+                    
+                    
+                    
+                    //speciesImage?.resizeToSize(CGSize(width: 10, height: 10))
                     
                     terminalTabColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
-                    
-                    if let species = realmDataController.getRealm().speciesWithIndex(withIndex: speciesIndex) {
-                        
-                        let title = "\(sectionName.uppercased()) \(species.name.uppercased())"
-                        
-                        for v in topTabbar.subviews {
-                            v.backgroundColor = mainColor
-                        }
-                    
-                        if topTabbar.numberOfSegments < 3 {
-                            topTabbar.insertSegment(withTitle: title, at: 2, animated: true)
-                            topTabbar.selectedSegmentIndex = 2
-                        } else {
-                            topTabbar.setTitle(title, forSegmentAt: 2)
-                            topTabbar.selectedSegmentIndex = 2
-                            
-                        }
-                        
-                        colorizeSelectedSegment()
-                        changeTab(withControl: topTabbar)
-                        realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
+                    for v in topTabbar.subviews {
+                        v.backgroundColor = mainColor
                     }
                     
+                    if let species = realmDataController.getRealm().speciesWithIndex(withIndex: speciesIndex) {
+                    
+                        let title = "\(sectionName.uppercased()) \(species.name.uppercased())"
+                        
+                    if topTabbar.numberOfSegments < 3 {
+                        topTabbar.insertSegment(withTitle: "\(title)", at: 2, animated: true)
+                        topTabbar.selectedSegmentIndex = 2
+                        changeTab(withControl: topTabbar)
+                        
+     
+                    } else {
+                        topTabbar.setTitle(title, forSegmentAt: 2)
+                        topTabbar.selectedSegmentIndex = 2
+                        changeTab(withControl: topTabbar)
+                    }
+                    
+                    
+                    let sortedViews = topTabbar.subviews.sorted( by: { $0.frame.origin.x < $1.frame.origin.x } )
+                    
+                    for (index, view) in sortedViews.enumerated() {
+                        if index == topTabbar.selectedSegmentIndex {
+                            view.backgroundColor = terminalTabColor
+                        } else {
+                            view.backgroundColor = mainColor
+                        }
+                    }
+                    }
+                    realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
                 default:
                     topTabbar.removeSegment(at: 2, animated: true)
                 }
@@ -249,23 +275,25 @@ class MainContainerController: UIViewController{
     }
     
     @IBAction func tabChanged(_ sender: UISegmentedControl) {
+        
+     
         colorizeSelectedSegment()
         changeTab(withControl: sender)
     }
     
     func colorizeSelectedSegment() {
         let sortedViews = topTabbar.subviews.sorted( by: { $0.frame.origin.x < $1.frame.origin.x } )
-        
         for (index, view) in sortedViews.enumerated() {
             if index == topTabbar.selectedSegmentIndex {
-                
                 if let terminalTabColor = terminalTabColor, index == 2 {
                     view.backgroundColor = terminalTabColor
                 } else {
-                    view.backgroundColor = mainColor?.lighterColor
+                    if let terminalTabColor = terminalTabColor, index == 2 {
+                        view.backgroundColor = terminalTabColor
+                    } else {
+                        view.backgroundColor = mainColor?.lighterColor
+                    }
                 }
-                
-                
             } else {
                 if let terminalTabColor = terminalTabColor, index == 2 {
                     view.backgroundColor = terminalTabColor
@@ -410,7 +438,7 @@ extension MainContainerController: TopToolbarDelegate {
             self.topTabbar.backgroundColor = self.mainColor
             self.topPanel.backgroundColor = self.mainColor
             }, completion: nil)
-        self.colorizeSelectedSegment()
+            self.colorizeSelectedSegment()
     }
 }
 
