@@ -1038,6 +1038,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <value key="contentSizeForViewInPopover" type="size" width="1000" height="625"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -1046,6 +1047,7 @@
                     <connections>
                         <outlet property="cameraButton" destination="kpo-YQ-W0L" id="kue-id-Kgu"/>
                         <outlet property="deleteButton" destination="zef-qi-Dni" id="S7M-80-LWU"/>
+                        <outlet property="doneButton" destination="Ut0-w3-GLZ" id="Aso-Vt-OGN"/>
                         <outlet property="fromSpeciesImageView" destination="kRF-e0-tO4" id="E9M-3q-Hpk"/>
                         <outlet property="noteTextView" destination="J6b-4g-YHC" id="Qjs-fh-Y8B"/>
                         <outlet property="photoLibButton" destination="A3H-ko-B5m" id="Xao-gD-AuS"/>

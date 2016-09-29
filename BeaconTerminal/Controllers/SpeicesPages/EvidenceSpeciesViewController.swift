@@ -26,6 +26,7 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
     @IBOutlet weak var relationshipTypeLabel: UILabel!
     @IBOutlet weak var toSpeciesImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     @IBOutlet weak var photoLibButton: FabButton!
     @IBOutlet weak var cameraButton: FabButton!
@@ -56,11 +57,12 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
                 
                 for (index, path) in self.attachments.enumerated() {
                     
-                    let url = URL(string: path)
-                    UIImage.contentsOfURL(url: url!, completion: { found, error in
+                    if let url = URL(string: path) {
+                    UIImage.contentsOfURL(url: url, completion: { found, error in
                         self.images[index].image = found
                         self.images[index].backgroundColor = UIColor.clear
                     })
+                    }
                 }
                 
             }
@@ -218,6 +220,7 @@ extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
        
+        self.doneButton.isEnabled = false
         // The info dictionary contains multiple representations of the image, and this uses the original.
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -245,7 +248,8 @@ extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
                         if let url = url {
                             self.attachments.append(url)
                         }
-                        
+                        self.doneButton.isEnabled = true
+
                     })
                 }
         }
