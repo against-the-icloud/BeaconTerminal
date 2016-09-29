@@ -64,9 +64,21 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
                 ecosystemSegmentedControl.selectedSegmentIndex = ecosystemIndex
             }
             
-            if let attachment = relationship.attachments {
+            if let attachments = relationship.attachments {
+                
+                    let urls = attachments.components(separatedBy: ",")
+                    
+                    if !urls.isEmpty {
+                        if let url = URL(string: urls[0]) {
+                            UIImage.contentsOfURL(url: url, completion: { found, error in
+                                if let image = found  {
+                                    self.evidenceImageView.image = image
+                                }
+                            })
+                        }
+                    }
+                
                  imageTapGesture.isEnabled = true
-                evidenceImageView.image = UIImage(named: attachment)
             } else {
                  imageTapGesture.isEnabled = false
             }

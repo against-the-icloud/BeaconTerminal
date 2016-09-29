@@ -37,6 +37,41 @@ public enum ContentViewAlignment: Int {
 }
 
 open class Bar: View {
+    /// Divider layer.
+    internal private(set) var divider: Divider!
+    
+    /// Divider color.
+    @IBInspectable
+    open var dividerColor: UIColor? {
+        get {
+            return divider.color
+        }
+        set(value) {
+            divider.color = value
+        }
+    }
+    
+    /// Divider animation.
+    open var dividerAlignment: DividerAlignment {
+        get {
+            return divider.alignment
+        }
+        set(value) {
+            divider.alignment = value
+        }
+    }
+    
+    /// Divider height.
+    @IBInspectable
+    open var dividerHeight: CGFloat {
+        get {
+            return divider.height
+        }
+        set(value) {
+            divider.height = value
+        }
+    }
+    
     /// Should center the contentView.
     open var contentViewAlignment = ContentViewAlignment.any {
         didSet {
@@ -100,9 +135,6 @@ open class Bar: View {
             layoutSubviews()
         }
     }
-    
-    /// Divider layer.
-    open internal(set) var divider: Divider!
     
     /// ContentView that holds the any desired subviews.
     open private(set) lazy var contentView = View()

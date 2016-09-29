@@ -46,7 +46,7 @@ func normalizedRSSIForBeaconWithIdentifier(identifier: String, RSSI: Int) -> Int
         request.sendRequest { deviceDetails, error in
             if let deviceDetails = deviceDetails {
                 bannedIdentifiers.remove(identifier)
-                cachedTxPowers[identifier] = deviceDetails.settings.connectivity.first!.powerInDBm.intValue
+                cachedTxPowers[identifier] = deviceDetails.settings.iBeacon.first?.powerInDBm.intValue
             }
             // we only "unban" the identifier if the request succeeded; we don't want to keep asking about a beacon that results in errors, i.e., doesn't exist or we don't have permission to ask about
         }

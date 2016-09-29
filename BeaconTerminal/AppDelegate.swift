@@ -6,6 +6,7 @@ import Nutella
 import Transporter
 import Fabric
 import Crashlytics
+import Alamofire
 
 
 let DEBUG = true
@@ -17,8 +18,8 @@ let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
-//  let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = LOCAL_IP
+//let LOCAL_IP = "131.193.79.203"
+var CURRENT_HOST = LOCAL
 var SECTION_NAME = "default"
 
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
@@ -145,6 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     weak var controlPanelDelegate: ControlPanelDelegate?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    
         
         ESTConfig.setupAppID("wallcology-2016-emb", andAppToken: "fd9eb675b3f09982fd5c1788f7a437dd")
         //crash analytics
@@ -161,18 +163,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initStateMachine(applicaitonState: .login)
         
-        //prepareViews(applicationType: ApplicationType.objectGroup)
+        prepareViews(applicationType: .login)
         //getAppDelegate().changeSystemStateTo(.objectGroup)
         
-        shortCircuitLogin()
+        //shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
         UIView.hr_setToastThemeColor(#colorLiteral(red: 0.9022639394, green: 0.9022851586, blue: 0.9022737145, alpha: 1))
         
-        
-        
-        
+    
         //setupConnection()
         
         UIApplication.shared.statusBarStyle = .lightContent
@@ -289,92 +289,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                        exitMessage: "exit species \(index)"
             )
         }
-        
-    
-//        
-//        //SPECIES-0
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 1),
-//                                                                   enterMessage: "enter species 0",
-//                                                                   exitMessage: "exit species 0"
-//        )
-//        
-//        
-//        //SPECIES-1
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 2),
-//                                                                   enterMessage: "enter species 1",
-//                                                                   exitMessage: "exit species 1"
-//        )
-//        
-//        //SPECIES-2
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 3),
-//            enterMessage: "enter species 2",
-//            exitMessage: "exit species 2"
-//        )
-//        
-//        //SPECIES-3
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 4),
-//            enterMessage: "enter species 3",
-//            exitMessage: "exit species 3"
-//        )
-//        
-//        //SPECIES-4
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 5),
-//            enterMessage: "enter species 4",
-//            exitMessage: "enter species 4"
-//        )
-//        
-//        //SPECIES-5
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 6),
-//            enterMessage: "enter species 5",
-//            exitMessage: "enter species 5"
-//        )
-//        
-//        //SPECIES-6
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 7),
-//            enterMessage: "enter species 6",
-//            exitMessage: "enter species 6"
-//        )
-//        
-//        //SPECIES-7
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 8),
-//            enterMessage: "enter species 7",
-//            exitMessage: "enter species 7"
-//        )
-//        
-//        
-//        //SPECIES-8
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 9),
-//            enterMessage: "enter species 8",
-//            exitMessage: "enter species 8"
-//        )
-//        
-//        //SPECIES-9
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 10),
-//            enterMessage: "enter species 9",
-//            exitMessage: "enter species 9"
-//        )
-//
-//        //SPECIES-10
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 11),
-//            enterMessage: "enter species 10",
-//            exitMessage: "enter species 10"
-//        )
-//        
-//        //SPECIES-11
-//        beaconNotificationsManager?.enableNotificationsForBeaconID(
-//            BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 12),
-//            enterMessage: "enter species 11",
-//            exitMessage: "enter species 11"
-//        )
     }
     
     func prepareLoginUI() -> NavigationDrawerController {
@@ -484,11 +398,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             setDefaultRealm(withSectionName: sectionName)
 
-        
             checkInitialization()
-            
-            
-            
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
@@ -729,12 +639,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return .landscape
-    }
-
     
     func checkCurrentRun(run:String) {
         

@@ -46,9 +46,9 @@ class TerminalCellController: UIViewController {
         
         profileImageView.image = disabledImage
         self.view.fadeIn(toAlpha: 0.3) {_ in
-//            for tap in self.tapCollection {
-//                tap.isEnabled = false
-//            }
+            //            for tap in self.tapCollection {
+            //                tap.isEnabled = false
+            //            }
         }
         
     }
@@ -86,9 +86,9 @@ class TerminalCellController: UIViewController {
         
         
         self.relationship = relationship
-//        for tap in tapCollection {
-//            tap.isEnabled = true
-//        }
+        //        for tap in tapCollection {
+        //            tap.isEnabled = true
+        //        }
         
         var cellItem = CellItem()
         cellItem.groupIndex = groupIndex
@@ -99,11 +99,21 @@ class TerminalCellController: UIViewController {
         
         profileImageView.image = enabledImage
         
-        if let attachment = relationship.attachments {
-            let evidenceImage = UIImage(named: attachment)
-            imageViewCells[groupIndex].image = evidenceImage
+        if let attachments = relationship.attachments {
+            
+            let urls = attachments.components(separatedBy: ",")
+            
+            if !urls.isEmpty {
+                if let url = URL(string: urls[0]) {
+                    UIImage.contentsOfURL(url: url, completion: { found, error in
+                        if let image = found  {
+                            self.imageViewCells[groupIndex].image = image
+                        }
+                    })
+                }
+            }
         } else {
-            imageViewCells[groupIndex].backgroundColor = UIColor.red
+            imageViewCells[groupIndex].backgroundColor = #colorLiteral(red: 0.8129653335, green: 0.8709804416, blue: 0.9280658364, alpha: 1)
         }
         
         if self.view.alpha < 1.0 {

@@ -10,13 +10,15 @@ import Foundation
 import UIKit
 import Material
 import RealmSwift
+import Photos
 
-class EvidenceSpeciesViewController: UIViewController {
+class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDelegate {
     
     var fromSpeciesIndex: Int?
     var toSpeciesIndex: Int?
     var relationshipType: RelationshipType?
     var relationship: Relationship?
+    var attachments = [String]()
     
     @IBOutlet var images: [UIImageView]!
     @IBOutlet weak var noteTextView: UITextView!
@@ -24,6 +26,12 @@ class EvidenceSpeciesViewController: UIViewController {
     @IBOutlet weak var relationshipTypeLabel: UILabel!
     @IBOutlet weak var toSpeciesImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIBarButtonItem!
+    
+    @IBOutlet weak var photoLibButton: FabButton!
+    @IBOutlet weak var cameraButton: FabButton!
+    
+    var popoverNavigationController: UINavigationController?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -37,16 +45,31 @@ class EvidenceSpeciesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareTitlePanel()
+        photoLibButton.image = Icon.cm.photoLibrary
+        photoLibButton.tintColor = UIColor.white
+        cameraButton.image = Icon.cm.photoCamera
+        cameraButton.tintColor = UIColor.white
         
-        for iv in images {
-            
-            let url = URL(string: "http://10.0.1.6:57882/d41d8cd98f00b204e9800998ecf8427e.jpg")
-            UIImage.contentsOfURL(url: url!, completion: { found, error in
-                if let image = found  {
-                    iv.image = image
+        if let relationship = self.relationship {
+            if let attachments = relationship.attachments?.components(separatedBy: ",") {
+                self.attachments = attachments
+                
+                for (index, path) in self.attachments.enumerated() {
+                    
+                    let url = URL(string: path)
+                    UIImage.contentsOfURL(url: url!, completion: { found, error in
+                        self.images[index].image = found
+                        self.images[index].backgroundColor = UIColor.clear
+                    })
                 }
-            })
+                
+            }
+            
+            if let reason = relationship.note {
+                noteTextView.text = reason
+            }
         }
+        
     }
     
     func prepareTitlePanel() {
@@ -78,11 +101,9 @@ class EvidenceSpeciesViewController: UIViewController {
                 return
             }
             
-            
             guard let toSpeciesIndex = self.toSpeciesIndex else {
                 return
             }
-            
             
             let newRelationship = Relationship()
             
@@ -120,7 +141,6 @@ class EvidenceSpeciesViewController: UIViewController {
             guard let toSpeciesIndex = self.toSpeciesIndex else {
                 return
             }
-            
 
             let newRelationship = Relationship()
             
@@ -130,12 +150,12 @@ class EvidenceSpeciesViewController: UIViewController {
                 
             }
             
-            
             if let toSpecies = realm?.speciesWithIndex(withIndex: toSpeciesIndex) {
                 newRelationship.toSpecies = toSpecies
             }
             
             newRelationship.note = self.noteTextView.text
+            newRelationship.attachments = self.attachments.joined(separator: ",")
             
             if let relationshipType = self.relationshipType {
                 newRelationship.relationshipType = relationshipType.rawValue
@@ -165,5 +185,72 @@ class EvidenceSpeciesViewController: UIViewController {
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: {})
+    }
+    
+    @IBAction func cameraAction(_ sender: FabButton) {
+    }
+    
+    @IBAction func photoLibraryAction(_ sender: FabButton) {
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+        let imagePickerController = UIImagePickerController()
+        
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .photoLibrary
+        
+        imagePickerController.delegate = self
+
+        imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
+        imagePickerController.popoverPresentationController?.sourceView = sender
+        
+        // Make sure ViewController is notified when the user picks an image.
+        self.present(imagePickerController, animated: true, completion: nil)
+        //present(imagePickerController, animated: true, completion: nil)
+    }
+}
+
+
+extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
+    // MARK: UIImagePickerControllerDelegate
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // Dismiss the picker if the user canceled.
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+       
+        // The info dictionary contains multiple representations of the image, and this uses the original.
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            for iv in images {
+                if let found = iv.image {
+                    
+                } else {
+                    iv.contentMode = .scaleAspectFit
+                    iv.image = pickedImage
+                    iv.backgroundColor = UIColor.clear
+                    break
+                }
+            }
+        }
+        
+        // Dismiss the picker.
+        self.dismiss(animated: true, completion: {
+            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                if let data = UIImagePNGRepresentation(pickedImage) {
+                     let imageName = "\(Util.randomString(5)).png"
+                    let filePath = Util.getDocumentsDirectory().appendingPathComponent(imageName)
+                    try? data.write(to: filePath)
+                    Util.uploadFile(withURL: filePath, andFilename: imageName, completion: { url in
+                        if let url = url {
+                            self.attachments.append(url)
+                        }
+                        
+                    })
+                }
+        }
+
+        })
+        
     }
 }

@@ -36,7 +36,7 @@ private var PageTabBarItemKey: UInt8 = 0
 open class PageTabBarItem: FlatButton {
     open override func prepare() {
         super.prepare()
-        pulse.animation = .none
+        pulseAnimation = .none
     }
 }
 
@@ -258,7 +258,7 @@ open class PageTabBarController: RootController {
     /// Prepares the pageTabBar.
     private func preparePageTabBar() {
         pageTabBar.zPosition = 1000
-        pageTabBar.divider.color = Color.grey.lighten3
+        pageTabBar.dividerColor = Color.grey.lighten3
         view.addSubview(pageTabBar)
         pageTabBar.select(at: selectedIndex)
     }

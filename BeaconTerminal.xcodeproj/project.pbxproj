@@ -19,7 +19,6 @@
 		701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701385CB1D8336890081FEB1 /* SpeciesPageContentController.swift */; };
 		701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */; };
 		701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */; };
-		70164F791D95F16300CA9F61 /* SimpleMQTTClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70020A9B1D95F13300313AAD /* SimpleMQTTClient.framework */; };
 		70164F7A1D95F16300CA9F61 /* SimpleMQTTClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70020A9B1D95F13300313AAD /* SimpleMQTTClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */; };
 		7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */; };
@@ -66,10 +65,6 @@
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
 		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */; };
 		70C1CF361D592E2800CB687E /* LoginSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */; };
-		70C293491D9089C20020247B /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C293471D90887D0020247B /* Realm.framework */; };
-		70C2934A1D9089C20020247B /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70C293471D90887D0020247B /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		70C2934B1D9089C20020247B /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C293451D9088430020247B /* RealmSwift.framework */; };
-		70C2934C1D9089C20020247B /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70C293451D9088430020247B /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */; };
 		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D142691D414E2700A588B3 /* DragUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D142681D414E2700A588B3 /* DragUtil.swift */; };
@@ -140,10 +135,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				70C2934A1D9089C20020247B /* Realm.framework in Embed Frameworks */,
 				70164F7A1D95F16300CA9F61 /* SimpleMQTTClient.framework in Embed Frameworks */,
 				702FDD921D805BF200B0EEDE /* Nutella.framework in Embed Frameworks */,
-				70C2934C1D9089C20020247B /* RealmSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,8 +202,6 @@
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
 		70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalContainerController.swift; path = Terminal/TerminalContainerController.swift; sourceTree = "<group>"; };
 		70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionViewController.swift; path = Login/LoginSectionViewController.swift; sourceTree = "<group>"; };
-		70C2933B1D90813E0020247B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/Realm.framework"; sourceTree = "<group>"; };
-		70C2933C1D90813E0020247B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../../../../../Downloads/realm-swift-1.1.0/ios/swift-3.0/RealmSwift.framework"; sourceTree = "<group>"; };
 		70C293451D9088430020247B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../RealmSwift.framework; sourceTree = "<group>"; };
 		70C293471D90887D0020247B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Speciescolors.swift"; sourceTree = "<group>"; };
@@ -287,12 +278,9 @@
 			files = (
 				70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */,
 				70663F6F1D8F99B700B5BEC9 /* SystemConfiguration.framework in Frameworks */,
-				70C2934B1D9089C20020247B /* RealmSwift.framework in Frameworks */,
 				700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */,
-				70C293491D9089C20020247B /* Realm.framework in Frameworks */,
 				700A3AB61D4BC7D8009B540D /* Photos.framework in Frameworks */,
 				70020A991D95EF0100313AAD /* SimpleMQTTClient.framework in Frameworks */,
-				70164F791D95F16300CA9F61 /* SimpleMQTTClient.framework in Frameworks */,
 				CBA9CAD8C8FD48EE867C994C /* Pods_BeaconTerminal.framework in Frameworks */,
 				702FDD901D805BEA00B0EEDE /* Nutella.framework in Frameworks */,
 			);
@@ -304,8 +292,6 @@
 		351FCE10601876F58D4A23C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				70C2933B1D90813E0020247B /* Realm.framework */,
-				70C2933C1D90813E0020247B /* RealmSwift.framework */,
 				70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */,
 				70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */,
 				700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */,

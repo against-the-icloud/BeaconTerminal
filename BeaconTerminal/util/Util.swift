@@ -1,8 +1,126 @@
 import Foundation
 import UIKit
 import Material
+import Alamofire
+import CryptoSwift
+
+enum ImageFormat: String {
+    case png = ".png"
+    case placeTerminal = "PLACE TERMINAL"
+    case placeGroup = "PLACE GROUP"
+    case objectGroup = "ARTIFACT GROUP"
+    
+    static let allValues = [placeTerminal, placeGroup, objectGroup]
+}
 
 class Util {
+    
+    
+    class func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
+    
+    class func randomString(_ length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
+            randomString += String(letters.character(at: Int(rand)))
+        }
+        
+        return randomString
+    }
+    
+    class func uploadFile(withURL fileData: Data, andFilename filename: String, completion: @escaping ((URL?) -> Void)) {
+        
+        // Add Headers
+        let headers = ["Content-Type":"multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__"]
+        
+        let uploadUrl = "http://\(CURRENT_HOST):57882/upload"
+        
+        // Fetch Request
+        
+        //"d41d8cd98f00b204e9800998ecf8427e.jpg".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        let md5filename = "\(filename.fileName().md5()).\(filename.fileExtension())"
+        let encodedFilename = md5filename.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+        
+        //let encodedFile = fileData
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(encodedFilename, withName: "filename")
+                multipartFormData.append(fileData, withName: "file")
+            },
+            to: uploadUrl,
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        LOG.debug("-----RESPONSE \(response)")
+                    }
+                case .failure(let encodingError):
+                    LOG.debug("-----ERROR \(encodingError)")
+                }
+            }
+        )
+    }
+    /**
+     Upload file and return the URL which it can be found
+     
+     upload
+     POST http://localhost:57882/upload
+     
+     - parameter file: The file to upload to nutella
+     */
+    class func uploadFile(withURL fileURL: URL, andFilename filename: String, completion: @escaping ((_ url:String?) -> Void)) {
+        
+        // Add Headers
+        let headers = ["Content-Type":"multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__"]
+        
+        let uploadUrl = "http://\(CURRENT_HOST):57882/upload"
+        
+        // Fetch Request
+        
+        let url = URL(fileURLWithPath: filename)
+        
+        //"d41d8cd98f00b204e9800998ecf8427e.jpg".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        let md5filename = "\(filename.fileName().md5()).\(filename.fileExtension())"
+        let encodedFilename = md5filename.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+        
+        //let encodedFile = fileData
+        Alamofire.upload(
+            multipartFormData: { multipartFormData in
+                multipartFormData.append(encodedFilename, withName: "filename")
+                multipartFormData.append(fileURL, withName: "file")
+            },
+            to: uploadUrl,
+            method: .post,
+            headers: headers,
+            encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        //LOG.debug("-----RESPONSE \(response)")
+                        if let data = response.data {
+                            
+                         let json = JSON(data: data)
+                        if let found = json["url"].string {
+                            completion(found)
+                        }
+                        }
+                    }
+                case .failure(let encodingError):
+                     LOG.debug("-----ERROR \(encodingError)")
+                }
+            }
+        )
+    }
     
     class func makeToast(_ message: String) {
         if let presentWindow = UIApplication.shared.keyWindow {
@@ -19,16 +137,16 @@ class Util {
     class func makeToast(_ message: String, title: String, duration: Double = 3.0, image: UIImage) {
         if let presentWindow = UIApplication.shared.keyWindow {
             presentWindow.makeToast(message: message, duration: duration,  position: HRToastPositionTop as AnyObject, title: title, image: image)
-
+            
         }
     }
     
     static let flatBlack: UIColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1.00)
     
     
-//    class func classNameAsString(_ obj: Any) -> String {
-//        return String(type(descring)).components(separatedBy: "__").last!
-//    }
+    //    class func classNameAsString(_ obj: Any) -> String {
+    //        return String(type(descring)).components(separatedBy: "__").last!
+    //    }
     
     class func prepareTabBar(with item: UITabBarItem) {
         item.setTitleColor(color: Color.grey.base, forState: .normal)
@@ -67,7 +185,7 @@ class Util {
         }
         
         var rand_y = CGFloat(arc4random_uniform(maxYValue)) // maxYValue is a variable with your maximum possible y value
-
+        
         
         if rand_y < CGFloat(minYValue) {
             rand_y = CGFloat(minYValue)
@@ -331,4 +449,42 @@ extension UIToolbar {
     }
     
 }
+
+extension UIImagePickerController {
+    
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .landscape
+        }
+    }
+    
+    open override var shouldAutorotate: Bool {
+        get {
+            return false
+        }
+    }
+}
+
+extension String {
+    
+    func fileName() -> String {
+        
+        if let fileNameWithoutExtension = NSURL(fileURLWithPath: self).deletingPathExtension?.lastPathComponent {
+            return fileNameWithoutExtension
+        } else {
+            return ""
+        }
+    }
+    
+    func fileExtension() -> String {
+        
+        if let fileExtension = NSURL(fileURLWithPath: self).pathExtension {
+            return fileExtension
+        } else {
+            return ""
+        }
+    }
+
+}
+
 

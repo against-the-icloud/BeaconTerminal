@@ -39,8 +39,40 @@ public enum NavigationBarStyle: Int {
 }
 
 open class NavigationBar: UINavigationBar {
-    /// A reference to the divider.
-    open internal(set) var divider: Divider!
+    /// Divider layer.
+    internal private(set) var divider: Divider!
+    
+    /// Divider color.
+    @IBInspectable
+    open var dividerColor: UIColor? {
+        get {
+            return divider.color
+        }
+        set(value) {
+            divider.color = value
+        }
+    }
+    
+    /// Divider animation.
+    open var dividerAlignment: DividerAlignment {
+        get {
+            return divider.alignment
+        }
+        set(value) {
+            divider.alignment = value
+        }
+    }
+    
+    /// Divider height.
+    @IBInspectable
+    open var dividerHeight: CGFloat {
+        get {
+            return divider.height
+        }
+        set(value) {
+            divider.height = value
+        }
+    }
     
     open override var intrinsicContentSize: CGSize {
         switch navigationBarStyle {
@@ -174,9 +206,7 @@ open class NavigationBar: UINavigationBar {
 			layoutNavigationItem(item: v)
 		}
         
-        if let v = divider {
-            v.reload()
-        }
+        divider.reload()
 	}
 	
 	open override func pushItem(_ item: UINavigationItem, animated: Bool) {
@@ -294,6 +324,8 @@ open class NavigationBar: UINavigationBar {
      when subclassing.
      */
 	public func prepare() {
+        prepareDivider()
+        
         barStyle = .black
 		isTranslucent = false
 		depthPreset = .depth1
@@ -305,7 +337,6 @@ open class NavigationBar: UINavigationBar {
 		shadowImage = image
 		setBackgroundImage(image, for: .default)
 		backgroundColor = Color.white
-        prepareDivider()
 	}
 	
 	/**
@@ -327,7 +358,7 @@ open class NavigationBar: UINavigationBar {
         }
         item.titleView = UIView(frame: .zero)
 	}
-	
+    
     /// Prepares the divider.
     private func prepareDivider() {
         divider = Divider(view: self)

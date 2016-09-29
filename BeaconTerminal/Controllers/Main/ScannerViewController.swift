@@ -224,6 +224,8 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                     return
                 }
                 
+                //clear the terminal if needed
+                realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
                 realmDataController.updateRuntime(withSpeciesIndex: Int(speciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
                 
                 self.immediateBeacon.disconnect()

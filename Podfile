@@ -5,10 +5,11 @@ target 'BeaconTerminal' do
     
     #ui pods
     pod 'Material', :git => 'https://github.com/CosmicMind/Material.git', :branch => 'development'
-    
-    #db
     #pod 'Realm', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
 	#pod 'RealmSwift', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
+    
+    pod 'Realm'
+    pod 'RealmSwift'
 
     #pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
     pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
@@ -24,6 +25,10 @@ target 'BeaconTerminal' do
     #distribution
     pod 'Fabric'
     pod 'Crashlytics'
+    
+    #upload
+    pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
+    pod 'Alamofire', '~> 4.0'
 end
 
 target 'BeaconTerminalModelTests' do

@@ -55,6 +55,8 @@ class MainContainerController: UIViewController{
         
         if needsTerminal {
             prepareTerminalNotifications()
+        } else {
+            
         }
         
         prepareToolMenu()
@@ -276,6 +278,17 @@ class MainContainerController: UIViewController{
         }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case "speciesPageContainerController":
+            return true
+        case "terminalSegue":
+            return needsTerminal
+        default:
+            return true
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let id = segue.identifier else {
             return
@@ -285,7 +298,10 @@ class MainContainerController: UIViewController{
             if let svc = segue.destination as? SpeciePageContainerController {
                 svc.topToolbarDelegate = self
             }
-            break
+        case "terminalSegue":
+            if let tvc = segue.destination as? TerminalMainViewController {
+                
+            }
         default:
             break
         }
