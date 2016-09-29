@@ -172,7 +172,8 @@ class SpeciesRelationshipTableController: UITableViewController {
                     ev.relationship = foundRelationship
                     ev.deleteButton.isEnabled = true
                     ev.title = "EDIT EVIDENCE"
-                    ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
+                    ev.preferredContentSize = CGSize(width: 1000, height: 675)
+                  //  ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
                 }
                 break
             case "chooseSpeciesSegue":

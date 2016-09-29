@@ -12,6 +12,7 @@ import UIKit
 class ImageViewController: UIViewController {
     
     var image: UIImage?
+    var imageUrl: String? 
     
     @IBOutlet weak var imageView: UIImageView!
     required init?(coder aDecoder: NSCoder) {
@@ -23,6 +24,7 @@ class ImageViewController: UIViewController {
         imageView.image = image
     }
     @IBAction func deleteImageAction(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil) 
     }
     @IBAction func closeAction(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)

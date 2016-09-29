@@ -163,10 +163,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initStateMachine(applicaitonState: .login)
         
-        prepareViews(applicationType: .login)
-        //getAppDelegate().changeSystemStateTo(.objectGroup)
+        //prepareViews(applicationType: .placeGroup)
+        //getAppDelegate().changeSystemStateTo(.placeGroup)
         
-        //shortCircuitLogin()
+        shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
@@ -184,7 +184,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func shortCircuitLogin() {
         
-        getAppDelegate().changeSystemStateTo(.objectGroup)
+        getAppDelegate().changeSystemStateTo(.placeGroup)
 
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
@@ -318,7 +318,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainContainerController)
         
         mainContainerController.toolMenuTypes = toolMenuTypes
-        
+        switch checkApplicationState() {
+        case .objectGroup:
+            mainContainerController.needsTerminal = true
+        default:
+            mainContainerController.needsTerminal = false
+        }
         //menu
         
         let toolMenuController = ToolMenuController(rootViewController: navigationController)
@@ -328,12 +333,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .lightContent
         
-        switch checkApplicationState() {
-        case .objectGroup:
-            mainContainerController.needsTerminal = true
-        default:
-            mainContainerController.needsTerminal = false
-        }
+    
         
         return navigationDrawerController
     }
