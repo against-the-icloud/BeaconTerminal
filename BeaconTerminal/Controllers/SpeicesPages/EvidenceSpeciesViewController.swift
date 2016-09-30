@@ -241,6 +241,18 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
     }
     
     @IBAction func cameraAction(_ sender: FabButton) {
+        let imagePickerController = UIImagePickerController()
+        
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .camera
+        
+        imagePickerController.delegate = self
+        
+        imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
+        imagePickerController.popoverPresentationController?.sourceView = sender
+        
+        // Make sure ViewController is notified when the user picks an image.
+        self.present(imagePickerController, animated: true, completion: nil)
     }
     
     @IBAction func photoLibraryAction(_ sender: FabButton) {

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TerminalRelationshipDetailTableViewController: UITableViewController {
+class TerminalComparsionDetailViewController: UIViewController {
     
     
     var cellItem: CellItem?
@@ -18,20 +18,10 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
     @IBOutlet weak var reasoningTextView: UITextView!
-    @IBOutlet weak var evidenceImageView: UIImageView!
-    @IBOutlet var imageTapGesture: UITapGestureRecognizer!
     
-    var showAlternate = false {
-        didSet {
-            if showAlternate {
-                let cells = tableView.visibleCells
-                
-                for cell in cells{
-                    cell.contentView.backgroundColor = UIColor.white
-                }
-            }
-        }
-    }
+    @IBOutlet var imageViews: [UIImageView]!
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -67,33 +57,35 @@ class TerminalRelationshipDetailTableViewController: UITableViewController {
             if let attachments = relationship.attachments {
                 
                     let urls = attachments.components(separatedBy: ",")
-                    
+                
+                for (index, imageUrl) in urls.enumerated() {
+                    let iv = imageViews[index]
+                    iv.isUserInteractionEnabled = true
+            
                     if !urls.isEmpty {
-                        if let url = URL(string: urls[0]) {
+                        if let url = URL(string: imageUrl) {
                             UIImage.contentsOfURL(url: url, completion: { found, error in
                                 if let image = found  {
-                                    self.evidenceImageView.image = image
+                                    iv.image = image
                                 }
                             })
                         }
                     }
-                
-                 imageTapGesture.isEnabled = true
-            } else {
-                 imageTapGesture.isEnabled = false
             }
-            
             if let note = relationship.note {
                 reasoningTextView.text = note
             } else {
-                reasoningTextView.text = "no reason"
+                reasoningTextView.text = "no answer"
             }
         } else {
             ecosystemSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
             reasoningTextView.text = ""
-            evidenceImageView.image = nil
-            evidenceImageView.backgroundColor = UIColor.clear
-            imageTapGesture.isEnabled = false
+            for iv in imageViews {
+                iv.image = nil
+                iv.backgroundColor = UIColor.clear
+                iv.isUserInteractionEnabled = false
+            }
+        }
         }
     }
     

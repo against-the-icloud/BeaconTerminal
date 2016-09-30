@@ -210,28 +210,46 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         immediateBeacon.delegate = nil
         
-        self.scanningStateMachine?.fireEvent(self.stopEvent)
         
+        self.scanningStateMachine?.fireEvent(self.stopEvent)
+
+        
+        if let lb = device as? ESTDeviceLocationBeacon, let setting = lb.settings {
+
+            
+            
+            let minor = setting.iBeacon.minor
+            let value = minor.getValue()
+            let speciesIndex = Int(value - 1)
+            
+            
+            
+            guard speciesIndex >= 0 else {
+                return
+            }
+            
+            if let oldSpeciesIndex = realmDataController.getRealm().runtimeSpeciesIndex(),let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "exit", withPlace: self.immediateBeacon.description, withGroupIndex: groupIndex, withSpeciesIndex: oldSpeciesIndex)
+            }
+            
+            realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
+            
+            realmDataController.syncSpeciesObservations(withIndex: Int(speciesIndex))
+            
+            //clear the terminal if needed
+            realmDataController.updateRuntime(withSpeciesIndex: Int(speciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
+            
+            if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "enter", withPlace: self.immediateBeacon.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+            }
+            
+            lb.disconnect()
+        }
         
         self.dismiss(animated: true, completion: {
             
-            if let setting = self.immediateBeacon.settings {
-                let minor = setting.iBeacon.minor
-                let value = minor.getValue()
-                let speciesIndex = Int(value - 1)
-                
-                guard speciesIndex >= 0 else {
-                    return
-                }
-                
-                realmDataController.syncSpeciesObservations(withIndex: Int(speciesIndex))
-
-                //clear the terminal if needed
-                realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
-                realmDataController.updateRuntime(withSpeciesIndex: Int(speciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
-                
-                self.immediateBeacon.disconnect()
-            }
+           
+            
         })
     }
     

@@ -93,12 +93,12 @@ extension LoginConditionCollectionViewController {
             cell.badgeImageView.image = UIImage(named: "objectGroup")
         case .placeTerminal:
             cell.badgeImageView.image = UIImage(named: "placeTerminal")
+        case .cloudGroup:
+            cell.badgeImageView.image = UIImage(named: "cloudGroup")
         default:
             break
         }
-        
-        
-        
+
         return cell
     }
     

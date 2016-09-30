@@ -5,9 +5,9 @@
 import UIKit
 import UserNotifications
 
-class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
+class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
 
-    let beaconManager = ESTBeaconManager()
+    let beaconManager = ESTMonitoringManager()
 
     var enterMessages = [String: String]()
     var exitMessages = [String: String]()
@@ -61,11 +61,12 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
                 banner.show()
                 
                 //four sec
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {                     banner.dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                    banner.dismiss()
                 }
                 
                 if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-                    realmDataController.saveNutellaPlace(withActionType: "enter", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+                    realmDataController.saveNutellaCondition(withCondition: "place", withActionType: "enter", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
                 }
             }
         }
@@ -92,11 +93,12 @@ class BeaconNotificationsManager: NSObject, ESTBeaconManagerDelegate {
                 banner.show()
                 
                 //four sec
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {                     banner.dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                    banner.dismiss()
                 }
                 
                 if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-                    realmDataController.saveNutellaPlace(withActionType: "exit", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+                    realmDataController.saveNutellaCondition(withCondition: "place", withActionType: "exit", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
                 }
             }
             

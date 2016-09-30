@@ -103,8 +103,9 @@ class TerminalCellController: UIViewController {
             
             let urls = attachments.components(separatedBy: ",")
             
-            if !urls.isEmpty {
-                if let url = URL(string: urls[0]) {
+            for attach in urls {
+            
+                if let url = URL(string: attach) {
                     UIImage.contentsOfURL(url: url, completion: { found, error in
                         if let image = found  {
                             self.imageViewCells[groupIndex].image = image
@@ -112,6 +113,7 @@ class TerminalCellController: UIViewController {
                     })
                 }
             }
+            
         } else {
             imageViewCells[groupIndex].backgroundColor = #colorLiteral(red: 0.8129653335, green: 0.8709804416, blue: 0.9280658364, alpha: 1)
         }

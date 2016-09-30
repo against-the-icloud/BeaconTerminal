@@ -61,11 +61,11 @@ class RealmDataController {
         }
     }
     
-    func saveNutellaPlace(withActionType type: String,  withPlace place: String, withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
+    func saveNutellaCondition(withCondition condition: String, withActionType type: String,  withPlace place: String, withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
         if let nutella = nutella {
             let block = DispatchWorkItem {
-                var json: JSON =  ["type": type, "place": place, "groupIndex":groupIndex, "speciesIndex":speciesIndex, "timestamp": Date().timeIntervalSince1970]
+                var json: JSON =  ["condition": condition, "type": type, "place": place, "groupIndex":groupIndex, "speciesIndex":speciesIndex, "timestamp": Date().timeIntervalSince1970]
                 let jsonObject: Any = json.object
                 nutella.net.asyncRequest("save_place", message: jsonObject as AnyObject, requestName: "save_place")
             }

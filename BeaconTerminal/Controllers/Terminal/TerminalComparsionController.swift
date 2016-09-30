@@ -69,7 +69,7 @@ class TerminalComparsionController: UIViewController {
              let id = NSNumber.init( value: Int32(segueId)!).intValue
     
             
-            if let detailvc = segue.destination as? TerminalRelationshipDetailTableViewController, let cellItems = self.cellItems {
+            if let detailvc = segue.destination as? TerminalComparsionDetailViewController, let cellItems = self.cellItems {
                 
                 if let found = cellItems.filter( { (cellItem: CellItem) -> Bool in
                     return cellItem.groupIndex == id

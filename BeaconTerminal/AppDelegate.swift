@@ -19,7 +19,7 @@ let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
 //let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = LOCAL
+var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
@@ -52,8 +52,9 @@ enum ApplicationType: String {
     case placeTerminal = "PLACE TERMINAL"
     case placeGroup = "PLACE GROUP"
     case objectGroup = "ARTIFACT GROUP"
+    case cloudGroup = "CLOUD GROUP"
     
-    static let allValues = [placeTerminal, placeGroup, objectGroup]
+    static let allValues = [placeTerminal, placeGroup, objectGroup, cloudGroup]
 }
 
 enum Tabs : String {
@@ -163,10 +164,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initStateMachine(applicaitonState: .login)
         
-        //prepareViews(applicationType: .placeGroup)
+        prepareViews(applicationType: .login)
         //getAppDelegate().changeSystemStateTo(.placeGroup)
         
-        shortCircuitLogin()
+        //shortCircuitLogin()
         
         //prepareDB(withSectionName: SECTION_NAME)
         
@@ -184,13 +185,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func shortCircuitLogin() {
         
-        getAppDelegate().changeSystemStateTo(.placeGroup)
+        getAppDelegate().changeSystemStateTo(.objectGroup)
 
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
         defaults.set("default", forKey: "sectionName")
-        //defaults.set(0, forKey: "speciesIndex")
-        defaults.set(0, forKey: "groupIndex")
+        defaults.set(0, forKey: "speciesIndex")
+        //defaults.set(0, forKey: "groupIndex")
         defaults.synchronize()
         
         // TODO: Move this to where you establish a user session
