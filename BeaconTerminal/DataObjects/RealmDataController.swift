@@ -47,6 +47,28 @@ class RealmDataController {
         return ""
     }
     
+    // Mark: inviewTerminal actions
+    
+    func clearInViewTerminal(withCondition condition: String) {
+        if let oldSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex(),let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+            realmDataController.saveNutellaCondition(withCondition: condition, withActionType: "exit", withGroupIndex: groupIndex, withSpeciesIndex: oldSpeciesIndex)
+            
+            realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
+            
+            //clear the terminal if needed
+            realmDataController.updateRuntime(withSpeciesIndex: Int(oldSpeciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.exited.rawValue)
+
+        }
+    }
+    
+    func updateInViewTerminal(withSpeciesIndex speciesIndex: Int, withCondition condition: String, withPlace place: String) {
+        realmDataController.updateRuntime(withSpeciesIndex: speciesIndex, withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
+        
+        if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+            realmDataController.saveNutellaCondition(withCondition: condition, withActionType: "enter", withPlace: place, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+        }
+    }
+    
     // Mark: Nutella Queries
     
     func forceSync(withIndex index: Int) {
@@ -147,7 +169,7 @@ class RealmDataController {
         case .placeGroup:
             handlePlaceGroupMessages(withMessage: message, withChannel: channel)
             break
-        case .objectGroup:
+        case .objectGroup,.cloudGroup:
             handleObjectGroupMessages(withMessage: message, withChannel: channel)
             break
         default:

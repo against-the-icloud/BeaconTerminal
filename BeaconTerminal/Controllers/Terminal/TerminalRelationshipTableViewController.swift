@@ -113,6 +113,11 @@ class TerminalRelationshipTableViewController: UITableViewController {
             return
         }
         
+        if speciesObservationResults.isEmpty {
+            resetAllCells()
+            return
+        }
+        
         updateReportLabel(shouldReset: true)
         
         for so in speciesObservationResults {
@@ -143,6 +148,15 @@ class TerminalRelationshipTableViewController: UITableViewController {
          
         }
     }
+    
+    func resetAllCells() {
+        if let cells = self.childViewControllers as? [TerminalCellController] {
+            for cell in cells {
+                cell.prepareView()
+            }
+        }
+    }
+    
     
     func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
         
@@ -238,9 +252,9 @@ class TerminalRelationshipTableViewController: UITableViewController {
             switch segueId {
             case "embedCell":
                 
-//                if let cellController = segue.destination as? TerminalCellController {
-//                    cellController.relationshipType = relationshipType
-//                }
+                if let cellController = segue.destination as? TerminalCellController {
+                    cellController.view.setNeedsLayout()
+                }
                 
                 break
             default:

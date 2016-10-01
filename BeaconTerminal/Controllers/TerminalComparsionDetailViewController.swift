@@ -50,9 +50,11 @@ class TerminalComparsionDetailViewController: UIViewController {
         }
         
         if let cellItem = self.cellItem, let relationship = cellItem.relationship {
+            /**
             if let ecosystemIndex = relationship.ecosystem?.index {
                 ecosystemSegmentedControl.selectedSegmentIndex = ecosystemIndex
             }
+             **/
             
             if let attachments = relationship.attachments {
                 
@@ -78,7 +80,7 @@ class TerminalComparsionDetailViewController: UIViewController {
                 reasoningTextView.text = "no answer"
             }
         } else {
-            ecosystemSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
+          //  ecosystemSegmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment
             reasoningTextView.text = ""
             for iv in imageViews {
                 iv.image = nil

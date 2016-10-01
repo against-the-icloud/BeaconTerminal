@@ -175,6 +175,8 @@ class MainContainerController: UIViewController{
         switch getAppDelegate().checkApplicationState() {
         case .objectGroup:
             badgeImageView.image = UIImage(named: "objectGroup")
+        case .cloudGroup:
+            badgeImageView.image = UIImage(named: "cloudGroup")
         default:
             badgeImageView.image = UIImage(named: "placeGroup")
         }
@@ -399,14 +401,7 @@ class MainContainerController: UIViewController{
     
     func scannerAction(sender: UIButton) {
         handleToggleMenu(button: nil)
-        
-        if let oldSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex(),let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-            realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "exit", withGroupIndex: groupIndex, withSpeciesIndex: oldSpeciesIndex)
-            
-            
-            //clear the terminal if needed
-            realmDataController.updateRuntime(withSpeciesIndex: Int(oldSpeciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.exited.rawValue)
-        }
+        realmDataController.clearInViewTerminal(withCondition: "artifact")
         self.performSegue(withIdentifier: "scannerSegue", sender: sender)
     }
     

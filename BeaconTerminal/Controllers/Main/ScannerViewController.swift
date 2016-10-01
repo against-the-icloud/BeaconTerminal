@@ -225,18 +225,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                     return
                 }
                 
-                LOG.debug("----VALUE \(description):MAJOR:\(majorIndex):MINOR:\(minorValue):SPECIES \(speciesIndex)")
+                LOG.debug("----VALUE \(description):MAJOR:\(majorIndex):MINOR:\(minorValue):SPECIES \(speciesIndex)")                        
                 
-                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
-                
-                realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
-                
-                //clear the terminal if needed
-                realmDataController.updateRuntime(withSpeciesIndex: speciesIndex, withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
-                
-                if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-                    realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "enter", withPlace: beaconId.asString, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
-                }
+                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
+             
                 lb.disconnect()
             }
             

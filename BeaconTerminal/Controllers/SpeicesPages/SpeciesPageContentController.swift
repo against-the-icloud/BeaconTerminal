@@ -37,7 +37,18 @@ class SpeciesPageContentController: UIViewController {
         super.viewDidLoad()
         updateHeader()
         prepareNotifications()
+        
+        switch getAppDelegate().checkApplicationState() {
+            case .cloudGroup:
+                prepareHeaderActions()
+            default:
+            break
+        }
+
+        
     }
+    
+   
     
     func prepareNotifications() {
         if let allSO = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let speciesIndex = speciesIndex{
@@ -129,6 +140,29 @@ class SpeciesPageContentController: UIViewController {
     
         //updateTimestamp()
     }
+    
+    func prepareHeaderActions() {
+            speciesProfileImageView.isUserInteractionEnabled = true
+            //now you need a tap gesture recognizer
+            //note that target and action point to what happens when the action is recognized.
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(showTerminalForCurrentSpeciesAction))
+            //Add the recognizer to your view.
+            speciesProfileImageView.addGestureRecognizer(tapRecognizer)
+    }
+        
+    func showTerminalForCurrentSpeciesAction(_ sender: UITapGestureRecognizer) {
+            
+            if let speciesIndex = self.speciesIndex {
+                
+                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+
+                realmDataController.clearInViewTerminal(withCondition: "cloud")
+                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "cloud", withPlace: "species:\(speciesIndex)")                
+            }
+        
+    }
+    
+    // Mark: Actions
     
     @IBAction func subpageSelection(_ sender: UISegmentedControl) {
         

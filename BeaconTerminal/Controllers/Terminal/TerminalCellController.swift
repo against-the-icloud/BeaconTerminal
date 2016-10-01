@@ -35,6 +35,7 @@ class TerminalCellController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        prepareView()
     }
     
     func prepareView() {
@@ -45,11 +46,26 @@ class TerminalCellController: UIViewController {
         let disabledImage = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: false)
         
         profileImageView.image = disabledImage
-        self.view.fadeIn(toAlpha: 0.3) {_ in
-            //            for tap in self.tapCollection {
-            //                tap.isEnabled = false
-            //            }
+        
+        for ic in imageViewCells {
+            ic.isUserInteractionEnabled = false
+            ic.image = nil
         }
+        
+        self.view.fadeIn(toAlpha: 0.3) {_ in
+   
+        }
+        
+        cellItems = [CellItem]()
+
+        /**
+        self.view.fadeIn(toAlpha: 0.3) {_ in
+            for (index,tap) in self.tapCollection.enumerated() {
+                self.imageViewCells[index].isUserInteractionEnabled = false
+                tap.isEnabled = false
+            }
+        }
+ **/
         
     }
     
@@ -86,9 +102,11 @@ class TerminalCellController: UIViewController {
         
         
         self.relationship = relationship
-        //        for tap in tapCollection {
-        //            tap.isEnabled = true
-        //        }
+        
+        for (index,_) in self.imageViewCells.enumerated() {
+            self.imageViewCells[index].isUserInteractionEnabled = true
+            
+        }
         
         var cellItem = CellItem()
         cellItem.groupIndex = groupIndex

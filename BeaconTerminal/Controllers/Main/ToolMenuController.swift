@@ -16,6 +16,9 @@ enum ToolMenuType: String {
     case SCREENSHOT
     case SCANNER
     
+    
+    static let cloudTypes = [PHOTO_LIB, CAMERA, SCREENSHOT]
+    
     static let allTypes = [PHOTO_LIB, CAMERA, SCREENSHOT, SCANNER]
     
     static let defaultTypes = [PHOTO_LIB, CAMERA, SCREENSHOT]
@@ -24,7 +27,7 @@ enum ToolMenuType: String {
 
 class ToolMenuController: MenuController {
     /// Menu diameter.
-    private let baseSize = CGSize(width: 56, height: 56)
+    private let baseSize = CGSize(width: 65, height: 65)
     
     /// Menu bottom inset.
     private let bottomInset: CGFloat = 24

@@ -69,15 +69,21 @@ enum Tabs : String {
 let placeTerminalState = State(ApplicationType.placeTerminal)
 let placeGroupState = State(ApplicationType.placeGroup)
 let objectGroupState = State(ApplicationType.objectGroup)
-let LoginState = State(ApplicationType.login)
-let applicationStateMachine = StateMachine(initialState: LoginState, states: [placeGroupState, objectGroupState,placeTerminalState])
+let cloudGroupState = State(ApplicationType.cloudGroup)
+let loginState = State(ApplicationType.login)
+let applicationStateMachine = StateMachine(initialState: loginState, states: [placeGroupState, objectGroupState, cloudGroupState, placeTerminalState])
 //init events
 
-let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup],
+let loginEvent = Event(name: "login", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup],
+                               destinationValue: ApplicationType.login)
+
+let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup],
                                destinationValue: ApplicationType.placeTerminal)
 
-let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.login,ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.placeGroup)
-let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.objectGroup)
+let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.login,ApplicationType.objectGroup, ApplicationType.placeTerminal, ApplicationType.cloudGroup], destinationValue: ApplicationType.placeGroup)
+let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.placeTerminal, ApplicationType.cloudGroup], destinationValue: ApplicationType.objectGroup)
+
+let cloudGroupEvent = Event(name: "cloudGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.cloudGroup)
 
 var realmDataController : RealmDataController = RealmDataController()
 
@@ -256,21 +262,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch applicationType {
         case .placeTerminal:
-          
             rootVC = prepareTerminalUI()
-            break
-        case .placeGroup:
-            //initStateMachine(applicaitonState: applicationType)
+        case .placeGroup:            
             rootVC = prepareGroupUI()
             prepareBeaconManager()
-            break
         case .objectGroup:
-            //initStateMachine(applicaitonState: applicationType)
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.allTypes)
-            break
+        case .cloudGroup:
+            rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.cloudTypes)
         default:
             //login
-            //initStateMachine(applicaitonState: applicationType)
             rootVC = prepareLoginUI()
         }
         
@@ -324,7 +325,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         mainContainerController.toolMenuTypes = toolMenuTypes
         switch checkApplicationState() {
-        case .objectGroup:
+        case .objectGroup, .cloudGroup:
             mainContainerController.needsTerminal = true
         default:
             mainContainerController.needsTerminal = false
@@ -399,7 +400,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
             break
-        case .objectGroup:
+        case .objectGroup, .cloudGroup:
             
             setDefaultRealm(withSectionName: sectionName)
 
@@ -510,7 +511,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         switch self.checkApplicationState() {
-        case .placeGroup, .objectGroup:
+        case .placeGroup, .objectGroup, .cloudGroup:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
                               runId: sectionName,
@@ -561,11 +562,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func initStateMachine(applicaitonState: ApplicationType) {
         
-        applicationStateMachine.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent])
+        applicationStateMachine.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent, cloudGroupEvent, loginEvent])
         
         placeTerminalState.didEnterState = { state in self.preparePlaceTerminal() }
         placeGroupState.didEnterState = { state in self.preparePlaceGroup() }
         objectGroupState.didEnterState = { state in self.prepareObjectGroup() }
+        cloudGroupState.didEnterState = { state in self.prepareCloudGroup() }
+        loginState.didEnterState = { state in self.prepareLogin() }
+        
         
         switch applicaitonState {
         case .placeGroup:
@@ -580,9 +584,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
                 //LOG.debug("We didn't transition")
             }
-            
+        case .cloudGroup:
+            if !applicationStateMachine.fireEvent(cloudGroupEvent).successful {
+                //LOG.debug("We didn't transition")
+            }
         default:
-            if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
+            if !applicationStateMachine.fireEvent(loginEvent).successful {
                 //LOG.debug("We didn't transition")
             }
         }
@@ -602,8 +609,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
                 //LOG.debug("We didn't transition")
             }
+        case .cloudGroup:
+            if !applicationStateMachine.fireEvent(cloudGroupEvent).successful {
+                //LOG.debug("We didn't transition")
+            }
         default:
-            break
+            if !applicationStateMachine.fireEvent(loginEvent).successful {
+                //LOG.debug("We didn't transition")
+            }
         }
     }
     
@@ -620,6 +633,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func prepareObjectGroup() {
+        
+    }
+    
+    func prepareCloudGroup() {
+        
+    }
+    
+    func prepareLogin() {
         
     }
     
