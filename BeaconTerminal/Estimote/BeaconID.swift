@@ -3,54 +3,54 @@
 //
 
 struct BeaconID: Equatable, CustomStringConvertible, Hashable {
-
+    
+    let identifier: String
     let proximityUUID: UUID
     let major: CLBeaconMajorValue
     let minor: CLBeaconMinorValue
-
-    init(proximityUUID: UUID, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
-        self.proximityUUID = proximityUUID
+    
+    init(identifier: String, UUIDString: String =  "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
+        self.identifier = identifier
+        self.proximityUUID = UUID(uuidString: UUIDString)!
         self.major = major
         self.minor = minor
     }
-
-    init(UUIDString: String, major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
-        self.init(proximityUUID: UUID(uuidString: UUIDString)!, major: major, minor: minor)
-    }
-
+    
     var asString: String {
-        get { return "\(proximityUUID.uuidString):\(major):\(minor)" }
+        get { return "identifier:\(identifier),proximityUUID:\(proximityUUID.uuidString), major:\(major), minor:\(minor)"
+        }
     }
-
+    
     var asBeaconRegion: CLBeaconRegion {
         get { return CLBeaconRegion(
             proximityUUID: self.proximityUUID, major: self.major, minor: self.minor,
-            identifier: self.asString) }
+            identifier: self.identifier) }
     }
-
+    
     var description: String {
         get { return self.asString }
     }
-
+    
     var hashValue: Int {
         get { return self.asString.hashValue }
     }
-
+    
 }
 
 func ==(lhs: BeaconID, rhs: BeaconID) -> Bool {
-    return lhs.proximityUUID == rhs.proximityUUID
+    return lhs.identifier == rhs.identifier
         && lhs.major == rhs.major
         && lhs.minor == rhs.minor
 }
-
-extension CLBeacon {
-
-    var beaconID: BeaconID {
-        get { return BeaconID(
-            proximityUUID: proximityUUID,
-            major: major.uint16Value,
-            minor: minor.uint16Value) }
-    }
-
-}
+/*
+ extension CLBeacon {
+ 
+ var beaconID: BeaconID {
+ get { return BeaconID(
+ identifier: identifier,
+ major: major.uint16Value,
+ minor: minor.uint16Value) }
+ }
+ 
+ }
+ */

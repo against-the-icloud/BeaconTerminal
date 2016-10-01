@@ -113,7 +113,11 @@ struct NutellaUpdate {
 
 
 var beaconNotificationsManager: BeaconNotificationsManager?
+/*
 let beaconIds = [BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 1),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 2),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 3),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 4),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 5),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 6),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 7),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 8),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 9),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 10),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 11),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 12)]
+ */
+
+let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", major: 1, minor: 1),BeaconID(identifier: "ee3a94ba9ed4a25cffaf290226c6d22c", major: 1, minor: 2)]
 
 
 var realm: Realm?

@@ -186,7 +186,7 @@ class MainContainerController: UIViewController{
             
             if let atype = ActionType(rawValue: action) {
                 switch atype {
-                case ActionType.entered:
+                case .entered:
                     
                     _ = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
                     
@@ -199,7 +199,7 @@ class MainContainerController: UIViewController{
                         for v in topTabbar.subviews {
                             v.backgroundColor = mainColor
                         }
-                    
+                        
                         if topTabbar.numberOfSegments < 3 {
                             topTabbar.insertSegment(withTitle: title, at: 2, animated: true)
                             topTabbar.selectedSegmentIndex = 2
@@ -213,7 +213,11 @@ class MainContainerController: UIViewController{
                         changeTab(withControl: topTabbar)
                         realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
                     }
-                    
+                case .exited:
+                    topTabbar.removeSegment(at: 2, animated: true)
+                    topTabbar.selectedSegmentIndex = 0
+                    colorizeSelectedSegment()
+                    changeTab(withControl: topTabbar)
                 default:
                     topTabbar.removeSegment(at: 2, animated: true)
                 }
@@ -298,10 +302,10 @@ class MainContainerController: UIViewController{
             if let svc = segue.destination as? SpeciePageContainerController {
                 svc.topToolbarDelegate = self
             }
-        case "terminalSegue":
-            if let tvc = segue.destination as? TerminalMainViewController {
-                
-            }
+        case "terminalSegue": break
+            // if let tvc = segue.destination as? TerminalMainViewController {
+            
+        //}
         default:
             break
         }
@@ -395,6 +399,14 @@ class MainContainerController: UIViewController{
     
     func scannerAction(sender: UIButton) {
         handleToggleMenu(button: nil)
+        
+        if let oldSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex(),let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+            realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "exit", withGroupIndex: groupIndex, withSpeciesIndex: oldSpeciesIndex)
+            
+            
+            //clear the terminal if needed
+            realmDataController.updateRuntime(withSpeciesIndex: Int(oldSpeciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.exited.rawValue)
+        }
         self.performSegue(withIdentifier: "scannerSegue", sender: sender)
     }
     

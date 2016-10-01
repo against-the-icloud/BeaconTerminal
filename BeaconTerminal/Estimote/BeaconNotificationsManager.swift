@@ -7,39 +7,60 @@ import UserNotifications
 
 class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
 
-    let beaconManager = ESTMonitoringManager()
-
+    var beaconManagers = [ESTMonitoringManager]()
+    //let beaconManager = ESTMonitoringManager()
+    
     var enterMessages = [String: String]()
     var exitMessages = [String: String]()
     
     override init() {
         super.init()
 
-        self.beaconManager.delegate = self
-        self.beaconManager.requestAlwaysAuthorization()
     }
 
     func enableNotificationsForBeaconID(_ beaconID: BeaconID, enterMessage: String?, exitMessage: String?) {
+        
+        let monitoringManager = ESTMonitoringManager()
+        monitoringManager.delegate = self
+        
+        
+     /*
         let beaconRegion = beaconID.asBeaconRegion
         beaconRegion.notifyEntryStateOnDisplay = true
         beaconRegion.notifyOnExit = true
         beaconRegion.notifyOnEntry = true
+        */
         
-        
-        self.enterMessages[beaconRegion.identifier] = enterMessage
-        self.exitMessages[beaconRegion.identifier] = exitMessage
+        self.enterMessages[beaconID.identifier] = enterMessage
+        self.exitMessages[beaconID.identifier] = exitMessage
         
     
-        self.beaconManager.startMonitoring(for: beaconRegion)
+        monitoringManager.startTurboMode()
         
-        LOG.debug("START MONITORING \(beaconRegion)")
+        // Improves performance in background, but can impact the battery. Use with caution.
+        
+        monitoringManager.startMonitoring(forIdentifier: beaconID.identifier, in: .near)
+        
+        beaconManagers.append(monitoringManager)
+        
+        //self.beaconManager.startMonitoring(for: beaconRegion)
+        
 
         
     }
     
+    func monitoringManager(_ manager: ESTMonitoringManager, didFailWithError error: Error) {
+      LOG.debug("DID FAIL WITH  MONITORING \(error) \(manager)")
+    }
+    func monitoringManagerDidStart(_ manager: ESTMonitoringManager) {
+        LOG.debug("START MONITORING \(manager)")
+    }
     
-    func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
-        if let message = self.enterMessages[region.identifier] {
+    func monitoringManager(_ manager: ESTMonitoringManager, didEnterRangeOfIdentifier identifier: String) {
+        
+        if let message = self.enterMessages[identifier], let beaconId = findBeaconId(withId: identifier) {
+            
+            let region = beaconId.asBeaconRegion
             
             self.showNotificationWithMessage(message)
             
@@ -72,8 +93,11 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
         }
     }
     
-    func beaconManager(_ manager: Any, didExitRegion region: CLBeaconRegion) {
-        if let message = self.exitMessages[region.identifier] {
+    func monitoringManager(_ manager: ESTMonitoringManager, didExitRangeOfIdentifier identifier: String) {
+        if let message = self.exitMessages[identifier],  let beaconId = findBeaconId(withId: identifier) {
+            
+            let region = beaconId.asBeaconRegion
+            
             self.showNotificationWithMessage(message)
             LOG.debug("didExitRegion \(region)")
             
@@ -113,6 +137,12 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
         LOG.debug("showNotificationWithMessage SHOW NOTIFICATION")
     }
     
+    func findBeaconId(withId id: String) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
+        return found.first
+    }
+    
+    /**
     func beaconManager(_ manager: Any, didChange status: CLAuthorizationStatus) {
         if status == .denied || status == .restricted {
             LOG.debug("Location Services are disabled for this app, which means it won't be able to detect beacons.")
@@ -125,5 +155,6 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
     func beaconManager(_ manager: Any, monitoringDidFailFor region: CLBeaconRegion?, withError error: Error) {
         LOG.debug("Monitoring failed for region: %@. Make sure that Bluetooth and Location Services are on, and that Location Services are allowed for this app. Beacons require a Bluetooth Low Energy compatible device: <http://www.bluetooth.com/Pages/Bluetooth-Smart-Devices-List.aspx>. Note that the iOS simulator doesn't support Bluetooth at all. The error was: %@ \(region?.identifier)")
     }
+ **/
 
 }

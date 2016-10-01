@@ -120,7 +120,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         stoppedState.didEnterState = { state in
             self.statusLabel.text = "Scanning Stopped..."
-            self.immediateBeaconDetector.stop()            
+            self.immediateBeaconDetector.stop()
         }
         
         errorState.didEnterState = { state in
@@ -210,49 +210,60 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         immediateBeacon.delegate = nil
         
-        
         self.scanningStateMachine?.fireEvent(self.stopEvent)
-
         
-        if let lb = device as? ESTDeviceLocationBeacon, let setting = lb.settings {
-
+        if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
             
+            let minorValue = settings.iBeacon.minor.getValue()
+            let majorValue = settings.iBeacon.major.getValue()
             
-            let minor = setting.iBeacon.minor
-            let value = minor.getValue()
-            let speciesIndex = Int(value - 1)
-            
-            
-            
-            guard speciesIndex >= 0 else {
-                return
+            let majorIndex = Int(majorValue)
+            let speciesIndex = Int(minorValue) - 1
+            if let beaconId = findBeaconMinor(withMinor: Int16(minorValue)) {
+                
+                guard speciesIndex >= 0 else {
+                    return
+                }
+                
+                LOG.debug("----VALUE \(description):MAJOR:\(majorIndex):MINOR:\(minorValue):SPECIES \(speciesIndex)")
+                
+                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                
+                realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
+                
+                //clear the terminal if needed
+                realmDataController.updateRuntime(withSpeciesIndex: speciesIndex, withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
+                
+                if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                    realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "enter", withPlace: beaconId.asString, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+                }
+                lb.disconnect()
             }
             
-            if let oldSpeciesIndex = realmDataController.getRealm().runtimeSpeciesIndex(),let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-                realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "exit", withPlace: self.immediateBeacon.description, withGroupIndex: groupIndex, withSpeciesIndex: oldSpeciesIndex)
-            }
-            
-            realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
-            
-            realmDataController.syncSpeciesObservations(withIndex: Int(speciesIndex))
-            
-            //clear the terminal if needed
-            realmDataController.updateRuntime(withSpeciesIndex: Int(speciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
-            
-            if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-                realmDataController.saveNutellaCondition(withCondition: "artifact", withActionType: "enter", withPlace: self.immediateBeacon.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
-            }
-            
-            lb.disconnect()
         }
+        
+        
+        
+        
+        
+        
         
         self.dismiss(animated: true, completion: {
             
-           
+            
             
         })
     }
     
+    func findBeaconMinor(withMinor minor: Int16) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.minor?.int16Value == minor })
+        return found.first
+    }
+    
+    func findBeaconId(withId id: String) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
+        return found.first
+    }
     
     func estDevice(_ device: ESTDeviceConnectable, didFailConnectionWithError error: Error) {
         if !retryConnection() {

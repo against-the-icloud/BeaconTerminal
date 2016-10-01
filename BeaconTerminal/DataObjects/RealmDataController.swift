@@ -61,7 +61,7 @@ class RealmDataController {
         }
     }
     
-    func saveNutellaCondition(withCondition condition: String, withActionType type: String,  withPlace place: String, withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
+    func saveNutellaCondition(withCondition condition: String, withActionType type: String,  withPlace place: String = "", withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
         if let nutella = nutella {
             let block = DispatchWorkItem {
