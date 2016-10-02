@@ -11,7 +11,7 @@ target 'BeaconTerminal' do
     pod 'Realm'
     pod 'RealmSwift'
 
-    #pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'swift3'
+    pod 'Nutella', :git => 'https://github.com/aperritano/Nutella', :branch => 'master'
     pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
 
 #pod 'RealmSwift'
