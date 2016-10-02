@@ -19,7 +19,7 @@ let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
 //let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = LOCAL_IP
+var CURRENT_HOST = REMOTE
 var SECTION_NAME = "default"
 
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
@@ -57,6 +57,7 @@ enum ApplicationType: String {
     static let allValues = [placeTerminal, placeGroup, objectGroup, cloudGroup]
 }
 
+
 enum Tabs : String {
     case species = "Species"
     case maps = "Place Map"
@@ -85,6 +86,27 @@ let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType
 
 let cloudGroupEvent = Event(name: "cloudGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.cloudGroup)
 
+
+enum LoginTypes: String {
+    case currentRun = "currentRun"
+    case currentSection = "currentSection"
+    case currentGroup = "currentGroup"
+    case model = "model"
+    
+    static let allValues = [currentRun, currentSection, currentGroup, model]
+}
+
+
+//login state machine
+let currentRunState = State(LoginTypes.currentRun)
+let currentRunEvent = Event(name: "currenRun", sourceValues: [LoginTypes.currentRun], destinationValue: LoginTypes.currentRun)
+
+let modelState = State(LoginTypes.model)
+let modelEvent = Event(name: "model", sourceValues: [LoginTypes.currentRun, LoginTypes.model], destinationValue: LoginTypes.model)
+
+let loginStateMachine = StateMachine(initialState: currentRunState, states: [modelState])
+
+
 var realmDataController : RealmDataController = RealmDataController()
 
 struct Platform {
@@ -107,6 +129,14 @@ enum NutellaChannelType: String {
     case allNotesWithSpecies = "all_notes_with_species"
     case allNotesWithGroup = "all_notes_with_group"
     case noteChanges = "note_changes"
+    case speciesNames = "get_species_names"
+}
+
+enum NutellaQueryType: String {
+    case species = "species"
+    case group = "group"
+    case currentRun = "currentRun"
+    case model = "model"
 }
 
 
@@ -158,13 +188,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     
+        //setupLoginConnection()
         
         ESTConfig.setupAppID("wallcology-2016-emb", andAppToken: "fd9eb675b3f09982fd5c1788f7a437dd")
         //crash analytics
         Fabric.with([Crashlytics.self])
         
         realmDataController = RealmDataController()
-        
+       
         let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
         let sectionDict = ["default":groupNames,"guest":groupNames, "6BM":groupNames,"6MT":groupNames,"6DF":groupNames]
         
@@ -174,23 +205,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initStateMachine(applicaitonState: .login)
         
-        prepareViews(applicationType: .login)
-        //getAppDelegate().changeSystemStateTo(.placeGroup)
-        
-        //shortCircuitLogin()
-        
-        //prepareDB(withSectionName: SECTION_NAME)
-        
-        UIView.hr_setToastThemeColor(#colorLiteral(red: 0.9022639394, green: 0.9022851586, blue: 0.9022737145, alpha: 1))
-        
+        prepareLoginInterface(isRemote: false)
     
-        //setupConnection()
+        prepareThemes()
+        
+        return true
+    }
+    
+    func prepareThemes() {
+        UIView.hr_setToastThemeColor(#colorLiteral(red: 0.9022639394, green: 0.9022851586, blue: 0.9022737145, alpha: 1))
         
         UIApplication.shared.statusBarStyle = .lightContent
         
         UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert], categories: nil))
         
-        return true
     }
     
     func shortCircuitLogin() {
@@ -244,21 +272,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.logUser()
         
-        prepareViews(applicationType: checkApplicationState())
-        if let sectionName = defaults.string(forKey: "sectionName") {
-            prepareDB(withSectionName: sectionName)
-            setupConnection(withSectionName: sectionName)
-        } else {
-            prepareDB()
-            setupConnection()
-        }
+        let appState = checkApplicationState()
+        
+        prepareViews(applicationType: appState)
+        postInitialization(applicationType: appState)
     }
     
+    func preInitialization(applicationType: ApplicationType) {
+        if let sectionName = defaults.string(forKey: "sectionName") {
+            switch applicationType {
+            case .placeTerminal, .placeGroup, .objectGroup, .cloudGroup:
+                setupConnection(withSectionName: sectionName)
+            default: break
+            }
+        }
+    }
     
     func prepareViews(applicationType: ApplicationType) {
         window = UIWindow(frame:UIScreen.main.bounds)
         
         var rootVC: NavigationDrawerController?
+        
+        preInitialization(applicationType: applicationType)
         
         switch applicationType {
         case .placeTerminal:
@@ -271,8 +306,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .cloudGroup:
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.cloudTypes)
         default:
-            //login
-            rootVC = prepareLoginUI()
+            break
         }
         
         // Configure the window with the SideNavigationController as the root view controller
@@ -284,6 +318,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         window?.makeKeyAndVisible()
+    }
+    
+    func postInitialization(applicationType: ApplicationType) {
+        if let sectionName = defaults.string(forKey: "sectionName") {
+            switch applicationType {
+            case .placeGroup, .objectGroup, .cloudGroup:
+                prepareDB(withSectionName: sectionName)
+            case .placeTerminal:
+                prepareDB(withSectionName: sectionName)
+                realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
+            default: break
+            }
+        }
+    }
+    
+    func prepareLoginInterface(isRemote: Bool) {
+        switch isRemote {
+        case true:
+            break
+        default:
+            window = UIWindow(frame:UIScreen.main.bounds)
+            
+            var rootVC: NavigationDrawerController?
+            rootVC = prepareLoginUI()
+            if let rnc = window?.rootViewController?.navigationController {
+                rnc.pushViewController(rootVC!, animated: true)
+            } else {
+                window?.rootViewController = rootVC
+            }
+            
+            window?.makeKeyAndVisible()
+        }
     }
     
     func prepareBeaconManager() {
@@ -508,54 +574,104 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupConnection(withSectionName sectionName: String = "default") {
         
+        let currentState = self.checkApplicationState()
         
-        
-        switch self.checkApplicationState() {
-        case .placeGroup, .objectGroup, .cloudGroup:
-            nutella = Nutella(brokerHostname: CURRENT_HOST,
-                              appId: "wallcology",
-                              runId: sectionName,
-                              componentId: ApplicationType.placeGroup.rawValue, netDelegate: self)
-            break
-        case .placeTerminal:
-            nutella = Nutella(brokerHostname: CURRENT_HOST,
-                              appId: "wallcology",
-                              runId: sectionName,
-                              componentId: ApplicationType.placeTerminal.rawValue, netDelegate: self)
-        default:
-            break
-        }
-        
-        
+        nutella = Nutella(brokerHostname: CURRENT_HOST,
+                          appId: "wallcology",
+                          runId: sectionName,
+                          componentId: currentState.rawValue, netDelegate: self)
         
         
         
         let sub_1 = "note_changes"
         let sub_2 = "echo_out"
-        let sub_3 = "place_changes"
+        //let sub_3 = "place_changes"
+        
+        nutella?.net.subscribe(sub_1)
+        realmDataController.queryNutellaAllNotes(withType: .model)
         
         // let sub_3 = "set_current_run"
-        nutella?.net.subscribe(sub_1)
-        nutella?.net.subscribe(sub_2)
-        
-        var dict = [String:String]()
-        dict["HEY_NOW_MAN"] = "HELLO"
+        //nutella?.net.subscribe(sub_1)
+        //var dict = [String:String]()
+        //dict["HEY_NOW_MAN"] = "HELLO"
         
         //nutella?.net.publish("echo_in", message: dict as AnyObject)
         //nutella?.net.subscribe(sub_3)
-        Util.makeToast("Subscribed to \(sub_1):\(sub_2)")
         
-        switch checkApplicationState() {
-        case .placeGroup, .objectGroup:
-            //realmDataController.queryNutellaAllNotes(withType: "group")
-            break
-        case .placeTerminal:
-            realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
+        
+       
+        
+        //resetDB()
+    }
+    
+    // Mark: Nutella LOGIN
+    
+    func setupLoginConnection() {
+        
+        let currentState = checkLoginState()
+        
+        switch currentState {
+        case .currentRun:
+            nutella = Nutella(brokerHostname: CURRENT_HOST,
+                              appId: "wallcology",
+                              runId: "",
+                              componentId: "", netDelegate: self)
+            
+        default:
+            nutella = Nutella(brokerHostname: CURRENT_HOST,
+                              appId: "wallcology",
+                              runId: "",
+                              componentId: "login", netDelegate: self)
+        }
+        
+        switch currentState {
+        case .currentRun:
+            realmDataController.queryNutellaAllNotes(withType: .currentRun)
+        case .model: break
+            //realmDataController.queryNutellaAllNotes(withType: .model)
         default:
             break
         }
+    }
+    
+    // Mark: LoginStateMachine
+    
+    func setUpLoginStateMachine() {
+        initLoginStateMachine(loginState: .currentRun)
+        changeLoginStateTo(.currentRun)
+        changeLoginStateTo(.model)
+    }
+    
+    func initLoginStateMachine(loginState: LoginTypes) {
+        loginStateMachine.addEvents([currentRunEvent, modelEvent])
         
-        //resetDB()
+        currentRunState.didEnterState = { state in
+            self.setupLoginConnection()
+        }
+        
+        modelState.didEnterState = { state in
+            self.setupLoginConnection()
+            print("")
+        }
+    }
+    
+    func changeLoginStateTo(_ state: LoginTypes) {
+        switch state {
+        case .currentRun:
+            if loginStateMachine.fireEvent(currentRunEvent).successful {
+                
+            }
+        case .model:
+            if loginStateMachine.fireEvent(modelEvent).successful {
+                
+            }
+        default:
+            break
+        }
+    }
+    
+    func checkLoginState() -> LoginTypes {
+        return loginStateMachine.currentState.value
     }
     
     // Mark: StateMachine
@@ -684,7 +800,8 @@ extension AppDelegate: NutellaNetDelegate {
         nutellaUpdate.message = response
         nutellaUpdate.updateType = .response
         realmDataController.processNutellaUpdate(nutellaUpdate: nutellaUpdate)
-        LOG.debug("----- Response Recieved on: \(channel) from: \(from) -----")
+        LOG.debug("\n\n----- Response Recieved on: \(channel) from: \(from) -----\n\n")
+        LOG.debug("----- Response \(response)")
     }
     
     func messageReceived(_ channel: String, message: Any, from: [String : String]) {

@@ -30,6 +30,8 @@
 
 import UIKit
 
+private var TextFieldContext: UInt8 = 0
+
 public protocol TextFieldDelegate: UITextFieldDelegate {}
 
 open class TextField: UITextField {
@@ -38,47 +40,43 @@ open class TextField: UITextField {
         return CGSize(width: width, height: 32)
     }
     
+    /// A Boolean that indicates if the placeholder label is animated.
+    @IBInspectable
+    open var isPlaceholderAnimated = true
+    
     /// A Boolean that indicates if the TextField is in an animating state.
 	open internal(set) var isAnimating = false
 	
-	/// A property that accesses the backing layer's backgroundColor.
-	@IBInspectable
-    open override var backgroundColor: UIColor? {
-		didSet {
-			layer.backgroundColor = backgroundColor?.cgColor
-		}
-	}
-	
-    /// Reference to the divider.
-	open private(set) var divider: CAShapeLayer!
-	
-	/// Divider height.
-	@IBInspectable
-    open var dividerHeight: CGFloat = 1
-	
-	/// Divider active state height.
+    /// Divider normal height.
+    @IBInspectable
+    open var dividerNormalHeight: CGFloat = 1
+    
+    
+	/// Divider active height.
 	@IBInspectable
     open var dividerActiveHeight: CGFloat = 2
 	
-	/// Sets the divider.
+	/// Divider normal color.
 	@IBInspectable
-    open var dividerColor: UIColor = Color.darkText.dividers {
-		didSet {
-			if !isEditing {
-				divider.backgroundColor = dividerColor.cgColor
-			}
-		}
-	}
+    open var dividerNormalColor = Color.darkText.dividers {
+        didSet {
+            guard !isEditing else {
+                return
+            }
+            
+            dividerColor = dividerNormalColor
+        }
+    }
 	
-	/// Sets the divider.
+	/// Divider active color.
 	@IBInspectable
-    open var dividerActiveColor: UIColor? {
+    open var dividerActiveColor = Color.blue.base {
 		didSet {
-			if let v: UIColor = dividerActiveColor {
-				if isEditing {
-					divider.backgroundColor = v.cgColor
-				}
-			}
+            guard isEditing else {
+                return
+            }
+            
+            dividerColor = dividerActiveColor
 		}
 	}
 	
@@ -94,9 +92,15 @@ open class TextField: UITextField {
 	@IBInspectable
     open override var text: String? {
 		didSet {
-			if true == text?.isEmpty && !isFirstResponder {
-				placeholderEditingDidEndAnimation()
-			}
+            guard true == text?.isEmpty else {
+                return
+            }
+            
+            guard !isFirstResponder else {
+                return
+            }
+            
+			placeholderEditingDidEndAnimation()
 		}
 	}
 	
@@ -108,9 +112,12 @@ open class TextField: UITextField {
 		}
 		set(value) {
 			placeholderLabel.text = value
-			if let v: String = value {
-				placeholderLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
-			}
+			
+            guard let v = value else {
+                return
+            }
+            
+            placeholderLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderNormalColor])
 		}
 	}
 	
@@ -118,15 +125,19 @@ open class TextField: UITextField {
 	@IBInspectable
     open private(set) var placeholderLabel: UILabel!
 	
-	/// Placeholder textColor.
+	/// Placeholder normal textColor.
 	@IBInspectable
-    open var placeholderColor = Color.darkText.others {
+    open var placeholderNormalColor = Color.darkText.others {
 		didSet {
-			if !isEditing {
-				if let v: String = placeholder {
-					placeholderLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
-				}
-			}
+            guard !isEditing else {
+                return
+            }
+            
+            guard let v = placeholder else {
+                return
+            }
+            
+            placeholderLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderNormalColor])
 		}
 	}
 	
@@ -134,22 +145,27 @@ open class TextField: UITextField {
 	@IBInspectable
     open var placeholderActiveColor = Color.blue.base {
 		didSet {
-			if isEditing {
-				if let v: String = placeholder {
-					placeholderLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderActiveColor])
-				}
-			}
-			tintColor = placeholderActiveColor
+            tintColor = placeholderActiveColor
+            
+            guard isEditing else {
+                return
+            }
+            
+            guard let v = placeholder else {
+                return
+            }
+                
+            placeholderLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderActiveColor])
 		}
 	}
 	
 	/// This property adds a padding to placeholder y position animation
-	open var placeholderVerticalOffset: CGFloat = 0
+	@IBInspectable
+    open var placeholderVerticalOffset: CGFloat = 0
 	
 	/// The detailLabel UILabel that is displayed.
 	@IBInspectable
-    open private(set) lazy var detailLabel = UILabel(frame: .zero)
-	
+    open private(set) lazy var detailLabel = UILabel()
 	
 	/// The detailLabel text value.
 	@IBInspectable
@@ -159,10 +175,6 @@ open class TextField: UITextField {
 		}
 		set(value) {
 			detailLabel.text = value
-			if let v: String = value {
-				detailLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: detailColor])
-			}
-			layoutDetailLabel()
 		}
 	}
 	
@@ -170,9 +182,7 @@ open class TextField: UITextField {
 	@IBInspectable
     open var detailColor = Color.darkText.others {
 		didSet {
-			if let v: String = detailLabel.text {
-				detailLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: detailColor])
-			}
+            updateDetailLabelAttributedText()
 		}
 	}
     
@@ -198,72 +208,84 @@ open class TextField: UITextField {
 	
 	/// Enables the clearIconButton.
 	@IBInspectable
-    open var isClearIconButtonEnable: Bool {
+    open var isClearIconButtonEnabled: Bool {
 		get {
 			return nil != clearIconButton
 		}
 		set(value) {
-			if value {
-				if nil == clearIconButton {
-                    clearIconButton = IconButton(image: Icon.cm.clear, tintColor: placeholderColor)
-					clearIconButton!.contentEdgeInsets = .zero
-					clearIconButton!.pulseAnimation = .center
-                    clearButtonMode = .never
-					rightViewMode = .whileEditing
-					rightView = clearIconButton
-					clearIconButtonAutoHandle = clearIconButtonAutoHandle ? true : false
-				}
-			} else {
-				clearIconButton?.removeTarget(self, action: #selector(handleClearIconButton), for: .touchUpInside)
-				clearIconButton = nil
-			}
+            guard value else {
+                clearIconButton?.removeTarget(self, action: #selector(handleClearIconButton), for: .touchUpInside)
+                clearIconButton = nil
+                return
+            }
+            
+            guard nil == clearIconButton else {
+                return
+            }
+            
+            clearIconButton = IconButton(image: Icon.cm.clear, tintColor: placeholderNormalColor)
+            clearIconButton!.contentEdgeInsets = .zero
+            clearIconButton!.pulseAnimation = .center
+            clearButtonMode = .never
+            rightViewMode = .whileEditing
+            rightView = clearIconButton
+            isClearIconButtonAutoHandled = isClearIconButtonAutoHandled ? true : false
 		}
 	}
 	
 	/// Enables the automatic handling of the clearIconButton.
 	@IBInspectable
-    open var clearIconButtonAutoHandle = true {
+    open var isClearIconButtonAutoHandled = true {
 		didSet {
 			clearIconButton?.removeTarget(self, action: #selector(handleClearIconButton), for: .touchUpInside)
-			if clearIconButtonAutoHandle {
-				clearIconButton?.addTarget(self, action: #selector(handleClearIconButton), for: .touchUpInside)
+			
+            guard isClearIconButtonAutoHandled else {
+                return
 			}
+            
+            clearIconButton?.addTarget(self, action: #selector(handleClearIconButton), for: .touchUpInside)
 		}
 	}
 	
 	/// Enables the visibilityIconButton.
 	@IBInspectable
-    open var isVisibilityIconButtonEnable: Bool {
+    open var isVisibilityIconButtonEnabled: Bool {
 		get {
 			return nil != visibilityIconButton
 		}
 		set(value) {
-			if value {
-				if nil == visibilityIconButton {
-                    visibilityIconButton = IconButton(image: Icon.visibility, tintColor: placeholderColor.withAlphaComponent(isSecureTextEntry ? 0.38 : 0.54))
-					visibilityIconButton!.contentEdgeInsets = .zero
-					visibilityIconButton!.pulseAnimation = .center
-					isSecureTextEntry = true
-					clearButtonMode = .never
-					rightViewMode = .whileEditing
-					rightView = visibilityIconButton
-					visibilityIconButtonAutoHandle = visibilityIconButtonAutoHandle ? true : false
-				}
-			} else {
-				visibilityIconButton?.removeTarget(self, action: #selector(handleVisibilityIconButton), for: .touchUpInside)
-				visibilityIconButton = nil
-			}
+            guard value else {
+                visibilityIconButton?.removeTarget(self, action: #selector(handleVisibilityIconButton), for: .touchUpInside)
+                visibilityIconButton = nil
+                return
+            }
+            
+            guard nil == visibilityIconButton else {
+                return
+            }
+            
+            visibilityIconButton = IconButton(image: Icon.visibility, tintColor: placeholderNormalColor.withAlphaComponent(isSecureTextEntry ? 0.38 : 0.54))
+            visibilityIconButton!.contentEdgeInsets = .zero
+            visibilityIconButton!.pulseAnimation = .center
+            isSecureTextEntry = true
+            clearButtonMode = .never
+            rightViewMode = .whileEditing
+            rightView = visibilityIconButton
+            isVisibilityIconButtonAutoHandled = isVisibilityIconButtonAutoHandled ? true : false
 		}
 	}
 	
 	/// Enables the automatic handling of the visibilityIconButton.
 	@IBInspectable
-    open var visibilityIconButtonAutoHandle: Bool = true {
+    open var isVisibilityIconButtonAutoHandled: Bool = true {
 		didSet {
 			visibilityIconButton?.removeTarget(self, action: #selector(handleVisibilityIconButton), for: .touchUpInside)
-			if visibilityIconButtonAutoHandle {
-				visibilityIconButton?.addTarget(self, action: #selector(handleVisibilityIconButton), for: .touchUpInside)
+			
+            guard isVisibilityIconButtonAutoHandled else {
+                return
 			}
+            
+            visibilityIconButton?.addTarget(self, action: #selector(handleVisibilityIconButton), for: .touchUpInside)
 		}
 	}
 	
@@ -282,6 +304,20 @@ open class TextField: UITextField {
     open override func becomeFirstResponder() -> Bool {
         layoutIfNeeded()
         return super.becomeFirstResponder()
+    }
+    
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard "detailLabel.text" == keyPath else {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        
+        updateDetailLabelAttributedText()
+        layoutDetailLabel()
+    }
+    
+    deinit {
+        removeObserver(self, forKeyPath: "detailLabel.text")
     }
     
 	/**
@@ -312,14 +348,16 @@ open class TextField: UITextField {
 	open override func layoutSubviews() {
 		super.layoutSubviews()
         layoutToSize()
+        layoutDivider()
 	}
 	
 	open override func layoutSublayers(of layer: CALayer) {
 		super.layoutSublayers(of: layer)
-		if self.layer == layer {
-            layoutShape()
-			layoutDivider()
-		}
+        guard self.layer == layer else {
+            return
+        }
+        
+        layoutShape()
 	}
 	
 	/// Handles the text editing did begin state.
@@ -339,23 +377,26 @@ open class TextField: UITextField {
 	/// Handles the clearIconButton TouchUpInside event.
 	@objc
     open func handleClearIconButton() {
-		if false == delegate?.textFieldShouldClear?(self) {
-			return
-		}
-		text = nil
+        guard true == delegate?.textFieldShouldClear?(self) else {
+            return
+        }
+		
+        text = nil
 	}
 	
 	/// Handles the visibilityIconButton TouchUpInside event.
     @objc
 	open func handleVisibilityIconButton() {
 		isSecureTextEntry = !isSecureTextEntry
-		if !isSecureTextEntry {
+		
+        if !isSecureTextEntry {
 			super.font = nil
 			font = placeholderLabel.font
 		}
-		visibilityIconButton?.tintColor = visibilityIconButton?.tintColor.withAlphaComponent(isSecureTextEntry ? 0.38 : 0.54)
+		
+        visibilityIconButton?.tintColor = visibilityIconButton?.tintColor.withAlphaComponent(isSecureTextEntry ? 0.38 : 0.54)
 	}
-	
+    
 	/**
      Prepares the view instance when intialized. When subclassing,
      it is recommended to override the prepare method
@@ -378,22 +419,24 @@ open class TextField: UITextField {
     
 	/// Ensures that the components are sized correctly.
 	open func layoutToSize() {
-		if !isAnimating {
-            layoutPlaceholderLabel()
-			layoutDetailLabel()
-			layoutClearIconButton()
-			layoutVisibilityIconButton()
-		}
+		guard !isAnimating else {
+            return
+        }
+        
+        layoutPlaceholderLabel()
+        layoutDetailLabel()
+        layoutButton(button: clearIconButton)
+        layoutButton(button: visibilityIconButton)
 	}
 	
 	/// Layout the divider.
 	open func layoutDivider() {
-        divider.frame = CGRect(x: 0, y: height, width: width, height: isEditing ? dividerActiveHeight : dividerHeight)
+        divider.reload()
 	}
 	
 	/// Layout the placeholderLabel.
 	open func layoutPlaceholderLabel() {
-		if !isEditing && true == text?.isEmpty {
+		if !isEditing && true == text?.isEmpty && isPlaceholderAnimated {
 			placeholderLabel.frame = bounds
 		} else if placeholderLabel.transform.isIdentity {
 			placeholderLabel.frame = bounds
@@ -406,7 +449,7 @@ open class TextField: UITextField {
 			default:break
 			}
 			placeholderLabel.y = -placeholderLabel.height + placeholderVerticalOffset
-			placeholderLabel.textColor = placeholderColor
+			placeholderLabel.textColor = placeholderNormalColor
 		} else {
 			switch textAlignment {
 			case .left, .natural:
@@ -423,95 +466,105 @@ open class TextField: UITextField {
 	
 	/// Layout the detailLabel.
 	open func layoutDetailLabel() {
-		let h: CGFloat = nil == detail ? 12 : detailLabel.font.stringSize(string: detail!, constrainedToWidth: Double(width)).height
-        detailLabel.frame = CGRect(x: 0, y: divider.y + detailVerticalOffset, width: width, height: h)
+        guard let v = divider.line else {
+            return
+        }
+        
+        let h: CGFloat = nil == detail ? 12 : detailLabel.font.stringSize(string: detail!, constrainedToWidth: Double(width)).height
+        detailLabel.frame = CGRect(x: 0, y: v.y + detailVerticalOffset, width: width, height: h)
 	}
 	
-	/// Layout the clearIconButton.
-	open func layoutClearIconButton() {
-		if let v = clearIconButton {
-			if 0 < width && 0 < height {
-                v.frame = CGRect(x: width - height, y: 0, width: height, height: height)
-			}
-		}
-	}
-	
-	/// Layout the visibilityIconButton.
-	open func layoutVisibilityIconButton() {
-		if let v = visibilityIconButton {
-			if 0 < width && 0 < height {
-                v.frame = CGRect(x: width - height, y: 0, width: height, height: height)
-			}
-		}
+	/// Layout the a button.
+    open func layoutButton(button: UIButton?) {
+        guard 0 < width && 0 < height else {
+            return
+        }
+        
+        button?.frame = CGRect(x: width - height, y: 0, width: height, height: height)
 	}
 	
 	/// The animation for the divider when editing begins.
 	open func dividerEditingDidBeginAnimation() {
 		dividerHeight = dividerActiveHeight
-		divider.backgroundColor = nil == dividerActiveColor ? placeholderActiveColor.cgColor : dividerActiveColor!.cgColor
+		dividerColor = dividerActiveColor
 	}
 	
 	/// The animation for the divider when editing ends.
 	open func dividerEditingDidEndAnimation() {
-		divider.frame.size.height = dividerHeight
-		divider.backgroundColor = dividerColor.cgColor
+		dividerHeight = dividerNormalHeight
+		dividerColor = dividerNormalColor
 	}
 	
 	/// The animation for the placeholder when editing begins.
 	open func placeholderEditingDidBeginAnimation() {
-		if placeholderLabel.transform.isIdentity {
-			isAnimating = true
-			UIView.animate(withDuration: 0.15, animations: { [weak self] in
-				if let s = self {
-					s.placeholderLabel.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-					switch s.textAlignment {
-					case .left, .natural:
-						s.placeholderLabel.x = 0
-					case .right:
-						s.placeholderLabel.x = s.width - s.placeholderLabel.width
-					default:break
-					}
-					s.placeholderLabel.y = -s.placeholderLabel.height + s.placeholderVerticalOffset
-					s.placeholderLabel.textColor = s.placeholderActiveColor
-				}
-			}) { [weak self] _ in
-				self?.isAnimating = false
-			}
-		} else if isEditing {
-			placeholderLabel.textColor = placeholderActiveColor
-		}
+        guard isPlaceholderAnimated else {
+            return
+        }
+        
+        guard placeholderLabel.transform.isIdentity else {
+            if isEditing {
+                placeholderLabel.textColor = placeholderActiveColor
+            }
+            return
+        }
+        
+        isAnimating = true
+        UIView.animate(withDuration: 0.15, animations: { [weak self] in
+            guard let s = self else {
+                return
+            }
+            
+            s.placeholderLabel.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+            
+            switch s.textAlignment {
+            case .left, .natural:
+                s.placeholderLabel.x = 0
+            case .right:
+                s.placeholderLabel.x = s.width - s.placeholderLabel.width
+            default:break
+            }
+            
+            s.placeholderLabel.y = -s.placeholderLabel.height + s.placeholderVerticalOffset
+            s.placeholderLabel.textColor = s.placeholderActiveColor
+        }) { [weak self] _ in
+            self?.isAnimating = false
+        }
 	}
 	
 	/// The animation for the placeholder when editing ends.
 	open func placeholderEditingDidEndAnimation() {
-		if !placeholderLabel.transform.isIdentity && true == text?.isEmpty {
+        guard isPlaceholderAnimated else {
+            return
+        }
+        
+        if !placeholderLabel.transform.isIdentity && true == text?.isEmpty {
 			isAnimating = true
 			UIView.animate(withDuration: 0.15, animations: { [weak self] in
-				if let s = self {
-					s.placeholderLabel.transform = CGAffineTransform.identity
-					s.placeholderLabel.x = 0
-					s.placeholderLabel.y = 0
-					s.placeholderLabel.textColor = s.placeholderColor
-				}
+                guard let s = self else {
+                    return
+                }
+                
+                s.placeholderLabel.transform = CGAffineTransform.identity
+                s.placeholderLabel.x = 0
+                s.placeholderLabel.y = 0
+                s.placeholderLabel.textColor = s.placeholderNormalColor
 			}) { [weak self] _ in
 				self?.isAnimating = false
 			}
 		} else if !isEditing {
-			placeholderLabel.textColor = placeholderColor
+			placeholderLabel.textColor = placeholderNormalColor
 		}
 	}
 	
 	/// Prepares the divider.
 	private func prepareDivider() {
-        divider = CAShapeLayer()
-		dividerColor = Color.darkText.dividers
-		layer.addSublayer(divider)
+        dividerColor = dividerNormalColor
 	}
 	
 	/// Prepares the placeholderLabel.
 	private func preparePlaceholderLabel() {
-        placeholderLabel = UILabel(frame: .zero)
-		placeholderColor = Color.darkText.others
+        placeholderLabel = UILabel()
+		placeholderNormalColor = Color.darkText.others
         font = RobotoFont.regular(with: 16)
         addSubview(placeholderLabel)
 	}
@@ -522,6 +575,7 @@ open class TextField: UITextField {
         detailLabel.numberOfLines = 0
 		detailColor = Color.darkText.others
 		addSubview(detailLabel)
+        addObserver(self, forKeyPath: "detailLabel.text", options: [], context: &TextFieldContext)
 	}
 	
 	/// Prepares the target handlers.
@@ -533,5 +587,14 @@ open class TextField: UITextField {
     /// Prepares the textAlignment.
     private func prepareTextAlignment() {
         textAlignment = .rightToLeft == UIApplication.shared.userInterfaceLayoutDirection ? .right : .left
+    }
+    
+    /// Updates the detailLabel attributedText.
+    private func updateDetailLabelAttributedText() {
+        guard let v = detail else {
+            return
+        }
+        
+        detailLabel.attributedText = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: detailColor])
     }
 }

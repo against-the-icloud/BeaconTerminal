@@ -1,8 +1,8 @@
 {
   "name": "Material",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "BSD-3-Clause",
-  "summary": "An animation and graphics framework for Material Design in Swift.",
+  "summary": "Material is an animation and graphics framework that is used to create beautiful applications.",
   "homepage": "http://cosmicmind.io",
   "social_media_url": "https://www.facebook.com/cosmicmindio",
   "authors": {
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/CosmicMind/Material.git",
-    "tag": "2.0.0"
+    "tag": "2.1.0"
   },
   "platforms": {
     "ios": "8.0",
@@ -20,7 +20,7 @@
     "source_files": "Sources/iOS/**/*.swift"
   },
   "osx": {
-    "source_files": "Sources/OSX/**/*.swift"
+    "source_files": "Sources/macOS/**/*.swift"
   },
   "requires_arc": true,
   "resource_bundles": {

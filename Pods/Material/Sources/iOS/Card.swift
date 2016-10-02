@@ -36,32 +36,54 @@ open class Card: PulseView {
         return 0 < width && nil != superview
     }
     
-    /// A preset wrapper around contentInset.
-    open var contentEdgeInsetsPreset: EdgeInsetsPreset {
-        get {
-            return grid.contentEdgeInsetsPreset
-        }
-        set(value) {
-            grid.contentEdgeInsetsPreset = value
-            layoutSubviews()
+    /// A container view for subviews.
+    open private(set) lazy var container = UIView()
+    
+    @IBInspectable
+    open override var cornerRadiusPreset: CornerRadiusPreset {
+        didSet {
+            container.cornerRadiusPreset = cornerRadiusPreset
         }
     }
     
-    /// A wrapper around grid.contentInset.
     @IBInspectable
-    open var contentEdgeInsets: EdgeInsets {
-        get {
-            return grid.contentEdgeInsets
+    open override var cornerRadius: CGFloat {
+        didSet {
+            container.cornerRadius = cornerRadius
         }
-        set(value) {
-            grid.contentEdgeInsets = value
-            layoutSubviews()
+    }
+    
+    open override var shapePreset: ShapePreset {
+        didSet {
+            container.shapePreset = shapePreset
+        }
+    }
+    
+    @IBInspectable
+    open override var backgroundColor: UIColor? {
+        didSet {
+            container.backgroundColor = backgroundColor
         }
     }
     
     /// A reference to the toolbar.
     @IBInspectable
     open var toolbar: Toolbar? {
+        didSet {
+            layoutSubviews()
+        }
+    }
+    
+    /// A preset wrapper around toolbarEdgeInsets.
+    open var toolbarEdgeInsetsPreset = EdgeInsetsPreset.none {
+        didSet {
+            toolbarEdgeInsets = EdgeInsetsPresetToValue(preset: toolbarEdgeInsetsPreset)
+        }
+    }
+    
+    /// A reference to toolbarEdgeInsets.
+    @IBInspectable
+    open var toolbarEdgeInsets = EdgeInsets.zero {
         didSet {
             layoutSubviews()
         }
@@ -75,9 +97,39 @@ open class Card: PulseView {
         }
     }
     
+    /// A preset wrapper around contentViewEdgeInsets.
+    open var contentViewEdgeInsetsPreset = EdgeInsetsPreset.none {
+        didSet {
+            contentViewEdgeInsets = EdgeInsetsPresetToValue(preset: contentViewEdgeInsetsPreset)
+        }
+    }
+    
+    /// A reference to contentViewEdgeInsets.
+    @IBInspectable
+    open var contentViewEdgeInsets = EdgeInsets.zero {
+        didSet {
+            layoutSubviews()
+        }
+    }
+    
     /// A reference to the bottomBar.
     @IBInspectable
     open var bottomBar: Bar? {
+        didSet {
+            layoutSubviews()
+        }
+    }
+    
+    /// A preset wrapper around bottomBarEdgeInsets.
+    open var bottomBarEdgeInsetsPreset = EdgeInsetsPreset.none {
+        didSet {
+            bottomBarEdgeInsets = EdgeInsetsPresetToValue(preset: bottomBarEdgeInsetsPreset)
+        }
+    }
+    
+    /// A reference to bottomBarEdgeInsets.
+    @IBInspectable
+    open var bottomBarEdgeInsets = EdgeInsets.zero {
         didSet {
             layoutSubviews()
         }
@@ -117,57 +169,78 @@ open class Card: PulseView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
+        guard willLayout else {
+            return
+        }
+        
         reload()
     }
     
     /// Reloads the layout.
     open func reload() {
-        guard willLayout else {
-            return
-        }
-        
-        // clear constraints so new ones do not conflict
-        removeConstraints(constraints)
-        for v in subviews {
+        // Clear constraints so new ones do not conflict.
+        container.removeConstraints(constraints)
+        for v in container.subviews {
             v.removeFromSuperview()
         }
         
-        layout()
-    }
-    
-    /// Lays out view.
-    open func layout() {
         var format = "V:|"
         var views = [String: Any]()
+        var metrics = [String: Any]()
         
         if let v = toolbar {
-            format += "[toolbar]"
+            metrics["toolbarTop"] = toolbarEdgeInsets.top
+            metrics["toolbarBottom"] = toolbarEdgeInsets.bottom
+            
+            format += "-(toolbarTop)-[toolbar]-(toolbarBottom)"
             views["toolbar"] = v
-            layout(v).horizontally().height(v.height)
+            container.layout(v).horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right).height(v.height)
             v.grid.reload()
+            v.divider.reload()
         }
         
         if let v = contentView {
-            format += "-(top)-[contentView]-(bottom)-"
+            metrics["contentViewBottom"] = contentViewEdgeInsets.bottom
+            
+            if nil != toolbar {
+                metrics["toolbarBottom"] = (metrics["toolbarBottom"] as! CGFloat) + contentViewEdgeInsets.top
+                format += "-[contentView]-(contentViewBottom)"
+            } else {
+                metrics["contentViewTop"] = contentViewEdgeInsets.top
+                format += "-(contentViewTop)-[contentView]-(contentViewBottom)"
+            }
+            
             views["contentView"] = v
-            layout(v).horizontally(left: contentEdgeInsets.left, right: contentEdgeInsets.right)
+            container.layout(v).horizontally(left: contentViewEdgeInsets.left, right: contentViewEdgeInsets.right)
+            v.grid.reload()
+            v.divider.reload()
         }
         
         if let v = bottomBar {
-            format += "[bottomBar]"
+            metrics["bottomBarBottom"] = bottomBarEdgeInsets.bottom
+            
+            if nil != contentView {
+                metrics["contentViewBottom"] = (metrics["contentViewBottom"] as! CGFloat) + bottomBarEdgeInsets.top
+                format += "-[bottomBar]-(bottomBarBottom)"
+            } else if nil != toolbar {
+                metrics["toolbarBottom"] = (metrics["toolbarBottom"] as! CGFloat) + bottomBarEdgeInsets.top
+                format += "-[bottomBar]-(bottomBarBottom)"
+            } else {
+                metrics["bottomBarTop"] = bottomBarEdgeInsets.top
+                format += "-(bottomBarTop)-[bottomBar]-(bottomBarBottom)"
+            }
+            
             views["bottomBar"] = v
-            layout(v).horizontally().height(v.height)
+            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right).height(v.height)
+            v.grid.reload()
+            v.divider.reload()
         }
         
         guard 0 < views.count else {
             return
         }
         
-        var metrics = [String: Any]()
-        metrics["top"] = contentEdgeInsets.top
-        metrics["bottom"] = contentEdgeInsets.bottom
-        
-        addConstraints(Layout.constraint(format: "\(format)|", options: [], metrics: metrics, views: views))
+        container.addConstraints(Layout.constraint(format: "\(format)-|", options: [], metrics: metrics, views: views))
     }
     
     /**
@@ -181,6 +254,8 @@ open class Card: PulseView {
         super.prepare()
         depthPreset = .depth1
         pulseAnimation = .none
+        cornerRadiusPreset = .cornerRadius1
+        prepareContainer()
     }
     
     /**
@@ -193,5 +268,11 @@ open class Card: PulseView {
         self.toolbar = toolbar
         self.contentView = contentView
         self.bottomBar = bottomBar
+    }
+    
+    /// Prepares the container.
+    private func prepareContainer() {
+        container.clipsToBounds = true
+        layout(container).edges()
     }
 }

@@ -140,7 +140,7 @@ class TerminalMainViewController: UIViewController {
         let loginNavigationController = storyboard.instantiateViewController(withIdentifier: "loginNavigationController") as! UINavigationController
         
         if let loginSectionViewController = loginNavigationController.viewControllers[0] as? LoginSectionViewController {
-            loginSectionViewController.loginType = LoginType.species
+            loginSectionViewController.loginType = groupType.species
         }
         
         self.present(loginNavigationController, animated: true, completion: {})

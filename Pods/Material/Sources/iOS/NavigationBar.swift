@@ -39,41 +39,6 @@ public enum NavigationBarStyle: Int {
 }
 
 open class NavigationBar: UINavigationBar {
-    /// Divider layer.
-    internal private(set) var divider: Divider!
-    
-    /// Divider color.
-    @IBInspectable
-    open var dividerColor: UIColor? {
-        get {
-            return divider.color
-        }
-        set(value) {
-            divider.color = value
-        }
-    }
-    
-    /// Divider animation.
-    open var dividerAlignment: DividerAlignment {
-        get {
-            return divider.alignment
-        }
-        set(value) {
-            divider.alignment = value
-        }
-    }
-    
-    /// Divider height.
-    @IBInspectable
-    open var dividerHeight: CGFloat {
-        get {
-            return divider.height
-        }
-        set(value) {
-            divider.height = value
-        }
-    }
-    
     open override var intrinsicContentSize: CGSize {
         switch navigationBarStyle {
         case .small:
@@ -95,14 +60,14 @@ open class NavigationBar: UINavigationBar {
 		return 0 < width && 0 < height && nil != superview
 	}
 	
-	/// A preset wrapper around contentInset.
+	/// A preset wrapper around contentEdgeInsets.
 	open var contentEdgeInsetsPreset = EdgeInsetsPreset.none {
 		didSet {
             contentEdgeInsets = EdgeInsetsPresetToValue(preset: contentEdgeInsetsPreset)
 		}
 	}
 	
-	/// A wrapper around grid.contentInset.
+	/// A reference to EdgeInsets.
 	@IBInspectable
     open var contentEdgeInsets = EdgeInsets.zero {
 		didSet {
@@ -189,9 +154,11 @@ open class NavigationBar: UINavigationBar {
     
     open override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        if self.layer == layer {
-            layoutShape()
+        guard self.layer == layer else {
+            return
         }
+        
+        layoutShape()
     }
 	
 	open override func layoutSubviews() {
@@ -324,8 +291,6 @@ open class NavigationBar: UINavigationBar {
      when subclassing.
      */
 	public func prepare() {
-        prepareDivider()
-        
         barStyle = .black
 		isTranslucent = false
 		depthPreset = .depth1
@@ -358,9 +323,4 @@ open class NavigationBar: UINavigationBar {
         }
         item.titleView = UIView(frame: .zero)
 	}
-    
-    /// Prepares the divider.
-    private func prepareDivider() {
-        divider = Divider(view: self)
-    }
 }

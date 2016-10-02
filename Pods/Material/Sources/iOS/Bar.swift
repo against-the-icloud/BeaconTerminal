@@ -37,41 +37,6 @@ public enum ContentViewAlignment: Int {
 }
 
 open class Bar: View {
-    /// Divider layer.
-    internal private(set) var divider: Divider!
-    
-    /// Divider color.
-    @IBInspectable
-    open var dividerColor: UIColor? {
-        get {
-            return divider.color
-        }
-        set(value) {
-            divider.color = value
-        }
-    }
-    
-    /// Divider animation.
-    open var dividerAlignment: DividerAlignment {
-        get {
-            return divider.alignment
-        }
-        set(value) {
-            divider.alignment = value
-        }
-    }
-    
-    /// Divider height.
-    @IBInspectable
-    open var dividerHeight: CGFloat {
-        get {
-            return divider.height
-        }
-        set(value) {
-            divider.height = value
-        }
-    }
-    
     /// Should center the contentView.
     open var contentViewAlignment = ContentViewAlignment.any {
         didSet {
@@ -84,7 +49,7 @@ open class Bar: View {
         return 0 < width && 0 < height && nil != superview
     }
     
-    /// A preset wrapper around contentInset.
+    /// A preset wrapper around contentEdgeInsets.
     open var contentEdgeInsetsPreset: EdgeInsetsPreset {
         get {
             return grid.contentEdgeInsetsPreset
@@ -94,7 +59,7 @@ open class Bar: View {
         }
     }
     
-    /// A wrapper around grid.contentInset.
+    /// A reference to EdgeInsets.
     @IBInspectable
     open var contentEdgeInsets: EdgeInsets {
         get {
@@ -159,6 +124,16 @@ open class Bar: View {
         }
     }
     
+    /// Center UIViews.
+    open var centerViews: [UIView] {
+        get {
+            return contentView.grid.views
+        }
+        set(value) {
+            contentView.grid.views = value
+        }
+    }
+    
     /**
      An initializer that initializes the object with a NSCoder object.
      - Parameter aDecoder: A NSCoder instance.
@@ -187,11 +162,13 @@ open class Bar: View {
      A convenience initializer with parameter settings.
      - Parameter leftViews: An Array of UIViews that go on the left side.
      - Parameter rightViews: An Array of UIViews that go on the right side.
+     - Parameter centerViews: An Array of UIViews that go in the center.
      */
-    public init(leftViews: [UIView]? = nil, rightViews: [UIView]? = nil) {
+    public init(leftViews: [UIView]? = nil, rightViews: [UIView]? = nil, centerViews: [UIView]? = nil) {
         self.leftViews = leftViews ?? []
         self.rightViews = rightViews ?? []
         super.init(frame: .zero)
+        self.centerViews = centerViews ?? []
         frame.size = intrinsicContentSize
     }
     
@@ -264,17 +241,14 @@ open class Bar: View {
      */
     open override func prepare() {
         super.prepare()
+        autoresizingMask = .flexibleWidth
+        interimSpacePreset = .interimSpace3
+        contentEdgeInsetsPreset = .square1
         prepareContentView()
-        prepareDivider()
     }
     
     /// Prepares the contentView.
     private func prepareContentView() {
         contentView.backgroundColor = nil
-    }
-    
-    /// Prepares the divider.
-    private func prepareDivider() {
-        divider = Divider(view: self)
     }
 }

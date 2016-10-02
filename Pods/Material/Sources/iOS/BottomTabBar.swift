@@ -72,9 +72,11 @@ open class BottomTabBar: UITabBar {
 	
     open override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        if self.layer == layer {
-            layoutShape()
+        guard self.layer == layer else {
+            return
         }
+        
+        layoutShape()
     }
     
 	open override func layoutSubviews() {
@@ -131,53 +133,3 @@ open class BottomTabBar: UITabBar {
 		backgroundImage = image
 	}
 }
-
-/// A memory reference to the TabBarItem instance.
-private var TabBarKey: UInt8 = 0
-
-extension UITabBar {
-    /// TabBarItem reference.
-    internal private(set) var divider: Divider {
-        get {
-            return AssociatedObject(base: self, key: &TabBarKey) {
-                return Divider(view: self)
-            }
-        }
-        set(value) {
-            AssociateObject(base: self, key: &TabBarKey, value: value)
-        }
-    }
-    
-    /// Divider color.
-    @IBInspectable
-    open var dividerColor: UIColor? {
-        get {
-            return divider.color
-        }
-        set(value) {
-            divider.color = value
-        }
-    }
-    
-    /// Divider animation.
-    open var dividerAlignment: DividerAlignment {
-        get {
-            return divider.alignment
-        }
-        set(value) {
-            divider.alignment = value
-        }
-    }
-    
-    /// Divider height.
-    @IBInspectable
-    open var dividerHeight: CGFloat {
-        get {
-            return divider.height
-        }
-        set(value) {
-            divider.height = value
-        }
-    }
-}
-

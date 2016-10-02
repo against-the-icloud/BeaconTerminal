@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import RealmSwift
 
-enum LoginType {
+enum groupType {
     case group
     case species
 }
@@ -21,7 +21,7 @@ class LoginSectionViewController: UITableViewController {
     let defaults = UserDefaults.standard
     
     // determined at runtime
-    var loginType: LoginType = .group
+    var loginType: groupType = .group
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -86,9 +86,12 @@ extension LoginSectionViewController {
     
         if let cell = tableView.cellForRow(at: indexPath) as? LoginConditionCell {
             
-            let sectionName = cell.titleLabel.text
-            defaults.set(sectionName, forKey: "sectionName")
-            defaults.synchronize()
+            if let sectionName = cell.titleLabel.text {
+                defaults.set(sectionName, forKey: "sectionName")
+                defaults.synchronize()
+                getAppDelegate().setupConnection(withSectionName: sectionName)
+            }
+            
             
             switch self.loginType {
             case .species:

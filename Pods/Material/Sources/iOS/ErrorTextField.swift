@@ -30,11 +30,12 @@
 
 import UIKit
 
-public class ErrorTextField: TextField {
+open class ErrorTextField: TextField {
     /// Controls the visibility of detailLabel
-    @IBInspectable public var revealError: Bool = false {
+    @IBInspectable
+    open var isErrorRevealed = false {
         didSet {
-            detailLabel.isHidden = !revealError
+            detailLabel.isHidden = !isErrorRevealed
         }
     }
     
@@ -45,9 +46,9 @@ public class ErrorTextField: TextField {
      The super.prepare method should always be called immediately
      when subclassing.
      */
-    override public func prepare() {
+    open override func prepare() {
         super.prepare()
-        revealError = false
+        isErrorRevealed = false
         detailColor = Color.red.base
     }
 }

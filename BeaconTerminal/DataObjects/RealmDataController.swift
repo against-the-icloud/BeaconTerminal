@@ -57,7 +57,7 @@ class RealmDataController {
             
             //clear the terminal if needed
             realmDataController.updateRuntime(withSpeciesIndex: Int(oldSpeciesIndex), withRealmType: RealmType.terminalDB, withAction: ActionType.exited.rawValue)
-
+            
         }
     }
     
@@ -98,9 +98,9 @@ class RealmDataController {
     
     // Mark: Nutella Queries
     
-    func queryNutellaAllNotes(withType type: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
+    func queryNutellaAllNotes(withType type: NutellaQueryType, withRealmType realmType: RealmType = RealmType.defaultDB) {
         switch type {
-        case "group":
+        case .group:
             if let index = getRealm(withRealmType: realmType).runtimeGroupIndex() {
                 if let nutella = nutella {
                     let block = DispatchWorkItem {
@@ -115,7 +115,7 @@ class RealmDataController {
                     DispatchQueue.main.async(execute: block)
                 }
             }
-        case "species":
+        case .species:
             
             if let index = getRealm(withRealmType: realmType).runtimeSpeciesIndex() {
                 if let nutella = nutella {
@@ -131,8 +131,32 @@ class RealmDataController {
                     DispatchQueue.main.async(execute: block)
                 }
             }
-        default:
-            break
+        case .currentRun:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("get_current_run", message: jsonObject as AnyObject, requestName: "get_current_run")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+        case .model:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("get_species_names", message: jsonObject as AnyObject, requestName: "get_species_names")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
         }
     }
     
@@ -162,14 +186,28 @@ class RealmDataController {
             return
         }
         
+        
+        if let precheckChannel = NutellaChannelType(rawValue: channel) {
+            switch precheckChannel {
+            case .speciesNames:
+                parseModelSpeciesNames(withMessage: message)
+                return
+            default: break
+            }
+        }
+        
+        
         switch getAppDelegate().checkApplicationState() {
+            
         case .placeTerminal:
             handlePlaceTerminalMessages(withMessage: message, withChannel: channel)
             break
         case .placeGroup:
+            
             handlePlaceGroupMessages(withMessage: message, withChannel: channel)
             break
         case .objectGroup,.cloudGroup:
+            
             handleObjectGroupMessages(withMessage: message, withChannel: channel)
             break
         default:
@@ -263,7 +301,7 @@ class RealmDataController {
         }
     }
     
-    func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {                
+    func handlePlaceTerminalMessages(withMessage message: Any, withChannel channel: String) {
         if let channelType = NutellaChannelType(rawValue: channel) {
             guard let currentSpeciesIndex = getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
                 //need species for this message
@@ -294,6 +332,29 @@ class RealmDataController {
             }
         }
     }
+    
+    //Mark: Handle Parsing
+    
+    func parseModelSpeciesNames(withMessage message: Any) {
+        let json = JSON(message)
+        
+        guard let names = json.array else {
+            //no speciesIndex
+            return
+        }
+        
+        var speciesNames = [String]()
+        
+        for name in names {
+            speciesNames.append("\(name)")
+        }
+        
+        
+        UserDefaults.standard.set(speciesNames, forKey: "speciesNames")
+        UserDefaults.standard.synchronize()
+        
+    }
+    
     
     func parseHeader(withMessage message: Any) -> Header? {
         let json = JSON(message)
@@ -1075,7 +1136,18 @@ extension RealmDataController {
     
     // Mark: Configuration
     
+    func speciesName(withIndex index: Int) -> String {
+        let speciesNames = UserDefaults.standard.array(forKey: "speciesNames") ?? []
+        
+        if speciesNames.count >= index {
+            return (speciesNames[index] as? String)!
+        }
+        
+        return "\(index)"
+    }
+    
     func parseSpeciesConfigurationJson() -> [Species] {
+        
         var allSpecies = [Species]()
         
         let path = Bundle.main.path(forResource: "wallcology_configuration", ofType: "json")
@@ -1101,7 +1173,7 @@ extension RealmDataController {
                     species.imgUrl = imgUrl
                 }
                 
-                species.name = Randoms.creatureNames()[index]
+                species.name = speciesName(withIndex: index)
                 
                 allSpecies.append(species)
                 
@@ -1171,7 +1243,8 @@ extension RealmDataController {
                     species.imgUrl = imgUrl
                 }
                 
-                species.name = Randoms.creatureNames()[index]
+                species.name = speciesName(withIndex: index)
+                
                 
                 simulationConfiguration.species.append(species)
                 

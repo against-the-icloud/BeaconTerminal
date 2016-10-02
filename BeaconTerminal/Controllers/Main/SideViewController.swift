@@ -24,10 +24,8 @@ class SideViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+        super.viewWillAppear(animated)        
     }
-    
     
     // MARK: table
     
@@ -45,7 +43,12 @@ class SideViewController: UITableViewController {
                 
         switch indexPath.section {
         case 0:
-            //getAppDelegate().prepareViews(applicationType: ApplicationType.login)
+        
+            if indexPath.row == 1 {
+                //do manual
+                getAppDelegate().prepareLoginInterface(isRemote: true)
+            }
+            
             break
         case 1:
             self.navigationDrawerController?.closeLeftView()

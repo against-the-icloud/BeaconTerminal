@@ -213,7 +213,7 @@ class MainContainerController: UIViewController{
                         
                         colorizeSelectedSegment()
                         changeTab(withControl: topTabbar)
-                        realmDataController.queryNutellaAllNotes(withType: "species", withRealmType: RealmType.terminalDB)
+                        realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
                     }
                 case .exited:
                     topTabbar.removeSegment(at: 2, animated: true)

@@ -78,7 +78,7 @@ open class TabBar: Bar {
                 b.removeFromSuperview()
             }
 			
-            contentView.grid.views = buttons as [UIView]
+            centerViews = buttons as [UIView]
             
 			layoutSubviews()
 		}
@@ -137,11 +137,10 @@ open class TabBar: Bar {
             return
         }
             
-        let columns: Int = contentView.grid.axis.columns / buttons.count
         for b in buttons {
-            b.grid.columns = columns
-            b.contentEdgeInsets = .zero
+            b.grid.columns = 0
             b.cornerRadius = 0
+            b.contentEdgeInsets = .zero
             
             if isLineAnimated {
                 prepareLineAnimationHandler(button: b)
@@ -208,8 +207,8 @@ open class TabBar: Bar {
      */
 	open override func prepare() {
 		super.prepare()
-        
-        autoresizingMask = .flexibleWidth
+        contentEdgeInsetsPreset = .none
+        interimSpacePreset = .none
         prepareLine()
         prepareDivider()
 	}

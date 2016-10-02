@@ -10,6 +10,7 @@ target 'BeaconTerminal' do
     
     pod 'Realm'
     pod 'RealmSwift'
+    pod 'HockeySDK', '~> 4.1.1'
 
     pod 'Nutella', :git => 'https://github.com/aperritano/Nutella', :branch => 'master'
     pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'

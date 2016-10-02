@@ -32,41 +32,6 @@ import UIKit
 
 @objc(CollectionViewCell)
 open class CollectionViewCell: UICollectionViewCell {
-    /// Divider layer.
-    internal private(set) var divider: Divider!
-    
-    /// Divider color.
-    @IBInspectable
-    open var dividerColor: UIColor? {
-        get {
-            return divider.color
-        }
-        set(value) {
-            divider.color = value
-        }
-    }
-    
-    /// Divider animation.
-    open var dividerAlignment: DividerAlignment {
-        get {
-            return divider.alignment
-        }
-        set(value) {
-            divider.alignment = value
-        }
-    }
-    
-    /// Divider height.
-    @IBInspectable
-    open var dividerHeight: CGFloat {
-        get {
-            return divider.height
-        }
-        set(value) {
-            divider.height = value
-        }
-    }
-    
     /**
      A CAShapeLayer used to manage elements that would be affected by
      the clipToBounds property of the backing layer. For example, this
@@ -185,7 +150,7 @@ open class CollectionViewCell: UICollectionViewCell {
 		}
 	}
 	
-	/// A preset wrapper around contentInset.
+	/// A preset wrapper around contentEdgeInsets.
 	public var contentEdgeInsetsPreset: EdgeInsetsPreset {
 		get {
 			return contentView.grid.contentEdgeInsetsPreset
@@ -195,7 +160,7 @@ open class CollectionViewCell: UICollectionViewCell {
 		}
 	}
 	
-	/// A wrapper around grid.contentInset.
+	/// A reference to EdgeInsets.
 	@IBInspectable
     open var contentInset: EdgeInsets {
 		get {
@@ -261,10 +226,12 @@ open class CollectionViewCell: UICollectionViewCell {
 	
 	open override func layoutSublayers(of layer: CALayer) {
 		super.layoutSublayers(of: layer)
-		if self.layer == layer {
-			layoutShape()
-			layoutVisualLayer()
-		}
+        guard self.layer == layer else {
+            return
+        }
+        
+        layoutShape()
+        layoutVisualLayer()
 	}
 	
 	open override func layoutSubviews() {
@@ -331,7 +298,6 @@ open class CollectionViewCell: UICollectionViewCell {
 	open func prepare() {
 		contentScaleFactor = Device.scale
 		prepareVisualLayer()
-        prepareDivider()
 	}
 	
 	/// Prepares the visualLayer property.
@@ -346,9 +312,4 @@ open class CollectionViewCell: UICollectionViewCell {
 		visualLayer.frame = bounds
 		visualLayer.cornerRadius = cornerRadius
 	}
-    
-    /// Prepares the divider.
-    private func prepareDivider() {
-        divider = Divider(view: self)
-    }
 }
