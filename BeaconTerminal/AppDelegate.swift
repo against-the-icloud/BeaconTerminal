@@ -149,11 +149,19 @@ struct NutellaUpdate {
 
 
 var beaconNotificationsManager: BeaconNotificationsManager?
-/*
-let beaconIds = [BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 1),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 2),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 3),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 4),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 5),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 6),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 7),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 8),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 9),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 10),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 11),BeaconID(UUIDString: ESTIMOTE_ID, major: 1, minor: 12)]
- */
 
-let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", major: 1, minor: 1),BeaconID(identifier: "ee3a94ba9ed4a25cffaf290226c6d22c", major: 1, minor: 2)]
+let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", major: 1, minor: 1),
+                 BeaconID(identifier: "ee3a94ba9ed4a25cffaf290226c6d22c", major: 1, minor: 2),
+                 BeaconID(identifier: "7148d3b4f6b3d192f52c3936fb9bcd33", major: 1, minor: 3),
+                 BeaconID(identifier: "040d277eac74d336847970113ccbe739", major: 1, minor: 4),
+                 BeaconID(identifier: "9e21d6e5190efbe7554742d62c1f1f0a", major: 1, minor: 5),
+                 BeaconID(identifier: "581736ca8b0332c774b07edc687f8231", major: 1, minor: 6),
+                 BeaconID(identifier: "5edb82480cbba797722765f64430b71f", major: 1, minor: 7),
+                 BeaconID(identifier: "38258bb861c5fe5011d0752ab0b82000", major: 1, minor: 8),
+                 BeaconID(identifier: "3725c7b4dd3a7dd2345f5d83488ac419", major: 1, minor: 9),
+                 BeaconID(identifier: "fd89d7d2ad4138ed782b965bf2380527", major: 1, minor: 10),
+                 BeaconID(identifier: "f90c0feb677f03759c6afce57048cc0f", major: 1, minor: 11),
+                 BeaconID(identifier: "040d277eac74d336847970113ccbe739", major: 1, minor: 12)]
 
 
 var realm: Realm?
