@@ -13,9 +13,9 @@ class StringUtil {
     class func relationshipString(withType type: RelationshipType) -> String {
         switch type {
         case .consumer:
-            return "IS A CONSUMER OF"
+            return "EATS"
         case .producer:
-            return "IS A PRODUCER FOR"
+            return "IS EATEN BY"
         case .mutual:
             return "IS DEPENDENT ON"
         default:
@@ -26,9 +26,9 @@ class StringUtil {
     class func relationshipString(withString string: String) -> String {
         switch string {
         case "consumer":
-            return "IS A CONSUMER OF"
+            return "EATS"
         case "producer":
-            return "IS A PRODUCER FOR"
+            return "IS EATEN BY"
         case "mutual":
             return "IS DEPENDENT ON"
         case "competes":

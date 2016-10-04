@@ -78,6 +78,8 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
             
             if let reason = relationship.note {
                 noteTextView.text = reason
+            } else {
+                noteTextView.text = "We saw… \n\n\n\n We think…because…"
             }
         }
         
