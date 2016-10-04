@@ -19,6 +19,7 @@ PODS:
   - MQTTClient/Min (0.8.5)
   - Nutella (1.0.0):
     - MQTTClient
+  - NVActivityIndicatorView (3.0)
   - Realm (2.0.1):
     - Realm/Headers (= 2.0.1)
   - Realm/Headers (2.0.1)
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - HockeySDK (~> 4.1.1)
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
   - Nutella (from `https://github.com/aperritano/Nutella`, branch `master`)
+  - NVActivityIndicatorView
   - Realm
   - RealmSwift
   - Transporter
@@ -79,11 +81,12 @@ SPEC CHECKSUMS:
   Material: c5c334bd7fa8c0307cb35be143b7c51c5e2c52a7
   MQTTClient: fca939bcd74aa70af2d8ee35f3e44f258f4e9888
   Nutella: fef7c16a3e10ccddfc24830374ace126c16abf07
+  NVActivityIndicatorView: 81953b5e65093ba79edf4fe7268e002039ca5268
   Realm: 0557ee0e4ab4f0936c90e370056d1ed6265f93d6
   RealmSwift: 64e00af79bdcd7d2a7a23fdc1cb3faf22b80ae4c
   Transporter: b6e906451c22d7119b6556adf3481689a5c30677
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: 6ad379a2a21105835dc00f95a30f3ee662888a60
+PODFILE CHECKSUM: fb1d949bb9d5b4c61031067cd9483d1ebec40c29
 
 COCOAPODS: 1.1.0.rc.2

@@ -77,8 +77,9 @@ class ChooseSpeciesViewController: UICollectionViewController {
                     ev.fromSpeciesIndex = speciesIndex
                     ev.toSpeciesIndex = speciesCell.speciesIndex
                     
-                    ev.title = "2. ADD EVIDENCE"
-                    ev.preferredContentSize = CGSize(width: 1000, height: 675)
+                    ev.title = "Support"
+                    
+                    //ev.navigationController?.setToolbarHidden(false, animated: true)
 //                    ev.navigationItem.prompt = "SUPPORT THE RELATIONSHIP"
                 }
                 break

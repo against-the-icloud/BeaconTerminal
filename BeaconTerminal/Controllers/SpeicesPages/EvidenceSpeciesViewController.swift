@@ -11,8 +11,9 @@ import UIKit
 import Material
 import RealmSwift
 import Photos
+import NVActivityIndicatorView
 
-class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDelegate {
+class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDelegate, NVActivityIndicatorViewable {
     
     var fromSpeciesIndex: Int?
     var toSpeciesIndex: Int?
@@ -52,6 +53,10 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
         cameraButton.image = Icon.cm.photoCamera
         cameraButton.tintColor = UIColor.white
         
+
+        noteTextView.text = "We saw… \n\n\n\n We think…because…"
+
+        
         for im in images {
             let tag = Randoms.randomInt()
             im.tag = tag
@@ -78,15 +83,20 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
             
             if let reason = relationship.note {
                 noteTextView.text = reason
-            } else {
-                noteTextView.text = "We saw… \n\n\n\n We think…because…"
             }
         }
-        
+        self.preferredContentSize = CGSize(width: 1000, height: 900)
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.viewDidLayoutSubviews()
+        self.preferredContentSize = CGSize(width: 1000, height: 900)
+        self.navigationController?.view.superview?.bounds = CGRect(x: 0, y: 0, width: 1000, height: 900)
+        super.viewDidAppear(animated)
     }
     
     func prepareTitlePanel() {
@@ -286,6 +296,8 @@ extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         self.doneButton.isEnabled = false
+        
+        self.startAnimating(CGSize(width: 100, height: 100), message: "Uploading image...")
         // The info dictionary contains multiple representations of the image, and this uses the original.
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -307,7 +319,7 @@ extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
         }
         
         // Dismiss the picker.
-        self.dismiss(animated: true, completion: {
+        picker.dismiss(animated: true, completion: {
             if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 if let data = UIImagePNGRepresentation(pickedImage) {
                     let imageName = "\(Util.randomString(5)).png"
@@ -318,6 +330,7 @@ extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
                             self.attachments.append(url)
                             self.enableView()
                         }
+                        self.stopAnimating()
                         self.doneButton.isEnabled = true
                         
                     })

@@ -23,6 +23,7 @@
 		7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */; };
 		7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EF1D865A6400C31119 /* SyncViewController.swift */; };
 		701841011D6041AF003921A1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701841001D6041AF003921A1 /* MapViewController.swift */; };
+		7030BE251DA4631400DB332D /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030BE241DA4631400DB332D /* Spinner.swift */; };
 		7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7031DB191D65E18B000DCC61 /* Terminal.storyboard */; };
 		7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */; };
 		7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */; };
@@ -157,6 +158,7 @@
 		7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesCellDetailController.swift; path = SpeicesPages/SpeciesCellDetailController.swift; sourceTree = "<group>"; };
 		7017A2EF1D865A6400C31119 /* SyncViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncViewController.swift; path = Login/SyncViewController.swift; sourceTree = "<group>"; };
 		701841001D6041AF003921A1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		7030BE241DA4631400DB332D /* Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		7031DB191D65E18B000DCC61 /* Terminal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Terminal.storyboard; sourceTree = "<group>"; };
 		7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalMainViewController.swift; path = Terminal/TerminalMainViewController.swift; sourceTree = "<group>"; };
 		7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCollectionController.swift; path = Login/LoginSpeciesCollectionController.swift; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 				70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */,
 				7064CAA31D6783FB00B77ADA /* StringUtil.swift */,
 				7003BEE11D81F96C0029B0EE /* TabSegmentedControl.swift */,
+				7030BE241DA4631400DB332D /* Spinner.swift */,
 			);
 			name = Util;
 			path = util;
@@ -919,6 +922,7 @@
 				70D4E2341D6CF925003102AC /* TerminalComparsionDetailViewController.swift in Sources */,
 				708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */,
 				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
+				7030BE251DA4631400DB332D /* Spinner.swift in Sources */,
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */,
