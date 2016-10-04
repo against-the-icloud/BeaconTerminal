@@ -12,6 +12,7 @@ import UIKit
 class PreferencesViewController: UIViewController {
     
     var speciesIndex: Int?
+    var groupIndex: Int? 
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,9 +30,17 @@ class PreferencesViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier {
             switch id {
-            case "preferencesSegue":
-                if let pvc = segue.destination as? PreferencesTableViewController, let fromSpecies = self.speciesIndex {
+            case "0","1","2","3","4":
+                if let pvc = segue.destination as? PreferencesTableViewController, let fromSpecies = self.speciesIndex{
                     pvc.speciesIndex = fromSpecies
+                    pvc.groupIndex = Int(id)
+                    pvc.isTerminal = true
+                }
+                break
+            case "preferencesSegue":
+                if let pvc = segue.destination as? PreferencesTableViewController, let fromSpecies = self.speciesIndex, let groupIndex = self.groupIndex {
+                    pvc.speciesIndex = fromSpecies
+                    pvc.groupIndex = groupIndex
                     pvc.isTerminal = true
                 }
             case "preferencesSpeciesViewSegue":

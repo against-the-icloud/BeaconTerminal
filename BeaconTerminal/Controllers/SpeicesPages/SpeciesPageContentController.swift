@@ -89,12 +89,10 @@ class SpeciesPageContentController: UIViewController {
         if synced {
             contentView.borderColor = UIColor.speciesColor(forIndex: speciesIndex!, isLight: false)
             contentView.backgroundColor = UIColor.white
-            tabSegmentedControl.tintColor = UIColor.black
             speciesLabel.textColor = UIColor.black
         } else {
             contentView.borderColor = UIColor.red
             contentView.backgroundColor = #colorLiteral(red: 0.9994968772, green: 0.8941870332, blue: 0.962585628, alpha: 1)
-            tabSegmentedControl.tintColor = UIColor.black
             speciesLabel.textColor = UIColor.black
         }
     }
@@ -114,6 +112,12 @@ class SpeciesPageContentController: UIViewController {
             break
         case "preferencesViewSegue":
             if let srv = segue.destination as? PreferencesViewController {
+                
+                // Fixes popover anchor centering issue in iOS 9
+                if let popoverPresentationController = segue.destination.popoverPresentationController, let sourceView = sender as? UIView {
+                    popoverPresentationController.sourceRect = sourceView.bounds
+                }
+                
                 srv.speciesIndex = speciesIndex
             }
             break
@@ -163,33 +167,7 @@ class SpeciesPageContentController: UIViewController {
     }
     
     // Mark: Actions
-    
-    @IBAction func subpageSelection(_ sender: UISegmentedControl) {
-        
-        let showView = subpageContainerViews[sender.selectedSegmentIndex]
-        
-        for (index,containerView) in subpageContainerViews.enumerated() {
-            
-            switch index {
-            case sender.selectedSegmentIndex:
-                containerView.isHidden = false
-                containerView.fadeIn(toAlpha: 1.0) {_ in
-                    
-                }
-            default:
-                containerView.isHidden = true
-                containerView.fadeOut(0.0) {_ in
-                    
-                }
-            }
-            
-        }
-        
-        
-        showView.fadeIn(toAlpha: 1.0) {_ in
 
-        }
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

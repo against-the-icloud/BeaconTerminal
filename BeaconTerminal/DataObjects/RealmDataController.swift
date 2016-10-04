@@ -1013,33 +1013,13 @@ extension RealmDataController {
                                     //prepare preferences
                                     let initalPreference = "Not ready to report"
                                     
-                                    let trophicLevelPreference = Preference()
-                                    trophicLevelPreference.id = "\(fromSpecies.index)-0"
-                                    trophicLevelPreference.configure(type: Preferences.trophicLevel, value: initalPreference)
-                                    speciesObservation.preferences.append(trophicLevelPreference)
-                                    
-                                    let behavorsPreference = Preference()
-                                    behavorsPreference.id = "\(fromSpecies.index)-1"
-                                    behavorsPreference.configure(type: Preferences.behaviors, value: initalPreference)
-                                    speciesObservation.preferences.append(behavorsPreference)
-                                    
-                                    let predationPreference = Preference()
-                                    predationPreference.id = "\(fromSpecies.index)-2"
-                                    predationPreference.configure(type: Preferences.predationResistance, value: initalPreference)
-                                    speciesObservation.preferences.append(predationPreference)
-                                    
                                     let heatSensitivityPreference = Preference()
-                                    heatSensitivityPreference.id = "\(fromSpecies.index)-3"
+                                    heatSensitivityPreference.id = "\(fromSpecies.index)-0"
                                     heatSensitivityPreference.configure(type: Preferences.heatSensitivity, value: initalPreference)
                                     speciesObservation.preferences.append(heatSensitivityPreference)
                                     
-                                    let humiditySensistivityPreference = Preference()
-                                    humiditySensistivityPreference.id = "\(fromSpecies.index)-4"
-                                    humiditySensistivityPreference.configure(type: Preferences.humditiySensitivity, value: initalPreference)
-                                    speciesObservation.preferences.append(humiditySensistivityPreference)
-                                    
                                     let habitatPreference = Preference()
-                                    habitatPreference.id = "\(fromSpecies.index)-5"
+                                    habitatPreference.id = "\(fromSpecies.index)-1"
                                     habitatPreference.configure(type: Preferences.habitatPreference, value: initalPreference)
                                     
                                     speciesObservation.preferences.append(habitatPreference)
@@ -1139,7 +1119,7 @@ extension RealmDataController {
     func speciesName(withIndex index: Int) -> String {
         let speciesNames = UserDefaults.standard.array(forKey: "speciesNames") ?? []
         
-        if speciesNames.count >= index {
+        if !speciesNames.isEmpty && speciesNames.count >= index {
             return (speciesNames[index] as? String)!
         }
         

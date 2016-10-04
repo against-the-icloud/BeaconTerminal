@@ -69,6 +69,8 @@
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
 		70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */; };
 		70D4E2341D6CF925003102AC /* TerminalComparsionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */; };
+		70D4E5711DA3763F00E96054 /* TerminalPreferenceComparsionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E5701DA3763F00E96054 /* TerminalPreferenceComparsionController.swift */; };
+		70D4E5731DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E5721DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift */; };
 		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
 		70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F801CFCF03D006F6997 /* DragViewController.swift */; };
 		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
@@ -203,6 +205,8 @@
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalComparsionController.swift; path = Terminal/TerminalComparsionController.swift; sourceTree = "<group>"; };
 		70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalComparsionDetailViewController.swift; sourceTree = "<group>"; };
+		70D4E5701DA3763F00E96054 /* TerminalPreferenceComparsionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalPreferenceComparsionController.swift; path = Terminal/TerminalPreferenceComparsionController.swift; sourceTree = "<group>"; };
+		70D4E5721DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalPreferenceComparsionDetailController.swift; path = Terminal/TerminalPreferenceComparsionDetailController.swift; sourceTree = "<group>"; };
 		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
 		70D62F801CFCF03D006F6997 /* DragViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragViewController.swift; sourceTree = "<group>"; };
 		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
@@ -348,6 +352,8 @@
 				70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */,
 				70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */,
 				70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */,
+				70D4E5701DA3763F00E96054 /* TerminalPreferenceComparsionController.swift */,
+				70D4E5721DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift */,
 			);
 			name = Terminal;
 			sourceTree = "<group>";
@@ -897,6 +903,7 @@
 				701841011D6041AF003921A1 /* MapViewController.swift in Sources */,
 				701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */,
 				709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */,
+				70D4E5731DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift in Sources */,
 				706CF1391D8FA83500A18927 /* Banner.swift in Sources */,
 				70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */,
 				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
@@ -917,6 +924,7 @@
 				70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
+				70D4E5711DA3763F00E96054 /* TerminalPreferenceComparsionController.swift in Sources */,
 				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
 				70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */,

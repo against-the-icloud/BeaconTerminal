@@ -183,8 +183,8 @@ class TerminalMainViewController: UIViewController {
         }
         
         switch id {
-        case "preferencesViewSegue":
-            if let srv = segue.destination as? PreferencesViewController, let speciesIndex = realmDataController.getRealm().runtimeSpeciesIndex() {
+        case "terminalPreferencesViewSegue":
+            if let srv = segue.destination as? TerminalPreferenceComparsionController, let speciesIndex = realmDataController.getRealm().runtimeSpeciesIndex() {
                 srv.speciesIndex = speciesIndex
             }
             break

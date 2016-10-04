@@ -10,27 +10,22 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class PreferencesTableViewController: UITableViewController {
+class TerminalPreferenceComparsionDetailController: UITableViewController {
     
     var speciesIndex: Int?
+    var groupIndex: Int?
     
     var speciesObservation: SpeciesObservation?
     
     var speciesObservations: Results<SpeciesObservation>?
     
-    var speciesObsNotificationToken: NotificationToken? = nil
-    
     var header: String?
-    var groupIndex: Int? {
-        didSet {
-            if headerLabel != nil {
-                headerLabel.text = "Group \(groupIndex)"
-            }
-        }
-    }
+
+    var speciesObsNotificationToken: NotificationToken? = nil
+
     
     @IBOutlet weak var headerLabel: UILabel!
-    var isTerminal = false
+    
     
     deinit {
         if let sp = self.speciesObsNotificationToken {
@@ -48,20 +43,21 @@ class PreferencesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isTerminal {
-            prepareTerminalNotification2()
-            tableView.allowsSelection = false
-        } else {
-            prepareNotification()
+        
+        prepareNotification()
+        
+        if let groupIndex = self.groupIndex {
+            headerLabel.text = "Group \(groupIndex)"
         }
 
     }
-    
-    
-    
+
     func prepareNotification() {
-        if let allSO = realmDataController.getRealm().allSpeciesObservationsForCurrentSectionAndGroup(), let fromSpeciesIndex = speciesIndex {
-            speciesObservations = allSO.filter("fromSpecies.index = \(fromSpeciesIndex)")
+        
+        if let fromSpeciesIndex = self.speciesIndex, let sectionName = realmDataController.getRealm().runtimeSectionName(), let groupIndex = self.groupIndex {
+            
+            speciesObservations = realmDataController.getRealm().speciesObservations(withSectionName: sectionName, withGroupIndex: groupIndex, withSpeciesIndex: fromSpeciesIndex)
+            
             speciesObsNotificationToken = speciesObservations?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
                 
                 guard let controller = self else { return }
@@ -81,78 +77,16 @@ class PreferencesTableViewController: UITableViewController {
                     fatalError("\(error)")
                     break
                 }
+                
             }
         }
     }
     
-    func prepareTerminalNotification2() {
-        
-        if let fromSpeciesIndex = self.speciesIndex, let sectionName = realmDataController.getRealm().runtimeSectionName(), let groupIndex = self.groupIndex {
-        
-        speciesObservations = realmDataController.getRealm().speciesObservations(withSectionName: sectionName, withGroupIndex: groupIndex, withSpeciesIndex: fromSpeciesIndex)
-        
-        speciesObsNotificationToken = speciesObservations?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-            
-            guard let controller = self else { return }
-            switch changes {
-            case .initial(let speciesObservationResults):
-                if let so = speciesObservationResults.first {
-                    controller.update(speciesObservation: so)
-                }
-                break
-            case .update(let speciesObservationResults, _, _, _):
-                if let so = speciesObservationResults.first {
-                    controller.update(speciesObservation: so)
-                }
-                break
-            case .error(let error):
-                // An error occurred while opening the Realm file on the background worker thread
-                fatalError("\(error)")
-                break
-            }
-            
-        }
-        }
-    }
-
-    func prepareTerminalNotification() {
-        
-        speciesObservations = realmDataController.getRealm().objects(SpeciesObservation.self)
-        
-        speciesObsNotificationToken = speciesObservations?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-            
-            guard let controller = self else { return }
-            switch changes {
-            case .initial(let speciesObservationResults):
-                if let so = speciesObservationResults.first {
-                    controller.update(speciesObservation: so)
-                }
-                break
-            case .update(let speciesObservationResults, _, _, _):
-                if let so = speciesObservationResults.first {
-                    controller.update(speciesObservation: so)
-                }
-                break
-            case .error(let error):
-                // An error occurred while opening the Realm file on the background worker thread
-                fatalError("\(error)")
-                break
-            }
-
-        }
-    }
-
     func update(speciesObservation: SpeciesObservation) {
         self.speciesObservation = speciesObservation
         tableView.reloadData()
     }
     
-    
-}
-
-extension PreferencesTableViewController {
-    
-    // MARK: table
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = super.tableView(tableView, cellForRowAt: indexPath) as? PreferenceTableViewCell {
@@ -216,6 +150,7 @@ extension PreferencesTableViewController {
             }
             
         }
+
     }
     
 }

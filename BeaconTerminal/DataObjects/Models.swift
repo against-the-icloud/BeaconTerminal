@@ -452,6 +452,12 @@ extension Realm {
         return nil
     }
     
+    func speciesObservations(withSectionName sectionName: String, withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int) -> Results<SpeciesObservation>? {
+        if let group = group(withSectionName: sectionName, withGroupIndex: groupIndex) {
+            return group.speciesObservations.filter("fromSpecies.index = \(speciesIndex)")
+        }
+        return nil
+    }
     
     func speciesObservations(withSectionName sectionName: String, withGroupIndex groupIndex: Int) -> List<SpeciesObservation>? {
         if let group = group(withSectionName: sectionName, withGroupIndex: groupIndex) {
