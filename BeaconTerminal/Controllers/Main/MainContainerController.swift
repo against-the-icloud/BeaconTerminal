@@ -17,7 +17,7 @@ import RealmSwift
     func changeAppearance(withColor color: UIColor)
 }
 
-class MainContainerController: UIViewController{
+class MainContainerController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet var containerViews: [UIView]!
     @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
@@ -363,16 +363,18 @@ class MainContainerController: UIViewController{
     
     //Mark: Action
     func cameriaAction(sender: UIButton) {
-        let imagePicker = UIImagePickerController()
-        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)) {
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-            self.present(imagePicker, animated: true, completion: nil)
-        } else {
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+        let imagePickerController = UIImagePickerController()
         
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .camera
+        
+        imagePickerController.delegate = self
+        
+        imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
+        imagePickerController.popoverPresentationController?.sourceView = sender
+        
+        // Make sure ViewController is notified when the user picks an image.
+        self.present(imagePickerController, animated: true, completion: nil)
     }
     
     func screenShotAction(sender: UIButton) {
@@ -406,16 +408,20 @@ class MainContainerController: UIViewController{
     }
     
     func photoAlbumAction(sender: UIButton) {
-        let imagePicker = UIImagePickerController()
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+        let imagePickerController = UIImagePickerController()
         
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.modalPresentationStyle = .overFullScreen
-        imagePicker.modalTransitionStyle = .crossDissolve
-        //imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        // Only allow photos to be picked, not taken.
+        imagePickerController.sourceType = .photoLibrary
         
+        imagePickerController.delegate = self
         
+        imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
+        imagePickerController.popoverPresentationController?.sourceView = sender
+        
+        // Make sure ViewController is notified when the user picks an image.
+        self.present(imagePickerController, animated: true, completion: nil)
+        //present(imagePickerController, animated: true, completion: nil)
     }
     
     override var shouldAutorotate: Bool {
@@ -454,4 +460,17 @@ extension MainContainerController: MenuDelegate {
         }
     }
 }
+
+extension MainContainerController: UIImagePickerControllerDelegate {
+    // MARK: UIImagePickerControllerDelegate
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // Dismiss the picker if the user canceled.
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+    }
+}
+
 

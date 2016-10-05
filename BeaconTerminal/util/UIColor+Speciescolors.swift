@@ -25,21 +25,21 @@ extension UIColor {
             }
         case 3:
             if isLight {
-                return greenHouse()
+                return #colorLiteral(red: 0.7949928548, green: 0.6469059504, blue: 0.6469059504, alpha: 1)
             } else {
-                return palmLeaf()
+                return #colorLiteral(red: 0.5009930134, green: 0.4058532119, blue: 0.4035398364, alpha: 1)
             }
         case 4:
             if isLight {
-                return lily()
+                return #colorLiteral(red: 0.9682237886, green: 0.6859217059, blue: 0.3609863759, alpha: 1)
             } else {
-                return daisyBush()
+                return #colorLiteral(red: 0.7618371248, green: 0.5363039374, blue: 0.2718488574, alpha: 1)
             }
         case 5:
             if isLight {
-                return wildWillow()
+                return #colorLiteral(red: 0.2032909253, green: 0.5485599758, blue: 0.1530638014, alpha: 1)
             } else {
-                return apple()
+                return #colorLiteral(red: 0.1193666235, green: 0.324714005, blue: 0.08855458349, alpha: 1)
             }
         case 6:
             if isLight {
@@ -49,9 +49,9 @@ extension UIColor {
             }
         case 7:
             if isLight {
-                return supernova()
+                return #colorLiteral(red: 0.4824384836, green: 0.8372815179, blue: 0.9991987436, alpha: 1)
             } else {
-                return lightningYellow()
+                return #colorLiteral(red: 0.4220160246, green: 0.7173771858, blue: 0.8544768095, alpha: 1)
             }
         case 8:
             if isLight {
@@ -61,15 +61,15 @@ extension UIColor {
             }
         case 9:
             if isLight {
-                return viking()
+                return #colorLiteral(red: 0.8498594648, green: 0.9134838887, blue: 0.4711037368, alpha: 1)
             } else {
-                return chathamsBlue()
+                return #colorLiteral(red: 0.693793416, green: 0.7444642186, blue: 0.3813612163, alpha: 1)
             }
         case 10:
             if isLight {
-                return apple()
+                return #colorLiteral(red: 0.8614662383, green: 0.7807986708, blue: 0.2414655356, alpha: 1)
             } else {
-                return greenHouse()
+                return #colorLiteral(red: 0.7140598297, green: 0.6493981481, blue: 0.1938434243, alpha: 1)
             }
         default:
             print("you know nothing")
@@ -377,4 +377,6 @@ extension UIColor {
 		return UIColor(red: 0.1607843137, green: 0.6901960784, blue: 0.3137254902, alpha: 1.0000000000);
 	}
 
+    
+    
 }
