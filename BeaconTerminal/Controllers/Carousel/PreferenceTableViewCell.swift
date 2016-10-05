@@ -12,7 +12,9 @@ import UIKit
 @IBDesignable class PreferenceTableViewCell: UITableViewCell {
     
     @IBInspectable var preferenceType: String?
-    
+    @IBOutlet var tickButton: UIButton!
+    @IBOutlet var titleLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }

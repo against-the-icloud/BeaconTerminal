@@ -597,7 +597,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="Adj-Nz-XHW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Adj-Nz-XHW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -618,7 +618,7 @@
                         <viewControllerLayoutGuide type="bottom" id="PxJ-XJ-ZOY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sUC-uy-ZaS">
-                        <rect key="frame" x="0.0" y="0.0" width="439" height="88"/>
+                        <rect key="frame" x="0.0" y="0.0" width="439" height="87"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="species_02" translatesAutoresizingMaskIntoConstraints="NO" id="tbE-5p-4uZ"/>
@@ -651,7 +651,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="1000" height="725"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="qwB-EF-C5j">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="qwB-EF-C5j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -671,7 +671,7 @@
         <scene sceneID="taC-gb-vZo">
             <objects>
                 <collectionViewController storyboardIdentifier="chooseSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="t31-ZL-f7f" customClass="ChooseSpeciesViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="3Vj-ln-15v">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="3Vj-ln-15v">
                         <rect key="frame" x="0.0" y="44" width="940" height="581"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1237,7 +1237,7 @@
                             </constraints>
                         </view>
                         <sections>
-                            <tableViewSection headerTitle="TEMPERATURE" id="QQv-vb-xfs" userLabel="HeatSensitivity">
+                            <tableViewSection headerTitle="HABITABLE TEMPERATURES" id="QQv-vb-xfs" userLabel="HeatSensitivity">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" textLabel="Hdd-PY-X8f" style="IBUITableViewCellStyleDefault" id="2rc-y5-l9m" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="540" height="44"/>
@@ -1266,7 +1266,7 @@
                                             <frame key="frameInset" width="540" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Low" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7PR-GN-Y8b" userLabel="sensitive">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Low (10ºC)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7PR-GN-Y8b" userLabel="sensitive">
                                                     <frame key="frameInset" minX="15" width="510" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -1286,7 +1286,7 @@
                                             <frame key="frameInset" width="540" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Medium" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5m7-oS-ESH" userLabel="notSensitive">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Medium (20ºC)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5m7-oS-ESH" userLabel="notSensitive">
                                                     <frame key="frameInset" minX="15" width="510" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -1306,7 +1306,7 @@
                                             <frame key="frameInset" width="540" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="High" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bUz-jW-1Fk" userLabel="neither">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="High (30ºC)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bUz-jW-1Fk" userLabel="neither">
                                                     <frame key="frameInset" minX="15" width="510" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -1321,7 +1321,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="HABITAT" id="iYz-qX-cpe" userLabel="HabitatPreferences">
+                            <tableViewSection headerTitle="HABITABLE SURFACES" id="iYz-qX-cpe" userLabel="HabitatPreferences">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="BRl-bI-m0O" style="IBUITableViewCellStyleDefault" id="B8t-Df-Sw4" customClass="PreferenceTableViewCell" customModule="BeaconTerminal" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="292" width="540" height="44"/>
@@ -1330,7 +1330,7 @@
                                             <frame key="frameInset" width="540" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Aluminum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BRl-bI-m0O" userLabel="aluminum">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Wood" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BRl-bI-m0O" userLabel="aluminum">
                                                     <frame key="frameInset" minX="15" width="510" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -1370,7 +1370,7 @@
                                             <frame key="frameInset" width="540" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Plaster" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ubh-zs-hlx" userLabel="plaster">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Aluminum" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ubh-zs-hlx" userLabel="plaster">
                                                     <frame key="frameInset" minX="15" width="510" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
@@ -1391,7 +1391,7 @@
                                             <frame key="frameInset" width="540" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Wood" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mcp-U2-mmb" userLabel="wood">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Drywall" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mcp-U2-mmb" userLabel="wood">
                                                     <frame key="frameInset" minX="15" width="510" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
