@@ -481,12 +481,21 @@ class RealmDataController {
                             
                             speciesObservation?.update(withJson: soJson, shouldParseId: false)
                             
+                            for relationship in foundSO.relationships {
+                                getRealm(withRealmType: realmType).delete(relationship)
+                            }
+                            
                             
                             //process the relationships
                             if let relationshipsJson = soJson["relationships"].array {
                                 importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson, withRealmType: realmType)
                             } else {
                                 LOG.debug("FOUND NO RELATIONSHIPS SO: \(speciesObservation?.id)")
+                            }
+                            
+                            
+                            for preference in foundSO.preferences {
+                                getRealm(withRealmType: realmType).delete(preference)
                             }
                             
                             if let preferencesJson = soJson["preferences"].array {
@@ -513,6 +522,7 @@ class RealmDataController {
                                 speciesObservation?.ecosystem = ecosystem
                             }
                             
+                         
                             //lets double check to see if there isnt another species card like this
                             if let relationshipsJson = soJson["relationships"].array {
                                 importRelationshipJSON(withSpeciesObservation: speciesObservation!, withRelationshipsJson: relationshipsJson, withRealmType: realmType)
@@ -714,6 +724,10 @@ class RealmDataController {
             
             try! getRealm(withRealmType: realmType).write {
                 getRealm(withRealmType: realmType).delete(foundRelationship)
+                
+                foundSO.isSynced.value = false
+                getRealm(withRealmType: realmType).add(foundSO, update: true)
+
             }
         }
     }

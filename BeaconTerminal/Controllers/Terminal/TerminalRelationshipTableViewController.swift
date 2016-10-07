@@ -1,4 +1,4 @@
-//
+    //
 //  TerminalRelationshipTableViewController.swift
 //  BeaconTerminal
 //
@@ -44,7 +44,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
         //set up toast
         
         //dark grey
-        UIView.hr_setToastThemeColor(UIColor.white)
+        //UIView.hr_setToastThemeColor(UIColor.white)
     }
     
     func prepareNotifications() {
@@ -88,9 +88,14 @@ class TerminalRelationshipTableViewController: UITableViewController {
             guard let controller = self else { return }
             switch changes {
             case .initial(let speciesObservationResults):
+                self?.speciesObservationResults = speciesObservationResults                
+                //clear all the cells
+                controller.reloadCells()
                 controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
-            case .update(let speciesObservationResults, _, _, _):
+            case .update(let speciesObservationResults, let deletions, let insertions, let modifications):
+                self?.speciesObservationResults = speciesObservationResults
+                controller.reloadCells()
                 controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
             case .error(let error):
@@ -107,31 +112,27 @@ class TerminalRelationshipTableViewController: UITableViewController {
 
     }
     
+     @IBAction func reloadCells() {
+        for controller in (self.childViewControllers as? [TerminalCellController])!{
+            controller.prepareView()
+        }
+        
+        updateReportLabel(shouldReset: true)
+    }
+    
     func updateCells(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
+        
+        self.speciesObservationResults = speciesObservationResults
         
         guard let type = relationshipType else {
             return
         }
         
-        if speciesObservationResults.isEmpty {
-            resetAllCells()
-            return
-        }
-        
-        updateReportLabel(shouldReset: true)
-        
         for so in speciesObservationResults {
-            
-          
-            
             if let foundRelationships = realmDataController.getRealm(withRealmType: RealmType.terminalDB).relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
-                
-                
                 relationshipCount += foundRelationships.count
-                
                 for r in foundRelationships {
                     groupsReported[so.groupIndex] = so.groupIndex
-
                     updateCell(withRelationship: r, groupIndex: so.groupIndex)
                 }
                 
@@ -181,6 +182,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
                     return cellSpeciesIndex == relationshipToSpeciesIndex                
             }).first {
                 //update
+                cell.relationshipType = relationship.relationshipType
                 cell.updateCell(withGroupIndex: groupIndex, andRelationship: relationship)
             }
         }
@@ -262,8 +264,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
             }
         }
     }
-    
-    
-    
-    
 }
+
+//extension TerminalRelationshipTableViewController {
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        return nil
+//    }
+//}

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class MyImageView: UIImageView {
+class PadImageView: UIImageView {
     var lastLocation:CGPoint = CGPoint(x: 0, y: 0)
     
     override init(image: UIImage?) {
@@ -42,7 +42,7 @@ class MyImageView: UIImageView {
     func setup() {
          self.isUserInteractionEnabled = true
         // Initialization code
-        let panRecognizer = UIPanGestureRecognizer(target:self, action:#selector(MyImageView.detectPan(_:)))
+        let panRecognizer = UIPanGestureRecognizer(target:self, action:#selector(PadImageView.detectPan(_:)))
         self.gestureRecognizers = [panRecognizer]
     }
     

@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015 Apple Inc. All Rights Reserved.
+    Copyright (C) 2016 Apple Inc. All Rights Reserved.
     See LICENSE.txt for this sample’s licensing information
     
     Abstract:
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CanvasView: DropTargetView {
+class CanvasView: UIView {
     // MARK: Properties
     
     let isPredictionEnabled = UIDevice.current.userInterfaceIdiom == .pad
@@ -42,7 +42,7 @@ class CanvasView: DropTargetView {
         in accessing the properties of the touch used as a key in the map table. `UITouch` properties should
         be accessed in `NSResponder` callbacks and methods called from them.
     */
-    let activeLines = NSMapTable.strongToStrongObjects() as NSMapTable<UITouch,Line>
+    let activeLines: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     /**
         Holds a map of `UITouch` objects to `Line` objects whose touch has ended but still has points awaiting
@@ -52,7 +52,7 @@ class CanvasView: DropTargetView {
         in accessing the properties of the touch used as a key in the map table. `UITouch` properties should
         be accessed in `NSResponder` callbacks and methods called from them.
     */
-    let pendingLines = NSMapTable.strongToStrongObjects() as NSMapTable<UITouch,Line>
+    let pendingLines: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     /// A `CGContext` for drawing the last representation of lines no longer receiving updates into.
     lazy var frozenContext: CGContext = {
@@ -67,7 +67,7 @@ class CanvasView: DropTargetView {
 
         context!.setLineCap(.round)
         let transform = CGAffineTransform(scaleX: scale, y: scale)
-        //context!.concatCTM(transform)
+        context!.concatenate(transform)
         
         return context!
     }()
@@ -95,8 +95,8 @@ class CanvasView: DropTargetView {
 
         frozenImage = frozenImage ?? frozenContext.makeImage()
         
-        if frozenImage != nil {
-            //context.draw(in: bounds, image: frozenImage)
+        if let frozenImage = frozenImage {
+            context.draw(frozenImage, in: bounds)
         }
         
         for line in lines {
@@ -126,22 +126,23 @@ class CanvasView: DropTargetView {
         
         for touch in touches {
             // Retrieve a line from `activeLines`. If no line exists, create one.
-            let line : Line = activeLines.object(forKey: touch) ?? addActiveLineForTouch(touch)
+            let line = activeLines.object(forKey: touch) as? Line ?? addActiveLineForTouch(touch)
             
             /*
                 Remove prior predicted points and update the `updateRect` based on the removals. The touches 
                 used to create these points are predictions provided to offer additional data. They are stale 
                 by the time of the next event for this touch.
             */
-          //  updateRect.insetInPlace(line.removePointsWithType(.Predicted))
+            updateRect.union(line.removePointsWithType(.Predicted))
             
             /*
                 Incorporate coalesced touch data. The data in the last touch in the returned array will match
                 the data of the touch supplied to `coalescedTouchesForTouch(_:)`
             */
             let coalescedTouches = event?.coalescedTouches(for: touch) ?? []
-            _ = addPointsOfType(.Coalesced, forTouches: coalescedTouches, toLine: line, currentUpdateRect: updateRect)
-           // updateRect.insetInPlace(coalescedRect)
+            let coalescedRect = addPointsOfType(.Coalesced, forTouches: coalescedTouches, toLine: line, currentUpdateRect: updateRect)
+            
+            updateRect.union(coalescedRect)
             
             /*
                 Incorporate predicted touch data. This sample draws predicted touches differently; however, 
@@ -151,8 +152,8 @@ class CanvasView: DropTargetView {
             */
             if isPredictionEnabled {
                 let predictedTouches = event?.predictedTouches(for: touch) ?? []
-                _ = addPointsOfType(.Predicted, forTouches: predictedTouches, toLine: line, currentUpdateRect: updateRect)
-          //      updateRect.insetInPlace(predictedRect)
+                let predictedRect = addPointsOfType(.Predicted, forTouches: predictedTouches, toLine: line, currentUpdateRect: updateRect)
+                updateRect.union(predictedRect)
             }
         }
         
@@ -170,9 +171,9 @@ class CanvasView: DropTargetView {
     }
     
     func addPointsOfType(_ type: LinePoint.PointType, forTouches touches: [UITouch], toLine line: Line, currentUpdateRect updateRect: CGRect) -> CGRect {
-        var type = type
         let accumulatedRect = CGRect.null
-        
+        var type = type
+		
         for (idx, touch) in touches.enumerated() {
             let isStylus = touch.type == .stylus
             
@@ -192,9 +193,8 @@ class CanvasView: DropTargetView {
                 type.formUnion(.Standard)
             }
             
-            _ = line.addPointOfType(type, forTouch: touch)
-            // todo: fix swift 3
-            //accumulatedRect.unionInPlace(touchRect)
+            let touchRect = line.addPointOfType(type, forTouch: touch)
+            accumulatedRect.union(touchRect)
             
             commitLine(line)
         }
@@ -207,10 +207,10 @@ class CanvasView: DropTargetView {
         
         for touch in touches {
             // Skip over touches that do not correspond to an active line.
-            guard let line : Line = activeLines.object(forKey: touch) else { continue }
+            guard let line = activeLines.object(forKey: touch) as? Line else { continue }
             
             // If this is a touch cancellation, cancel the associated line.
-          //  if cancel { updateRect.insetInPlace(line.cancel()) }
+            if cancel { updateRect.union(line.cancel()) }
             
             // If the line is complete (no points needing updates) or updating isn't enabled, move the line to the `frozenImage`.
             if line.isComplete || !isTouchUpdatingEnabled {
@@ -229,39 +229,39 @@ class CanvasView: DropTargetView {
     }
     
     func updateEstimatedPropertiesForTouches(_ touches: Set<NSObject>) {
-//        guard isTouchUpdatingEnabled, let touches = touches as? Set<UITouch> else { return }
-//        
-//        for touch in touches {
-//            var isPending = false
-//            
-//            // Look to retrieve a line from `activeLines`. If no line exists, look it up in `pendingLines`.
-//            let possibleLine: Line = activeLines.object(forKey: touch) ?? {
-//                let pendingLine : Line = pendingLines.object(forKey: touch)!
-//                isPending = true
-//                return pendingLine
-//            }()
-//            
-//            // If no line is related to the touch, return as there is no additional work to do.
-////            guard let line: Line = possibleLine else { return }
-////            
-////            switch line.updateWithTouch(touch) {
-////                case (true, let updateRect):
-////                    setNeedsDisplay(updateRect)
-////                default:
-////                    ()
-////            }
-////            
-////            // If this update updated the last point requiring an update, move the line to the `frozenImage`.
-////            if isPending && line.isComplete {
-////                finishLine(line)
-////                pendingLines.removeObject(forKey: touch)
-////            }
-////            // Otherwise, have the line add any points no longer requiring updates to the `frozenImage`.
-////            else {
-////                commitLine(line)
-////            }
-//            
-//        }
+        guard isTouchUpdatingEnabled, let touches = touches as? Set<UITouch> else { return }
+        
+        for touch in touches {
+            var isPending = false
+            
+            // Look to retrieve a line from `activeLines`. If no line exists, look it up in `pendingLines`.
+            let possibleLine: Line? = activeLines.object(forKey: touch) as? Line ?? {
+                let pendingLine = pendingLines.object(forKey: touch) as? Line
+                isPending = pendingLine != nil
+                return pendingLine
+            }()
+            
+            // If no line is related to the touch, return as there is no additional work to do.
+            guard let line = possibleLine else { return }
+            
+            switch line.updateWithTouch(touch) {
+                case (true, let updateRect):
+                    setNeedsDisplay(updateRect)
+                default:
+                    ()
+            }
+            
+            // If this update updated the last point requiring an update, move the line to the `frozenImage`.
+            if isPending && line.isComplete {
+                finishLine(line)
+                pendingLines.removeObject(forKey: touch)
+            }
+            // Otherwise, have the line add any points no longer requiring updates to the `frozenImage`.
+            else {
+                commitLine(line)
+            }
+            
+        }
     }
     
     func commitLine(_ line: Line) {

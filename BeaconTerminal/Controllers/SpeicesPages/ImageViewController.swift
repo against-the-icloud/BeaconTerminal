@@ -12,8 +12,10 @@ import UIKit
 class ImageViewController: UIViewController {
     
     var image: UIImage?
-    var imageUrl: String? 
+    var imageUrl: String?
+    var canDelete: Bool?
     
+    @IBOutlet weak var deleteButtonItem: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -22,6 +24,12 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
+        
+        if let canDelete = self.canDelete {
+            deleteButtonItem.tintColor = UIColor.black
+            deleteButtonItem.isEnabled = false
+        }
+        
     }
     @IBAction func deleteImageAction(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil) 

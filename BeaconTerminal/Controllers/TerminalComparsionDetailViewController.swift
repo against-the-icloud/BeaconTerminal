@@ -69,6 +69,7 @@ class TerminalComparsionDetailViewController: UIViewController {
                             UIImage.contentsOfURL(url: url, completion: { found, error in
                                 if let image = found  {
                                     iv.image = image
+                                    iv.isUserInteractionEnabled = true
                                 }
                             })
                         }
@@ -105,6 +106,14 @@ class TerminalComparsionDetailViewController: UIViewController {
             if let uinavigationController = segue.destination as? UINavigationController, let evidenceController = uinavigationController.topViewController as? EvidenceViewController {
                 evidenceController.evidenceImageName = attachment
             }
+        case "showImage":
+            if let gesture = sender as? UITapGestureRecognizer, let iv = gesture.view as? UIImageView, let imc = segue.destination as? ImageViewController {
+                
+                imc.image = iv.image
+                imc.canDelete = false
+                
+            }
+            
         default:
             break
         }

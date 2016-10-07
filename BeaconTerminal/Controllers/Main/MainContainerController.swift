@@ -256,6 +256,10 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
     }
     
+    @IBAction func showSidebar(_ sender: Any) {
+        navigationDrawerController?.openLeftView()
+    }
+    
     @IBAction func tabChanged(_ sender: UISegmentedControl) {
         colorizeSelectedSegment()
         changeTab(withControl: sender)

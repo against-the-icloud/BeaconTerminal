@@ -5,7 +5,6 @@ import XCGLogger
 import Nutella
 import Transporter
 import Fabric
-import Crashlytics
 import Alamofire
 
 
@@ -198,9 +197,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         //setupLoginConnection()
         
+        setupHockeyApp()
+        
         ESTConfig.setupAppID("wallcology-2016-emb", andAppToken: "fd9eb675b3f09982fd5c1788f7a437dd")
         //crash analytics
-        Fabric.with([Crashlytics.self])
+        //Fabric.with([Crashlytics.self])
         
         realmDataController = RealmDataController()
        
@@ -229,6 +230,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func setupHockeyApp() {
+        BITHockeyManager.shared().configure(withIdentifier: "dc4ac5b3c9af4127a03dc23bbf3b800f")
+        // Do some additional configuration if needed here
+        BITHockeyManager.shared().start()
+        BITHockeyManager.shared().authenticator.authenticateInstallation()
+    }
+    
     func shortCircuitLogin() {
         
         getAppDelegate().changeSystemStateTo(.objectGroup)
@@ -246,30 +254,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loadCondition()
     }
     
-    func logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
-        let defaults = UserDefaults.standard
-//        defaults.set(2, forKey: "condition")
-//        defaults.set("default", forKey: "sectionName")
-//        defaults.set(0, forKey: "groupIndex")
+//    func logUser() {
+//        // TODO: Use the current user's information
+//        // You can call any combination of these three methods
+//        let defaults = UserDefaults.standard
+////        defaults.set(2, forKey: "condition")
+////        defaults.set("default", forKey: "sectionName")
+////        defaults.set(0, forKey: "groupIndex")
+////        
+//        if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
+//            Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
+//        }
 //        
-        if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
-            Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
-        }
-        
-        if let speciesIndex = defaults.value(forKey: "speciesIndex") as? Int {
-            Crashlytics.sharedInstance().setIntValue(Int32(speciesIndex), forKey: "speciesIndex")
-        }
-        
-        if let condition = defaults.value(forKey: "condition") as? Int {
-            Crashlytics.sharedInstance().setIntValue(Int32(condition), forKey: "condition")
-        }
-        
-        if let sectionName = defaults.value(forKey: "sectionName"){
-            Crashlytics.sharedInstance().setObjectValue(sectionName, forKey: "sectionName")
-        }
-    }
+//        if let speciesIndex = defaults.value(forKey: "speciesIndex") as? Int {
+//            Crashlytics.sharedInstance().setIntValue(Int32(speciesIndex), forKey: "speciesIndex")
+//        }
+//        
+//        if let condition = defaults.value(forKey: "condition") as? Int {
+//            Crashlytics.sharedInstance().setIntValue(Int32(condition), forKey: "condition")
+//        }
+//        
+//        if let sectionName = defaults.value(forKey: "sectionName"){
+//            Crashlytics.sharedInstance().setObjectValue(sectionName, forKey: "sectionName")
+//        }
+//    }
 
     
     // Mark: View setup
@@ -278,7 +286,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func loadCondition() {
         
-        self.logUser()
+        //self.logUser()
         
         let appState = checkApplicationState()
         
@@ -446,17 +454,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setDefaultRealm(withSectionName: sectionName)
             
             checkInitialization()
-
-            
-            let hasInit = defaults.bool(forKey: "init")
-            
-            if !hasInit {
-                realmDataController.deleteAllConfigurationAndGroups()
-                realmDataController.deleteAllUserData()
-                _ = realmDataController.parseNutellaConfigurationJson()
-                _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
-                defaults.set(true, forKey: "init")
-            }
+        
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
@@ -502,13 +500,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let sectionName = defaults.string(forKey: "sectionName")
         let hasInit = defaults.bool(forKey: "init")
         
-        if !hasInit {
-            realmDataController.deleteAllConfigurationAndGroups()
-            realmDataController.deleteAllUserData()
-            _ = realmDataController.parseNutellaConfigurationJson()
-            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
-            defaults.set(true, forKey: "init")
+        let r = realmDataController.getRealm()
+        let allSos =  r.allSpeciesObservations()
+        if allSos.isEmpty {
+                _ = realmDataController.parseNutellaConfigurationJson()
+                _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
+                defaults.set(true, forKey: "init")
         }
+        
+        
+//        if !hasInit {
+//            realmDataController.deleteAllConfigurationAndGroups()
+//            realmDataController.deleteAllUserData()
+//            _ = realmDataController.parseNutellaConfigurationJson()
+//            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
+//            defaults.set(true, forKey: "init")
+//        }
     }
     
     func setDefaultRealm(withSectionName sectionName: String = "default") {

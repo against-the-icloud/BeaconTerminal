@@ -61,6 +61,11 @@
 		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
+		70B017E21DA5CE6C00B233AA /* ScratchPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017DE1DA5CE6C00B233AA /* ScratchPadViewController.swift */; };
+		70B017E31DA5CE6C00B233AA /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017DF1DA5CE6C00B233AA /* CanvasView.swift */; };
+		70B017E41DA5CE6C00B233AA /* ReticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017E01DA5CE6C00B233AA /* ReticleView.swift */; };
+		70B017E51DA5CE6C00B233AA /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017E11DA5CE6C00B233AA /* Line.swift */; };
+		70B017E71DA5D0B400B233AA /* PadImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017E61DA5D0B400B233AA /* PadImageView.swift */; };
 		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */; };
 		70C1CF361D592E2800CB687E /* LoginSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */; };
 		70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */; };
@@ -87,11 +92,7 @@
 		70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */; };
 		70ECDCE91D7DB76F00C07CCA /* EvidenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */; };
 		70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF4FF91CE6135200AC8AD5 /* Models.swift */; };
-		70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3EB1CE652E700A0E752 /* CanvasView.swift */; };
-		70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3ED1CE652ED00A0E752 /* Line.swift */; };
-		70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3EF1CE652F400A0E752 /* MyImageView.swift */; };
-		70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F11CE6530200A0E752 /* ReticleView.swift */; };
-		70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */; };
+		70F0A3F41CE6531C00A0E752 /* one in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* one */; };
 		70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B76D1D8C96200020E757 /* DefaultViewController.swift */; };
 		70F1B7701D8C9B790020E757 /* LoginConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */; };
 		70F1B7721D8CBC780020E757 /* LoginConditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B7711D8CBC780020E757 /* LoginConditionCell.swift */; };
@@ -196,6 +197,11 @@
 		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
+		70B017DE1DA5CE6C00B233AA /* ScratchPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadViewController.swift; sourceTree = "<group>"; };
+		70B017DF1DA5CE6C00B233AA /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		70B017E01DA5CE6C00B233AA /* ReticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReticleView.swift; sourceTree = "<group>"; };
+		70B017E11DA5CE6C00B233AA /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		70B017E61DA5D0B400B233AA /* PadImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PadImageView.swift; sourceTree = "<group>"; };
 		70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalContainerController.swift; path = Terminal/TerminalContainerController.swift; sourceTree = "<group>"; };
 		70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionViewController.swift; path = Login/LoginSectionViewController.swift; sourceTree = "<group>"; };
 		70C293451D9088430020247B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../RealmSwift.framework; sourceTree = "<group>"; };
@@ -224,11 +230,7 @@
 		70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidenceViewController.swift; path = Terminal/EvidenceViewController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		70F0A3EB1CE652E700A0E752 /* CanvasView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
-		70F0A3ED1CE652ED00A0E752 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		70F0A3EF1CE652F400A0E752 /* MyImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyImageView.swift; sourceTree = "<group>"; };
-		70F0A3F11CE6530200A0E752 /* ReticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReticleView.swift; sourceTree = "<group>"; };
-		70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadViewController.swift; sourceTree = "<group>"; };
+		70F0A3F31CE6531C00A0E752 /* one */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = one; sourceTree = "<group>"; };
 		70F1B76D1D8C96200020E757 /* DefaultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultViewController.swift; path = Login/DefaultViewController.swift; sourceTree = "<group>"; };
 		70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginConditionViewController.swift; path = Login/LoginConditionViewController.swift; sourceTree = "<group>"; };
 		70F1B7711D8CBC780020E757 /* LoginConditionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginConditionCell.swift; path = Login/LoginConditionCell.swift; sourceTree = "<group>"; };
@@ -446,11 +448,12 @@
 		70F0A3EA1CE6526000A0E752 /* ScratchPad */ = {
 			isa = PBXGroup;
 			children = (
-				70F0A3EB1CE652E700A0E752 /* CanvasView.swift */,
-				70F0A3ED1CE652ED00A0E752 /* Line.swift */,
-				70F0A3F11CE6530200A0E752 /* ReticleView.swift */,
-				70F0A3EF1CE652F400A0E752 /* MyImageView.swift */,
-				70F0A3F31CE6531C00A0E752 /* ScratchPadViewController.swift */,
+				70B017E61DA5D0B400B233AA /* PadImageView.swift */,
+				70B017DE1DA5CE6C00B233AA /* ScratchPadViewController.swift */,
+				70B017DF1DA5CE6C00B233AA /* CanvasView.swift */,
+				70B017E01DA5CE6C00B233AA /* ReticleView.swift */,
+				70B017E11DA5CE6C00B233AA /* Line.swift */,
+				70F0A3F31CE6531C00A0E752 /* one */,
 			);
 			path = ScratchPad;
 			sourceTree = "<group>";
@@ -823,7 +826,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/Fabric/run edc8bdc3e62738f894091653db9d30eab1c2acfe 2a2695d2dc14b000c842d2b7d7dd49133e19b863e32aedfb105a9561971c1317\n";
+			shellScript = "FILE=\"${SRCROOT}/HockeySDK-iOS/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi";
 		};
 		99D377C35F9370EECBF3E46E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -856,9 +859,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70B017E21DA5CE6C00B233AA /* ScratchPadViewController.swift in Sources */,
 				70A8D8571D984B0D00C1D2B7 /* ToolMenuController.swift in Sources */,
 				709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */,
-				70F0A3F41CE6531C00A0E752 /* ScratchPadViewController.swift in Sources */,
+				70F0A3F41CE6531C00A0E752 /* one in Sources */,
 				70D142691D414E2700A588B3 /* DragUtil.swift in Sources */,
 				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
 				70F1B7721D8CBC780020E757 /* LoginConditionCell.swift in Sources */,
@@ -866,11 +870,10 @@
 				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				70DD4EDF1D9B876D0071A542 /* ImageViewController.swift in Sources */,
 				70C1CF361D592E2800CB687E /* LoginSectionViewController.swift in Sources */,
-				70F0A3EC1CE652E700A0E752 /* CanvasView.swift in Sources */,
 				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
 				7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */,
 				70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */,
-				70F0A3F01CE652F400A0E752 /* MyImageView.swift in Sources */,
+				70B017E71DA5D0B400B233AA /* PadImageView.swift in Sources */,
 				7003BEE01D81F3250029B0EE /* MainContainerController.swift in Sources */,
 				70ECDCE91D7DB76F00C07CCA /* EvidenceViewController.swift in Sources */,
 				701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */,
@@ -890,13 +893,13 @@
 				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
 				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
-				70F0A3EE1CE652ED00A0E752 /* Line.swift in Sources */,
+				70B017E51DA5CE6C00B233AA /* Line.swift in Sources */,
 				7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */,
 				704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */,
-				70F0A3F21CE6530200A0E752 /* ReticleView.swift in Sources */,
 				70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */,
 				70F1B7701D8C9B790020E757 /* LoginConditionViewController.swift in Sources */,
 				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
+				70B017E31DA5CE6C00B233AA /* CanvasView.swift in Sources */,
 				706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */,
 				706723A71D999E86008B9DD1 /* RSSINormalization.swift in Sources */,
 				70D9C1B21D6650B700FAF080 /* LoginGroupViewController.swift in Sources */,
@@ -926,6 +929,7 @@
 				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */,
+				70B017E41DA5CE6C00B233AA /* ReticleView.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
 				70D4E5711DA3763F00E96054 /* TerminalPreferenceComparsionController.swift in Sources */,

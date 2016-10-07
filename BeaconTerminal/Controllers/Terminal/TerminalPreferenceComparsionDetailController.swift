@@ -49,6 +49,12 @@ class TerminalPreferenceComparsionDetailController: UITableViewController {
         if let groupIndex = self.groupIndex {
             headerLabel.text = "Group \(groupIndex)"
         }
+        
+        let header1 = tableView.headerView(forSection: 0)
+        header1?.textLabel?.adjustsFontSizeToFitWidth = true
+        
+        let header2 = tableView.headerView(forSection: 1)
+        header2?.textLabel?.adjustsFontSizeToFitWidth = true
 
     }
 
@@ -110,7 +116,6 @@ class TerminalPreferenceComparsionDetailController: UITableViewController {
         
         return PreferenceTableViewCell()
     }
-    
     
     /// Select item at row in tableView.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

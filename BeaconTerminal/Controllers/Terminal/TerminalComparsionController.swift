@@ -12,12 +12,13 @@ import RealmSwift
 
 class TerminalComparsionController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
-
+    
     var cellItems: [CellItem]?
     var fromSpeciesIndex: Int?
-    var relationship: Relationship?
+    var toSpeciesIndex: Int?
+    var relationshipType: String?
     
-    @IBOutlet weak var fromSpeciesImageView: UIImageView!    
+    @IBOutlet weak var fromSpeciesImageView: UIImageView!
     @IBOutlet weak var relationshipLabel: UILabel!
     @IBOutlet weak var toSpeciesImageView: UIImageView!
     
@@ -39,11 +40,11 @@ class TerminalComparsionController: UIViewController {
     
     func prepareView() {
         
-        guard let relationship = self.relationship else {
+        guard let relationshipType = self.relationshipType else {
             return
         }
-
-        guard let toSpeciesIndex = relationship.toSpecies?.index else {
+        
+        guard let toSpeciesIndex = self.toSpeciesIndex else {
             return
         }
         
@@ -51,13 +52,13 @@ class TerminalComparsionController: UIViewController {
             return
         }
         
-     
-            
-            fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
-            toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
-            
-            relationshipLabel.text = StringUtil.relationshipString(withString: relationship.relationshipType)
-            
+        
+        
+        fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
+        toSpeciesImageView.image = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
+        
+        relationshipLabel.text = StringUtil.relationshipString(withString: relationshipType)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,18 +67,18 @@ class TerminalComparsionController: UIViewController {
         
         if let segueId = segue.identifier {
             
-             let id = NSNumber.init( value: Int32(segueId)!).intValue
-    
+            let id = NSNumber.init( value: Int32(segueId)!).intValue
+            
             
             if let detailvc = segue.destination as? TerminalComparsionDetailViewController, let cellItems = self.cellItems {
                 
                 if let found = cellItems.filter( { (cellItem: CellItem) -> Bool in
                     return cellItem.groupIndex == id
                 }).first {
-                  detailvc.cellItem = found
-                  detailvc.groupIndex = found.groupIndex
+                    detailvc.cellItem = found
+                    detailvc.groupIndex = found.groupIndex
                 } else {
-                  detailvc.groupIndex = id
+                    detailvc.groupIndex = id
                 }
             }
         }

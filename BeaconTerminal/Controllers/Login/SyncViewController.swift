@@ -39,7 +39,12 @@ class SyncViewController: UICollectionViewController {
     }
     
     func prepareView() {
-        shouldSync = realm?.allSpeciesObservations().filter("isSynced = false")
+        
+        let r = realmDataController.getRealm()
+        
+        if let groupIndex = r.runtimeGroupIndex() {
+        
+        shouldSync = realm?.allSpeciesObservations().filter("isSynced = false AND groupIndex = \(groupIndex)")
         
         speciesObsNotificationToken = shouldSync?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
@@ -60,6 +65,7 @@ class SyncViewController: UICollectionViewController {
                 fatalError("\(error)")
                 break
             }
+        }
         }
 
     }

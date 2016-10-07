@@ -20,14 +20,14 @@ class TerminalCellController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet var imageViewCells: [UIImageView]!
     @IBOutlet var tapCollection: [UITapGestureRecognizer]!
+    var relationshipType: String?
     
     var toSpeciesIndex: Int? {
         didSet {
             prepareView()
         }
     }
-    var cellItems = [CellItem]()
-    var relationship: Relationship?
+    var cellItems = [CellItem(),CellItem(),CellItem(),CellItem(),CellItem()]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,17 +47,20 @@ class TerminalCellController: UIViewController {
         
         profileImageView.image = disabledImage
         
-        for ic in imageViewCells {
-            ic.isUserInteractionEnabled = false
-            ic.image = nil
+        cellItems = [CellItem(),CellItem(),CellItem(),CellItem(),CellItem()]
+        
+        for (index, _) in cellItems.enumerated() {
+            imageViewCells[index].isUserInteractionEnabled = false
+            imageViewCells[index].backgroundColor = UIColor.clear
+            imageViewCells[index].image = nil
         }
+    
+        self.view.setNeedsLayout()
         
         self.view.fadeIn(toAlpha: 0.3) {_ in
    
         }
         
-        cellItems = [CellItem]()
-
         /**
         self.view.fadeIn(toAlpha: 0.3) {_ in
             for (index,tap) in self.tapCollection.enumerated() {
@@ -72,20 +75,16 @@ class TerminalCellController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case "comparsionSegue":
-            if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let relationship = self.relationship {
-                
-                
+            if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let relationshipType = self.relationshipType{
                 tcvc.cellItems = cellItems
-                tcvc.relationship = relationship
-                
-                
+                tcvc.toSpeciesIndex = toSpeciesIndex
+                tcvc.relationshipType = relationshipType
+                //tcvc.relationship = relationship
                 //tcvc.title = title
                 tcvc.navigationController?.navigationBar.tintColor = Util.flatBlack
                 tcvc.navigationItem.backBarButtonItem?.tintColor = UIColor.white
                 tcvc.doneButton.tintColor = UIColor.white
                 tcvc.navigationController?.toolbar.tintColor =  Util.flatBlack
-                
-                
             }
             break
         default:
@@ -99,41 +98,41 @@ class TerminalCellController: UIViewController {
             return
         }
         
-        
-        
-        self.relationship = relationship
-        
         for (index,_) in self.imageViewCells.enumerated() {
             self.imageViewCells[index].isUserInteractionEnabled = true
-            
         }
-        
-        var cellItem = CellItem()
-        cellItem.groupIndex = groupIndex
-        cellItem.relationship = relationship
-        cellItems.append(cellItem)
         
         let enabledImage = RealmDataController.generateImageForSpecies(toSpeciesIndex, isHighlighted: true)
         
         profileImageView.image = enabledImage
         
+        var cellItem = cellItems[groupIndex]
+        cellItem.groupIndex = groupIndex
+        cellItem.relationship = relationship
+
+                        
         if let attachments = relationship.attachments {
             
             let urls = attachments.components(separatedBy: ",")
             
-            for attach in urls {
-            
-                if let url = URL(string: attach) {
-                    UIImage.contentsOfURL(url: url, completion: { found, error in
-                        if let image = found  {
-                            self.imageViewCells[groupIndex].image = image
-                        }
-                    })
+            if !urls.isEmpty {
+                for attach in urls {
+                    
+                    if let url = URL(string: attach) {
+                        UIImage.contentsOfURL(url: url, completion: { found, error in
+                            if let image = found  {
+                                self.imageViewCells[groupIndex].image = image
+                            }
+                        })
+                    }
                 }
+            } else {
+                imageViewCells[groupIndex].backgroundColor = #colorLiteral(red: 0.4824384836, green: 0.8372815179, blue: 0.9991987436, alpha: 1)
             }
+         
             
         } else {
-            imageViewCells[groupIndex].backgroundColor = #colorLiteral(red: 0.8129653335, green: 0.8709804416, blue: 0.9280658364, alpha: 1)
+            imageViewCells[groupIndex].backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
         }
         
         if self.view.alpha < 1.0 {

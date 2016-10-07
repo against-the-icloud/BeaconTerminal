@@ -558,13 +558,17 @@
                                                                             <constraint firstAttribute="bottom" secondItem="BCg-8I-yeD" secondAttribute="bottom" id="mqE-Tl-DGT"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="752" text="DEFAULT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSr-Jv-G38" userLabel="DEFAULT">
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="752" text="DEFAULT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSr-Jv-G38" userLabel="DEFAULT">
+                                                                        <gestureRecognizers/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="OyP-5L-Sjf"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <connections>
+                                                                            <outletCollection property="gestureRecognizers" destination="XSr-yt-tz0" appends="YES" id="04G-qC-Yq2"/>
+                                                                        </connections>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="l68-Er-9gR" userLabel="BadgeView">
                                                                         <subviews>
@@ -746,26 +750,13 @@
                         <action selector="tapScanView:" destination="oOh-3b-NoF" id="wED-8R-HFg"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="XSr-yt-tz0">
+                    <connections>
+                        <action selector="showSidebar:" destination="oOh-3b-NoF" id="vOu-ul-rXM"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-155.4904831625183" y="-1557.421875"/>
-        </scene>
-        <!--ScratchPadController-->
-        <scene sceneID="p5W-by-BUf">
-            <objects>
-                <viewController storyboardIdentifier="scratchPadController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Tr5-Bv-VQt" userLabel="ScratchPadController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="VIT-5s-fnh"/>
-                        <viewControllerLayoutGuide type="bottom" id="Px7-c1-ROY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="k7K-cV-nqk">
-                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1o7-3Y-bkQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="547" y="-1518"/>
         </scene>
         <!--terminalMainViewController-->
         <scene sceneID="5Fw-G6-okm">
@@ -1175,9 +1166,92 @@
             </objects>
             <point key="canvasLocation" x="1095" y="-476"/>
         </scene>
+        <!--Scratch Pad View Controller-->
+        <scene sceneID="3gR-nY-wc4">
+            <objects>
+                <viewController id="UYC-Xr-gc8" customClass="ScratchPadViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="28N-Kz-Ht0"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fbp-B5-kJp"/>
+                    </layoutGuides>
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="cMU-Av-7Wq" customClass="CanvasView" customModule="BeaconTerminal" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_05" translatesAutoresizingMaskIntoConstraints="NO" id="1Wf-ex-uP6" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="1246" minY="344" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_03" translatesAutoresizingMaskIntoConstraints="NO" id="620-XN-cyH" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="22" minY="252" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_04" translatesAutoresizingMaskIntoConstraints="NO" id="1zN-QG-ygD" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="1246" minY="236" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_01" translatesAutoresizingMaskIntoConstraints="NO" id="8UL-E5-7DE" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="22" minY="129" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_00" translatesAutoresizingMaskIntoConstraints="NO" id="dGp-Fk-Bpg" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="22" minY="8" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_03" translatesAutoresizingMaskIntoConstraints="NO" id="4L1-7O-yYP" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="1246" minY="452" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_10" translatesAutoresizingMaskIntoConstraints="NO" id="Aje-ec-vNE" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="1246" minY="128" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_09" translatesAutoresizingMaskIntoConstraints="NO" id="PQU-pf-4ZJ" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="1246" minY="20" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_08" translatesAutoresizingMaskIntoConstraints="NO" id="Dtb-dR-oFj" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="22" minY="605" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_06" translatesAutoresizingMaskIntoConstraints="NO" id="Pe9-nK-0Pt" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="20" minY="360" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="species_02" translatesAutoresizingMaskIntoConstraints="NO" id="E1w-Ze-a0Z" customClass="MyImageView" customModule="BeaconTerminal" customModuleProvider="target">
+                                <frame key="frameInset" minX="22" minY="484" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVL-gf-f2B">
+                                <frame key="frameInset" minX="9" minY="878" width="75" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ic_delete"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wrG-5K-Gj6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="679.94143484626647" y="-1595.21484375"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg_greylinen" width="1280" height="720"/>
+        <image name="ic_delete" width="24" height="24"/>
         <image name="placeGroup" width="241" height="226"/>
+        <image name="species_00" width="256" height="256"/>
+        <image name="species_01" width="256" height="256"/>
+        <image name="species_02" width="256" height="256"/>
+        <image name="species_03" width="256" height="256"/>
+        <image name="species_04" width="256" height="256"/>
+        <image name="species_05" width="256" height="256"/>
+        <image name="species_06" width="256" height="256"/>
+        <image name="species_08" width="256" height="256"/>
+        <image name="species_09" width="256" height="256"/>
+        <image name="species_10" width="256" height="256"/>
     </resources>
 </document>

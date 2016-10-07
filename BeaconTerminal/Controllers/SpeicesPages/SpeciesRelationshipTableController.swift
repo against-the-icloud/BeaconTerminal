@@ -42,6 +42,16 @@ class SpeciesRelationshipTableController: UITableViewController {
         super.viewDidLoad()
         updateHeader()
         prepareNotifications()
+        
+        tableView.estimatedRowHeight = 87
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let rowheight = (tableView.height - 80.0)/9
+        
+        return rowheight;
     }
     
     func prepareNotifications() {
@@ -64,10 +74,7 @@ class SpeciesRelationshipTableController: UITableViewController {
                         controller.updateCell(relationshipResults: relationshipResults, type: .insert, indexes: insertions)
                         
                         controller.updateCell(relationshipResults: relationshipResults, type: .update, indexes: modifications)
-                        
                         controller.updateCell(relationshipResults: relationshipResults, type: .delete, indexes: deletions)
-
-
                         break
                     case .error(let error):
                         // An error occurred while opening the Realm file on the background worker thread

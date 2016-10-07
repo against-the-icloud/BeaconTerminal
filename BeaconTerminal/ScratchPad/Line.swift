@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2015 Apple Inc. All Rights Reserved.
+    Copyright (C) 2016 Apple Inc. All Rights Reserved.
     See LICENSE.txt for this sample’s licensing information
     
     Abstract:
@@ -30,7 +30,9 @@ class Line: NSObject {
             let rect = updateRectForExistingPoint(point)
             let didUpdate = point.updateWithTouch(touch)
             if didUpdate {
-                //rect.insetInPlace(updateRectForExistingPoint(point))
+                
+                rect.union(updateRectForExistingPoint(point))
+                
             }
             if point.estimatedPropertiesExpectingUpdates == [] {
                 pointsWaitingForUpdatesByEstimationIndex.removeValue(forKey: estimationUpdateIndex)
@@ -62,25 +64,26 @@ class Line: NSObject {
     
     func removePointsWithType(_ type: LinePoint.PointType) -> CGRect {
         let updateRect = CGRect.null
-//        var priorPoint: LinePoint?
-//        
-//        points = points.filter { point in
-//            let keepPoint = !point.pointType.contains(type)
-//            
-//            if !keepPoint {
-//                _ = self.updateRectForLinePoint(point)
-//                
-//                if  {
-//                    != nil           //  rect.unionInPlace(updateRectForLinePoint(priorPoint))
-//                }
-//                
-//               // updateRect.unionInPlace(rect)
-//            }
-//            
-//            priorPoint = point
-//            
-//            return keepPoint
-//        }
+        var priorPoint: LinePoint?
+        
+        points = points.filter { point in
+            let keepPoint = !point.pointType.contains(type)
+            
+            if !keepPoint {
+                let rect = self.updateRectForLinePoint(point)
+                
+                if let priorPoint = priorPoint {
+                    
+                    rect.union(updateRectForLinePoint(priorPoint))
+                }
+                
+                updateRect.union(rect)
+            }
+            
+            priorPoint = point
+            
+            return keepPoint
+        }
         
         return updateRect
     }
@@ -113,7 +116,7 @@ class Line: NSObject {
             }
             
             // This color will used by default for `.Standard` touches.
-            var color = UIColor.black()
+            var color = UIColor.black
             
             let pointType = point.pointType
             if isDebuggingEnabled {
@@ -144,31 +147,31 @@ class Line: NSObject {
                 }
             }
             
-            _ = usePreciseLocation ? point.preciseLocation : point.location
-            _ = usePreciseLocation ? priorPoint.preciseLocation : priorPoint.location
+            let location = usePreciseLocation ? point.preciseLocation : point.location
+            let priorLocation = usePreciseLocation ? priorPoint.preciseLocation : priorPoint.location
             
             context.setStrokeColor(color.cgColor)
             
             context.beginPath()
             
-//            context.move(x: priorLocation.x, y: priorLocation.y)
-//            context.addLine(x: location.x, y: location.y)
-//            
+            context.move(to: CGPoint(x: priorLocation.x, y: priorLocation.y))
+            context.addLine(to: CGPoint(x: location.x, y: location.y))
+            
             context.setLineWidth(point.magnitude)
             context.strokePath()
             
             // Draw azimuith and elevation on all non-coalesced points when debugging.
             if isDebuggingEnabled && !pointType.contains(.Coalesced) && !pointType.contains(.Predicted) && !pointType.contains(.Finger) {
                 context.beginPath()
-//                context.setStrokeColor(UIColor.red.cgColor)
-//                context.setLineWidth(0.5);
-//                context.move(x: location.x, y: location.y)
-//                var targetPoint = CGPoint(x:0.5 + 10.0 * cos(point.altitudeAngle), y:0.0)
-//                targetPoint = targetPoint.applying(CGAffineTransform(rotationAngle: point.azimuthAngle))
-//                targetPoint.x += location.x
-//                targetPoint.y += location.y
-//                context.addLine(x: targetPoint.x, y: targetPoint.y)
-//                context.strokePath()
+                context.setStrokeColor(UIColor.red.cgColor)
+                context.setLineWidth(0.5);
+                context.move(to: CGPoint(x: location.x, y: location.y))
+                var targetPoint = CGPoint(x:0.5 + 10.0 * cos(point.altitudeAngle), y:0.0)
+                targetPoint = targetPoint.applying(CGAffineTransform(rotationAngle: point.azimuthAngle))
+                targetPoint.x += location.x
+                targetPoint.y += location.y
+                context.addLine(to: CGPoint(x: targetPoint.x, y: targetPoint.y))
+                context.strokePath()
             }
             
             maybePriorPoint = point
@@ -227,8 +230,9 @@ class Line: NSObject {
         let rect = CGRect(origin: point.location, size: CGSize.zero)
         
         // The negative magnitude ensures an outset rectangle.
-        _ = -3 * point.magnitude - 2
-       // rect.insetInPlace(dx: magnitude, dy: magnitude)
+        let magnitude = -3 * point.magnitude - 2
+        
+        rect.insetBy(dx: magnitude, dy: magnitude)
         
         return rect
     }
@@ -244,8 +248,9 @@ class Line: NSObject {
         }
         
         // The negative magnitude ensures an outset rectangle.
-        _ = -3.0 * pointMagnitude - 2.0
-      //  rect.insetInPlace(dx: magnitude, dy: magnitude)
+        let magnitude = -3.0 * pointMagnitude - 2.0
+        rect.insetBy(dx: magnitude, dy: magnitude)
+
         
         return rect
     }
@@ -334,45 +339,45 @@ class LinePoint: NSObject  {
         guard let estimationUpdateIndex = touch.estimationUpdateIndex
             , estimationUpdateIndex == estimationUpdateIndex else { return false }
         
-//        // An array of the touch properties that may be of interest.
-//        let touchProperties: [UITouchProperties] = [.altitude, .azimuth, .force, .location]
-//        
-//        // Iterate through possible properties.
-//        for expectedProperty in touchProperties {
-//            // If an update to this property is not expected, continue to the next property.
-//            guard !estimatedPropertiesExpectingUpdates.contains(expectedProperty) else { continue }
-//            
-//            // Update the value of the point with the value from the touch's property.
-//            switch expectedProperty {
-//                case UITouchProperties.force:
-//                    force = touch.force
-//                case UITouchProperties.azimuth:
-//                    azimuthAngle = touch.azimuthAngle(in: touch.view)
-//                case UITouchProperties.altitude:
-//                    altitudeAngle = touch.altitudeAngle
-//                case UITouchProperties.location:
-//                    location = touch.location(in: touch.view)
-//                    preciseLocation = touch.preciseLocation(in: touch.view)
-//                default:
-//                    ()
-//            }
-//
-//            if !touch.estimatedProperties.contains(expectedProperty) {
-//                // Flag that this point now has a 'final' value for this property.
-//                estimatedProperties.subtracting(expectedProperty)
-//            }
-//            
-//            if !touch.estimatedPropertiesExpectingUpdates.contains(expectedProperty) {
-//                // Flag that this point is no longer expecting updates for this property.
-//                estimatedPropertiesExpectingUpdates.subtracting(expectedProperty)
-//                
-//                if estimatedPropertiesExpectingUpdates.isEmpty {
-//                    // Flag that this point has been updated and no longer needs updates.
-//                    pointType.subtract(.NeedsUpdate)
-//                    pointType.formUnion(.Updated)
-//                }
-//            }
-//        }
+        // An array of the touch properties that may be of interest.
+        let touchProperties: [UITouchProperties] = [.altitude, .azimuth, .force, .location]
+        
+        // Iterate through possible properties.
+        for expectedProperty in touchProperties {
+            // If an update to this property is not expected, continue to the next property.
+            guard !estimatedPropertiesExpectingUpdates.contains(expectedProperty) else { continue }
+            
+            // Update the value of the point with the value from the touch's property.
+            switch expectedProperty {
+                case UITouchProperties.force:
+                    force = touch.force
+                case UITouchProperties.azimuth:
+                    azimuthAngle = touch.azimuthAngle(in: touch.view)
+                case UITouchProperties.altitude:
+                    altitudeAngle = touch.altitudeAngle
+                case UITouchProperties.location:
+                    location = touch.location(in: touch.view)
+                    preciseLocation = touch.preciseLocation(in: touch.view)
+                default:
+                    ()
+            }
+
+            if !touch.estimatedProperties.contains(expectedProperty) {
+                // Flag that this point now has a 'final' value for this property.
+                estimatedProperties.subtract(expectedProperty)
+            }
+            
+            if !touch.estimatedPropertiesExpectingUpdates.contains(expectedProperty) {
+                // Flag that this point is no longer expecting updates for this property.
+                estimatedPropertiesExpectingUpdates.subtract(expectedProperty)
+                
+                if estimatedPropertiesExpectingUpdates.isEmpty {
+                    // Flag that this point has been updated and no longer needs updates.
+                    pointType.subtract(.NeedsUpdate)
+                    pointType.formUnion(.Updated)
+                }
+            }
+        }
         
         return true
     }
