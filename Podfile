@@ -25,9 +25,9 @@ target 'BeaconTerminal' do
     pod 'EstimoteSDK'
     
     #distribution
-    pod 'Fabric'
-    pod 'Crashlytics'
-    
+#    pod 'Fabric'
+#    pod 'Crashlytics'
+
     #upload
     pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"
     pod 'Alamofire', '~> 4.0'

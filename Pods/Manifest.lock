@@ -1,13 +1,10 @@
 PODS:
   - Alamofire (4.0.1)
-  - Crashlytics (3.8.2):
-    - Fabric (~> 1.6.3)
   - CryptoSwift (0.6.0)
   - EstimoteSDK (4.9.0)
-  - Fabric (1.6.9)
-  - HockeySDK (4.1.1):
-    - HockeySDK/DefaultLib (= 4.1.1)
-  - HockeySDK/DefaultLib (4.1.1)
+  - HockeySDK (4.1.2):
+    - HockeySDK/DefaultLib (= 4.1.2)
+  - HockeySDK/DefaultLib (4.1.2)
   - Material (2.1.0)
   - MQTTClient (0.8.5):
     - MQTTClient/Core (= 0.8.5)
@@ -20,20 +17,18 @@ PODS:
   - Nutella (1.0.0):
     - MQTTClient
   - NVActivityIndicatorView (3.0)
-  - Realm (2.0.1):
-    - Realm/Headers (= 2.0.1)
-  - Realm/Headers (2.0.1)
-  - RealmSwift (2.0.1):
-    - Realm (= 2.0.1)
+  - Realm (2.0.2):
+    - Realm/Headers (= 2.0.2)
+  - Realm/Headers (2.0.2)
+  - RealmSwift (2.0.2):
+    - Realm (= 2.0.2)
   - Transporter (3.0.0)
   - XCGLogger (3.3)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
-  - Crashlytics
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
   - EstimoteSDK
-  - Fabric
   - HockeySDK (~> 4.1.1)
   - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
   - Nutella (from `https://github.com/aperritano/Nutella`, branch `master`)
@@ -62,7 +57,7 @@ CHECKOUT OPTIONS:
     :commit: 13764570021ca73c315c3de18f367e5fdb55d785
     :git: https://github.com/krzyzanowskim/CryptoSwift
   Material:
-    :commit: ecc9cad53364f407a7531d114dd2193dec5b2d74
+    :commit: 3215a38a9f116348f50ce4c8b1ce6174bc33c00a
     :git: https://github.com/CosmicMind/Material.git
   Nutella:
     :commit: 89a4cb017d7d44a00eff8ca4e6a0e6d40b5c4c45
@@ -73,20 +68,18 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
   EstimoteSDK: fe53a20d47d5bec1bbbf62c4610729fa21aa73a8
-  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
-  HockeySDK: 364679ba00f3447d014dd75cac57e59cc2574318
+  HockeySDK: c7523379550a4305cefc1cdfa7b5f9a5a3538180
   Material: c5c334bd7fa8c0307cb35be143b7c51c5e2c52a7
   MQTTClient: fca939bcd74aa70af2d8ee35f3e44f258f4e9888
   Nutella: fef7c16a3e10ccddfc24830374ace126c16abf07
   NVActivityIndicatorView: 81953b5e65093ba79edf4fe7268e002039ca5268
-  Realm: 0557ee0e4ab4f0936c90e370056d1ed6265f93d6
-  RealmSwift: 64e00af79bdcd7d2a7a23fdc1cb3faf22b80ae4c
+  Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
+  RealmSwift: 0eb5070d851cba7c66e841ca756d83609dc78bc8
   Transporter: b6e906451c22d7119b6556adf3481689a5c30677
   XCGLogger: d6e196e78940ff6daab17d6917107876f973fa31
 
-PODFILE CHECKSUM: fb1d949bb9d5b4c61031067cd9483d1ebec40c29
+PODFILE CHECKSUM: 477de932201aee5a826fc3c2953ba7e4039d46bd
 
 COCOAPODS: 1.1.0.rc.2
