@@ -56,9 +56,7 @@ class ChooseSpeciesViewController: UICollectionViewController {
                             query.append(" AND index != \(toSpecies.index)")
                         }
                     }
-                    
                     speciesFilterd = realm?.species.filter(query)
-                    
                 }
                 
             }
@@ -78,9 +76,6 @@ class ChooseSpeciesViewController: UICollectionViewController {
                     ev.toSpeciesIndex = speciesCell.speciesIndex
                     
                     ev.title = "Support"
-                    
-                    //ev.navigationController?.setToolbarHidden(false, animated: true)
-//                    ev.navigationItem.prompt = "SUPPORT THE RELATIONSHIP"
                 }
                 break
             default:

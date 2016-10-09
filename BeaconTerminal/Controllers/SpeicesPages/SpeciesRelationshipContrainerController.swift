@@ -24,34 +24,34 @@ class SpeciesRelationshipContainerController: UIViewController {
     
     // Mark: segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let tvc = segue.destination as? SpeciesRelationshipTableController, let segueId = segue.identifier {
+        if let segueId = segue.identifier {
             switch segueId {
             case "producerRelationshipSegue":
+                
+                if let tvc = segue.destination as? SpeciesRelationshipTableController {
                 tvc.relationshipType = .producer
                 tvc.speciesIndex = speciesIndex
+                }
                 break
             case "competesRelationshipSegue":
+                if let tvc = segue.destination as? SpeciesRelationshipTableController {
                 tvc.relationshipType = .competes
                 tvc.speciesIndex = speciesIndex
+                }
                 break
             case "consumerRelationshipSegue":
+                if let tvc = segue.destination as? SpeciesRelationshipTableController {
                 tvc.relationshipType = .consumer
                 tvc.speciesIndex = speciesIndex
+                }
+            case "habitatsRelationshipSegue":
+                if let pvc = segue.destination as? SpeciesPreferencesTableController {
+                    pvc.speciesIndex = speciesIndex
+                }
             default:
                 break
             }
         }
- 
-    
-    if let pvc = segue.destination as? SpeciesPreferencesTableController, let segueId = segue.identifier {
-        switch segueId {
-        case "habitatsRelationshipSegue":
-            pvc.relationshipType = .habitats
-            pvc.speciesIndex = speciesIndex
-        default:
-            break
-        }
-    }
-}
+ }
 
 }

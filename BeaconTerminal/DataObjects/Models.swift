@@ -193,11 +193,6 @@ class Preference: Object {
 
 }
 
-class SpeciesHabitat: Object {
-    dynamic var imgUrl = ""
-    dynamic var name = ""
-    dynamic var index = 0
-}
 
 class SpeciesPreference: Object {
     dynamic var id : String? = nil
@@ -205,7 +200,7 @@ class SpeciesPreference: Object {
     dynamic var attachments : String? = nil
     dynamic var authors : Group? = nil
     dynamic var lastModified = Date()
-    dynamic var speciesPreference: SpeciesHabitat?
+    dynamic var habitat: Habitat?
     
     override static func primaryKey() -> String? {
         return "id"
@@ -308,6 +303,7 @@ class SimulationConfiguration: Object {
     
     let ecosystems = List<Ecosystem>()
     let species = List<Species>()
+    let habitats = List<Habitat>()
     
     
     override static func primaryKey() -> String? {
@@ -325,6 +321,16 @@ class Ecosystem: Object {
     
 }
 
+
+class Habitat: Object {
+    dynamic var imgUrl = ""
+    dynamic var name = ""
+    dynamic var index = 0
+    dynamic var last_modified = Date()
+
+}
+
+
 class Species: Object {
     
     dynamic var imgUrl = ""
@@ -332,14 +338,6 @@ class Species: Object {
     dynamic var name = ""
     dynamic var index = 0
     dynamic var last_modified = Date()
-    
-    //    func convertHexColor() -> UIColor {
-    //        if !color.isEmpty {
-    //            return UIColor.init(hex: self.c)
-    //        }
-    //
-    //        return UIColor.whiteColor()
-    //    }
 }
 
 class User: Object {
@@ -364,6 +362,14 @@ extension Realm {
     
     var species: Results<Species> {
         return objects(Species.self)
+    }
+  
+    var habitats: Results<Habitat> {
+        return objects(Habitat.self)
+    }
+    
+    func habitatWithIndex(withIndex index: Int) -> Habitat? {
+        return objects(Habitat.self).filter("index = \(index)").first
     }
     
     func speciesWithIndex(withIndex index: Int) -> Species? {

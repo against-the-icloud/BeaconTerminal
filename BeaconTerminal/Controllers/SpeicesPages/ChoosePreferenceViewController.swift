@@ -13,8 +13,7 @@ import RealmSwift
 class ChoosePreferencesViewController: UICollectionViewController {
     
     var speciesIndex: Int?
-    var relationshipType: RelationshipType?
-    var speciesFilterd: Results<Species>?
+    var habitatFiltered: Results<Habitat>?
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
@@ -40,27 +39,32 @@ class ChoosePreferencesViewController: UICollectionViewController {
         navigationController?.navigationBar.backItem?.backBarButtonItem?.tintColor = UIColor.white
         
         
-        if let speciesIndex = self.speciesIndex, let speciesObs = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let rType = self.relationshipType?.rawValue {
+        if let speciesIndex = self.speciesIndex, let speciesObs = realm?.allSpeciesObservationsForCurrentSectionAndGroup() {
             
             if let so = speciesObs.filter("fromSpecies.index = \(speciesIndex)").first {
-                let relationshipResults = so.relationships.filter("relationshipType = '\(rType)'")
                 
-                if relationshipResults.isEmpty {
-                    speciesFilterd = realm?.species.filter("index != \(speciesIndex)")
-                } else {
-                    
-                    
+                
+                if !so.speciesPreferences.isEmpty {
+                var query: String?
+
                     //all the species that have been used
-                    var query = "index != \(speciesIndex)"
-                    for (_,r) in relationshipResults.enumerated() {
-                        if let toSpecies = r.toSpecies {
-                            query.append(" AND index != \(toSpecies.index)")
+                    for (index,sp) in so.speciesPreferences.enumerated() {
+                        
+                        if index == 0 {
+                          query = "index != \(sp.habitat?.index)"
+                        }
+                        
+                        if let habitat = sp.habitat {
+                            query!.append(" AND index != \(habitat.index)")
                         }
                     }
-                    
-                    speciesFilterd = realm?.species.filter(query)
-                    
+//
+                    habitatFiltered = realmDataController.getRealm().habitats.filter(query!)
+                } else {
+                    habitatFiltered = realmDataController.getRealm().habitats
                 }
+//
+            
                 
             }
         }
@@ -70,18 +74,14 @@ class ChoosePreferencesViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier {
             switch segueId {
-            case "evidenceSpeciesSegue":
+            case "evidencePreferencesSegue":
                 
-                if let ev = segue.destination as? EvidenceSpeciesViewController, let speciesIndex = self.speciesIndex, let relationshipType = self.relationshipType, let speciesCell = sender as? LoginSpeciesCell {
+                if let ev = segue.destination as? EvidencePreferenceViewController, let speciesIndex = self.speciesIndex, let speciesCell = sender as? LoginSpeciesCell {
                     
-                    ev.relationshipType = relationshipType
                     ev.fromSpeciesIndex = speciesIndex
-                    ev.toSpeciesIndex = speciesCell.speciesIndex
+                    ev.habitatIndex = speciesCell.speciesIndex
                     
                     ev.title = "Support"
-                    
-                    //ev.navigationController?.setToolbarHidden(false, animated: true)
-                    //                    ev.navigationItem.prompt = "SUPPORT THE RELATIONSHIP"
                 }
                 break
             default:
@@ -103,17 +103,17 @@ extension ChoosePreferencesViewController {
         
         let headerView: ChooseSpeciesHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ChooseSpeciesHeader.chooseSpeciesHeaderIdentifier, for: indexPath) as! ChooseSpeciesHeader
         
-        if let fromSpeciesIndex = self.speciesIndex, let rType = self.relationshipType {
+        if let fromSpeciesIndex = self.speciesIndex {
             headerView.fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
-            headerView.relationshipLabel.text = StringUtil.relationshipString(withType: rType).uppercased()
+            headerView.relationshipLabel.text = "PREFERS"
         }
         
         return headerView
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let allSpecies = speciesFilterd {
-            return allSpecies.count
+        if let allHabitats = self.habitatFiltered {
+            return allHabitats.count
         } else {
             return 0
         }
@@ -126,11 +126,11 @@ extension ChoosePreferencesViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoginSpeciesCell.reuseIdentifier, for: indexPath) as! LoginSpeciesCell
         
-        if let filtered = speciesFilterd {
-            let toSpecies = filtered[indexPath.row]
+        if let filtered = self.habitatFiltered {
+            let toHabitat = filtered[indexPath.row]
             
-            cell.speciesImageView.image = RealmDataController.generateImageForSpecies(toSpecies.index, isHighlighted: true)
-            cell.speciesIndex = toSpecies.index
+            cell.speciesImageView.image = UIImage(named: toHabitat.name)
+            cell.speciesIndex = toHabitat.index
             //cell.speciesLabel.text = "Species \(toSpecies.index)"
             
         }

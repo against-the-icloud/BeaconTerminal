@@ -41,6 +41,7 @@
 		706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */; };
 		706CF1391D8FA83500A18927 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CF1381D8FA83500A18927 /* Banner.swift */; };
 		706D21E21DA99FD4009FC554 /* ChoosePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */; };
+		706D21E41DA9D245009FC554 /* EvidencePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */; };
 		706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */; };
 		7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7070C4D41D4E77BA00AB47FF /* Popover.storyboard */; };
 		7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */; };
@@ -180,6 +181,7 @@
 		706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateBeaconDetector.swift; sourceTree = "<group>"; };
 		706CF1381D8FA83500A18927 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChoosePreferenceViewController.swift; path = SpeicesPages/ChoosePreferenceViewController.swift; sourceTree = "<group>"; };
+		706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidencePreferenceViewController.swift; path = SpeicesPages/EvidencePreferenceViewController.swift; sourceTree = "<group>"; };
 		706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipDetailViewController.swift; sourceTree = "<group>"; };
 		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popover.storyboard; sourceTree = "<group>"; };
 		7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelationshipDropView.swift; path = BeaconTerminal/Controllers/Carousel/RelationshipDropView.swift; sourceTree = SOURCE_ROOT; };
@@ -341,6 +343,7 @@
 				70DD4EDE1D9B876D0071A542 /* ImageViewController.swift */,
 				70D1281E1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift */,
 				706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */,
+				706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */,
 			);
 			name = SpeciesPages;
 			sourceTree = "<group>";
@@ -900,6 +903,7 @@
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
 				70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
+				706D21E41DA9D245009FC554 /* EvidencePreferenceViewController.swift in Sources */,
 				70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */,
 				7003BEE21D81F96C0029B0EE /* TabSegmentedControl.swift in Sources */,
 				7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */,

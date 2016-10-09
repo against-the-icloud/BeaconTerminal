@@ -1025,6 +1025,11 @@ extension RealmDataController {
         return UIImage(named: imageName)
     }
     
+    static func generateImageForHabitat(_ index: Int, isHighlighted: Bool) -> UIImage? {
+        let imageName = self.generateImageFileNameFromIndex(index, isHighlighted: isHighlighted)
+        return UIImage(named: imageName)
+    }
+    
     // Mark: JSON Parsing
     
     func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "default", withRealmType realmType: RealmType = RealmType.defaultDB) -> SystemConfiguration {
@@ -1086,21 +1091,7 @@ extension RealmDataController {
                                     speciesObservation.id = "\(g.index)-\(fromSpecies.index)"
                                     speciesObservation.fromSpecies = fromSpecies
                                     speciesObservation.groupIndex = g.index
-                                    
-                                    //prepare preferences
-                                    let initalPreference = "Not ready to report"
-                                    
-                                    let heatSensitivityPreference = Preference()
-                                    heatSensitivityPreference.id = "\(fromSpecies.index)-0"
-                                    heatSensitivityPreference.configure(type: Preferences.heatSensitivity, value: initalPreference)
-                                    speciesObservation.preferences.append(heatSensitivityPreference)
-                                    
-                                    let habitatPreference = Preference()
-                                    habitatPreference.id = "\(fromSpecies.index)-1"
-                                    habitatPreference.configure(type: Preferences.habitatPreference, value: initalPreference)
-                                    
-                                    speciesObservation.preferences.append(habitatPreference)
-                                    
+                                                                                                            
                                     r.add(speciesObservation, update: true)
                                     
                                     
@@ -1337,7 +1328,24 @@ extension RealmDataController {
                 simulationConfiguration.species.append(species)
                 
             }
-            
+        }
+        
+        if let allHabitats = json["habitatItems"].array {
+            for (_,item) in allHabitats.enumerated() {
+                
+                let habitat = Habitat()
+                
+                
+                if let index = item["index"].int {
+                    habitat.index = index
+                }
+                                              
+                if let name = item["name"].string {
+                    habitat.name = name
+                }
+                
+                simulationConfiguration.habitats.append(habitat)
+            }
         }
         
         r.add(simulationConfiguration)

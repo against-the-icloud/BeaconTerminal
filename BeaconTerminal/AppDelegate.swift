@@ -28,14 +28,14 @@ let LOG: XCGLogger = {
     // Setup XCGLogger
     let LOG = XCGLogger.default
     //LOG. = true // Or set the XcodeColors environment variable in your scheme to YES
-//    LOG.xcodeColors = [
-//        .verbose: .lightGrey,
-//        .debug: .red,
-//        .info: .darkGreen,
-//        .warning: .orange,
-//        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white()), // Optionally use a UIColor
-//        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-//    ]
+    //    LOG.xcodeColors = [
+    //        .verbose: .lightGrey,
+    //        .debug: .red,
+    //        .info: .darkGreen,
+    //        .warning: .orange,
+    //        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white()), // Optionally use a UIColor
+    //        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+    //    ]
     return LOG
 }()
 
@@ -86,7 +86,7 @@ let applicationStateMachine = StateMachine(initialState: loginState, states: [pl
 //init events
 
 let loginEvent = Event(name: "login", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup],
-                               destinationValue: ApplicationType.login)
+                       destinationValue: ApplicationType.login)
 
 let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup],
                                destinationValue: ApplicationType.placeTerminal)
@@ -202,7 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     weak var controlPanelDelegate: ControlPanelDelegate?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-    
+        
         //setupLoginConnection()
         
         setupHockeyApp()
@@ -214,7 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         realmDataController = RealmDataController()
-    
+        
         prepareThemes()
         
         manualLogin()
@@ -239,7 +239,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func autoLogin() {
         initLoginStateMachine(loginState: .autoLogin)
         getAppDelegate().changeLoginStateTo(.autoLogin)
-
+        
     }
     
     func prepareThemes() {
@@ -261,7 +261,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func shortCircuitLogin() {
         
         getAppDelegate().changeSystemStateTo(.objectGroup)
-
+        
         let defaults = UserDefaults.standard
         defaults.set(2, forKey: "condition")
         defaults.set("default", forKey: "sectionName")
@@ -270,36 +270,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.synchronize()
         
         // TODO: Move this to where you establish a user session
-
-
+        
+        
         loadCondition()
     }
     
-//    func logUser() {
-//        // TODO: Use the current user's information
-//        // You can call any combination of these three methods
-//        let defaults = UserDefaults.standard
-////        defaults.set(2, forKey: "condition")
-////        defaults.set("default", forKey: "sectionName")
-////        defaults.set(0, forKey: "groupIndex")
-////        
-//        if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
-//            Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
-//        }
-//        
-//        if let speciesIndex = defaults.value(forKey: "speciesIndex") as? Int {
-//            Crashlytics.sharedInstance().setIntValue(Int32(speciesIndex), forKey: "speciesIndex")
-//        }
-//        
-//        if let condition = defaults.value(forKey: "condition") as? Int {
-//            Crashlytics.sharedInstance().setIntValue(Int32(condition), forKey: "condition")
-//        }
-//        
-//        if let sectionName = defaults.value(forKey: "sectionName"){
-//            Crashlytics.sharedInstance().setObjectValue(sectionName, forKey: "sectionName")
-//        }
-//    }
-
+    //    func logUser() {
+    //        // TODO: Use the current user's information
+    //        // You can call any combination of these three methods
+    //        let defaults = UserDefaults.standard
+    ////        defaults.set(2, forKey: "condition")
+    ////        defaults.set("default", forKey: "sectionName")
+    ////        defaults.set(0, forKey: "groupIndex")
+    ////
+    //        if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
+    //            Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
+    //        }
+    //
+    //        if let speciesIndex = defaults.value(forKey: "speciesIndex") as? Int {
+    //            Crashlytics.sharedInstance().setIntValue(Int32(speciesIndex), forKey: "speciesIndex")
+    //        }
+    //
+    //        if let condition = defaults.value(forKey: "condition") as? Int {
+    //            Crashlytics.sharedInstance().setIntValue(Int32(condition), forKey: "condition")
+    //        }
+    //
+    //        if let sectionName = defaults.value(forKey: "sectionName"){
+    //            Crashlytics.sharedInstance().setObjectValue(sectionName, forKey: "sectionName")
+    //        }
+    //    }
+    
     
     // Mark: View setup
     
@@ -335,7 +335,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch applicationType {
         case .placeTerminal:
             rootVC = prepareTerminalUI()
-        case .placeGroup:            
+        case .placeGroup:
             rootVC = prepareGroupUI()
             prepareBeaconManager()
         case .objectGroup:
@@ -395,7 +395,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for (index, beaconId) in beaconIds.enumerated() {
             beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
                                                                        enterMessage: "enter species \(index)",
-                                                                       exitMessage: "exit species \(index)"
+                exitMessage: "exit species \(index)"
             )
         }
     }
@@ -455,7 +455,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .lightContent
         
-    
+        
         
         return navigationDrawerController
     }
@@ -488,7 +488,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setDefaultRealm(withSectionName: sectionName)
             
             checkInitialization()
-        
+            
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
@@ -509,7 +509,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .objectGroup, .cloudGroup:
             
             setDefaultRealm(withSectionName: sectionName)
-
+            
             checkInitialization()
             
             let groupIndex = defaults.integer(forKey: "groupIndex")
@@ -531,25 +531,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkInitialization() {
-        let sectionName = defaults.string(forKey: "sectionName")
-        let hasInit = defaults.bool(forKey: "init")
-        
-        let r = realmDataController.getRealm()
-        let allSos =  r.allSpeciesObservations()
-        if allSos.isEmpty {
-                _ = realmDataController.parseNutellaConfigurationJson()
-                _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
+        if let sectionName = defaults.string(forKey: "sectionName")  {
+            let hasInit = defaults.bool(forKey: "init")
+            
+            
+            let r = realmDataController.getRealm()
+            let allSos =  r.allSpeciesObservations()
+            if allSos.isEmpty {
+                //_ = realmDataController.parseNutellaConfigurationJson()
+                _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
                 defaults.set(true, forKey: "init")
+            }
         }
         
-        
-//        if !hasInit {
-//            realmDataController.deleteAllConfigurationAndGroups()
-//            realmDataController.deleteAllUserData()
-//            _ = realmDataController.parseNutellaConfigurationJson()
-//            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
-//            defaults.set(true, forKey: "init")
-//        }
+        //        if !hasInit {
+        //            realmDataController.deleteAllConfigurationAndGroups()
+        //            realmDataController.deleteAllUserData()
+        //            _ = realmDataController.parseNutellaConfigurationJson()
+        //            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
+        //            defaults.set(true, forKey: "init")
+        //        }
     }
     
     func setDefaultRealm(withSectionName sectionName: String = "default") {
@@ -645,7 +646,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //nutella?.net.subscribe(sub_3)
         
         
-       
+        
         
         //resetDB()
     }
@@ -694,7 +695,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
             self.loginViewController?.startAnimating(CGSize(width: 100, height: 100), message: "Fetching Current Run...")
-          
+            
             //defualt connection
             self.setupLoginConnection()
         }
@@ -713,7 +714,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentRosterState.didEnterState = { state in
             if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
                 //self.setupConnection(withSectionName: sectionName)
-             
+                
             }
             
         }
