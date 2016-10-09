@@ -12,6 +12,7 @@ import Material
 import RealmSwift
 import Photos
 import NVActivityIndicatorView
+import Haneke
 
 class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDelegate, NVActivityIndicatorViewable {
     
@@ -69,13 +70,20 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
                 for (index, path) in self.attachments.enumerated() {
                     
                     if let url = URL(string: path) {
-                        UIImage.contentsOfURL(url: url, completion: { found, error in
-                            let tag = self.images[index].tag
-                            self.tags.append(tag)
-                            self.images[index].isUserInteractionEnabled = true
-                            self.images[index].image = found
-                            self.images[index].backgroundColor = UIColor.clear
-                        })
+                        
+                     
+                        self.images[index].hnk_setImageFromURL(url)
+                        self.images[index].isUserInteractionEnabled = true
+                        self.images[index].backgroundColor = UIColor.clear
+
+                        
+//                        UIImage.contentsOfURL(url: url, completion: { found, error in
+//                            let tag = self.images[index].tag
+//                            self.tags.append(tag)
+//                            self.images[index].isUserInteractionEnabled = true
+//                            self.images[index].image = found
+//                            self.images[index].backgroundColor = UIColor.clear
+//                        })
                     }
                 }
                 

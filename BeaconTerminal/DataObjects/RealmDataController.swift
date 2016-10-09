@@ -96,6 +96,56 @@ class RealmDataController {
         }
     }
     
+    
+    // Mark: General Nutella queries
+    
+    func queryNutella(withType type: NutellaQueryType) {
+        switch type {
+            case .currentRun:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("get_current_run", message: jsonObject as AnyObject, requestName: "get_current_run")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+            case .speciesNames:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("get_species_names", message: jsonObject as AnyObject, requestName: "get_species_names")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+        case .currentRoster:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("roster", message: jsonObject as AnyObject, requestName: "roster")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+
+    
+        default:
+            break
+        }
+    }
     // Mark: Nutella Queries
     
     func queryNutellaAllNotes(withType type: NutellaQueryType, withRealmType realmType: RealmType = RealmType.defaultDB) {
@@ -131,32 +181,9 @@ class RealmDataController {
                     DispatchQueue.main.async(execute: block)
                 }
             }
-        case .currentRun:
-            if let nutella = nutella {
-                let block = DispatchWorkItem {
-                    
-                    var dict = [String:String]()
-                    dict[""] = ""
-                    let json = JSON(dict)
-                    let jsonObject: Any = json.object
-                    nutella.net.asyncRequest("get_current_run", message: jsonObject as AnyObject, requestName: "get_current_run")
-                }
-                
-                DispatchQueue.main.async(execute: block)
-            }
-        case .model:
-            if let nutella = nutella {
-                let block = DispatchWorkItem {
-                    
-                    var dict = [String:String]()
-                    dict[""] = ""
-                    let json = JSON(dict)
-                    let jsonObject: Any = json.object
-                    nutella.net.asyncRequest("get_species_names", message: jsonObject as AnyObject, requestName: "get_species_names")
-                }
-                
-                DispatchQueue.main.async(execute: block)
-            }
+            
+        default:
+            break
         }
     }
     
@@ -189,6 +216,31 @@ class RealmDataController {
         
         if let precheckChannel = NutellaChannelType(rawValue: channel) {
             switch precheckChannel {
+            case .getCurrentRun:
+                
+                let sectionName = message as! String
+//                
+                UserDefaults.standard.set(sectionName, forKey: "sectionName")
+                UserDefaults.standard.synchronize()
+                
+                getAppDelegate().changeLoginStateTo(.currentSection)
+                //UserDefau
+                
+                return
+            case .getRoster:
+                
+                if let roster = handleRosterMessages(withMessage: message) {
+                    
+
+                    UserDefaults.standard.set(roster, forKey: "currentRoster")
+                    UserDefaults.standard.synchronize()
+                    
+                    getAppDelegate().changeLoginStateTo(.currentRoster)
+                }
+              
+                //UserDefau
+                
+                return
             case .speciesNames:
                 parseModelSpeciesNames(withMessage: message)
                 return
@@ -203,16 +255,40 @@ class RealmDataController {
             handlePlaceTerminalMessages(withMessage: message, withChannel: channel)
             break
         case .placeGroup:
-            
             handlePlaceGroupMessages(withMessage: message, withChannel: channel)
             break
-        case .objectGroup,.cloudGroup:
-            
+        case .objectGroup,.cloudGroup:            
             handleObjectGroupMessages(withMessage: message, withChannel: channel)
             break
         default:
             break
         }
+    }
+    
+    func handleRosterMessages(withMessage message: Any) -> [String]? {
+        
+        let json = JSON(message)
+        guard let all = json.array else {
+            //no speciesIndex
+            return nil
+        }
+        
+        
+        for (_,item) in all.enumerated() {
+            
+            if let type = item["type"].string {
+                
+                if type == "group" {
+                    
+                let groups = item["printNames"].arrayValue.map({$0.stringValue})
+                return groups
+                }
+                
+            }
+        }
+
+        
+        return nil
     }
     
     func handlePlaceGroupMessages(withMessage message: Any, withChannel channel: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
@@ -986,31 +1062,18 @@ extension RealmDataController {
                     systemConfigruation.sections.append(section)
                     
                     if let groups = sectionItem["groups"].array {
-                        for (groupIndex,groupItem) in groups.enumerated() {
+                        for (groupIndex,_) in groups.enumerated() {
                             
-                            let group = Group()
+                            let g = Group()
                             
-                            if let name = groupItem["name"].string {
-                                group.name = name
-                            }
-                            
-                            group.index = groupIndex
-                            r.add(group)
+                            g.name = groupName(withIndex: groupIndex)
+                             
+                       
+                            g.index = groupIndex
+                            r.add(g)
                             
                             //add groups
-                            section.groups.append(group)
-                            
-                            if let groupMembers = groupItem["members"].array {
-                                for (_,memberItem) in groupMembers.enumerated() {
-                                    
-                                    let member = Member()
-                                    member.name = memberItem.string
-                                    
-                                    //add members
-                                    group.members.append(member)
-                                    section.members.append(member)
-                                }
-                            }
+                            section.groups.append(g)
                             
                             //create speciesObservation place holders for group
                             if placeHolders {
@@ -1020,9 +1083,9 @@ extension RealmDataController {
                                     // var makeRelationship : (String, Group) -> List<SpeciesObservation>
                                     
                                     let speciesObservation = SpeciesObservation()
-                                    speciesObservation.id = "\(group.index)-\(fromSpecies.index)"
+                                    speciesObservation.id = "\(g.index)-\(fromSpecies.index)"
                                     speciesObservation.fromSpecies = fromSpecies
-                                    speciesObservation.groupIndex = group.index
+                                    speciesObservation.groupIndex = g.index
                                     
                                     //prepare preferences
                                     let initalPreference = "Not ready to report"
@@ -1041,8 +1104,8 @@ extension RealmDataController {
                                     r.add(speciesObservation, update: true)
                                     
                                     
-                                    group.speciesObservations.append(speciesObservation)
-                                    r.add(group, update: true)
+                                    g.speciesObservations.append(speciesObservation)
+                                    r.add(g, update: true)
                                 }
                             }
                         }
@@ -1130,6 +1193,22 @@ extension RealmDataController {
     
     // Mark: Configuration
     
+    func sectionName(withIndex index: Int) -> String {
+        return sections()[index]
+    }
+    
+    func sections() -> [String] {
+        let sections = UserDefaults.standard.array(forKey: "sectionNames") ?? []
+        
+        if sections.isEmpty {
+            return ["default", "6ADF", "6MT","6BM"]
+        } else {
+            return sections as! [String]
+        }
+    }
+    
+    
+    
     func speciesName(withIndex index: Int) -> String {
         let speciesNames = UserDefaults.standard.array(forKey: "speciesNames") ?? []
         
@@ -1139,6 +1218,21 @@ extension RealmDataController {
         
         return "\(index)"
     }
+    
+    func groups() -> [String] {
+        let groups = UserDefaults.standard.array(forKey: "currentRoster") ?? []
+        
+        if groups.isEmpty {
+            return ["Team 1", "Team 2", "Team 3","Team 4", "Team 5"]
+        } else {
+            return groups as! [String]
+        }
+    }
+    
+    func groupName(withIndex index: Int) -> String {
+        return groups()[index]
+    }
+    
     
     func parseSpeciesConfigurationJson() -> [Species] {
         

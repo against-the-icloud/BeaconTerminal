@@ -19,6 +19,9 @@ class SpeciePageContainerController: UIPageViewController {
     var pageCount = 0
     @IBOutlet var topToolbarDelegate: TopToolbarDelegate!
     
+    var pageIsAnimating = false
+
+    
     deinit {
         speciesObsNotificationToken?.stop()
         runtimeNotificationToken?.stop()
@@ -38,7 +41,7 @@ class SpeciePageContainerController: UIPageViewController {
         prepareNotifications()
         
         let pageControlAppearance = UIPageControl.appearance()
-        pageControlAppearance.pageIndicatorTintColor = UIColor.gray
+        pageControlAppearance.pageIndicatorTintColor = UIColor.white
         pageControlAppearance.currentPageIndicatorTintColor = UIColor.black
         pageControlAppearance.backgroundColor = UIColor.clear
         
@@ -119,24 +122,22 @@ class SpeciePageContainerController: UIPageViewController {
 extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if completed {
-            
-            guard let vcs = pageViewController.viewControllers else {
-                return
-            }
-            
-            if !vcs.isEmpty, let page = vcs.first as? SpeciesPageContentController, let index = page.speciesIndex{
-                
-                if let ttd = topToolbarDelegate {
-                    ttd.changeAppearance(withColor: UIColor.speciesColor(forIndex: index, isLight: false))
-                }
-            }
-            
+        if finished || completed {
+            self.pageIsAnimating = false
         }
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+        self.pageIsAnimating = true
     }
     
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
+        if self.pageIsAnimating {
+            return nil
+        }
+        
         let pageContent: SpeciesPageContentController = viewController as! SpeciesPageContentController
         if var index = pageContent.speciesIndex {
             if (index == NSNotFound) {
@@ -151,6 +152,11 @@ extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageV
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        
+        if self.pageIsAnimating {
+            return nil
+        }
+
         let pageContent: SpeciesPageContentController = viewController as! SpeciesPageContentController
         if var index = pageContent.speciesIndex {
             if (index == NSNotFound) {

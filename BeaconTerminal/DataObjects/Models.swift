@@ -11,7 +11,8 @@ enum RelationshipType: String {
     case consumer = "consumer"
     case mutual = "mutual"
     case competes = "competes"
-    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes]
+    case habitats = "habitats"
+    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes, .habitats]
 }
 
 enum ActionType: String {
@@ -67,6 +68,7 @@ class SpeciesObservation: Object {
     dynamic var ecosystem: Ecosystem?
     
     var relationships = List<Relationship>()
+    var speciesPreferences = List<SpeciesPreference>()
     var preferences = List<Preference>()
     
     override static func primaryKey() -> String? {
@@ -100,8 +102,6 @@ class SpeciesObservation: Object {
     
     
 }
-
-
 
 class Relationship: Object {
     dynamic var id : String? = nil
@@ -140,10 +140,6 @@ class Relationship: Object {
         if let relationshipType = json["relationshipType"].string {
             self.relationshipType = relationshipType
         }
-        
-     
-        
-        
     }
 }
 
@@ -196,6 +192,47 @@ class Preference: Object {
     }
 
 }
+
+class SpeciesHabitat: Object {
+    dynamic var imgUrl = ""
+    dynamic var name = ""
+    dynamic var index = 0
+}
+
+class SpeciesPreference: Object {
+    dynamic var id : String? = nil
+    dynamic var note: String? = nil
+    dynamic var attachments : String? = nil
+    dynamic var authors : Group? = nil
+    dynamic var lastModified = Date()
+    dynamic var speciesPreference: SpeciesHabitat?
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func generateId() {
+        self.id = UUID().uuidString
+    }
+    
+    func update(withJson json:JSON, shouldParseId: Bool){
+        if shouldParseId {
+            if let id = json["id"].string {
+                self.id = id
+            } else {
+                self.id = UUID().uuidString
+            }
+        }
+        if let attachments = json["attachments"].string {
+            self.attachments = attachments
+        }
+        
+        if let note = json["note"].string {
+            self.note = note
+        }
+    }
+}
+
 
 class NutellaConfig: Object {
     dynamic var id: String = UUID().uuidString

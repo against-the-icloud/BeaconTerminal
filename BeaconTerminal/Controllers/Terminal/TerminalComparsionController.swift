@@ -66,21 +66,21 @@ class TerminalComparsionController: UIViewController {
         prepareView()
         
         if let segueId = segue.identifier {
-            
             let id = NSNumber.init( value: Int32(segueId)!).intValue
-            
-            
-            if let detailvc = segue.destination as? TerminalComparsionDetailViewController, let cellItems = self.cellItems {
+
+            switch id {
+            case 0,1,2,3,4,5:
+                if let detailvc = segue.destination as? TerminalComparsionDetailViewController, let cellItems = self.cellItems {
                 
-                if let found = cellItems.filter( { (cellItem: CellItem) -> Bool in
-                    return cellItem.groupIndex == id
-                }).first {
-                    detailvc.cellItem = found
-                    detailvc.groupIndex = found.groupIndex
-                } else {
-                    detailvc.groupIndex = id
+                        detailvc.cellItem = cellItems[id]
+                    
+              
                 }
+
+            default:
+              break
             }
+            
         }
     }
     

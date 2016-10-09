@@ -11,6 +11,7 @@ import UIKit
 class ScratchPadViewController: UIViewController {
     // MARK: Properties
     
+    @IBOutlet var imageViews: [PadImageView]!
     var visualizeAzimuth = false
     
     let reticleView: ReticleView = {
@@ -28,7 +29,19 @@ class ScratchPadViewController: UIViewController {
     // MARK: View Life Cycle
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         canvasView.addSubview(reticleView)
+        
+//        for iv in imageViews {
+//            iv.isUserInteractionEnabled = true
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//                for iv in imageViews {
+//                    iv.isUserInteractionEnabled = true
+//                }
     }
     
     // MARK: Touch Handling

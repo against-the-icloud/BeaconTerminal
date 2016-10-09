@@ -225,7 +225,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                     return
                 }
                 
-                LOG.debug("----VALUE \(description):MAJOR:\(majorIndex):MINOR:\(minorValue):SPECIES \(speciesIndex)")                        
+                //LOG.debug("----VALUE \(self.description):MAJOR:\(majorIndex):MINOR:\(minorValue):SPECIES \(speciesIndex)")
                 
                 realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
              

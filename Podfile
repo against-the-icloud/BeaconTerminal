@@ -14,7 +14,7 @@ target 'BeaconTerminal' do
     pod 'NVActivityIndicatorView'
 
     pod 'Nutella', :git => 'https://github.com/aperritano/Nutella', :branch => 'master'
-    pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
+    #pod 'XCGLogger', :git => 'https://github.com/aperritano/XCGLogger.git', :branch => 'swift3_xcode8_6'
 
 #pod 'RealmSwift'
     #Logger
@@ -23,10 +23,8 @@ target 'BeaconTerminal' do
     #state machinepod
     pod 'Transporter'
     pod 'EstimoteSDK'
-    
-    #distribution
-#    pod 'Fabric'
-#    pod 'Crashlytics'
+    pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :branch => 'feature/swift-3'
+    pod 'XCGLogger', '~> 4.0.0'
 
     #upload
     pod 'CryptoSwift', :git => "https://github.com/krzyzanowskim/CryptoSwift", :branch => "master"

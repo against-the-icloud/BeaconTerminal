@@ -19,7 +19,7 @@ class TabSegmentedControl: UISegmentedControl {
     func setupBackground(){
         let backgroundImage = UIImage(named: "segmented_unselected_bg")
         let dividerImage = UIImage(named: "segmented_separator_bg")
-        let backgroundImageSelected = UIImage(named: "segmented_selected_bg")
+        let backgroundImageSelected = UIImage(named: "egmented_unselected_bg")
         
         self.setBackgroundImage(backgroundImage, for: UIControlState(), barMetrics: .default)
         self.setBackgroundImage(backgroundImageSelected, for: .highlighted, barMetrics: .default)

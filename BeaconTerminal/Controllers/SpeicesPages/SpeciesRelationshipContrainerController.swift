@@ -37,10 +37,21 @@ class SpeciesRelationshipContainerController: UIViewController {
             case "consumerRelationshipSegue":
                 tvc.relationshipType = .consumer
                 tvc.speciesIndex = speciesIndex
-                break
             default:
                 break
             }
         }
+ 
+    
+    if let pvc = segue.destination as? SpeciesPreferencesTableController, let segueId = segue.identifier {
+        switch segueId {
+        case "habitatsRelationshipSegue":
+            pvc.relationshipType = .habitats
+            pvc.speciesIndex = speciesIndex
+        default:
+            break
+        }
     }
+}
+
 }

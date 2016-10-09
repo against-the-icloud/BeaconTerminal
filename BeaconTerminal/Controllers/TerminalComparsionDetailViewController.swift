@@ -8,12 +8,12 @@
 
 import Foundation
 import UIKit
+import Haneke
 
 class TerminalComparsionDetailViewController: UIViewController {
     
     
     var cellItem: CellItem?
-    var groupIndex: Int?
     
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var ecosystemSegmentedControl: UISegmentedControl!
@@ -40,7 +40,7 @@ class TerminalComparsionDetailViewController: UIViewController {
     }
     
     func prepareView() {
-        if let groupIndex = self.groupIndex {
+        if let groupIndex = cellItem?.groupIndex {
             
             if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
                 if let group = realmDataController.getRealm(withRealmType: RealmType.terminalDB).group(withSectionName: sectionName, withGroupIndex: groupIndex) {
@@ -66,12 +66,18 @@ class TerminalComparsionDetailViewController: UIViewController {
             
                     if !urls.isEmpty {
                         if let url = URL(string: imageUrl) {
-                            UIImage.contentsOfURL(url: url, completion: { found, error in
-                                if let image = found  {
-                                    iv.image = image
-                                    iv.isUserInteractionEnabled = true
-                                }
-                            })
+                            
+                            
+                            iv.hnk_setImageFromURL(url)
+                            iv.isUserInteractionEnabled = true
+                            //iv.backgroundColor = UIColor.clear
+                            
+//                            UIImage.contentsOfURL(url: url, completion: { found, error in
+//                                if let image = found  {
+//                                    iv.image = image
+//                                    iv.isUserInteractionEnabled = true
+//                                }
+//                            })
                         }
                     }
             }

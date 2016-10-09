@@ -31,8 +31,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
     var needsTerminal = false
-    var mainColor: UIColor?
-    var terminalTabColor: UIColor?
     
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
@@ -192,14 +190,13 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     
                     _ = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
                     
-                    terminalTabColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: true)
                     
                     if let species = realmDataController.getRealm().speciesWithIndex(withIndex: speciesIndex) {
                         
                         let title = "\(sectionName.uppercased()) \(species.name.uppercased())"
                         
                         for v in topTabbar.subviews {
-                            v.backgroundColor = mainColor
+                            v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                         }
                         
                         if topTabbar.numberOfSegments < 3 {
@@ -271,19 +268,13 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         for (index, view) in sortedViews.enumerated() {
             if index == topTabbar.selectedSegmentIndex {
                 
-                if let terminalTabColor = terminalTabColor, index == 2 {
-                    view.backgroundColor = terminalTabColor
-                } else {
-                    view.backgroundColor = mainColor?.lighterColor
-                }
-                
+                view.backgroundColor = UIColor.black
+            
                 
             } else {
-                if let terminalTabColor = terminalTabColor, index == 2 {
-                    view.backgroundColor = terminalTabColor
-                } else {
-                    view.backgroundColor = mainColor
-                }
+           
+                view.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
+                
             }
         }
     }
@@ -306,7 +297,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         switch id {
         case "speciesPageContainerController":
             if let svc = segue.destination as? SpeciePageContainerController {
-                svc.topToolbarDelegate = self
             }
         case "terminalSegue": break
             // if let tvc = segue.destination as? TerminalMainViewController {
@@ -432,19 +422,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         return false
     }
     
-}
-
-//Mark: TopToolbar
-
-extension MainContainerController: TopToolbarDelegate {
-    func changeAppearance(withColor color: UIColor) {
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-            self.mainColor = color
-            self.topTabbar.backgroundColor = self.mainColor
-            self.topPanel.backgroundColor = self.mainColor
-            }, completion: nil)
-        self.colorizeSelectedSegment()
-    }
 }
 
 //Mark: ToolMenu

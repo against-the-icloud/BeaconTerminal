@@ -16,11 +16,11 @@ enum UpdateType: String {
     case delete
 }
 
-
 class SpeciesRelationshipTableController: UITableViewController {
     
     @IBOutlet weak var relationshipHeaderLabel: UILabel!
     @IBOutlet weak var addRelationshipButton: UIButton!
+    @IBOutlet weak var headerView: UIView!
     
     var speciesIndex: Int?
     var relationshipType: RelationshipType?
@@ -141,6 +141,7 @@ class SpeciesRelationshipTableController: UITableViewController {
     // Mark: updates
     func updateHeader() {
         if let speciesIndex = self.speciesIndex {
+            headerView.backgroundColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
             relationshipHeaderLabel.backgroundColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
             relationshipHeaderLabel.borderColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
             self.tableView.borderColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
@@ -162,7 +163,6 @@ class SpeciesRelationshipTableController: UITableViewController {
         
         
         relationshipHeaderLabel.text = relationship
-        addRelationshipButton.setTitle("ADD \(relationshipType.rawValue.uppercased()) RELATIONSHIP",  for: [])
     }
     
     

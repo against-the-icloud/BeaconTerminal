@@ -106,10 +106,9 @@ class TerminalCellController: UIViewController {
         
         profileImageView.image = enabledImage
         
-        var cellItem = cellItems[groupIndex]
-        cellItem.groupIndex = groupIndex
-        cellItem.relationship = relationship
-
+     
+        cellItems[groupIndex].groupIndex = groupIndex
+        cellItems[groupIndex].relationship = relationship
                         
         if let attachments = relationship.attachments {
             

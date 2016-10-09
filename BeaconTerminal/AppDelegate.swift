@@ -4,8 +4,8 @@ import Material
 import XCGLogger
 import Nutella
 import Transporter
-import Fabric
 import Alamofire
+import NVActivityIndicatorView
 
 
 let DEBUG = true
@@ -26,16 +26,16 @@ let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 let LOG: XCGLogger = {
     
     // Setup XCGLogger
-    let LOG = XCGLogger.defaultInstance()
-    LOG.xcodeColorsEnabled = true // Or set the XcodeColors environment variable in your scheme to YES
-    LOG.xcodeColors = [
-        .verbose: .lightGrey,
-        .debug: .red,
-        .info: .darkGreen,
-        .warning: .orange,
-        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white()), // Optionally use a UIColor
-        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-    ]
+    let LOG = XCGLogger.default
+    //LOG. = true // Or set the XcodeColors environment variable in your scheme to YES
+//    LOG.xcodeColors = [
+//        .verbose: .lightGrey,
+//        .debug: .red,
+//        .info: .darkGreen,
+//        .warning: .orange,
+//        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white()), // Optionally use a UIColor
+//        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
+//    ]
     return LOG
 }()
 
@@ -54,6 +54,17 @@ enum ApplicationType: String {
     case cloudGroup = "CLOUD GROUP"
     
     static let allValues = [placeTerminal, placeGroup, objectGroup, cloudGroup]
+}
+
+enum LoginTypes: String {
+    case autoLogin = "autoLogin"
+    case currentRun = "currentRun"
+    case currentSection = "currentSection"
+    case currentRoster = "currentRoster"
+    case currentGroupChannels = "currentGroupChannels"
+    case currentSpeciesNames = "currentSpeciesNames"
+    
+    static let allValues = [currentRun, currentSection, currentRoster, currentGroupChannels, currentSpeciesNames]
 }
 
 
@@ -86,24 +97,17 @@ let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType
 let cloudGroupEvent = Event(name: "cloudGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.cloudGroup)
 
 
-enum LoginTypes: String {
-    case currentRun = "currentRun"
-    case currentSection = "currentSection"
-    case currentGroup = "currentGroup"
-    case model = "model"
-    
-    static let allValues = [currentRun, currentSection, currentGroup, model]
-}
-
-
 //login state machine
-let currentRunState = State(LoginTypes.currentRun)
-let currentRunEvent = Event(name: "currenRun", sourceValues: [LoginTypes.currentRun], destinationValue: LoginTypes.currentRun)
+let autoLoginState = State(LoginTypes.autoLogin)
+let autoLoginEvent = Event(name: "autoLogin", sourceValues: [LoginTypes.autoLogin], destinationValue: LoginTypes.autoLogin)
+let currentSectionState = State(LoginTypes.currentSection)
+let currentSectionEvent = Event(name: "currentSection", sourceValues: [LoginTypes.autoLogin], destinationValue: LoginTypes.currentSection)
 
-let modelState = State(LoginTypes.model)
-let modelEvent = Event(name: "model", sourceValues: [LoginTypes.currentRun, LoginTypes.model], destinationValue: LoginTypes.model)
+let currentRosterState = State(LoginTypes.currentRoster)
+let currentRosterEvent = Event(name: "currentRoster", sourceValues: [LoginTypes.currentSection], destinationValue: LoginTypes.currentRoster)
 
-let loginStateMachine = StateMachine(initialState: currentRunState, states: [modelState])
+
+let loginStateMachine = StateMachine(initialState: autoLoginState, states: [autoLoginState, currentSectionState,currentRosterState])
 
 
 var realmDataController : RealmDataController = RealmDataController()
@@ -129,13 +133,17 @@ enum NutellaChannelType: String {
     case allNotesWithGroup = "all_notes_with_group"
     case noteChanges = "note_changes"
     case speciesNames = "get_species_names"
+    case getCurrentRun = "get_current_run"
+    case getRoster = "roster"
 }
 
 enum NutellaQueryType: String {
     case species = "species"
     case group = "group"
     case currentRun = "currentRun"
-    case model = "model"
+    case currentRoster = "currentRoster"
+    case currentChannelList = "currentChannelList"
+    case speciesNames = "speciesNames"
 }
 
 
@@ -203,22 +211,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //crash analytics
         //Fabric.with([Crashlytics.self])
         
-        realmDataController = RealmDataController()
-       
-        let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
-        let sectionDict = ["default":groupNames,"guest":groupNames, "6BM":groupNames,"6MT":groupNames,"6DF":groupNames]
         
-        defaults.set(false, forKey: "init")
-        defaults.set(sectionDict, forKey: "sections")
-        defaults.synchronize()
+        
+        realmDataController = RealmDataController()
+    
+        prepareThemes()
+        
+        manualLogin()
+        
+        return true
+    }
+    
+    func manualLogin() {
+        let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
+        let sectionNames = ["default","guest","6BM","6MT","6ADF"]
+        
+        UserDefaults.standard.set(false, forKey: "init")
+        UserDefaults.standard.set(sectionNames, forKey: "sectionNames")
+        UserDefaults.standard.set(groupNames, forKey: "currentRoster")
+        UserDefaults.standard.synchronize()
         
         initStateMachine(applicaitonState: .login)
         
         prepareLoginInterface(isRemote: false)
+    }
     
-        prepareThemes()
-        
-        return true
+    func autoLogin() {
+        initLoginStateMachine(loginState: .autoLogin)
+        getAppDelegate().changeLoginStateTo(.autoLogin)
+
     }
     
     func prepareThemes() {
@@ -357,7 +378,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window = UIWindow(frame:UIScreen.main.bounds)
             
             var rootVC: NavigationDrawerController?
-            rootVC = prepareLoginUI()
+            rootVC = prepareLoginUI(shouldShowLogin: false)
             if let rnc = window?.rootViewController?.navigationController {
                 rnc.pushViewController(rootVC!, animated: true)
             } else {
@@ -379,10 +400,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func prepareLoginUI() -> NavigationDrawerController {
+    
+    func prepareAutoLoginUI() -> DefaultViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let defaultViewController = storyboard.instantiateViewController(withIdentifier: "defaultViewController") as! DefaultViewController
+        
+        defaultViewController.shouldShowLogin = false
+        
+        return defaultViewController
+    }
+    
+    func prepareLoginUI(shouldShowLogin: Bool = true) -> NavigationDrawerController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let defaultViewController = storyboard.instantiateViewController(withIdentifier: "defaultViewController") as! DefaultViewController
+        
+        defaultViewController.shouldShowLogin = true
         
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
@@ -589,21 +623,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupConnection(withSectionName sectionName: String = "default") {
         
-        let currentState = self.checkApplicationState()
-        
         nutella = Nutella(brokerHostname: CURRENT_HOST,
                           appId: "wallcology",
                           runId: sectionName,
-                          componentId: currentState.rawValue, netDelegate: self)
+                          componentId: "", netDelegate: self)
         
         
         
         let sub_1 = "note_changes"
-        let sub_2 = "echo_out"
+        _ = "echo_out"
         //let sub_3 = "place_changes"
         
         nutella?.net.subscribe(sub_1)
-        realmDataController.queryNutellaAllNotes(withType: .model)
         
         // let sub_3 = "set_current_run"
         //nutella?.net.subscribe(sub_1)
@@ -629,21 +660,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .currentRun:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
-                              runId: "",
+                              runId: "default",
                               componentId: "", netDelegate: self)
             
         default:
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
-                              runId: "",
+                              runId: "default",
                               componentId: "login", netDelegate: self)
         }
         
         switch currentState {
-        case .currentRun:
-            realmDataController.queryNutellaAllNotes(withType: .currentRun)
-        case .model: break
-            //realmDataController.queryNutellaAllNotes(withType: .model)
+        case .autoLogin:
+            realmDataController.queryNutella(withType: .currentRun)
         default:
             break
         }
@@ -651,33 +680,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Mark: LoginStateMachine
     
-    func setUpLoginStateMachine() {
-        initLoginStateMachine(loginState: .currentRun)
-        changeLoginStateTo(.currentRun)
-        changeLoginStateTo(.model)
-    }
+    var loginViewController: DefaultViewController?
     
     func initLoginStateMachine(loginState: LoginTypes) {
-        loginStateMachine.addEvents([currentRunEvent, modelEvent])
+        loginStateMachine.addEvents([autoLoginEvent, currentSectionEvent,currentRosterEvent])
         
-        currentRunState.didEnterState = { state in
+        autoLoginState.didEnterState = { state in
+            self.window = UIWindow(frame:UIScreen.main.bounds)
+            
+            self.loginViewController = self.prepareAutoLoginUI()
+            self.window?.rootViewController = self.loginViewController
+            self.window?.makeKeyAndVisible()
+            
+            
+            self.loginViewController?.startAnimating(CGSize(width: 100, height: 100), message: "Fetching Current Run...")
+          
+            //defualt connection
             self.setupLoginConnection()
         }
         
-        modelState.didEnterState = { state in
-            self.setupLoginConnection()
-            print("")
+        
+        currentSectionState.didEnterState = { state in
+            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+                self.setupConnection(withSectionName: sectionName)
+                realmDataController.queryNutella(withType: .speciesNames)
+                realmDataController.queryNutella(withType: .currentRoster)
+                realmDataController.queryNutella(withType: .currentChannelList)
+            }
+            
         }
+        
+        currentRosterState.didEnterState = { state in
+            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+                //self.setupConnection(withSectionName: sectionName)
+             
+            }
+            
+        }
+        
     }
     
     func changeLoginStateTo(_ state: LoginTypes) {
         switch state {
-        case .currentRun:
-            if loginStateMachine.fireEvent(currentRunEvent).successful {
+        case .autoLogin:
+            if loginStateMachine.fireEvent(autoLoginEvent).successful {
                 
             }
-        case .model:
-            if loginStateMachine.fireEvent(modelEvent).successful {
+        case .currentSection:
+            if loginStateMachine.fireEvent(currentSectionEvent).successful {
+                
+            }
+        case .currentRoster:
+            if loginStateMachine.fireEvent(currentRosterEvent).successful {
                 
             }
         default:

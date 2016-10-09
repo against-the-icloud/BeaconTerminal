@@ -20,7 +20,6 @@ class SpeciesPageContentController: UIViewController {
     @IBOutlet weak var tabSegmentedControl: UISegmentedControl!
     @IBOutlet weak var speciesLabel: UILabel!
     @IBOutlet weak var speciesProfileImageView: UIImageView!
-    @IBOutlet var subpageContainerViews: [UIView]!
 
     var speciesObservationResults: Results<SpeciesObservation>?
     var shouldSync: Results<SpeciesObservation>?
@@ -87,12 +86,12 @@ class SpeciesPageContentController: UIViewController {
     
     func colors(forSynced synced: Bool) {
         if synced {
-            contentView.borderColor = UIColor.speciesColor(forIndex: speciesIndex!, isLight: false)
+            contentView.borderColor = #colorLiteral(red: 0.3035082817, green: 0.3933896124, blue: 0.4837856293, alpha: 1)
             contentView.backgroundColor = UIColor.white
             speciesLabel.textColor = UIColor.black
         } else {
-            contentView.borderColor = UIColor.red
-            contentView.backgroundColor = #colorLiteral(red: 0.9994968772, green: 0.8941870332, blue: 0.962585628, alpha: 1)
+            contentView.borderColor = #colorLiteral(red: 0.996078372, green: 0.9137254953, blue: 0.3058823943, alpha: 1)
+            contentView.backgroundColor = #colorLiteral(red: 0.996078372, green: 0.9674537485, blue: 0.7561766128, alpha: 1)
             speciesLabel.textColor = UIColor.black
         }
     }
@@ -110,19 +109,6 @@ class SpeciesPageContentController: UIViewController {
                 srv.speciesIndex = speciesIndex
             }
             break
-        case "preferencesViewSegue":
-            if let srv = segue.destination as? PreferencesViewController {
-                
-                // Fixes popover anchor centering issue in iOS 9
-                if let popoverPresentationController = segue.destination.popoverPresentationController, let sourceView = sender as? UIView {
-                    popoverPresentationController.sourceRect = sourceView.bounds
-                }
-                
-                srv.speciesIndex = speciesIndex
-            }
-            break
-        case "experimentsViewSegue":
-            break
         default:
             break
         }
@@ -137,7 +123,7 @@ class SpeciesPageContentController: UIViewController {
             if let species = realm?.speciesWithIndex(withIndex: speciesIndex) {
                 speciesLabel.text = species.name
             }
-            contentView.borderColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
+            contentView.borderColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
         } else {
             //no species image
         }

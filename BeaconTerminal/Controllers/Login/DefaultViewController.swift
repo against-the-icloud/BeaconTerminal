@@ -8,9 +8,12 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
 
-class DefaultViewController: UIViewController {
+
+class DefaultViewController: UIViewController, NVActivityIndicatorViewable {
     
+    var shouldShowLogin: Bool = true
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -27,7 +30,10 @@ class DefaultViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        showLogin()
+        
+        if shouldShowLogin {
+            showLogin()
+        }
     }
     
     func showLogin() {

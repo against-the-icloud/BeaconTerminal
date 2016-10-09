@@ -205,7 +205,7 @@ class DraggableImageView: UIImageView {
 
             //LOG.debug("DROP TAG \(currentView!.tag)")
 
-            LOG.debug("\(currentView!.subviews)")
+            LOG.debug("\(self.currentView!.subviews)")
 
             if (shouldCopy == true) || (shouldCopy == false && shouldSnapBack == true) {
 

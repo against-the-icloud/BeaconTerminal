@@ -71,11 +71,9 @@ class LoginSectionViewController: UITableViewController {
 extension LoginSectionViewController {
     
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionDict = defaults.object(forKey: "sections") as? [String: [String]] ?? [String: [String]]()
-        
-        let sections = Array(sectionDict.keys)
-        return sections.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {        
+        let count = realmDataController.sections().count
+        return count
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -106,17 +104,11 @@ extension LoginSectionViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
-          let cell:LoginConditionCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! LoginConditionCell
-        
-        
-        let sectionDict = defaults.object(forKey: "sections") as? [String: [String]] ?? [String: [String]]()
-        
-        let sections = Array(sectionDict.keys)
-        
-        if !sections.isEmpty {
-            cell.titleLabel.text = sections[indexPath.row]
-        }
-        
+        let cell:LoginConditionCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! LoginConditionCell
+   
+        let sectionName = realmDataController.sectionName(withIndex: indexPath.row)
+
+        cell.titleLabel.text = sectionName
         return cell
     }
 }

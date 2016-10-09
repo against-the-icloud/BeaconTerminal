@@ -12,9 +12,6 @@ import RealmSwift
 
 class LoginGroupViewController: UITableViewController {
     
-    let defaults = UserDefaults.standard
-    var groupNames = [String]()
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -24,33 +21,9 @@ class LoginGroupViewController: UITableViewController {
     }
     
     
-    func constructLabel(with group: Group?) -> String? {
-        if let g = group {
-            
-            if g.members.count > 0 {
-                var memberNames = ""
-                for member in g.members {
-                    if memberNames.isEmpty {
-                        memberNames = "\(member.name!)"
-                    } else {
-                        memberNames = "\(memberNames),\(member.name!)"
-                    }
-                }
-                return "\(memberNames)"
-            }
-        }
-        return nil
-    }
-    
     // Mark: View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let defaults = UserDefaults.standard
-        let sections = defaults.object(forKey: "sections") as? [String: [String]] ?? [String: [String]]()
-        let sectionName = defaults.object(forKey: "sectionName") as! String
-        groupNames = sections[sectionName]!
-        
         prepareView()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
@@ -73,13 +46,16 @@ extension LoginGroupViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupNames.count
+        
+        let groups = realmDataController.groups()
+        
+        return groups.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? LoginConditionCell, let _ = cell.titleLabel.text {
-            defaults.set(indexPath.row, forKey: "groupIndex")
-            defaults.synchronize()
+            UserDefaults.standard.set(indexPath.row, forKey: "groupIndex")
+            UserDefaults.standard.synchronize()
             
             self.dismiss(animated: true, completion: {
                 //realm for section $0
@@ -92,7 +68,9 @@ extension LoginGroupViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:LoginConditionCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! LoginConditionCell
-        let groupName = groupNames[indexPath.row]
+        
+        let groupName = realmDataController.groupName(withIndex: indexPath.row)
+
         cell.titleLabel.text = "\(groupName) (\(indexPath.row))"
         return cell
     }
