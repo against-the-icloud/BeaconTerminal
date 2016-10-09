@@ -159,6 +159,7 @@ class SpeciesPreferencesTableController: UITableViewController {
                 if let uinav = segue.destination as? UINavigationController, let ev = uinav.viewControllers.first as? EvidencePreferenceViewController, let speciesIndex = self.speciesIndex, let cell = sender as? SpeciesCellDetailController, let foundSpeciesPreference = cell.speciesPreference {
                     
                     ev.fromSpeciesIndex = speciesIndex
+                    ev.speciesPreference = foundSpeciesPreference
                     ev.habitatIndex = foundSpeciesPreference.habitat?.index
                     ev.deleteButton.isEnabled = true
                     ev.title = "EDIT PREFERENCE"

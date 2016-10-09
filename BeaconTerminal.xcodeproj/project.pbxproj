@@ -22,18 +22,15 @@
 		7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */; };
 		7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */; };
 		7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017A2EF1D865A6400C31119 /* SyncViewController.swift */; };
-		701841011D6041AF003921A1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701841001D6041AF003921A1 /* MapViewController.swift */; };
 		7030BE251DA4631400DB332D /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7030BE241DA4631400DB332D /* Spinner.swift */; };
 		7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7031DB191D65E18B000DCC61 /* Terminal.storyboard */; };
 		7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */; };
 		7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */; };
 		7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */; };
 		70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */; };
-		70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */; };
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */; };
 		704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */; };
-		705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */; };
 		7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7064CAA31D6783FB00B77ADA /* StringUtil.swift */; };
 		70663F6F1D8F99B700B5BEC9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */; };
 		70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */; };
@@ -42,14 +39,9 @@
 		706CF1391D8FA83500A18927 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CF1381D8FA83500A18927 /* Banner.swift */; };
 		706D21E21DA99FD4009FC554 /* ChoosePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */; };
 		706D21E41DA9D245009FC554 /* EvidencePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */; };
-		706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */; };
 		7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7070C4D41D4E77BA00AB47FF /* Popover.storyboard */; };
-		7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */; };
 		708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */; };
 		708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */; };
-		708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708D70631D2EFEF70032F422 /* CoverFlowCell.swift */; };
-		708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708D70651D2F03070032F422 /* CoverFlowCell.xib */; };
-		708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7099CDA11D0F99050037E56C /* Pulsator.swift */; };
 		709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F926C1D8F7D260057E104 /* BeaconID.swift */; };
@@ -57,10 +49,7 @@
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
 		70A06DD41CE3F84D008FC11F /* coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD21CE3F84D008FC11F /* coin.wav */; };
 		70A06DD61CE3FB54008FC11F /* tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD51CE3FB54008FC11F /* tap.wav */; };
-		70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */; };
-		70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */; };
 		70A8D8571D984B0D00C1D2B7 /* ToolMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */; };
-		70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */; };
 		70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE00601D0F14CF00C3C61B /* RealmDataController.swift */; };
 		70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */; };
 		70B017E21DA5CE6C00B233AA /* ScratchPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017DE1DA5CE6C00B233AA /* ScratchPadViewController.swift */; };
@@ -71,7 +60,6 @@
 		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */; };
 		70C1CF361D592E2800CB687E /* LoginSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */; };
 		70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */; };
-		70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C487461D32A6DF004F103A /* RelationshipsUIView.swift */; };
 		70D1281D1DA88BF9008DB916 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1281C1DA88BF9008DB916 /* WebViewController.swift */; };
 		70D1281F1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1281E1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift */; };
 		70D142691D414E2700A588B3 /* DragUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D142681D414E2700A588B3 /* DragUtil.swift */; };
@@ -79,12 +67,6 @@
 		70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */; };
 		70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */; };
 		70D4E2341D6CF925003102AC /* TerminalComparsionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */; };
-		70D4E5711DA3763F00E96054 /* TerminalPreferenceComparsionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E5701DA3763F00E96054 /* TerminalPreferenceComparsionController.swift */; };
-		70D4E5731DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D4E5721DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift */; };
-		70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */; };
-		70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F801CFCF03D006F6997 /* DragViewController.swift */; };
-		70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D62F881CFCF76C006F6997 /* DropTargetView.swift */; };
-		70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D84A0B1D343125003C36DF /* DraggableSpeciesImageView.swift */; };
 		70D9C1B21D6650B700FAF080 /* LoginGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B11D6650B700FAF080 /* LoginGroupViewController.swift */; };
 		70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */; };
 		70DC484B1D79CD0800E11064 /* BeaconTerminalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DC484A1D79CD0800E11064 /* BeaconTerminalModelTests.swift */; };
@@ -96,19 +78,14 @@
 		70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */; };
 		70ECDCE91D7DB76F00C07CCA /* EvidenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */; };
 		70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF4FF91CE6135200AC8AD5 /* Models.swift */; };
-		70F0A3F41CE6531C00A0E752 /* one in Sources */ = {isa = PBXBuildFile; fileRef = 70F0A3F31CE6531C00A0E752 /* one */; };
 		70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B76D1D8C96200020E757 /* DefaultViewController.swift */; };
 		70F1B7701D8C9B790020E757 /* LoginConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */; };
 		70F1B7721D8CBC780020E757 /* LoginConditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B7711D8CBC780020E757 /* LoginConditionCell.swift */; };
-		70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */; };
-		70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */; };
-		70F29A5A1D57D8200057A497 /* PreferenceUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A591D57D8200057A497 /* PreferenceUILabel.swift */; };
 		70F29A601D57DB820057A497 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5B1D57DB820057A497 /* Roboto-Bold.ttf */; };
 		70F29A611D57DB820057A497 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5C1D57DB820057A497 /* Roboto-Light.ttf */; };
 		70F29A621D57DB820057A497 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5D1D57DB820057A497 /* Roboto-Medium.ttf */; };
 		70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */; };
 		70F29A641D57DB820057A497 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */; };
-		70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F29A661D57E15F0057A497 /* PreferenceUIView.swift */; };
 		70F29A691D582AAD0057A497 /* system_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70F29A681D582AAD0057A497 /* system_configuration.json */; };
 		AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */; };
 		AE9764941C22C1BF0058A4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE9764931C22C1BF0058A4DC /* Assets.xcassets */; };
@@ -117,7 +94,6 @@
 		C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */ = {isa = PBXBuildFile; fileRef = C0A7D004FC456D55A564307C /* nutella_config.json */; };
 		C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */; };
 		C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7D6AC0D72ADF2FA28B555 /* Random.swift */; };
-		C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */; };
 		C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A7D628C381C03091617459 /* Main.storyboard */; };
 		C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DAD61205D9767DB6FF97 /* Util.swift */; };
 /* End PBXBuildFile section */
@@ -162,18 +138,15 @@
 		7017A2EB1D85FE3600C31119 /* EvidenceSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidenceSpeciesViewController.swift; path = SpeicesPages/EvidenceSpeciesViewController.swift; sourceTree = "<group>"; };
 		7017A2ED1D864D4500C31119 /* SpeciesCellDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesCellDetailController.swift; path = SpeicesPages/SpeciesCellDetailController.swift; sourceTree = "<group>"; };
 		7017A2EF1D865A6400C31119 /* SyncViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncViewController.swift; path = Login/SyncViewController.swift; sourceTree = "<group>"; };
-		701841001D6041AF003921A1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7030BE241DA4631400DB332D /* Spinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		7031DB191D65E18B000DCC61 /* Terminal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Terminal.storyboard; sourceTree = "<group>"; };
 		7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalMainViewController.swift; path = Terminal/TerminalMainViewController.swift; sourceTree = "<group>"; };
 		7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCollectionController.swift; path = Login/LoginSpeciesCollectionController.swift; sourceTree = "<group>"; };
 		7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSpeciesCell.swift; path = Login/LoginSpeciesCell.swift; sourceTree = "<group>"; };
 		70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeUtil.swift; sourceTree = "<group>"; };
-		70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesMenuViewController.swift; path = BeaconTerminal/Controllers/SpeciesMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
 		704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesViewController.swift; path = SpeicesPages/ChooseSpeciesViewController.swift; sourceTree = "<group>"; };
 		704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesHeader.swift; path = SpeicesPages/ChooseSpeciesHeader.swift; sourceTree = "<group>"; };
-		705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBottomNavigationController.swift; sourceTree = "<group>"; };
 		7064CAA31D6783FB00B77ADA /* StringUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -182,14 +155,9 @@
 		706CF1381D8FA83500A18927 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChoosePreferenceViewController.swift; path = SpeicesPages/ChoosePreferenceViewController.swift; sourceTree = "<group>"; };
 		706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidencePreferenceViewController.swift; path = SpeicesPages/EvidencePreferenceViewController.swift; sourceTree = "<group>"; };
-		706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipDetailViewController.swift; sourceTree = "<group>"; };
-		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popover.storyboard; sourceTree = "<group>"; };
-		7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelationshipDropView.swift; path = BeaconTerminal/Controllers/Carousel/RelationshipDropView.swift; sourceTree = SOURCE_ROOT; };
+		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Popover.storyboard; path = ../Carousel/Popover.storyboard; sourceTree = "<group>"; };
 		708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesRelationshipTableController.swift; path = SpeicesPages/SpeciesRelationshipTableController.swift; sourceTree = "<group>"; };
 		708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesRelationshipContrainerController.swift; path = SpeicesPages/SpeciesRelationshipContrainerController.swift; sourceTree = "<group>"; };
-		708D70631D2EFEF70032F422 /* CoverFlowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowCell.swift; sourceTree = "<group>"; };
-		708D70651D2F03070032F422 /* CoverFlowCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverFlowCell.xib; sourceTree = "<group>"; };
-		708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CoverFlow.storyboard; path = BeaconTerminal/Controllers/Carousel/CoverFlow.storyboard; sourceTree = SOURCE_ROOT; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = wallcology_configuration.json; path = ../wallcology_configuration.json; sourceTree = "<group>"; };
 		7099CDA11D0F99050037E56C /* Pulsator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pulsator.swift; path = ../Views/Pulsator.swift; sourceTree = "<group>"; };
 		709F926C1D8F7D260057E104 /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
@@ -197,10 +165,7 @@
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
 		70A06DD21CE3F84D008FC11F /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coin.wav; sourceTree = "<group>"; };
 		70A06DD51CE3FB54008FC11F /* tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tap.wav; sourceTree = "<group>"; };
-		70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
-		70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolMenuController.swift; sourceTree = "<group>"; };
-		70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterCellCollectionViewFlowLayout.swift; path = ../../Views/CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		70AE00601D0F14CF00C3C61B /* RealmDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDataController.swift; sourceTree = "<group>"; };
 		70AE971B1D202AAE0002C26F /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "HRToast+UIView.swift"; path = "../Views/HRToast+UIView.swift"; sourceTree = "<group>"; };
 		70B017DE1DA5CE6C00B233AA /* ScratchPadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScratchPadViewController.swift; sourceTree = "<group>"; };
@@ -213,7 +178,6 @@
 		70C293451D9088430020247B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../RealmSwift.framework; sourceTree = "<group>"; };
 		70C293471D90887D0020247B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Speciescolors.swift"; sourceTree = "<group>"; };
-		70C487461D32A6DF004F103A /* RelationshipsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsUIView.swift; sourceTree = "<group>"; };
 		70D1281C1DA88BF9008DB916 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Controllers/webview/WebViewController.swift; sourceTree = "<group>"; };
 		70D1281E1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesPreferencesTableController.swift; path = SpeicesPages/SpeciesPreferencesTableController.swift; sourceTree = "<group>"; };
 		70D142681D414E2700A588B3 /* DragUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragUtil.swift; sourceTree = "<group>"; };
@@ -221,12 +185,6 @@
 		70D3BCB81CD85EAC003F52CE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalComparsionController.swift; path = Terminal/TerminalComparsionController.swift; sourceTree = "<group>"; };
 		70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TerminalComparsionDetailViewController.swift; sourceTree = "<group>"; };
-		70D4E5701DA3763F00E96054 /* TerminalPreferenceComparsionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalPreferenceComparsionController.swift; path = Terminal/TerminalPreferenceComparsionController.swift; sourceTree = "<group>"; };
-		70D4E5721DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalPreferenceComparsionDetailController.swift; path = Terminal/TerminalPreferenceComparsionDetailController.swift; sourceTree = "<group>"; };
-		70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableImageView.swift; sourceTree = "<group>"; };
-		70D62F801CFCF03D006F6997 /* DragViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragViewController.swift; sourceTree = "<group>"; };
-		70D62F881CFCF76C006F6997 /* DropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropTargetView.swift; sourceTree = "<group>"; };
-		70D84A0B1D343125003C36DF /* DraggableSpeciesImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableSpeciesImageView.swift; sourceTree = "<group>"; };
 		70D9C1B11D6650B700FAF080 /* LoginGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupViewController.swift; path = Login/LoginGroupViewController.swift; sourceTree = "<group>"; };
 		70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginGroupCell.swift; path = Login/LoginGroupCell.swift; sourceTree = "<group>"; };
 		70DC48481D79CD0800E11064 /* BeaconTerminalModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconTerminalModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,38 +192,32 @@
 		70DC484C1D79CD0800E11064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70DC48551D7A0CF700E11064 /* species_note_test_db.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = species_note_test_db.json; sourceTree = "<group>"; };
 		70DD4EDE1D9B876D0071A542 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageViewController.swift; path = SpeicesPages/ImageViewController.swift; sourceTree = "<group>"; };
-		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppNavigationController.swift; path = ../AppNavigationController.swift; sourceTree = "<group>"; };
 		70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidenceViewController.swift; path = Terminal/EvidenceViewController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		70F0A3F31CE6531C00A0E752 /* one */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = one; sourceTree = "<group>"; };
 		70F1B76D1D8C96200020E757 /* DefaultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultViewController.swift; path = Login/DefaultViewController.swift; sourceTree = "<group>"; };
 		70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginConditionViewController.swift; path = Login/LoginConditionViewController.swift; sourceTree = "<group>"; };
 		70F1B7711D8CBC780020E757 /* LoginConditionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginConditionCell.swift; path = Login/LoginConditionCell.swift; sourceTree = "<group>"; };
-		70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTableViewController.swift; sourceTree = "<group>"; };
-		70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceTableViewCell.swift; sourceTree = "<group>"; };
-		70F29A591D57D8200057A497 /* PreferenceUILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceUILabel.swift; sourceTree = "<group>"; };
 		70F29A5B1D57DB820057A497 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		70F29A5C1D57DB820057A497 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		70F29A5D1D57DB820057A497 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		70F29A5E1D57DB820057A497 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		70F29A5F1D57DB820057A497 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
-		70F29A661D57E15F0057A497 /* PreferenceUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceUIView.swift; sourceTree = "<group>"; };
 		70F29A681D582AAD0057A497 /* system_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = system_configuration.json; path = ../system_configuration.json; sourceTree = "<group>"; };
 		8E68E1EA4D0E588613CD0100 /* Pods_BeaconTerminal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93357ADB1F797AF6490F7959 /* Pods_BeaconTerminalModelTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BeaconTerminalModelTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE9764891C22C1BF0058A4DC /* BeaconTerminal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaconTerminal.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
+		AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppDelegate.swift; sourceTree = "<group>"; };
 		AE9764931C22C1BF0058A4DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AE9764981C22C1BF0058A4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE9764BC1C22F4B80058A4DC /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
 		C0A7D004FC456D55A564307C /* nutella_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = nutella_config.json; path = ../nutella_config.json; sourceTree = "<group>"; };
-		C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideViewController.swift; path = Main/SideViewController.swift; sourceTree = "<group>"; };
+		C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
 		C0A7D42A074C04107E1DC615 /* Base */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Base; path = BeaconTerminal/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C0A7D6AC0D72ADF2FA28B555 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		C0A7DAD61205D9767DB6FF97 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverFlowViewController.swift; sourceTree = "<group>"; };
 		C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		C29E94F4117F39FE4AC53170 /* Pods-BeaconTerminal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminal.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminal/Pods-BeaconTerminal.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -348,14 +300,6 @@
 			name = SpeciesPages;
 			sourceTree = "<group>";
 		};
-		701840FF1D604181003921A1 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				701841001D6041AF003921A1 /* MapViewController.swift */,
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
 		7031DB181D65E156000DCC61 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,8 +311,6 @@
 				70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */,
 				70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */,
 				70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */,
-				70D4E5701DA3763F00E96054 /* TerminalPreferenceComparsionController.swift */,
-				70D4E5721DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift */,
 			);
 			name = Terminal;
 			sourceTree = "<group>";
@@ -434,16 +376,6 @@
 			name = Webview;
 			sourceTree = "<group>";
 		};
-		70D62F871CFCF043006F6997 /* DragAndDrop */ = {
-			isa = PBXGroup;
-			children = (
-				70D62F7F1CFCF03D006F6997 /* DraggableImageView.swift */,
-				70D62F881CFCF76C006F6997 /* DropTargetView.swift */,
-				70D62F801CFCF03D006F6997 /* DragViewController.swift */,
-			);
-			name = DragAndDrop;
-			sourceTree = "<group>";
-		};
 		70DC48491D79CD0800E11064 /* BeaconTerminalModelTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,17 +383,6 @@
 				70DC484C1D79CD0800E11064 /* Info.plist */,
 			);
 			path = BeaconTerminalModelTests;
-			sourceTree = "<group>";
-		};
-		70E8F41A1D162CA8007DF331 /* Setup */ = {
-			isa = PBXGroup;
-			children = (
-				C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */,
-				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
-				70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */,
-				705F6A201D398EEA00F3E666 /* AppBottomNavigationController.swift */,
-			);
-			name = Setup;
 			sourceTree = "<group>";
 		};
 		70F0A3EA1CE6526000A0E752 /* ScratchPad */ = {
@@ -472,33 +393,8 @@
 				70B017DF1DA5CE6C00B233AA /* CanvasView.swift */,
 				70B017E01DA5CE6C00B233AA /* ReticleView.swift */,
 				70B017E11DA5CE6C00B233AA /* Line.swift */,
-				70F0A3F31CE6531C00A0E752 /* one */,
 			);
 			path = ScratchPad;
-			sourceTree = "<group>";
-		};
-		70F29A571D57D7F60057A497 /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-				70A5229A1D4C12A00047E7E7 /* Preferences.storyboard */,
-				70A5229C1D4C55F50047E7E7 /* PreferencesViewController.swift */,
-				70F29A511D56BF000057A497 /* PreferenceTableViewController.swift */,
-				70F29A551D5767730057A497 /* PreferenceTableViewCell.swift */,
-				70F29A591D57D8200057A497 /* PreferenceUILabel.swift */,
-				70F29A661D57E15F0057A497 /* PreferenceUIView.swift */,
-			);
-			name = Preferences;
-			path = Carousel;
-			sourceTree = "<group>";
-		};
-		70F29A581D57D8080057A497 /* Relationships */ = {
-			isa = PBXGroup;
-			children = (
-				7074BBC61D3352CC00FC7C90 /* RelationshipDropView.swift */,
-				70C487461D32A6DF004F103A /* RelationshipsUIView.swift */,
-				706F331C1D44689A00D569AE /* RelationshipDetailViewController.swift */,
-			);
-			name = Relationships;
 			sourceTree = "<group>";
 		};
 		70F29A651D57DB8C0057A497 /* Fonts */ = {
@@ -539,7 +435,6 @@
 				70D1281B1DA88BBA008DB916 /* Webview */,
 				70F0A3EA1CE6526000A0E752 /* ScratchPad */,
 				70920D091CD52C4F001B582F /* DataObjects */,
-				70D62F871CFCF043006F6997 /* DragAndDrop */,
 				70920D0C1CD57B3F001B582F /* Support */,
 				AEC0A9391C86F6C700F88936 /* Estimote */,
 				C0A7D5E1CCBC3F9F3D7FF1EF /* Util */,
@@ -563,13 +458,10 @@
 		C0A7D28976CF55BCDC92A3AB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				70F29A571D57D7F60057A497 /* Preferences */,
 				7031DB181D65E156000DCC61 /* Terminal */,
 				70C1CF341D592DEB00CB687E /* Login */,
 				C0A7DAF922A5401E5A9F4885 /* Main */,
-				70E8F41A1D162CA8007DF331 /* Setup */,
 				701385C81D8333560081FEB1 /* SpeciesPages */,
-				C0A7DC783C6B08701103D5EF /* Carousel */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -600,29 +492,16 @@
 			isa = PBXGroup;
 			children = (
 				C0A7D628C381C03091617459 /* Main.storyboard */,
+				7070C4D41D4E77BA00AB47FF /* Popover.storyboard */,
 				7003BEDF1D81F3250029B0EE /* MainContainerController.swift */,
 				70A8D8561D984B0D00C1D2B7 /* ToolMenuController.swift */,
 				C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */,
 				C0A7D7D10C9C8F198DA9F6D4 /* ScannerViewController.swift */,
-				70400D481D3DE108001942BA /* SpeciesMenuViewController.swift */,
+				C0A7D041675C60FCCCCB17D9 /* SideViewController.swift */,
+				AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */,
+				70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		C0A7DC783C6B08701103D5EF /* Carousel */ = {
-			isa = PBXGroup;
-			children = (
-				701840FF1D604181003921A1 /* Map */,
-				70D84A0B1D343125003C36DF /* DraggableSpeciesImageView.swift */,
-				708D70631D2EFEF70032F422 /* CoverFlowCell.swift */,
-				708D70651D2F03070032F422 /* CoverFlowCell.xib */,
-				708E0E3D1D4D0BAF0094F17A /* CoverFlow.storyboard */,
-				70AE005C1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift */,
-				C0A7DCD4F4E359FD879809E4 /* CoverFlowViewController.swift */,
-				70F29A581D57D8080057A497 /* Relationships */,
-				7070C4D41D4E77BA00AB47FF /* Popover.storyboard */,
-			);
-			path = Carousel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -744,16 +623,13 @@
 				701385C71D83334C0081FEB1 /* SpeciesPages.storyboard in Resources */,
 				70A06DD41CE3F84D008FC11F /* coin.wav in Resources */,
 				70A06DD61CE3FB54008FC11F /* tap.wav in Resources */,
-				708E0E3E1D4D0BAF0094F17A /* CoverFlow.storyboard in Resources */,
 				70D3BCB91CD85EAC003F52CE /* LaunchScreen.storyboard in Resources */,
 				70DC48561D7A0CF700E11064 /* species_note_test_db.json in Resources */,
-				70A5229B1D4C12A00047E7E7 /* Preferences.storyboard in Resources */,
 				70F29A691D582AAD0057A497 /* system_configuration.json in Resources */,
 				C0A7DEB430A5A2A9402CBBA4 /* Main.storyboard in Resources */,
 				70F29A631D57DB820057A497 /* Roboto-Regular.ttf in Resources */,
 				C0A7D7200703366FD3290DAB /* nutella_config.json in Resources */,
 				7031DB1A1D65E18B000DCC61 /* Terminal.storyboard in Resources */,
-				708D70661D2F03070032F422 /* CoverFlowCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,39 +758,28 @@
 				70B017E21DA5CE6C00B233AA /* ScratchPadViewController.swift in Sources */,
 				70A8D8571D984B0D00C1D2B7 /* ToolMenuController.swift in Sources */,
 				709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */,
-				70F0A3F41CE6531C00A0E752 /* one in Sources */,
 				70D142691D414E2700A588B3 /* DragUtil.swift in Sources */,
-				708D70641D2EFEF70032F422 /* CoverFlowCell.swift in Sources */,
 				70F1B7721D8CBC780020E757 /* LoginConditionCell.swift in Sources */,
-				70F29A671D57E15F0057A497 /* PreferenceUIView.swift in Sources */,
-				70AE005D1D0DCD9200C3C61B /* CenterCellCollectionViewFlowLayout.swift in Sources */,
 				70DD4EDF1D9B876D0071A542 /* ImageViewController.swift in Sources */,
 				70C1CF361D592E2800CB687E /* LoginSectionViewController.swift in Sources */,
 				70AE00611D0F14CF00C3C61B /* RealmDataController.swift in Sources */,
-				7074BBC71D3352CC00FC7C90 /* RelationshipDropView.swift in Sources */,
 				70D4E2321D6CD25D003102AC /* TerminalComparsionController.swift in Sources */,
 				70B017E71DA5D0B400B233AA /* PadImageView.swift in Sources */,
 				7003BEE01D81F3250029B0EE /* MainContainerController.swift in Sources */,
 				70ECDCE91D7DB76F00C07CCA /* EvidenceViewController.swift in Sources */,
 				70D1281D1DA88BF9008DB916 /* WebViewController.swift in Sources */,
 				701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */,
-				70D62F841CFCF03D006F6997 /* DragViewController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
 				70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
 				706D21E41DA9D245009FC554 /* EvidencePreferenceViewController.swift in Sources */,
-				70400D491D3DE108001942BA /* SpeciesMenuViewController.swift in Sources */,
 				7003BEE21D81F96C0029B0EE /* TabSegmentedControl.swift in Sources */,
 				7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */,
 				7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */,
-				70D84A0C1D343125003C36DF /* DraggableSpeciesImageView.swift in Sources */,
 				701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */,
-				70F29A561D5767730057A497 /* PreferenceTableViewCell.swift in Sources */,
 				70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */,
-				70A5229D1D4C55F50047E7E7 /* PreferencesViewController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
-				70D62F831CFCF03D006F6997 /* DraggableImageView.swift in Sources */,
 				70B017E51DA5CE6C00B233AA /* Line.swift in Sources */,
 				7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */,
 				704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */,
@@ -929,37 +794,27 @@
 				70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */,
 				70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */,
 				706D21E21DA99FD4009FC554 /* ChoosePreferenceViewController.swift in Sources */,
-				701841011D6041AF003921A1 /* MapViewController.swift in Sources */,
 				701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */,
 				709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */,
-				70D4E5731DA3771300E96054 /* TerminalPreferenceComparsionDetailController.swift in Sources */,
 				706CF1391D8FA83500A18927 /* Banner.swift in Sources */,
 				70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */,
-				705F6A211D398EEA00F3E666 /* AppBottomNavigationController.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
-				70D62F891CFCF76C006F6997 /* DropTargetView.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
-				70C487471D32A6DF004F103A /* RelationshipsUIView.swift in Sources */,
-				70F29A5A1D57D8200057A497 /* PreferenceUILabel.swift in Sources */,
 				701385CA1D8334BA0081FEB1 /* SpeciesPageContainerController.swift in Sources */,
 				70D4E2341D6CF925003102AC /* TerminalComparsionDetailViewController.swift in Sources */,
 				708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */,
-				706F331D1D44689A00D569AE /* RelationshipDetailViewController.swift in Sources */,
 				7030BE251DA4631400DB332D /* Spinner.swift in Sources */,
-				C0A7D8F70A7E079D7A2D2D5C /* CoverFlowViewController.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
 				70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */,
 				70B017E41DA5CE6C00B233AA /* ReticleView.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
-				70D4E5711DA3763F00E96054 /* TerminalPreferenceComparsionController.swift in Sources */,
 				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
 				70D1281F1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
-				70F29A521D56BF000057A497 /* PreferenceTableViewController.swift in Sources */,
 				708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1080,6 +935,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = "";
@@ -1123,6 +979,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1150,7 +1007,7 @@
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D COCOAPODS\" -Xfrontend -debug-time-function-bodies";
+				OTHER_SWIFT_FLAGS = "\"-D COCOAPODS\" -Xfrontend -debug-time-function-bodies $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminal;
 				PRODUCT_NAME = BeaconTerminal;
 				PROVISIONING_PROFILE = "";
@@ -1179,7 +1036,7 @@
 				INFOPLIST_FILE = BeaconTerminal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "$(inherited) \"-D COCOAPODS\" -Xfrontend -debug-time-function-bodies";
+				OTHER_SWIFT_FLAGS = "\"-D COCOAPODS\" -Xfrontend -debug-time-function-bodies $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ltg.evl.uic.edu.BeaconTerminal;
 				PRODUCT_NAME = BeaconTerminal;
 				PROVISIONING_PROFILE = "";

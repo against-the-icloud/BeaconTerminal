@@ -12,7 +12,8 @@ enum RelationshipType: String {
     case mutual = "mutual"
     case competes = "competes"
     case habitats = "habitats"
-    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes, .habitats]
+    case sPreference = "speciesPreference"
+    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes, .habitats, .sPreference]
 }
 
 enum ActionType: String {
@@ -69,7 +70,6 @@ class SpeciesObservation: Object {
     
     var relationships = List<Relationship>()
     var speciesPreferences = List<SpeciesPreference>()
-    var preferences = List<Preference>()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -142,57 +142,6 @@ class Relationship: Object {
         }
     }
 }
-
-struct Preferences {
-    static let trophicLevel = "trophic_level"
-    static let behaviors = "behaviors"
-    static let predationResistance = "predation_resistence"
-    static let heatSensitivity = "heat_sensitivity"
-    static let humditiySensitivity = "humidity_sensitivity"
-    static let habitatPreference = "habitat_preference"
-}
-
-class Preference: Object {
-    dynamic var id : String? = nil
-    dynamic var note: String? = nil
-    dynamic var value: String? = nil
-    dynamic var attachments : String? = nil
-    dynamic var type: String = ""
-    dynamic var lastModified = Date()
-    
-    override static func primaryKey() -> String? {
-        return "id"
-    }
-    
-    func configure(type: String, value: String) {
-        self.type = type
-        self.value = value
-    }
-    
-    func update(withJson json:JSON, shouldParseId: Bool){
-        if shouldParseId {
-            if let id = json["id"].string {
-                self.id = id
-            } else {
-                self.id = UUID().uuidString
-            }
-        }
-        if let attachments = json["attachments"].string {
-            self.attachments = attachments
-        }
-        if let note = json["note"].string {
-            self.note = note
-        }
-        if let value = json["value"].string {
-            self.value = value
-        }
-        if let type = json["type"].string {
-            self.type = type
-        }        
-    }
-
-}
-
 
 class SpeciesPreference: Object {
     dynamic var id : String? = nil
@@ -565,12 +514,12 @@ extension Realm {
         return speciesObservation.relationships.filter("relationshipType = '\(relationshipType)'")
     }
     
-    func preference(withId id: String) -> Preference? {
-        return objects(Preference.self).filter("id = '\(id)'").first
+    func speciesPreference(withId id: String) -> SpeciesPreference? {
+        return objects(SpeciesPreference.self).filter("id = '\(id)'").first
     }
     
-    func allPreferences() -> Results<Preference> {
-        return objects(Preference.self)
+    func allSpeciesPreferences() -> Results<SpeciesPreference> {
+        return objects(SpeciesPreference.self)
     }
 
 }

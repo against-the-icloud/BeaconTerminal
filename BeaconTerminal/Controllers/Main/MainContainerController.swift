@@ -84,8 +84,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     let item = prepareMenuItem(withTitle: "SCANNER", withImage: UIImage(named: "ic_wifi_white")!)
                     item.button.addTarget(self, action: #selector(scannerAction), for: .touchUpInside)
                     toolMenuItems.append(item)
-                default:
-                    break
                 }
             }
         }
@@ -217,8 +215,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     topTabbar.selectedSegmentIndex = 0
                     colorizeSelectedSegment()
                     changeTab(withControl: topTabbar)
-                default:
-                    topTabbar.removeSegment(at: 2, animated: true)
                 }
                 
             }

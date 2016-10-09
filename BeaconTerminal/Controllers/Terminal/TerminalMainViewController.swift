@@ -18,10 +18,8 @@ class TerminalMainViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    
-    @IBOutlet weak var viewSegmentedControl: UISegmentedControl!
-    
-    @IBOutlet var containerViews: [UIView]!
+    @IBOutlet weak var refreshButton: UIButton!
+
     
     var notificationTokens = [NotificationToken]()
     
@@ -112,8 +110,6 @@ class TerminalMainViewController: UIViewController {
             if let species = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesWithIndex(withIndex: speciesIndex) {
                 profileLabel.text = species.name
             }
-            
-            viewSegmentedControl.tintColor = UIColor.speciesColor(forIndex: speciesIndex, isLight: false)
         } else {
             //no species image
         }
@@ -146,36 +142,6 @@ class TerminalMainViewController: UIViewController {
         self.present(loginNavigationController, animated: true, completion: {})
     }
     
-    //Mark: Segment Switch
-    
-    @IBAction func switchSegment(_ sender: UISegmentedControl) {
-        
-        let showView = containerViews[sender.selectedSegmentIndex]
-        
-        for (index,containerView) in containerViews.enumerated() {
-            if index == sender.selectedSegmentIndex {
-                containerView.isHidden = false
-                containerView.fadeIn(toAlpha: 1.0) {_ in
-                    
-                }
-
-            } else {
-                containerView.isHidden = true
-                containerView.fadeOut(0.0) {_ in
-                    
-                }
-            }
-        }
-        
-        //var filtered = myList.filter { $0 != sender.selectedSegmentIndex }
-        
-        showView.fadeIn(toAlpha: 1.0) {_ in
-            //            for tap in self.tapCollection {
-            //                tap.isEnabled = false
-           
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let id = segue.identifier else {
@@ -184,16 +150,16 @@ class TerminalMainViewController: UIViewController {
         
         switch id {
         case "terminalPreferencesViewSegue":
-            if let srv = segue.destination as? TerminalPreferenceComparsionController, let speciesIndex = realmDataController.getRealm().runtimeSpeciesIndex() {
-                srv.speciesIndex = speciesIndex
-            }
+           
             break
         default:
             break
         }
     }
     
+    @IBAction func refreshAction(_ sender: Any) {
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .lightContent
     }
 }

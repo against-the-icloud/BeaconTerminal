@@ -37,6 +37,9 @@ class TerminalContainerViewController: UIViewController {
             case "terminalConsumerRelationship":
                 tvc.relationshipType = .consumer
                 break
+            case "terminalSpeciesPreferencesRelationship":
+                tvc.relationshipType = .sPreference
+                break
             default:
                 break
             }

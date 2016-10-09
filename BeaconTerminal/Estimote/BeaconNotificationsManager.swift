@@ -72,7 +72,8 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
                 
                 let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
                 
-                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                
+                
                 
                 let banner = Banner(title: "DID ENTER", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
                 
@@ -86,9 +87,8 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
                     banner.dismiss()
                 }
                 
-                if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
-                    realmDataController.saveNutellaCondition(withCondition: "place", withActionType: "enter", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
-                }
+                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: "place", withActionType: "enter", withPlace: region.description)
+
             }
         }
     }
@@ -107,7 +107,7 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
                 
                 let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
                 
-                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                //realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
                 
                 let banner = Banner(title: "DID EXIT", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
                 

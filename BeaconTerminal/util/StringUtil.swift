@@ -18,6 +18,8 @@ class StringUtil {
             return "IS EATEN BY"
         case .mutual:
             return "IS DEPENDENT ON"
+        case .sPreference:
+            return "HABITATS"
         default:
             return "COMPETES WITH"
         }
@@ -33,6 +35,8 @@ class StringUtil {
             return "IS DEPENDENT ON"
         case "competes":
             return "COMPETES WITH"
+        case "sPreference":
+            return "HABITATS"
         default:
             return ""
         }

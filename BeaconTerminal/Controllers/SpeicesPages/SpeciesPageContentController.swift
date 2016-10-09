@@ -40,6 +40,8 @@ class SpeciesPageContentController: UIViewController {
         switch getAppDelegate().checkApplicationState() {
             case .cloudGroup:
                 prepareHeaderActions()
+            case .objectGroup,.placeGroup:
+                prepareManualSyncActions()
             default:
             break
         }
@@ -59,6 +61,8 @@ class SpeciesPageContentController: UIViewController {
                     guard let controller = self else { return }
                     switch changes {
                     case .initial(let speciesObservationResults):
+                        controller.updateHeader()
+
                         if !speciesObservationResults.isEmpty {
                             controller.colors(forSynced: false)
                         } else {
@@ -66,7 +70,8 @@ class SpeciesPageContentController: UIViewController {
                         }
                         break
                     case .update( _, let deletions, _, _):
-                        
+                        controller.updateHeader()
+
                         if deletions.count > 0 {
                             controller.colors(forSynced: true)
                         } else {
@@ -131,6 +136,15 @@ class SpeciesPageContentController: UIViewController {
         //updateTimestamp()
     }
     
+    func prepareManualSyncActions() {
+        speciesProfileImageView.isUserInteractionEnabled = true
+        //now you need a tap gesture recognizer
+        //note that target and action point to what happens when the action is recognized.
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doManualSyncAction))
+        //Add the recognizer to your view.
+        speciesProfileImageView.addGestureRecognizer(tapRecognizer)
+    }
+    
     func prepareHeaderActions() {
             speciesProfileImageView.isUserInteractionEnabled = true
             //now you need a tap gesture recognizer
@@ -139,12 +153,19 @@ class SpeciesPageContentController: UIViewController {
             //Add the recognizer to your view.
             speciesProfileImageView.addGestureRecognizer(tapRecognizer)
     }
-        
+    
+    func doManualSyncAction(_ sender: UITapGestureRecognizer) {
+        if let speciesIndex = self.speciesIndex {
+            
+            realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: getAppDelegate().checkApplicationState().rawValue, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+        }
+    }
+    
     func showTerminalForCurrentSpeciesAction(_ sender: UITapGestureRecognizer) {
             
             if let speciesIndex = self.speciesIndex {
                 
-                realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: getAppDelegate().checkApplicationState().rawValue, withActionType: "enter", withPlace: "species:\(speciesIndex)")
 
                 realmDataController.clearInViewTerminal(withCondition: "cloud")
                 realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "cloud", withPlace: "species:\(speciesIndex)")                

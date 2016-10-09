@@ -98,7 +98,10 @@ class SideViewController: UITableViewController {
                 realmDataController.updateRuntime(withAction: ActionType.entered.rawValue)
                 
                 if let zone = enterZoneText.text {
-                    realmDataController.syncSpeciesObservations(withIndex: Int(zone)!)
+                    
+                    let place = "speciesIndex:\(Int(zone)!)"
+                    
+                    realmDataController.syncSpeciesObservations(withSpeciesIndex: Int(zone)!, withCondition: getAppDelegate().checkApplicationState().rawValue, withActionType: "enter", withPlace: place)
                     realmDataController.deleteAllSpeciesObservations(withRealmType: RealmType.terminalDB)
                     realmDataController.updateRuntime(withSpeciesIndex: Int(zone), withRealmType: RealmType.terminalDB, withAction: ActionType.entered.rawValue)
                 }

@@ -18,7 +18,7 @@ let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
 //let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = REMOTE
+var CURRENT_HOST = LOCAL_IP
 var SECTION_NAME = "default"
 
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
@@ -186,17 +186,9 @@ func getAppDelegate() -> AppDelegate {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    
-    let defaults = UserDefaults.standard
+class AppDelegate: UIResponder, UIApplicationDelegate {    
     
     var window: UIWindow?
-    
-    
-    var collectionView: UICollectionView?
-    var speciesViewController: SpeciesMenuViewController?
-    var bottomNavigationController: AppBottomNavigationController?
     
     //delegates
     weak var controlPanelDelegate: ControlPanelDelegate?
@@ -316,7 +308,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func preInitialization(applicationType: ApplicationType) {
-        if let sectionName = defaults.string(forKey: "sectionName") {
+        if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
             switch applicationType {
             case .placeTerminal, .placeGroup, .objectGroup, .cloudGroup:
                 setupConnection(withSectionName: sectionName)
@@ -358,10 +350,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func postInitialization(applicationType: ApplicationType) {
-        if let sectionName = defaults.string(forKey: "sectionName") {
+        if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
             switch applicationType {
             case .placeGroup, .objectGroup, .cloudGroup:
-                prepareDB(withSectionName: sectionName)
+                prepareDB(withSectionName: sectionName)                
+                realmDataController.queryNutella(withType: .speciesNames)
             case .placeTerminal:
                 prepareDB(withSectionName: sectionName)
                 realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
@@ -471,7 +464,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
         navigationController.isNavigationBarHidden = true
-        navigationController.statusBarStyle = .default
+        navigationController.statusBarStyle = .lightContent
         
         return navigationDrawerController
     }
@@ -531,8 +524,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkInitialization() {
-        if let sectionName = defaults.string(forKey: "sectionName")  {
-            let hasInit = defaults.bool(forKey: "init")
+        if let sectionName = UserDefaults.standard.string(forKey: "sectionName")  {
+            _ = UserDefaults.standard.bool(forKey: "init")
             
             
             let r = realmDataController.getRealm()
@@ -540,7 +533,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if allSos.isEmpty {
                 //_ = realmDataController.parseNutellaConfigurationJson()
                 _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName)
-                defaults.set(true, forKey: "init")
+                UserDefaults.standard.set(true, forKey: "init")
+                UserDefaults.standard.synchronize()
             }
         }
         
@@ -602,21 +596,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func resetDB(withGroupIndex groupIndex: Int = 0) {
         //check nutella connection
         
-        //handle_requests: reset
-        if let nutella = nutella {
-            
-            let block = DispatchWorkItem {
-                var dict = [String: Int]()
-                
-                dict["groupIndex"] = groupIndex
-                let json = JSON(dict)
-                let jsonObject: Any = json.object
-                nutella.net.asyncRequest("all_notes_with_group", message: jsonObject as AnyObject, requestName: "all_notes_with_group")
-            }
-            DispatchQueue.main.async(execute: block)
-        } else {
-            //we have been disconnected
-        }
+        
+        realmDataController.queryNutellaAllNotes(withType: .group)
+        
     }
     
     
@@ -712,10 +694,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         currentRosterState.didEnterState = { state in
-            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
-                //self.setupConnection(withSectionName: sectionName)
-                
-            }
+//            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+//                //self.setupConnection(withSectionName: sectionName)
+//                
+//            }
             
         }
         

@@ -88,7 +88,7 @@ class Util {
         
         // Fetch Request
         
-        let url = URL(fileURLWithPath: filename)
+        _ = URL(fileURLWithPath: filename)
         
         //"d41d8cd98f00b204e9800998ecf8427e.jpg".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
         let md5filename = "\(filename.fileName().md5()).\(filename.fileExtension())"

@@ -217,7 +217,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             let minorValue = settings.iBeacon.minor.getValue()
             let majorValue = settings.iBeacon.major.getValue()
             
-            let majorIndex = Int(majorValue)
+            _ = Int(majorValue)
             let speciesIndex = Int(minorValue) - 1
             if let beaconId = findBeaconMinor(withMinor: Int16(minorValue)) {
                 

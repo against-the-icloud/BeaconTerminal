@@ -127,7 +127,7 @@ extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageV
         }
     }
     
-    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         self.pageIsAnimating = true
     }
     

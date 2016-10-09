@@ -39,14 +39,12 @@ class TerminalRelationshipTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         prepareNotifications()
-        
-        //set up toast
-        
-        //dark grey
-        //UIView.hr_setToastThemeColor(UIColor.white)
     }
     
+
     func prepareNotifications() {
         
         runtimeResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(Runtime.self)
@@ -60,13 +58,13 @@ class TerminalRelationshipTableViewController: UITableViewController {
             case .initial(let runtimeResults):
                 if let runtime = runtimeResults.first, let speciesIndex = runtime.currentSpeciesIndex.value {
                     tableController.updateHeader(withSpeciesIndex: speciesIndex)
-                    tableController.updateReportLabel()
+                    //tableController.updateReportLabel()
                 }
                 break
             case .update(let runtimeResults, _, _, _):
                 if let runtime = runtimeResults.first, let speciesIndex = runtime.currentSpeciesIndex.value {
                     tableController.updateHeader(withSpeciesIndex: speciesIndex)
-                    tableController.updateReportLabel()
+                    //tableController.updateReportLabel()
                 }
                 break
             case .error(let error):
@@ -93,7 +91,7 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 controller.reloadCells()
                 controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
-            case .update(let speciesObservationResults, let deletions, let insertions, let modifications):
+            case .update(let speciesObservationResults, _, _, _):
                 self?.speciesObservationResults = speciesObservationResults
                 controller.reloadCells()
                 controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
@@ -113,11 +111,33 @@ class TerminalRelationshipTableViewController: UITableViewController {
     }
     
      @IBAction func reloadCells() {
-        for controller in (self.childViewControllers as? [TerminalCellController])!{
-            controller.prepareView()
+
+        guard let type = relationshipType else {
+            return
+        }
+        switch type {
+        case .sPreference:
+            
+            for controller in (self.childViewControllers as? [TerminalCellController])!{
+                controller.prepareView()
+            }
+            
+            
+            
+            break
+        default:
+            
+            for controller in (self.childViewControllers as? [TerminalCellController])!{
+                controller.prepareView()
+            }
+            
         }
         
-        updateReportLabel(shouldReset: true)
+
+        
+        
+      
+        //updateReportLabel(shouldReset: true)
     }
     
     func updateCells(withSpeciesObservationResults speciesObservationResults: Results<SpeciesObservation>) {
@@ -128,17 +148,39 @@ class TerminalRelationshipTableViewController: UITableViewController {
             return
         }
         
-        for so in speciesObservationResults {
-            if let foundRelationships = realmDataController.getRealm(withRealmType: RealmType.terminalDB).relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
-                relationshipCount += foundRelationships.count
-                for r in foundRelationships {
-                    groupsReported[so.groupIndex] = so.groupIndex
-                    updateCell(withRelationship: r, groupIndex: so.groupIndex)
-                }
+        switch type {
+        case .sPreference:
+            
+            for so in speciesObservationResults {
+             
                 
+                    for sp in so.speciesPreferences {
+                        groupsReported[so.groupIndex] = so.groupIndex
+                        updateCell(withSpeciesPreference: sp, groupIndex: so.groupIndex)
+                    }
+                    
+                }
+        
+            
+            break
+        default:
+         
+            
+            for so in speciesObservationResults {
+                if let foundRelationships = realmDataController.getRealm(withRealmType: RealmType.terminalDB).relationships(withSpeciesObservation: so, withRelationshipType: type.rawValue) {
+                    relationshipCount += foundRelationships.count
+                    for r in foundRelationships {
+                        groupsReported[so.groupIndex] = so.groupIndex
+                        updateCell(withRelationship: r, groupIndex: so.groupIndex)
+                    }
+                    
+                }
             }
         }
-        updateReportLabel(shouldReset: false)
+        
+        
+  
+        //updateReportLabel(shouldReset: false)
     }
     
     func makeToast(relationship: Relationship, groupIndex: Int) {
@@ -159,6 +201,9 @@ class TerminalRelationshipTableViewController: UITableViewController {
     }
     
     
+    func updateCell(withSpeciesPreference speciesPreference: SpeciesPreference, groupIndex: Int) {
+
+    }
     func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
         
         
@@ -224,27 +269,58 @@ class TerminalRelationshipTableViewController: UITableViewController {
     // Mark: Prepare
     func prepareView() {
         
-        if let currentSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
-            //update title
-            if let relationshipType = self.relationshipType {
-                relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
-            }
-            
-            let allSpecies = realmDataController.getRealm(withRealmType: RealmType.terminalDB).species            
-            //make all the cells
-            
-            //create array with int 0...10
-            var array = (0...allSpecies.count-1).map { $0 }
-            
-            array.remove(at: currentSpeciesIndex)
-            
-            for (index,speciesIndex) in array.enumerated() {
-                if let cell = childViewControllers[index] as? TerminalCellController {
-                    cell.toSpeciesIndex = speciesIndex
+        guard let type = relationshipType else {
+            return
+        }
+        
+        switch type {
+        case .sPreference:
+            if let currentSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+                //update title
+                if let relationshipType = self.relationshipType {
+                    relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
                 }
+                
+                let allHabitats = realmDataController.getRealm(withRealmType: RealmType.terminalDB).habitats
+                //make all the cells
+                
+                
+                
+                for (index,_) in allHabitats.enumerated() {
+                    if let cell = childViewControllers[index] as? TerminalCellController {
+                        cell.toHabitatIndex = index
+                    }
+                }
+                
+                
             }
             
             
+            break
+        default:
+            if let currentSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+                //update title
+                if let relationshipType = self.relationshipType {
+                    relationshipHeaderLabel.text = StringUtil.relationshipString(withType: relationshipType)
+                }
+                
+                let allSpecies = realmDataController.getRealm(withRealmType: RealmType.terminalDB).species
+                //make all the cells
+                
+                //create array with int 0...10
+                var array = (0...allSpecies.count-1).map { $0 }
+                
+                array.remove(at: currentSpeciesIndex)
+                
+                for (index,speciesIndex) in array.enumerated() {
+                    if let cell = childViewControllers[index] as? TerminalCellController {
+                        cell.toSpeciesIndex = speciesIndex
+                    }
+                }
+                
+                
+            }
+        
         }
     }
     

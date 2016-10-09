@@ -94,7 +94,7 @@ open class Bar: View {
     
     /// Grid cell factor.
     @IBInspectable
-    open var gridFactor: CGFloat = 24 {
+    open var gridFactor: CGFloat = 12 {
         didSet {
             assert(0 < gridFactor, "[Material Error: gridFactor must be greater than 0.]")
             layoutSubviews()
@@ -171,7 +171,6 @@ open class Bar: View {
         self.centerViews = centerViews ?? []
         frame.size = intrinsicContentSize
     }
-    
     open override func layoutSubviews() {
         super.layoutSubviews()
         guard willLayout else {
@@ -190,9 +189,14 @@ open class Bar: View {
         grid.axis.columns = columns
         
         for v in leftViews {
-            (v as? UIButton)?.contentEdgeInsets = .zero
+            if let b = v as? UIButton {
+                b.contentEdgeInsets = .zero
+                b.titleEdgeInsets = .zero
+            }
+            
+            v.width = v.intrinsicContentSize.width
             v.sizeToFit()
-            v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
+            v.grid.columns = Int(ceil(v.width / gridFactor)) + 2
             
             lc += v.grid.columns
             
@@ -202,9 +206,14 @@ open class Bar: View {
         grid.views.append(contentView)
         
         for v in rightViews {
-            (v as? UIButton)?.contentEdgeInsets = .zero
+            if let b = v as? UIButton {
+                b.contentEdgeInsets = .zero
+                b.titleEdgeInsets = .zero
+            }
+            
+            v.width = v.intrinsicContentSize.width
             v.sizeToFit()
-            v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
+            v.grid.columns = Int(ceil(v.width / gridFactor)) + 2
             
             rc += v.grid.columns
             

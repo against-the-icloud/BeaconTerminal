@@ -92,7 +92,7 @@ open class NavigationBar: UINavigationBar {
 	
 	/// Grid cell factor.
 	@IBInspectable
-    open var gridFactor: CGFloat = 24 {
+    open var gridFactor: CGFloat = 12 {
 		didSet {
 			assert(0 < gridFactor, "[Material Error: gridFactor must be greater than 0.]")
 			layoutSubviews()
@@ -208,9 +208,14 @@ open class NavigationBar: UINavigationBar {
         item.titleView!.grid.axis.columns = columns
         
         for v in item.leftViews {
-            (v as? UIButton)?.contentEdgeInsets = .zero
+            if let b = v as? UIButton {
+                b.contentEdgeInsets = .zero
+                b.titleEdgeInsets = .zero
+            }
+            
+            v.width = v.intrinsicContentSize.width
             v.sizeToFit()
-            v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
+            v.grid.columns = Int(ceil(v.width / gridFactor)) + 2
             
             lc += v.grid.columns
             
@@ -220,9 +225,14 @@ open class NavigationBar: UINavigationBar {
         item.titleView!.grid.views.append(item.contentView)
         
         for v in item.rightViews {
-            (v as? UIButton)?.contentEdgeInsets = .zero
+            if let b = v as? UIButton {
+                b.contentEdgeInsets = .zero
+                b.titleEdgeInsets = .zero
+            }
+            
+            v.width = v.intrinsicContentSize.width
             v.sizeToFit()
-            v.grid.columns = Int(ceil(v.width / gridFactor)) + 1
+            v.grid.columns = Int(ceil(v.width / gridFactor)) + 2
             
             rc += v.grid.columns
             
@@ -294,9 +304,9 @@ open class NavigationBar: UINavigationBar {
         barStyle = .black
 		isTranslucent = false
 		depthPreset = .depth1
-		interimSpacePreset = .interimSpace3
-		contentEdgeInsetsPreset = .square1
-		contentScaleFactor = Device.scale
+        interimSpacePreset = .interimSpace3
+        contentEdgeInsetsPreset = .square1
+        contentScaleFactor = Device.scale
 		backButtonImage = Icon.cm.arrowBack
         let image = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
 		shadowImage = image

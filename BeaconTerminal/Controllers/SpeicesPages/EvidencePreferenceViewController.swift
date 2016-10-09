@@ -191,7 +191,7 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier {
             switch id {
-            case "imageSegue":
+            case "imagePreferenceSegue":
                 if let ivc = segue.destination as? ImageViewController, let tap = sender as? UIGestureRecognizer {
                     if let iv = tap.view as? UIImageView, let image = iv.image {
                         let tag = iv.tag
@@ -243,7 +243,7 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
         
         // Only allow photos to be picked, not taken.
         imagePickerController.sourceType = .camera
-        
+        imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
         
         imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -259,6 +259,7 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
         
         // Only allow photos to be picked, not taken.
         imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
         
         imagePickerController.delegate = self
         
@@ -283,12 +284,12 @@ extension EvidencePreferenceViewController: UIImagePickerControllerDelegate {
         
         self.doneButton.isEnabled = false
         
-        self.startAnimating(CGSize(width: 100, height: 100), message: "Uploading image...")
+        self.startAnimating(CGSize(width: 100, height: 100), message: "Uploading image...", minimumDisplayTime: 200)
         // The info dictionary contains multiple representations of the image, and this uses the original.
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             for iv in images {
-                if let found = iv.image {
+                if iv.image != nil {
                     
                 } else {
                     iv.contentMode = .scaleAspectFit

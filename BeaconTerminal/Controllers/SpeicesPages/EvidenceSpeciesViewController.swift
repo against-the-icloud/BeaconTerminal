@@ -310,7 +310,7 @@ extension EvidenceSpeciesViewController: UIImagePickerControllerDelegate {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             for iv in images {
-                if let found = iv.image {
+                if iv.image != nil {
                     
                 } else {
                     iv.contentMode = .scaleAspectFit
