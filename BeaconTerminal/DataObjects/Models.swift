@@ -368,7 +368,7 @@ extension Realm {
         return objects(Habitat.self)
     }
     
-    func habitatWithIndex(withIndex index: Int) -> Habitat? {
+    func habitat(withIndex index: Int) -> Habitat? {
         return objects(Habitat.self).filter("index = \(index)").first
     }
     
@@ -495,6 +495,16 @@ extension Realm {
         return nil
     }
     
+    func speciesPreferences(withSpeciesObservation speciesObservation: SpeciesObservation,withHabitatIndex habitatIndex: Int) -> SpeciesPreference? {
+        
+        if let speciesPreferences = speciesObservation.speciesPreferences.filter("habitat.index = \(habitatIndex)").first {
+            return speciesPreferences
+        }
+        
+        return nil
+    }
+    
+    
     func speciesObservations(withSectionName sectionName: String, withGroupIndex groupIndex: Int, withSpeciesIndex speciesIndex: Int) -> Results<SpeciesObservation>? {
         if let group = group(withSectionName: sectionName, withGroupIndex: groupIndex) {
             return group.speciesObservations.filter("fromSpecies.index = \(speciesIndex)")
@@ -537,6 +547,10 @@ extension Realm {
     
     func allRelationships() -> Results<Relationship> {
         return objects(Relationship.self)
+    }
+    
+    func allSpeciesPreference() -> Results<SpeciesPreference> {
+        return objects(SpeciesPreference.self)
     }
     
     func relationship(withId id: String) -> Relationship? {

@@ -45,25 +45,32 @@ class ChoosePreferencesViewController: UICollectionViewController {
                 
                 
                 if !so.speciesPreferences.isEmpty {
-                var query: String?
+                var query: String = ""
 
                     //all the species that have been used
                     for (index,sp) in so.speciesPreferences.enumerated() {
                         
-                        if index == 0 {
-                          query = "index != \(sp.habitat?.index)"
-                        }
+                        
                         
                         if let habitat = sp.habitat {
-                            query!.append(" AND index != \(habitat.index)")
+                            
+                            if index == 0 {
+                                query = "index != \(habitat.index)"
+                            }else {
+                                query.append(" AND index != \(habitat.index)")
+                            }
+                            
+                            
                         }
                     }
 //
-                    habitatFiltered = realmDataController.getRealm().habitats.filter(query!)
+                    habitatFiltered = realmDataController.getRealm().habitats.filter(query)
                 } else {
                     habitatFiltered = realmDataController.getRealm().habitats
+
                 }
 //
+
             
                 
             }

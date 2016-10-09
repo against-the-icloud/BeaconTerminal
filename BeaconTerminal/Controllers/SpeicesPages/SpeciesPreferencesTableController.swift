@@ -79,10 +79,10 @@ class SpeciesPreferencesTableController: UITableViewController {
     }
     
     func  updateCell(speciesPreferenceResults: List<SpeciesPreference>) {
-        for (_, relationship) in speciesPreferenceResults.enumerated() {
+        for (_, speciesPreference) in speciesPreferenceResults.enumerated() {
             for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
                 if !cell.used {
-                    //cell.updateCell(withRelationship: relationship)
+                    cell.updateCell(withSpeciesPreference: speciesPreference)
                     break
                 }
             }
@@ -99,7 +99,7 @@ class SpeciesPreferencesTableController: UITableViewController {
                 
                 for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
                     if !cell.used {
-                        //cell.updateCell(withRelationship: relationship)
+                        cell.updateCell(withSpeciesPreference: speciesPreference)
                         break
                     }
                 }
@@ -113,14 +113,15 @@ class SpeciesPreferencesTableController: UITableViewController {
                 
                 //find that cell
                 if let cell = self.childViewControllers[index] as? SpeciesCellDetailController {
-                    //cell.updateCell(withRelationship: relationship)
+                    cell.updateCell(withSpeciesPreference: speciesPreference)
+
                 }
             }
             break
         case .delete:
             if indexes.count > 0 {
                 for cell in (self.childViewControllers as? [SpeciesCellDetailController])! {
-                    cell.delete()
+                    cell.deleteSpeciesPreference()
                 }
                 
                 updateCell(speciesPreferenceResults: speciesPreferenceResults)
@@ -155,15 +156,13 @@ class SpeciesPreferencesTableController: UITableViewController {
             switch segueId {
             case "editPreferenceSegue":
                 
-                if let uinav = segue.destination as? UINavigationController, let ev = uinav.viewControllers.first as? ChoosePreferencesViewController, let speciesIndex = self.speciesIndex, let cell = sender as? SpeciesCellDetailController {
+                if let uinav = segue.destination as? UINavigationController, let ev = uinav.viewControllers.first as? EvidencePreferenceViewController, let speciesIndex = self.speciesIndex, let cell = sender as? SpeciesCellDetailController, let foundSpeciesPreference = cell.speciesPreference {
                     
-                    //                        ev.fromSpeciesIndex = speciesIndex
-                    //                        ev.toSpeciesIndex = foundRelationship.toSpecies?.index
-                    //                        ev.relationship = foundRelationship
-                    //                        ev.deleteButton.isEnabled = true
-                    //                        ev.title = "EDIT EVIDENCE"
-                    //                        ev.preferredContentSize = CGSize(width: 1000, height: 675)
-                    //                        //  ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
+                    ev.fromSpeciesIndex = speciesIndex
+                    ev.habitatIndex = foundSpeciesPreference.habitat?.index
+                    ev.deleteButton.isEnabled = true
+                    ev.title = "EDIT PREFERENCE"
+                    ev.preferredContentSize = CGSize(width: 1000, height: 675)
                 }
                 break
             case "choosePreferenceSegue":
@@ -192,11 +191,11 @@ extension SpeciesPreferencesTableController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = self.childViewControllers[indexPath.item] as? SpeciesCellDetailController {
             
-            guard cell.relationship != nil else {
+            guard cell.speciesPreference != nil else {
                 return
             }
             
-            performSegue(withIdentifier: "editSpeciesSegue", sender: cell)
+            performSegue(withIdentifier: "editPreferenceSegue", sender: cell)
         }
     }
     

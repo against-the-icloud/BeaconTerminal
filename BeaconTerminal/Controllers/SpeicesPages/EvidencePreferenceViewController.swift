@@ -17,11 +17,9 @@ import Haneke
 class EvidencePreferenceViewController: UIViewController, UINavigationControllerDelegate, NVActivityIndicatorViewable {
     
     var fromSpeciesIndex: Int?
-    var toSpeciesIndex: Int?
     var habitatIndex: Int?
     var speciesPreference: SpeciesPreference?
 
-    var relationship: Relationship?
     var attachments = [String]()
     var tags = [Int]()
     
@@ -109,7 +107,7 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
         
         fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
         
-        if let habitat = realmDataController.getRealm().habitatWithIndex(withIndex: habitatIndex) {
+        if let habitat = realmDataController.getRealm().habitat(withIndex: habitatIndex) {
             toSpeciesImageView.image = UIImage(named: habitat.name)
         }
         
@@ -121,7 +119,7 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
         
         self.dismiss(animated: true, completion: {
             
-            guard let fromIndex = self.fromSpeciesIndex else {
+            guard let fromSpeciesIndex = self.fromSpeciesIndex else {
                 return
             }
             
@@ -129,24 +127,23 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
                 return
             }
             
-            let speciesPreference = SpeciesPreference()
+            let newSpeciesPreference = SpeciesPreference()
             
             if let sp = self.speciesPreference {
-                speciesPreference.id = sp.id
+                newSpeciesPreference.id = sp.id
             } else {
                 
             }
             
             
-            if let toHabitat = realmDataController.getRealm().habitat(withIndex: habitatIndex) {
-                speciesPreference.habitat = toHabitat
+            if let habitat = realmDataController.getRealm().habitat(withIndex: habitatIndex) {
+                newSpeciesPreference.habitat = habitat
             }
             
-            speciesPreference.note = self.noteTextView.text
+            newSpeciesPreference.note = self.noteTextView.text
         
-            
-//            realmDataController.delete(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
-            
+            realmDataController.delete(withSpeciesPreference: newSpeciesPreference, withSpeciesIndex: fromSpeciesIndex)
+         
         })
         
     }
@@ -155,7 +152,7 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
         
         self.dismiss(animated: true, completion: {
-            guard let fromIndex = self.fromSpeciesIndex else {
+            guard let fromSpeciesIndex = self.fromSpeciesIndex else {
                 return
             }
             
@@ -163,19 +160,19 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
                 return
             }
             
-            let speciesPreference = SpeciesPreference()
+            let newSpeciesPreference = SpeciesPreference()
             
             if let sp = self.speciesPreference {
-                speciesPreference.id = sp.id
+                newSpeciesPreference.id = sp.id
             } else {
                 
             }
             
-            if let habitat = realmDataController.getRealm().habitatWithIndex(withIndex: habitatIndex) {
-                speciesPreference.habitat = habitat
+            if let habitat = realmDataController.getRealm().habitat(withIndex: habitatIndex) {
+                newSpeciesPreference.habitat = habitat
             }
             
-            speciesPreference.note = self.noteTextView.text
+            newSpeciesPreference.note = self.noteTextView.text
             
             for attach in self.attachments {
                 if attach.isEmpty {
@@ -184,9 +181,9 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
             }
             
             let filtered = self.attachments.filter( {$0 != ""} )
-            speciesPreference.attachments = filtered.joined(separator: ",")
+            newSpeciesPreference.attachments = filtered.joined(separator: ",")
             
-            realmDataController.add(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
+            realmDataController.add(withSpeciesPreference: newSpeciesPreference, withSpeciesIndex: fromSpeciesIndex)
         })
         
     }

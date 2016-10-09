@@ -378,7 +378,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <segue destination="a2W-il-hTL" kind="presentation" identifier="chooseSpeciesSegue" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="oWJ-pV-NWc"/>
+                                                        <segue destination="a2W-il-hTL" kind="presentation" identifier="chooseSpeciesSegue" modalPresentationStyle="formSheet" id="oWJ-pV-NWc"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -659,7 +659,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORn-ls-vW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="700" y="1769"/>
+            <point key="canvasLocation" x="582" y="1762"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zr2-9N-Sbb">
@@ -739,7 +739,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sV8-Kp-pmY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2132" y="1898"/>
+            <point key="canvasLocation" x="1959" y="1623"/>
         </scene>
         <!--Choose Species-->
         <scene sceneID="taC-gb-vZo">
@@ -907,7 +907,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sac-ml-4r3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="XSC-S7-3g6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1433" y="2073"/>
+            <point key="canvasLocation" x="1396" y="2446"/>
         </scene>
         <!--Support-->
         <scene sceneID="MLr-OK-Fef">
@@ -1259,7 +1259,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2048" y="2462"/>
+            <point key="canvasLocation" x="1912" y="2438"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="za1-Gj-tGv">
@@ -1325,7 +1325,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eSR-0D-pLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="4b3-KG-38P" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2846" y="2206"/>
+            <point key="canvasLocation" x="2574" y="2418"/>
         </scene>
         <!--Preferences Table View Controller-->
         <scene sceneID="FFx-b6-myY">
@@ -1643,6 +1643,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adx-jt-tCT">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="k8W-PS-RC7"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1663,6 +1666,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UTM-yf-uuq">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="fAf-gZ-Gge"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1683,6 +1689,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9jx-ng-ReV">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="csi-4R-eCa"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1703,6 +1712,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PSX-Kl-84i">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="DDp-ca-xV4"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1723,6 +1735,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AJ-C3-wqP">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="eW9-sF-tms"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1744,6 +1759,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MX2-jg-feg">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="0OP-mI-WzM"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1765,6 +1783,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-7T-ZG2">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="E9H-Gi-o5t"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1786,6 +1807,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIA-wA-xh3">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="wro-bS-2dE"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1807,6 +1831,9 @@
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iM4-d8-mLw">
                                                     <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                                                    <connections>
+                                                        <segue destination="C2Z-uA-Giu" kind="embed" identifier="preferenceCellSegue" id="dhF-6M-pHA"/>
+                                                    </connections>
                                                 </containerView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1845,12 +1872,12 @@
                         <outlet property="addRelationshipButton" destination="IGD-qC-0ej" id="E0K-fq-kn0"/>
                         <outlet property="headerView" destination="JMe-0e-jdZ" id="2wh-Up-7HM"/>
                         <outlet property="relationshipHeaderLabel" destination="d1K-wy-Lcj" id="emf-yq-qdN"/>
-                        <segue destination="c6b-wV-nVm" kind="presentation" identifier="editPreferencesSegue" id="aD9-Gw-eNM"/>
+                        <segue destination="c6b-wV-nVm" kind="presentation" identifier="editPreferenceSegue" modalPresentationStyle="formSheet" id="aD9-Gw-eNM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V60-Qa-SXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1091" y="1769"/>
+            <point key="canvasLocation" x="1102" y="1946"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Alq-pi-lPr">
@@ -1870,7 +1897,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gn6-66-U1W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1503" y="1254"/>
+            <point key="canvasLocation" x="1440" y="1137"/>
         </scene>
         <!--Choose Preference-->
         <scene sceneID="cDX-bJ-4cg">
@@ -2034,7 +2061,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhK-EQ-3ns" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2016" y="1002"/>
+            <point key="canvasLocation" x="2127" y="1173"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="S5B-ka-YiS">
@@ -2054,10 +2081,13 @@
                         <rect key="frame" x="0.0" y="681" width="1000" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
+                    <connections>
+                        <segue destination="nKk-7x-DHf" kind="relationship" relationship="rootViewController" id="1aX-pv-DYs"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="50q-BM-r8S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973" y="1463"/>
+            <point key="canvasLocation" x="2614" y="556"/>
         </scene>
         <!--Support-->
         <scene sceneID="VOm-Fw-15C">
@@ -2086,7 +2116,7 @@
                                                             <constraint firstAttribute="width" secondItem="MgU-0F-0FI" secondAttribute="height" multiplier="1:1" id="SDZ-2u-nOL"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="IS A CONSUMER OF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFS-EK-d22">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="PREFERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFS-EK-d22">
                                                         <rect key="frame" x="102" y="0.0" width="300" height="94"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="300" id="5h8-l3-2RP"/>
@@ -2409,7 +2439,41 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2619" y="1055"/>
+            <point key="canvasLocation" x="2629" y="1188"/>
+        </scene>
+        <!--Species Cell Detail Controller-->
+        <scene sceneID="We4-XR-xUW">
+            <objects>
+                <viewController storyboardIdentifier="preferenceCellDetailController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="C2Z-uA-Giu" customClass="SpeciesCellDetailController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mXx-e1-Mcu"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jsa-yg-YuZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ie3-Q0-vE6">
+                        <rect key="frame" x="0.0" y="0.0" width="328" height="86"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="species_02" translatesAutoresizingMaskIntoConstraints="NO" id="fcW-oE-0JW">
+                                <rect key="frame" x="36" y="2" width="256" height="82"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fcW-oE-0JW" firstAttribute="top" secondItem="Ie3-Q0-vE6" secondAttribute="top" constant="2" id="8yD-XP-heu"/>
+                            <constraint firstAttribute="bottom" secondItem="fcW-oE-0JW" secondAttribute="bottom" constant="2" id="sd5-SV-QGp"/>
+                            <constraint firstItem="fcW-oE-0JW" firstAttribute="centerX" secondItem="Ie3-Q0-vE6" secondAttribute="centerX" id="uHd-zR-ME3"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="toSpeciesImageView" destination="fcW-oE-0JW" id="ZFG-Jo-KnN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IEx-Ki-Qn4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1336" y="1762"/>
         </scene>
     </scenes>
     <resources>
@@ -2419,8 +2483,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="csQ-8q-xhl"/>
-        <segue reference="W3t-Py-UC5"/>
+        <segue reference="ppx-ZJ-qbg"/>
         <segue reference="X7A-UY-9fB"/>
-        <segue reference="gRc-c9-uLA"/>
+        <segue reference="DDp-ca-xV4"/>
+        <segue reference="J8a-lQ-NRq"/>
+        <segue reference="mfu-u2-S3H"/>
     </inferredMetricsTieBreakers>
 </document>

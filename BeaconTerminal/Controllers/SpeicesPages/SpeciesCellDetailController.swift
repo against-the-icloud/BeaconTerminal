@@ -9,6 +9,7 @@ class SpeciesCellDetailController: UIViewController {
 
     var fromSpeciesIndex: Int?
     var relationship: Relationship?
+    var speciesPreference: SpeciesPreference?
     var used = false
     
     var toSpeciesIndex: Int? {
@@ -18,6 +19,16 @@ class SpeciesCellDetailController: UIViewController {
             }
             
             return toSpeciesIndex
+        }
+    }
+    
+    var habitatIndex: Int? {
+        get {
+            guard let habitatIndex =  speciesPreference?.habitat?.index else {
+                return nil
+            }
+            
+            return habitatIndex
         }
     }
     
@@ -37,13 +48,41 @@ class SpeciesCellDetailController: UIViewController {
         self.toSpeciesImageView.isHidden = true
     }
     
+    func deleteSpeciesPreference() {
+        self.speciesPreference = nil
+        self.used = false
+        self.fromSpeciesIndex = -1
+        self.toSpeciesImageView.image = nil
+        self.toSpeciesImageView.isHidden = true
+    }
+    
     func updateCell(withRelationship relationship: Relationship) {
         self.relationship = relationship
         self.used = true
         prepareView()
     }
     
+    func updateCell(withSpeciesPreference speciesPreference: SpeciesPreference) {
+        self.speciesPreference = speciesPreference
+        self.used = true
+        prepareSpeciesPreferenceView()
+    }
     
+    func prepareSpeciesPreferenceView() {
+        guard let speciesPreference = self.speciesPreference else {
+            return
+        }
+        
+        guard let habitatName = speciesPreference.habitat?.name else {
+            return
+        }
+        
+        
+        let habitatImage = UIImage(named: habitatName)
+        
+        toSpeciesImageView.image = habitatImage
+        toSpeciesImageView.isHidden = false
+    }
     func prepareView() {
         guard let relationship = self.relationship else {
             return
