@@ -147,7 +147,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
             case .update(let terminalRuntimeResults, _, _, _):
                 LOG.debug("UPDATE terminal Runtime -- TERMINAL RESULTS")
                 mainController.updateTabs(terminalRuntimeResults: terminalRuntimeResults)
-                //terminalController.updateUI(withRuntimeResults: runtimeResults)
+                //TerminalCellController.updateUI(withRuntimeResults: runtimeResults)
                 break
             case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -165,7 +165,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
         
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
-            topTabbar.setTitle("\(groupName.uppercased()) SPECIES ACCOUNTS", forSegmentAt: 0)
+            topTabbar.setTitle("MY SPECIES ACCOUNTS", forSegmentAt: 0)
         }
         
         switch getAppDelegate().checkApplicationState() {

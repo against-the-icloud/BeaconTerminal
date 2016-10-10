@@ -192,6 +192,15 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
+    func makeToast(speciesPreference: SpeciesPreference, groupIndex: Int) {
+        if let habitatName = speciesPreference.habitat?.name, let speciesIndex = speciesPreference.habitat?.name, let si = UIImage(named: habitatName) {
+            
+            
+            Util.makeToast("Species Observation \(habitatName) from Group \(groupIndex)", title: "Update for Species Observation", image: si)
+            
+        }
+    }
+    
     func resetAllCells() {
         if let cells = self.childViewControllers as? [TerminalCellController] {
             for cell in cells {
@@ -202,7 +211,33 @@ class TerminalRelationshipTableViewController: UITableViewController {
     
     
     func updateCell(withSpeciesPreference speciesPreference: SpeciesPreference, groupIndex: Int) {
+        
+        makeToast(speciesPreference: speciesPreference, groupIndex: groupIndex)
+        
+        
+        //find the controller with that species
+        if let cells = self.childViewControllers as? [TerminalCellController] {
+            
+            //find the controller
+            if let cell = cells.filter( { (terminalCell: TerminalCellController) -> Bool in
+                
+                guard let habitatIndex = speciesPreference.habitat?.index else {
+                    return false
+                }
+                
+                guard let cellHabitatIndex = terminalCell.toHabitatIndex else {
+                    return false
+                }
+                
+                return cellHabitatIndex == habitatIndex
+            }).first {
+                //update
+                cell.updateCell(withGroupIndex: groupIndex, andSpeciesPreference: speciesPreference)
+                //cell.updateCell(withSpeciesPreference: speciesPreference, groupIndex: groupIndex)
+            }
+        }
 
+        
     }
     func updateCell(withRelationship relationship: Relationship, groupIndex: Int) {
         
@@ -246,26 +281,6 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
-    func updateReportLabel(shouldReset reset: Bool = true) {
-        
-        if reset {
-            groupsReported = [:]
-            relationshipCount = 0
-            relationshipReportLabel.text = "Nothing to report."
-            return
-        }
-        
-        if let groups = realmDataController.getRealm(withRealmType: RealmType.terminalDB).currentGroups() {
-            
-            if relationshipCount == 0 && groupsReported.keys.count == 0 {
-                relationshipReportLabel.text = "Nothing to report."
-            } else {
-              
-                relationshipReportLabel.text = "Reporting \(relationshipCount) relationships from \(groupsReported.keys.count) of \(groups.count) groups"
-            }
-        }
-    }
-    
     // Mark: Prepare
     func prepareView() {
         
@@ -283,8 +298,6 @@ class TerminalRelationshipTableViewController: UITableViewController {
                 
                 let allHabitats = realmDataController.getRealm(withRealmType: RealmType.terminalDB).habitats
                 //make all the cells
-                
-                
                 
                 for (index,_) in allHabitats.enumerated() {
                     if let cell = childViewControllers[index] as? TerminalCellController {

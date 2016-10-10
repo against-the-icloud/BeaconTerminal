@@ -13,6 +13,7 @@ import RealmSwift
 struct CellItem {
     var groupIndex: Int?
     var relationship: Relationship?
+    var speciesPreference: SpeciesPreference?
     
     init() {
         
@@ -127,6 +128,39 @@ class TerminalCellController: UIViewController {
         default:
             print("you know nothing jon snow")
         }
+        }
+    }
+    
+    func updateCell(withGroupIndex groupIndex: Int, andSpeciesPreference speciesPreference: SpeciesPreference) {
+        
+        guard let toHabitatIndex = self.toHabitatIndex else {
+            return
+        }
+        
+        if let habitat = realmDataController.getRealm(withRealmType: RealmType.terminalDB).habitat(withIndex: toHabitatIndex) {
+            let name = habitat.name
+            if let image = UIImage(named: name) {
+                profileImageView.image = image
+                profileImageView.tintColor = UIColor.clear
+                profileImageView.backgroundColor = UIColor.clear
+            }
+        }
+        
+        cellItems[groupIndex].groupIndex = groupIndex
+        cellItems[groupIndex].speciesPreference = speciesPreference
+        
+        var count = 0
+        
+        for cell in cellItems {
+            if cell.speciesPreference != nil {
+                count += 1
+            }
+        }
+        
+        countLabel.text = "\(count)"
+        
+        if self.view.alpha < 1.0 {
+            self.view.fadeIn(toAlpha: 1.0)
         }
     }
     
