@@ -193,7 +193,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     
                     if let species = realmDataController.getRealm().speciesWithIndex(withIndex: speciesIndex) {
                         
-                        let title = "\(sectionName.uppercased()) \(species.name.uppercased())"
+                        let title = "\(species.name.uppercased())"
                         
                         for v in topTabbar.subviews {
                             v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)

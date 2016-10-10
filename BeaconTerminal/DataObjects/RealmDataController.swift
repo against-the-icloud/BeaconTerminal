@@ -425,9 +425,7 @@ class RealmDataController {
         for name in names {
             speciesNames.append("\(name)")
         }
-        
-        
-        
+
         let r = realmDataController.getRealm()
         let species = r.species
         if !species.isEmpty {
@@ -436,7 +434,6 @@ class RealmDataController {
                 try! r.write {
                     species[index].name = name
                     r.add(species, update: false)
-                    
                 }
                 
             }
@@ -445,6 +442,23 @@ class RealmDataController {
         UserDefaults.standard.set(speciesNames, forKey: "speciesNames")
         UserDefaults.standard.synchronize()
         
+        switch getAppDelegate().checkApplicationState() {
+        case .cloudGroup, .objectGroup:
+            let rdb = realmDataController.getRealm(withRealmType: RealmType.terminalDB)
+            let species = rdb.species
+            if !species.isEmpty {
+                for (index,name) in speciesNames.enumerated() {
+                    
+                    try! rdb.write {
+                        species[index].name = name
+                        rdb.add(species, update: false)
+                    }
+                    
+                }
+            }
+        default:
+            break
+        }
     }
     
     

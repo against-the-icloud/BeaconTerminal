@@ -873,20 +873,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9sf-EA-5I8">
-                                <rect key="frame" x="171" y="96.5" width="1024" height="768"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="1024" id="Mwm-kj-SHe"/>
-                                    <constraint firstAttribute="height" constant="768" id="U7V-h0-6Jg"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="0.0" width="1366" height="961"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -894,8 +887,10 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="9sf-EA-5I8" firstAttribute="height" secondItem="SM1-Gb-Rej" secondAttribute="height" id="5BU-r6-uor"/>
+                            <constraint firstItem="9sf-EA-5I8" firstAttribute="width" secondItem="SM1-Gb-Rej" secondAttribute="width" id="5a0-P4-tr4"/>
                             <constraint firstItem="9sf-EA-5I8" firstAttribute="centerX" secondItem="SM1-Gb-Rej" secondAttribute="centerX" id="SQf-fg-rqH"/>
                             <constraint firstItem="9sf-EA-5I8" firstAttribute="centerY" secondItem="SM1-Gb-Rej" secondAttribute="centerY" id="qHF-aZ-4MR"/>
                         </constraints>

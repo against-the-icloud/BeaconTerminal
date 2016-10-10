@@ -91,6 +91,7 @@ class TerminalCellController: UIViewController {
         cellItems = [CellItem(withGroupIndex: 0),CellItem(withGroupIndex: 1),CellItem(withGroupIndex: 2),CellItem(withGroupIndex: 3),CellItem(withGroupIndex: 4)]
         
         countLabel.text = ""
+        countLabel.isHidden = true
     
         self.view.setNeedsLayout()
         
@@ -158,6 +159,7 @@ class TerminalCellController: UIViewController {
         }
         
         countLabel.text = "\(count)"
+        countLabel.isHidden = false
         
         if self.view.alpha < 1.0 {
             self.view.fadeIn(toAlpha: 1.0)

@@ -330,6 +330,12 @@ class TerminalRelationshipTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let rowheight = (tableView.height - relationshipHeaderLabel.height)/9
+        
+        return rowheight;
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier {

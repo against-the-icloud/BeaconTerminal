@@ -19,10 +19,9 @@ class TerminalMainViewController: UIViewController {
     @IBOutlet weak var profileLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var refreshButton: UIButton!
-
+    @IBOutlet weak var bannerView: UIView!
     
     var notificationTokens = [NotificationToken]()
-    
     var runtimeResults: Results<Runtime>?
     var runtimeNotificationToken: NotificationToken? = nil
     var speciesObsNotificationToken: NotificationToken? = nil
@@ -117,11 +116,24 @@ class TerminalMainViewController: UIViewController {
             //no species image
         }
         
-        if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
-            sectionLabel.text = sectionName
-        } else {
-            sectionLabel.text = "XYZ"
+        switch getAppDelegate().checkApplicationState() {
+        case .objectGroup, .cloudGroup:
+            if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
+                sectionLabel.text = ""
+            } else {
+                sectionLabel.text = ""
+            }
+            bannerView.backgroundColor = UIColor.clear
+        default:
+            if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
+                sectionLabel.text = sectionName.uppercased()
+            } else {
+                sectionLabel.text = "XYZ"
+            }
         }
+        
+        
+        
         updateTimestamp()
     }
     
