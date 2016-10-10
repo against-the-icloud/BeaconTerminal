@@ -38,9 +38,9 @@ class SpeciesPageContentController: UIViewController {
         prepareNotifications()
         
         switch getAppDelegate().checkApplicationState() {
-            case .cloudGroup:
+            case .cloudGroup,.objectGroup:
                 prepareHeaderActions()
-            case .objectGroup,.placeGroup:
+            case .placeGroup:
                 prepareManualSyncActions()
             default:
             break
@@ -165,10 +165,15 @@ class SpeciesPageContentController: UIViewController {
             
             if let speciesIndex = self.speciesIndex {
                 
-                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: getAppDelegate().checkApplicationState().rawValue, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+                let condition = getAppDelegate().checkApplicationState().rawValue
 
-                realmDataController.clearInViewTerminal(withCondition: "cloud")
-                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "cloud", withPlace: "species:\(speciesIndex)")                
+                
+                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+
+                
+                realmDataController.clearInViewTerminal(withCondition: condition)
+                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: condition, withPlace: "species:\(speciesIndex)")
+                
             }
         
     }

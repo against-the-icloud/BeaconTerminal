@@ -40,8 +40,9 @@ class TerminalRelationshipTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        if needsTerminal {
         prepareNotifications()
+        }
     }
     
 
@@ -121,9 +122,6 @@ class TerminalRelationshipTableViewController: UITableViewController {
             for controller in (self.childViewControllers as? [TerminalCellController])!{
                 controller.prepareView()
             }
-            
-            
-            
             break
         default:
             
@@ -132,11 +130,6 @@ class TerminalRelationshipTableViewController: UITableViewController {
             }
             
         }
-        
-
-        
-        
-      
         //updateReportLabel(shouldReset: true)
     }
     

@@ -11,14 +11,14 @@ import NVActivityIndicatorView
 let DEBUG = true
 let REFRESH_DB = true
 let EXPORT_DB = true
-
+var needsTerminal = false
 // localhost || remote
 let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
 //let LOCAL_IP = "131.193.79.203"
-var CURRENT_HOST = LOCAL_IP
+var CURRENT_HOST = REMOTE
 var SECTION_NAME = "default"
 
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
@@ -326,13 +326,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch applicationType {
         case .placeTerminal:
+            needsTerminal = true
             rootVC = prepareTerminalUI()
         case .placeGroup:
+            needsTerminal = false
             rootVC = prepareGroupUI()
             prepareBeaconManager()
         case .objectGroup:
+            needsTerminal = true
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.allTypes)
         case .cloudGroup:
+            needsTerminal = true
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.cloudTypes)
         default:
             break
@@ -433,12 +437,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainContainerController)
         
         mainContainerController.toolMenuTypes = toolMenuTypes
-        switch checkApplicationState() {
-        case .objectGroup, .cloudGroup:
-            mainContainerController.needsTerminal = true
-        default:
-            mainContainerController.needsTerminal = false
-        }
+ 
         //menu
         
         let toolMenuController = ToolMenuController(rootViewController: navigationController)
@@ -483,7 +482,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             checkInitialization()
             
             
-            let groupIndex = defaults.integer(forKey: "groupIndex")
+            let groupIndex = UserDefaults.standard.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
             break
         case .placeTerminal:

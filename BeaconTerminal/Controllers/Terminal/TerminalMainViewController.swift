@@ -40,7 +40,10 @@ class TerminalMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if needsTerminal {
         prepareNotifications()
+        }
     }
     
     // Mark: Prepare

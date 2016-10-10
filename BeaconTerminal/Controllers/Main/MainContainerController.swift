@@ -30,7 +30,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var terminalRuntimeResults: Results<Runtime>?
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
-    var needsTerminal = false
     
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
@@ -166,7 +165,10 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
             topTabbar.setTitle("MY SPECIES ACCOUNTS", forSegmentAt: 0)
+            groupLabel.text = "TEAM \(groupIndex + 1)"
+
         }
+        
         
         switch getAppDelegate().checkApplicationState() {
         case .objectGroup:

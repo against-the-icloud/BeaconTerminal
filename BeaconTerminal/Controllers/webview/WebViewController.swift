@@ -28,7 +28,7 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         
         webView?.uiDelegate = self
         webView?.navigationDelegate = self
-        loadURL()
+        //loadURL()
     }
     
     func loadURL() {
