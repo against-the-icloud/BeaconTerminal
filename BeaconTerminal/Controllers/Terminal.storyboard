@@ -168,7 +168,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="750" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="izh-6g-oeE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="izh-6g-oeE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -182,7 +182,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R2T-to-sI4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1521" y="1139"/>
+            <point key="canvasLocation" x="1505" y="1039"/>
         </scene>
         <!--Terminal Relationship Table View Controller-->
         <scene sceneID="WJq-Qa-Fd9">
@@ -491,17 +491,17 @@
                         <viewControllerLayoutGuide type="bottom" id="IIs-bj-AS4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MoL-od-Xsk">
-                        <rect key="frame" x="0.0" y="44" width="1366" height="980"/>
+                        <rect key="frame" x="0.0" y="44" width="750" height="456"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FkF-57-8TM" userLabel="MainStackView">
-                                <rect key="frame" x="0.0" y="0.0" width="1366" height="980"/>
+                                <rect key="frame" x="0.0" y="0.0" width="750" height="456"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2UM-GY-f3R" userLabel="RelationshipView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1366" height="70"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="750" height="70"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="D27-Ow-RUX">
-                                                <rect key="frame" x="501.5" y="5" width="363.5" height="60"/>
+                                                <rect key="frame" x="193.5" y="5" width="363.5" height="60"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3cl-Pc-E92" userLabel="toSpecies">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -534,34 +534,34 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Vdt-Od-0T1" userLabel="CellStackView">
-                                        <rect key="frame" x="0.0" y="75" width="1366" height="905"/>
+                                        <rect key="frame" x="0.0" y="75" width="750" height="381"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYB-WP-Qmr" userLabel="1">
-                                                <rect key="frame" x="0.0" y="0.0" width="273" height="905"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="381"/>
                                                 <connections>
                                                     <segue destination="Bhz-kZ-AWH" kind="embed" identifier="0" id="C7s-Ig-jA6"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WVT-ld-IQf" userLabel="2">
-                                                <rect key="frame" x="273" y="0.0" width="273.5" height="905"/>
+                                                <rect key="frame" x="150" y="0.0" width="150" height="381"/>
                                                 <connections>
                                                     <segue destination="Bhz-kZ-AWH" kind="embed" identifier="1" id="qAa-T8-fDS"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6zy-rd-yA5" userLabel="3">
-                                                <rect key="frame" x="546.5" y="0.0" width="273" height="905"/>
+                                                <rect key="frame" x="300" y="0.0" width="150" height="381"/>
                                                 <connections>
                                                     <segue destination="Bhz-kZ-AWH" kind="embed" identifier="2" id="bty-3a-ar9"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTD-tA-Giz" userLabel="4">
-                                                <rect key="frame" x="819.5" y="0.0" width="273.5" height="905"/>
+                                                <rect key="frame" x="450" y="0.0" width="150" height="381"/>
                                                 <connections>
                                                     <segue destination="Bhz-kZ-AWH" kind="embed" identifier="3" id="eO2-95-Ud4"/>
                                                 </connections>
                                             </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rob-ZX-erL" userLabel="5">
-                                                <rect key="frame" x="1093" y="0.0" width="273" height="905"/>
+                                                <rect key="frame" x="600" y="0.0" width="150" height="381"/>
                                                 <connections>
                                                     <segue destination="Bhz-kZ-AWH" kind="embed" identifier="4" id="4ax-IM-5xf"/>
                                                 </connections>
@@ -858,7 +858,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieP-xY-bub">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ieP-xY-bub">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -883,21 +883,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0Zo-C6-iwe" userLabel="MainStackView">
-                                <rect key="frame" x="112" y="6" width="110" height="50"/>
+                                <rect key="frame" x="106" y="3" width="122" height="56"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_02_0" translatesAutoresizingMaskIntoConstraints="NO" id="4E8-zT-OAW">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="4E8-zT-OAW" secondAttribute="height" multiplier="1:1" id="XiN-gM-AiU"/>
-                                            <constraint firstAttribute="width" constant="50" id="ufW-MN-MvE"/>
+                                            <constraint firstAttribute="width" secondItem="4E8-zT-OAW" secondAttribute="height" multiplier="1:1" id="9LF-EC-wQQ"/>
                                         </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="Ocn-xC-aTU" appends="YES" id="9Q3-6I-ZIg"/>
-                                        </connections>
                                     </imageView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbG-KK-AQv">
-                                        <rect key="frame" x="60" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="66" y="0.0" width="56" height="56"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -906,9 +902,6 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="KSb-u4-xyU" appends="YES" id="IJO-aS-0Q2"/>
-                                        </connections>
                                     </label>
                                 </subviews>
                             </stackView>
@@ -917,11 +910,9 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="0Zo-C6-iwe" firstAttribute="centerX" secondItem="qsS-7h-2KG" secondAttribute="centerX" id="1oh-21-pWP"/>
+                            <constraint firstItem="4E8-zT-OAW" firstAttribute="height" secondItem="qsS-7h-2KG" secondAttribute="height" constant="-6" id="QY1-8B-r1x"/>
                             <constraint firstItem="0Zo-C6-iwe" firstAttribute="centerY" secondItem="qsS-7h-2KG" secondAttribute="centerY" id="aeD-Ca-VD3"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="TPC-DC-ntD" appends="YES" id="4yS-JT-w21"/>
-                        </connections>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -931,24 +922,10 @@
                     <connections>
                         <outlet property="countLabel" destination="DbG-KK-AQv" id="3sX-hN-PlX"/>
                         <outlet property="profileImageView" destination="4E8-zT-OAW" id="90p-KB-RCP"/>
+                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="fullScreen" id="wje-Cm-T6N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9i-sJ-tWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="KSb-u4-xyU">
-                    <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="fullScreen" id="wNs-ee-rZz"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="Ocn-xC-aTU">
-                    <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="fullScreen" id="hxv-2c-ASU"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="TPC-DC-ntD">
-                    <connections>
-                        <segue destination="Ez9-2A-5F0" kind="presentation" identifier="comparsionSegue" modalPresentationStyle="fullScreen" id="aAL-zG-sn7"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1465" y="815"/>
         </scene>
@@ -1031,8 +1008,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="d7H-aV-fVH"/>
         <segue reference="8dF-C1-n03"/>
-        <segue reference="sMF-Op-vMn"/>
         <segue reference="eO2-95-Ud4"/>
-        <segue reference="aAL-zG-sn7"/>
+        <segue reference="sMF-Op-vMn"/>
     </inferredMetricsTieBreakers>
 </document>

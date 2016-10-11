@@ -49,14 +49,14 @@ class TerminalComparsionDetailViewController: UIViewController {
             }
         }
         
-        if let cellItem = self.cellItem, let relationship = cellItem.relationship {
+        if let cellItem = self.cellItem {
             /**
             if let ecosystemIndex = relationship.ecosystem?.index {
                 ecosystemSegmentedControl.selectedSegmentIndex = ecosystemIndex
             }
              **/
             
-            if let attachments = relationship.attachments {
+            if let attachments = cellItem.attachments {
                 
                     let urls = attachments.components(separatedBy: ",")
                 
@@ -81,7 +81,7 @@ class TerminalComparsionDetailViewController: UIViewController {
                         }
                     }
             }
-            if let note = relationship.note {
+            if let note = cellItem.note {
                 reasoningTextView.text = note
             } else {
                 reasoningTextView.text = "no answer"

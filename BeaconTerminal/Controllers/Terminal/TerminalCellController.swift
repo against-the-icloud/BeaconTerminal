@@ -14,6 +14,9 @@ struct CellItem {
     var groupIndex: Int?
     var relationship: Relationship?
     var speciesPreference: SpeciesPreference?
+    var attachments: String?
+    var note: String?
+    var enabled = false
     
     init() {
         
@@ -27,6 +30,7 @@ class TerminalCellController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet var countLabel: UILabel!
+    
     var relationshipType: String?
     
     var toSpeciesIndex: Int? {
@@ -53,6 +57,9 @@ class TerminalCellController: UIViewController {
     }
     
     func prepareSpeciesPreferencesView() {
+        
+        self.relationshipType = RelationshipType.sPreference.rawValue
+        
         guard let toHabitatIndex = self.toHabitatIndex else {
             return
         }
@@ -64,16 +71,12 @@ class TerminalCellController: UIViewController {
                 profileImageView.tintColor = UIColor.gray
             }
         }
-        
-        
    
-        
         cellItems = [CellItem(withGroupIndex: 0),CellItem(withGroupIndex: 1),CellItem(withGroupIndex: 2),CellItem(withGroupIndex: 3),CellItem(withGroupIndex: 4)]
         
         countLabel.text = ""
-        
+    
         self.view.setNeedsLayout()
-        
         self.view.fadeIn(toAlpha: 0.3) {_ in
             
         }
@@ -92,7 +95,7 @@ class TerminalCellController: UIViewController {
         
         countLabel.text = ""
         countLabel.isHidden = true
-    
+        
         self.view.setNeedsLayout()
         
         self.view.fadeIn(toAlpha: 0.3) {_ in
@@ -117,6 +120,7 @@ class TerminalCellController: UIViewController {
             if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? TerminalComparsionController, let relationshipType = self.relationshipType{
                 tcvc.cellItems = cellItems
                 tcvc.toSpeciesIndex = toSpeciesIndex
+                tcvc.toHabitatIndex = toHabitatIndex
                 tcvc.relationshipType = relationshipType
                 //tcvc.relationship = relationship
                 //tcvc.title = title
@@ -130,6 +134,17 @@ class TerminalCellController: UIViewController {
             print("you know nothing jon snow")
         }
         }
+    }
+    
+    func showComparsionView() {
+        
+        for cell in cellItems {
+            if cell.enabled {
+                self.performSegue(withIdentifier: "comparsionSegue", sender: self)
+                return
+            }
+        }
+        
     }
     
     func updateCell(withGroupIndex groupIndex: Int, andSpeciesPreference speciesPreference: SpeciesPreference) {
@@ -149,21 +164,11 @@ class TerminalCellController: UIViewController {
         
         cellItems[groupIndex].groupIndex = groupIndex
         cellItems[groupIndex].speciesPreference = speciesPreference
+        cellItems[groupIndex].attachments = speciesPreference.attachments
+        cellItems[groupIndex].note = speciesPreference.note
+        cellItems[groupIndex].enabled = true
         
-        var count = 0
-        
-        for cell in cellItems {
-            if cell.speciesPreference != nil {
-                count += 1
-            }
-        }
-        
-        countLabel.text = "\(count)"
-        countLabel.isHidden = false
-        
-        if self.view.alpha < 1.0 {
-            self.view.fadeIn(toAlpha: 1.0)
-        }
+        doCounts(withType: "preference")
     }
     
     func updateCell(withGroupIndex groupIndex: Int, andRelationship relationship: Relationship) {
@@ -179,16 +184,35 @@ class TerminalCellController: UIViewController {
      
         cellItems[groupIndex].groupIndex = groupIndex
         cellItems[groupIndex].relationship = relationship
+        cellItems[groupIndex].attachments = relationship.attachments
+        cellItems[groupIndex].note = relationship.note
+        cellItems[groupIndex].enabled = true
+
+        doCounts(withType: "relationship")
+    }
+    
+    func doCounts(withType type: String) {
         
         var count = 0
         
-        for cell in cellItems {
-            if cell.relationship != nil {
-                count += 1
+        switch type {
+        case "preference":
+            for cell in cellItems {
+                if cell.speciesPreference != nil {
+                    count += 1
+                }
+            }
+        default:
+            for cell in cellItems {
+                if cell.relationship != nil {
+                    count += 1
+                }
             }
         }
+       
         
         countLabel.text = "\(count)"
+        countLabel.isHidden = false
         
         if self.view.alpha < 1.0 {
             self.view.fadeIn(toAlpha: 1.0)

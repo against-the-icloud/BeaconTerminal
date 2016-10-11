@@ -16,6 +16,7 @@ class TerminalComparsionController: UIViewController {
     var cellItems: [CellItem]?
     var fromSpeciesIndex: Int?
     var toSpeciesIndex: Int?
+    var toHabitatIndex: Int?
     var relationshipType: String?
     
     @IBOutlet weak var fromSpeciesImageView: UIImageView!
@@ -34,9 +35,47 @@ class TerminalComparsionController: UIViewController {
     // Mark: View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareView()
+        if let value = self.relationshipType, let type = RelationshipType(rawValue: value) {
+        switch type {
+        case .sPreference:
+            prepareSpeciesPreference()
+        default:
+            prepareView()
+        }
     }
     
+        
+    }
+    
+    
+    func prepareSpeciesPreference() {
+        guard let relationshipType = self.relationshipType else {
+            return
+        }
+        
+        guard let toHabitatIndex = self.toHabitatIndex else {
+            return
+        }
+        
+        guard let fromSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() else {
+            return
+        }
+        
+        
+        
+        fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
+        
+        if let habitat = realmDataController.getRealm(withRealmType: RealmType.terminalDB).habitat(withIndex: toHabitatIndex) {
+            let name = habitat.name
+            if let image = UIImage(named: name) {
+                toSpeciesImageView.image = image
+                toSpeciesImageView.tintColor = UIColor.gray
+            }
+        }
+        
+        relationshipLabel.text = "PREFERS"
+
+    }
     
     func prepareView() {
         
@@ -63,7 +102,14 @@ class TerminalComparsionController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        prepareView()
+        if let value = self.relationshipType, let type = RelationshipType(rawValue: value) {
+            switch type {
+            case .sPreference:
+                prepareSpeciesPreference()
+            default:
+                prepareView()
+        }
+        }
         
         if let segueId = segue.identifier {
             let id = NSNumber.init( value: Int32(segueId)!).intValue

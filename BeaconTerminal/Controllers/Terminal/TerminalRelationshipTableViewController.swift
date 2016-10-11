@@ -337,6 +337,13 @@ class TerminalRelationshipTableViewController: UITableViewController {
         return rowheight;
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row  = indexPath.row
+        if let cell = self.childViewControllers[row] as? TerminalCellController {
+        cell.showComparsionView()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let segueId = segue.identifier {
             switch segueId {
