@@ -405,7 +405,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         
         // Only allow photos to be picked, not taken.
         imagePickerController.sourceType = .photoLibrary
-        
+        imagePickerController.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+
         imagePickerController.delegate = self
         
         imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -438,18 +439,33 @@ extension MainContainerController: MenuDelegate {
             (view as? MenuItem)?.hideTitleLabel()
         }
     }
+    
+  
 }
 
 extension MainContainerController: UIImagePickerControllerDelegate {
     // MARK: UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
+        dismiss(animated: true, completion: nil)
+
         
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        UIImageWriteToSavedPhotosAlbum(chosenImage, self,
+                                       #selector(MainContainerController.image(image:didFinishSavingWithError:contextInfo:)), nil)
+        dismiss(animated:true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafeRawPointer) {        
+        if error != nil {
+            
+        }
     }
+    
+    
 }
 
 
