@@ -164,7 +164,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
         
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
-            topTabbar.setTitle("MY SPECIES ACCOUNTS", forSegmentAt: 0)
+            topTabbar.setTitle("SPECIES", forSegmentAt: 0)
             groupLabel.text = "TEAM \(groupIndex + 1)"
 
         }

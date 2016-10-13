@@ -35,9 +35,6 @@ class SpeciesPreferencesTableController: UITableViewController {
         super.viewDidLoad()
         updateHeader()
         prepareNotifications()
-        
-        tableView.estimatedRowHeight = 87
-        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

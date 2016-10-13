@@ -443,7 +443,7 @@ class RealmDataController {
         UserDefaults.standard.synchronize()
         
         switch getAppDelegate().checkApplicationState() {
-        case .cloudGroup, .objectGroup:
+        case .cloudGroup, .objectGroup, .placeTerminal:
             let rdb = realmDataController.getRealm(withRealmType: RealmType.terminalDB)
             let species = rdb.species
             if !species.isEmpty {

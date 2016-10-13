@@ -20,6 +20,7 @@ class SpeciesPageContentController: UIViewController {
     @IBOutlet weak var tabSegmentedControl: UISegmentedControl!
     @IBOutlet weak var speciesLabel: UILabel!
     @IBOutlet weak var speciesProfileImageView: UIImageView!
+    @IBOutlet weak var cloudSyncButton: UIButton!
 
     var speciesObservationResults: Results<SpeciesObservation>?
     var shouldSync: Results<SpeciesObservation>?
@@ -38,9 +39,15 @@ class SpeciesPageContentController: UIViewController {
         prepareNotifications()
         
         switch getAppDelegate().checkApplicationState() {
-            case .cloudGroup,.objectGroup:
-                prepareHeaderActions()
+            case .cloudGroup:
+                cloudSyncButton.isHidden = false
+            case .objectGroup:
+                cloudSyncButton.setImage(nil, for: .normal)
+                //cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
+                prepareManualSyncActions()
             case .placeGroup:
+                cloudSyncButton.setImage(nil, for: .normal)
+                cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
                 prepareManualSyncActions()
             default:
             break
@@ -149,7 +156,7 @@ class SpeciesPageContentController: UIViewController {
             speciesProfileImageView.isUserInteractionEnabled = true
             //now you need a tap gesture recognizer
             //note that target and action point to what happens when the action is recognized.
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(showTerminalForCurrentSpeciesAction))
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doTerminalForCurrentSpeciesAction))
             //Add the recognizer to your view.
             speciesProfileImageView.addGestureRecognizer(tapRecognizer)
     }
@@ -161,7 +168,11 @@ class SpeciesPageContentController: UIViewController {
         }
     }
     
-    func showTerminalForCurrentSpeciesAction(_ sender: UITapGestureRecognizer) {
+    @IBAction func doCloudSync(_ sender: Any) {
+        doTerminalForCurrentSpeciesAction(sender)
+    }
+    
+    func doTerminalForCurrentSpeciesAction(_ sender: Any) {
             
             if let speciesIndex = self.speciesIndex {
                 

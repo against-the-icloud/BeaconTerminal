@@ -71,7 +71,8 @@ extension LoginGroupViewController {
         
         let groupName = realmDataController.groupName(withIndex: indexPath.row)
 
-        cell.titleLabel.text = "\(groupName) (\(indexPath.row))"
+        //cell.titleLabel.text = "\(groupName) (\(indexPath.row))"
+        cell.titleLabel.text = "\(groupName)"
         return cell
     }
 }

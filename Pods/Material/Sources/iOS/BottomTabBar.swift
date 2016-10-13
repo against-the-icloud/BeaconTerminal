@@ -38,10 +38,14 @@ extension UITabBarItem {
 }
 
 open class BottomTabBar: UITabBar {
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: width, height: height)
+    }
+    
     /// Automatically aligns the BottomNavigationBar to the superview.
 	open var isAlignedToParentAutomatically = true
 	
-	/// A property that accesses the backing layer's backgroundColor.
+	/// A property that accesses the backing layer's background
 	@IBInspectable
     open override var backgroundColor: UIColor? {
 		didSet {
@@ -124,11 +128,12 @@ open class BottomTabBar: UITabBar {
      when subclassing.
      */
 	public func prepare() {
-		depthPreset = .depth1
+		heightPreset = .normal
+        depthPreset = .depth1
         dividerAlignment = .top
 		contentScaleFactor = Device.scale
-		backgroundColor = Color.white
-        let image = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
+		backgroundColor = .white
+        let image = UIImage.image(with: .clear, size: CGSize(width: 1, height: 1))
 		shadowImage = image
 		backgroundImage = image
 	}

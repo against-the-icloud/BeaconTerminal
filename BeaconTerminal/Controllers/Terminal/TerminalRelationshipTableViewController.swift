@@ -43,6 +43,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
         if needsTerminal {
         prepareNotifications()
         }
+
+        
+        tableView.estimatedRowHeight = 65
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
 
@@ -333,6 +337,10 @@ class TerminalRelationshipTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let rowheight = (tableView.height - relationshipHeaderLabel.height)/9
+        
+        if rowheight <= 0 {
+            return 65.0
+        }
         
         return rowheight;
     }

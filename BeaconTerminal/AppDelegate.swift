@@ -361,6 +361,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 realmDataController.queryNutella(withType: .speciesNames)
             case .placeTerminal:
                 prepareDB(withSectionName: sectionName)
+                realmDataController.queryNutella(withType: .speciesNames)
                 realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
             default: break
             }
