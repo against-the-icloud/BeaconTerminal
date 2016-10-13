@@ -217,6 +217,7 @@ class Condition: Object {
 }
 class Channel: Object {
     dynamic var name: String? = nil
+    dynamic var urls: String? = nil
 }
 
 class SystemConfiguration: Object {
@@ -236,9 +237,11 @@ class Runtime: Object {
     dynamic var currentSectionName: String? = nil
     let currentGroupIndex = RealmOptional<Int>()
     let currentSpeciesIndex =  RealmOptional<Int>()
+    let channels = List<Channel>()
     //ENTERED/EXITED
     dynamic var currentAction: String? = nil
     dynamic var condition: String? = nil
+    
     
     override static func primaryKey() -> String? {
         return "id"
