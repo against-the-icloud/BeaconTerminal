@@ -23,6 +23,9 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         case error = "error"
     }
     
+    var scannedSpecies: Int?
+    var scannedBeaconId: BeaconID?
+    
     //init states
     let initialScannerState = State(ScanningState.initial)
     let stoppedState = State(ScanningState.stopped)
@@ -205,44 +208,44 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     }
     
     func estDeviceConnectionDidSucceed(_ device: ESTDeviceConnectable) {
-        
         connectionRetries = 0
         
         immediateBeacon.delegate = nil
         
         self.scanningStateMachine?.fireEvent(self.stopEvent)
-        
-        if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
-            
-            let minorValue = settings.iBeacon.minor.getValue()
-            let majorValue = settings.iBeacon.major.getValue()
-            
-            _ = Int(majorValue)
-            let speciesIndex = Int(minorValue) - 1
-            if let beaconId = findBeaconMinor(withMinor: Int16(minorValue)) {
-                
-                guard speciesIndex >= 0 else {
-                    return
-                }
-                
-                //LOG.debug("----VALUE \(self.description):MAJOR:\(majorIndex):MINOR:\(minorValue):SPECIES \(speciesIndex)")
-                
-                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
-             
-                lb.disconnect()
-            }
-            
-        }
-        
-        
-        
-        
-        
-        
+
+
         
         self.dismiss(animated: true, completion: {
             
-            
+            if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
+                
+                let minorValue = settings.iBeacon.minor.getValue()
+                let majorValue = settings.iBeacon.major.getValue()
+                
+                _ = Int(majorValue)
+                let speciesIndex = Int(minorValue) - 1
+                if let beaconId = self.findBeaconMinor(withMinor: Int16(minorValue)) {
+                    
+                    guard speciesIndex >= 0 else {
+                        return
+                    }
+                    
+                    self.scannedSpecies = speciesIndex
+                    self.scannedBeaconId = beaconId
+                    
+                    lb.disconnect()
+                    
+                 
+                        
+                        
+                        let condition = getAppDelegate().checkApplicationState().rawValue
+                        realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+                        realmDataController.clearInViewTerminal(withCondition: condition)
+                        realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)  
+                }
+                
+            }
             
         })
     }

@@ -353,7 +353,25 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         mc.menu.views = toolMenuItems
     }
     
-    //Mark: Action
+    // Mark: Action
+    
+     @IBAction func unwindToMainFromScanner(segue: UIStoryboardSegue) {
+        
+        if let scannerViewController =  segue.source as? ScannerViewController {
+            if let speciesIndex = scannerViewController.scannedSpecies, let beaconId = scannerViewController.scannedBeaconId {
+                
+                
+                let condition = getAppDelegate().checkApplicationState().rawValue
+                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+                realmDataController.clearInViewTerminal(withCondition: condition)
+                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
+                
+                
+            }
+        }
+        
+    }
+    
     func cameriaAction(sender: UIButton) {
         let imagePickerController = UIImagePickerController()
         
