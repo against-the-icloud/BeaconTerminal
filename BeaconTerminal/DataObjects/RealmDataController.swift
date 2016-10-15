@@ -140,6 +140,19 @@ class RealmDataController {
                 
                 DispatchQueue.main.async(execute: block)
             }
+        case .currentChannelList:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("channel_names", message: jsonObject as AnyObject, requestName: "channel_names")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
             
             
         default:
@@ -217,30 +230,18 @@ class RealmDataController {
         
         if let precheckChannel = NutellaChannelType(rawValue: channel) {
             switch precheckChannel {
-            case .getCurrentRun:
-                
+            case .getCurrentRun:                
                 let sectionName = message as! String
-                //
                 UserDefaults.standard.set(sectionName, forKey: "sectionName")
                 UserDefaults.standard.synchronize()
-                
                 getAppDelegate().changeLoginStateTo(.currentSection)
-                //UserDefau
-                
                 return
             case .getRoster:
-                
                 if let roster = handleRosterMessages(withMessage: message) {
-                    
-                    
                     UserDefaults.standard.set(roster, forKey: "currentRoster")
                     UserDefaults.standard.synchronize()
-                    
                     getAppDelegate().changeLoginStateTo(.currentRoster)
                 }
-                
-                //UserDefau
-                
                 return
             case .speciesNames:
                 parseModelSpeciesNames(withMessage: message)
@@ -426,18 +427,24 @@ class RealmDataController {
             speciesNames.append("\(name)")
         }
 
-        let r = realmDataController.getRealm()
-        let species = r.species
-        if !species.isEmpty {
-            for (index,name) in speciesNames.enumerated() {
-                
-                try! r.write {
-                    species[index].name = name
-                    r.add(species, update: false)
+        switch  getAppDelegate().checkLoginState() {
+        case .currentSection,.currentRun, .currentRun:
+            break
+        default:
+            let r = realmDataController.getRealm()
+            let species = r.species
+            if !species.isEmpty {
+                for (index,name) in speciesNames.enumerated() {
+                    
+                    try! r.write {
+                        species[index].name = name
+                        r.add(species, update: false)
+                    }
+                    
                 }
-                
             }
         }
+   
         
         UserDefaults.standard.set(speciesNames, forKey: "speciesNames")
         UserDefaults.standard.synchronize()

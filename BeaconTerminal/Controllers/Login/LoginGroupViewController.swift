@@ -11,6 +11,7 @@ import UIKit
 import RealmSwift
 
 class LoginGroupViewController: UITableViewController {
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

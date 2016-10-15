@@ -177,6 +177,9 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="CVu-yN-J4i" id="BHp-HA-Tsf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yf8-BP-eB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -396,8 +399,37 @@
             </objects>
             <point key="canvasLocation" x="12" y="1878"/>
         </scene>
+        <!--LoginNavigationController-->
+        <scene sceneID="qYk-jl-D9y">
+            <objects>
+                <navigationController storyboardIdentifier="loginGroupNavigationController" title="LoginNavigationController" modalPresentationStyle="formSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QSB-sg-BDn" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="lt5-e4-BNr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="nWG-cn-OlR">
+                        <rect key="frame" x="0.0" y="468" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.1019607843" green="0.1019607843" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="7ZA-ae-7Af" kind="relationship" relationship="rootViewController" id="2ka-Y1-4iJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vNW-AV-Mq5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="606" y="864"/>
+        </scene>
     </scenes>
     <resources>
         <image name="placeTerminal" width="230" height="301"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="2ka-Y1-4iJ"/>
+    </inferredMetricsTieBreakers>
 </document>

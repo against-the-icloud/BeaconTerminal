@@ -61,10 +61,10 @@ enum LoginTypes: String {
     case currentRun = "currentRun"
     case currentSection = "currentSection"
     case currentRoster = "currentRoster"
-    case currentGroupChannels = "currentGroupChannels"
+    case currentChannelList = "currentChannelList"
     case currentSpeciesNames = "currentSpeciesNames"
     
-    static let allValues = [currentRun, currentSection, currentRoster, currentGroupChannels, currentSpeciesNames]
+    static let allValues = [currentRun, currentSection, currentRoster, currentChannelList, currentSpeciesNames]
 }
 
 
@@ -106,8 +106,11 @@ let currentSectionEvent = Event(name: "currentSection", sourceValues: [LoginType
 let currentRosterState = State(LoginTypes.currentRoster)
 let currentRosterEvent = Event(name: "currentRoster", sourceValues: [LoginTypes.currentSection], destinationValue: LoginTypes.currentRoster)
 
+let currentChannelListState = State(LoginTypes.currentChannelList)
 
-let loginStateMachine = StateMachine(initialState: autoLoginState, states: [autoLoginState, currentSectionState,currentRosterState])
+let currentChannelListEvent = Event(name: "currentChannelList", sourceValues: [LoginTypes.currentRoster], destinationValue: LoginTypes.currentChannelList)
+
+let loginStateMachine = StateMachine(initialState: autoLoginState, states: [autoLoginState, currentSectionState,currentRosterState, currentChannelListState])
 
 
 var realmDataController : RealmDataController = RealmDataController()
@@ -209,7 +212,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         prepareThemes()
         
-        manualLogin()
+        autoLogin()
+        //manualLogin()
         
         return true
     }
@@ -666,7 +670,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var loginViewController: DefaultViewController?
     
     func initLoginStateMachine(loginState: LoginTypes) {
-        loginStateMachine.addEvents([autoLoginEvent, currentSectionEvent,currentRosterEvent])
+        loginStateMachine.addEvents([autoLoginEvent, currentSectionEvent,currentRosterEvent, currentChannelListEvent])
         
         autoLoginState.didEnterState = { state in
             self.window = UIWindow(frame:UIScreen.main.bounds)
@@ -686,19 +690,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentSectionState.didEnterState = { state in
             if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
                 self.setupConnection(withSectionName: sectionName)
-                realmDataController.queryNutella(withType: .speciesNames)
+                
+                
+                self.loginViewController?.stopAnimating()
+                self.loginViewController?.startAnimating(CGSize(width: 100, height: 100), message: "Fetching Current Roster...")
+                
+                //realmDataController.queryNutella(withType: .speciesNames)
+                
+                
+                
                 realmDataController.queryNutella(withType: .currentRoster)
-                realmDataController.queryNutella(withType: .currentChannelList)
+                
+//                self.loginViewController?.startAnimating(CGSize(width: 100, height: 100), message: "Fetching Current Roster...")
+//                
+//                realmDataController.queryNutella(withType: .currentChannelList)
             }
             
         }
         
         currentRosterState.didEnterState = { state in
+            
+            self.loginViewController?.stopAnimating()
+            self.loginViewController?.showGroupLogin()
+            
 //            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
 //                //self.setupConnection(withSectionName: sectionName)
 //                
 //            }
             
+            
+        }
+        
+        currentChannelListState.didEnterState = { state in
         }
         
     }
@@ -715,6 +738,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         case .currentRoster:
             if loginStateMachine.fireEvent(currentRosterEvent).successful {
+                
+            }
+        case .currentChannelList:
+            if loginStateMachine.fireEvent(currentChannelListEvent).successful {
                 
             }
         default:
