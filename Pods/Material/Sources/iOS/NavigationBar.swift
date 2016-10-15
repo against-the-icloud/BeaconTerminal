@@ -220,6 +220,7 @@ open class NavigationBar: UINavigationBar {
         }
         
         item.contentView.grid.begin()
+        
         if .center == item.contentViewAlignment {
             if lc < rc {
                 item.contentView.grid.columns = columns - 2 * rc

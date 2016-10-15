@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-public class MD5: DigestType  {
+public final class MD5: DigestType  {
     static let blockSize:Int = 64
-    static let digestSize:Int = 16 // 128 / 8
+    static let digestLength:Int = 16 // 128 / 8
     fileprivate static let hashInitialValue:Array<UInt32> = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476]
 
     fileprivate var accumulated = Array<UInt8>()
@@ -130,7 +130,7 @@ extension MD5: Updatable {
 
         // output current hash
         var result = Array<UInt8>()
-        result.reserveCapacity(self.accumulatedHash.count / 4)
+        result.reserveCapacity(MD5.digestLength)
 
         for hElement in self.accumulatedHash {
             let hLE = hElement.littleEndian

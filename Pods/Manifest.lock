@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.0.1)
-  - CryptoSwift (0.6.0)
+  - CryptoSwift (0.6.1)
   - EstimoteSDK (4.11.0)
   - HanekeSwift (0.10.1)
   - HockeySDK (4.1.2):
@@ -58,13 +58,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CryptoSwift:
-    :commit: 13764570021ca73c315c3de18f367e5fdb55d785
+    :commit: 5f9bb95c6f246c7e19bf4346a6ad1a0c406415f0
     :git: https://github.com/krzyzanowskim/CryptoSwift
   HanekeSwift:
     :commit: 6e48f795c5928101043a5e11e1377877e042012d
     :git: https://github.com/Haneke/HanekeSwift.git
   Material:
-    :commit: 71b92d5c974de1021658c03eb186a59065728481
+    :commit: f7279fc679a51438dca823d5306103cb51c314a9
     :git: https://github.com/CosmicMind/Material.git
   Nutella:
     :commit: 89a4cb017d7d44a00eff8ca4e6a0e6d40b5c4c45
@@ -72,7 +72,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
-  CryptoSwift: 4a599b7241b8d3b857d6e2c28867d0bd5d1aae24
+  CryptoSwift: abdbc1bf32c89117c6b403810a7b30f742d86e68
   EstimoteSDK: b75d26004d401a335f43851d6369a69a8ce1c2ff
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
   HockeySDK: c7523379550a4305cefc1cdfa7b5f9a5a3538180
