@@ -146,17 +146,6 @@ class TerminalMainViewController: UIViewController {
     }
     
     
-    func showLogin() {
-        let storyboard = UIStoryboard(name: "Popover", bundle: nil)
-        let loginNavigationController = storyboard.instantiateViewController(withIdentifier: "loginNavigationController") as! UINavigationController
-        
-        if let loginSectionViewController = loginNavigationController.viewControllers[0] as? LoginSectionViewController {
-            loginSectionViewController.loginType = groupType.species
-        }
-        
-        self.present(loginNavigationController, animated: true, completion: {})
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let id = segue.identifier else {

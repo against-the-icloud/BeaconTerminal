@@ -42,6 +42,7 @@
 		7070C4D51D4E77BA00AB47FF /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7070C4D41D4E77BA00AB47FF /* Popover.storyboard */; };
 		708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */; };
 		708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */; };
+		708E91741DB41E6200AF2D3C /* LoginTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708E91731DB41E6200AF2D3C /* LoginTypeViewController.swift */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7099CDA11D0F99050037E56C /* Pulsator.swift */; };
 		709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F926C1D8F7D260057E104 /* BeaconID.swift */; };
@@ -158,6 +159,7 @@
 		7070C4D41D4E77BA00AB47FF /* Popover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Popover.storyboard; path = Carousel/Popover.storyboard; sourceTree = "<group>"; };
 		708040C21D851BD50065B372 /* SpeciesRelationshipTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesRelationshipTableController.swift; path = SpeicesPages/SpeciesRelationshipTableController.swift; sourceTree = "<group>"; };
 		708040C41D8520850065B372 /* SpeciesRelationshipContrainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeciesRelationshipContrainerController.swift; path = SpeicesPages/SpeciesRelationshipContrainerController.swift; sourceTree = "<group>"; };
+		708E91731DB41E6200AF2D3C /* LoginTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginTypeViewController.swift; path = Login/LoginTypeViewController.swift; sourceTree = "<group>"; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = wallcology_configuration.json; path = ../wallcology_configuration.json; sourceTree = "<group>"; };
 		7099CDA11D0F99050037E56C /* Pulsator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pulsator.swift; path = ../Views/Pulsator.swift; sourceTree = "<group>"; };
 		709F926C1D8F7D260057E104 /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
@@ -355,13 +357,14 @@
 		70C1CF341D592DEB00CB687E /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				70F1B76D1D8C96200020E757 /* DefaultViewController.swift */,
+				708E91731DB41E6200AF2D3C /* LoginTypeViewController.swift */,
 				70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */,
 				70D9C1B11D6650B700FAF080 /* LoginGroupViewController.swift */,
+				70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */,
 				7031DB1D1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift */,
 				7031DB1F1D6610AE000DCC61 /* LoginSpeciesCell.swift */,
-				70D9C1B31D6651F100FAF080 /* LoginGroupCell.swift */,
 				7017A2EF1D865A6400C31119 /* SyncViewController.swift */,
-				70F1B76D1D8C96200020E757 /* DefaultViewController.swift */,
 				70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */,
 				70F1B7711D8CBC780020E757 /* LoginConditionCell.swift */,
 				7070C4D41D4E77BA00AB47FF /* Popover.storyboard */,
@@ -781,6 +784,7 @@
 				70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
 				70B017E51DA5CE6C00B233AA /* Line.swift in Sources */,
+				708E91741DB41E6200AF2D3C /* LoginTypeViewController.swift in Sources */,
 				7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */,
 				704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */,
 				70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */,

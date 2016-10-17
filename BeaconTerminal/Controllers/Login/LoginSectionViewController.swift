@@ -21,8 +21,7 @@ class LoginSectionViewController: UITableViewController {
     let defaults = UserDefaults.standard
     
     // determined at runtime
-    var loginType: groupType = .group
-    
+    var startType: StartType?
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -36,19 +35,6 @@ class LoginSectionViewController: UITableViewController {
         super.viewDidLoad()
         prepareView()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
-        if let condition = defaults.string(forKey: "condition") {
-            if let appType = ApplicationType(rawValue: condition) {
-                switch appType {
-                case .placeTerminal:
-                    loginType = .species
-                    break
-                default:
-                    loginType = .group
-                }
-            }
-        }
-        
     }
     
     func prepareView() {
@@ -64,7 +50,9 @@ class LoginSectionViewController: UITableViewController {
 
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: {})
+        self.dismiss(animated: true, completion: {
+            getAppDelegate().manualLogin()
+        })
     }
 }
 
@@ -82,7 +70,7 @@ extension LoginSectionViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-        if let cell = tableView.cellForRow(at: indexPath) as? LoginConditionCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? LoginConditionCell, let startType = self.startType {
             
             if let sectionName = cell.titleLabel.text {
                 defaults.set(sectionName, forKey: "sectionName")
@@ -91,8 +79,8 @@ extension LoginSectionViewController {
             }
             
             
-            switch self.loginType {
-            case .species:
+            switch startType {
+            case .terminal:
                 self.performSegue(withIdentifier: "speciesSegue", sender: cell)
             default:
                 self.performSegue(withIdentifier: "groupSegue", sender: cell)

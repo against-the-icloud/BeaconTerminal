@@ -43,15 +43,20 @@ class DefaultViewController: UIViewController, NVActivityIndicatorViewable {
         self.present(loginNavigationController, animated: true, completion: {})
     }
     
-    func showGroupLogin() {
+    func showGroupLogin(showConditionAfter showConditionAfter: Bool = false) {
         let storyboard = UIStoryboard(name: "Popover", bundle: nil)
         let loginGroupViewController = storyboard.instantiateViewController(withIdentifier: "loginGroupNavigationController") as! UINavigationController
         
         if let loginGroupViewController = loginGroupViewController.viewControllers[0] as? LoginGroupViewController {
+            loginGroupViewController.showConditionAfter = showConditionAfter
             loginGroupViewController.cancelButton.isEnabled = false
         }
         
         self.present(loginGroupViewController, animated: true, completion: {})
+    }
+    
+    func showConditionLogin() {
+        
     }
     
 }

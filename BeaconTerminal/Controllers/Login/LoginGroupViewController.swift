@@ -11,7 +11,10 @@ import UIKit
 import RealmSwift
 
 class LoginGroupViewController: UITableViewController {
+    
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    var showConditionAfter = false
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,7 +38,9 @@ class LoginGroupViewController: UITableViewController {
     }
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: {})
+        self.dismiss(animated: true, completion: {
+            getAppDelegate().manualLogin()
+        })
     }
 }
 
@@ -58,12 +63,7 @@ extension LoginGroupViewController {
             UserDefaults.standard.set(indexPath.row, forKey: "groupIndex")
             UserDefaults.standard.synchronize()
             
-            self.dismiss(animated: true, completion: {
-                //realm for section $0
-                //load configuration
-                //contact nutella for section $0
-                getAppDelegate().loadCondition()
-            })
+            getAppDelegate().changeLoginStateTo(.currentActivityAndRoom)
         }
     }
     
@@ -71,7 +71,7 @@ extension LoginGroupViewController {
         let cell:LoginConditionCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! LoginConditionCell
         
         let groupName = realmDataController.groupName(withIndex: indexPath.row)
-
+        
         //cell.titleLabel.text = "\(groupName) (\(indexPath.row))"
         cell.titleLabel.text = "\(groupName)"
         return cell

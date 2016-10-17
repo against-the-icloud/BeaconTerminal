@@ -44,10 +44,10 @@ class SideViewController: UITableViewController {
         switch indexPath.section {
         case 0:
         
-            if indexPath.row == 1 {
+           
                 //do manual
-                getAppDelegate().prepareLoginInterface(isRemote: true)
-            }
+                getAppDelegate().manualLogin()
+        
             
             break
         case 1:

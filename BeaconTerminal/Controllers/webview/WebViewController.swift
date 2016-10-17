@@ -13,6 +13,7 @@ import WebKit
 class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView?
+    var src: String?
 
     
     override func viewDidLoad() {
@@ -31,10 +32,22 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         //loadURL()
     }
     
-    func loadURL() {
-        let urlString = "http://cnn.com"
-        guard let url = URL(string: urlString) else {return}
+    func loadURL(withUrl src: String = "http://google.com") {
+        LOG.debug("TAB AT CREATED \(src)")
+        self.src = src
+        guard let url = URL(string: src) else {return}
         let request = NSMutableURLRequest(url:url)
         webView?.load(request as URLRequest)
+    }
+    
+    func reload() {
+        if let src = self.src {
+            LOG.debug("LOADING WEB \(src)")
+
+            guard let url = URL(string: src) else {return}
+            let request = NSMutableURLRequest(url:url)
+            webView?.load(request as URLRequest)
+        }
+       
     }
 }
