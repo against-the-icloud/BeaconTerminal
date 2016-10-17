@@ -43,7 +43,7 @@ class LoginSpeciesCollectionViewController: UICollectionViewController {
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: {
             
-            getAppDelegate().loadCondition()
+            getAppDelegate().manualLogin()
             
         })
     }
@@ -68,10 +68,7 @@ extension LoginSpeciesCollectionViewController {
                 defaults.synchronize()
                 
                 self.dismiss(animated: true, completion: {
-                    //realm for section $0
-                    //load configuration
-                    //contact nutella for section $0
-                    getAppDelegate().loadCondition()
+                    getAppDelegate().changeSystemStateTo(.placeTerminal)
                 })
             }
         }

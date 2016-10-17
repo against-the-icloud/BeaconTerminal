@@ -24,18 +24,8 @@ var SECTION_NAME = "default"
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 
 let LOG: XCGLogger = {
-    
     // Setup XCGLogger
     let LOG = XCGLogger.default
-    //LOG. = true // Or set the XcodeColors environment variable in your scheme to YES
-    //    LOG.xcodeColors = [
-    //        .verbose: .lightGrey,
-    //        .debug: .red,
-    //        .info: .darkGreen,
-    //        .warning: .orange,
-    //        .error: XCGLogger.XcodeColor(fg: UIColor.red, bg: UIColor.white()), // Optionally use a UIColor
-    //        .severe: XCGLogger.XcodeColor(fg: (255, 255, 255), bg: (255, 0, 0)) // Optionally use RGB values directly
-    //    ]
     return LOG
 }()
 
@@ -52,19 +42,26 @@ enum ApplicationType: String {
     case placeGroup = "PLACE GROUP"
     case objectGroup = "ARTIFACT GROUP"
     case cloudGroup = "CLOUD GROUP"
+    case ready = "READY"
     
     static let allValues = [placeTerminal, placeGroup, objectGroup, cloudGroup]
+    static let allGroups = [placeGroup, objectGroup, cloudGroup]
+
 }
 
 enum LoginTypes: String {
+    case startLogin = "startLogin"
     case autoLogin = "autoLogin"
+    case manualLogin = "manualLogin"
     case currentRun = "currentRun"
     case currentSection = "currentSection"
     case currentRoster = "currentRoster"
-    case currentGroupChannels = "currentGroupChannels"
+    case currentChannelNames = "currentChannelNames"
+    case currentChannelList = "currentChannelList"
+    case currentActivityAndRoom = "currentActivityAndRoom"
     case currentSpeciesNames = "currentSpeciesNames"
     
-    static let allValues = [currentRun, currentSection, currentRoster, currentGroupChannels, currentSpeciesNames]
+    static let allValues = [autoLogin, manualLogin, currentRun, currentSection, currentRoster, currentChannelList, currentSpeciesNames, currentActivityAndRoom, currentChannelNames]
 }
 
 
@@ -82,24 +79,35 @@ let placeGroupState = State(ApplicationType.placeGroup)
 let objectGroupState = State(ApplicationType.objectGroup)
 let cloudGroupState = State(ApplicationType.cloudGroup)
 let loginState = State(ApplicationType.login)
-let applicationStateMachine = StateMachine(initialState: loginState, states: [placeGroupState, objectGroupState, cloudGroupState, placeTerminalState])
+let readyState = State(ApplicationType.ready)
+
+var applicationStateMachine: StateMachine<ApplicationType>?
 //init events
 
 let loginEvent = Event(name: "login", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup],
                        destinationValue: ApplicationType.login)
 
-let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.login, ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup],
+let placeTerminalEvent = Event(name: "placeTerminal", sourceValues: [ApplicationType.ready,ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal],
                                destinationValue: ApplicationType.placeTerminal)
 
-let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.login,ApplicationType.objectGroup, ApplicationType.placeTerminal, ApplicationType.cloudGroup], destinationValue: ApplicationType.placeGroup)
-let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.placeTerminal, ApplicationType.cloudGroup], destinationValue: ApplicationType.objectGroup)
+let placeGroupEvent = Event(name: "placeGroup", sourceValues: [ApplicationType.ready,ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.placeGroup)
+let objectGroupEvent = Event(name: "objectGroup", sourceValues: [ApplicationType.ready,ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.objectGroup)
 
-let cloudGroupEvent = Event(name: "cloudGroup", sourceValues: [ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.cloudGroup)
+let cloudGroupEvent = Event(name: "cloudGroup", sourceValues: [ApplicationType.ready,ApplicationType.login, ApplicationType.placeGroup, ApplicationType.objectGroup, ApplicationType.placeTerminal], destinationValue: ApplicationType.cloudGroup)
 
+let readyEvent = Event(name: "ready", sourceValues: [ApplicationType.ready,ApplicationType.login,ApplicationType.objectGroup, ApplicationType.placeGroup, ApplicationType.cloudGroup], destinationValue: ApplicationType.ready)
 
 //login state machine
+let startLoginState = State(LoginTypes.startLogin)
+let startLoginEvent = Event(name: "startLogin", sourceValues: [LoginTypes.startLogin], destinationValue: LoginTypes.startLogin)
+
+
 let autoLoginState = State(LoginTypes.autoLogin)
-let autoLoginEvent = Event(name: "autoLogin", sourceValues: [LoginTypes.autoLogin], destinationValue: LoginTypes.autoLogin)
+let autoLoginEvent = Event(name: "autoLogin", sourceValues: [LoginTypes.startLogin, LoginTypes.manualLogin], destinationValue: LoginTypes.autoLogin)
+
+let manualLoginState = State(LoginTypes.manualLogin)
+let manualLoginEvent = Event(name: "manualLogin", sourceValues: [LoginTypes.startLogin], destinationValue: LoginTypes.manualLogin)
+
 let currentSectionState = State(LoginTypes.currentSection)
 let currentSectionEvent = Event(name: "currentSection", sourceValues: [LoginTypes.autoLogin], destinationValue: LoginTypes.currentSection)
 
@@ -107,7 +115,18 @@ let currentRosterState = State(LoginTypes.currentRoster)
 let currentRosterEvent = Event(name: "currentRoster", sourceValues: [LoginTypes.currentSection], destinationValue: LoginTypes.currentRoster)
 
 
-let loginStateMachine = StateMachine(initialState: autoLoginState, states: [autoLoginState, currentSectionState,currentRosterState])
+//Run
+let currentActivityAndRunState = State(LoginTypes.currentActivityAndRoom)
+let currentActivityAndRunEvent = Event(name: "currentActivityAndRun", sourceValues: [LoginTypes.currentRoster, LoginTypes.manualLogin], destinationValue: LoginTypes.currentActivityAndRoom)
+
+let currentChannelNamesState = State(LoginTypes.currentChannelNames)
+let currentChannelNamesEvent = Event(name: "currentChannelNames", sourceValues: [LoginTypes.currentChannelList], destinationValue: LoginTypes.currentChannelNames)
+
+let currentChannelListState = State(LoginTypes.currentChannelList)
+let currentChannelListEvent = Event(name: "currentChannelList", sourceValues: [LoginTypes.currentActivityAndRoom], destinationValue: LoginTypes.currentChannelList)
+
+
+var loginStateMachine: StateMachine<LoginTypes>?
 
 
 var realmDataController : RealmDataController = RealmDataController()
@@ -135,6 +154,9 @@ enum NutellaChannelType: String {
     case speciesNames = "get_species_names"
     case getCurrentRun = "get_current_run"
     case getRoster = "roster"
+    case currentActivityAndRoom = "currentActivityAndRoom"
+    case channelList = "channel_list"
+    case channelNames = "channel_names"
 }
 
 enum NutellaQueryType: String {
@@ -143,6 +165,8 @@ enum NutellaQueryType: String {
     case currentRun = "currentRun"
     case currentRoster = "currentRoster"
     case currentChannelList = "currentChannelList"
+    case currentChannelNames = "currentChannelNames"
+    case currentActivityAndRoom = "currentActivityAndRoom"
     case speciesNames = "speciesNames"
 }
 
@@ -201,13 +225,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ESTConfig.setupAppID("wallcology-2016-emb", andAppToken: "fd9eb675b3f09982fd5c1788f7a437dd")
         //crash analytics
-        //Fabric.with([Crashlytics.self])
-        
-        
         
         realmDataController = RealmDataController()
         
         prepareThemes()
+        
         
         manualLogin()
         
@@ -215,21 +237,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func manualLogin() {
-        let groupNames = ["Team 1","Team 2", "Team 3","Team 4","Team 5"]
-        let sectionNames = ["default","guest","6BM","6MT","6ADF"]
-        
-        UserDefaults.standard.set(false, forKey: "init")
-        UserDefaults.standard.set(sectionNames, forKey: "sectionNames")
-        UserDefaults.standard.set(groupNames, forKey: "currentRoster")
-        UserDefaults.standard.synchronize()
-        
-        initStateMachine(applicaitonState: .login)
-        
+        initStateMachine()
+        initLoginStateMachine()
+        realmDataController = RealmDataController()
+
         prepareLoginInterface(isRemote: false)
     }
     
     func autoLogin() {
-        initLoginStateMachine(loginState: .autoLogin)
+        initLoginStateMachine()
+
         getAppDelegate().changeLoginStateTo(.autoLogin)
         
     }
@@ -267,32 +284,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loadCondition()
     }
     
-    //    func logUser() {
-    //        // TODO: Use the current user's information
-    //        // You can call any combination of these three methods
-    //        let defaults = UserDefaults.standard
-    ////        defaults.set(2, forKey: "condition")
-    ////        defaults.set("default", forKey: "sectionName")
-    ////        defaults.set(0, forKey: "groupIndex")
-    ////
-    //        if let groupIndex = defaults.value(forKey: "groupIndex") as? Int {
-    //            Crashlytics.sharedInstance().setIntValue(Int32(groupIndex), forKey: "groupIndex")
-    //        }
-    //
-    //        if let speciesIndex = defaults.value(forKey: "speciesIndex") as? Int {
-    //            Crashlytics.sharedInstance().setIntValue(Int32(speciesIndex), forKey: "speciesIndex")
-    //        }
-    //
-    //        if let condition = defaults.value(forKey: "condition") as? Int {
-    //            Crashlytics.sharedInstance().setIntValue(Int32(condition), forKey: "condition")
-    //        }
-    //
-    //        if let sectionName = defaults.value(forKey: "sectionName"){
-    //            Crashlytics.sharedInstance().setObjectValue(sectionName, forKey: "sectionName")
-    //        }
-    //    }
-    
-    
     // Mark: View setup
     
     // Mark: db setup
@@ -304,17 +295,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appState = checkApplicationState()
         
         prepareViews(applicationType: appState)
-        postInitialization(applicationType: appState)
-    }
-    
-    func preInitialization(applicationType: ApplicationType) {
-        if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
-            switch applicationType {
-            case .placeTerminal, .placeGroup, .objectGroup, .cloudGroup:
-                setupConnection(withSectionName: sectionName)
-            default: break
-            }
-        }
     }
     
     func prepareViews(applicationType: ApplicationType) {
@@ -342,6 +322,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         }
         
+        
+        postInitialization(applicationType: applicationType)
+
         // Configure the window with the SideNavigationController as the root view controller
         
         if let rnc = window?.rootViewController?.navigationController {
@@ -351,6 +334,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         window?.makeKeyAndVisible()
+    }
+    
+    
+    func preInitialization(applicationType: ApplicationType) {
+        if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+            switch applicationType {
+            case .placeTerminal, .placeGroup, .objectGroup, .cloudGroup:
+                setupConnection(withSectionName: sectionName)
+            default: break
+            }
+        }
     }
     
     func postInitialization(applicationType: ApplicationType) {
@@ -369,27 +363,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func prepareLoginInterface(isRemote: Bool) {
-        switch isRemote {
-        case true:
-            break
-        default:
             window = UIWindow(frame:UIScreen.main.bounds)
-            
-            var rootVC: NavigationDrawerController?
-            rootVC = prepareLoginUI(shouldShowLogin: false)
-            if let rnc = window?.rootViewController?.navigationController {
-                rnc.pushViewController(rootVC!, animated: true)
-            } else {
-                window?.rootViewController = rootVC
-            }
-            
+            window?.rootViewController = prepareLoginUI(shouldShowLogin: false)
             window?.makeKeyAndVisible()
-        }
     }
     
     func prepareBeaconManager() {
         beaconNotificationsManager = BeaconNotificationsManager()
-        
         for (index, beaconId) in beaconIds.enumerated() {
             beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
                                                                        enterMessage: "enter species \(index)",
@@ -412,13 +392,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func prepareLoginUI(shouldShowLogin: Bool = true) -> NavigationDrawerController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let defaultViewController = storyboard.instantiateViewController(withIdentifier: "defaultViewController") as! DefaultViewController
+        self.loginViewController = storyboard.instantiateViewController(withIdentifier: "defaultViewController") as! DefaultViewController
         
-        defaultViewController.shouldShowLogin = true
+        self.loginViewController?.shouldShowLogin = true
         
         let sideViewController = storyboard.instantiateViewController(withIdentifier: "sideViewController") as! SideViewController
         
-        let navigationController: AppNavigationController = AppNavigationController(rootViewController: defaultViewController)
+        let navigationController: AppNavigationController = AppNavigationController(rootViewController: self.loginViewController!)
         
         let navigationDrawerController = NavigationDrawerController(rootViewController: navigationController, leftViewController:sideViewController)
         
@@ -448,8 +428,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.isNavigationBarHidden = true
         navigationController.statusBarStyle = .lightContent
         
-        
-        
         return navigationDrawerController
     }
     
@@ -476,40 +454,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         switch checkApplicationState() {
         case .placeGroup:
-            
-            
             setDefaultRealm(withSectionName: sectionName)
-            
             checkInitialization()
-            
-            
             let groupIndex = UserDefaults.standard.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
             break
         case .placeTerminal:
-            
             setTerminalRealm(withSectionName: sectionName)
-            
             realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
             //re-up
-            
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)
             
             let speciesIndex = defaults.integer(forKey: "speciesIndex")
-            
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: speciesIndex, withGroupIndex: nil, withRealmType: RealmType.terminalDB)
             break
         case .objectGroup, .cloudGroup:
-            
             setDefaultRealm(withSectionName: sectionName)
-            
             checkInitialization()
-            
             let groupIndex = defaults.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
-            
             setTerminalRealm(withSectionName: sectionName)
-            
             realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
             //re-up
             
@@ -665,57 +629,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var loginViewController: DefaultViewController?
     
-    func initLoginStateMachine(loginState: LoginTypes) {
-        loginStateMachine.addEvents([autoLoginEvent, currentSectionEvent,currentRosterEvent])
+    func initLoginStateMachine() {
+        loginStateMachine = StateMachine(initialState: startLoginState, states: [startLoginState,autoLoginState, manualLoginState, currentSectionState,currentRosterState, currentChannelListState, currentChannelNamesState, currentActivityAndRunState])
         
-        autoLoginState.didEnterState = { state in
-            self.window = UIWindow(frame:UIScreen.main.bounds)
-            
-            self.loginViewController = self.prepareAutoLoginUI()
-            self.window?.rootViewController = self.loginViewController
-            self.window?.makeKeyAndVisible()
-            
-            
-            self.loginViewController?.startAnimating(CGSize(width: 100, height: 100), message: "Fetching Current Run...")
-            
-            //defualt connection
-            self.setupLoginConnection()
-        }
-        
-        
-        currentSectionState.didEnterState = { state in
-            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
-                self.setupConnection(withSectionName: sectionName)
-                realmDataController.queryNutella(withType: .speciesNames)
-                realmDataController.queryNutella(withType: .currentRoster)
-                realmDataController.queryNutella(withType: .currentChannelList)
-            }
-            
-        }
-        
-        currentRosterState.didEnterState = { state in
-//            if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
-//                //self.setupConnection(withSectionName: sectionName)
-//                
-//            }
-            
-        }
-        
+        loginStateMachine?.addEvents([startLoginEvent, manualLoginEvent, autoLoginEvent, currentSectionEvent,currentRosterEvent, currentChannelListEvent, currentActivityAndRunEvent, currentChannelNamesEvent])
     }
     
     func changeLoginStateTo(_ state: LoginTypes) {
         switch state {
+        case .startLogin:
+             if (loginStateMachine?.fireEvent(startLoginEvent).successful)! {
+                break
+            }
+        case .manualLogin:
+            if (loginStateMachine?.fireEvent(manualLoginEvent).successful)! {
+                break
+            }
         case .autoLogin:
-            if loginStateMachine.fireEvent(autoLoginEvent).successful {
+            if (loginStateMachine?.fireEvent(autoLoginEvent).successful)! {
+                //defualt connection
+                self.setupLoginConnection()
+                
+                let ad = ActivityData(size: CGSize.init(width: 100.0, height: 100.0),
+                                      message: "Fetching sections, roster...",
+                                      displayTimeThreshold: 4,
+                                      minimumDisplayTime: 4)
+                
+                NVActivityIndicatorPresenter.sharedInstance.startAnimating(ad)
+                
                 
             }
+            
         case .currentSection:
-            if loginStateMachine.fireEvent(currentSectionEvent).successful {
-                
+            if (loginStateMachine?.fireEvent(currentSectionEvent).successful)! {
+                if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+                    self.setupConnection(withSectionName: sectionName)
+                    realmDataController.queryNutella(withType: .currentRoster)
+
+                }
             }
         case .currentRoster:
-            if loginStateMachine.fireEvent(currentRosterEvent).successful {
+            if (loginStateMachine?.fireEvent(currentRosterEvent).successful)! {
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                self.loginViewController?.showGroupLogin(showConditionAfter: true)
+            }
+        case .currentActivityAndRoom:
+            if (loginStateMachine?.fireEvent(currentActivityAndRunEvent).successful)! {
+                let ad = ActivityData(size: CGSize.init(width: 100.0, height: 100.0),
+                                      message: "Fetching current activity, channel lineup...",
+                                      displayTimeThreshold: 4,
+                                      minimumDisplayTime: 4)
                 
+                NVActivityIndicatorPresenter.sharedInstance.startAnimating(ad)
+                realmDataController.queryNutella(withType: .currentActivityAndRoom)
+                
+            }
+        case .currentChannelList:
+            if (loginStateMachine?.fireEvent(currentChannelListEvent).successful)! {
+                realmDataController.queryNutella(withType: .currentChannelList)
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            }
+  
+        case .currentChannelNames:
+            if (loginStateMachine?.fireEvent(currentChannelNamesEvent).successful)! {
+                realmDataController.queryNutella(withType: .currentChannelNames)
+
             }
         default:
             break
@@ -723,93 +701,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func checkLoginState() -> LoginTypes {
-        return loginStateMachine.currentState.value
+        return loginStateMachine!.currentState.value
     }
     
     // Mark: StateMachine
     
-    func initStateMachine(applicaitonState: ApplicationType) {
+    func initStateMachine() {
         
-        applicationStateMachine.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent, cloudGroupEvent, loginEvent])
+        applicationStateMachine = StateMachine(initialState: readyState, states: [placeGroupState, objectGroupState, cloudGroupState, placeTerminalState, loginState])
         
-        placeTerminalState.didEnterState = { state in self.preparePlaceTerminal() }
-        placeGroupState.didEnterState = { state in self.preparePlaceGroup() }
-        objectGroupState.didEnterState = { state in self.prepareObjectGroup() }
-        cloudGroupState.didEnterState = { state in self.prepareCloudGroup() }
-        loginState.didEnterState = { state in self.prepareLogin() }
-        
-        
-        switch applicaitonState {
-        case .placeGroup:
-            if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
-                //LOG.debug("We didn't transition")
-            }
-        case .objectGroup:
-            if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
-                //LOG.debug("We didn't transition")
-            }
-        case .placeTerminal:
-            if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
-                //LOG.debug("We didn't transition")
-            }
-        case .cloudGroup:
-            if !applicationStateMachine.fireEvent(cloudGroupEvent).successful {
-                //LOG.debug("We didn't transition")
-            }
-        default:
-            if !applicationStateMachine.fireEvent(loginEvent).successful {
-                //LOG.debug("We didn't transition")
-            }
-        }
+        applicationStateMachine?.addEvents([placeTerminalEvent, placeGroupEvent, objectGroupEvent, cloudGroupEvent, loginEvent, readyEvent])
     }
     
     func changeSystemStateTo(_ state: ApplicationType) {
         switch state {
         case .placeGroup:
-            if !applicationStateMachine.fireEvent(placeGroupEvent).successful {
-                //LOG.debug("We didn't transition")
+            if (applicationStateMachine?.fireEvent(placeGroupEvent).successful)! {
+                loadCondition()
             }
         case .placeTerminal:
-            if !applicationStateMachine.fireEvent(placeTerminalEvent).successful {
-                //LOG.debug("We didn't transition")
+            if (applicationStateMachine?.fireEvent(placeTerminalEvent).successful)! {
+                loadCondition()
             }
         case .objectGroup:
-            if !applicationStateMachine.fireEvent(objectGroupEvent).successful {
-                //LOG.debug("We didn't transition")
+            if (applicationStateMachine?.fireEvent(objectGroupEvent).successful)! {
+                loadCondition()
             }
         case .cloudGroup:
-            if !applicationStateMachine.fireEvent(cloudGroupEvent).successful {
-                //LOG.debug("We didn't transition")
+            if (applicationStateMachine?.fireEvent(cloudGroupEvent).successful)! {
+                loadCondition()
             }
         default:
-            if !applicationStateMachine.fireEvent(loginEvent).successful {
+            if (applicationStateMachine?.fireEvent(readyEvent).successful)! {
                 //LOG.debug("We didn't transition")
             }
         }
     }
     
     func checkApplicationState() -> ApplicationType {
-        return applicationStateMachine.currentState.value
-    }
-    
-    func preparePlaceTerminal() {
-        
-    }
-    
-    func preparePlaceGroup() {
-        
-    }
-    
-    func prepareObjectGroup() {
-        
-    }
-    
-    func prepareCloudGroup() {
-        
-    }
-    
-    func prepareLogin() {
-        
+        return applicationStateMachine!.currentState.value
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

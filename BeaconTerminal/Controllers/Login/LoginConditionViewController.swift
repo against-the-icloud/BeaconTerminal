@@ -12,6 +12,8 @@ import RealmSwift
 
 class LoginConditionCollectionViewController: UITableViewController {
     
+    var startType: StartType?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -24,7 +26,7 @@ class LoginConditionCollectionViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)                      
     }
     
     
@@ -63,12 +65,12 @@ extension LoginConditionCollectionViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ApplicationType.allValues.count
+        return ApplicationType.allGroups.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.cellForRow(at: indexPath) != nil {
-            let condition: ApplicationType = ApplicationType.allValues[indexPath.row]
+            let condition: ApplicationType = ApplicationType.allGroups[indexPath.row]
             let defaults = UserDefaults.standard
             defaults.set(condition.rawValue, forKey: "condition")
             defaults.synchronize()
@@ -82,9 +84,10 @@ extension LoginConditionCollectionViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:LoginConditionCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! LoginConditionCell
         
-        let appType = ApplicationType.allValues[indexPath.row]
+        let appType = ApplicationType.allGroups[indexPath.row]
         
         cell.titleLabel.text = appType.rawValue
+        
         
         switch appType {
         case .placeGroup:

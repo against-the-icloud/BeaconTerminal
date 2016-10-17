@@ -140,6 +140,48 @@ class RealmDataController {
                 
                 DispatchQueue.main.async(execute: block)
             }
+        case .currentChannelList:
+            if let nutella = nutella, let activity = UserDefaults.standard.value(forKey: "activity") as? String {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict["activity"] = activity
+                    dict["type"] = "group"
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("channel_list", message: jsonObject as AnyObject, requestName: "channel_list")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+        case .currentChannelNames:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("channel_names", message: jsonObject as AnyObject, requestName: "channel_names")
+                }
+                DispatchQueue.main.async(execute: block)
+            }
+            
+            
+        case .currentActivityAndRoom:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("currentActivityAndRoom", message: jsonObject as AnyObject, requestName: "currentActivityAndRoom")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+            
             
             
         default:
@@ -218,29 +260,56 @@ class RealmDataController {
         if let precheckChannel = NutellaChannelType(rawValue: channel) {
             switch precheckChannel {
             case .getCurrentRun:
-                
                 let sectionName = message as! String
-                //
                 UserDefaults.standard.set(sectionName, forKey: "sectionName")
                 UserDefaults.standard.synchronize()
-                
                 getAppDelegate().changeLoginStateTo(.currentSection)
-                //UserDefau
-                
                 return
-            case .getRoster:
                 
-                if let roster = handleRosterMessages(withMessage: message) {
-                    
-                    
+            case .getRoster:
+                if let roster = handleRoster(withMessage: message) {
                     UserDefaults.standard.set(roster, forKey: "currentRoster")
                     UserDefaults.standard.synchronize()
-                    
                     getAppDelegate().changeLoginStateTo(.currentRoster)
                 }
+                return
+            case .currentActivityAndRoom:
+                let currentActivityAndRoom = handleCurrentActivity(withMessage: message)
                 
-                //UserDefau
+                if let activity = currentActivityAndRoom.activity, let room = currentActivityAndRoom.room {
+                    
+                    
+                    UserDefaults.standard.set(activity, forKey: "activity")
+                    UserDefaults.standard.set(room, forKey: "room")
+                    UserDefaults.standard.synchronize()
+                    
+                    
+                    getAppDelegate().changeLoginStateTo(.currentChannelList)
+                    
+                }
+                return
+            case .channelList:
+                let channelList = handleChannelList(withMessage: message)
                 
+                
+                UserDefaults.standard.set(channelList, forKey: "channelList")
+                UserDefaults.standard.synchronize()
+                
+                    
+               // getAppDelegate().changeLoginStateTo(.currentChannelNames)
+                
+                
+                //                let sectionName = message as! String
+                //                UserDefaults.standard.set(sectionName, forKey: "sectionName")
+                //                UserDefaults.standard.synchronize()
+                
+                return
+            case .channelNames:
+                //                let sectionName = message as! String
+                //                UserDefaults.standard.set(sectionName, forKey: "sectionName")
+                //                UserDefaults.standard.synchronize()
+                
+                //getAppDelegate().changeLoginStateTo(.currentChannelNames)
                 return
             case .speciesNames:
                 parseModelSpeciesNames(withMessage: message)
@@ -266,7 +335,67 @@ class RealmDataController {
         }
     }
     
-    func handleRosterMessages(withMessage message: Any) -> [String]? {
+    //src="http://ltg.evl.uic.edu:57880/wallcology/6BM/runs/species-notes/index.html?broker=ltg.evl.uic.edu&app_id=wallcology&run_id=6BM&TYPE=group&INSTANCE=2"
+    func handleChannelList(withMessage message: Any) -> [[String:String]] {
+        
+       //
+
+        
+        var allChannels = [[String:String]]()
+        //var channels = [String:String]()
+        
+        let json = JSON(message)
+        guard let all = json.array else {
+            //no speciesIndex
+            return allChannels
+
+        }
+        
+        
+        for (_,item) in all.enumerated() {
+            
+            if let name = item.string {
+                
+                var channel = [String:String]()
+                
+                channel["name"] = name
+                
+                if let sectionName = UserDefaults.standard.value(forKey: "sectionName") as? String, let groupIndex = UserDefaults.standard.value(forKey: "groupIndex") as? Int {
+                
+                
+                let channelUrl = "http://\(CURRENT_HOST):57880/wallcology/\(sectionName)/runs/\(name)/index.html?broker=\(CURRENT_HOST)&app_id=wallcology&run_id=\(sectionName)&TYPE=group&INSTANCE=\(groupIndex)"
+                    
+                    channel["url"] = channelUrl
+                
+                }
+                
+                allChannels.append(channel)
+            }
+        }
+        
+        
+        return allChannels
+    }
+    
+    func handleCurrentActivity(withMessage message: Any) -> (activity: String?, room: String?) {
+        
+        let json = JSON(message)
+        var activity: String?
+        var room: String?
+        
+        if let a = json["activity"].string {
+            activity = a
+        }
+        
+        if let b = json["room"].string {
+            room = b
+        }
+        
+        return (activity: activity, room: room)
+        
+    }
+    
+    func handleRoster(withMessage message: Any) -> [String]? {
         
         let json = JSON(message)
         guard let all = json.array else {
@@ -425,19 +554,25 @@ class RealmDataController {
         for name in names {
             speciesNames.append("\(name)")
         }
-
-        let r = realmDataController.getRealm()
-        let species = r.species
-        if !species.isEmpty {
-            for (index,name) in speciesNames.enumerated() {
-                
-                try! r.write {
-                    species[index].name = name
-                    r.add(species, update: false)
+        
+        switch  getAppDelegate().checkLoginState() {
+        case .currentSection,.currentRun, .currentRun:
+            break
+        default:
+            let r = realmDataController.getRealm()
+            let species = r.species
+            if !species.isEmpty {
+                for (index,name) in speciesNames.enumerated() {
+                    
+                    try! r.write {
+                        species[index].name = name
+                        r.add(species, update: false)
+                    }
+                    
                 }
-                
             }
         }
+        
         
         UserDefaults.standard.set(speciesNames, forKey: "speciesNames")
         UserDefaults.standard.synchronize()
@@ -638,19 +773,19 @@ class RealmDataController {
                             
                             if let preferencesJson = soJson["speciesPreferences"].array {
                                 importSpeciesPreferenceJSON(withSpeciesObservation: speciesObservation!, withSpeciesPreferenceJson: preferencesJson, withRealmType: realmType)
-            
-
+                                
+                                
                             } else {
                                 //found nothing
                                 LOG.debug("FOUND NO species preferences SO: \(speciesObservation?.id)")
                             }
                             
-//                            if let preferencesJson = soJson["preferences"].array {
-//                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson, withRealmType: realmType)
-//                            } else {
-//                                //found nothing
-//                                LOG.debug("FOUND NO PREFERENCES SO: \(speciesObservation?.id)")
-//                            }
+                            //                            if let preferencesJson = soJson["preferences"].array {
+                            //                                importPreferenceJSON(withSpeciesObservation: speciesObservation!, withPreferencesJson: preferencesJson, withRealmType: realmType)
+                            //                            } else {
+                            //                                //found nothing
+                            //                                LOG.debug("FOUND NO PREFERENCES SO: \(speciesObservation?.id)")
+                            //                            }
                             
                             getRealm(withRealmType: realmType).add(speciesObservation!, update: true)
                             //find its group
@@ -748,7 +883,7 @@ class RealmDataController {
                     if let habitat = realmDataController.parseHabitatJSON(withJson: sJson,withRealmType: realmType)  {
                         speciesPreferences?.habitat = habitat
                     }
-                
+                    
                     getRealm(withRealmType: realmType).add(speciesPreferences!, update: true)
                 } else {
                     speciesPreferences = SpeciesPreference()

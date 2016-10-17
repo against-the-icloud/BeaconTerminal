@@ -24,12 +24,17 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     @IBOutlet weak var topTabbar: TabSegmentedControl!
     @IBOutlet weak var topPanel: UIView!
     @IBOutlet weak var badgeImageView: UIImageView!
+    @IBOutlet weak var tabContainterView: UIView!
+    
+    var TERMINAL_INDEX = 0
     
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
     var terminalRuntimeResults: Results<Runtime>?
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
+    var tabViews = [UIView]()
+    var tabControllers = [WebViewController]()
     
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
@@ -57,8 +62,35 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
         
         prepareToolMenu()
-        
-        
+        prepareTabs()
+    }
+    
+    func prepareTabs() {
+        if let channels = UserDefaults.standard.array(forKey: "channelList") {
+            for (index,item) in channels.enumerated() {
+                if let c = item as? [String:String], let name = c["name"], let url = c["url"], name != "species-notes" {
+                    if index == 1 {
+                        topTabbar.setTitle(name, forSegmentAt: index)
+                    }else {
+                        topTabbar.insertSegment(withTitle: name, at: index, animated: true)
+                    }
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    
+                    if let webViewController = storyboard.instantiateViewController(withIdentifier: "webViewController") as? WebViewController {
+                        webViewController.src = url
+                        self.addChildViewController(webViewController)
+                        webViewController.view.frame = self.tabContainterView.frame
+                        webViewController.view.isHidden = true
+                        webViewController.view.alpha = 0.0
+                        tabContainterView.addSubview(webViewController.view)
+                        webViewController.didMove(toParentViewController: self)
+                        tabViews.append(webViewController.view)
+                        tabControllers.append(webViewController)
+                    }
+                }
+            }
+        }
     }
     
     func  prepareToolMenu() {
@@ -163,10 +195,10 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
             sectionLabel.text = "\(sectionName.uppercased())"
         }
         
-        if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let groupName = group.name {
+        if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let _ = group.name {
             topTabbar.setTitle("SPECIES", forSegmentAt: 0)
             groupLabel.text = "TEAM \(groupIndex + 1)"
-
+            
         }
         
         
@@ -182,7 +214,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     }
     
     func updateTabs(terminalRuntimeResults: Results<Runtime>) {
-        if let terminalRuntime = terminalRuntimeResults.first, let speciesIndex = terminalRuntime.currentSpeciesIndex.value, let sectionName = terminalRuntime.currentSectionName, let action = terminalRuntime.currentAction {
+        if let terminalRuntime = terminalRuntimeResults.first, let speciesIndex = terminalRuntime.currentSpeciesIndex.value, let _ = terminalRuntime.currentSectionName, let action = terminalRuntime.currentAction {
             
             if let atype = ActionType(rawValue: action) {
                 switch atype {
@@ -199,21 +231,25 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                             v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                         }
                         
-                        if topTabbar.numberOfSegments < 3 {
-                            topTabbar.insertSegment(withTitle: title, at: 2, animated: true)
-                            topTabbar.selectedSegmentIndex = 2
+                        if TERMINAL_INDEX == 0 {
+                            topTabbar.insertSegment(withTitle: title, at: topTabbar.numberOfSegments, animated: true)
+                            TERMINAL_INDEX = topTabbar.numberOfSegments - 1
+                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
                         } else {
-                            topTabbar.setTitle(title, forSegmentAt: 2)
-                            topTabbar.selectedSegmentIndex = 2
+                            topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
+                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
                             
                         }
                         
                         colorizeSelectedSegment()
+                        topTabbar.setNeedsLayout()
+                        topTabbar.setNeedsDisplay()
+                        
                         changeTab(withControl: topTabbar)
                         realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
                     }
                 case .exited:
-                    topTabbar.removeSegment(at: 2, animated: true)
+                    topTabbar.removeSegment(at: TERMINAL_INDEX, animated: true)
                     topTabbar.selectedSegmentIndex = 0
                     colorizeSelectedSegment()
                     changeTab(withControl: topTabbar)
@@ -233,23 +269,67 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     
     func changeTab(withControl tabbar: UISegmentedControl) {
-        if tabbar.selectedSegmentIndex < containerViews.count {
-            let showView = containerViews[tabbar.selectedSegmentIndex]
-            for (index,containerView) in containerViews.enumerated() {
-                if index == tabbar.selectedSegmentIndex {
-                    containerView.isHidden = false
-                    containerView.fadeIn(toAlpha: 1.0) {_ in
+        
+        switch tabbar.selectedSegmentIndex {
+        case 0:
+            switchContainerTab(withIndex: 0)
+        case TERMINAL_INDEX:
+            switchContainerTab(withIndex: 1)
+        default:
+            for containerView in containerViews {
+                containerView.isHidden = true
+                
+                containerView.fadeOut(0.0) {_ in
+                }
+                
+            }
+            
+            let adjustedIndex = tabbar.selectedSegmentIndex - 1
+            
+            for (index,tabView) in tabViews.enumerated() {
+                if index == adjustedIndex {
+                    tabView.isHidden = false
+                    
+                    tabView.fadeIn(toAlpha: 1.0) {_ in
+                        let wc = self.tabControllers[adjustedIndex]
+                        wc.reload()
                     }
                 } else {
-                    containerView.isHidden = true
-                    containerView.fadeOut(0.0) {_ in
+                    
+                    tabView.fadeOut(0.0) {_ in
+                        tabView.isHidden = true
                     }
                 }
             }
-            showView.fadeIn(toAlpha: 1.0) {_ in
+        }
+        
+    }
+    
+    func switchContainerTab(withIndex showIndex: Int) {
+        for tabView in tabViews {
+            tabView.fadeOut(0.0) {_ in
+                tabView.isHidden = true
             }
         }
+        
+        let showView = containerViews[showIndex]
+        for (index,containerView) in containerViews.enumerated() {
+            if index == showIndex {
+                containerView.isHidden = false
+                containerView.fadeIn(toAlpha: 1.0) {_ in
+                    
+                }
+            } else {
+                containerView.isHidden = true
+                containerView.fadeOut(0.0) {_ in
+                }
+            }
+        }
+        showView.fadeIn(toAlpha: 1.0) {_ in
+        }
+        
     }
+    
     
     @IBAction func showSidebar(_ sender: Any) {
         navigationDrawerController?.openLeftView()
@@ -267,10 +347,10 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
             if index == topTabbar.selectedSegmentIndex {
                 
                 view.backgroundColor = UIColor.black
-            
+                
                 
             } else {
-           
+                
                 view.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                 
             }
@@ -294,7 +374,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
         switch id {
         case "speciesPageContainerController":
-            if let svc = segue.destination as? SpeciePageContainerController {
+            if segue.destination is SpeciePageContainerController {
             }
         case "terminalSegue": break
             // if let tvc = segue.destination as? TerminalMainViewController {
@@ -397,16 +477,16 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
             wnd.addSubview(v)
             UIView.animate(withDuration: 1, animations: {
                 v.alpha = 0.0
-                }, completion: {
-                    (finished: Bool) in
-                    
-                    v.removeFromSuperview()
-                    let v = self.view
-                    UIGraphicsBeginImageContextWithOptions((v?.bounds.size)!, true, 1.0)
-                    v?.drawHierarchy(in: (v?.bounds)!, afterScreenUpdates: true)
-                    let img = UIGraphicsGetImageFromCurrentImageContext()
-                    UIGraphicsEndImageContext()
-                    UIImageWriteToSavedPhotosAlbum(img!, nil, nil, nil)
+            }, completion: {
+                (finished: Bool) in
+                
+                v.removeFromSuperview()
+                let v = self.view
+                UIGraphicsBeginImageContextWithOptions((v?.bounds.size)!, true, 1.0)
+                v?.drawHierarchy(in: (v?.bounds)!, afterScreenUpdates: true)
+                let img = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                UIImageWriteToSavedPhotosAlbum(img!, nil, nil, nil)
             })
         }
     }
@@ -424,7 +504,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         // Only allow photos to be picked, not taken.
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-
+        
         imagePickerController.delegate = self
         
         imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -458,7 +538,7 @@ extension MainContainerController: MenuDelegate {
         }
     }
     
-  
+    
 }
 
 extension MainContainerController: UIImagePickerControllerDelegate {
@@ -466,7 +546,7 @@ extension MainContainerController: UIImagePickerControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
         dismiss(animated: true, completion: nil)
-
+        
         
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -477,7 +557,7 @@ extension MainContainerController: UIImagePickerControllerDelegate {
         dismiss(animated:true, completion: nil)
     }
     
-    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafeRawPointer) {        
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafeRawPointer) {
         if error != nil {
             
         }
