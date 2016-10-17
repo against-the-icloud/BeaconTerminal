@@ -68,7 +68,9 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     func prepareTabs() {
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
-                if let c = item as? [String:String], let name = c["name"], let url = c["url"], name != "species-notes" {
+                if let c = item as? [String:String], let name = c["name"]?.replacingOccurrences(of: "-", with: " ").uppercased(), let url = c["url"], c["name"] != "species-notes" {
+                    
+                    
                     if index == 1 {
                         topTabbar.setTitle(name, forSegmentAt: index)
                     }else {
