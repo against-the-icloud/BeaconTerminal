@@ -99,9 +99,9 @@ open class View: UIView {
 	
 	/// A Preset for the contentsGravity property.
 	@IBInspectable
-    open var contentsGravityPreset: Gravity {
+    open var contentsGravityPreset: MaterialGravity {
 		didSet {
-			contentsGravity = GravityToValue(gravity: contentsGravityPreset)
+			contentsGravity = MaterialGravityToValue(gravity: contentsGravityPreset)
 		}
 	}
 	
@@ -116,7 +116,7 @@ open class View: UIView {
 		}
 	}
 	
-	/// A property that accesses the backing layer's background
+	/// A property that accesses the backing layer's backgroundColor.
 	@IBInspectable
     open override var backgroundColor: UIColor? {
 		didSet {
@@ -129,7 +129,7 @@ open class View: UIView {
      - Parameter aDecoder: A NSCoder instance.
      */
 	public required init?(coder aDecoder: NSCoder) {
-		contentsGravityPreset = .resizeAspectFill
+		contentsGravityPreset = .ResizeAspectFill
 		super.init(coder: aDecoder)
 		prepare()
 	}
@@ -141,7 +141,7 @@ open class View: UIView {
      - Parameter frame: A CGRect instance.
      */
 	public override init(frame: CGRect) {
-		contentsGravityPreset = .resizeAspectFill
+		contentsGravityPreset = .ResizeAspectFill
 		super.init(frame: frame)
 		prepare()
 	}

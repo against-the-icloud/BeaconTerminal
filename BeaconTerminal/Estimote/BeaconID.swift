@@ -2,6 +2,7 @@
 // Please report any problems with this app template to contact@estimote.com
 //
 
+
 struct BeaconID: Equatable, CustomStringConvertible, Hashable {
     
     let identifier: String

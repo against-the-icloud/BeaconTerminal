@@ -74,17 +74,17 @@ open class SearchBar: Bar {
 	@IBInspectable
     open var placeholder: String? {
 		didSet {
-			if let v = placeholder {
+			if let v: String = placeholder {
 				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
 			}
 		}
 	}
 	
-	/// Placeholder text
+	/// Placeholder textColor.
 	@IBInspectable
     open var placeholderColor = Color.darkText.others {
 		didSet {
-			if let v = placeholder {
+			if let v: String = placeholder {
 				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
 			}
 		}
@@ -137,7 +137,6 @@ open class SearchBar: Bar {
      */
 	open override func prepare() {
 		super.prepare()
-        heightPreset = .normal
         prepareTextField()
 		prepareClearButton()
 	}

@@ -30,48 +30,48 @@
 
 import UIKit
 
-@objc(Gravity)
-public enum Gravity: Int {
-	case center
-	case top
-	case bottom
-	case left
-	case right
-	case topLeft
-	case topRight
-	case bottomLeft
-	case bottomRight
-	case resize
-	case resizeAspect
-	case resizeAspectFill
+@objc(MaterialGravity)
+public enum MaterialGravity: Int {
+	case Center
+	case Top
+	case Bottom
+	case Left
+	case Right
+	case TopLeft
+	case TopRight
+	case BottomLeft
+	case BottomRight
+	case Resize
+	case ResizeAspect
+	case ResizeAspectFill
 }
 
-/// Converts the Gravity enum to a String value.
-public func GravityToValue(gravity: Gravity) -> String {
+/// Converts the MaterialGravity enum to a String value.
+public func MaterialGravityToValue(gravity: MaterialGravity) -> String {
 	switch gravity {
-	case .center:
+	case .Center:
 		return kCAGravityCenter
-	case .top:
+	case .Top:
 		return kCAGravityTop
-	case .bottom:
+	case .Bottom:
 		return kCAGravityBottom
-	case .left:
+	case .Left:
 		return kCAGravityLeft
-	case .right:
+	case .Right:
 		return kCAGravityRight
-	case .topLeft:
+	case .TopLeft:
 		return kCAGravityBottomLeft
-	case .topRight:
+	case .TopRight:
 		return kCAGravityBottomRight
-	case .bottomLeft:
+	case .BottomLeft:
 		return kCAGravityTopLeft
-	case .bottomRight:
+	case .BottomRight:
 		return kCAGravityTopRight
-	case .resize:
+	case .Resize:
 		return kCAGravityResize
-	case .resizeAspect:
+	case .ResizeAspect:
 		return kCAGravityResizeAspect
-	case .resizeAspectFill:
+	case .ResizeAspectFill:
 		return kCAGravityResizeAspectFill
 	}
 }

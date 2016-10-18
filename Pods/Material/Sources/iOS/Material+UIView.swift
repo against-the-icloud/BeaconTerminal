@@ -76,16 +76,6 @@ extension UIView {
         }
     }
     
-    /// HeightPreset value.
-    open var heightPreset: HeightPreset {
-        get {
-            return layer.heightPreset
-        }
-        set(value) {
-            layer.heightPreset = value
-        }
-    }
-    
     /**
      A property that manages the overall shape for the object. If either the
      width or height property is set, the other will be automatically adjusted
@@ -120,7 +110,7 @@ extension UIView {
         }
     }
     
-    /// A property that accesses the backing layer's shadow
+    /// A property that accesses the backing layer's shadowColor.
     @IBInspectable
     open var shadowColor: UIColor? {
         get {

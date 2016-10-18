@@ -42,6 +42,6 @@ open class RaisedButton: Button {
 		super.prepare()
 		depthPreset = .depth1
 		cornerRadiusPreset = .cornerRadius1
-		backgroundColor = .white
+		backgroundColor = Color.white
 	}
 }

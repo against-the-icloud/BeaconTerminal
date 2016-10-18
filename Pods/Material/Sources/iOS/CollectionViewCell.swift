@@ -133,9 +133,9 @@ open class CollectionViewCell: UICollectionViewCell {
 	}
 	
 	/// A Preset for the contentsGravity property.
-	public var contentsGravityPreset: Gravity {
+	public var contentsGravityPreset: MaterialGravity {
 		didSet {
-            contentsGravity = GravityToValue(gravity: contentsGravityPreset)
+            contentsGravity = MaterialGravityToValue(gravity: contentsGravityPreset)
 		}
 	}
 	
@@ -162,7 +162,7 @@ open class CollectionViewCell: UICollectionViewCell {
 	
 	/// A reference to EdgeInsets.
 	@IBInspectable
-    open var contentEdgeInsets: EdgeInsets {
+    open var contentInset: EdgeInsets {
 		get {
 			return contentView.grid.contentEdgeInsets
 		}
@@ -189,7 +189,7 @@ open class CollectionViewCell: UICollectionViewCell {
 		}
 	}
 	
-	/// A property that accesses the backing layer's background
+	/// A property that accesses the backing layer's backgroundColor.
 	@IBInspectable
     open override var backgroundColor: UIColor? {
 		didSet {
@@ -202,7 +202,7 @@ open class CollectionViewCell: UICollectionViewCell {
      - Parameter aDecoder: A NSCoder instance.
      */
 	public required init?(coder aDecoder: NSCoder) {
-		contentsGravityPreset = .resizeAspectFill
+		contentsGravityPreset = .ResizeAspectFill
 		super.init(coder: aDecoder)
 		prepare()
 	}
@@ -214,7 +214,7 @@ open class CollectionViewCell: UICollectionViewCell {
      - Parameter frame: A CGRect instance.
      */
 	public override init(frame: CGRect) {
-		contentsGravityPreset = .resizeAspectFill
+		contentsGravityPreset = .ResizeAspectFill
 		super.init(frame: frame)
 		prepare()
 	}

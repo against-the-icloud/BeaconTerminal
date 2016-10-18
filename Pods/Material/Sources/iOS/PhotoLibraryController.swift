@@ -48,7 +48,7 @@ open class PhotoLibraryController: UIViewController {
      */
     open func prepare() {
         view.clipsToBounds = true
-        view.backgroundColor = .white
+        view.backgroundColor = Color.white
         view.contentScaleFactor = Device.scale
         preparePhotoLibrary()
     }

@@ -56,7 +56,16 @@ public protocol ColorPalette {
     optional static var accent4: UIColor { get }
 }
 
-open class Color: UIColor {
+open class Color {
+	// clear
+	open static let clear = UIColor.clear
+	
+	// white
+	open static let white = UIColor.white
+	
+	// black
+	open static let black = UIColor.black
+	
 	// dark text
     open class darkText {
 		open static let primary = Color.black.withAlphaComponent(0.87)

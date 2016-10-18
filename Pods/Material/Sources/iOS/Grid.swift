@@ -233,9 +233,6 @@ public class Grid {
                 canvas.addSubview(child)
             }
             
-            // Forces the views to adjust accordingly to size changes, ie: UILabel.
-            (child as? UILabel)?.sizeToFit()
-            
             switch axis.direction {
             case .horizontal:
                 let c = 0 == child.grid.columns ? axis.columns / count : child.grid.columns
@@ -294,27 +291,6 @@ extension UIView {
         }
         set(value) {
             AssociateObject(base: self, key: &GridKey, value: value)
-        }
-    }
-    
-    /// A reference to grid's layoutEdgeInsetsPreset.
-    open var layoutEdgeInsetsPreset: EdgeInsetsPreset {
-        get {
-            return grid.layoutEdgeInsetsPreset
-        }
-        set(value) {
-            grid.layoutEdgeInsetsPreset = value
-        }
-    }
-    
-    /// A reference to grid's layoutEdgeInsets.
-    @IBInspectable
-    open var layoutEdgeInsets: EdgeInsets {
-        get {
-            return grid.layoutEdgeInsets
-        }
-        set(value) {
-            grid.layoutEdgeInsets = value
         }
     }
 }

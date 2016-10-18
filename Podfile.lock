@@ -6,7 +6,7 @@ PODS:
   - HockeySDK (4.1.2):
     - HockeySDK/DefaultLib (= 4.1.2)
   - HockeySDK/DefaultLib (4.1.2)
-  - Material (2.2.0)
+  - Material (2.1.2)
   - MQTTClient (0.8.5):
     - MQTTClient/Core (= 0.8.5)
   - MQTTClient/Core (0.8.5):
@@ -31,10 +31,10 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
-  - EstimoteSDK
+  - EstimoteSDK (from `https://github.com/Estimote/iOS-SDK.git`, branch `master`)
   - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, branch `feature/swift-3`)
   - HockeySDK (~> 4.1.1)
-  - Material (from `https://github.com/CosmicMind/Material.git`, branch `development`)
+  - Material (from `https://github.com/CosmicMind/Material.git`, branch `master`)
   - Nutella (from `https://github.com/aperritano/Nutella`, branch `master`)
   - NVActivityIndicatorView
   - Realm
@@ -46,11 +46,14 @@ EXTERNAL SOURCES:
   CryptoSwift:
     :branch: master
     :git: https://github.com/krzyzanowskim/CryptoSwift
+  EstimoteSDK:
+    :branch: master
+    :git: https://github.com/Estimote/iOS-SDK.git
   HanekeSwift:
     :branch: feature/swift-3
     :git: https://github.com/Haneke/HanekeSwift.git
   Material:
-    :branch: development
+    :branch: master
     :git: https://github.com/CosmicMind/Material.git
   Nutella:
     :branch: master
@@ -60,11 +63,14 @@ CHECKOUT OPTIONS:
   CryptoSwift:
     :commit: 5f9bb95c6f246c7e19bf4346a6ad1a0c406415f0
     :git: https://github.com/krzyzanowskim/CryptoSwift
+  EstimoteSDK:
+    :commit: 7866528497dc746c721fdcbab4adab5bacf5e32a
+    :git: https://github.com/Estimote/iOS-SDK.git
   HanekeSwift:
     :commit: 6e48f795c5928101043a5e11e1377877e042012d
     :git: https://github.com/Haneke/HanekeSwift.git
   Material:
-    :commit: f7279fc679a51438dca823d5306103cb51c314a9
+    :commit: 0b16cde691cf9787b018c4a03fe46766dcf94c68
     :git: https://github.com/CosmicMind/Material.git
   Nutella:
     :commit: 89a4cb017d7d44a00eff8ca4e6a0e6d40b5c4c45
@@ -76,7 +82,7 @@ SPEC CHECKSUMS:
   EstimoteSDK: b75d26004d401a335f43851d6369a69a8ce1c2ff
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
   HockeySDK: c7523379550a4305cefc1cdfa7b5f9a5a3538180
-  Material: 458bf69c34ddef7f2fd83d125969b4c038162c0c
+  Material: e27257b2efea0ea145150b141da22e1d68bef552
   MQTTClient: fca939bcd74aa70af2d8ee35f3e44f258f4e9888
   Nutella: fef7c16a3e10ccddfc24830374ace126c16abf07
   NVActivityIndicatorView: 81953b5e65093ba79edf4fe7268e002039ca5268
@@ -85,6 +91,6 @@ SPEC CHECKSUMS:
   Transporter: b6e906451c22d7119b6556adf3481689a5c30677
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: 905cf7f657a42efe6df1bdcda59332e3d69ac76d
+PODFILE CHECKSUM: 74703ac9706a0fedcde74ab7d542471663644047
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.1.0.rc.3

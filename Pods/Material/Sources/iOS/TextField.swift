@@ -125,7 +125,7 @@ open class TextField: UITextField {
 	@IBInspectable
     open private(set) var placeholderLabel: UILabel!
 	
-	/// Placeholder normal text
+	/// Placeholder normal textColor.
 	@IBInspectable
     open var placeholderNormalColor = Color.darkText.others {
 		didSet {
@@ -141,7 +141,7 @@ open class TextField: UITextField {
 		}
 	}
 	
-	/// Placeholder active text
+	/// Placeholder active textColor.
 	@IBInspectable
     open var placeholderActiveColor = Color.blue.base {
 		didSet {
@@ -178,7 +178,7 @@ open class TextField: UITextField {
 		}
 	}
 	
-	/// Detail text
+	/// Detail textColor.
 	@IBInspectable
     open var detailColor = Color.darkText.others {
 		didSet {
@@ -437,11 +437,7 @@ open class TextField: UITextField {
 	/// Layout the placeholderLabel.
 	open func layoutPlaceholderLabel() {
 		if !isEditing && true == text?.isEmpty && isPlaceholderAnimated {
-            if let v = leftView?.width {
-                placeholderLabel.frame = CGRect(x: v, y: bounds.origin.y, width: bounds.width - v, height: bounds.height)
-            } else {
-                placeholderLabel.frame = bounds
-            }
+			placeholderLabel.frame = bounds
 		} else if placeholderLabel.transform.isIdentity {
 			placeholderLabel.frame = bounds
 			placeholderLabel.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
@@ -547,9 +543,9 @@ open class TextField: UITextField {
                 guard let s = self else {
                     return
                 }
-
+                
                 s.placeholderLabel.transform = CGAffineTransform.identity
-                s.placeholderLabel.x = s.leftView?.width ?? 0
+                s.placeholderLabel.x = 0
                 s.placeholderLabel.y = 0
                 s.placeholderLabel.textColor = s.placeholderNormalColor
 			}) { [weak self] _ in

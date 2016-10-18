@@ -89,7 +89,7 @@ open class Switch: UIControl {
 	
 	/// Indicates if the animation should bounce.
 	@IBInspectable
-    open var bounceable = true {
+    public var bounceable = true {
 		didSet {
 			bounceOffset = bounceable ? 3 : 0
 		}
@@ -97,7 +97,7 @@ open class Switch: UIControl {
 	
 	/// Button on color.
 	@IBInspectable
-    open var buttonOnColor = Color.clear {
+    public var buttonOnColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -105,7 +105,7 @@ open class Switch: UIControl {
 	
 	/// Button off color.
 	@IBInspectable
-    open var buttonOffColor = Color.clear {
+    public var buttonOffColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -113,7 +113,7 @@ open class Switch: UIControl {
 	
 	/// Track on color.
 	@IBInspectable
-    open var trackOnColor = Color.clear {
+    public var trackOnColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -121,7 +121,7 @@ open class Switch: UIControl {
 	
 	/// Track off color.
 	@IBInspectable
-    open var trackOffColor = Color.clear {
+    public var trackOffColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -129,7 +129,7 @@ open class Switch: UIControl {
 	
 	/// Button on disabled color.
 	@IBInspectable
-    open var buttonOnDisabledColor = Color.clear {
+    public var buttonOnDisabledColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -137,7 +137,7 @@ open class Switch: UIControl {
 	
 	/// Track on disabled color.
 	@IBInspectable
-    open var trackOnDisabledColor = Color.clear {
+    public var trackOnDisabledColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -145,7 +145,7 @@ open class Switch: UIControl {
 	
 	/// Button off disabled color.
 	@IBInspectable
-    open var buttonOffDisabledColor = Color.clear {
+    public var buttonOffDisabledColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
@@ -153,21 +153,21 @@ open class Switch: UIControl {
 	
 	/// Track off disabled color.
 	@IBInspectable
-    open var trackOffDisabledColor = Color.clear {
+    public var trackOffDisabledColor = Color.clear {
 		didSet {
 			styleForState(state: switchState)
 		}
 	}
 	
 	/// Track view reference.
-	open private(set) var track: UIView {
+	public private(set) var track: UIView {
 		didSet {
 			prepareTrack()
 		}
 	}
 	
 	/// Button view reference.
-	open private(set) var button: FabButton {
+	public private(set) var button: FabButton {
 		didSet {
 			prepareButton()
 		}

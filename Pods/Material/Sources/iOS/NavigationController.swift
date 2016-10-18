@@ -95,15 +95,12 @@ open class NavigationController: UINavigationController {
 	
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		guard let v = navigationBar as? NavigationBar else {
-            return
-        }
-        
-        guard let item = v.topItem else {
-            return
-        }
-        
-        v.layoutNavigationItem(item: item)
+		// Load the initial topItem.
+		if let v = navigationBar as? NavigationBar {
+			if let item = v.topItem {
+				v.layoutNavigationItem(item: item)
+			}
+		}
 	}
     
 	/**
@@ -114,10 +111,8 @@ open class NavigationController: UINavigationController {
      when subclassing.
      */
 	open func prepare() {
-        navigationBar.heightPreset = .normal
-        
         view.clipsToBounds = true
-		view.backgroundColor = .white
+		view.backgroundColor = Color.white
         view.contentScaleFactor = Device.scale
         
         // This ensures the panning gesture is available when going back between views.

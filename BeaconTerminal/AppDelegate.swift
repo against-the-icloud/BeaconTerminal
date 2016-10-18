@@ -191,8 +191,7 @@ let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", major:
                  BeaconID(identifier: "38258bb861c5fe5011d0752ab0b82000", major: 1, minor: 8),
                  BeaconID(identifier: "3725c7b4dd3a7dd2345f5d83488ac419", major: 1, minor: 9),
                  BeaconID(identifier: "fd89d7d2ad4138ed782b965bf2380527", major: 1, minor: 10),
-                 BeaconID(identifier: "f90c0feb677f03759c6afce57048cc0f", major: 1, minor: 11),
-                 BeaconID(identifier: "040d277eac74d336847970113ccbe739", major: 1, minor: 12)]
+                 BeaconID(identifier: "f90c0feb677f03759c6afce57048cc0f", major: 1, minor: 11)]
 
 
 var realm: Realm?
@@ -311,7 +310,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .placeGroup:
             needsTerminal = false
             rootVC = prepareGroupUI()
-            prepareBeaconManager()
+            //prepareBeaconManager()
         case .objectGroup:
             needsTerminal = true
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.allTypes)

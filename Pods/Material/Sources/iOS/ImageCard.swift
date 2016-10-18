@@ -74,7 +74,7 @@ open class ImageCard: Card {
         }
         
         // Clear constraints so new ones do not conflict.
-        container.removeConstraints(container.constraints)
+        container.removeConstraints(constraints)
         for v in container.subviews {
             v.removeFromSuperview()
         }
@@ -89,16 +89,18 @@ open class ImageCard: Card {
         format += "-(imageViewTop)-[imageView]-(imageViewBottom)"
         views["imageView"] = iv
         container.layout(iv).horizontally(left: imageViewEdgeInsets.left, right: imageViewEdgeInsets.right)
-        
-        iv.grid.reload()
         iv.divider.reload()
         
         if let v = toolbar {
-            iv.layoutIfNeeded()
+            iv.layout(v).horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right).height(v.height)
             
-            container.layout(v)
-                .horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right)
-                .top(.top == toolbarAlignment ? toolbarEdgeInsets.top : iv.height - v.height - toolbarEdgeInsets.bottom)
+            if .top == toolbarAlignment {
+                iv.layout(v).top(toolbarEdgeInsets.top)
+            } else {
+                iv.layout(v).bottom(toolbarEdgeInsets.bottom)
+            }
+            v.grid.reload()
+            v.divider.reload()
         }
         
         if let v = contentView {
@@ -108,7 +110,6 @@ open class ImageCard: Card {
             format += "-[contentView]-(contentViewBottom)"
             views["contentView"] = v
             container.layout(v).horizontally(left: contentViewEdgeInsets.left, right: contentViewEdgeInsets.right)
-            
             v.grid.reload()
             v.divider.reload()
         }
@@ -125,7 +126,9 @@ open class ImageCard: Card {
             }
             
             views["bottomBar"] = v
-            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right)
+            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right).height(v.height)
+            v.grid.reload()
+            v.divider.reload()
         }
         
         guard 0 < views.count else {

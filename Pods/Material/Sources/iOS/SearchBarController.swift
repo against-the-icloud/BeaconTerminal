@@ -48,38 +48,23 @@ extension UIViewController {
 	}
 }
 
-open class SearchBarController: StatusBarController {
-    /**
-     A Display value to indicate whether or not to
-     display the rootViewController to the full view
-     bounds, or up to the searchBar height.
-     */
-    open var display = Display.partial {
-        didSet {
-            layoutSubviews()
-        }
-    }
-    
-    /// Reference to the SearchBar.
+open class SearchBarController: RootController {
+	/// Reference to the SearchBar.
     open private(set) lazy var searchBar: SearchBar = SearchBar()
+	
 	
 	open override func layoutSubviews() {
 		super.layoutSubviews()
-        statusBar.layoutIfNeeded()
         
-        let y = statusBar.isHidden ? 0 : statusBar.height
-        let p = y + searchBar.height
+        searchBar.grid.layoutEdgeInsets.top = .phone == Device.userInterfaceIdiom && Device.isLandscape ? 0 : 20
         
-        searchBar.y = y
-        searchBar.width = view.width
+        let p = searchBar.intrinsicContentSize.height + searchBar.grid.layoutEdgeInsets.top + searchBar.grid.layoutEdgeInsets.bottom
         
-        switch display {
-        case .partial:
-            rootViewController.view.y = p
-            rootViewController.view.height = view.height - p
-        case .full:
-            rootViewController.view.frame = view.bounds
-        }
+        searchBar.width = view.width + searchBar.grid.layoutEdgeInsets.left + searchBar.grid.layoutEdgeInsets.right
+        searchBar.height = p
+        
+        rootViewController.view.y = p
+        rootViewController.view.height = view.height - p
 	}
 	
 	/**

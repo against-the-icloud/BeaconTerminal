@@ -23,14 +23,6 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
         let monitoringManager = ESTMonitoringManager()
         monitoringManager.delegate = self
         
-        
-     /*
-        let beaconRegion = beaconID.asBeaconRegion
-        beaconRegion.notifyEntryStateOnDisplay = true
-        beaconRegion.notifyOnExit = true
-        beaconRegion.notifyOnEntry = true
-        */
-        
         self.enterMessages[beaconID.identifier] = enterMessage
         self.exitMessages[beaconID.identifier] = exitMessage
         
@@ -39,8 +31,7 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
         
         // Improves performance in background, but can impact the battery. Use with caution.
         
-        monitoringManager.startMonitoring(forIdentifier: beaconID.identifier, in: .near)
-        
+        monitoringManager.startDefaultMonitoring(forIdentifier: beaconID.identifier)
         beaconManagers.append(monitoringManager)
         
         //self.beaconManager.startMonitoring(for: beaconRegion)
@@ -83,7 +74,7 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
                 banner.show()
                 
                 //four sec
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     banner.dismiss()
                 }
                 
@@ -117,7 +108,7 @@ class BeaconNotificationsManager: NSObject, ESTMonitoringManagerDelegate {
                 banner.show()
                 
                 //four sec
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     banner.dismiss()
                 }
                 

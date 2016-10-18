@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import RealmSwift
 
+@objc protocol AutoScrollPageDelegate {
+    func scroll(withIndex index: Int)
+}
+
 class SpeciePageContainerController: UIPageViewController {
     
     var speciesObservationResults: Results<SpeciesObservation>?
@@ -17,7 +21,8 @@ class SpeciePageContainerController: UIPageViewController {
     var runtimeNotificationToken: NotificationToken? = nil
     var speciesObsNotificationToken: NotificationToken? = nil
     var pageCount = 0
-    @IBOutlet var topToolbarDelegate: TopToolbarDelegate!
+    
+    var autoScrollPageDelegate: AutoScrollPageDelegate?
     
     var pageIsAnimating = false
 
@@ -83,10 +88,7 @@ class SpeciePageContainerController: UIPageViewController {
         if let firstPageController = viewController(atIndex: 0) {
             
             self.setViewControllers([firstPageController], direction: .forward, animated: true, completion: {done in })
-            
-            if let ttd = topToolbarDelegate {
-                ttd.changeAppearance(withColor: UIColor.speciesColor(forIndex: 0, isLight: false))
-            }
+        
         }
     }
 
@@ -116,6 +118,18 @@ class SpeciePageContainerController: UIPageViewController {
         return .lightContent
     }
 
+}
+
+// MARK: - Page View Controller Data Source
+extension SpeciePageContainerController: AutoScrollPageDelegate{
+    func scroll(withIndex index: Int) {
+        if let firstPageController = self.viewController(atIndex: index) {
+            LOG.debug("AUTO SCROLLING to \(index)")
+            self.setViewControllers([firstPageController], direction: .forward, animated: true, completion: {done in })
+            
+        }
+    }
+    
 }
 
 // MARK: - Page View Controller Data Source

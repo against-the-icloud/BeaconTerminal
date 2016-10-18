@@ -12,12 +12,18 @@ import Photos
 import MobileCoreServices
 import Material
 import RealmSwift
+import AVFoundation
 
 @objc protocol TopToolbarDelegate {
     func changeAppearance(withColor color: UIColor)
 }
 
-class MainContainerController: UIViewController, UINavigationControllerDelegate {
+enum Sound {
+    case coin
+    case tap
+}
+
+class MainContainerController: UIViewController, UINavigationControllerDelegate, ESTMonitoringManagerDelegate {
     @IBOutlet var containerViews: [UIView]!
     @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var sectionLabel: UILabel!
@@ -36,6 +42,15 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var tabViews = [UIView]()
     var tabControllers = [WebViewController]()
     
+    var beaconManagers = [String:ESTMonitoringManager]()
+    var enterMessages = [String: String]()
+    var exitMessages = [String: String]()
+    
+    var audioPlayer:AVAudioPlayer!
+    
+    var autoScrollPageDelegate: AutoScrollPageDelegate?
+    
+    
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
     var toolMenuItems: [UIView] = [UIView]()
@@ -49,7 +64,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+//    var  monitoringManager = ESTMonitoringManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         topTabbar.initUI()
@@ -63,6 +79,173 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         
         prepareToolMenu()
         prepareTabs()
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        prepareMenuController()
+        
+        setupBeacons()
+    }
+    
+    
+    func setupBeacons() {
+        switch getAppDelegate().checkApplicationState() {
+        case .placeGroup:
+            
+            
+            // monitoringManager.startTurboMode()
+            
+            
+            
+            self.enterMessages = [String: String]()
+             self.exitMessages = [String: String]()
+            
+            for (index, beaconId) in beaconIds.enumerated() {
+                
+                self.enterMessages[beaconId.identifier] = "ENTER SPECIES ---------> \(index)"
+                self.exitMessages[beaconId.identifier] = "EXIT SPECIES --------->  \(index)"
+                
+                enableNotificationsForBeaconID(beaconId)
+            }
+            
+            //monitoringManager.startTurboMode()
+
+        default:
+            break
+        }
+    }
+    
+    
+    
+    func enableNotificationsForBeaconID(_ beaconID: BeaconID) {
+        
+        // Improves performance in background, but can impact the battery. Use with caution.
+        
+        let  monitoringManager = ESTMonitoringManager()
+        
+        monitoringManager.delegate = self
+        monitoringManager.startMonitoring(forIdentifier: beaconID.identifier, in: .near)
+        monitoringManager.startTurboMode()
+        beaconManagers[beaconID.identifier] = monitoringManager
+        
+        //self.beaconManager.startMonitoring(for: beaconRegion)
+    }
+    
+    
+    func monitoringManager(_ manager: ESTMonitoringManager, didFailWithError error: Error) {
+        LOG.debug("DID FAIL WITH  MONITORING \(error) \(manager)")
+    }
+    func monitoringManagerDidStart(_ manager: ESTMonitoringManager) {
+        LOG.debug("START MONITORING \(manager)")
+    }
+    
+    func monitoringManager(_ manager: ESTMonitoringManager, didEnterRangeOfIdentifier identifier: String) {
+        
+        LOG.debug("TRYING TO  ENTER \(identifier)")
+        
+        if let message = self.enterMessages[identifier], let beaconId = findBeaconId(withId: identifier) {
+            
+            let region = beaconId.asBeaconRegion
+            
+            self.enableNotificationsForBeaconID(beaconId)
+            
+            self.showNotificationWithMessage(message)
+            
+            
+            if let minorSpeciesIndex = region.minor?.intValue {
+                //adjust because these ids can't be start 0
+                let speciesIndex = minorSpeciesIndex - 1
+                
+                let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                
+                if let autoScrollPageDelegate = self.autoScrollPageDelegate {
+                    autoScrollPageDelegate.scroll(withIndex: speciesIndex)
+                }
+                
+                LOG.debug("DID ENTER ----------------> \(region)")
+
+                
+                let banner = Banner(title: "DID ENTER", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
+                
+                banner.shouldTintImage = false
+                banner.dismissesOnTap = true
+                banner.dismissesOnSwipe = true
+                banner.show()
+                
+                //four sec
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    banner.dismiss()
+                }
+                
+                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: "place", withActionType: "enter", withPlace: region.description)
+                
+                play(sound: .coin)
+            }
+        } else {
+            LOG.debug("FAILED ENTER \(identifier)")
+        }
+    }
+    
+    func monitoringManager(_ manager: ESTMonitoringManager, didExitRangeOfIdentifier identifier: String) {
+        
+        LOG.debug("TRYING TO EXIT \(identifier)")
+
+        
+        if let message = self.exitMessages[identifier],  let beaconId = findBeaconId(withId: identifier) {
+            
+            let region = beaconId.asBeaconRegion
+            
+            self.enableNotificationsForBeaconID(beaconId)
+            
+            self.showNotificationWithMessage(message)
+            
+            if let minorSpeciesIndex = region.minor?.intValue {
+                //adjust because these ids can't be start 0
+                let speciesIndex = minorSpeciesIndex - 1
+                
+                let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+                
+                //realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+                
+                let banner = Banner(title: "DID EXIT", subtitle: "SPECIES \(message)", image: gim, backgroundColor: UIColor.black)
+                
+                banner.shouldTintImage = false
+                banner.dismissesOnTap = true
+                banner.dismissesOnSwipe = true
+                banner.show()
+                
+                LOG.debug("DID EXIT ----------------> \(region)")
+                
+                //four sec
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    banner.dismiss()
+                }
+                
+                if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                    realmDataController.saveNutellaCondition(withCondition: "place", withActionType: "exit", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+                }
+                
+                play(sound: .tap)
+                
+            } else {
+                    LOG.debug("FAILED EXIT \(identifier)")
+            }
+            
+        }
+    }
+    
+    fileprivate func showNotificationWithMessage(_ message: String) {
+        let notification = UILocalNotification()
+        notification.alertBody = message
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.shared.presentLocalNotificationNow(notification)
+        LOG.debug("showNotificationWithMessage SHOW NOTIFICATION")
+    }
+    
+    func findBeaconId(withId id: String) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
+        return found.first
     }
     
     func prepareTabs() {
@@ -122,11 +305,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
     }
     
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        prepareMenuController()
-    }
-    
+  
     //Mark: Notifications
     
     func prepareNotifications() {
@@ -222,6 +401,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                 switch atype {
                 case .entered:
                     
+                    play(sound: .coin)
                     _ = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
                     
                     
@@ -251,6 +431,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                         realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
                     }
                 case .exited:
+                    play(sound: .tap)
                     topTabbar.removeSegment(at: TERMINAL_INDEX, animated: true)
                     topTabbar.selectedSegmentIndex = 0
                     colorizeSelectedSegment()
@@ -374,9 +555,11 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         guard let id = segue.identifier else {
             return
         }
+        
         switch id {
         case "speciesPageContainerController":
-            if segue.destination is SpeciePageContainerController {
+            if let svc = segue.destination as? SpeciePageContainerController {
+                self.autoScrollPageDelegate = svc
             }
         case "terminalSegue": break
             // if let tvc = segue.destination as? TerminalMainViewController {
@@ -437,7 +620,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     // Mark: Action
     
-     @IBAction func unwindToMainFromScanner(segue: UIStoryboardSegue) {
+    @IBAction func unwindToMainFromScanner(segue: UIStoryboardSegue) {
         
         if let scannerViewController =  segue.source as? ScannerViewController {
             if let speciesIndex = scannerViewController.scannedSpecies, let beaconId = scannerViewController.scannedBeaconId {
@@ -519,6 +702,34 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     override var shouldAutorotate: Bool {
         return false
+    }
+    
+    func play(sound: Sound) {
+        
+        
+        var audioFilePath: String?
+        
+        switch sound {
+        case .tap:
+            audioFilePath = Bundle.main.path(forResource: "tap", ofType: "wav")
+        default:
+            audioFilePath = Bundle.main.path(forResource: "coin", ofType: "wav")
+        }
+        
+        do {
+            if let path = audioFilePath {
+                
+                let url = NSURL.fileURL(withPath: path)
+                
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+                
+            } else {
+                print("audio file is not found")
+            }
+        } catch {
+            
+        }
     }
     
 }

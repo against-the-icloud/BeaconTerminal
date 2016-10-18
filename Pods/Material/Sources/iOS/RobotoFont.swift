@@ -68,12 +68,10 @@ public struct RobotoFont: FontType {
      */
     public static func thin(with size: CGFloat) -> UIFont {
         Font.loadFontIfNeeded(name: "Roboto-Thin")
-		
-        if let f = UIFont(name: "Roboto-Thin", size: size) {
+		if let f = UIFont(name: "Roboto-Thin", size: size) {
 			return f
 		}
-		
-        return Font.systemFont(ofSize: size)
+		return Font.systemFontWithSize(size: size)
 	}
 	
     /**
@@ -83,12 +81,10 @@ public struct RobotoFont: FontType {
      */
     public static func light(with size: CGFloat) -> UIFont {
         Font.loadFontIfNeeded(name: "Roboto-Light")
-		
-        if let f = UIFont(name: "Roboto-Light", size: size) {
+		if let f = UIFont(name: "Roboto-Light", size: size) {
 			return f
 		}
-		
-        return Font.systemFont(ofSize: size)
+		return Font.systemFontWithSize(size: size)
 	}
 	
     /**
@@ -98,12 +94,10 @@ public struct RobotoFont: FontType {
      */
     public static func regular(with size: CGFloat) -> UIFont {
         Font.loadFontIfNeeded(name: "Roboto-Regular")
-		
-        if let f = UIFont(name: "Roboto-Regular", size: size) {
+		if let f = UIFont(name: "Roboto-Regular", size: size) {
 			return f
 		}
-		
-        return Font.systemFont(ofSize: size)
+		return Font.systemFontWithSize(size: size)
 	}
 	
     /**
@@ -113,12 +107,10 @@ public struct RobotoFont: FontType {
      */
     public static func medium(with size: CGFloat) -> UIFont {
 		Font.loadFontIfNeeded(name: "Roboto-Medium")
-		
-        if let f = UIFont(name: "Roboto-Medium", size: size) {
+		if let f = UIFont(name: "Roboto-Medium", size: size) {
 			return f
 		}
-		
-        return Font.boldSystemFont(ofSize: size)
+		return Font.boldSystemFontWithSize(size: size)
 	}
 	
     /**
@@ -128,11 +120,9 @@ public struct RobotoFont: FontType {
      */
     public static func bold(with size: CGFloat) -> UIFont {
         Font.loadFontIfNeeded(name: "Roboto-Bold")
-		
-        if let f = UIFont(name: "Roboto-Bold", size: size) {
+		if let f = UIFont(name: "Roboto-Bold", size: size) {
 			return f
 		}
-		
-        return Font.boldSystemFont(ofSize: size)
+		return Font.boldSystemFontWithSize(size: size)
 	}
 }
