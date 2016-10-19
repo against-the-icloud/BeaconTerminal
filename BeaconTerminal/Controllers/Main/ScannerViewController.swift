@@ -234,11 +234,16 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                     self.scannedSpecies = speciesIndex
                     self.scannedBeaconId = beaconId
                     
+                    self.immediateBeacon.disconnect()
                     lb.disconnect()
                     
-                 
-                        
-                        
+                    let userInfo = ["index":NSNumber.init(value: speciesIndex)]
+                    
+                    let notification = Notification(
+                        name: Notification.Name(rawValue: beaconNotificationKey), object: self,
+                        userInfo: userInfo)
+                    NotificationCenter.default.post(notification)
+                    
                         let condition = getAppDelegate().checkApplicationState().rawValue
                         realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
                         realmDataController.clearInViewTerminal(withCondition: condition)
