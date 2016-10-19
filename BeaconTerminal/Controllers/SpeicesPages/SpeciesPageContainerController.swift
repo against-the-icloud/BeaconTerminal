@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import RealmSwift
 
-@objc protocol AutoScrollPageDelegate {
-    func scroll(withIndex index: Int)
-}
-
 class SpeciePageContainerController: UIPageViewController {
     
     var speciesObservationResults: Results<SpeciesObservation>?
@@ -22,14 +18,13 @@ class SpeciePageContainerController: UIPageViewController {
     var speciesObsNotificationToken: NotificationToken? = nil
     var pageCount = 0
     
-    var autoScrollPageDelegate: AutoScrollPageDelegate?
-    
     var pageIsAnimating = false
-
+    
     
     deinit {
         speciesObsNotificationToken?.stop()
         runtimeNotificationToken?.stop()
+        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +44,9 @@ class SpeciePageContainerController: UIPageViewController {
         pageControlAppearance.pageIndicatorTintColor = UIColor.white
         pageControlAppearance.currentPageIndicatorTintColor = UIColor.black
         pageControlAppearance.backgroundColor = UIColor.clear
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SpeciePageContainerController.scroll(_:)), name: Notification.Name(rawValue: beaconNotificationKey), object: nil)
+        
         
     }
     
@@ -88,10 +86,10 @@ class SpeciePageContainerController: UIPageViewController {
         if let firstPageController = viewController(atIndex: 0) {
             
             self.setViewControllers([firstPageController], direction: .forward, animated: true, completion: {done in })
-        
+            
         }
     }
-
+    
     
     func viewController(atIndex index: Int) -> UIViewController? {
         if let groupIndex = realm?.runtimeGroupIndex(), let sectionName = realm?.runtimeSectionName() {
@@ -117,16 +115,14 @@ class SpeciePageContainerController: UIPageViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
-}
-
-// MARK: - Page View Controller Data Source
-extension SpeciePageContainerController: AutoScrollPageDelegate{
-    func scroll(withIndex index: Int) {
-        if let firstPageController = self.viewController(atIndex: index) {
-            LOG.debug("AUTO SCROLLING to \(index)")
-            self.setViewControllers([firstPageController], direction: .forward, animated: true, completion: {done in })
-            
+    
+    func scroll(_ notification: Notification) {
+        if let index = notification.userInfo?["index"] as? Int {
+            if let firstPageController = self.viewController(atIndex: index) {
+                LOG.debug("AUTO SCROLLING to \(index)")
+                self.setViewControllers([firstPageController], direction: .forward, animated: true, completion: {done in })
+                
+            }
         }
     }
     
@@ -159,7 +155,7 @@ extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageV
             }
             index -= 1
             if index >= 0 {
-                return self.viewController(atIndex: index)                
+                return self.viewController(atIndex: index)
             }
         }
         return nil
@@ -170,7 +166,7 @@ extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageV
         if self.pageIsAnimating {
             return nil
         }
-
+        
         let pageContent: SpeciesPageContentController = viewController as! SpeciesPageContentController
         if var index = pageContent.speciesIndex {
             if (index == NSNotFound) {
@@ -178,7 +174,7 @@ extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageV
             }
             index += 1
             
-        
+            
             
             return self.viewController(atIndex: index)
         }
@@ -199,5 +195,5 @@ extension SpeciePageContainerController: UIPageViewControllerDataSource, UIPageV
         return 0
     }
     
-
+    
 }

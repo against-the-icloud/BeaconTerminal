@@ -36,6 +36,8 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>Location</key>
+	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -46,10 +48,8 @@
 	<key>NSCameraUsageDescription</key>
 	<string>photos</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Location, Location, Location</string>
+	<string>This application monitors your location to show you promotional offers in shops you're passing by.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Location, Location, Location</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location, Location, Location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photos</string>

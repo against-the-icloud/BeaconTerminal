@@ -30,35 +30,15 @@
 
 import UIKit
 
-/// NavigationBar styles.
-@objc(NavigationBarStyle)
-public enum NavigationBarStyle: Int {
-	case small
-	case medium
-	case large
-}
-
 open class NavigationBar: UINavigationBar {
-    open override var intrinsicContentSize: CGSize {
-        switch navigationBarStyle {
-        case .small:
-            return CGSize(width: Device.width, height: 32)
-        case .medium:
-            return CGSize(width: Device.width, height: 44)
-        case .large:
-            return CGSize(width: Device.width, height: 56)
-        }
+    /// Will layout the view.
+    open var willLayout: Bool {
+        return 0 < width && 0 < height && nil != superview
     }
     
-	/// NavigationBarStyle value.
-	open var navigationBarStyle = NavigationBarStyle.medium
-	
-	internal var animating = false
-	
-	/// Will render the view.
-	open var willLayout: Bool {
-		return 0 < width && 0 < height && nil != superview
-	}
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: Device.width, height: height)
+    }
 	
 	/// A preset wrapper around contentEdgeInsets.
 	open var contentEdgeInsetsPreset = EdgeInsetsPreset.none {
@@ -115,7 +95,7 @@ open class NavigationBar: UINavigationBar {
 		}
 	}
 	
-	/// A property that accesses the backing layer's backgroundColor.
+	/// A property that accesses the backing layer's background
 	@IBInspectable
     open override var backgroundColor: UIColor? {
 		didSet {
@@ -165,7 +145,7 @@ open class NavigationBar: UINavigationBar {
 		super.layoutSubviews()
         layoutShadowPath()
 		
-		if let v = topItem {
+        if let v = topItem {
 			layoutNavigationItem(item: v)
 		}
 		
@@ -240,6 +220,7 @@ open class NavigationBar: UINavigationBar {
         }
         
         item.contentView.grid.begin()
+        
         if .center == item.contentViewAlignment {
             if lc < rc {
                 item.contentView.grid.columns = columns - 2 * rc
@@ -300,18 +281,18 @@ open class NavigationBar: UINavigationBar {
      The super.prepare method should always be called immediately
      when subclassing.
      */
-	public func prepare() {
+	open func prepare() {
         barStyle = .black
-		isTranslucent = false
-		depthPreset = .depth1
+        isTranslucent = false
+        depthPreset = .depth1
         interimSpacePreset = .interimSpace3
         contentEdgeInsetsPreset = .square1
         contentScaleFactor = Device.scale
 		backButtonImage = Icon.cm.arrowBack
-        let image = UIImage.imageWithColor(color: Color.clear, size: CGSize(width: 1, height: 1))
+        let image = UIImage.image(with: .clear, size: CGSize(width: 1, height: 1))
 		shadowImage = image
 		setBackgroundImage(image, for: .default)
-		backgroundColor = Color.white
+		backgroundColor = .white
 	}
 	
 	/**

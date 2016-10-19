@@ -9,16 +9,18 @@ struct BeaconID: Equatable, CustomStringConvertible, Hashable {
     let proximityUUID: UUID
     let major: CLBeaconMajorValue
     let minor: CLBeaconMinorValue
+    let speciesIndex: Int
     
-    init(identifier: String, UUIDString: String =  "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: CLBeaconMajorValue, minor: CLBeaconMinorValue) {
+    init(identifier: String, UUIDString: String =  "B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: CLBeaconMajorValue, minor: CLBeaconMinorValue, withSpeciesIndex speciesIndex: Int) {
         self.identifier = identifier
         self.proximityUUID = UUID(uuidString: UUIDString)!
         self.major = major
         self.minor = minor
+        self.speciesIndex = speciesIndex
     }
     
     var asString: String {
-        get { return "identifier:\(identifier),proximityUUID:\(proximityUUID.uuidString), major:\(major), minor:\(minor)"
+        get { return "identifier:\(identifier),proximityUUID:\(proximityUUID.uuidString), major:\(major), minor:\(minor), speciesIndex:\(speciesIndex)"
         }
     }
     

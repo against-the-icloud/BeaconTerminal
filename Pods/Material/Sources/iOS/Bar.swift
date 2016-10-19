@@ -37,16 +37,20 @@ public enum ContentViewAlignment: Int {
 }
 
 open class Bar: View {
+    /// Will layout the view.
+    open var willLayout: Bool {
+        return 0 < width && 0 < height && nil != superview
+    }
+    
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: width, height: height)
+    }
+    
     /// Should center the contentView.
     open var contentViewAlignment = ContentViewAlignment.any {
         didSet {
             layoutSubviews()
         }
-    }
-    
-    /// Will render the view.
-    open var willLayout: Bool {
-        return 0 < width && 0 < height && nil != superview
     }
     
     /// A preset wrapper around contentEdgeInsets.
@@ -88,10 +92,6 @@ open class Bar: View {
         }
     }
     
-    open override var intrinsicContentSize: CGSize {
-        return CGSize(width: width, height: 44)
-    }
-    
     /// Grid cell factor.
     @IBInspectable
     open var gridFactor: CGFloat = 12 {
@@ -125,12 +125,12 @@ open class Bar: View {
     }
     
     /// Center UIViews.
-    open var centerViews: [UIView] {
-        get {
-            return contentView.grid.views
-        }
-        set(value) {
-            contentView.grid.views = value
+    open var centerViews = [UIView]() {
+        didSet {
+            for v in oldValue {
+                v.removeFromSuperview()
+            }
+            layoutSubviews()
         }
     }
     
@@ -165,18 +165,24 @@ open class Bar: View {
      - Parameter centerViews: An Array of UIViews that go in the center.
      */
     public init(leftViews: [UIView]? = nil, rightViews: [UIView]? = nil, centerViews: [UIView]? = nil) {
+        super.init(frame: .zero)
         self.leftViews = leftViews ?? []
         self.rightViews = rightViews ?? []
-        super.init(frame: .zero)
         self.centerViews = centerViews ?? []
         frame.size = intrinsicContentSize
     }
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
         guard willLayout else {
             return
         }
         
+        reload()
+    }
+    
+    /// Reloads the view.
+    open func reload() {
         var lc = 0
         var rc = 0
         let l = (CGFloat(leftViews.count) * interimSpace)
@@ -221,6 +227,7 @@ open class Bar: View {
         }
         
         contentView.grid.begin()
+        contentView.grid.views = centerViews
         
         if .center == contentViewAlignment {
             if lc < rc {
@@ -250,6 +257,7 @@ open class Bar: View {
      */
     open override func prepare() {
         super.prepare()
+        heightPreset = .default
         autoresizingMask = .flexibleWidth
         interimSpacePreset = .interimSpace3
         contentEdgeInsetsPreset = .square1

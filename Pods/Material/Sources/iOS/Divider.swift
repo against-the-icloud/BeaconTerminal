@@ -46,7 +46,25 @@ open class Divider {
     internal var line: UIView?
     
     /// A reference to the height.
-    public var height: CGFloat
+    open var thickness: CGFloat {
+        didSet {
+            reload()
+        }
+    }
+    
+    /// A preset wrapper around contentEdgeInsets.
+    open var contentEdgeInsetsPreset = EdgeInsetsPreset.none {
+        didSet {
+            contentEdgeInsets = EdgeInsetsPresetToValue(preset: contentEdgeInsetsPreset)
+        }
+    }
+    
+    /// A reference to EdgeInsets.
+    open var contentEdgeInsets = EdgeInsets.zero {
+        didSet {
+            reload()
+        }
+    }
     
     /// A UIColor.
     open var color: UIColor? {
@@ -79,27 +97,30 @@ open class Divider {
     /**
      Initializer that takes in a UIView.
      - Parameter view: A UIView reference.
+     - Parameter thickness: A CGFloat value.
      */
-    internal init(view: UIView?, height: CGFloat = 1) {
+    internal init(view: UIView?, thickness: CGFloat = 1) {
         self.view = view
-        self.height = height
+        self.thickness = thickness
     }
     
     /// Lays out the divider.
-    internal func reload() {
+    open func reload() {
         guard let l = line, let v = view else {
             return
         }
         
+        let c = contentEdgeInsets
+        
         switch alignment {
         case .top:
-            l.frame = CGRect(x: 0, y: 0, width: v.width, height: height)
+            l.frame = CGRect(x: c.left, y: c.top, width: v.width - c.left - c.right, height: thickness)
         case .bottom:
-            l.frame = CGRect(x: 0, y: v.height - height, width: v.width, height: height)
+            l.frame = CGRect(x: c.left, y: v.height - thickness - c.bottom, width: v.width - c.left - c.right, height: thickness)
         case .left:
-            l.frame = CGRect(x: 0, y: 0, width: height, height: v.height)
+            l.frame = CGRect(x: c.left, y: c.top, width: thickness, height: v.height - c.top - c.bottom)
         case .right:
-            l.frame = CGRect(x: v.width - height, y: 0, width: height, height: v.height)
+            l.frame = CGRect(x: v.width - thickness - c.right, y: c.top, width: thickness, height: v.height - c.top - c.bottom)
         }
     }
 }
@@ -141,15 +162,14 @@ extension UIView {
         }
     }
     
-    /// Divider height.
+    /// Divider thickness.
     @IBInspectable
-    open var dividerHeight: CGFloat {
+    open var dividerThickness: CGFloat {
         get {
-            return divider.height
+            return divider.thickness
         }
         set(value) {
-            divider.height = value
+            divider.thickness = value
         }
     }
 }
-

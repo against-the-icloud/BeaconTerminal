@@ -19,7 +19,7 @@ class StringUtil {
         case .mutual:
             return "IS DEPENDENT ON"
         case .sPreference:
-            return "HABITATS"
+            return "INHABITATS"
         default:
             return "COMPETES WITH"
         }

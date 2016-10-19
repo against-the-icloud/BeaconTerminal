@@ -31,7 +31,7 @@
 import UIKit
 
 open class Card: PulseView {
-    /// Will render the view.
+    /// Will layout the view.
     open var willLayout: Bool {
         return 0 < width && nil != superview
     }
@@ -178,7 +178,7 @@ open class Card: PulseView {
     /// Reloads the layout.
     open func reload() {
         // Clear constraints so new ones do not conflict.
-        container.removeConstraints(constraints)
+        container.removeConstraints(container.constraints)
         for v in container.subviews {
             v.removeFromSuperview()
         }
@@ -193,9 +193,7 @@ open class Card: PulseView {
             
             format += "-(toolbarTop)-[toolbar]-(toolbarBottom)"
             views["toolbar"] = v
-            container.layout(v).horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right).height(v.height)
-            v.grid.reload()
-            v.divider.reload()
+            container.layout(v).horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right)
         }
         
         if let v = contentView {
@@ -211,6 +209,7 @@ open class Card: PulseView {
             
             views["contentView"] = v
             container.layout(v).horizontally(left: contentViewEdgeInsets.left, right: contentViewEdgeInsets.right)
+            
             v.grid.reload()
             v.divider.reload()
         }
@@ -230,9 +229,7 @@ open class Card: PulseView {
             }
             
             views["bottomBar"] = v
-            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right).height(v.height)
-            v.grid.reload()
-            v.divider.reload()
+            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right)
         }
         
         guard 0 < views.count else {

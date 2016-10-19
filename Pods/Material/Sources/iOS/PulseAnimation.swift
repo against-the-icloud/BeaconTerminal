@@ -66,6 +66,8 @@ internal extension Animation {
         bLayer.addSublayer(pLayer)
         pulse.layers.insert(bLayer, at: 0)
         visualLayer.addSublayer(bLayer)
+        bLayer.zPosition = 0
+        pLayer.zPosition = 0
         
         visualLayer.masksToBounds = !(.centerRadialBeyondBounds == pulse.animation || .radialBeyondBounds == pulse.animation)
         

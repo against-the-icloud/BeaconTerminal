@@ -100,17 +100,11 @@ open class Toolbar: Bar {
         }
         contentViewAlignment = .center == titleLabel.textAlignment ? .center : .any
     }
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        guard willLayout else {
-            return
-        }
-        
-        reload()
-    }
     
     /// Reloads the view.
-    open func reload() {
+    open override func reload() {
+        super.reload()
+        
         if nil != title && "" != title {
             if nil == titleLabel.superview {
                 contentView.addSubview(titleLabel)
@@ -154,6 +148,7 @@ open class Toolbar: Bar {
      */
 	open override func prepare() {
 		super.prepare()
+        heightPreset = .normal
         contentViewAlignment = .center
 		prepareTitleLabel()
 		prepareDetailLabel()

@@ -6,7 +6,7 @@ import Nutella
 import Transporter
 import Alamofire
 import NVActivityIndicatorView
-
+import AVFoundation
 
 let DEBUG = true
 let REFRESH_DB = true
@@ -29,7 +29,7 @@ let LOG: XCGLogger = {
     return LOG
 }()
 
-//Mark: State Machine
+//MARK: State Machine
 
 enum RealmType: String {
     case defaultDB = "DEFAULT_DB"
@@ -64,6 +64,10 @@ enum LoginTypes: String {
     static let allValues = [autoLogin, manualLogin, currentRun, currentSection, currentRoster, currentChannelList, currentSpeciesNames, currentActivityAndRoom, currentChannelNames]
 }
 
+enum Sound {
+    case coin
+    case tap
+}
 
 enum Tabs : String {
     case species = "Species"
@@ -138,7 +142,7 @@ struct Platform {
 }
 
 
-//Mark: Nutella supports
+//MARK: Nutella supports
 
 enum NutellaMessageType: String {
     case request
@@ -179,19 +183,23 @@ struct NutellaUpdate {
 }
 
 
-var beaconNotificationsManager: BeaconNotificationsManager?
+let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D",  major: 111, minor: 1, withSpeciesIndex: 0),
+                 BeaconID(identifier: "ee3a94ba9ed4a25cffaf290226c6d22c", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2,withSpeciesIndex: 1),
+                 BeaconID(identifier: "7148d3b4f6b3d192f52c3936fb9bcd33", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 3,withSpeciesIndex: 2),
+                 BeaconID(identifier: "040d277eac74d336847970113ccbe739", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 4,withSpeciesIndex: 3),
+                 BeaconID(identifier: "9e21d6e5190efbe7554742d62c1f1f0a", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 5,withSpeciesIndex: 4),
+                 BeaconID(identifier: "581736ca8b0332c774b07edc687f8231", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 6,withSpeciesIndex: 5),
+                 BeaconID(identifier: "5edb82480cbba797722765f64430b71f", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 7,withSpeciesIndex: 6),
+                 BeaconID(identifier: "38258bb861c5fe5011d0752ab0b82000", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 8,withSpeciesIndex: 7),
+                 BeaconID(identifier: "3725c7b4dd3a7dd2345f5d83488ac419", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 9,withSpeciesIndex: 8),
+                 BeaconID(identifier: "fd89d7d2ad4138ed782b965bf2380527", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 10,withSpeciesIndex: 9),
+                 BeaconID(identifier: "f90c0feb677f03759c6afce57048cc0f", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 11,withSpeciesIndex: 10)]
 
-let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", major: 1, minor: 1),
-                 BeaconID(identifier: "ee3a94ba9ed4a25cffaf290226c6d22c", major: 1, minor: 2),
-                 BeaconID(identifier: "7148d3b4f6b3d192f52c3936fb9bcd33", major: 1, minor: 3),
-                 BeaconID(identifier: "040d277eac74d336847970113ccbe739", major: 1, minor: 4),
-                 BeaconID(identifier: "9e21d6e5190efbe7554742d62c1f1f0a", major: 1, minor: 5),
-                 BeaconID(identifier: "581736ca8b0332c774b07edc687f8231", major: 1, minor: 6),
-                 BeaconID(identifier: "5edb82480cbba797722765f64430b71f", major: 1, minor: 7),
-                 BeaconID(identifier: "38258bb861c5fe5011d0752ab0b82000", major: 1, minor: 8),
-                 BeaconID(identifier: "3725c7b4dd3a7dd2345f5d83488ac419", major: 1, minor: 9),
-                 BeaconID(identifier: "fd89d7d2ad4138ed782b965bf2380527", major: 1, minor: 10),
-                 BeaconID(identifier: "f90c0feb677f03759c6afce57048cc0f", major: 1, minor: 11)]
+
+var estMonitoringManager = ESTMonitoringManager()
+var estBeaconManager = ESTBeaconManager()
+
+let beaconNotificationKey = "ltg.evl.uic.edu.beaconNotificationKey"
 
 
 var realm: Realm?
@@ -209,7 +217,7 @@ func getAppDelegate() -> AppDelegate {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {    
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
@@ -283,9 +291,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loadCondition()
     }
     
-    // Mark: View setup
-    
-    // Mark: db setup
+    // MARK: View setup
     
     func loadCondition() {
         
@@ -310,7 +316,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .placeGroup:
             needsTerminal = false
             rootVC = prepareGroupUI()
-            //prepareBeaconManager()
+            prepareBeacons()
         case .objectGroup:
             needsTerminal = true
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.allTypes)
@@ -367,15 +373,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.makeKeyAndVisible()
     }
     
-    func prepareBeaconManager() {
-        beaconNotificationsManager = BeaconNotificationsManager()
-        for (index, beaconId) in beaconIds.enumerated() {
-            beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
-                                                                       enterMessage: "enter species \(index)",
-                exitMessage: "exit species \(index)"
-            )
-        }
-    }
+//    func prepareBeaconManager() {
+//        beaconNotificationsManager = BeaconNotificationsManager()
+//        for (index, beaconId) in beaconIds.enumerated() {
+//            beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
+//                                                                       enterMessage: "enter species \(index)",
+//                exitMessage: "exit species \(index)"
+//            )
+//        }
+//    }
     
     
     func prepareAutoLoginUI() -> DefaultViewController {
@@ -565,7 +571,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    // Mark: Nutella setup
+    // MARK: Nutella setup
     
     func setupConnection(withSectionName sectionName: String = "default") {
         
@@ -596,7 +602,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //resetDB()
     }
     
-    // Mark: Nutella LOGIN
+    // MARK: Nutella LOGIN
     
     func setupLoginConnection() {
         
@@ -624,7 +630,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // Mark: LoginStateMachine
+    // MARK: LoginStateMachine
     
     var loginViewController: DefaultViewController?
     
@@ -703,7 +709,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return loginStateMachine!.currentState.value
     }
     
-    // Mark: StateMachine
+    // MARK: StateMachine
     
     func initStateMachine() {
         
@@ -741,6 +747,162 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return applicationStateMachine!.currentState.value
     }
     
+    func prepareBeacons() {
+        estBeaconManager.delegate = self
+        //estMonitoringManager.delegate = self
+        
+        estBeaconManager.requestAlwaysAuthorization()
+        
+        for (_, beaconId) in beaconIds.enumerated() {
+            enableNotificationsForBeaconID(beaconId)
+        }
+
+    }
+    
+    func enableNotificationsForBeaconID(_ beaconId: BeaconID) {
+        
+        // Improves performance in background, but can impact the battery. Use with caution.
+        
+        let beaconRegion = beaconId.asBeaconRegion
+        beaconRegion.notifyEntryStateOnDisplay = true
+        beaconRegion.notifyOnExit = true
+        beaconRegion.notifyOnEntry = true
+        
+        estBeaconManager.startMonitoring(for: beaconRegion)
+    }
+    
+    func doEnter(identifier:String) {
+        if let beaconId = findBeaconId(withId: identifier) {
+            
+            
+            
+            let region = beaconId.asBeaconRegion
+            
+            //adjust because these ids can't be start 0
+            let speciesIndex = beaconId.speciesIndex
+            
+            let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+            
+//            if let autoScrollPageDelegate = self.autoScrollPageDelegate {
+//                autoScrollPageDelegate.scroll(withIndex: speciesIndex)
+//            }
+            
+            LOG.debug("\n\n DID ENTER ----------------> SPECIES: \(speciesIndex) REGION: \(region)")
+            
+            
+            let banner = Banner(title: "DID ENTER", subtitle: "SPECIES \(speciesIndex)", image: gim, backgroundColor: UIColor.black)
+            
+            banner.shouldTintImage = false
+            banner.dismissesOnTap = true
+            banner.dismissesOnSwipe = true
+            banner.show()
+            
+            //four sec
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                banner.dismiss()
+            }
+            
+            realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: "place", withActionType: "enter", withPlace: region.description)
+            
+            play(sound: .coin)
+            
+            let userInfo = ["index":NSNumber.init(value: speciesIndex)]
+            
+            let notification = Notification(
+                name: Notification.Name(rawValue: beaconNotificationKey), object: self,
+                userInfo: userInfo)
+            NotificationCenter.default.post(notification)
+            
+        } else {
+            LOG.debug("FAILED ENTER \(identifier)")
+        }
+    }
+    
+    func doExit(identifier:String) {
+        if let beaconId = findBeaconId(withId: identifier) {
+            
+            let region = beaconId.asBeaconRegion
+            
+            //self.enableNotificationsForBeaconID(beaconId)
+            
+            
+            
+            //adjust because these ids can't be start 0
+            let speciesIndex = beaconId.speciesIndex
+            
+            
+            let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
+            
+            //realmDataController.syncSpeciesObservations(withIndex: speciesIndex)
+            
+            let banner = Banner(title: "DID EXIT", subtitle: "SPECIES \(speciesIndex)", image: gim, backgroundColor: UIColor.black)
+            
+            banner.shouldTintImage = false
+            banner.dismissesOnTap = true
+            banner.dismissesOnSwipe = true
+            banner.show()
+            
+            LOG.debug("\n\n DID EXIT ----------------> SPECIES: \(speciesIndex) REGION: \(region)")
+            
+            //four sec
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                banner.dismiss()
+            }
+            
+            if let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
+                realmDataController.saveNutellaCondition(withCondition: "place", withActionType: "exit", withPlace: region.description, withGroupIndex: groupIndex, withSpeciesIndex: speciesIndex)
+            }
+            
+            play(sound: .tap)
+            
+            let userInfo = ["index":NSNumber.init(value: speciesIndex)]
+            
+            let notification = Notification(
+                name: Notification.Name(rawValue: beaconNotificationKey), object: self,
+                userInfo: userInfo)
+            NotificationCenter.default.post(notification)
+            
+        } else {
+            LOG.debug("FAILED EXIT \(identifier)")
+        }
+    }
+    
+    var audioPlayer:AVAudioPlayer!
+
+    func play(sound: Sound) {
+        
+        
+        var audioFilePath: String?
+        
+        switch sound {
+        case .tap:
+            audioFilePath = Bundle.main.path(forResource: "tap", ofType: "wav")
+        default:
+            audioFilePath = Bundle.main.path(forResource: "coin", ofType: "wav")
+        }
+        
+        do {
+            if let path = audioFilePath {
+                
+                let url = NSURL.fileURL(withPath: path)
+                
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer.play()
+                
+            } else {
+                print("audio file is not found")
+            }
+        } catch {
+            
+        }
+    }
+
+
+    func findBeaconId(withId id: String) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
+        return found.first
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -766,6 +928,98 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkCurrentRun(run:String) {
         
     }
+}
+
+extension AppDelegate: ESTBeaconManagerDelegate {
+    
+    func beaconManager(_ manager: Any, didChange status: CLAuthorizationStatus) {
+        LOG.debug("\n\n STATUS ---> BEACON MANAGER REGION: \(status)")
+        
+        switch status {
+        case .authorizedAlways:
+            LOG.debug("\n\n authorizedAlways)")
+        case .authorizedWhenInUse:
+            LOG.debug("\n\n authorizedWhenInUse)")
+        case .denied:
+            LOG.debug("\n\n denied)")
+        case .notDetermined:
+            LOG.debug("\n\n not determined)")
+        case .restricted:
+            LOG.debug("\n\n restricted)")
+        }
+    }
+    
+    func beaconManager(_ manager: Any, didStartMonitoringFor region: CLBeaconRegion) {
+        LOG.debug("\n\n DID START MONITOR BEACON MANAGER ---> BEACON MANAGER REGION: \(region)")
+        
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+        
+    }
+    
+    func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
+        LOG.debug("\n\n DID ENTER ---> BEACON MANAGER REGION: \(region)")
+        doEnter(identifier: region.identifier)
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+        
+    }
+    
+    func beaconManagerDidStartAdvertising(_ manager: Any, error: Error?) {
+        LOG.debug("\n\n DID ADV ---> BEACON MANAGER")
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+        
+        
+    }
+    
+    func beaconManager(_ manager: Any, didExitRegion region: CLBeaconRegion) {
+        LOG.debug("\n\n DID EXIT ---> BEACON MANAGER REGION: \(region)")
+        doExit(identifier: region.identifier)
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+        
+    }
+    
+    func beaconManager(_ manager: Any, didDetermineState state: CLRegionState, for region: CLBeaconRegion) {
+        
+        switch state {
+        case .unknown:
+            LOG.debug("\n\n UNKNOWN STATE ---> BEACON MANAGER REGION: \(region.identifier)")
+        case .inside:
+            doEnter(identifier: region.identifier)
+            LOG.debug("\n\n INSIDE STATE ---> BEACON MANAGER REGION: \(region.identifier)")
+        case .outside:
+            LOG.debug("\n\n OUTSIDE STATE ---> BEACON MANAGER REGION: \(region.identifier)")
+        default:
+            break
+        }
+        
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+        
+    }
+    
+    func beaconManager(_ manager: Any, didFailWithError error: Error) {
+        LOG.debug("\n\n DID FAIL WITH ERROR \(manager) ----------------> BEACON MANAGER: \(error)")
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+        
+    }
+    
+    func beaconManager(_ manager: Any, monitoringDidFailFor region: CLBeaconRegion?, withError error: Error) {
+        LOG.debug("\n\n DID FAILE FOR  ---> BEACON MANAGER REGION: \(region) ERROR \(error)")
+        if let bm = manager as? ESTBeaconManager {
+            LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
+        }
+    }
+
 }
 
 extension AppDelegate: NutellaNetDelegate {

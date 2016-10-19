@@ -75,7 +75,7 @@ open class Button: UIButton {
         }
     }
     
-	/// A property that accesses the backing layer's backgroundColor.
+	/// A property that accesses the backing layer's background
 	@IBInspectable
     open override var backgroundColor: UIColor? {
 		didSet {
@@ -143,41 +143,25 @@ open class Button: UIButton {
 	}
     
     /**
-     A convenience initializer that acceps an image.
+     A convenience initializer that acceps an image and tint
      - Parameter image: A UIImage.
-    */
-    public convenience init(image: UIImage?) {
-        self.init()
-        prepare(with: image, tintColor: nil)
-    }
-    
-    /**
-     A convenience initializer that acceps an image and tintColor.
-     - Parameter image: A UIImage.
-     - Parameter tintColor: A UIColor.
+     - Parameter tintColor: A UI
      */
-    public convenience init(image: UIImage?, tintColor: UIColor?) {
+    public convenience init(image: UIImage?, tintColor: UIColor = Color.blue.base) {
         self.init()
         prepare(with: image, tintColor: tintColor)
+        prepare()
     }
     
     /**
-     A convenience initializer that acceps a title.
+     A convenience initializer that acceps a title and title
      - Parameter title: A String.
+     - Parameter titleColor: A UI
      */
-    public convenience init(title: String?) {
-        self.init()
-        prepare(with: title, titleColor: nil)
-    }
-    
-    /**
-     A convenience initializer that acceps a title and titleColor.
-     - Parameter title: A String.
-     - Parameter titleColor: A UIColor.
-     */
-    public convenience init(title: String?, titleColor: UIColor?) {
+    public convenience init(title: String?, titleColor: UIColor = Color.blue.base) {
         self.init()
         prepare(with: title, titleColor: titleColor)
+        prepare()
     }
 	
     open override func layoutSublayers(of layer: CALayer) {
@@ -208,6 +192,8 @@ open class Button: UIButton {
             }
             Animation.pulseContractAnimation(layer: s.layer, visualLayer: s.visualLayer, pulse: &s.pulse)
         }
+        
+        bringImageViewToFront()
     }
     
     /**
@@ -219,6 +205,8 @@ open class Button: UIButton {
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         Animation.pulseExpandAnimation(layer: layer, visualLayer: visualLayer, point: layer.convert(touches.first!.location(in: self), from: layer), width: width, height: height, pulse: &pulse)
+        
+        bringImageViewToFront()
     }
     
     /**
@@ -243,6 +231,14 @@ open class Button: UIButton {
         Animation.pulseContractAnimation(layer: layer, visualLayer: visualLayer, pulse: &pulse)
     }
 	
+    open func bringImageViewToFront() {
+        guard let v = imageView else {
+            return
+        }
+        
+        bringSubview(toFront: v)
+    }
+    
 	/**
      Prepares the view instance when intialized. When subclassing,
      it is recommended to override the prepare method
@@ -270,21 +266,21 @@ open class Button: UIButton {
 	}
     
     /**
-     Prepares the Button with an image and tintColor.
+     Prepares the Button with an image and tint
      - Parameter image: A UIImage.
-     - Parameter tintColor: A UIColor.
+     - Parameter tintColor: A UI
      */
-    private func prepare(with image: UIImage?, tintColor: UIColor?) {
+    private func prepare(with image: UIImage?, tintColor: UIColor) {
         self.image = image
         self.tintColor = tintColor
     }
     
     /**
-     Prepares the Button with a title and titleColor.
+     Prepares the Button with a title and title
      - Parameter title: A String.
-     - Parameter titleColor: A UIColor.
+     - Parameter titleColor: A UI
      */
-    private func prepare(with title: String?, titleColor: UIColor?) {
+    private func prepare(with title: String?, titleColor: UIColor) {
         self.title = title
         self.titleColor = titleColor
     }
