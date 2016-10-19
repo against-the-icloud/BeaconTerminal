@@ -71,9 +71,15 @@ class TerminalComparsionController: UIViewController {
                 toSpeciesImageView.image = image
                 toSpeciesImageView.tintColor = UIColor.gray
             }
+            
+            if name.contains("Temp") {
+                relationshipLabel.text = "SURVIVES IN"
+            } else {
+                relationshipLabel.text = "INHABITATS"
+
+            }
         }
         
-        relationshipLabel.text = "PREFERS"
 
     }
     

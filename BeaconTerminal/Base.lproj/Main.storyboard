@@ -54,7 +54,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="MANUAL LOGIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LF1-i4-ino" userLabel="SHOW LOGIN">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="SHOW LOGIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LF1-i4-ino" userLabel="SHOW LOGIN">
                                                     <rect key="frame" x="347" y="0.0" width="672" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
@@ -67,29 +67,12 @@
                                             <segue destination="EWU-Kq-l3j" kind="presentation" identifier="loginSegue" id="xII-rn-HTP"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="4mf-nr-sfl" style="IBUITableViewCellStyleDefault" id="V7y-Xt-hni">
-                                        <rect key="frame" x="0.0" y="72" width="1366" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V7y-Xt-hni" id="eCF-KH-MIs">
-                                            <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="AUTO LOGIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4mf-nr-sfl" userLabel="SHOW LOGIN">
-                                                    <rect key="frame" x="347" y="0.0" width="672" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="ADMIN" id="VDb-2S-HcW">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="JI6-kc-Qvs" style="IBUITableViewCellStyleDefault" id="qU3-tO-xxK">
-                                        <rect key="frame" x="0.0" y="144" width="1366" height="44"/>
+                                        <rect key="frame" x="0.0" y="100" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qU3-tO-xxK" id="ZQ3-Wv-wUJ">
                                             <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
@@ -109,7 +92,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="KSG-p2-bOc" style="IBUITableViewCellStyleDefault" id="p3s-zc-kmQ">
-                                        <rect key="frame" x="0.0" y="188" width="1366" height="44"/>
+                                        <rect key="frame" x="0.0" y="144" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p3s-zc-kmQ" id="T7J-yl-olH">
                                             <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
@@ -130,7 +113,7 @@
                             <tableViewSection headerTitle="ACTIONS" id="QdR-fa-MgL" userLabel="Actions">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="GAa-Zl-PGk" style="IBUITableViewCellStyleDefault" id="5Lm-Qi-dWL">
-                                        <rect key="frame" x="0.0" y="260" width="1366" height="44"/>
+                                        <rect key="frame" x="0.0" y="216" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Lm-Qi-dWL" id="C0D-VD-wPA">
                                             <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
@@ -150,7 +133,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="FVZ-ml-z41">
-                                        <rect key="frame" x="0.0" y="304" width="1366" height="44"/>
+                                        <rect key="frame" x="0.0" y="260" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FVZ-ml-z41" id="PgB-ha-G8H">
                                             <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
@@ -197,7 +180,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="kx0-tA-xVV">
-                                        <rect key="frame" x="0.0" y="348" width="1366" height="44"/>
+                                        <rect key="frame" x="0.0" y="304" width="1366" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kx0-tA-xVV" id="3Kw-ms-buO">
                                             <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>

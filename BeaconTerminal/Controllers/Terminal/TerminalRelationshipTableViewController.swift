@@ -180,21 +180,37 @@
             //updateReportLabel(shouldReset: false)
         }
         
+        
         func makeToast(relationship: Relationship, groupIndex: Int) {
             if let speciesName = relationship.toSpecies?.name, let speciesIndex = relationship.toSpecies?.index, let si = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true){
                 
+                let banner = Banner(title: "UPDATED! ", subtitle: "Species Observation \(speciesName) from Group \(groupIndex+1)", image: si, backgroundColor: UIColor.black)
+                banner.shouldTintImage = false
+                banner.dismissesOnTap = true
+                banner.dismissesOnSwipe = true
+                banner.show()
                 
-                Util.makeToast("Species Observation \(speciesName) from Group \(groupIndex)", title: "Update for Species Observation", image: si)
-                
+                //four sec
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    banner.dismiss()
+                }
             }
         }
         
         func makeToast(speciesPreference: SpeciesPreference, groupIndex: Int) {
             if let habitatName = speciesPreference.habitat?.name, let speciesIndex = speciesPreference.habitat?.name, let si = UIImage(named: habitatName) {
                 
+               
+                let banner = Banner(title: "UPDATED! ", subtitle: "Species Preference \(habitatName ) from Group \(groupIndex+1)", image: si, backgroundColor: UIColor.black)
+                banner.shouldTintImage = false
+                banner.dismissesOnTap = true
+                banner.dismissesOnSwipe = true
+                banner.show()
                 
-                Util.makeToast("Species Observation \(habitatName) from Group \(groupIndex)", title: "Update for Species Observation", image: si)
-                
+                //four sec
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    banner.dismiss()
+                }
             }
         }
         

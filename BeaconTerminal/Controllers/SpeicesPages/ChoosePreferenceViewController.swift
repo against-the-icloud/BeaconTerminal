@@ -112,7 +112,7 @@ extension ChoosePreferencesViewController {
         
         if let fromSpeciesIndex = self.speciesIndex {
             headerView.fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
-            headerView.relationshipLabel.text = "PREFERS"
+            headerView.relationshipLabel.text = "INHABITS or SURVIVES IN"
         }
         
         return headerView

@@ -41,7 +41,7 @@ class TerminalMainViewController: UIViewController {
         super.viewDidLoad()
         
         if needsTerminal {
-        prepareNotifications()
+            prepareNotifications()
         }
     }
     
@@ -58,11 +58,8 @@ class TerminalMainViewController: UIViewController {
             switch changes {
             case .initial(let runtimeResults):
                 //we have nothing
-                if runtimeResults.isEmpty {
-                    //terminalController.showLogin()
-                } else {
-                    terminalController.updateHeader()
-                }
+                terminalController.updateHeader()
+
                 break
             case .update( _, _, _, _):
                 LOG.debug("UPDATE Runtime -- TERMINAL")
@@ -153,8 +150,7 @@ class TerminalMainViewController: UIViewController {
         }
         
         switch id {
-        case "terminalPreferencesViewSegue":
-           
+        case "terminalPreferencesViewSegue":           
             break
         default:
             break

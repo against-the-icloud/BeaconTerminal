@@ -11,9 +11,9 @@ enum RelationshipType: String {
     case consumer = "consumer"
     case mutual = "mutual"
     case competes = "competes"
-    case habitats = "inhabitats"
+    case inhabits = "inhabits"
     case sPreference = "speciesPreference"
-    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes, .habitats, .sPreference]
+    static let allRelationships : [RelationshipType] = [.producer, .consumer, .competes, .inhabits, .sPreference]
 }
 
 enum ActionType: String {

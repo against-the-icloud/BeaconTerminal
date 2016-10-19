@@ -109,9 +109,15 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
         
         if let habitat = realmDataController.getRealm().habitat(withIndex: habitatIndex) {
             toSpeciesImageView.image = UIImage(named: habitat.name)
+            
+            if habitat.name.contains("Temp") {
+                relationshipTypeLabel.text = "SURVIVES IN"
+            } else {
+                relationshipTypeLabel.text = "INHABITS"
+
+            }
+            
         }
-        
-        relationshipTypeLabel.text = "PREFERS"
     }
     
     
