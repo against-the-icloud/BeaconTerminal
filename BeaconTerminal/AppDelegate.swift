@@ -7,6 +7,7 @@ import Transporter
 import Alamofire
 import NVActivityIndicatorView
 import AVFoundation
+import SystemConfiguration
 
 let DEBUG = true
 let REFRESH_DB = true
@@ -23,6 +24,13 @@ var SECTION_NAME = "default"
 
 let SCHEMEA_VER: UInt64 = 2
 
+let ReachabilityDidChangeNotificationName = "ReachabilityDidChangeNotification"
+
+enum ReachabilityStatus {
+    case notReachable
+    case reachableViaWiFi
+    case reachableViaWWAN
+}
 
 
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
@@ -220,6 +228,8 @@ func getAppDelegate() -> AppDelegate {
     return UIApplication.shared.delegate as! AppDelegate
 }
 
+var reachability: Reachability? = Reachability.networkReachabilityForInternetConnection()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -230,8 +240,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
-        
         //setupLoginConnection()
+        
+        prepareReachability()
         
         setupHockeyApp()
         
@@ -245,7 +256,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         manualLogin()
         
+        
         return true
+    }
+    
+    func prepareReachability() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityDidChange(_:)), name: NSNotification.Name(rawValue: ReachabilityDidChangeNotificationName), object: nil)
+        
+        _ = reachability?.startNotifier()
+        
+    }
+    
+    
+    func checkReachability(withOk ok:Bool) {
+        guard let r = reachability else { return }
+        if r.isReachable  {
+            
+            if ok {
+                let alert = UIAlertController(title: "Alert", message: "WE ARE CONNECTED 😎", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
+            
+        } else {
+            //This method is called when the rootViewController is set and the view.
+            // And the View controller is ready to get touches or events.
+            let alert = UIAlertController(title: "Alert", message: "NOT CONNECTED 😢", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            
+        }
+    }
+    
+    func reachabilityDidChange(_ notification: Notification) {
+        checkReachability(withOk: false)
     }
     
     func manualLogin() {
@@ -605,7 +650,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Realm.Configuration.defaultConfiguration = config
             
             try! terminalRealm = Realm(configuration: config)
-
+            
         } else {
             
             var config = Realm.Configuration(
@@ -710,13 +755,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func refreshTerminalConnection() {
         
         if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
-         
+            
             setupConnection(withSectionName: sectionName)
-                
+            
             realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
         }
-
-    
+        
+        
     }
     
     // MARK: Login StateMachine
@@ -1131,7 +1176,7 @@ extension AppDelegate: NutellaNetDelegate {
         //once recieved set_run runid
         //check run, async 'get_current_run"
         //if cool, request 'roster', give portal types 'group', get list of groups,
-        //get species names - terminal 
+        //get species names - terminal
     }
     
 }

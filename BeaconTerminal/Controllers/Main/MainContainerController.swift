@@ -39,7 +39,11 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
     var toolMenuItems: [UIView] = [UIView]()
     
+
+
+    
     deinit {
+     
         for notificationToken in notificationTokens {
             notificationToken.stop()
         }
@@ -63,6 +67,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         
         prepareToolMenu()
         prepareTabs()
+        
+ 
         
     }
     

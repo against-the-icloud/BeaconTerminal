@@ -53,7 +53,11 @@ class SideViewController: UITableViewController {
         case 1:
             self.navigationDrawerController?.closeLeftView()
             break
-        case 1:
+        case 2:
+            if indexPath.row == 3 {
+                getAppDelegate().checkReachability(withOk: true)
+            }
+            
             self.navigationDrawerController?.closeLeftView()
             break
         default:

@@ -94,6 +94,7 @@
 		70F3B0B41DB51C1F0087DE2F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F3B0B31DB51C1F0087DE2F /* UIKit.framework */; };
 		70F3B0B81DB5218E0087DE2F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F3B0B71DB5218D0087DE2F /* CoreBluetooth.framework */; };
 		70F3B0BA1DB521980087DE2F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F3B0B91DB521980087DE2F /* CoreLocation.framework */; };
+		70F4F9451DBEA8B40076357F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F4F9441DBEA8B40076357F /* Reachability.swift */; };
 		AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */; };
 		AE9764941C22C1BF0058A4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE9764931C22C1BF0058A4DC /* Assets.xcassets */; };
 		C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A7DFEBD44FF1762DD95243 /* ControlPanelViewController.swift */; };
@@ -223,6 +224,7 @@
 		70F3B0B51DB51D150087DE2F /* EstimoteSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EstimoteSDK.framework; path = "../../../../libs-ios/beta/EstimoteSDK/EstimoteSDK.framework"; sourceTree = "<group>"; };
 		70F3B0B71DB5218D0087DE2F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		70F3B0B91DB521980087DE2F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		70F4F9441DBEA8B40076357F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		AE9764891C22C1BF0058A4DC /* BeaconTerminal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeaconTerminal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE97648C1C22C1BF0058A4DC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../AppDelegate.swift; sourceTree = "<group>"; };
 		AE9764931C22C1BF0058A4DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				7003BEE11D81F96C0029B0EE /* TabSegmentedControl.swift */,
 				7030BE241DA4631400DB332D /* Spinner.swift */,
 				7068B05E1DBE6F5300B0F790 /* ImageScrollView.swift */,
+				70F4F9441DBEA8B40076357F /* Reachability.swift */,
 			);
 			name = Util;
 			path = util;
@@ -855,6 +858,7 @@
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
 				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
+				70F4F9451DBEA8B40076357F /* Reachability.swift in Sources */,
 				70D1281F1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift in Sources */,
 				C0A7D4716B8FF4FC2CA79983 /* ScannerViewController.swift in Sources */,
 				708040C51D8520850065B372 /* SpeciesRelationshipContrainerController.swift in Sources */,

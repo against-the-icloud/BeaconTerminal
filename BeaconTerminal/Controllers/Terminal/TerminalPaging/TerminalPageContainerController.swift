@@ -44,14 +44,15 @@ class TerminalPageContainerController: UIPageViewController {
         self.delegate = self
         self.dataSource = self
         
-        
-        prepareNotifications()
-        
+
         let pageControlAppearance = UIPageControl.appearance()
         pageControlAppearance.pageIndicatorTintColor = UIColor.black
         pageControlAppearance.currentPageIndicatorTintColor = UIColor.black
         pageControlAppearance.backgroundColor = UIColor.clear
         
+        if needsTerminal {
+            prepareNotifications()
+        }
     }
     
     func prepareNotifications() {

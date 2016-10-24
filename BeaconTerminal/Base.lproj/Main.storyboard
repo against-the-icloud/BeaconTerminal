@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11535.1" systemVersion="16B2553a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11523"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -227,6 +227,44 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="T8i-DY-1Zt">
+                                        <rect key="frame" x="0.0" y="348" width="1366" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T8i-DY-1Zt" id="AnK-HY-e6H">
+                                            <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="auD-cD-e8o" userLabel="ExitView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Epb-sN-wFb" userLabel="ExitStackView">
+                                                            <rect key="frame" x="12" y="7" width="158" height="30"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lB-ZR-Kcc">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
+                                                                    <state key="normal" title="CHECK REACHABILITY"/>
+                                                                    <connections>
+                                                                        <action selector="changeZone:" destination="zmJ-ct-Y8s" eventType="touchUpInside" id="XNL-Rg-V52"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Epb-sN-wFb" firstAttribute="leading" secondItem="auD-cD-e8o" secondAttribute="leading" constant="12" id="CWw-qk-9FH"/>
+                                                        <constraint firstItem="Epb-sN-wFb" firstAttribute="top" secondItem="auD-cD-e8o" secondAttribute="top" constant="7" id="ZOC-4W-43t"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="auD-cD-e8o" firstAttribute="height" secondItem="AnK-HY-e6H" secondAttribute="height" id="CZA-Cd-JQ6"/>
+                                                <constraint firstItem="auD-cD-e8o" firstAttribute="width" secondItem="AnK-HY-e6H" secondAttribute="width" id="EyD-CD-27i"/>
+                                                <constraint firstItem="auD-cD-e8o" firstAttribute="centerX" secondItem="AnK-HY-e6H" secondAttribute="centerX" id="Uv4-aF-rDe"/>
+                                                <constraint firstItem="auD-cD-e8o" firstAttribute="centerY" secondItem="AnK-HY-e6H" secondAttribute="centerY" id="aFk-n4-wSz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -253,7 +291,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="7ep-h8-Hzi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="7ep-h8-Hzi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -285,16 +323,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="750" height="576"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="h9N-sD-Scf" userLabel="NutellaStack">
-                                        <rect key="frame" x="0.0" y="0.0" width="750" height="321"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="750" height="320.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NUTELLA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfs-0V-Xn4">
-                                                <rect key="frame" x="0.0" y="0.0" width="750" height="27"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="750" height="26.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="3uZ-Zb-RLr" userLabel="ResetStack">
-                                                <rect key="frame" x="0.0" y="34" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="33.5" width="750" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvO-HQ-hJ2">
                                                         <rect key="frame" x="0.0" y="0.0" width="238" height="30"/>
@@ -334,7 +372,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="QEa-sU-IGg" userLabel="ExportStack">
-                                                <rect key="frame" x="0.0" y="71" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="70.5" width="750" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQb-7e-f9d" userLabel="Exoport DB">
                                                         <rect key="frame" x="0.0" y="0.0" width="238" height="30"/>
@@ -374,7 +412,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="SkY-yh-qeO" userLabel="RestartStack">
-                                                <rect key="frame" x="0.0" y="108" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="107.5" width="750" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NuM-oy-NVK" userLabel="Exoport DB">
                                                         <rect key="frame" x="0.0" y="0.0" width="238" height="30"/>
@@ -414,7 +452,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="t1z-bC-459" userLabel="SyncStack">
-                                                <rect key="frame" x="0.0" y="145" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="144.5" width="750" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0V4-sQ-7tC" userLabel="syncbutton">
                                                         <rect key="frame" x="0.0" y="0.0" width="238" height="30"/>
@@ -454,7 +492,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9aQ-0k-kL4" userLabel="InitStack">
-                                                <rect key="frame" x="0.0" y="182" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="181.5" width="750" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="246" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Saw-qi-1hM">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
@@ -473,7 +511,7 @@
                                                 </subviews>
                                             </stackView>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7sf-sj-FCl">
-                                                <rect key="frame" x="0.0" y="219" width="750" height="29"/>
+                                                <rect key="frame" x="0.0" y="218.5" width="750" height="29"/>
                                                 <segments>
                                                     <segment title="LOCAL_IP"/>
                                                     <segment title="REMOTE"/>
@@ -483,7 +521,7 @@
                                                 </connections>
                                             </segmentedControl>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aey-2P-wZq">
-                                                <rect key="frame" x="0.0" y="254" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="253.5" width="750" height="30"/>
                                                 <color key="backgroundColor" red="0.72156862749999995" green="0.80000000000000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="DELETE USER OBJECTS"/>
                                                 <connections>
@@ -491,7 +529,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Moe-2s-bJS">
-                                                <rect key="frame" x="0.0" y="291" width="750" height="30"/>
+                                                <rect key="frame" x="0.0" y="290.5" width="750" height="30"/>
                                                 <color key="backgroundColor" red="0.72156862749999995" green="0.80000000000000004" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="RECONNECT TO NUTELLA"/>
                                                 <connections>
@@ -1010,7 +1048,7 @@
                                         <rect key="frame" x="0.0" y="60" width="1366" height="904"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Xjd-Zu-Frh" userLabel="ScannerStackView">
-                                                <rect key="frame" x="271" y="13" width="825" height="879"/>
+                                                <rect key="frame" x="271" y="13.5" width="825" height="878.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJW-SH-Hth" userLabel="ScannerView">
                                                         <rect key="frame" x="0.0" y="0.0" width="825" height="825"/>
@@ -1070,7 +1108,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEST" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPp-pK-ESx">
-                                                        <rect key="frame" x="0.0" y="845" width="825" height="34"/>
+                                                        <rect key="frame" x="0.0" y="845" width="825" height="33.5"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                         <color key="textColor" red="0.08235294118" green="0.30980392159999998" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -1117,7 +1155,7 @@
         <scene sceneID="D1s-iV-auq">
             <objects>
                 <collectionViewController storyboardIdentifier="syncSpeciesCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uDt-KF-AWl" customClass="SyncViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="72F-VO-vlj">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="72F-VO-vlj">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1215,7 +1253,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="500" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Htm-O1-sK8">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Htm-O1-sK8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
