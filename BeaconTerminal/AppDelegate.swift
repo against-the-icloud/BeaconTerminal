@@ -21,6 +21,10 @@ let LOCAL_IP = "10.0.1.6"
 var CURRENT_HOST = REMOTE
 var SECTION_NAME = "default"
 
+let SCHEMEA_VER: UInt64 = 2
+
+
+
 let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 
 let LOG: XCGLogger = {
@@ -46,7 +50,7 @@ enum ApplicationType: String {
     
     static let allValues = [placeTerminal, placeGroup, objectGroup, cloudGroup]
     static let allGroups = [placeGroup, objectGroup, cloudGroup]
-
+    
 }
 
 enum LoginTypes: String {
@@ -226,6 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
+        
         //setupLoginConnection()
         
         setupHockeyApp()
@@ -247,13 +252,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initStateMachine()
         initLoginStateMachine()
         realmDataController = RealmDataController()
-
+        
         prepareLoginInterface(isRemote: false)
     }
     
     func autoLogin() {
         initLoginStateMachine()
-
+        
         getAppDelegate().changeLoginStateTo(.autoLogin)
         
     }
@@ -272,6 +277,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Do some additional configuration if needed here
         BITHockeyManager.shared().start()
         BITHockeyManager.shared().authenticator.authenticateInstallation()
+        
+        
     }
     
     func shortCircuitLogin() {
@@ -329,7 +336,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         postInitialization(applicationType: applicationType)
-
+        
         // Configure the window with the SideNavigationController as the root view controller
         
         if let rnc = window?.rootViewController?.navigationController {
@@ -347,6 +354,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch applicationType {
             case .placeTerminal, .placeGroup, .objectGroup, .cloudGroup:
                 setupConnection(withSectionName: sectionName)
+                
             default: break
             }
         }
@@ -356,8 +364,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
             switch applicationType {
             case .placeGroup, .objectGroup, .cloudGroup:
-                prepareDB(withSectionName: sectionName)                
+                prepareDB(withSectionName: sectionName)
                 realmDataController.queryNutella(withType: .speciesNames)
+                realmDataController.queryNutella(withType: .currentChannelNames)
             case .placeTerminal:
                 prepareDB(withSectionName: sectionName)
                 realmDataController.queryNutella(withType: .speciesNames)
@@ -368,20 +377,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func prepareLoginInterface(isRemote: Bool) {
-            window = UIWindow(frame:UIScreen.main.bounds)
-            window?.rootViewController = prepareLoginUI(shouldShowLogin: false)
-            window?.makeKeyAndVisible()
+        window = UIWindow(frame:UIScreen.main.bounds)
+        window?.rootViewController = prepareLoginUI(shouldShowLogin: false)
+        window?.makeKeyAndVisible()
     }
     
-//    func prepareBeaconManager() {
-//        beaconNotificationsManager = BeaconNotificationsManager()
-//        for (index, beaconId) in beaconIds.enumerated() {
-//            beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
-//                                                                       enterMessage: "enter species \(index)",
-//                exitMessage: "exit species \(index)"
-//            )
-//        }
-//    }
+    //    func prepareBeaconManager() {
+    //        beaconNotificationsManager = BeaconNotificationsManager()
+    //        for (index, beaconId) in beaconIds.enumerated() {
+    //            beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
+    //                                                                       enterMessage: "enter species \(index)",
+    //                exitMessage: "exit species \(index)"
+    //            )
+    //        }
+    //    }
     
     
     func prepareAutoLoginUI() -> DefaultViewController {
@@ -423,7 +432,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController: AppNavigationController = AppNavigationController(rootViewController: mainContainerController)
         
         mainContainerController.toolMenuTypes = toolMenuTypes
- 
+        
         //menu
         
         let toolMenuController = ToolMenuController(rootViewController: navigationController)
@@ -506,24 +515,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserDefaults.standard.synchronize()
             }
         }
-        
-        //        if !hasInit {
-        //            realmDataController.deleteAllConfigurationAndGroups()
-        //            realmDataController.deleteAllUserData()
-        //            _ = realmDataController.parseNutellaConfigurationJson()
-        //            _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: (realmDataController.parseSimulationConfigurationJson()), withPlaceHolders: true, withSectionName: sectionName!)
-        //            defaults.set(true, forKey: "init")
-        //        }
     }
     
     func setDefaultRealm(withSectionName sectionName: String = "default") {
         
         if Platform.isSimulator {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(sectionName).realm")
-            try! realm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+            
+            var config = Realm.Configuration(
+                // Set the new schema version. This must be greater than the previously used
+                // version (if you've never set a schema version before, the version is 0).
+                schemaVersion: SCHEMEA_VER,
+                
+                // Set the block which will be called automatically when opening a Realm with
+                // a schema version lower than the one set above
+                migrationBlock: { migration, oldSchemaVersion in
+                    // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                    if (oldSchemaVersion < 1) {
+                        // Nothing to do!
+                        // Realm will automatically detect new properties and removed properties
+                        // And will update the schema on disk automatically
+                    }
+            })
+            
+            // Use the default directory, but replace the filename with the username
+            config.fileURL = testRealmURL
+            
+            
+            try! realm = Realm(configuration: config)
         } else {
             
-            var config = Realm.Configuration()
+            
+            var config = Realm.Configuration(
+                // Set the new schema version. This must be greater than the previously used
+                // version (if you've never set a schema version before, the version is 0).
+                schemaVersion: SCHEMEA_VER,
+                
+                // Set the block which will be called automatically when opening a Realm with
+                // a schema version lower than the one set above
+                migrationBlock: { migration, oldSchemaVersion in
+                    // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                    if (oldSchemaVersion < 1) {
+                        // Nothing to do!
+                        // Realm will automatically detect new properties and removed properties
+                        // And will update the schema on disk automatically
+                    }
+            })
             
             // Use the default directory, but replace the filename with the username
             config.fileURL = config.fileURL!.deletingLastPathComponent()
@@ -544,10 +581,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Platform.isSimulator {
             let testRealmURL = URL(fileURLWithPath: "/Users/aperritano/Desktop/Realm/BeaconTerminal\(dbName).realm")
-            try! terminalRealm = Realm(configuration: Realm.Configuration(fileURL: testRealmURL))
+            
+            var config = Realm.Configuration(
+                // Set the new schema version. This must be greater than the previously used
+                // version (if you've never set a schema version before, the version is 0).
+                schemaVersion: SCHEMEA_VER,
+                
+                // Set the block which will be called automatically when opening a Realm with
+                // a schema version lower than the one set above
+                migrationBlock: { migration, oldSchemaVersion in
+                    // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                    if (oldSchemaVersion < 1) {
+                        // Nothing to do!
+                        // Realm will automatically detect new properties and removed properties
+                        // And will update the schema on disk automatically
+                    }
+            })
+            
+            // Use the default directory, but replace the filename with the username
+            config.fileURL = testRealmURL
+            
+            
+            Realm.Configuration.defaultConfiguration = config
+            
+            try! terminalRealm = Realm(configuration: config)
+
         } else {
             
-            var config = Realm.Configuration()
+            var config = Realm.Configuration(
+                // Set the new schema version. This must be greater than the previously used
+                // version (if you've never set a schema version before, the version is 0).
+                schemaVersion: SCHEMEA_VER,
+                
+                // Set the block which will be called automatically when opening a Realm with
+                // a schema version lower than the one set above
+                migrationBlock: { migration, oldSchemaVersion in
+                    // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                    if (oldSchemaVersion < 1) {
+                        // Nothing to do!
+                        // Realm will automatically detect new properties and removed properties
+                        // And will update the schema on disk automatically
+                    }
+            })
             
             // Use the default directory, but replace the filename with the username
             config.fileURL = config.fileURL!.deletingLastPathComponent()
@@ -619,18 +694,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             nutella = Nutella(brokerHostname: CURRENT_HOST,
                               appId: "wallcology",
                               runId: "default",
-                              componentId: "login", netDelegate: self)
+                              componentId: "", netDelegate: self)
         }
         
         switch currentState {
         case .autoLogin:
             realmDataController.queryNutella(withType: .currentRun)
+        //realmDataController.queryNutella(withType: .currentChannelNames)
         default:
             break
+            //realmDataController.queryNutella(withType: .currentChannelNames)
         }
     }
     
-    // MARK: LoginStateMachine
+    func refreshTerminalConnection() {
+        
+        if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+         
+            setupConnection(withSectionName: sectionName)
+                
+            realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
+        }
+
+    
+    }
+    
+    // MARK: Login StateMachine
     
     var loginViewController: DefaultViewController?
     
@@ -643,7 +732,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func changeLoginStateTo(_ state: LoginTypes) {
         switch state {
         case .startLogin:
-             if (loginStateMachine?.fireEvent(startLoginEvent).successful)! {
+            if (loginStateMachine?.fireEvent(startLoginEvent).successful)! {
                 break
             }
         case .manualLogin:
@@ -663,6 +752,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NVActivityIndicatorPresenter.sharedInstance.startAnimating(ad)
                 
                 
+                
             }
             
         case .currentSection:
@@ -670,7 +760,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
                     self.setupConnection(withSectionName: sectionName)
                     realmDataController.queryNutella(withType: .currentRoster)
-
+                    
                 }
             }
         case .currentRoster:
@@ -694,11 +784,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 realmDataController.queryNutella(withType: .currentChannelList)
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             }
-  
+            
         case .currentChannelNames:
             if (loginStateMachine?.fireEvent(currentChannelNamesEvent).successful)! {
                 realmDataController.queryNutella(withType: .currentChannelNames)
-
+                
             }
         default:
             break
@@ -709,7 +799,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return loginStateMachine!.currentState.value
     }
     
-    // MARK: StateMachine
+    // MARK: App StateMachine
     
     func initStateMachine() {
         
@@ -747,6 +837,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return applicationStateMachine!.currentState.value
     }
     
+    // MARK: APPDELEGATE
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    // MARK: BEACONS
+    
     func prepareBeacons() {
         estBeaconManager.delegate = self
         //estMonitoringManager.delegate = self
@@ -756,7 +872,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for (_, beaconId) in beaconIds.enumerated() {
             enableNotificationsForBeaconID(beaconId)
         }
-
+        
     }
     
     func enableNotificationsForBeaconID(_ beaconId: BeaconID) {
@@ -783,9 +899,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let gim = RealmDataController.generateImageForSpecies(speciesIndex, isHighlighted: true)
             
-//            if let autoScrollPageDelegate = self.autoScrollPageDelegate {
-//                autoScrollPageDelegate.scroll(withIndex: speciesIndex)
-//            }
+            //            if let autoScrollPageDelegate = self.autoScrollPageDelegate {
+            //                autoScrollPageDelegate.scroll(withIndex: speciesIndex)
+            //            }
             
             LOG.debug("\n\n DID ENTER ----------------> SPECIES: \(speciesIndex) REGION: \(region)")
             
@@ -806,13 +922,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             play(sound: .coin)
             
-            let userInfo = ["index":NSNumber.init(value: speciesIndex)]
-            
-            let notification = Notification(
-                name: Notification.Name(rawValue: beaconNotificationKey), object: self,
-                userInfo: userInfo)
-            NotificationCenter.default.post(notification)
-            
         } else {
             LOG.debug("FAILED ENTER \(identifier)")
         }
@@ -824,9 +933,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let region = beaconId.asBeaconRegion
             
             //self.enableNotificationsForBeaconID(beaconId)
-            
-            
-            
             //adjust because these ids can't be start 0
             let speciesIndex = beaconId.speciesIndex
             
@@ -855,12 +961,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             play(sound: .tap)
             
-            let userInfo = ["index":NSNumber.init(value: speciesIndex)]
-            
-            let notification = Notification(
-                name: Notification.Name(rawValue: beaconNotificationKey), object: self,
-                userInfo: userInfo)
-            NotificationCenter.default.post(notification)
+            //            let userInfo = ["index":NSNumber.init(value: speciesIndex)]
+            //
+            //            let notification = Notification(
+            //                name: Notification.Name(rawValue: beaconNotificationKey), object: self,
+            //                userInfo: userInfo)
+            //            NotificationCenter.default.post(notification)
             
         } else {
             LOG.debug("FAILED EXIT \(identifier)")
@@ -868,9 +974,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     var audioPlayer:AVAudioPlayer!
-
+    
     func play(sound: Sound) {
-        
         
         var audioFilePath: String?
         
@@ -896,39 +1001,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
     }
-
-
+    
+    
     func findBeaconId(withId id: String) -> BeaconID? {
         let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
         return found.first
     }
     
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-    
-    func checkCurrentRun(run:String) {
-        
-    }
 }
+
+// MARK: BEACON MANAGER
 
 extension AppDelegate: ESTBeaconManagerDelegate {
     
@@ -1019,7 +1101,7 @@ extension AppDelegate: ESTBeaconManagerDelegate {
             LOG.debug("--ranged regions \(bm.monitoredRegions.count)--")
         }
     }
-
+    
 }
 
 extension AppDelegate: NutellaNetDelegate {

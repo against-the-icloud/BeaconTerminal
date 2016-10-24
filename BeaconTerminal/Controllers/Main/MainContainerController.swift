@@ -28,10 +28,12 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
     var terminalRuntimeResults: Results<Runtime>?
+    var channelResults: Results<Channel>?
     var runtimeNotificationToken: NotificationToken? = nil
     var terminalRuntimeNotificationToken: NotificationToken? = nil
+    var channelNotificationToken: NotificationToken? = nil
     var tabViews = [UIView]()
-    var tabControllers = [WebViewController]()
+    var tabControllers = [UIViewController]()
 
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
@@ -70,29 +72,42 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     }
     
     func prepareTabs() {
+        
+        realmDataController.updateChannel(withId: "species-notes", url: "", name: "")
+        
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
-                if let c = item as? [String:String], let name = c["name"]?.replacingOccurrences(of: "-", with: " ").uppercased(), let url = c["url"], c["name"] != "species-notes", c["name"] != "classaccount" {
+                if let c = item as? [String:String], let url = c["url"], let id = c["name"] {
                     
+                    let adjIndex = index + 1
                     
-                    if index == 1 {
-                        topTabbar.setTitle(name, forSegmentAt: index)
-                    }else {
-                        topTabbar.insertSegment(withTitle: name, at: index, animated: true)
+                    switch adjIndex {
+                    case 0,1:
+                        topTabbar.setTitle(id, forSegmentAt: adjIndex)
+                    default:
+                        topTabbar.insertSegment(withTitle: id, at: adjIndex, animated: true)
                     }
                     
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    
-                    if let webViewController = storyboard.instantiateViewController(withIdentifier: "webViewController") as? WebViewController {
-                        webViewController.src = url
-                        self.addChildViewController(webViewController)
-                        webViewController.view.frame = self.tabContainterView.frame
-                        webViewController.view.isHidden = true
-                        webViewController.view.alpha = 0.0
-                        tabContainterView.addSubview(webViewController.view)
-                        webViewController.didMove(toParentViewController: self)
-                        tabViews.append(webViewController.view)
-                        tabControllers.append(webViewController)
+                    switch adjIndex {
+                    case 1...10:
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        
+                        realmDataController.updateChannel(withId: id, url: url, name: "")
+
+                        
+                        if let webViewController = storyboard.instantiateViewController(withIdentifier: "webViewController") as? WebViewController {
+                            webViewController.src = url
+                            self.addChildViewController(webViewController)
+                            webViewController.view.frame = self.tabContainterView.frame
+                            webViewController.view.isHidden = true
+                            webViewController.view.alpha = 0.0
+                            tabContainterView.addSubview(webViewController.view)
+                            webViewController.didMove(toParentViewController: self)
+                            tabViews.append(webViewController.view)
+                            tabControllers.append(webViewController)
+                        }
+                    default:
+                        break
                     }
                 }
             }
@@ -157,6 +172,48 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                 break
             }
         }
+        
+        if let r = runtimeNotificationToken {
+            notificationTokens.append(r)
+        }
+        
+        channelResults = realmDataController.getRealm().objects(Channel.self)
+        
+        // Observe Notifications
+        channelNotificationToken = channelResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            
+            guard let mainController = self else { return }
+            switch changes {
+            case .initial(let channelResults):
+                //we have nothing
+                if channelResults.isEmpty {
+
+                } else {
+
+                }
+                break
+            case .update(let channelResults, _, _, _):
+                LOG.debug("UPDATE Channels -- TERMINAL")
+                
+                for (index,channel) in channelResults.enumerated() {
+                    
+                    if let name = channel.name {
+                    mainController.topTabbar.setTitle(name, forSegmentAt: index)
+                    }
+                }
+                //terminalController.updateUI(withRuntimeResults: runtimeResults)
+                break
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                LOG.error("\(error)")
+                break
+            }
+        }
+        
+        if let r = channelNotificationToken {
+            notificationTokens.append(r)
+        }
+        
     }
     
     func prepareTerminalNotifications() {
@@ -197,7 +254,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
         
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let _ = group.name {
-            topTabbar.setTitle("SPECIES", forSegmentAt: 0)
+            //topTabbar.setTitle("SPECIES", forSegmentAt: 0)
             groupLabel.text = "TEAM \(groupIndex + 1)"
             
         }
@@ -293,8 +350,9 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     tabView.isHidden = false
                     
                     tabView.fadeIn(toAlpha: 1.0) {_ in
-                        let wc = self.tabControllers[adjustedIndex]
-                        wc.reload()
+                        if let wc = self.tabControllers[adjustedIndex] as? WebViewController {
+                            wc.reload()
+                        }
                     }
                 } else {
                     

@@ -216,8 +216,13 @@ class Condition: Object {
     }
 }
 class Channel: Object {
+    dynamic var id : String? = nil
     dynamic var name: String? = nil
-    dynamic var urls: String? = nil
+    dynamic var url: String? = nil
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 class SystemConfiguration: Object {
@@ -312,8 +317,20 @@ class User: Object {
 
 extension Realm {
     
+    var channels: Results<Channel> {
+        return objects(Channel.self)
+    }
+    
+    func channel(withId id:String) -> Channel? {
+        return objects(Channel.self).filter("id = '\(id)'").first
+    }
+    
     var species: Results<Species> {
         return objects(Species.self)
+    }
+    
+    func speciesWithIndex(withIndex index: Int) -> Species? {
+        return objects(Species.self).filter("index = \(index)").first
     }
   
     var habitats: Results<Habitat> {
@@ -324,13 +341,10 @@ extension Realm {
         return objects(Habitat.self).filter("index = \(index)").first
     }
     
-    func speciesWithIndex(withIndex index: Int) -> Species? {
-        return objects(Species.self).filter("index = \(index)").first
-    }
-   
     func ecosystem(withIndex index: Int) -> Ecosystem? {
         return objects(Ecosystem.self).filter("index = \(index)").first
     }
+
     
     func runtime() -> Runtime? {
         return objects(Runtime.self).first

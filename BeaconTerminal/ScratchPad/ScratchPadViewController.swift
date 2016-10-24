@@ -39,6 +39,9 @@ class ScratchPadViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        canvasView.usePreciseLocations = !canvasView.usePreciseLocations
+
 //                for iv in imageViews {
 //                    iv.isUserInteractionEnabled = true
 //                }

@@ -140,6 +140,10 @@ class TerminalCellController: UIViewController {
         
         for cell in cellItems {
             if cell.enabled {
+                
+                let metricsManager = BITHockeyManager.shared().metricsManager
+                metricsManager.trackEvent(withName: "showComparsionView")
+                
                 self.performSegue(withIdentifier: "comparsionSegue", sender: self)
                 return
             }

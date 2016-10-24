@@ -124,7 +124,7 @@
             case .sPreference:
                 
                 for controller in (self.childViewControllers as? [TerminalCellController])!{
-                    controller.prepareView()
+                    controller.prepareSpeciesPreferencesView()
                 }
                 break
             default:
@@ -384,9 +384,3 @@
             }
         }
     }
-    
-    //extension TerminalRelationshipTableViewController {
-    //    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    //        return nil
-    //    }
-    //}

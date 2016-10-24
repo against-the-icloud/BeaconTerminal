@@ -45,7 +45,7 @@ class TerminalMainViewController: UIViewController {
         }
     }
     
-    // Mark: Prepare
+    // MARK: Prepare
     
     func prepareNotifications() {
         runtimeResults = realmDataController.getRealm(withRealmType: RealmType.terminalDB).objects(Runtime.self)
@@ -100,7 +100,7 @@ class TerminalMainViewController: UIViewController {
         }                
     }
     
-    // Mark: Update UI
+    // MARK: Update UI
     
     func updateHeader() {
         if let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
@@ -158,6 +158,10 @@ class TerminalMainViewController: UIViewController {
     }
     
     @IBAction func refreshAction(_ sender: Any) {
+        
+        getAppDelegate().refreshTerminalConnection()
+
+        
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

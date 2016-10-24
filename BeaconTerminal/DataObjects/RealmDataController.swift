@@ -35,7 +35,7 @@ class RealmDataController {
     }
     
     
-    // Mark: Group
+    // MARK: Group
     
     static func exportJson(withSpeciesObservation speciesObservation: SpeciesObservation, group: Group) -> String {
         
@@ -47,7 +47,7 @@ class RealmDataController {
         return ""
     }
     
-    // Mark: inviewTerminal actions
+    // MARK: inviewTerminal actions
     
     func clearInViewTerminal(withCondition condition: String) {
         if let oldSpeciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex(),let groupIndex = realmDataController.getRealm().runtimeGroupIndex() {
@@ -69,7 +69,7 @@ class RealmDataController {
         }
     }
     
-    // Mark: Nutella Queries
+    // MARK: Nutella Queries
     
     func forceSync(withIndex index: Int) {
         if let nutella = nutella {
@@ -97,7 +97,7 @@ class RealmDataController {
     }
     
     
-    // Mark: General Nutella queries
+    // MARK: General Nutella queries
     
     func queryNutella(withType type: NutellaQueryType) {
         switch type {
@@ -166,8 +166,6 @@ class RealmDataController {
                 }
                 DispatchQueue.main.async(execute: block)
             }
-            
-            
         case .currentActivityAndRoom:
             if let nutella = nutella {
                 let block = DispatchWorkItem {
@@ -188,7 +186,7 @@ class RealmDataController {
             break
         }
     }
-    // Mark: Nutella Queries
+    // MARK: Nutella Queries
     
     func queryNutellaAllNotes(withType type: NutellaQueryType, withRealmType realmType: RealmType = RealmType.defaultDB) {
         switch type {
@@ -229,7 +227,7 @@ class RealmDataController {
         }
     }
     
-    // Mark: Sync Observations
+    // MARK: Sync Observations
     
     func syncSpeciesObservations(withSpeciesIndex speciesIndex: Int, withCondition condition: String, withActionType actionType: String, withPlace place: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let found = getRealm(withRealmType: realmType).speciesObservationCurrentSectionGroup(withFromSpeciesIndex: speciesIndex), let synced = found.isSynced.value {
@@ -243,7 +241,7 @@ class RealmDataController {
     }
     
     
-    // Mark: Nutella updates
+    // MARK: Nutella updates
     
     func processNutellaUpdate(nutellaUpdate: NutellaUpdate) {
         //what condition are we in?
@@ -290,26 +288,25 @@ class RealmDataController {
                 return
             case .channelList:
                 let channelList = handleChannelList(withMessage: message)
-                
-                
                 UserDefaults.standard.set(channelList, forKey: "channelList")
                 UserDefaults.standard.synchronize()
-                
-                    
-               // getAppDelegate().changeLoginStateTo(.currentChannelNames)
-                
-                
-                //                let sectionName = message as! String
-                //                UserDefaults.standard.set(sectionName, forKey: "sectionName")
-                //                UserDefaults.standard.synchronize()
-                
                 return
             case .channelNames:
-                //                let sectionName = message as! String
-                //                UserDefaults.standard.set(sectionName, forKey: "sectionName")
-                //                UserDefaults.standard.synchronize()
+                let channelNames = handleChannelNames(withMessage: message)
+                UserDefaults.standard.set(channelNames, forKey: "channelNames")
+                UserDefaults.standard.synchronize()
                 
-                //getAppDelegate().changeLoginStateTo(.currentChannelNames)
+                for c in channelNames {
+                  
+                    if let id = c["id"],
+                        let name = c["name"], let channel = getRealm().channel(withId: id) {
+                        try! getRealm().write {
+                            channel.name = name
+                            getRealm().add(channel, update: true)
+                        }
+                    }
+                }
+                
                 return
             case .speciesNames:
                 parseModelSpeciesNames(withMessage: message)
@@ -333,6 +330,34 @@ class RealmDataController {
         default:
             break
         }
+    }
+    
+    func handleChannelNames(withMessage message: Any) -> [[String:String]] {
+        var allChannelNames = [[String:String]]()
+        
+        let json = JSON(message)
+        guard let all = json.array else {
+            //no speciesIndex
+            return allChannelNames
+        }
+        
+        for (_,item) in all.enumerated() {
+            
+            var channel = [String:String]()
+            
+            if let name = item["name"].string {
+                channel["id"] = name
+            }
+
+            if let pName = item["printName"].string {
+                channel["name"] = pName
+            }
+            
+            allChannelNames.append(channel)
+        }
+        
+        
+        return allChannelNames
     }
     
     //src="http://ltg.evl.uic.edu:57880/wallcology/6BM/runs/species-notes/index.html?broker=ltg.evl.uic.edu&app_id=wallcology&run_id=6BM&TYPE=group&INSTANCE=2"
@@ -539,7 +564,7 @@ class RealmDataController {
         }
     }
     
-    //Mark: Handle Parsing
+    //MARK: Handle Parsing
     
     func parseModelSpeciesNames(withMessage message: Any) {
         let json = JSON(message)
@@ -935,7 +960,7 @@ class RealmDataController {
         return nil
     }
     
-    // Mark: UPDATE RUNTIME
+    // MARK: UPDATE RUNTIME
     
     func updateRuntime(withSectionName sectionName: String? = nil, withSpeciesIndex speciesIndex: Int? = nil, withGroupIndex groupIndex: Int? = nil, withRealmType realmType: RealmType = RealmType.defaultDB, withAction action: String? = nil) {
         //get all the current runtimes
@@ -978,8 +1003,43 @@ class RealmDataController {
         
     }
     
+    func updateChannel(withId id: String, url: String?, name: String?) {
+        try! getRealm().write {
+            
+            if let channel = getRealm().channel(withId: id) {
+                
+                if let n = name {
+                    channel.name = n
+                }
+                
+                if let u = url {
+                    channel.url = u
+                }
+                
+                getRealm().add(channel, update: true)
+                
+            } else {
+                let channel = Channel()
+
+                if let n = name {
+                    channel.name = n
+                }
+                
+                if let u = url {
+                    channel.url = u
+                }
+                
+                getRealm().add(channel, update: false)
+            }
+        
+         
+            
+        }
+    }
     
-    //Mark: UPDATE SPECIES OBSERVATION
+    
+    
+    //MARK: UPDATE SPECIES OBSERVATION
     
     
     func delete(withSpeciesPreference speciesPreference: SpeciesPreference, withSpeciesIndex speciesIndex: Int,withRealmType realmType: RealmType = RealmType.defaultDB) {
@@ -1143,7 +1203,7 @@ class RealmDataController {
 
 extension RealmDataController {
     
-    // Mark: Mock data
+    // MARK: Mock data
     //populate speciesObservation with fake data
     func populateWithSpeciesObservationTestData(forGroup group: Group, andSystemConfig systemConfig: SystemConfiguration, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
@@ -1247,14 +1307,14 @@ extension RealmDataController {
         return speciesObservation
     }
     
-    // Mark: Species
+    // MARK: Species
     
     func findSpecies(withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) -> Species? {
         let foundSpecies = getRealm(withRealmType: realmType).speciesWithIndex(withIndex: speciesIndex)
         return foundSpecies
     }
     
-    // Mark Ecosytem
+    // MARK Ecosytem
     
     func findEcosystem(withEcosystemIndex ecosystemIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) -> Ecosystem? {
         let foundEcosystem = getRealm(withRealmType: realmType).ecosystem(withIndex: ecosystemIndex)
@@ -1290,7 +1350,7 @@ extension RealmDataController {
         return UIImage(named: imageName)
     }
     
-    // Mark: JSON Parsing
+    // MARK: JSON Parsing
     
     func parseUserGroupConfigurationJson(withSimConfig simConfig: SimulationConfiguration, withPlaceHolders placeHolders: Bool = false, withSectionName sectionName: String = "default", withRealmType realmType: RealmType = RealmType.defaultDB) -> SystemConfiguration {
         
@@ -1442,7 +1502,7 @@ extension RealmDataController {
         return nutellaConfig
     }
     
-    // Mark: Configuration
+    // MARK: Configuration
     
     func sectionName(withIndex index: Int) -> String {
         return sections()[index]
@@ -1615,7 +1675,7 @@ extension RealmDataController {
         return simulationConfiguration
     }
     
-    // Mark: Nutella
+    // MARK: Nutella
     
     func validateNutellaConfiguration(withRealmType realmType: RealmType = RealmType.defaultDB) -> Bool {
         
@@ -1649,6 +1709,8 @@ extension RealmDataController {
         }
     }
     
+    // MARK: DB functions
+    
     func deleteAllConfigurationAndGroups(withRealmType realmType: RealmType = RealmType.defaultDB) {
         let r = getRealm(withRealmType: realmType)
         
@@ -1678,6 +1740,16 @@ extension RealmDataController {
             r.delete(r.objects(SpeciesPreference.self))
             r.delete(r.objects(Relationship.self))
         }
+    }
+    
+    // MARK: Reporting Metrics
+    
+    func saveMetric(withEventName eventName: String, withProperties properties: [String:String]) {
+    
+    }
+    
+    func saveMetric(withEventName eventName: String) {
+        
     }
     
 }

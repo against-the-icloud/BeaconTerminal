@@ -117,7 +117,8 @@ class TerminalComparsionDetailViewController: UIViewController {
                 
                 imc.image = iv.image
                 imc.canDelete = false
-                
+                let metricsManager = BITHockeyManager.shared().metricsManager
+                metricsManager.trackEvent(withName: "imageClicked")
             }
             
         default:
