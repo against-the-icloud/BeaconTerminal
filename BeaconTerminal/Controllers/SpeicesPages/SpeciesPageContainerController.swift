@@ -44,10 +44,6 @@ class SpeciePageContainerController: UIPageViewController {
         pageControlAppearance.pageIndicatorTintColor = UIColor.white
         pageControlAppearance.currentPageIndicatorTintColor = UIColor.black
         pageControlAppearance.backgroundColor = UIColor.clear
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(SpeciePageContainerController.scroll(_:)), name: Notification.Name(rawValue: beaconNotificationKey), object: nil)
-        
-        
     }
     
     func prepareNotifications() {

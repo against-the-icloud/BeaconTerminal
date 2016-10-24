@@ -34,7 +34,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var channelNotificationToken: NotificationToken? = nil
     var tabViews = [UIView]()
     var tabControllers = [UIViewController]()
-
+    
     //menu items
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
     var toolMenuItems: [UIView] = [UIView]()
@@ -93,7 +93,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         
                         realmDataController.updateChannel(withId: id, url: url, name: "")
-
+                        
                         
                         if let webViewController = storyboard.instantiateViewController(withIdentifier: "webViewController") as? WebViewController {
                             webViewController.src = url
@@ -146,7 +146,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     func prepareNotifications() {
         runtimeResults = realmDataController.getRealm().objects(Runtime.self)
-                
+        
         // Observe Notifications
         runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
@@ -187,9 +187,9 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
             case .initial(let channelResults):
                 //we have nothing
                 if channelResults.isEmpty {
-
+                    
                 } else {
-
+                    
                 }
                 break
             case .update(let channelResults, _, _, _):
@@ -198,7 +198,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                 for (index,channel) in channelResults.enumerated() {
                     
                     if let name = channel.name {
-                    mainController.topTabbar.setTitle(name, forSegmentAt: index)
+                        mainController.topTabbar.setTitle(name, forSegmentAt: index)
                     }
                 }
                 //terminalController.updateUI(withRuntimeResults: runtimeResults)
@@ -576,7 +576,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     override var shouldAutorotate: Bool {
         return false
     }
-
+    
 }
 
 //Mark: ToolMenu

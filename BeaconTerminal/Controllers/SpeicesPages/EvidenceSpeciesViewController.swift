@@ -44,7 +44,7 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    // Mark: View Methods
+    // MARK: View Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,7 +235,7 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
         }
     }
     
-    // Mark: Action
+    // MARK: Action
     
     @IBAction func unwindToEvidenceSpecies(_ sender: UIStoryboardSegue) {
         

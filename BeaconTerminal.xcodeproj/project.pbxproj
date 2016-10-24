@@ -35,6 +35,9 @@
 		70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */; };
 		706723A71D999E86008B9DD1 /* RSSINormalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706723A61D999E86008B9DD1 /* RSSINormalization.swift */; };
 		706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */; };
+		7068B05B1DBD958100B0F790 /* TerminalPageContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7068B05A1DBD958100B0F790 /* TerminalPageContainerController.swift */; };
+		7068B05D1DBD95AD00B0F790 /* TerminalPageContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7068B05C1DBD95AD00B0F790 /* TerminalPageContentController.swift */; };
+		7068B05F1DBE6F5300B0F790 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7068B05E1DBE6F5300B0F790 /* ImageScrollView.swift */; };
 		706CF1391D8FA83500A18927 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706CF1381D8FA83500A18927 /* Banner.swift */; };
 		706D21E21DA99FD4009FC554 /* ChoosePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */; };
 		706D21E41DA9D245009FC554 /* EvidencePreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */; };
@@ -57,7 +60,7 @@
 		70B017E41DA5CE6C00B233AA /* ReticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017E01DA5CE6C00B233AA /* ReticleView.swift */; };
 		70B017E51DA5CE6C00B233AA /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017E11DA5CE6C00B233AA /* Line.swift */; };
 		70B017E71DA5D0B400B233AA /* PadImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B017E61DA5D0B400B233AA /* PadImageView.swift */; };
-		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */; };
+		70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerViewController.swift */; };
 		70C1CF361D592E2800CB687E /* LoginSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */; };
 		70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C2A6301D71E451007BA074 /* UIColor+Speciescolors.swift */; };
 		70D1281D1DA88BF9008DB916 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D1281C1DA88BF9008DB916 /* WebViewController.swift */; };
@@ -158,6 +161,9 @@
 		70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		706723A61D999E86008B9DD1 /* RSSINormalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSSINormalization.swift; sourceTree = "<group>"; };
 		706723AA1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateBeaconDetector.swift; sourceTree = "<group>"; };
+		7068B05A1DBD958100B0F790 /* TerminalPageContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalPageContainerController.swift; path = Terminal/TerminalPaging/TerminalPageContainerController.swift; sourceTree = "<group>"; };
+		7068B05C1DBD95AD00B0F790 /* TerminalPageContentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalPageContentController.swift; path = Terminal/TerminalPaging/TerminalPageContentController.swift; sourceTree = "<group>"; };
+		7068B05E1DBE6F5300B0F790 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		706CF1381D8FA83500A18927 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChoosePreferenceViewController.swift; path = SpeicesPages/ChoosePreferenceViewController.swift; sourceTree = "<group>"; };
 		706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidencePreferenceViewController.swift; path = SpeicesPages/EvidencePreferenceViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +186,7 @@
 		70B017E01DA5CE6C00B233AA /* ReticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReticleView.swift; sourceTree = "<group>"; };
 		70B017E11DA5CE6C00B233AA /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		70B017E61DA5D0B400B233AA /* PadImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PadImageView.swift; sourceTree = "<group>"; };
-		70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalContainerController.swift; path = Terminal/TerminalContainerController.swift; sourceTree = "<group>"; };
+		70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalContainerViewController.swift; path = Terminal/TerminalContainerViewController.swift; sourceTree = "<group>"; };
 		70C1CF351D592E2800CB687E /* LoginSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginSectionViewController.swift; path = Login/LoginSectionViewController.swift; sourceTree = "<group>"; };
 		70C293451D9088430020247B /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../RealmSwift.framework; sourceTree = "<group>"; };
 		70C293471D90887D0020247B /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
@@ -314,12 +320,13 @@
 			children = (
 				7031DB191D65E18B000DCC61 /* Terminal.storyboard */,
 				7031DB1B1D65E3E5000DCC61 /* TerminalMainViewController.swift */,
-				70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerController.swift */,
+				70B39CE91D7DF4DC00A5B3B6 /* TerminalContainerViewController.swift */,
 				701564DA1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift */,
 				701564DE1D7154D400A0EEA5 /* TerminalCellController.swift */,
 				70D4E2311D6CD25D003102AC /* TerminalComparsionController.swift */,
 				70D4E2331D6CF925003102AC /* TerminalComparsionDetailViewController.swift */,
 				70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */,
+				7068B0591DBD946900B0F790 /* TerminalPaging */,
 			);
 			name = Terminal;
 			sourceTree = "<group>";
@@ -332,6 +339,15 @@
 				70A06DD21CE3F84D008FC11F /* coin.wav */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		7068B0591DBD946900B0F790 /* TerminalPaging */ = {
+			isa = PBXGroup;
+			children = (
+				7068B05A1DBD958100B0F790 /* TerminalPageContainerController.swift */,
+				7068B05C1DBD95AD00B0F790 /* TerminalPageContentController.swift */,
+			);
+			name = TerminalPaging;
 			sourceTree = "<group>";
 		};
 		70920D091CD52C4F001B582F /* DataObjects */ = {
@@ -494,6 +510,7 @@
 				7064CAA31D6783FB00B77ADA /* StringUtil.swift */,
 				7003BEE11D81F96C0029B0EE /* TabSegmentedControl.swift */,
 				7030BE241DA4631400DB332D /* Spinner.swift */,
+				7068B05E1DBE6F5300B0F790 /* ImageScrollView.swift */,
 			);
 			name = Util;
 			path = util;
@@ -778,6 +795,7 @@
 			files = (
 				70B017E21DA5CE6C00B233AA /* ScratchPadViewController.swift in Sources */,
 				70A8D8571D984B0D00C1D2B7 /* ToolMenuController.swift in Sources */,
+				7068B05F1DBE6F5300B0F790 /* ImageScrollView.swift in Sources */,
 				709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */,
 				70D142691D414E2700A588B3 /* DragUtil.swift in Sources */,
 				70F1B7721D8CBC780020E757 /* LoginConditionCell.swift in Sources */,
@@ -799,7 +817,7 @@
 				7017A2EE1D864D4500C31119 /* SpeciesCellDetailController.swift in Sources */,
 				7031DB1E1D65EC0A000DCC61 /* LoginSpeciesCollectionController.swift in Sources */,
 				701564DB1D71501D00A0EEA5 /* TerminalRelationshipTableViewController.swift in Sources */,
-				70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerController.swift in Sources */,
+				70B39CEA1D7DF4DC00A5B3B6 /* TerminalContainerViewController.swift in Sources */,
 				7031DB1C1D65E3E5000DCC61 /* TerminalMainViewController.swift in Sources */,
 				70B017E51DA5CE6C00B233AA /* Line.swift in Sources */,
 				708E91741DB41E6200AF2D3C /* LoginTypeViewController.swift in Sources */,
@@ -810,6 +828,7 @@
 				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
 				70B017E31DA5CE6C00B233AA /* CanvasView.swift in Sources */,
 				706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */,
+				7068B05D1DBD95AD00B0F790 /* TerminalPageContentController.swift in Sources */,
 				706723A71D999E86008B9DD1 /* RSSINormalization.swift in Sources */,
 				70D9C1B21D6650B700FAF080 /* LoginGroupViewController.swift in Sources */,
 				704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */,
@@ -821,6 +840,7 @@
 				706CF1391D8FA83500A18927 /* Banner.swift in Sources */,
 				70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,
+				7068B05B1DBD958100B0F790 /* TerminalPageContainerController.swift in Sources */,
 				7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */,
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */,

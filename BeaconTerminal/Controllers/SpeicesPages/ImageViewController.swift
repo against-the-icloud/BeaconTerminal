@@ -14,16 +14,19 @@ class ImageViewController: UIViewController {
     var image: UIImage?
     var imageUrl: String?
     var canDelete: Bool?
+    @IBOutlet weak var imageScrollView: ImageScrollView!
     
     @IBOutlet weak var deleteButtonItem: UIBarButtonItem!
-    @IBOutlet weak var imageView: UIImageView!
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
+        
+        if let image = self.image {
+            imageScrollView.display(image: image)
+        }
         
         if let canDelete = self.canDelete {
             deleteButtonItem.tintColor = UIColor.black
@@ -32,7 +35,7 @@ class ImageViewController: UIViewController {
         
     }
     @IBAction func deleteImageAction(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil) 
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func closeAction(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
