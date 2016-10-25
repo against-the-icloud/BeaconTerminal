@@ -21,10 +21,10 @@ class SpeciesPageContentController: UIViewController {
     @IBOutlet weak var speciesLabel: UILabel!
     @IBOutlet weak var speciesProfileImageView: UIImageView!
     @IBOutlet weak var cloudSyncButton: UIButton!
-
+    
     var speciesObservationResults: Results<SpeciesObservation>?
     var shouldSync: Results<SpeciesObservation>?
-
+    
     var speciesObsNotificationToken: NotificationToken? = nil
     var syncNotificationToken: NotificationToken? = nil
     
@@ -39,37 +39,37 @@ class SpeciesPageContentController: UIViewController {
         prepareNotifications()
         
         switch getAppDelegate().checkApplicationState() {
-            case .cloudGroup:
-                cloudSyncButton.isHidden = false
-            case .objectGroup:
-                cloudSyncButton.setImage(nil, for: .normal)
-                //cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
-                prepareManualSyncActions()
-            case .placeGroup:
-                cloudSyncButton.setImage(nil, for: .normal)
-                cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
-                prepareManualSyncActions()
-            default:
+        case .cloudGroup:
+            cloudSyncButton.isHidden = false
+        case .objectGroup:
+            cloudSyncButton.setImage(nil, for: .normal)
+            //cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
+            prepareManualSyncActions()
+        case .placeGroup:
+            cloudSyncButton.setImage(nil, for: .normal)
+            cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
+            prepareManualSyncActions()
+        default:
             break
         }
-
+        
         
     }
     
-   
+    
     
     func prepareNotifications() {
         if let allSO = realm?.allSpeciesObservationsForCurrentSectionAndGroup(), let speciesIndex = speciesIndex{
             shouldSync = allSO.filter("fromSpecies.index = \(speciesIndex) AND isSynced = false")
             
             if let shouldSync = shouldSync {
-                    syncNotificationToken = shouldSync.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-                
+                syncNotificationToken = shouldSync.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+                    
                     guard let controller = self else { return }
                     switch changes {
                     case .initial(let speciesObservationResults):
                         controller.updateHeader()
-
+                        
                         if !speciesObservationResults.isEmpty {
                             controller.colors(forSynced: false)
                         } else {
@@ -78,7 +78,7 @@ class SpeciesPageContentController: UIViewController {
                         break
                     case .update( _, let deletions, _, _):
                         controller.updateHeader()
-
+                        
                         if deletions.count > 0 {
                             controller.colors(forSynced: true)
                         } else {
@@ -105,7 +105,24 @@ class SpeciesPageContentController: UIViewController {
             contentView.borderColor = #colorLiteral(red: 0.996078372, green: 0.9137254953, blue: 0.3058823943, alpha: 1)
             contentView.backgroundColor = #colorLiteral(red: 0.996078372, green: 0.9674537485, blue: 0.7561766128, alpha: 1)
             speciesLabel.textColor = UIColor.black
+            
+            //force synce in place condition
+            switch getAppDelegate().checkApplicationState() {
+            case .placeGroup:
+                if let speciesIndex = self.speciesIndex {
+                    if entered.contains(speciesIndex) {
+                        realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: getAppDelegate().checkApplicationState().rawValue, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+                    }
+                }
+            default:
+                break
+            }
         }
+        
+  
+        
+        
+        
     }
     
     
@@ -139,7 +156,7 @@ class SpeciesPageContentController: UIViewController {
         } else {
             //no species image
         }
-    
+        
         //updateTimestamp()
     }
     
@@ -153,12 +170,12 @@ class SpeciesPageContentController: UIViewController {
     }
     
     func prepareHeaderActions() {
-            speciesProfileImageView.isUserInteractionEnabled = true
-            //now you need a tap gesture recognizer
-            //note that target and action point to what happens when the action is recognized.
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doTerminalForCurrentSpeciesAction))
-            //Add the recognizer to your view.
-            speciesProfileImageView.addGestureRecognizer(tapRecognizer)
+        speciesProfileImageView.isUserInteractionEnabled = true
+        //now you need a tap gesture recognizer
+        //note that target and action point to what happens when the action is recognized.
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doTerminalForCurrentSpeciesAction))
+        //Add the recognizer to your view.
+        speciesProfileImageView.addGestureRecognizer(tapRecognizer)
     }
     
     func doManualSyncAction(_ sender: UITapGestureRecognizer) {
@@ -173,24 +190,24 @@ class SpeciesPageContentController: UIViewController {
     }
     
     func doTerminalForCurrentSpeciesAction(_ sender: Any) {
+        
+        if let speciesIndex = self.speciesIndex {
             
-            if let speciesIndex = self.speciesIndex {
-                
-                let condition = getAppDelegate().checkApplicationState().rawValue
-
-                
-                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
-
-                
-                realmDataController.clearInViewTerminal(withCondition: condition)
-                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: condition, withPlace: "species:\(speciesIndex)")
-                
-            }
+            let condition = getAppDelegate().checkApplicationState().rawValue
+            
+            
+            realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+            
+            
+            realmDataController.clearInViewTerminal(withCondition: condition)
+            realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: condition, withPlace: "species:\(speciesIndex)")
+            
+        }
         
     }
     
     // Mark: Actions
-
+    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

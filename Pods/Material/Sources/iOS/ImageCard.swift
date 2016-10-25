@@ -56,6 +56,10 @@ open class ImageCard: Card {
     @IBInspectable
     open var imageView: UIImageView? {
         didSet {
+            oldValue?.removeFromSuperview()
+            if let v = imageView {
+                container.addSubview(v)
+            }
             layoutSubviews()
         }
     }
@@ -68,70 +72,19 @@ open class ImageCard: Card {
     }
     
     open override func reload() {
-        guard let iv = imageView else {
-            super.reload()
-            return
-        }
+        var h: CGFloat = 0
         
-        // Clear constraints so new ones do not conflict.
-        container.removeConstraints(container.constraints)
-        for v in container.subviews {
-            v.removeFromSuperview()
-        }
-        
-        var format = "V:|"
-        var views = [String: Any]()
-        var metrics = [String: Any]()
-        
-        metrics["imageViewTop"] = imageViewEdgeInsets.top
-        metrics["imageViewBottom"] = imageViewEdgeInsets.bottom
-        
-        format += "-(imageViewTop)-[imageView]-(imageViewBottom)"
-        views["imageView"] = iv
-        container.layout(iv).horizontally(left: imageViewEdgeInsets.left, right: imageViewEdgeInsets.right)
-        
-        iv.grid.reload()
-        iv.divider.reload()
+        h = prepare(view: imageView, with: imageViewEdgeInsets, from: h)
         
         if let v = toolbar {
-            iv.layoutIfNeeded()
-            
-            container.layout(v)
-                .horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right)
-                .top(.top == toolbarAlignment ? toolbarEdgeInsets.top : iv.height - v.height - toolbarEdgeInsets.bottom)
+            prepare(view: v, with: toolbarEdgeInsets, from: h)
+            v.y = .top == toolbarAlignment ? toolbarEdgeInsets.top : h - v.height - toolbarEdgeInsets.bottom
         }
         
-        if let v = contentView {
-            metrics["imageViewBottom"] = (metrics["imageViewBottom"] as! CGFloat) + contentViewEdgeInsets.top
-            metrics["contentViewBottom"] = contentViewEdgeInsets.bottom
-            
-            format += "-[contentView]-(contentViewBottom)"
-            views["contentView"] = v
-            container.layout(v).horizontally(left: contentViewEdgeInsets.left, right: contentViewEdgeInsets.right)
-            
-            v.grid.reload()
-            v.divider.reload()
-        }
+        h = prepare(view: contentView, with: contentViewEdgeInsets, from: h)
+        h = prepare(view: bottomBar, with: bottomBarEdgeInsets, from: h)
         
-        if let v = bottomBar {
-            metrics["bottomBarBottom"] = bottomBarEdgeInsets.bottom
-            
-            if nil != contentView {
-                metrics["contentViewBottom"] = (metrics["contentViewBottom"] as! CGFloat) + bottomBarEdgeInsets.top
-                format += "-[bottomBar]-(bottomBarBottom)"
-            } else {
-                metrics["imageViewBottom"] = (metrics["imageViewBottom"] as! CGFloat) + bottomBarEdgeInsets.top
-                format += "-[bottomBar]-(bottomBarBottom)"
-            }
-            
-            views["bottomBar"] = v
-            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right)
-        }
-        
-        guard 0 < views.count else {
-            return
-        }
-        
-        container.addConstraints(Layout.constraint(format: "\(format)-|", options: [], metrics: metrics, views: views))
+        container.height = h
+        bounds.size.height = h
     }
 }

@@ -190,10 +190,6 @@ class TerminalPageContainerController: UIPageViewController {
                         
                         let relationship = relationshipResults[offset]
                         
-                        
-                        
-                        
-                        
                         if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withRelationshipId: relationship.id!) {
                             terminalPageContentViewController.groupIndex = so.groupIndex
                         }

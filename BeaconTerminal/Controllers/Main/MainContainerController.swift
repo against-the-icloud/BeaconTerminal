@@ -23,6 +23,13 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var tabContainterView: UIView!
     
+  
+    
+    @IBOutlet var beaconProfileImageViews: [UIImageView]!
+    
+    @IBOutlet weak var beaconBarStatusLabel: UILabel!
+
+    
     var TERMINAL_INDEX = 0
     
     var notificationTokens = [NotificationToken]()
@@ -43,7 +50,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
 
     
     deinit {
-     
         for notificationToken in notificationTokens {
             notificationToken.stop()
         }
@@ -64,12 +70,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         } else {
             
         }
-        
         prepareToolMenu()
         prepareTabs()
-        
- 
-        
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -79,13 +81,15 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     func prepareTabs() {
         
-        realmDataController.updateChannel(withId: "species-notes", url: "", name: "")
+        realmDataController.updateChannel(withId: "species-notes", url: "", name: "Species Notes")
+        
+        topTabbar.setTitle("Species Notes", forSegmentAt: 0)
         
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
                 if let c = item as? [String:String], let url = c["url"], let id = c["name"] {
                     
-                    let adjIndex = index + 1
+                    let adjIndex = index
                     
                     switch adjIndex {
                     case 0,1:
@@ -120,7 +124,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
     }
     
-    func  prepareToolMenu() {
+    func prepareToolMenu() {
         if !toolMenuTypes.isEmpty {
             toolMenuItems.append(prepareAddButton())
             
@@ -148,9 +152,13 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     }
     
     
-    //Mark: Notifications
+    // MARK: Notifications
     
     func prepareNotifications() {
+//        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBeaconBar(_:)), name: NSNotification.Name(rawValue: beaconNotificationKey), object: nil)
+        
+        
         runtimeResults = realmDataController.getRealm().objects(Runtime.self)
         
         // Observe Notifications
@@ -207,7 +215,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                         mainController.topTabbar.setTitle(name, forSegmentAt: index)
                     }
                 }
-                //terminalController.updateUI(withRuntimeResults: runtimeResults)
                 break
             case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -252,7 +259,26 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
     }
     
-    //Mark: Update
+    //MARK: Update
+    
+    func updateBeaconBar(_ notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+            let speciesIndex  = userInfo["speciesIndex"] as? NSNumber,
+            let action     = userInfo["action"]    as? ActionType else {
+                print("No userInfo found in notification")
+                return
+        }
+        
+        let si = speciesIndex.intValue
+        
+        switch action {
+        case .exited:
+            beaconProfileImageViews[si].image = nil
+        default:
+            beaconProfileImageViews[si].image = RealmDataController.generateImageForSpecies(si, isHighlighted: true)
+        }
+    }
     
     func updateHeader() {
         if let sectionName = realmDataController.getRealm().runtimeSectionName() {
@@ -453,7 +479,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         return .lightContent
     }
     
-    //Mark: Toolbar menu
+    //MARK: Toolbar menu
     
     /// Handle the menu toggle event.
     internal func handleToggleMenu(button: Any?) {
@@ -497,7 +523,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         mc.menu.views = toolMenuItems
     }
     
-    // Mark: Action
+    // MARK: Action
     
     @IBAction func unwindToMainFromScanner(segue: UIStoryboardSegue) {
         
@@ -585,7 +611,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
 }
 
-//Mark: ToolMenu
+//MARK: ToolMenu
 
 extension MainContainerController: MenuDelegate {
     func menu(menu: Menu, tappedAt point: CGPoint, isOutside: Bool) {

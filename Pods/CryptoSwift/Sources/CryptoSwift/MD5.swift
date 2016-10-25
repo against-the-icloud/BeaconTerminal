@@ -43,7 +43,7 @@ public final class MD5: DigestType  {
         
     }
 
-    func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
+    public func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
         do {
             return try self.update(withBytes: bytes, isLast: true)
         } catch {
@@ -113,7 +113,7 @@ extension MD5: Updatable {
 
         if isLast {
             // Step 1. Append padding
-            self.accumulated = bitPadding(to: self.accumulated, blockSize: MD5.blockSize, allowance: 64 / 8)
+            bitPadding(to: &self.accumulated, blockSize: MD5.blockSize, allowance: 64 / 8)
 
             // Step 2. Append Length a 64-bit representation of lengthInBits
             let lengthInBits = self.accumulatedLength * 8

@@ -217,6 +217,9 @@ let beaconNotificationKey = "ltg.evl.uic.edu.beaconNotificationKey"
 var realm: Realm?
 var terminalRealm: Realm?
 
+var entered = [Int]()
+var exited = [Int]()
+
 
 var nutella: Nutella?
 
@@ -612,9 +615,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .appendingPathComponent("\(sectionName).realm")
             
             // Set this as the configuration used for the default Realm
-            Realm.Configuration.defaultConfiguration = config
+            //Realm.Configuration.defaultConfiguration = config
             
-            try! realm = Realm(configuration: Realm.Configuration.defaultConfiguration)
+            try! realm = Realm(configuration: config)
             
             LOG.debug("REALM FILE: \(Realm.Configuration.defaultConfiguration.fileURL)")
         }
@@ -1118,9 +1121,55 @@ extension AppDelegate: ESTBeaconManagerDelegate {
         case .unknown:
             LOG.debug("\n\n UNKNOWN STATE ---> BEACON MANAGER REGION: \(region.identifier)")
         case .inside:
+            
             doEnter(identifier: region.identifier)
+            
+            if let beaconId = findBeaconId(withId: region.identifier) {
+                let speciesIndex = beaconId.speciesIndex
+                
+                
+                
+                if entered.index(of: speciesIndex) == nil {
+                    entered.append(speciesIndex)
+                    
+                }
+                
+                let userInfo = ["speciesIndex":NSNumber.init(value: speciesIndex),"action":ActionType.entered] as [String : Any]
+                
+                
+                let notification = Notification(
+                    name: Notification.Name(rawValue: beaconNotificationKey), object: self,
+                    userInfo: userInfo)
+                NotificationCenter.default.post(notification)
+                
+            }
+            
+            
+            
             LOG.debug("\n\n INSIDE STATE ---> BEACON MANAGER REGION: \(region.identifier)")
         case .outside:
+            
+            if let beaconId = findBeaconId(withId: region.identifier) {
+                let speciesIndex = beaconId.speciesIndex
+                
+                
+                
+                if exited.index(of: speciesIndex) == nil {
+                    exited.append(speciesIndex)
+                    
+                }
+                
+                let userInfo = ["speciesIndex":NSNumber.init(value: speciesIndex),"action":ActionType.exited] as [String : Any]
+                
+                
+                let notification = Notification(
+                    name: Notification.Name(rawValue: beaconNotificationKey), object: self,
+                    userInfo: userInfo)
+                NotificationCenter.default.post(notification)
+                
+            }
+
+            
             LOG.debug("\n\n OUTSIDE STATE ---> BEACON MANAGER REGION: \(region.identifier)")
         default:
             break

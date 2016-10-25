@@ -30,7 +30,6 @@
 
 import UIKit
 
-@objc(Button)
 open class Button: UIButton {
 	/**
      A CAShapeLayer used to manage elements that would be affected by
@@ -173,6 +172,7 @@ open class Button: UIButton {
         layoutShape()
         layoutVisualLayer()
     }
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
         layoutShadowPath()

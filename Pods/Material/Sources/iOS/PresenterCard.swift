@@ -50,94 +50,24 @@ open class PresenterCard: Card {
     @IBInspectable
     open var presenterView: UIView? {
         didSet {
+            oldValue?.removeFromSuperview()
+            if let v = presenterView {
+                v.clipsToBounds = true
+                container.addSubview(v)
+            }
             layoutSubviews()
         }
     }
     
     open override func reload() {
-        // Clear constraints so new ones do not conflict.
-        container.removeConstraints(container.constraints)
-        for v in container.subviews {
-            v.removeFromSuperview()
-        }
+        var h: CGFloat = 0
         
-        var format = "V:|"
-        var views = [String: Any]()
-        var metrics = [String: Any]()
+        h = prepare(view: toolbar, with: toolbarEdgeInsets, from: h)
+        h = prepare(view: presenterView, with: presenterViewEdgeInsets, from: h)
+        h = prepare(view: contentView, with: contentViewEdgeInsets, from: h)
+        h = prepare(view: bottomBar, with: bottomBarEdgeInsets, from: h)
         
-        if let v = toolbar {
-            metrics["toolbarTop"] = toolbarEdgeInsets.top
-            metrics["toolbarBottom"] = toolbarEdgeInsets.bottom
-            
-            format += "-(toolbarTop)-[toolbar]-(toolbarBottom)"
-            views["toolbar"] = v
-            container.layout(v).horizontally(left: toolbarEdgeInsets.left, right: toolbarEdgeInsets.right)
-        }
-        
-        if let v = presenterView {
-            metrics["presenterViewBottom"] = presenterViewEdgeInsets.bottom
-            
-            if nil != toolbar {
-                metrics["toolbarBottom"] = (metrics["toolbarBottom"] as! CGFloat) + presenterViewEdgeInsets.top
-                format += "-[presenterView]-(presenterViewBottom)"
-            } else {
-                metrics["presenterViewTop"] = presenterViewEdgeInsets.top
-                format += "-(presenterViewTop)-[presenterView]-(presenterViewBottom)"
-            }
-            
-            views["presenterView"] = v
-            container.layout(v).horizontally(left: presenterViewEdgeInsets.left, right: presenterViewEdgeInsets.right)
-            
-            v.grid.reload()
-            v.divider.reload()
-        }
-        
-        if let v = contentView {
-            metrics["contentViewBottom"] = contentViewEdgeInsets.bottom
-            
-            if nil != presenterView {
-                metrics["presenterViewBottom"] = (metrics["presenterViewBottom"] as! CGFloat) + contentViewEdgeInsets.top
-                format += "-[contentView]-(contentViewBottom)"
-            } else if nil != toolbar {
-                metrics["toolbarBottom"] = (metrics["toolbarBottom"] as! CGFloat) + contentViewEdgeInsets.top
-                format += "-[contentView]-(contentViewBottom)"
-            } else {
-                metrics["contentViewTop"] = contentViewEdgeInsets.top
-                format += "-(contentViewTop)-[contentView]-(contentViewBottom)"
-            }
-            
-            views["contentView"] = v
-            container.layout(v).horizontally(left: contentViewEdgeInsets.left, right: contentViewEdgeInsets.right)
-            
-            v.grid.reload()
-            v.divider.reload()
-        }
-        
-        if let v = bottomBar {
-            metrics["bottomBarBottom"] = bottomBarEdgeInsets.bottom
-            
-            if nil != contentView {
-                metrics["contentViewBottom"] = (metrics["contentViewBottom"] as! CGFloat) + bottomBarEdgeInsets.top
-                format += "-[bottomBar]-(bottomBarBottom)"
-            } else if nil != presenterView {
-                metrics["presenterViewBottom"] = (metrics["presenterViewBottom"] as! CGFloat) + bottomBarEdgeInsets.top
-                format += "-[bottomBar]-(bottomBarBottom)"
-            } else if nil != toolbar {
-                metrics["toolbarBottom"] = (metrics["toolbarBottom"] as! CGFloat) + bottomBarEdgeInsets.top
-                format += "-[bottomBar]-(bottomBarBottom)"
-            } else {
-                metrics["bottomBarTop"] = bottomBarEdgeInsets.top
-                format += "-(bottomBarTop)-[bottomBar]-(bottomBarBottom)"
-            }
-            
-            views["bottomBar"] = v
-            container.layout(v).horizontally(left: bottomBarEdgeInsets.left, right: bottomBarEdgeInsets.right)
-        }
-        
-        guard 0 < views.count else {
-            return
-        }
-        
-        container.addConstraints(Layout.constraint(format: "\(format)-|", options: [], metrics: metrics, views: views))
+        container.height = h
+        bounds.size.height = h
     }
 }

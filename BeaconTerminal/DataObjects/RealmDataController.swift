@@ -1003,10 +1003,10 @@ class RealmDataController {
         
     }
     
-    func updateChannel(withId id: String, url: String?, name: String?) {
+    func updateChannel(withId id: String?, url: String?, name: String?) {
         try! getRealm().write {
             
-            if let channel = getRealm().channel(withId: id) {
+            if let channel = getRealm().channel(withId: id!) {
                 
                 if let n = name {
                     channel.name = n
@@ -1021,6 +1021,9 @@ class RealmDataController {
             } else {
                 let channel = Channel()
 
+                if let i = id {
+                    channel.id = i
+                }
                 if let n = name {
                     channel.name = n
                 }

@@ -3,6 +3,7 @@ import UIKit
 import Material
 import Alamofire
 import CryptoSwift
+import RealmSwift
 
 enum ImageFormat: String {
     case png = ".png"

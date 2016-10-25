@@ -6,22 +6,20 @@
 //  Copyright (c) 2014 Marcin Krzyzanowski. All rights reserved.
 //
 
-final class SHA1: DigestType {
+public final class SHA1: DigestType {
     static let digestLength:Int = 20 // 160 / 8
-    static var blockSize: Int = 64
-    fileprivate static let hashInitialValue: Array<UInt32> = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]
+    static let blockSize: Int = 64
+    fileprivate static let hashInitialValue: ContiguousArray<UInt32> = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]
 
     fileprivate var accumulated = Array<UInt8>()
     fileprivate var accumulatedLength: Int = 0
-    fileprivate var accumulatedHash: Array<UInt32> = SHA1.hashInitialValue
+    fileprivate var accumulatedHash: ContiguousArray<UInt32> = SHA1.hashInitialValue
 
     public init() {
 
     }
 
-    private let h:Array<UInt32> = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]
-
-    func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
+    public func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
         do {
             return try self.update(withBytes: bytes, isLast: true)
         } catch {
@@ -29,12 +27,12 @@ final class SHA1: DigestType {
         }
     }
 
-    fileprivate func process<C: Collection>(block chunk: C, currentHash hh: inout Array<UInt32>) where C.Iterator.Element == UInt8, C.Index == Int {
+    fileprivate func process(block chunk: ArraySlice<UInt8>, currentHash hh: inout ContiguousArray<UInt32>) {
         // break chunk into sixteen 32-bit words M[j], 0 ≤ j ≤ 15, big-endian
         // Extend the sixteen 32-bit words into eighty 32-bit words:
-        var M:Array<UInt32> = Array<UInt32>(repeating: 0, count: 80)
+        var M = ContiguousArray<UInt32>(repeating: 0, count: 80)
         for x in 0..<M.count {
-            switch (x) {
+            switch x {
             case 0...15:
                 let start = chunk.startIndex.advanced(by: x * 4) // * MemoryLayout<UInt32>.size
                 M[x] = UInt32(bytes: chunk, fromIndex: start)
@@ -97,11 +95,11 @@ extension SHA1: Updatable {
     public func update<T: Sequence>(withBytes bytes: T, isLast: Bool = false) throws -> Array<UInt8> where T.Iterator.Element == UInt8 {
         let prevAccumulatedLength = self.accumulated.count
         self.accumulated += bytes
-        self.accumulatedLength += self.accumulated.count - prevAccumulatedLength //avoid Array(bytes).count
+        self.accumulatedLength = self.accumulatedLength &+ self.accumulated.count &- prevAccumulatedLength //avoid Array(bytes).count
 
         if isLast {
             // Step 1. Append padding
-            self.accumulated = bitPadding(to: self.accumulated, blockSize: SHA1.blockSize, allowance: 64 / 8)
+            bitPadding(to: &self.accumulated, blockSize: SHA1.blockSize, allowance: 64 / 8)
 
             // Step 2. Append Length a 64-bit representation of lengthInBits
             let lengthInBits = self.accumulatedLength * 8
@@ -117,12 +115,15 @@ extension SHA1: Updatable {
         }
 
         // output current hash
-        var result = Array<UInt8>()
-        result.reserveCapacity(SHA1.digestLength)
-
-        for hElement in self.accumulatedHash {
-            let h = hElement.bigEndian
-            result += [UInt8(h & 0xff), UInt8((h >> 8) & 0xff), UInt8((h >> 16) & 0xff), UInt8((h >> 24) & 0xff)]
+        var result = Array<UInt8>(repeating: 0, count: SHA1.digestLength)
+        var pos = 0
+        for idx in 0..<self.accumulatedHash.count {
+            let h = self.accumulatedHash[idx].bigEndian
+            result[pos]     = UInt8(h & 0xff)
+            result[pos + 1] = UInt8((h >> 8) & 0xff)
+            result[pos + 2] = UInt8((h >> 16) & 0xff)
+            result[pos + 3] = UInt8((h >> 24) & 0xff)
+            pos += 4
         }
 
         // reset hash value for instance
