@@ -47,6 +47,8 @@
 		708E91741DB41E6200AF2D3C /* LoginTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708E91731DB41E6200AF2D3C /* LoginTypeViewController.swift */; };
 		70920D0E1CD57B54001B582F /* wallcology_configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 70920D0D1CD57B54001B582F /* wallcology_configuration.json */; };
 		7099CDA21D0F99050037E56C /* Pulsator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7099CDA11D0F99050037E56C /* Pulsator.swift */; };
+		709F6E2F1DBFBC8A0014CED8 /* ExperimentsSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F6E2E1DBFBC8A0014CED8 /* ExperimentsSummaryViewController.swift */; };
+		709F6E321DBFBD0A0014CED8 /* QuestionsSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F6E311DBFBD0A0014CED8 /* QuestionsSummaryViewController.swift */; };
 		709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F926C1D8F7D260057E104 /* BeaconID.swift */; };
 		709F926F1D8F7D390057E104 /* BeaconNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709F926E1D8F7D390057E104 /* BeaconNotificationsManager.swift */; };
 		70A06DD31CE3F84D008FC11F /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70A06DD11CE3F84D008FC11F /* click.wav */; };
@@ -174,6 +176,8 @@
 		708E91731DB41E6200AF2D3C /* LoginTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginTypeViewController.swift; path = Login/LoginTypeViewController.swift; sourceTree = "<group>"; };
 		70920D0D1CD57B54001B582F /* wallcology_configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = wallcology_configuration.json; path = ../wallcology_configuration.json; sourceTree = "<group>"; };
 		7099CDA11D0F99050037E56C /* Pulsator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pulsator.swift; path = ../Views/Pulsator.swift; sourceTree = "<group>"; };
+		709F6E2E1DBFBC8A0014CED8 /* ExperimentsSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperimentsSummaryViewController.swift; path = Experiments/ExperimentsSummaryViewController.swift; sourceTree = "<group>"; };
+		709F6E311DBFBD0A0014CED8 /* QuestionsSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuestionsSummaryViewController.swift; path = Questions/QuestionsSummaryViewController.swift; sourceTree = "<group>"; };
 		709F926C1D8F7D260057E104 /* BeaconID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconID.swift; sourceTree = "<group>"; };
 		709F926E1D8F7D390057E104 /* BeaconNotificationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconNotificationsManager.swift; sourceTree = "<group>"; };
 		70A06DD11CE3F84D008FC11F /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.wav; sourceTree = "<group>"; };
@@ -379,6 +383,22 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
+		709F6E2D1DBFBC550014CED8 /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				709F6E2E1DBFBC8A0014CED8 /* ExperimentsSummaryViewController.swift */,
+			);
+			name = Experiments;
+			sourceTree = "<group>";
+		};
+		709F6E301DBFBCD80014CED8 /* QuestionsSummaryController */ = {
+			isa = PBXGroup;
+			children = (
+				709F6E311DBFBD0A0014CED8 /* QuestionsSummaryViewController.swift */,
+			);
+			name = QuestionsSummaryController;
+			sourceTree = "<group>";
+		};
 		70C1CF341D592DEB00CB687E /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +507,8 @@
 		C0A7D28976CF55BCDC92A3AB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				709F6E301DBFBCD80014CED8 /* QuestionsSummaryController */,
+				709F6E2D1DBFBC550014CED8 /* Experiments */,
 				7031DB181D65E156000DCC61 /* Terminal */,
 				70C1CF341D592DEB00CB687E /* Login */,
 				C0A7DAF922A5401E5A9F4885 /* Main */,
@@ -831,9 +853,11 @@
 				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
 				70B017E31DA5CE6C00B233AA /* CanvasView.swift in Sources */,
 				706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */,
+				709F6E2F1DBFBC8A0014CED8 /* ExperimentsSummaryViewController.swift in Sources */,
 				7068B05D1DBD95AD00B0F790 /* TerminalPageContentController.swift in Sources */,
 				706723A71D999E86008B9DD1 /* RSSINormalization.swift in Sources */,
 				70D9C1B21D6650B700FAF080 /* LoginGroupViewController.swift in Sources */,
+				709F6E321DBFBD0A0014CED8 /* QuestionsSummaryViewController.swift in Sources */,
 				704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */,
 				70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */,
 				70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */,

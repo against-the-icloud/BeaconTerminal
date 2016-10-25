@@ -20,6 +20,8 @@ class TerminalMainViewController: UIViewController {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var bannerView: UIView!
+    @IBOutlet weak var topTabbar: TabSegmentedControl!
+    @IBOutlet var containerViews: [UIView]!
     
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
@@ -39,7 +41,7 @@ class TerminalMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        topTabbar.initUI()
         if needsTerminal {
             prepareNotifications()
         }
@@ -130,7 +132,7 @@ class TerminalMainViewController: UIViewController {
         }
         
         
-        
+        colorizeSelectedSegment()        
         updateTimestamp()
     }
     
@@ -141,7 +143,7 @@ class TerminalMainViewController: UIViewController {
         
         timestampLabel.text = dateformatter.string(from: date)
     }
-    
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -155,6 +157,57 @@ class TerminalMainViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    // MARK: Tab
+    
+    func colorizeSelectedSegment() {
+        let sortedViews = topTabbar.subviews.sorted( by: { $0.frame.origin.x < $1.frame.origin.x } )
+        
+        for (index, view) in sortedViews.enumerated() {
+            if index == topTabbar.selectedSegmentIndex {
+                
+                view.backgroundColor = UIColor.black
+                
+                
+            } else {
+                
+                view.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
+                
+            }
+        }
+    }
+
+    
+    func changeTab(withControl tabbar: UISegmentedControl) {
+        
+            let selected =  tabbar.selectedSegmentIndex
+        
+            for (index,containerView) in containerViews.enumerated() {
+                
+                switch selected {
+                case index:
+                    containerView.alpha = 0.0
+                    containerView.isHidden = false
+                    containerView.fadeIn(toAlpha: 1.0) {_ in
+                        containerView.isHidden = false
+                    }
+                default:
+                    containerView.fadeOut(0.0) {_ in
+                        containerView.isHidden = true
+                    }
+                }
+            }
+        
+    }
+
+    
+    // MARK: actions
+
+    
+    @IBAction func tabChanged(_ sender: UISegmentedControl) {
+        colorizeSelectedSegment()
+        changeTab(withControl: sender)
     }
     
     @IBAction func refreshAction(_ sender: Any) {

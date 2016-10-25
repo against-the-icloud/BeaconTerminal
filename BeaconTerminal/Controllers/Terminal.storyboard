@@ -42,16 +42,16 @@
                                                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                                     </imageView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="rqk-QJ-iLs" userLabel="LeftStackView">
-                                                        <rect key="frame" x="60" y="0.0" width="170.5" height="50"/>
+                                                        <rect key="frame" x="60" y="0.0" width="171" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" text="SPECIES " lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XyW-yE-tfB">
-                                                                <rect key="frame" x="0.0" y="0.0" width="170.5" height="34"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="171" height="34"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="749" text="Last Update: 8/7/16 4:56pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4QX-MT-Iml" userLabel="TimestampLabel">
-                                                                <rect key="frame" x="0.0" y="34" width="170.5" height="16"/>
+                                                                <rect key="frame" x="0.0" y="34" width="171" height="16"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -60,10 +60,36 @@
                                                         <color key="backgroundColor" red="0.074509803920000006" green="0.5450980392" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cFa-Wl-Kyl" userLabel="MiddleStackView">
-                                                        <rect key="frame" x="240.5" y="0.0" width="598.5" height="50"/>
+                                                        <rect key="frame" x="241" y="0.0" width="598" height="50"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="247" horizontalCompressionResistancePriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-6b-cz6" userLabel="Spacer">
-                                                                <rect key="frame" x="0.0" y="0.0" width="598.5" height="50"/>
+                                                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-6b-cz6" userLabel="Spacer">
+                                                                <rect key="frame" x="0.0" y="0.0" width="598" height="50"/>
+                                                                <subviews>
+                                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ANL-AB-Hsf" customClass="TabSegmentedControl" customModule="BeaconTerminal" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="598" height="51"/>
+                                                                        <color key="backgroundColor" red="0.074509803920000006" green="0.5450980392" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <segments>
+                                                                            <segment title="CLASS ACCOUNTS"/>
+                                                                            <segment title="EXPERIMENTS"/>
+                                                                            <segment title="QUESTIONS"/>
+                                                                        </segments>
+                                                                        <color key="tintColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                                <real key="value" value="0.0"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                        <connections>
+                                                                            <action selector="tabChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="g58-gt-RuH"/>
+                                                                        </connections>
+                                                                    </segmentedControl>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="ANL-AB-Hsf" firstAttribute="centerY" secondItem="2AR-6b-cz6" secondAttribute="centerY" id="BrK-YC-Iny"/>
+                                                                    <constraint firstItem="ANL-AB-Hsf" firstAttribute="centerX" secondItem="2AR-6b-cz6" secondAttribute="centerX" id="Mgf-G2-9TF"/>
+                                                                    <constraint firstItem="ANL-AB-Hsf" firstAttribute="height" secondItem="2AR-6b-cz6" secondAttribute="height" id="avI-um-lJt"/>
+                                                                    <constraint firstItem="ANL-AB-Hsf" firstAttribute="width" secondItem="2AR-6b-cz6" secondAttribute="width" id="ilQ-q0-Uz1"/>
+                                                                </constraints>
                                                             </view>
                                                         </subviews>
                                                     </stackView>
@@ -121,21 +147,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aaq-KO-HOf" userLabel="CenterView">
                                         <rect key="frame" x="0.0" y="59" width="1024" height="681"/>
                                         <subviews>
-                                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yq0-TZ-7IY" userLabel="SummaryView">
-                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                        <real key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </containerView>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pGN-Ew-cs5" userLabel="TerminalPagingView">
                                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
                                                 <userDefinedRuntimeAttributes>
@@ -150,8 +161,37 @@
                                                     <segue destination="8Tl-q7-A5f" kind="embed" identifier="terminalPageContainerSegue" id="szF-r6-2aK"/>
                                                 </connections>
                                             </containerView>
+                                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yq0-TZ-7IY" userLabel="ExperminentsView">
+                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <segue destination="A15-MY-5Z9" kind="embed" identifier="experimentSegue" id="fP3-cJ-77d"/>
+                                                </connections>
+                                            </containerView>
+                                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4w-OL-rKx" userLabel="QuestionsView">
+                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <segue destination="5xc-TC-cHr" kind="embed" identifier="questionsSegue" id="mpQ-Lk-fDS"/>
+                                                </connections>
+                                            </containerView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.30272299050000001" green="0.39065501089999999" blue="0.48220103980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="pGN-Ew-cs5" firstAttribute="width" secondItem="aaq-KO-HOf" secondAttribute="width" id="1pa-TN-l4Y"/>
                                             <constraint firstItem="Yq0-TZ-7IY" firstAttribute="width" secondItem="aaq-KO-HOf" secondAttribute="width" id="AP7-hs-I7e"/>
@@ -185,11 +225,64 @@
                         <outlet property="refreshButton" destination="hTC-Ka-j7e" id="Vll-vR-xuN"/>
                         <outlet property="sectionLabel" destination="y6F-VW-byX" id="DWx-12-Q3w"/>
                         <outlet property="timestampLabel" destination="4QX-MT-Iml" id="bUK-rO-rZW"/>
+                        <outlet property="topTabbar" destination="ANL-AB-Hsf" id="3oJ-7u-Yia"/>
+                        <outletCollection property="containerViews" destination="pGN-Ew-cs5" collectionClass="NSMutableArray" id="gGJ-cb-wIi"/>
+                        <outletCollection property="containerViews" destination="Yq0-TZ-7IY" collectionClass="NSMutableArray" id="fYb-jr-iZd"/>
+                        <outletCollection property="containerViews" destination="j4w-OL-rKx" collectionClass="NSMutableArray" id="H6o-tl-Ozu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="418" y="-47"/>
+        </scene>
+        <!--Experiments Summary View Controller-->
+        <scene sceneID="V91-cM-zze">
+            <objects>
+                <viewController storyboardIdentifier="experimentsSummaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A15-MY-5Z9" customClass="ExperimentsSummaryViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V46-BE-bLs"/>
+                        <viewControllerLayoutGuide type="bottom" id="WXN-wx-qAb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fGE-xI-jmB">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="drE-Xz-I1u" userLabel="NoExperimentsView">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no experiments at this time." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXS-51-huc">
+                                        <rect key="frame" x="0.0" y="324" width="1024" height="34"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="HXS-51-huc" firstAttribute="centerY" secondItem="drE-Xz-I1u" secondAttribute="centerY" id="db9-dS-b55"/>
+                                    <constraint firstItem="HXS-51-huc" firstAttribute="width" secondItem="drE-Xz-I1u" secondAttribute="width" id="fWL-dj-XP0"/>
+                                    <constraint firstItem="HXS-51-huc" firstAttribute="centerX" secondItem="drE-Xz-I1u" secondAttribute="centerX" id="wj3-De-1dY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.3027229905128479" green="0.39065501093864441" blue="0.48220103979110718" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="drE-Xz-I1u" firstAttribute="height" secondItem="fGE-xI-jmB" secondAttribute="height" id="ARk-hG-Ye6"/>
+                            <constraint firstItem="drE-Xz-I1u" firstAttribute="centerY" secondItem="fGE-xI-jmB" secondAttribute="centerY" id="H2O-4M-5RI"/>
+                            <constraint firstItem="drE-Xz-I1u" firstAttribute="centerX" secondItem="fGE-xI-jmB" secondAttribute="centerX" id="WnJ-3l-pfb"/>
+                            <constraint firstItem="drE-Xz-I1u" firstAttribute="width" secondItem="fGE-xI-jmB" secondAttribute="width" id="qvD-1Q-ic1"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="noExperimentsView" destination="drE-Xz-I1u" id="5XP-71-HWT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RUh-69-aPT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1119" y="72"/>
         </scene>
         <!--Terminal Page Container Controller-->
         <scene sceneID="gIv-fF-9ZI">
@@ -1444,6 +1537,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ASk-Tu-Jq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2318" y="2157"/>
+        </scene>
+        <!--Questions Summary View Controller-->
+        <scene sceneID="2Hf-AY-hP1">
+            <objects>
+                <viewController storyboardIdentifier="questionsSummaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5xc-TC-cHr" customClass="QuestionsSummaryViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0JU-6M-nDB"/>
+                        <viewControllerLayoutGuide type="bottom" id="iX0-DC-xyU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W05-jF-WPd">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mfb-Rb-uaw" userLabel="NoExperimentsView">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="681"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no questions at this time." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uai-hs-Whw">
+                                        <rect key="frame" x="0.0" y="324" width="1024" height="34"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="uai-hs-Whw" firstAttribute="centerX" secondItem="mfb-Rb-uaw" secondAttribute="centerX" id="0Iy-SW-cSy"/>
+                                    <constraint firstItem="uai-hs-Whw" firstAttribute="centerY" secondItem="mfb-Rb-uaw" secondAttribute="centerY" id="T4g-L4-731"/>
+                                    <constraint firstItem="uai-hs-Whw" firstAttribute="width" secondItem="mfb-Rb-uaw" secondAttribute="width" id="xW0-0B-IIF"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.30272299050000001" green="0.39065501089999999" blue="0.48220103980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="mfb-Rb-uaw" firstAttribute="centerX" secondItem="W05-jF-WPd" secondAttribute="centerX" id="7CV-9w-Sbq"/>
+                            <constraint firstItem="mfb-Rb-uaw" firstAttribute="centerY" secondItem="W05-jF-WPd" secondAttribute="centerY" id="EBj-Mr-KJz"/>
+                            <constraint firstItem="mfb-Rb-uaw" firstAttribute="height" secondItem="W05-jF-WPd" secondAttribute="height" id="PTW-A3-Fsy"/>
+                            <constraint firstItem="mfb-Rb-uaw" firstAttribute="width" secondItem="W05-jF-WPd" secondAttribute="width" id="wkg-IG-OjV"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="noQuestionsView" destination="mfb-Rb-uaw" id="vCN-Ay-CRs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NwN-qe-JLe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1126" y="-518"/>
         </scene>
     </scenes>
     <resources>
