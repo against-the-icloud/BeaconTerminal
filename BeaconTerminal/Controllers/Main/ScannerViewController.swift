@@ -148,7 +148,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        self.scanningStateMachine?.fireEvent(self.stopEvent)
+        //self.scanningStateMachine?.fireEvent(self.stopEvent)
         
     }
     
@@ -210,49 +210,53 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     func estDeviceConnectionDidSucceed(_ device: ESTDeviceConnectable) {
         connectionRetries = 0
         
-        immediateBeacon.delegate = nil
+        //immediateBeacon.delegate = nil
         
-        self.scanningStateMachine?.fireEvent(self.stopEvent)
+        //self.scanningStateMachine?.fireEvent(self.stopEvent)
 
+        if self.immediateBeaconDetector != nil {
+            self.immediateBeaconDetector.stop()
+        }
 
-        
-        self.dismiss(animated: true, completion: {
+        if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
             
-            if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
+            let minorValue = settings.iBeacon.minor.getValue()
+            let majorValue = settings.iBeacon.major.getValue()
+            
+            _ = Int(majorValue)
+            let speciesIndex = Int(minorValue) - 1
+            if let beaconId = self.findBeaconMinor(withMinor: Int16(minorValue)) {
                 
-                let minorValue = settings.iBeacon.minor.getValue()
-                let majorValue = settings.iBeacon.major.getValue()
-                
-                _ = Int(majorValue)
-                let speciesIndex = Int(minorValue) - 1
-                if let beaconId = self.findBeaconMinor(withMinor: Int16(minorValue)) {
-                    
-                    guard speciesIndex >= 0 else {
-                        return
-                    }
-                    
-                    self.scannedSpecies = speciesIndex
-                    self.scannedBeaconId = beaconId
-                    
-                    self.immediateBeacon.disconnect()
-                    lb.disconnect()
-                    
-                    let userInfo = ["index":NSNumber.init(value: speciesIndex)]
-                    
-                    let notification = Notification(
-                        name: Notification.Name(rawValue: beaconNotificationKey), object: self,
-                        userInfo: userInfo)
-                    NotificationCenter.default.post(notification)
-                    
-                        let condition = getAppDelegate().checkApplicationState().rawValue
-                        realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
-                        realmDataController.clearInViewTerminal(withCondition: condition)
-                        realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)  
+                guard speciesIndex >= 0 else {
+                    return
                 }
                 
+                self.scannedSpecies = speciesIndex
+                self.scannedBeaconId = beaconId
+                
+                
+                let condition = getAppDelegate().checkApplicationState().rawValue
+                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+                realmDataController.clearInViewTerminal(withCondition: condition)
+                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
+                
+                lb.disconnect()
+                
+                self.statusLabel.text = "Disconnecting..."
+
+                if self.immediateBeaconDetector != nil {
+                    self.immediateBeaconDetector.stop()
+                    if self.immediateBeacon != nil {
+                        self.immediateBeacon.disconnect()
+                    }
+                }
+             
             }
             
-        })
+        }
+
+        
+       
     }
     
     func findBeaconMinor(withMinor minor: Int16) -> BeaconID? {
@@ -271,9 +275,23 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         }
     }
     
+    
     func estDevice(_ device: ESTDeviceConnectable, didDisconnectWithError error: Error?) {
-        if !retryConnection() {
-            self.scanningStateMachine?.fireEvent(self.errorEvent)
+        if let e = error {
+            self.statusLabel.text = "Error Connecting try again"
+            if self.immediateBeaconDetector != nil {
+                self.immediateBeaconDetector.stop()
+                if self.immediateBeacon != nil {
+                    self.immediateBeacon.disconnect()
+                }
+            }
+            LOG.debug("ERROR DISCONNECT \(e)")
+        } else {
+            LOG.debug("DISCONNECT SUCCESSFULL")
+            self.dismiss(animated: true, completion: {
+                
+                
+            })
         }
     }
     

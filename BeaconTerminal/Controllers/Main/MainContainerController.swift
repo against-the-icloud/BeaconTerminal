@@ -322,15 +322,17 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                             v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                         }
                         
-                        if TERMINAL_INDEX == 0 {
-                            topTabbar.insertSegment(withTitle: title, at: topTabbar.numberOfSegments, animated: true)
-                            TERMINAL_INDEX = topTabbar.numberOfSegments - 1
+                      
+                            TERMINAL_INDEX = topTabbar.numberOfSegments
+
+                            topTabbar.insertSegment(withTitle: title, at: TERMINAL_INDEX, animated: true)
                             topTabbar.selectedSegmentIndex = TERMINAL_INDEX
-                        } else {
-                            topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
-                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
-                            
-                        }
+                      
+//                        } else {
+//                            topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
+//                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
+//                            
+//                        }
                         
                         colorizeSelectedSegment()
                         topTabbar.setNeedsLayout()

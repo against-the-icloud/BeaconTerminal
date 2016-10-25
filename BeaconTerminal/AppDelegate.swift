@@ -299,16 +299,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func manualLogin() {
         initStateMachine()
         initLoginStateMachine()
-        realmDataController = RealmDataController()
-        
         prepareLoginInterface(isRemote: false)
     }
     
     func autoLogin() {
+        initStateMachine()
         initLoginStateMachine()
-        
+        prepareLoginInterface(isRemote: false)
         getAppDelegate().changeLoginStateTo(.autoLogin)
-        
     }
     
     func prepareThemes() {
@@ -367,15 +365,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch applicationType {
         case .placeTerminal:
             needsTerminal = true
+            unprepareBeacons()
             rootVC = prepareTerminalUI()
         case .placeGroup:
             needsTerminal = false
             rootVC = prepareGroupUI()
             prepareBeacons()
         case .objectGroup:
+            unprepareBeacons()
             needsTerminal = true
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.allTypes)
         case .cloudGroup:
+            unprepareBeacons()
             needsTerminal = true
             rootVC = prepareGroupUI(withToolMenuTypes: ToolMenuType.cloudTypes)
         default:
@@ -426,20 +427,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func prepareLoginInterface(isRemote: Bool) {
         window = UIWindow(frame:UIScreen.main.bounds)
-        window?.rootViewController = prepareLoginUI(shouldShowLogin: false)
+
+        let rootVC = prepareLoginUI(shouldShowLogin: false)
+        
+        if let rnc = window?.rootViewController?.navigationController {
+            rnc.pushViewController(rootVC, animated: true)
+        } else {
+            window?.rootViewController = rootVC
+        }
+        
         window?.makeKeyAndVisible()
     }
-    
-    //    func prepareBeaconManager() {
-    //        beaconNotificationsManager = BeaconNotificationsManager()
-    //        for (index, beaconId) in beaconIds.enumerated() {
-    //            beaconNotificationsManager?.enableNotificationsForBeaconID(beaconId,
-    //                                                                       enterMessage: "enter species \(index)",
-    //                exitMessage: "exit species \(index)"
-    //            )
-    //        }
-    //    }
-    
     
     func prepareAutoLoginUI() -> DefaultViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -910,6 +908,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: BEACONS
+    
+    func unprepareBeacons() {
+        estBeaconManager.delegate = nil
+    }
+
+    
     
     func prepareBeacons() {
         estBeaconManager.delegate = self

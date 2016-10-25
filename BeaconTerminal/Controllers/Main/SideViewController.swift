@@ -45,6 +45,7 @@ class SideViewController: UITableViewController {
         case 0:
         
            
+                self.navigationDrawerController?.closeLeftView()
                 //do manual
                 getAppDelegate().manualLogin()
         

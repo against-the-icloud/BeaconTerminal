@@ -75,9 +75,10 @@ extension LoginConditionCollectionViewController {
             defaults.set(condition.rawValue, forKey: "condition")
             defaults.synchronize()
             
-            getAppDelegate().changeSystemStateTo(condition)
             
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: {
+                getAppDelegate().changeSystemStateTo(condition)
+            })
 
         }
     }

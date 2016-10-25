@@ -60,7 +60,7 @@ class TerminalPageContentController: UIViewController {
     func prepareTitlePanel() {
         
         if let groupIndex = self.groupIndex {
-            groupIndexLabel.text = "TEAM \(groupIndex)"
+            groupIndexLabel.text = "TEAM \(groupIndex + 1)"
 
         }
         

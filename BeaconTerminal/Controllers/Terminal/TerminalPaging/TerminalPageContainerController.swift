@@ -318,7 +318,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             
         } else if let pageCount = viewController as? TerminalContainerViewController {
             
-            return self.viewController(atIndex: 1)
+            return self.viewController(atIndex: 0)
             
             
         }
