@@ -179,9 +179,20 @@ class RealmDataController {
                 
                 DispatchQueue.main.async(execute: block)
             }
-            
-            
-            
+//        case .questions:
+//            if let nutella = nutella {
+//                let block = DispatchWorkItem {
+//                    
+//                    var dict = [String:String]()
+//                    dict[""] = ""
+//                    let json = JSON(dict)
+//                    let jsonObject: Any = json.object
+//                    nutella.net.asyncRequest("get_questions", message: jsonObject as AnyObject, requestName: "get_questions")
+//                }
+//                
+//                DispatchQueue.main.async(execute: block)
+//            }
+
         default:
             break
         }
@@ -221,8 +232,7 @@ class RealmDataController {
                     DispatchQueue.main.async(execute: block)
                 }
             }
-            
-        default:
+               default:
             break
         }
     }
@@ -1739,6 +1749,7 @@ extension RealmDataController {
             r.delete(r.objects(Section.self))
             r.delete(r.objects(Member.self))
             r.delete(r.objects(Group.self))
+            r.delete(r.objects(Species.self))
             r.delete(r.objects(SpeciesObservation.self))
             r.delete(r.objects(SpeciesPreference.self))
             r.delete(r.objects(Relationship.self))

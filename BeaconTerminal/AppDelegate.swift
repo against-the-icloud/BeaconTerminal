@@ -259,6 +259,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         manualLogin()
         
+        UIApplication.shared.isIdleTimerDisabled = true
         
         return true
     }
@@ -420,6 +421,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 prepareDB(withSectionName: sectionName)
                 realmDataController.queryNutella(withType: .speciesNames)
                 realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
+                realmDataController.queryNutella(withType: .currentChannelNames)
             default: break
             }
         }
@@ -427,7 +429,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func prepareLoginInterface(isRemote: Bool) {
         window = UIWindow(frame:UIScreen.main.bounds)
-
+        
         let rootVC = prepareLoginUI(shouldShowLogin: false)
         
         if let rnc = window?.rootViewController?.navigationController {
@@ -691,6 +693,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func resetConnection() {
+        if let sectionName = UserDefaults.standard.string(forKey: "sectionName") {
+            setupConnection(withSectionName: sectionName)
+        }        
+    }
+    
     
     // MARK: Nutella setup
     
@@ -900,7 +908,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        resetConnection()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -912,7 +920,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func unprepareBeacons() {
         estBeaconManager.delegate = nil
     }
-
+    
     
     
     func prepareBeacons() {
@@ -1172,7 +1180,6 @@ extension AppDelegate: ESTBeaconManagerDelegate {
                 NotificationCenter.default.post(notification)
                 
             }
-
             
             LOG.debug("\n\n OUTSIDE STATE ---> BEACON MANAGER REGION: \(region.identifier)")
         default:

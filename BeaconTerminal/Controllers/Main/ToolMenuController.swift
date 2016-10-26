@@ -30,7 +30,7 @@ class ToolMenuController: MenuController {
     private let baseSize = CGSize(width: 65, height: 65)
     
     /// Menu bottom inset.
-    private let bottomInset: CGFloat = 24
+    private let bottomInset: CGFloat = 15
     
     /// Menu right inset.
     private let rightInset: CGFloat = 24

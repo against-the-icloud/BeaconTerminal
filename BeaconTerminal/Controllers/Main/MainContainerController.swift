@@ -23,14 +23,14 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var tabContainterView: UIView!
     
-  
+    
     
     @IBOutlet var beaconProfileImageViews: [UIImageView]!
     
     @IBOutlet weak var beaconBarStatusLabel: UILabel!
-
     
-    var TERMINAL_INDEX = 0
+    
+    var TERMINAL_INDEX = -1
     
     var notificationTokens = [NotificationToken]()
     var runtimeResults: Results<Runtime>?
@@ -46,8 +46,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
     var toolMenuItems: [UIView] = [UIView]()
     
-
-
+    
+    
     
     deinit {
         for notificationToken in notificationTokens {
@@ -83,7 +83,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         
         realmDataController.updateChannel(withId: "species-notes", url: "", name: "Species Notes")
         
-        topTabbar.setTitle("Species Notes", forSegmentAt: 0)
+        //topTabbar.setTitle("Species Notes", forSegmentAt: 0)
         
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
@@ -91,14 +91,19 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     
                     let adjIndex = index
                     
-                    switch adjIndex {
-                    case 0,1:
-                        topTabbar.setTitle(id, forSegmentAt: adjIndex)
+                    //if id != "species-notes" {
+                    switch index {
+                    case 0:
+                        break
+                    case 1:
+                        topTabbar.setTitle(id, forSegmentAt: index)
                     default:
-                        topTabbar.insertSegment(withTitle: id, at: adjIndex, animated: true)
+                        topTabbar.insertSegment(withTitle: id, at: index, animated: true)
                     }
                     
-                    switch adjIndex {
+                    switch index {
+                    case 0:
+                        break
                     case 1...10:
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         
@@ -117,8 +122,13 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                             tabControllers.append(webViewController)
                         }
                     default:
-                        break
+                        print("")
                     }
+                    //                    } else {
+                    //
+                    //                    }
+                    
+                    
                 }
             }
         }
@@ -155,7 +165,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     // MARK: Notifications
     
     func prepareNotifications() {
-//        
+        //
         NotificationCenter.default.addObserver(self, selector: #selector(updateBeaconBar(_:)), name: NSNotification.Name(rawValue: beaconNotificationKey), object: nil)
         
         
@@ -203,18 +213,14 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                 if channelResults.isEmpty {
                     
                 } else {
-                    
+                    mainController.updateChannels(withResults: channelResults)
                 }
                 break
             case .update(let channelResults, _, _, _):
                 LOG.debug("UPDATE Channels -- TERMINAL")
                 
-                for (index,channel) in channelResults.enumerated() {
-                    
-                    if let name = channel.name {
-                        mainController.topTabbar.setTitle(name, forSegmentAt: index)
-                    }
-                }
+                mainController.updateChannels(withResults: channelResults)
+                
                 break
             case .error(let error):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -226,6 +232,26 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         if let r = channelNotificationToken {
             notificationTokens.append(r)
         }
+        
+    }
+    
+    func updateChannels(withResults channelResults: Results<Channel>) {
+        
+        if topTabbar.numberOfSegments > 0 {
+            
+            let max = topTabbar.numberOfSegments - 1
+            
+            for i in 0...max {
+                if let id = topTabbar.titleForSegment(at: i) {
+                    
+                    if let found = channelResults.filter("id = '\(id)'").first, let name = found.name, name != "" {
+                        topTabbar.setTitle(name, forSegmentAt: i)
+                    }
+                }
+            }
+        }
+        
+        
         
     }
     
@@ -322,17 +348,20 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                             v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                         }
                         
-                      
+                        if TERMINAL_INDEX == -1 {
                             TERMINAL_INDEX = topTabbar.numberOfSegments
-
                             topTabbar.insertSegment(withTitle: title, at: TERMINAL_INDEX, animated: true)
-                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
-                      
-//                        } else {
-//                            topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
-//                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
-//                            
-//                        }
+                        } else {
+                             topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
+                        }
+                        
+                        topTabbar.selectedSegmentIndex = TERMINAL_INDEX
+                        
+                        //                        } else {
+                        //                            topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
+                        //                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
+                        //
+                        //                        }
                         
                         colorizeSelectedSegment()
                         topTabbar.setNeedsLayout()
@@ -400,6 +429,9 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     }
     
     func switchContainerTab(withIndex showIndex: Int) {
+        
+        
+        
         for tabView in tabViews {
             tabView.fadeOut(0.0) {_ in
                 tabView.isHidden = true
@@ -526,6 +558,11 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     }
     
     // MARK: Action
+    
+    
+    @IBAction func badgeTapAction(_ sender: Any) {
+        getAppDelegate().resetConnection()
+    }
     
     @IBAction func unwindToMainFromScanner(segue: UIStoryboardSegue) {
         

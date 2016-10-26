@@ -56,16 +56,16 @@ class TerminalMainViewController: UIViewController {
         // Observe Notifications
         runtimeNotificationToken = runtimeResults?.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             
-            guard let terminalController = self else { return }
+            guard let controller = self else { return }
             switch changes {
             case .initial(let runtimeResults):
                 //we have nothing
-                terminalController.updateHeader()
+                controller.updateHeader()
 
                 break
             case .update( _, _, _, _):
                 LOG.debug("UPDATE Runtime -- TERMINAL")
-                terminalController.updateHeader()
+                controller.updateHeader()
                 //terminalController.updateUI(withRuntimeResults: runtimeResults)
                 break
             case .error(let error):
@@ -85,9 +85,11 @@ class TerminalMainViewController: UIViewController {
             guard let controller = self else { return }
             switch changes {
             case .initial( _):
+                controller.updateHeader()
                 controller.updateTimestamp()
                 break
             case .update( _, _, _, _):
+                controller.updateHeader()
                 controller.updateTimestamp()
                 break
             case .error(let error):

@@ -43,13 +43,9 @@ class SideViewController: UITableViewController {
                 
         switch indexPath.section {
         case 0:
-        
-           
-                self.navigationDrawerController?.closeLeftView()
+            self.navigationDrawerController?.closeLeftView()
                 //do manual
-                getAppDelegate().manualLogin()
-        
-            
+            getAppDelegate().manualLogin()
             break
         case 1:
             self.navigationDrawerController?.closeLeftView()

@@ -44,7 +44,7 @@ class TerminalPageContainerController: UIPageViewController {
         self.delegate = self
         self.dataSource = self
         
-
+        
         let pageControlAppearance = UIPageControl.appearance()
         pageControlAppearance.pageIndicatorTintColor = UIColor.black
         pageControlAppearance.currentPageIndicatorTintColor = UIColor.black
@@ -279,48 +279,59 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             return nil
         }
         
-        if let pageContent = viewController as? TerminalPageContentController {
-            if var index = pageContent.index {
-                
-                if (index == NSNotFound) {
-                    return nil
-                }
-                
-                index -= 1
-                if index >= 0 {
-                    return self.viewController(atIndex: index)
-                }
+        var pageIndex = 0
+        
+        if let pageCount = viewController as? TerminalContainerViewController {
+            pageIndex = 0
+                        
+            pageIndex -= 1
+            if pageIndex >= 0 {
+                return self.viewController(atIndex: pageIndex)
             }
             
-        } else if let pageCount = viewController as? TerminalContainerViewController {
+        } else if let pageContent = viewController as? TerminalPageContentController {
+            pageIndex = pageContent.index!
             
-            return self.viewController(atIndex: 1)
+            if (pageIndex == NSNotFound) {
+                return nil
+            }
             
+            pageIndex -= 1
+            if pageIndex >= 0 {
+                return self.viewController(atIndex: pageIndex)
+            }
         }
+        
         
         return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        if let pageContent = viewController as? TerminalPageContentController {
-            if var index = pageContent.index {
-                
-                if (index == NSNotFound) {
-                    return nil
-                }
-                
-                index += 1
-                if index >= 0 {
-                    return self.viewController(atIndex: index)
-                }
+        if self.pageIsAnimating {
+            return nil
+        }
+        
+        var pageIndex = 0
+        
+        if let pageCount = viewController as? TerminalContainerViewController {
+            pageIndex = 0
+            
+            pageIndex += 1
+            if pageIndex >= 0 {
+                return self.viewController(atIndex: pageIndex)
+            }
+        } else if let pageContent = viewController as? TerminalPageContentController {
+            pageIndex = pageContent.index!
+            
+            if (pageIndex == NSNotFound) {
+                return nil
             }
             
-        } else if let pageCount = viewController as? TerminalContainerViewController {
-            
-            return self.viewController(atIndex: 0)
-            
-            
+            pageIndex += 1
+            if pageIndex >= 0 {
+                return self.viewController(atIndex: pageIndex)
+            }
         }
         
         return nil

@@ -681,6 +681,7 @@
                                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="placeGroup" translatesAutoresizingMaskIntoConstraints="NO" id="Nyc-9D-tNA" userLabel="ImageView">
                                                                                         <rect key="frame" x="1" y="1" width="30" height="30"/>
                                                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <gestureRecognizers/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" secondItem="Nyc-9D-tNA" secondAttribute="height" multiplier="1:1" id="c5y-D3-PlN"/>
                                                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="uko-x1-KL1"/>
@@ -693,6 +694,9 @@
                                                                                                 <real key="value" value="0.0"/>
                                                                                             </userDefinedRuntimeAttribute>
                                                                                         </userDefinedRuntimeAttributes>
+                                                                                        <connections>
+                                                                                            <outletCollection property="gestureRecognizers" destination="CBJ-YD-xCZ" appends="YES" id="jGu-oC-LJC"/>
+                                                                                        </connections>
                                                                                     </imageView>
                                                                                 </subviews>
                                                                                 <constraints>
@@ -828,16 +832,16 @@
                                         <rect key="frame" x="0.0" y="974" width="1366" height="50"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hXg-wp-KzE" userLabel="StackView">
-                                                <rect key="frame" x="15" y="5" width="875" height="40"/>
+                                                <rect key="frame" x="15" y="5" width="874.5" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENTERED SPECIES ZONES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaE-LI-9Ne" userLabel="ENTERED">
-                                                        <rect key="frame" x="0.0" y="0.0" width="325" height="40"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="324.5" height="40"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="D5S-Tm-BaU">
-                                                        <rect key="frame" x="335" y="0.0" width="540" height="40"/>
+                                                        <rect key="frame" x="334.5" y="0.0" width="540" height="40"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NJ3-Wx-lK0" userLabel="ProfileView">
                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -964,14 +968,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lsx-qX-QrR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="gsa-F8-Ol5">
-                    <connections>
-                        <action selector="tapScanView:" destination="oOh-3b-NoF" id="wED-8R-HFg"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <tapGestureRecognizer id="XSr-yt-tz0">
                     <connections>
                         <action selector="showSidebar:" destination="oOh-3b-NoF" id="vOu-ul-rXM"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="CBJ-YD-xCZ">
+                    <connections>
+                        <action selector="badgeTapAction:" destination="oOh-3b-NoF" id="aWY-El-f0d"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
