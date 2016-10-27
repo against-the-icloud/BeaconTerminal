@@ -205,6 +205,8 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
                 newRelationship.relationshipType = relationshipType.rawValue
             }
             
+         
+            
             realmDataController.add(withRelationship: newRelationship, withSpeciesIndex: fromIndex)
         })
         

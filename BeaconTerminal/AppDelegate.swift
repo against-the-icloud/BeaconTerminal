@@ -38,6 +38,16 @@ let ESTIMOTE_ID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 let LOG: XCGLogger = {
     // Setup XCGLogger
     let LOG = XCGLogger.default
+    
+//    let ansiColorLogFormatter: ANSIColorLogFormatter = ANSIColorLogFormatter()
+//    ansiColorLogFormatter.colorize(level: .verbose, with: .colorIndex(number: 244), options: [.faint])
+//    ansiColorLogFormatter.colorize(level: .debug, with: .black)
+//    ansiColorLogFormatter.colorize(level: .info, with: .blue, options: [.underline])
+//    ansiColorLogFormatter.colorize(level: .warning, with: .red, options: [.faint])
+//    ansiColorLogFormatter.colorize(level: .error, with: .red, options: [.bold])
+//    ansiColorLogFormatter.colorize(level: .severe, with: .white, on: .red)
+//    LOG.formatters = [ansiColorLogFormatter]
+    
     return LOG
 }()
 
@@ -238,11 +248,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    let documentsDirectory: URL = {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.endIndex - 1]
+    }()
+    
     //delegates
     weak var controlPanelDelegate: ControlPanelDelegate?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
+        setupLog()
+        
+        let _ = LOG
         //setupLoginConnection()
         
         prepareReachability()
@@ -261,9 +279,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.shared.isIdleTimerDisabled = true
         
+        LOG.info("DONE LAUCHING")
+        
         return true
     }
     
+    func setupLog() {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.short
+        dateformatter.timeStyle = DateFormatter.Style.short
+        
+        let timestamp = dateformatter.string(from: Date())
+        
+        let logPath: URL = documentsDirectory.appendingPathComponent("INTERACTIONS.log")
+        
+//        LOG.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath, fileLevel: .info)
+
+        
+        if let fileDestination: FileDestination = FileDestination(writeToFile:logPath, identifier: XCGLogger.Constants.fileDestinationIdentifier, shouldAppend: true, appendMarker: "-- Relauched App --"){
+            
+            
+            // Optionally set some configuration options
+            fileDestination.outputLevel = .info
+            fileDestination.showLogIdentifier = false
+            fileDestination.showFunctionName = true
+            fileDestination.showLevel = true
+            fileDestination.showFileName = true
+//            fileDestination.showLineNumber = true
+            fileDestination.showDate = true
+            
+            fileDestination.logQueue = DispatchQueue.global(qos: .background)
+            //fileDestination.logQueue = XCGLogger.logQueue
+ 
+            
+            LOG.add(destination: fileDestination)
+            
+            //LOG.logAppDetails()
+
+        }
+        
+    }
+//    func setupLog() {
+//        let logPath: URL = getAppDelegate().
+//            .cacheDirectory.appendingPathComponent("XCGLogger_Log.txt")
+//        LOG.setup(level: .debug, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, writeToFile: logPath)
+//    }
+//    
     func prepareReachability() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityDidChange(_:)), name: NSNotification.Name(rawValue: ReachabilityDidChangeNotificationName), object: nil)
@@ -338,9 +399,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.set(0, forKey: "speciesIndex")
         //defaults.set(0, forKey: "groupIndex")
         defaults.synchronize()
-        
-        // TODO: Move this to where you establish a user session
-        
         
         loadCondition()
     }
@@ -426,6 +484,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+
     
     func prepareLoginInterface(isRemote: Bool) {
         window = UIWindow(frame:UIScreen.main.bounds)

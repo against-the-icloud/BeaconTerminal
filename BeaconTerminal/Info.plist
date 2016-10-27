@@ -15,11 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.26.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>4.0</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -48,7 +48,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>photos</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This application monitors your location to show you promotional offers in shops you&apos;re passing by.</string>
+	<string>This application monitors your location to show you promotional offers in shops you're passing by.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Location, Location, Location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -61,6 +61,8 @@
 		<string>location</string>
 		<string>remote-notification</string>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -80,7 +82,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIFileSharingEnabled</key>
-	<true/>
 </dict>
 </plist>

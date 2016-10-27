@@ -44,7 +44,7 @@ class SpeciesPageContentController: UIViewController {
         case .objectGroup:
             cloudSyncButton.setImage(nil, for: .normal)
             //cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)
-            prepareManualSyncActions()
+            prepareHeaderActions()
         case .placeGroup:
             cloudSyncButton.setImage(nil, for: .normal)
             cloudSyncButton.removeTarget(nil, action: nil, for: .allEvents)

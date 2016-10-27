@@ -149,6 +149,30 @@ class TerminalPageContentController: UIViewController {
                         let tag = iv.tag
                         if let index = tags.index(of: tag) {
                             ivc.imageUrl = self.attachments[index]
+                            
+                            var id = ""
+                            var type = ""
+                            var toIndex = 0
+                            var sectionName = ""
+                            if let s = realmDataController.getRealm().runtimeSectionName() {
+                                sectionName = s
+                            } else {
+                                sectionName = "not specified"
+                            }
+                            
+                            if let speciesPreference = self.speciesPreference {
+                                id = speciesPreference.id!
+                                type = "preference"
+                                toIndex = speciesPreference.habitat!.index
+                            } else if let relationship = self.relationship {
+                                id = relationship.id!
+                                type = "relationship"
+                                toIndex = relationship.toSpecies!.index
+                            }
+                            
+                              LOG.info( ["condition":"BeaconTerminal.ApplicationType.placeTerminal", "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"tap_image","url":ivc.imageUrl!,"type":type,"groupIndex":self.groupIndex!,"fromSpecies":self.fromSpeciesIndex!,"toIndex":toIndex,"sectionName":sectionName])
+                                
+                            
                         }
                         ivc.image = image
                         ivc.canDelete = false

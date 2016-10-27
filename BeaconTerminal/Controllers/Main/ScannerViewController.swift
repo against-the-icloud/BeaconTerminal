@@ -80,6 +80,17 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     //
     //    // declared system sound here
     //    let systemSoundID: SystemSoundID = 1104
+    
+    deinit {
+        if immediateBeacon != nil {
+            immediateBeacon.disconnect()
+            immediateBeacon.delegate = nil
+            immediateBeacon = nil
+        }
+        
+    }
+    
+    
     //
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -115,6 +126,12 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         scanningState.didEnterState = { state in
             self.statusLabel.text = "Scanning..."
             self.immediateBeaconDetector.start()
+            
+            if let sectionName = realmDataController.getRealm().runtimeSectionName() {
+            
+            LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"start_scan_to_species_","sectionName":sectionName])
+            }
+            
         }
         
         connectingState.didEnterState = { state in
@@ -148,7 +165,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        //self.scanningStateMachine?.fireEvent(self.stopEvent)
+        self.scanningStateMachine?.fireEvent(self.stopEvent)
         
     }
     
@@ -197,7 +214,7 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     // MARK: Beacon connection
     
     func retryConnection() -> Bool {
-        if connectionRetries < 3 {
+        if connectionRetries < 2 {
             connectionRetries += 1
             immediateBeacon.connect()
             return true
@@ -211,13 +228,49 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         connectionRetries = 0
         
         //immediateBeacon.delegate = nil
-        
-        //self.scanningStateMachine?.fireEvent(self.stopEvent)
+    
+        self.scanningStateMachine?.fireEvent(self.stopEvent)
 
         if self.immediateBeaconDetector != nil {
             self.immediateBeaconDetector.stop()
         }
+        
+        doScan(device)
 
+//        if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
+//            
+//            let minorValue = settings.iBeacon.minor.getValue()
+//            let majorValue = settings.iBeacon.major.getValue()
+//            
+//            _ = Int(majorValue)
+//            let speciesIndex = Int(minorValue) - 1
+//            if let beaconId = self.findBeaconMinor(withMinor: Int16(minorValue)) {
+//                
+//                guard speciesIndex >= 0 else {
+//                    return
+//                }
+//                
+//                self.scannedSpecies = speciesIndex
+//                self.scannedBeaconId = beaconId
+//                
+//                
+//                
+//                self.statusLabel.text = "Disconnecting..."
+//
+//                self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
+//
+//                //lb.disconnect()
+//                
+//  
+//            }
+//            
+//        }
+
+        
+       
+    }
+    
+    func doScan(_ device: ESTDeviceConnectable) {
         if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
             
             let minorValue = settings.iBeacon.minor.getValue()
@@ -235,67 +288,110 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 self.scannedBeaconId = beaconId
                 
                 
-                let condition = getAppDelegate().checkApplicationState().rawValue
-                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
-                realmDataController.clearInViewTerminal(withCondition: condition)
-                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
-                
-                lb.disconnect()
                 
                 self.statusLabel.text = "Disconnecting..."
-
-                if self.immediateBeaconDetector != nil {
-                    self.immediateBeaconDetector.stop()
-                    if self.immediateBeacon != nil {
-                        self.immediateBeacon.disconnect()
+                
+                
+                self.dismiss(animated: true, completion: {
+                    
+                    
+                    if let sectionName = realmDataController.getRealm().runtimeSectionName() {
+                        
+                        LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"success_scan_to_species_","sectionName":sectionName, "speciesIndex":self.scannedSpecies,"beaconId":self.scannedBeaconId?.asString])
                     }
-                }
-             
-            }
-            
-        }
+                    
+                    if getAppDelegate().checkApplicationState().rawValue != nil {
+                        
+                        let condition = getAppDelegate().checkApplicationState().rawValue
+                        //realmDataController.clearInViewTerminal(withCondition: condition)
+                        realmDataController.syncSpeciesObservations(withSpeciesIndex: self.scannedSpecies!, withCondition: condition, withActionType: "enter", withPlace: "species:\(self.scannedSpecies)")
+                        realmDataController.updateInViewTerminal(withSpeciesIndex: self.scannedSpecies!, withCondition: "artifact", withPlace: (self.scannedBeaconId?.asString)!)
+                    } else {
+                        print("no condition")
+                    }
+    
+                })
+                    
+                    
+                
+                
 
-        
-       
+                
+                //lb.disconnect()
+                
+                //self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
+                
+                //lb.disconnect()
+            }
+        }
     }
-    
-    func findBeaconMinor(withMinor minor: Int16) -> BeaconID? {
-        let found = beaconIds.filter({ $0.asBeaconRegion.minor?.int16Value == minor })
-        return found.first
-    }
-    
-    func findBeaconId(withId id: String) -> BeaconID? {
-        let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
-        return found.first
-    }
+
     
     func estDevice(_ device: ESTDeviceConnectable, didFailConnectionWithError error: Error) {
-        if !retryConnection() {
-            self.scanningStateMachine?.fireEvent(self.errorEvent)
+        
+        if error._code == ESTDeviceLocationBeaconError.cloudVerificationFailed.rawValue {
+           
+                LOG.debug("Couldn't reach Estimote Cloud. Check your Internet connection, then try again.")
+            
+            if let sectionName = realmDataController.getRealm().runtimeSectionName() {
+                
+                LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"fail_scan_to_species_","sectionName":sectionName])
+            }
+            
+        
+        } else {
+            if error != nil {
+                
+                
+                if let sectionName = realmDataController.getRealm().runtimeSectionName() {
+                    
+                    LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"fail_scan_to_species_","sectionName":sectionName])
+                }
+                
+                
+                print("fail try")
+                doScan(device)
+                self.scanningStateMachine?.fireEvent(self.scanningEvent)
+
+            }
+            
+
         }
+
+        self.scanningStateMachine?.fireEvent(self.stopEvent)
+        
+        device.disconnect()
+        
     }
     
     
     func estDevice(_ device: ESTDeviceConnectable, didDisconnectWithError error: Error?) {
-        if let e = error {
-            self.statusLabel.text = "Error Connecting try again"
-            if self.immediateBeaconDetector != nil {
-                self.immediateBeaconDetector.stop()
-                if self.immediateBeacon != nil {
-                    self.immediateBeacon.disconnect()
-                }
-            }
-            LOG.debug("ERROR DISCONNECT \(e)")
-        } else {
-            LOG.debug("DISCONNECT SUCCESSFULL")
-            self.dismiss(animated: true, completion: {
-                
-                
-            })
+  
+        
+        connectionRetries = 0
+        if immediateBeacon != nil {
+            
+            immediateBeacon.delegate = nil
+            immediateBeacon = nil
         }
+        
+        if error == nil {
+            self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
+        }
+
+        
     }
     
     @IBAction func closeButton(sender: Any?) {
+        
+        
+        connectionRetries = 0
+        
+        if immediateBeacon != nil {
+            immediateBeacon.disconnect()
+            immediateBeacon.delegate = nil
+            immediateBeacon = nil
+        }
         
         LOG.debug("Scanner View Close Button Tapped")
         
@@ -310,6 +406,16 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             }
         })
         
+    }
+    
+    func findBeaconMinor(withMinor minor: Int16) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.minor?.int16Value == minor })
+        return found.first
+    }
+    
+    func findBeaconId(withId id: String) -> BeaconID? {
+        let found = beaconIds.filter({ $0.asBeaconRegion.identifier == id })
+        return found.first
     }
     
 }

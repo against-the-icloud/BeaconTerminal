@@ -22,6 +22,9 @@ class TerminalPageContainerController: UIPageViewController {
     var relationshipNotificaitonToken: NotificationToken? = nil
     var notificationTokens = [NotificationToken]()
     
+    var sectionName = ""
+    var speciesIndex = 0
+    
     
     var pageCount = 0
     
@@ -52,6 +55,18 @@ class TerminalPageContainerController: UIPageViewController {
         
         if needsTerminal {
             prepareNotifications()
+            
+            if let sectionName = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSectionName() {
+                self.sectionName = sectionName
+            } else {
+                self.sectionName = "not specified"
+            }
+            
+            if let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+                self.speciesIndex = speciesIndex
+            } else {
+                self.speciesIndex = -1
+            }
         }
     }
     
@@ -167,13 +182,20 @@ class TerminalPageContainerController: UIPageViewController {
     
     func viewController(atIndex index: Int) -> UIViewController? {
         
+        var count = 1
+        
+        if let rr = relationshipResults, !rr.isEmpty {
+            count = rr.count
+        }
+        
+        
         switch index {
         case 0:
             let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
             let terminalContainerController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalContainerViewController") as! TerminalContainerViewController
             return terminalContainerController
             
-        case 1...(relationshipResults?.count)!:
+        case 1...count:
             if let relationshipResults = self.relationshipResults, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
                 
                 
@@ -247,16 +269,6 @@ class TerminalPageContainerController: UIPageViewController {
         return .lightContent
     }
     
-    func scroll(_ notification: Notification) {
-        if let index = notification.userInfo?["index"] as? Int {
-            if let firstPageController = self.viewController(atIndex: index) {
-                LOG.debug("AUTO SCROLLING to \(index)")
-                self.setViewControllers([firstPageController], direction: .forward, animated: true, completion: {done in })
-                
-            }
-        }
-    }
-    
 }
 
 // MARK: - Page View Controller Data Source
@@ -283,9 +295,11 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
         
         if let pageCount = viewController as? TerminalContainerViewController {
             pageIndex = 0
-                        
+            
             pageIndex -= 1
             if pageIndex >= 0 {
+                
+                
                 return self.viewController(atIndex: pageIndex)
             }
             
@@ -298,6 +312,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             
             pageIndex -= 1
             if pageIndex >= 0 {
+                LOG.info( ["condition":"BeaconTerminal.ApplicationType.placeTerminal", "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"scrolled_to_species_note","fromSpeciesIndex":self.speciesIndex,"toSpeciesIndex":pageIndex,"sectionName":self.sectionName])
                 return self.viewController(atIndex: pageIndex)
             }
         }
@@ -319,6 +334,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             
             pageIndex += 1
             if pageIndex >= 0 {
+                
                 return self.viewController(atIndex: pageIndex)
             }
         } else if let pageContent = viewController as? TerminalPageContentController {
@@ -330,6 +346,9 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             
             pageIndex += 1
             if pageIndex >= 0 {
+                
+                LOG.info( ["condition":"BeaconTerminal.ApplicationType.placeTerminal", "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"scrolled_to_species_note","fromSpeciesIndex":self.speciesIndex,"toSpeciesIndex":pageIndex,"sectionName":self.sectionName])
+                
                 return self.viewController(atIndex: pageIndex)
             }
         }

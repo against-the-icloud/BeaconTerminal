@@ -46,13 +46,11 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     var toolMenuTypes: [ToolMenuType] = [ToolMenuType]()
     var toolMenuItems: [UIView] = [UIView]()
     
-    
-    
-    
     deinit {
         for notificationToken in notificationTokens {
             notificationToken.stop()
         }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,6 +61,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         topTabbar.initUI()
+        
+        topTabbar.removeSegment(at: 0, animated: false)
         prepareNotifications()
         
         if needsTerminal {
@@ -83,7 +83,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         
         realmDataController.updateChannel(withId: "species-notes", url: "", name: "Species Notes")
         
-        //topTabbar.setTitle("Species Notes", forSegmentAt: 0)
+        topTabbar.setTitle("Species Notes", forSegmentAt: 0)
         
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
@@ -95,8 +95,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     switch index {
                     case 0:
                         break
-                    case 1:
-                        topTabbar.setTitle(id, forSegmentAt: index)
                     default:
                         topTabbar.insertSegment(withTitle: id, at: index, animated: true)
                     }
@@ -348,20 +346,35 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                             v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                         }
                         
+                       
+                        
+                        
                         if TERMINAL_INDEX == -1 {
-                            TERMINAL_INDEX = topTabbar.numberOfSegments
+                            
+                            if terminalRuntime.channels.isEmpty {
+                                TERMINAL_INDEX = 1
+
+                            } else {
+                                TERMINAL_INDEX = topTabbar.numberOfSegments
+
+                            }
+                            
                             topTabbar.insertSegment(withTitle: title, at: TERMINAL_INDEX, animated: true)
                         } else {
-                             topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
+                            
+                            if TERMINAL_INDEX < topTabbar.numberOfSegments {
+                                
+                                if topTabbar.titleForSegment(at: TERMINAL_INDEX) == nil {
+                                    TERMINAL_INDEX = topTabbar.numberOfSegments
+                                    topTabbar.insertSegment(withTitle: title, at: TERMINAL_INDEX, animated: true)
+                                } else {
+                                    topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
+                                }
+                                
+                            }
                         }
                         
                         topTabbar.selectedSegmentIndex = TERMINAL_INDEX
-                        
-                        //                        } else {
-                        //                            topTabbar.setTitle(title, forSegmentAt: TERMINAL_INDEX)
-                        //                            topTabbar.selectedSegmentIndex = TERMINAL_INDEX
-                        //
-                        //                        }
                         
                         colorizeSelectedSegment()
                         topTabbar.setNeedsLayout()
@@ -566,18 +579,26 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     @IBAction func unwindToMainFromScanner(segue: UIStoryboardSegue) {
         
-        if let scannerViewController =  segue.source as? ScannerViewController {
-            if let speciesIndex = scannerViewController.scannedSpecies, let beaconId = scannerViewController.scannedBeaconId {
-                
-                
-                let condition = getAppDelegate().checkApplicationState().rawValue
-                realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
-                realmDataController.clearInViewTerminal(withCondition: condition)
-                realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
-                
-                
-            }
-        }
+        //        if let scannerViewController =  segue.source as? ScannerViewController {
+        //            if let speciesIndex = scannerViewController.scannedSpecies, let beaconId = scannerViewController.scannedBeaconId {
+        //
+        //
+        //                if getAppDelegate().checkApplicationState().rawValue != nil {
+        //
+        //                    let condition = getAppDelegate().checkApplicationState().rawValue
+        //                    //realmDataController.clearInViewTerminal(withCondition: condition)
+        //                    realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+        //                    realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
+        //                } else {
+        //                    print("no condition")
+        //                }
+        //
+        //
+        //
+        //
+        //
+        //            }
+        //        }
         
     }
     
@@ -622,7 +643,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     func scannerAction(sender: UIButton) {
         handleToggleMenu(button: nil)
-        realmDataController.clearInViewTerminal(withCondition: "artifact")
+        //realmDataController.clearInViewTerminal(withCondition: "artifact")
         self.performSegue(withIdentifier: "scannerSegue", sender: sender)
     }
     

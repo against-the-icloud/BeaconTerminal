@@ -389,7 +389,7 @@ class RealmDataController {
         
         for (_,item) in all.enumerated() {
             
-            if let name = item.string {
+            if let name = item.string, name != "classaccount" {
                 
                 var channel = [String:String]()
                 
@@ -970,6 +970,9 @@ class RealmDataController {
         return nil
     }
     
+    // MARK: LOG EVENT
+
+    
     // MARK: UPDATE RUNTIME
     
     func updateRuntime(withSectionName sectionName: String? = nil, withSpeciesIndex speciesIndex: Int? = nil, withGroupIndex groupIndex: Int? = nil, withRealmType realmType: RealmType = RealmType.defaultDB, withAction action: String? = nil) {
@@ -1071,6 +1074,10 @@ class RealmDataController {
         if let habitat = speciesPreference.habitat,
             let foundSpeciesPreference = r.speciesPreferences(withSpeciesObservation: foundSO, withHabitatIndex: habitat.index) {
             
+            
+            
+            LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"delete_preference","preferenceId":speciesPreference.id!,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":habitat.index,"sectionName":r.runtimeSectionName()!])
+            
             try! r.write {
                 r.delete(foundSpeciesPreference)
                 foundSO.isSynced.value = false
@@ -1095,6 +1102,9 @@ class RealmDataController {
             let foundRelationship = getRealm(withRealmType: realmType).relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
             
             
+              LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"delete_relationship","relationshipId":relationship.id!,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":toSpecies.index,"sectionName":self.getRealm(withRealmType: realmType).runtimeSectionName()!])
+            
+            
             try! getRealm(withRealmType: realmType).write {
                 getRealm(withRealmType: realmType).delete(foundRelationship)
                 
@@ -1117,9 +1127,12 @@ class RealmDataController {
         guard let foundSO = r.speciesObservation(FromCollection: speciesObservations, withSpeciesIndex: speciesIndex) else {
             return
         }
-        
+        var id = ""
         if let habitat = speciesPreference.habitat, let foundSpeciesPreference = r.speciesPreferences(withSpeciesObservation: foundSO, withHabitatIndex: habitat.index) {
             speciesPreference.id = foundSpeciesPreference.id
+            
+            id = speciesPreference.id!
+            
             try! r.write {
                 r.add(speciesPreference, update: true)
                 foundSO.isSynced.value = false
@@ -1127,6 +1140,8 @@ class RealmDataController {
             }
         } else {
             speciesPreference.generateId()
+            
+             id = speciesPreference.id!
             try! r.write {
                 r.add(speciesPreference, update: true)
                 foundSO.speciesPreferences.append(speciesPreference)
@@ -1134,6 +1149,8 @@ class RealmDataController {
                 r.add(foundSO, update: true)
             }
         }
+        
+           LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"add_preference","preferenceId":id,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"habitatIndex":speciesPreference.habitat!.index,"sectionName":r.runtimeSectionName()!])
         
     }
     
@@ -1152,10 +1169,15 @@ class RealmDataController {
             return
         }
         
+     
+        
+        var id = ""
+        
         if let toSpecies = relationship.toSpecies,
             let foundRelationship = r.relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
             
             relationship.id = foundRelationship.id
+            id = relationship.id!
             try! r.write {
                 r.add(relationship, update: true)
                 foundSO.isSynced.value = false
@@ -1163,6 +1185,8 @@ class RealmDataController {
             }
         } else {
             relationship.generateId()
+            id = relationship.id!
+
             try! r.write {
                 r.add(relationship, update: true)
                 foundSO.relationships.append(relationship)
@@ -1170,6 +1194,8 @@ class RealmDataController {
                 r.add(foundSO, update: true)
             }
         }
+        
+          LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"add_relationship","relationshipId":id,"observationId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":relationship.toSpecies!.index,"sectionName":r.runtimeSectionName()!])
     }
     
     func generateTestData(withRealmType realmType: RealmType = RealmType.defaultDB) {
@@ -1319,6 +1345,17 @@ extension RealmDataController {
         
         return speciesObservation
     }
+    
+    // MARK: ACTIVITY
+    
+    func getActivity() -> String {
+        if let activity = UserDefaults.standard.value(forKey: "activity") as? String {
+            return activity
+        } else {
+            return "not specified"
+        }
+    }
+    
     
     // MARK: Species
     
