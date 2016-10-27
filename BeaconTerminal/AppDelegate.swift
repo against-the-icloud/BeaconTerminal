@@ -206,7 +206,7 @@ struct NutellaUpdate {
 
 
 let beaconIds = [BeaconID(identifier: "19450ac90c94be0b7d66c0e9f654d333", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D",  major: 111, minor: 1, withSpeciesIndex: 0),
-                 BeaconID(identifier: "ee3a94ba9ed4a25cffaf290226c6d22c", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2,withSpeciesIndex: 1),
+                 BeaconID(identifier: "a986cdb18e57eeeba2f6d8078223b000", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 2,withSpeciesIndex: 1),
                  BeaconID(identifier: "7148d3b4f6b3d192f52c3936fb9bcd33", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 3,withSpeciesIndex: 2),
                  BeaconID(identifier: "040d277eac74d336847970113ccbe739", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 4,withSpeciesIndex: 3),
                  BeaconID(identifier: "9e21d6e5190efbe7554742d62c1f1f0a", UUIDString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D", major: 1, minor: 5,withSpeciesIndex: 4),

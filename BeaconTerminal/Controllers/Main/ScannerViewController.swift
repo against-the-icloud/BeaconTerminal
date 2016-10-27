@@ -193,11 +193,34 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     
     func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didDiscoverBeacon beacon: ESTDeviceLocationBeacon) {
         
-        self.scanningStateMachine?.fireEvent(self.connectingEvent)
         
         immediateBeacon = beacon
-        immediateBeacon.delegate = self
-        immediateBeacon.connect()
+        
+//        LOG.debug("IS SHAKEN>>>>> \(beacon.isShaken)")
+//        
+//        immediateBeacon.delegate = self
+//        immediateBeacon.connect()
+        
+        switch immediateBeacon.isShaken.boolValue {
+        case true:
+            LOG.debug("SKAKENING \(beacon.settings?.deviceInfo)")
+            if immediateBeacon.isShaken.boolValue  {
+                self.scanningStateMachine?.fireEvent(self.connectingEvent)
+                
+                
+                LOG.debug("IS SHAKEN>>>>> \(self.immediateBeacon.isShaken)")
+                
+                
+                doScan(scannedBeacon: immediateBeacon)
+                
+//                immediateBeacon.delegate = self
+//                immediateBeacon.connect()
+            }
+        default:
+                LOG.debug("NOT SHAKING \(self.immediateBeacon.settings?.deviceInfo)")
+
+        }
+    
     }
     
     func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didFailDiscovery error: ImmediateBeaconDetectorError) {
@@ -214,10 +237,15 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
     // MARK: Beacon connection
     
     func retryConnection() -> Bool {
-        if connectionRetries < 2 {
+        if connectionRetries < 3 {
             connectionRetries += 1
-            immediateBeacon.connect()
-            return true
+            
+            if let ib = immediateBeacon {
+                immediateBeacon.connect()
+                return true
+            }
+            
+            return false
         } else {
             connectionRetries = 0
             return false
@@ -235,43 +263,55 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             self.immediateBeaconDetector.stop()
         }
         
-        doScan(device)
+        if let ib = immediateBeacon {
+            doScan(ib: ib)
 
-//        if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
-//            
-//            let minorValue = settings.iBeacon.minor.getValue()
-//            let majorValue = settings.iBeacon.major.getValue()
-//            
-//            _ = Int(majorValue)
-//            let speciesIndex = Int(minorValue) - 1
-//            if let beaconId = self.findBeaconMinor(withMinor: Int16(minorValue)) {
-//                
-//                guard speciesIndex >= 0 else {
-//                    return
-//                }
-//                
-//                self.scannedSpecies = speciesIndex
-//                self.scannedBeaconId = beaconId
-//                
-//                
-//                
-//                self.statusLabel.text = "Disconnecting..."
-//
-//                self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
-//
-//                //lb.disconnect()
-//                
-//  
-//            }
-//            
-//        }
-
+        }
         
-       
+
     }
     
-    func doScan(_ device: ESTDeviceConnectable) {
-        if let lb = device as? ESTDeviceLocationBeacon, let settings = lb.settings {
+    func doScan(scannedBeacon:ESTDeviceLocationBeacon) {
+        if let beaconId = self.findBeaconId(withId: scannedBeacon.identifier) {
+            
+            
+            
+            let region = beaconId.asBeaconRegion
+            
+            //adjust because these ids can't be start 0
+            let speciesIndex = beaconId.speciesIndex
+            
+            self.statusLabel.text = "Disconnecting..."
+            
+            
+            self.dismiss(animated: true, completion: {
+                
+                
+                if let sectionName = realmDataController.getRealm().runtimeSectionName() {
+                    
+                    LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"success_scan_to_species_","sectionName":sectionName, "speciesIndex":speciesIndex,"beaconId": beaconId.asString])
+                }
+                
+                if getAppDelegate().checkApplicationState().rawValue != nil {
+                    
+                    let condition = getAppDelegate().checkApplicationState().rawValue
+                    //realmDataController.clearInViewTerminal(withCondition: condition)
+                    realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
+                    realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
+                    
+
+                    
+                } else {
+                    print("no condition")
+                }
+                
+            })
+
+        }
+    }
+    
+    func doScan(ib:ESTDeviceLocationBeacon) {
+        if let settings = ib.settings {
             
             let minorValue = settings.iBeacon.minor.getValue()
             let majorValue = settings.iBeacon.major.getValue()
@@ -306,6 +346,13 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                         //realmDataController.clearInViewTerminal(withCondition: condition)
                         realmDataController.syncSpeciesObservations(withSpeciesIndex: self.scannedSpecies!, withCondition: condition, withActionType: "enter", withPlace: "species:\(self.scannedSpecies)")
                         realmDataController.updateInViewTerminal(withSpeciesIndex: self.scannedSpecies!, withCondition: "artifact", withPlace: (self.scannedBeaconId?.asString)!)
+                        
+                      
+                            ib.disconnect()
+                    
+                        
+                       
+                        
                     } else {
                         print("no condition")
                     }
@@ -350,17 +397,23 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 
                 
                 print("fail try")
-                doScan(device)
+                
+                if let ib = immediateBeacon {
+                    doScan(ib: ib)
+                }
+                //doScan(ib: device)
+                if !retryConnection() {
+                    if let ibd = immediateBeaconDetector {
+                        ibd.stop()
+                        ibd.start()
+                    }
+                }
                 self.scanningStateMachine?.fireEvent(self.scanningEvent)
 
             }
             
 
         }
-
-        self.scanningStateMachine?.fireEvent(self.stopEvent)
-        
-        device.disconnect()
         
     }
     
@@ -375,9 +428,9 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             immediateBeacon = nil
         }
         
-        if error == nil {
-            self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
-        }
+//        if error == nil {
+//            self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
+//        }
 
         
     }

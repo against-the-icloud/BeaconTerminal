@@ -84,6 +84,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         realmDataController.updateChannel(withId: "species-notes", url: "", name: "Species Notes")
         
         topTabbar.setTitle("Species Notes", forSegmentAt: 0)
+        topTabbar.selectedSegmentIndex = 0
+        colorizeSelectedSegment()
         
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
@@ -122,11 +124,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     default:
                         print("")
                     }
-                    //                    } else {
-                    //
-                    //                    }
-                    
-                    
                 }
             }
         }
