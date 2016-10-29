@@ -30,6 +30,7 @@
 		7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704204191CE8E94D00C09FD0 /* LoadingView.swift */; };
 		704288E91D85ED700020A5E6 /* ChooseSpeciesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */; };
 		704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */; };
+		7055446D1DC51738003B1195 /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7055446C1DC51738003B1195 /* RLMSupport.swift */; };
 		7064CAA41D6783FB00B77ADA /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7064CAA31D6783FB00B77ADA /* StringUtil.swift */; };
 		70663F6F1D8F99B700B5BEC9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */; };
 		70663F711D8F99D300B5BEC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */; };
@@ -159,6 +160,7 @@
 		704204191CE8E94D00C09FD0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../Views/LoadingView.swift; sourceTree = "<group>"; };
 		704288E81D85ED700020A5E6 /* ChooseSpeciesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesViewController.swift; path = SpeicesPages/ChooseSpeciesViewController.swift; sourceTree = "<group>"; };
 		704288EA1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChooseSpeciesHeader.swift; path = SpeicesPages/ChooseSpeciesHeader.swift; sourceTree = "<group>"; };
+		7055446C1DC51738003B1195 /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		7064CAA31D6783FB00B77ADA /* StringUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		70663F6E1D8F99B700B5BEC9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		70663F701D8F99D300B5BEC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -520,6 +522,7 @@
 		C0A7D5E1CCBC3F9F3D7FF1EF /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				7055446C1DC51738003B1195 /* RLMSupport.swift */,
 				706CF1381D8FA83500A18927 /* Banner.swift */,
 				7099CDA11D0F99050037E56C /* Pulsator.swift */,
 				704204191CE8E94D00C09FD0 /* LoadingView.swift */,
@@ -864,6 +867,7 @@
 				706D21E21DA99FD4009FC554 /* ChoosePreferenceViewController.swift in Sources */,
 				701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */,
 				709F926D1D8F7D260057E104 /* BeaconID.swift in Sources */,
+				7055446D1DC51738003B1195 /* RLMSupport.swift in Sources */,
 				706CF1391D8FA83500A18927 /* Banner.swift in Sources */,
 				70C2A6311D71E451007BA074 /* UIColor+Speciescolors.swift in Sources */,
 				70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */,

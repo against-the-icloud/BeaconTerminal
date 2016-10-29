@@ -21,6 +21,7 @@ class TerminalPageContainerController: UIPageViewController {
     var runtimeNotificationToken: NotificationToken? = nil
     var relationshipNotificaitonToken: NotificationToken? = nil
     var notificationTokens = [NotificationToken]()
+    var resultsArray = [Any]()
     
     var sectionName = ""
     var speciesIndex = 0
@@ -106,13 +107,15 @@ class TerminalPageContainerController: UIPageViewController {
             guard let controller = self else { return }
             switch changes {
             case .initial(let relationshipResults):
-                controller.relationshipResults = relationshipResults
+                self?.relationshipResults = relationshipResults
+                controller.updateCounts()
                 //clear all the cells
                 //                controller.reloadCells()
                 //                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
             case .update(let relationshipResults, _, _, _):
-                controller.relationshipResults = relationshipResults
+                self?.relationshipResults = relationshipResults
+                controller.updateCounts()
                 break
             case .error(_):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -133,13 +136,17 @@ class TerminalPageContainerController: UIPageViewController {
             guard let controller = self else { return }
             switch changes {
             case .initial(let preferencesResults):
-                controller.preferencesResults = preferencesResults
+                self?.preferencesResults = preferencesResults
+                controller.updateCounts()
+
                 //clear all the cells
                 //                controller.reloadCells()
                 //                controller.updateCells(withSpeciesObservationResults: speciesObservationResults)
                 break
             case .update(let preferencesResults, _, _, _):
-                controller.preferencesResults = preferencesResults
+                self?.preferencesResults = preferencesResults
+                controller.updateCounts()
+
                 break
             case .error(_):
                 // An error occurred while opening the Realm file on the background worker thread
@@ -152,6 +159,7 @@ class TerminalPageContainerController: UIPageViewController {
         if let s = speciesPreferenceNotification {
             notificationTokens.append(s)
         }
+        
     }
     
     func updateUI() {
@@ -164,16 +172,32 @@ class TerminalPageContainerController: UIPageViewController {
         }
     }
     
+    func updateCounts() {
+        
+        resultsArray = [Any]()
+        
+        if let rr = relationshipResults, !rr.isEmpty {
+            let relationships = rr.toArray()
+            for r in relationships {
+                resultsArray.append(r)
+            }
+        }
+        
+        if let sr = preferencesResults, !sr.isEmpty {
+            let speciesPreferences = sr.toArray()
+            for sp in speciesPreferences {
+                resultsArray.append(sp)
+            }
+            
+        }
+    }
+    
     func computePageCount() -> Int {
         
         var pc = 0
         
-        if let rr = relationshipResults {
-            pc += rr.count
-        }
-        
-        if let ss = preferencesResults {
-            pc += ss.count
+        if !resultsArray.isEmpty {
+            pc = resultsArray.count
         }
         
         return pc
@@ -182,83 +206,56 @@ class TerminalPageContainerController: UIPageViewController {
     
     func viewController(atIndex index: Int) -> UIViewController? {
         
-        var count = 1
-        
-        if let rr = relationshipResults, !rr.isEmpty {
-            count = rr.count
-        }
-        
-        
         switch index {
         case 0:
             let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
             let terminalContainerController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalContainerViewController") as! TerminalContainerViewController
             return terminalContainerController
             
-        case 1...count:
-            if let relationshipResults = self.relationshipResults, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
-                
-                
-                if !relationshipResults.isEmpty {
-                    
-                    let offset = index - 1
-                    
-                    if offset < relationshipResults.count {
-                        
-                        let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
-                        let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
-                        
-                        terminalPageContentViewController.index = index
-                        
-                        let relationship = relationshipResults[offset]
-                        
-                        if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withRelationshipId: relationship.id!) {
-                            terminalPageContentViewController.groupIndex = so.groupIndex
-                        }
-                        terminalPageContentViewController.fromSpeciesIndex = speciesIndex
-                        terminalPageContentViewController.relationship = relationship
-                        return terminalPageContentViewController
-                    }
-                }
-                
-            }
-            
-            return nil
         default:
-            if let preferencesResults = self.preferencesResults, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+            
+            if !resultsArray.isEmpty {
                 
-                if !preferencesResults.isEmpty {
-                    var offset = 0
+                let offsetIndex = index - 1
+                
+                if offsetIndex < resultsArray.count {
                     
-                    if let relationshipResults = relationshipResults {
-                        let rcount = relationshipResults.count
-                        
-                        offset = index - (1 + rcount)
-                        
-                    } else {
-                        offset = index - 1
-                    }
+                    LOG.debug("index \(index) compute \(self.computePageCount())")
                     
-                    if offset < preferencesResults.count {
+                    if let someRelationship = resultsArray[offsetIndex] as? Relationship, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+                        
                         
                         let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
                         let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
                         
                         terminalPageContentViewController.index = index
                         
-                        
-                        
-                        let speciesPreference = preferencesResults[offset]
-                        
-                        if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withSpeciesPreferenceId: speciesPreference.id!) {
+                        if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withRelationshipId: someRelationship.id!) {
                             terminalPageContentViewController.groupIndex = so.groupIndex
                         }
                         terminalPageContentViewController.fromSpeciesIndex = speciesIndex
-                        terminalPageContentViewController.speciesPreference = speciesPreference
+                        terminalPageContentViewController.relationship = someRelationship
                         return terminalPageContentViewController
                     }
+                    
+                    
+                    
+                    if let somePreference = resultsArray[offsetIndex] as? SpeciesPreference, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+                        let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
+                        let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
+                        
+                        terminalPageContentViewController.index = index
+                        
+                        
+                        if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withSpeciesPreferenceId: somePreference.id!) {
+                            terminalPageContentViewController.groupIndex = so.groupIndex
+                        }
+                        terminalPageContentViewController.fromSpeciesIndex = speciesIndex
+                        terminalPageContentViewController.speciesPreference = somePreference
+                        return terminalPageContentViewController
+                    }
+                    
                 }
-                
             }
         }
         
@@ -334,7 +331,6 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             
             pageIndex += 1
             if pageIndex >= 0 {
-                
                 return self.viewController(atIndex: pageIndex)
             }
         } else if let pageContent = viewController as? TerminalPageContentController {
@@ -356,25 +352,25 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
         return nil
     }
     
-    public func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return computePageCount()
-    }
-    
-    public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let vcs = pageViewController.viewControllers else {
-            return 0
-        }
-        
-        if let page = vcs.first as? TerminalContainerViewController {
-            return 0
-        }
-        
-        if let page = vcs.first as? TerminalPageContentController, let index = page.index {
-            return index
-        }
-        
-        return 0
-    }
-    
+    //    public func presentationCount(for pageViewController: UIPageViewController) -> Int {
+    //        return computePageCount()
+    //    }
+    //
+    //    public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+    //        guard let vcs = pageViewController.viewControllers else {
+    //            return 0
+    //        }
+    //
+    //        if let page = vcs.first as? TerminalContainerViewController {
+    //            return 0
+    //        }
+    //
+    //        if let page = vcs.first as? TerminalPageContentController, let index = page.index {
+    //            return index
+    //        }
+    //
+    //        return 0
+    //    }
+    //
     
 }

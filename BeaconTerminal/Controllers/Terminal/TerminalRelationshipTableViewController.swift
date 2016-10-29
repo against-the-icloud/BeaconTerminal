@@ -352,10 +352,10 @@
         
         override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             
-            let rowheight = (tableView.height - relationshipHeaderLabel.height)/9
+            let rowheight = (tableView.height - relationshipHeaderLabel.height)/10.5
             
             if rowheight <= 0 {
-                return 65.0
+                return 60.0
             }
             
             return rowheight;

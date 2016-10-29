@@ -16,8 +16,6 @@ enum ImageFormat: String {
 
 class Util {
     
-    
-    
     class func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
@@ -503,4 +501,9 @@ extension String {
 
 }
 
+extension Results {
+    func toArray() -> [Results.Generator.Element] {
+        return map { $0 }
+    }
+}
 

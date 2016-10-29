@@ -439,9 +439,6 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     }
     
     func switchContainerTab(withIndex showIndex: Int) {
-        
-        
-        
         for tabView in tabViews {
             tabView.fadeOut(0.0) {_ in
                 tabView.isHidden = true

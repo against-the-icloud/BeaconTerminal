@@ -42,6 +42,7 @@ class TerminalMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topTabbar.initUI()
+        topTabbar.removeSegment(at: 1, animated: true)
         if needsTerminal {
             prepareNotifications()
         }
@@ -134,7 +135,7 @@ class TerminalMainViewController: UIViewController {
         }
         
         
-        colorizeSelectedSegment()        
+        //colorizeSelectedSegment()
         updateTimestamp()
     }
     
@@ -208,7 +209,7 @@ class TerminalMainViewController: UIViewController {
 
     
     @IBAction func tabChanged(_ sender: UISegmentedControl) {
-        colorizeSelectedSegment()
+       // colorizeSelectedSegment()
         changeTab(withControl: sender)
     }
     

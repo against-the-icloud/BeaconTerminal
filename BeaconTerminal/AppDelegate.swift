@@ -583,6 +583,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .placeTerminal:
             setTerminalRealm(withSectionName: sectionName)
             realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
+            realmDataController.deleteAllUserData(withRealmType: RealmType.terminalDB)
             //re-up
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)
             
@@ -596,6 +597,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
             setTerminalRealm(withSectionName: sectionName)
             realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
+            realmDataController.deleteAllUserData(withRealmType: RealmType.terminalDB)
             //re-up
             
             _ = realmDataController.parseUserGroupConfigurationJson(withSimConfig: realmDataController.parseSimulationConfigurationJson(withRealmType: RealmType.terminalDB), withPlaceHolders: false, withSectionName: sectionName, withRealmType: RealmType.terminalDB)

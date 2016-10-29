@@ -66,15 +66,16 @@ class TerminalCellController: UIViewController {
         
         if let habitat = realmDataController.getRealm(withRealmType: RealmType.terminalDB).habitat(withIndex: toHabitatIndex) {
             let name = habitat.name
-            if let image = UIImage(named: name) {
+            if let image = UIImage(named: "_\(name)") {
                 profileImageView.image = image
-                profileImageView.tintColor = UIColor.gray
+                //profileImageView.tintColor = UIColor.gray
             }
         }
    
         cellItems = [CellItem(withGroupIndex: 0),CellItem(withGroupIndex: 1),CellItem(withGroupIndex: 2),CellItem(withGroupIndex: 3),CellItem(withGroupIndex: 4)]
         
         countLabel.text = ""
+        countLabel.isHidden = true
     
         self.view.setNeedsLayout()
         self.view.fadeIn(toAlpha: 0.3) {_ in

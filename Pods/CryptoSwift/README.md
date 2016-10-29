@@ -39,6 +39,7 @@ Good mood
 - [AES-128, AES-192, AES-256](http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf)
 - [ChaCha20](http://cr.yp.to/chacha/chacha-20080128.pdf)
 - [Rabbit](https://tools.ietf.org/html/rfc4503)
+- [Blowfish](https://www.schneier.com/academic/blowfish/)
 
 #### Message authenticators
 - [Poly1305](http://cr.yp.to/mac/poly1305-20050329.pdf)
@@ -145,6 +146,7 @@ See: [Package.swift - manual](http://blog.krzyzanowskim.com/2016/08/09/package-s
 * [Data Padding](#data-padding)
 * [ChaCha20](#chacha20)
 * [Rabbit](#rabbit)
+* [Blowfish](#blowfish)
 * [Advanced Encryption Standard (AES)](#aes)
 
 
@@ -281,11 +283,28 @@ let decrypted = try ChaCha20(key: key, iv: iv).decrypt(encrypted)
 let encrypted = try Rabbit(key: key, iv: iv).encrypt(message)
 let decrypted = try Rabbit(key: key, iv: iv).decrypt(encrypted)
 ```
+#####Blowfish
+
+```swift
+let encrypted = try Blowfish(key: key, iv: iv, blockMode: .CBC, padding: PKCS7()).encrypt(message)
+let decrypted = try Blowfish(key: key, iv: iv, blockMode: .CBC, padding: PKCS7()).decrypt(encrypted)
+```
 
 #####AES
 
 Notice regarding padding: *Manual padding of data is optional, and CryptoSwift is using PKCS7 padding by default. If you need manually disable/enable padding, you can do this by setting parameter for __AES__ class*
 
+Variant of AES encryption (AES-128, AES-192, AES-256) depends on given key length:
+
+- AES-128 = 16 bytes
+- AES-192 = 24 bytes
+- AES-256 = 32 bytes
+
+AES-256 example
+```swift
+try AES(key: [1,2,3,...,32], iv: [1,2,3,...,16], blockMode: .CBC, padding: PKCS7())
+```
+ 
 ######All at once
 ```swift
 do {

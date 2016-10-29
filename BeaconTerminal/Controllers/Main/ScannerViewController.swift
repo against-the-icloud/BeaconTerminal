@@ -128,8 +128,8 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             self.immediateBeaconDetector.start()
             
             if let sectionName = realmDataController.getRealm().runtimeSectionName() {
-            
-            LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"start_scan_to_species_","sectionName":sectionName])
+                
+                LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"start_scan_to_species_","sectionName":sectionName])
             }
             
         }
@@ -196,10 +196,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         
         immediateBeacon = beacon
         
-//        LOG.debug("IS SHAKEN>>>>> \(beacon.isShaken)")
-//        
-//        immediateBeacon.delegate = self
-//        immediateBeacon.connect()
+        //        LOG.debug("IS SHAKEN>>>>> \(beacon.isShaken)")
+        //
+        //        immediateBeacon.delegate = self
+        //        immediateBeacon.connect()
         
         switch immediateBeacon.isShaken.boolValue {
         case true:
@@ -213,14 +213,14 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                 
                 doScan(scannedBeacon: immediateBeacon)
                 
-//                immediateBeacon.delegate = self
-//                immediateBeacon.connect()
+                //                immediateBeacon.delegate = self
+                //                immediateBeacon.connect()
             }
         default:
-                LOG.debug("NOT SHAKING \(self.immediateBeacon.settings?.deviceInfo)")
-
+            LOG.debug("NOT SHAKING \(self.immediateBeacon.settings?.deviceInfo)")
+            
         }
-    
+        
     }
     
     func immediateBeaconDetector(immediateBeaconDetector: ImmediateBeaconDetector, didFailDiscovery error: ImmediateBeaconDetectorError) {
@@ -256,19 +256,19 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
         connectionRetries = 0
         
         //immediateBeacon.delegate = nil
-    
+        
         self.scanningStateMachine?.fireEvent(self.stopEvent)
-
+        
         if self.immediateBeaconDetector != nil {
             self.immediateBeaconDetector.stop()
         }
         
         if let ib = immediateBeacon {
             doScan(ib: ib)
-
+            
         }
         
-
+        
     }
     
     func doScan(scannedBeacon:ESTDeviceLocationBeacon) {
@@ -286,27 +286,21 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             
             self.dismiss(animated: true, completion: {
                 
-                
                 if let sectionName = realmDataController.getRealm().runtimeSectionName() {
-                    
                     LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"success_scan_to_species_","sectionName":sectionName, "speciesIndex":speciesIndex,"beaconId": beaconId.asString])
                 }
                 
                 if getAppDelegate().checkApplicationState().rawValue != nil {
-                    
                     let condition = getAppDelegate().checkApplicationState().rawValue
                     //realmDataController.clearInViewTerminal(withCondition: condition)
                     realmDataController.syncSpeciesObservations(withSpeciesIndex: speciesIndex, withCondition: condition, withActionType: "enter", withPlace: "species:\(speciesIndex)")
                     realmDataController.updateInViewTerminal(withSpeciesIndex: speciesIndex, withCondition: "artifact", withPlace: beaconId.asString)
-                    
-
-                    
                 } else {
                     print("no condition")
                 }
                 
             })
-
+            
         }
     }
     
@@ -347,22 +341,22 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                         realmDataController.syncSpeciesObservations(withSpeciesIndex: self.scannedSpecies!, withCondition: condition, withActionType: "enter", withPlace: "species:\(self.scannedSpecies)")
                         realmDataController.updateInViewTerminal(withSpeciesIndex: self.scannedSpecies!, withCondition: "artifact", withPlace: (self.scannedBeaconId?.asString)!)
                         
-                      
-                            ib.disconnect()
-                    
                         
-                       
+                        ib.disconnect()
+                        
+                        
+                        
                         
                     } else {
                         print("no condition")
                     }
-    
+                    
                 })
-                    
-                    
                 
                 
-
+                
+                
+                
                 
                 //lb.disconnect()
                 
@@ -372,20 +366,20 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             }
         }
     }
-
+    
     
     func estDevice(_ device: ESTDeviceConnectable, didFailConnectionWithError error: Error) {
         
         if error._code == ESTDeviceLocationBeaconError.cloudVerificationFailed.rawValue {
-           
-                LOG.debug("Couldn't reach Estimote Cloud. Check your Internet connection, then try again.")
+            
+            LOG.debug("Couldn't reach Estimote Cloud. Check your Internet connection, then try again.")
             
             if let sectionName = realmDataController.getRealm().runtimeSectionName() {
                 
                 LOG.info( ["condition":getAppDelegate().checkApplicationState().rawValue, "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"fail_scan_to_species_","sectionName":sectionName])
             }
             
-        
+            
         } else {
             if error != nil {
                 
@@ -409,17 +403,17 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
                     }
                 }
                 self.scanningStateMachine?.fireEvent(self.scanningEvent)
-
+                
             }
             
-
+            
         }
         
     }
     
     
     func estDevice(_ device: ESTDeviceConnectable, didDisconnectWithError error: Error?) {
-  
+        
         
         connectionRetries = 0
         if immediateBeacon != nil {
@@ -428,10 +422,10 @@ class ScannerViewController: UIViewController, ImmediateBeaconDetectorDelegate, 
             immediateBeacon = nil
         }
         
-//        if error == nil {
-//            self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
-//        }
-
+        //        if error == nil {
+        //            self.performSegue(withIdentifier: "unwindToMainFromScannerWithSegue", sender: self)
+        //        }
+        
         
     }
     
