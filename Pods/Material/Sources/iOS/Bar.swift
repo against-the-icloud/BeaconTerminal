@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,7 +47,7 @@ open class Bar: View {
     }
     
     /// Should center the contentView.
-    open var contentViewAlignment = ContentViewAlignment.any {
+    open var contentViewAlignment = ContentViewAlignment.center {
         didSet {
             layoutSubviews()
         }
@@ -188,14 +188,9 @@ open class Bar: View {
     open func reload() {
         var lc = 0
         var rc = 0
-        let l = (CGFloat(leftViews.count) * interimSpace)
-        let r = (CGFloat(rightViews.count) * interimSpace)
-        let p = width - l - r - contentEdgeInsets.left - contentEdgeInsets.right
-        let columns = Int(ceil(p / gridFactor))
         
         grid.begin()
         grid.views.removeAll()
-        grid.axis.columns = columns
         
         for v in leftViews {
             if let b = v as? UIButton {
@@ -230,6 +225,23 @@ open class Bar: View {
         }
         
         contentView.grid.begin()
+        contentView.grid.offset.columns = 0
+        
+        var l: CGFloat = 0
+        var r: CGFloat = 0
+        
+        if .center == contentViewAlignment {
+            if leftViews.count < rightViews.count {
+                r = CGFloat(rightViews.count) * interimSpace
+                l = r
+            } else {
+                l = CGFloat(leftViews.count) * interimSpace
+                r = l
+            }
+        }
+        
+        let p = width - l - r - contentEdgeInsets.left - contentEdgeInsets.right
+        let columns = Int(ceil(p / gridFactor))
         
         if .center == contentViewAlignment {
             if lc < rc {
@@ -237,13 +249,13 @@ open class Bar: View {
                 contentView.grid.offset.columns = rc - lc
             } else {
                 contentView.grid.columns = columns - 2 * lc
-                contentView.grid.offset.columns = 0
                 rightViews.first?.grid.offset.columns = lc - rc
             }
         } else {
             contentView.grid.columns = columns - lc - rc
         }
         
+        grid.axis.columns = columns
         grid.commit()
         contentView.grid.commit()
         

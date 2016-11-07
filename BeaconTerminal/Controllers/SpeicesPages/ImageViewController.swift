@@ -9,8 +9,14 @@
 import Foundation
 import UIKit
 
+enum ImageControllerSourceType {
+    case preferences
+    case species
+}
+
 class ImageViewController: UIViewController {
     
+    var sourceType: ImageControllerSourceType?
     var image: UIImage?
     var imageUrl: String?
     var canDelete: Bool?
@@ -35,6 +41,16 @@ class ImageViewController: UIViewController {
         
     }
     @IBAction func deleteImageAction(_ sender: AnyObject) {
+        
+        if let st = self.sourceType {
+            switch st {
+            case .preferences:
+                break
+            default:
+                self.performSegue(withIdentifier: "unwindToEvidenceDeleteSpeciesWithSegue", sender: self)
+            }
+        }
+        
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func closeAction(_ sender: AnyObject) {

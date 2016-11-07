@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,7 +56,11 @@ internal class MaterialLayer {
     }
     
     /// A preset property to set the shape.
-    internal var shapePreset = ShapePreset.none
+    internal var shapePreset = ShapePreset.none {
+        didSet {
+            layer?.layoutShape()
+        }
+    }
     
     /// A preset value for Depth.
     internal var depthPreset: DepthPreset {
@@ -321,7 +325,7 @@ extension CALayer {
         } else if nil == shadowPath {
             shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
         } else {
-            let a = Animation.shadowPath(path: UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath)
+            let a = Motion.shadowPath(to: UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath)
             a.fromValue = shadowPath
             animate(animation: a)
         }

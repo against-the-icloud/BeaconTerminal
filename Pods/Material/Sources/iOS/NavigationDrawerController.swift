@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -306,9 +306,6 @@ open class NavigationDrawerController: RootController, UIGestureRecognizerDelega
      */
 	@IBInspectable
     open var isHiddenStatusBarEnabled = true
-	
-	/// Sets the statusBar to isHidden or not.
-	open internal(set) var isStatusBarHidden = false
 	
 	/**
      A DepthPreset property that is used to set the depth of the

@@ -179,6 +179,16 @@ class RealmDataController {
                 
                 DispatchQueue.main.async(execute: block)
             }
+        case .getExperiments:
+            if let nutella = nutella, let groupIndex = getRealm().runtimeGroupIndex()  {
+                let block = DispatchWorkItem {
+                    var json: JSON =  [groupIndex]
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("get_experiments", message: jsonObject as AnyObject, requestName: "get_experiments")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
 //        case .questions:
 //            if let nutella = nutella {
 //                let block = DispatchWorkItem {
@@ -217,7 +227,6 @@ class RealmDataController {
                 }
             }
         case .species:
-            
             if let index = getRealm(withRealmType: realmType).runtimeSpeciesIndex() {
                 if let nutella = nutella {
                     let block = DispatchWorkItem {
@@ -285,15 +294,10 @@ class RealmDataController {
                 let currentActivityAndRoom = handleCurrentActivity(withMessage: message)
                 
                 if let activity = currentActivityAndRoom.activity, let room = currentActivityAndRoom.room {
-                    
-                    
                     UserDefaults.standard.set(activity, forKey: "activity")
                     UserDefaults.standard.set(room, forKey: "room")
                     UserDefaults.standard.synchronize()
-                    
-                    
                     getAppDelegate().changeLoginStateTo(.currentChannelList)
-                    
                 }
                 return
             case .channelList:
@@ -318,8 +322,12 @@ class RealmDataController {
                 }
                 
                 return
+            case .getExperiments:
+                handleExperiments(withMessage: message)
             case .speciesNames:
                 parseModelSpeciesNames(withMessage: message)
+                return
+            case .getExperiments:
                 return
             default: break
             }
@@ -339,6 +347,66 @@ class RealmDataController {
             break
         default:
             break
+        }
+    }
+    
+    func handleExperiments(withMessage message: Any) {
+        let json = JSON(message)
+        guard let all = json.array else {
+            return
+        }
+
+        try! getRealm().write {
+            
+
+            for (_,item) in all.enumerated() {
+                
+                let experiment = Experiment()
+
+                //strings
+                if let conclusions = item["conclusions"].string {
+                    experiment.conclusions = conclusions
+                }
+                
+                if let manipulations = item["manipulations"].string {
+                    experiment.manipulations = manipulations
+                }
+                
+                if let question = item["question"].string {
+                    experiment.question = question
+                }
+                
+                if let results = item["results"].string {
+                    experiment.results = results
+                }
+                
+                if let ecosystemIndex = item["ecosystem"].int, let ecosystem = getRealm().ecosystem(withIndex: ecosystemIndex) {
+                    experiment.ecosystem = ecosystem
+                } else if let ecosystemIndex = item["ecosystem"].string, let ecosystem = getRealm().ecosystem(withIndex: Int(ecosystemIndex)!) {
+                    experiment.ecosystem = ecosystem
+                }
+                
+                if let figures = item["figures"].array {
+                    
+                    var attachments = [String]()
+                    
+                    for(_,figure) in figures.enumerated() {
+                        
+                        if let attachment = figure.string {
+                            attachments.append(attachment)
+                        }
+                    }
+                    
+                    experiment.attachments = attachments.joined(separator: ",")
+                }
+                
+                if let index = experiment.ecosystem?.index, let question = experiment.question {
+                    let id = "\(index)-\(question)"
+                    experiment.id = id
+                }                
+                getRealm().add(experiment, update: true)
+            }
+            
         }
     }
     

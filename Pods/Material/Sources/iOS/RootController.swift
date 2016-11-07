@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,16 @@ open class RootController: UIViewController {
 			Device.statusBarStyle = value
 		}
 	}
+    
+    /// Device visibility state.
+    open var isStatusBarHidden: Bool {
+        get {
+            return Device.isStatusBarHidden
+        }
+        set(value) {
+            Device.isStatusBarHidden = value
+        }
+    }
 	
 	/**
      A Boolean property used to enable and disable interactivity
@@ -132,6 +142,7 @@ open class RootController: UIViewController {
                 s.rootViewController.view.clipsToBounds = true
                 s.rootViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 s.rootViewController.view.contentScaleFactor = Device.scale
+                s.view.sendSubview(toBack: s.rootViewController.view)
                 completion?(result)
 			}
 	}

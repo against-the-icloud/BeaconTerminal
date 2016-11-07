@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,12 @@ open class StatusBarController: RootController {
 	/// A reference to the statusBar.
 	open private(set) lazy var statusBar = View()
 	
+    open override var isStatusBarHidden: Bool {
+        didSet {
+            statusBar.isHidden = isStatusBarHidden
+        }
+    }
+    
 	/**
      To execute in the order of the layout chain, override this
      method. LayoutSubviews should be called immediately, unless you
@@ -59,6 +65,7 @@ open class StatusBarController: RootController {
      */
 	open override func layoutSubviews() {
 		super.layoutSubviews()
+        statusBar.width = view.width
         statusBar.zPosition = Device.isLandscape && .phone == Device.userInterfaceIdiom ? 0 : 3000
 		rootViewController.view.frame = view.bounds
 	}
@@ -78,6 +85,7 @@ open class StatusBarController: RootController {
 	/// Prepares the statusBar.
 	private func prepareStatusBar() {
 		statusBar.backgroundColor = .white
-		view.layout(statusBar).top().horizontally().height(20)
+        statusBar.height = 20
+		view.addSubview(statusBar)
 	}
 }

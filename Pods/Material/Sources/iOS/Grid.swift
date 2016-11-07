@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -220,8 +220,8 @@ public class Grid {
             return
         }
         
-        var n: Int = 0
-        var i: Int = 0
+        var n = 0
+        var i = 0
         
         for v in views {
             guard let canvas = context else {

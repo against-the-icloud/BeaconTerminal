@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -174,7 +174,7 @@ open class View: UIView {
      */
 	open func prepare() {
 		contentScaleFactor = Device.scale
-		backgroundColor = Color.white
+		backgroundColor = .white
 		prepareVisualLayer()
 	}
 	

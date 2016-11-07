@@ -99,10 +99,36 @@ class SpeciesObservation: Object {
         }
         
     }
-    
-    
+
 }
 
+class Experiment: Object {
+    dynamic var id : String? = nil
+    dynamic var conclusions: String? = nil
+    dynamic var manipulations: String? = nil
+    dynamic var question: String? = nil
+    dynamic var reasoning: String? = nil
+    dynamic var results: String? = nil
+    dynamic var attachments : String? = nil
+    dynamic var lastModified = Date()
+    dynamic var relationshipId : String? = nil
+    dynamic var ecosystem: Ecosystem?
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func update(withJson json:JSON, shouldParseId: Bool){
+        if shouldParseId {
+            if let id = json["id"].string {
+                self.id = id
+            }
+        }
+        if let attachments = json["attachments"].string {
+            self.attachments = attachments
+        }
+    }
+}
 class Relationship: Object {
     dynamic var id : String? = nil
     dynamic var note: String? = nil
@@ -112,7 +138,8 @@ class Relationship: Object {
     dynamic var lastModified = Date()
     dynamic var toSpecies: Species?
     dynamic var ecosystem: Ecosystem?
-    
+    dynamic var experimentId: String? = nil
+
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -139,6 +166,10 @@ class Relationship: Object {
         
         if let relationshipType = json["relationshipType"].string {
             self.relationshipType = relationshipType
+        }
+        
+        if let experimentId = json["experimentId"].string {
+            self.experimentId = experimentId
         }
     }
 }
@@ -316,6 +347,19 @@ class User: Object {
 }
 
 extension Realm {
+    
+    
+    var experiments: Results<Experiment> {
+        return objects(Experiment.self)
+    }
+    
+    func experimentsWithId(withId id: String) -> Experiment? {
+        return objects(Experiment.self).filter("id = '\(id)'").first
+    }
+    
+    func experimentsWithIndex(withIndex index: Int) -> Results<Experiment>? {
+        return objects(Experiment.self).filter("ecosystem.index = \(index)")
+    }
     
     var channels: Results<Channel> {
         return objects(Channel.self)

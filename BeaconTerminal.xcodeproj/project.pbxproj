@@ -10,6 +10,10 @@
 		599200E1262253863BB2F805 /* Pods_BeaconTerminal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B571DB6DBD515BBA1C109C78 /* Pods_BeaconTerminal.framework */; };
 		7003BEE01D81F3250029B0EE /* MainContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7003BEDF1D81F3250029B0EE /* MainContainerController.swift */; };
 		7003BEE21D81F96C0029B0EE /* TabSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7003BEE11D81F96C0029B0EE /* TabSegmentedControl.swift */; };
+		7004FABF1DCF8F7400659C1C /* ObservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7004FABE1DCF8F7400659C1C /* ObservationViewController.swift */; };
+		7004FAC11DCF904500659C1C /* InvestigationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7004FAC01DCF904500659C1C /* InvestigationsViewController.swift */; };
+		7004FAC31DCFBE3900659C1C /* ObservationsSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7004FAC21DCFBE3900659C1C /* ObservationsSegmentedControl.swift */; };
+		7004FAC51DD0398400659C1C /* InvestigationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7004FAC41DD0398400659C1C /* InvestigationTableViewController.swift */; };
 		700A3AB61D4BC7D8009B540D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB51D4BC7D8009B540D /* Photos.framework */; };
 		700A3AB81D4BC7E1009B540D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */; };
 		701103AC1D4E3BE200F81AC4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */; };
@@ -140,6 +144,10 @@
 		62C7EB345E0F882B5245A310 /* Pods-BeaconTerminalModelTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BeaconTerminalModelTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BeaconTerminalModelTests/Pods-BeaconTerminalModelTests.release.xcconfig"; sourceTree = "<group>"; };
 		7003BEDF1D81F3250029B0EE /* MainContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerController.swift; sourceTree = "<group>"; };
 		7003BEE11D81F96C0029B0EE /* TabSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabSegmentedControl.swift; path = BeaconTerminal/Views/TabSegmentedControl.swift; sourceTree = SOURCE_ROOT; };
+		7004FABE1DCF8F7400659C1C /* ObservationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservationViewController.swift; path = SpeicesPages/ObservationViewController.swift; sourceTree = "<group>"; };
+		7004FAC01DCF904500659C1C /* InvestigationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvestigationsViewController.swift; path = SpeicesPages/InvestigationsViewController.swift; sourceTree = "<group>"; };
+		7004FAC21DCFBE3900659C1C /* ObservationsSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservationsSegmentedControl.swift; sourceTree = "<group>"; };
+		7004FAC41DD0398400659C1C /* InvestigationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvestigationTableViewController.swift; path = SpeicesPages/InvestigationTableViewController.swift; sourceTree = "<group>"; };
 		700A3AB51D4BC7D8009B540D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		700A3AB71D4BC7E1009B540D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		701103AB1D4E3BE200F81AC4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -319,6 +327,9 @@
 				70D1281E1DA8A76D008DB916 /* SpeciesPreferencesTableController.swift */,
 				706D21E11DA99FD4009FC554 /* ChoosePreferenceViewController.swift */,
 				706D21E31DA9D245009FC554 /* EvidencePreferenceViewController.swift */,
+				7004FABE1DCF8F7400659C1C /* ObservationViewController.swift */,
+				7004FAC01DCF904500659C1C /* InvestigationsViewController.swift */,
+				7004FAC41DD0398400659C1C /* InvestigationTableViewController.swift */,
 			);
 			name = SpeciesPages;
 			sourceTree = "<group>";
@@ -536,6 +547,7 @@
 				70389A0A1D5E6ECE005DF200 /* BadgeUtil.swift */,
 				7064CAA31D6783FB00B77ADA /* StringUtil.swift */,
 				7003BEE11D81F96C0029B0EE /* TabSegmentedControl.swift */,
+				7004FAC21DCFBE3900659C1C /* ObservationsSegmentedControl.swift */,
 				7030BE241DA4631400DB332D /* Spinner.swift */,
 				7068B05E1DBE6F5300B0F790 /* ImageScrollView.swift */,
 				70F4F9441DBEA8B40076357F /* Reachability.swift */,
@@ -838,6 +850,7 @@
 				701564DF1D7154D400A0EEA5 /* TerminalCellController.swift in Sources */,
 				70AE971C1D202AAE0002C26F /* HRToast+UIView.swift in Sources */,
 				7042041D1CE8E94D00C09FD0 /* LoadingView.swift in Sources */,
+				7004FAC11DCF904500659C1C /* InvestigationsViewController.swift in Sources */,
 				70D9C1B41D6651F100FAF080 /* LoginGroupCell.swift in Sources */,
 				AE97648D1C22C1BF0058A4DC /* AppDelegate.swift in Sources */,
 				706D21E41DA9D245009FC554 /* EvidencePreferenceViewController.swift in Sources */,
@@ -876,14 +889,17 @@
 				C0A7DF679DB7E99EBAA806A9 /* Util.swift in Sources */,
 				701385CC1D8336890081FEB1 /* SpeciesPageContentController.swift in Sources */,
 				C0A7D8DB435721FCBB3BA999 /* Random.swift in Sources */,
+				7004FAC51DD0398400659C1C /* InvestigationTableViewController.swift in Sources */,
 				701385CA1D8334BA0081FEB1 /* SpeciesPageContainerController.swift in Sources */,
 				70D4E2341D6CF925003102AC /* TerminalComparsionDetailViewController.swift in Sources */,
 				708040C31D851BD50065B372 /* SpeciesRelationshipTableController.swift in Sources */,
 				7030BE251DA4631400DB332D /* Spinner.swift in Sources */,
 				C0A7D0FF940DC7B09B9D5B77 /* ControlPanelViewController.swift in Sources */,
+				7004FAC31DCFBE3900659C1C /* ObservationsSegmentedControl.swift in Sources */,
 				70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */,
 				70B017E41DA5CE6C00B233AA /* ReticleView.swift in Sources */,
 				C0A7D86B5F43115AEA850B2E /* SideViewController.swift in Sources */,
+				7004FABF1DCF8F7400659C1C /* ObservationViewController.swift in Sources */,
 				7017A2F01D865A6400C31119 /* SyncViewController.swift in Sources */,
 				7017A2EC1D85FE3600C31119 /* EvidenceSpeciesViewController.swift in Sources */,
 				70F4F9451DBEA8B40076357F /* Reachability.swift in Sources */,

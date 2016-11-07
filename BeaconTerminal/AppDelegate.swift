@@ -22,7 +22,7 @@ let LOCAL_IP = "10.0.1.6"
 var CURRENT_HOST = REMOTE
 var SECTION_NAME = "default"
 
-let SCHEMEA_VER: UInt64 = 2
+let SCHEMEA_VER: UInt64 = 4
 
 let ReachabilityDidChangeNotificationName = "ReachabilityDidChangeNotification"
 
@@ -183,6 +183,7 @@ enum NutellaChannelType: String {
     case currentActivityAndRoom = "currentActivityAndRoom"
     case channelList = "channel_list"
     case channelNames = "channel_names"
+    case getExperiments = "get_experiments"
 }
 
 enum NutellaQueryType: String {
@@ -194,6 +195,8 @@ enum NutellaQueryType: String {
     case currentChannelNames = "currentChannelNames"
     case currentActivityAndRoom = "currentActivityAndRoom"
     case speciesNames = "speciesNames"
+    case getExperiments = "get_experiments"
+
 }
 
 
@@ -475,11 +478,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 prepareDB(withSectionName: sectionName)
                 realmDataController.queryNutella(withType: .speciesNames)
                 realmDataController.queryNutella(withType: .currentChannelNames)
+                realmDataController.queryNutella(withType: .getExperiments)
             case .placeTerminal:
                 prepareDB(withSectionName: sectionName)
                 realmDataController.queryNutella(withType: .speciesNames)
                 realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
                 realmDataController.queryNutella(withType: .currentChannelNames)
+                realmDataController.queryNutella(withType: .getExperiments)
             default: break
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.io>.
+ * Copyright (C) 2015 - 2016, Daniel Dahan and CosmicMind, Inc. <http://cosmicmind.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -173,7 +173,7 @@ open class ToolbarController: StatusBarController {
 		super.layoutSubviews()
         statusBar.layoutIfNeeded()
         
-        let y = 0 == statusBar.zPosition ? 0 : statusBar.height
+        let y = 0 == statusBar.zPosition || statusBar.isHidden ? 0 : statusBar.height
         let p = y + toolbar.height
         
         toolbar.y = y

@@ -214,8 +214,10 @@ class EvidencePreferenceViewController: UIViewController, UINavigationController
     }
     
     func enableView() {
-        if let tag = tags.last, let index = tags.index(of: tag) {
-            images[index].isUserInteractionEnabled = true
+        if let obsVC = self.childViewControllers[0] as? ObservationsViewController {
+            if let tag = tags.last, let index = tags.index(of: tag) {
+                images[index].isUserInteractionEnabled = true
+            }
         }
     }
     
