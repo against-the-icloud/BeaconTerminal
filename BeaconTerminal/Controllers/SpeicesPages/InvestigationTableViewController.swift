@@ -18,6 +18,7 @@ class InvestigationViewTableViewController: UITableViewController {
     var experimentNotification: NotificationToken? = nil
     var notificationTokens = [NotificationToken]()
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     deinit {
         experimentNotification?.stop()
     }
@@ -67,7 +68,20 @@ class InvestigationViewTableViewController: UITableViewController {
         }
         
     }
+    @IBAction func refreshAction(_ sender: Any) {
+        realmDataController.fetchExperiments()
+    }
 
+    @IBAction func doneAction(_ sender: Any) {
+        
+        self.performSegue(withIdentifier: "unwindToInvestigations", sender: self)
+        
+        self.dismiss(animated: true, completion: {
+            
+            
+            
+        })
+    }
 }
 
 

@@ -22,7 +22,7 @@ let LOCAL_IP = "10.0.1.6"
 var CURRENT_HOST = REMOTE
 var SECTION_NAME = "default"
 
-let SCHEMEA_VER: UInt64 = 4
+let SCHEMEA_VER: UInt64 = 5
 
 let ReachabilityDidChangeNotificationName = "ReachabilityDidChangeNotification"
 

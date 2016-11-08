@@ -203,7 +203,6 @@ class TerminalPageContainerController: UIPageViewController {
         return pc
     }
     
-    
     func viewController(atIndex index: Int) -> UIViewController? {
         
         switch index {
@@ -225,17 +224,19 @@ class TerminalPageContainerController: UIPageViewController {
                     if let someRelationship = resultsArray[offsetIndex] as? Relationship, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
                         
                         
-                        let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
-                        let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
+                        let speciesPageStoryboard = UIStoryboard(name: "SpeciesPages", bundle: nil)
+                        let speciesPageContentViewController = speciesPageStoryboard.instantiateViewController(withIdentifier: "evidenceSpeciesViewController") as! EvidenceSpeciesViewController
                         
-                        terminalPageContentViewController.index = index
+                        speciesPageContentViewController.index = index
                         
                         if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withRelationshipId: someRelationship.id!) {
-                            terminalPageContentViewController.groupIndex = so.groupIndex
+                            speciesPageContentViewController.groupIndex = so.groupIndex
                         }
-                        terminalPageContentViewController.fromSpeciesIndex = speciesIndex
-                        terminalPageContentViewController.relationship = someRelationship
-                        return terminalPageContentViewController
+                        speciesPageContentViewController.fromSpeciesIndex = speciesIndex
+                        speciesPageContentViewController.toSpeciesIndex = someRelationship.toSpecies?.index
+//                        speciesPageContentViewController.relationshipType = someRelationship.relationshipType
+                        speciesPageContentViewController.relationship = someRelationship
+                        return speciesPageContentViewController
                     }
                     
                     
@@ -261,6 +262,64 @@ class TerminalPageContainerController: UIPageViewController {
         
         return nil
     }
+    
+//    func viewController(atIndex index: Int) -> UIViewController? {
+//        
+//        switch index {
+//        case 0:
+//            let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
+//            let terminalContainerController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalContainerViewController") as! TerminalContainerViewController
+//            return terminalContainerController
+//            
+//        default:
+//            
+//            if !resultsArray.isEmpty {
+//                
+//                let offsetIndex = index - 1
+//                
+//                if offsetIndex < resultsArray.count {
+//                    
+//                    LOG.debug("index \(index) compute \(self.computePageCount())")
+//                    
+//                    if let someRelationship = resultsArray[offsetIndex] as? Relationship, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+//                        
+//                        
+//                        let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
+//                        let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
+//                        
+//                        terminalPageContentViewController.index = index
+//                        
+//                        if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withRelationshipId: someRelationship.id!) {
+//                            terminalPageContentViewController.groupIndex = so.groupIndex
+//                        }
+//                        terminalPageContentViewController.fromSpeciesIndex = speciesIndex
+//                        terminalPageContentViewController.relationship = someRelationship
+//                        return terminalPageContentViewController
+//                    }
+//                    
+//                    
+//                    
+//                    if let somePreference = resultsArray[offsetIndex] as? SpeciesPreference, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
+//                        let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
+//                        let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
+//                        
+//                        terminalPageContentViewController.index = index
+//                        
+//                        
+//                        if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withSpeciesPreferenceId: somePreference.id!) {
+//                            terminalPageContentViewController.groupIndex = so.groupIndex
+//                        }
+//                        terminalPageContentViewController.fromSpeciesIndex = speciesIndex
+//                        terminalPageContentViewController.speciesPreference = somePreference
+//                        return terminalPageContentViewController
+//                    }
+//                    
+//                }
+//            }
+//        }
+//        
+//        return nil
+//    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -300,7 +359,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
                 return self.viewController(atIndex: pageIndex)
             }
             
-        } else if let pageContent = viewController as? TerminalPageContentController {
+        } else if let pageContent = viewController as? EvidenceSpeciesViewController {
             pageIndex = pageContent.index!
             
             if (pageIndex == NSNotFound) {
@@ -333,7 +392,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             if pageIndex >= 0 {
                 return self.viewController(atIndex: pageIndex)
             }
-        } else if let pageContent = viewController as? TerminalPageContentController {
+        } else if let pageContent = viewController as? EvidenceSpeciesViewController {
             pageIndex = pageContent.index!
             
             if (pageIndex == NSNotFound) {
@@ -347,7 +406,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
                 
                 return self.viewController(atIndex: pageIndex)
             }
-        }
+        } 
         
         return nil
     }

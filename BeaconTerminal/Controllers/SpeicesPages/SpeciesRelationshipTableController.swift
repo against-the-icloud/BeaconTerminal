@@ -171,6 +171,7 @@ class SpeciesRelationshipTableController: UITableViewController {
             switch segueId {
             case "editSpeciesSegue":
                 
+                realmDataController.fetchExperiments()
                 if let uinav = segue.destination as? UINavigationController, let ev = uinav.viewControllers.first as? EvidenceSpeciesViewController, let speciesIndex = self.speciesIndex, let relationshipType = self.relationshipType, let cell = sender as? SpeciesCellDetailController, let foundRelationship = cell.relationship {
                     
                     ev.relationshipType = relationshipType
@@ -183,13 +184,16 @@ class SpeciesRelationshipTableController: UITableViewController {
                   //  ev.navigationItem.prompt = "SUPPORT THE '\(StringUtil.relationshipString(withType: relationshipType).uppercased())' RELATIONSHIP"
                 }
                 break
-            case "chooseSpeciesSegue":
+            case "chooseSpeciesSegue":                                
+                
+                realmDataController.fetchExperiments()
                 
                 if let uinav = segue.destination as? UINavigationController, let csvc = uinav.viewControllers.first as? ChooseSpeciesViewController, let speciesIndex = self.speciesIndex, let relationshipType = self.relationshipType {
                     
                     csvc.relationshipType = relationshipType
                     csvc.speciesIndex = speciesIndex
                     csvc.title = "CREATE A RELATIONSHIP"
+                    
 //                    csvc.navigationItem.prompt = "CREATE THE RELATIONSHIP"
                 }
                 break

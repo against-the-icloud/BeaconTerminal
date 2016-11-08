@@ -112,6 +112,7 @@ class Experiment: Object {
     dynamic var attachments : String? = nil
     dynamic var lastModified = Date()
     dynamic var relationshipId : String? = nil
+    let isLinked = RealmOptional<Bool>()
     dynamic var ecosystem: Ecosystem?
     
     override static func primaryKey() -> String? {
@@ -139,6 +140,7 @@ class Relationship: Object {
     dynamic var toSpecies: Species?
     dynamic var ecosystem: Ecosystem?
     dynamic var experimentId: String? = nil
+    dynamic var experiment: Experiment?
 
     override static func primaryKey() -> String? {
         return "id"

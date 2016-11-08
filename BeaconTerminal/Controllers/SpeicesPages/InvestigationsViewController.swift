@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class InvestigationsViewController: UIViewController {
   
@@ -18,10 +19,20 @@ class InvestigationsViewController: UIViewController {
     @IBOutlet weak var noteTextView: UITextView!
     var selectedExperimentIndex = 0
     var experiment: Experiment?
+    var experimentId: String?
     var relationship: Relationship?
     var attachments = [String]()
     var tags = [Int]()
     weak var evidencePhotoDelegate: EvidencePhotoDelegate?
+    
+    var experimentResults: Results<Experiment>?
+    var experimentNotification: NotificationToken? = nil
+    
+    var notificationTokens = [NotificationToken]()
+    
+    deinit {
+        experimentNotification?.stop()
+    }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,11 +52,42 @@ class InvestigationsViewController: UIViewController {
         
         if let relationship = self.relationship, let id = self.relationship?.experimentId {
             
-            let r = realmDataController.getRealm()
-            if let experiment = r.experimentsWithId(withId:id) {
-                update(withExperiment: experiment)
-            }
+            self.prepareNotifications(withExperimentId: id)
+            
+//            let r = realmDataController.getRealm()
+//            if let experiment = r.experimentsWithId(withId:id) {
+//                update(withExperiment: experiment)
+//            }
         }
+        
+    }
+    
+    func prepareNotifications(withExperimentId experimentId: String) {
+        
+        experimentNotification = realmDataController.getRealm().objects(Experiment.self).filter("id = '\(experimentId)'").addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+                    
+                    guard let controller = self else { return }
+                    switch changes {
+                    case .initial(let experimentResults):
+                        
+                        if let exp = experimentResults.first {
+                          controller.update(withExperiment: exp)
+                        }
+                        break
+                    case .update(let experimentResults, let deletions, let insertions, let modifications):
+                        
+                        if let exp = experimentResults.first {
+                            controller.update(withExperiment: exp)
+                        }
+                        break
+                    case .error(let error):
+                        // An error occurred while opening the Realm file on the background worker thread
+                        fatalError("\(error)")
+                        break
+                    }
+                }
+                
+        
         
     }
     
@@ -58,8 +100,9 @@ class InvestigationsViewController: UIViewController {
             
             try! r.write {
                 relationship.experimentId = id
+                relationship.experiment = experiment
 
-                //r.add(species, update: false)
+                r.add(relationship, update: true)
             }
             
         }
@@ -112,15 +155,14 @@ class InvestigationsViewController: UIViewController {
         if let id = segue.identifier {
             switch id {
             case "investigationSegue":
-                if let controller = segue.destination as? UITableViewController {
-                    controller.popoverPresentationController!.delegate = self
-                    controller.preferredContentSize = CGSize(width: 300, height: 300)
-                    
-                    controller.popoverPresentationController?.sourceView = self.questionButton;
-                    controller.popoverPresentationController?.sourceRect = self.questionButton.bounds;
-                }
+                if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? InvestigationViewTableViewController {
                 
-                //fixIOS9PopOverAnchor(segue: segue)
+                    uinc.popoverPresentationController!.delegate = self
+                    //controller.preferredContentSize = CGSize(width: 300, height: 300)
+                    
+                    uinc.popoverPresentationController?.sourceView = self.questionButton;
+                    uinc.popoverPresentationController?.sourceRect = self.questionButton.bounds;
+                }
                 break
             case "imageSegue":
                 if let ivc = segue.destination as? ImageViewController, let tap = sender as? UIGestureRecognizer{
@@ -151,6 +193,24 @@ class InvestigationsViewController: UIViewController {
         }
     }
     
+    @IBAction func unwindToInvestigationsChooseExperiment(_ sender: UIStoryboardSegue) {
+        
+        if let itc = sender.source as? InvestigationViewTableViewController {            
+            if let experiment = itc.experiment, let id = experiment.id {
+                self.experimentId = id
+                
+                for im in images {
+                    im.image = nil
+                    im.backgroundColor = #colorLiteral(red: 0.8129653335, green: 0.8709804416, blue: 0.9280658364, alpha: 1)
+                }
+                
+                self.prepareNotifications(withExperimentId: id)
+                //self.update(withExperiment: experiment)
+            }
+        }
+    }
+
+    
     @IBAction func unwindToEvidenceDeleteSpecies(_ sender: UIStoryboardSegue) {
         
         if let imageController = sender.source as? ImageViewController {
@@ -179,8 +239,9 @@ extension InvestigationsViewController: UIPopoverPresentationControllerDelegate 
     }
     
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-        if let ivc = popoverPresentationController.presentedViewController as? InvestigationViewTableViewController, let experiment = ivc.experiment {
-            self.experiment = ivc.experiment
+        if let ivc = popoverPresentationController.presentedViewController as? InvestigationViewTableViewController, let experiment = ivc.experiment, let id = experiment.id {
+            self.experiment = experiment
+            self.experimentId = id
             self.selectedExperimentIndex = ivc.selectedExperimentIndex
             
             
@@ -189,7 +250,8 @@ extension InvestigationsViewController: UIPopoverPresentationControllerDelegate 
                 im.backgroundColor = #colorLiteral(red: 0.8129653335, green: 0.8709804416, blue: 0.9280658364, alpha: 1)
             }
             
-            self.update(withExperiment: experiment)
+            self.prepareNotifications(withExperimentId: id)
+            //self.update(withExperiment: experiment)
         }
     }
     

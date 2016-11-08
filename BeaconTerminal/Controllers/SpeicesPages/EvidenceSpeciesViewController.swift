@@ -16,11 +16,14 @@ import Haneke
 
 class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDelegate, NVActivityIndicatorViewable {
     
+    var index: Int?
+    var groupIndex: Int?
     var fromSpeciesIndex: Int?
     var toSpeciesIndex: Int?
     var relationshipType: RelationshipType?
     var relationship: Relationship?
     var experiment: Experiment?
+    
 
     @IBOutlet weak var topTabbar: ObservationsSegmentedControl!
     @IBOutlet var containerViews: [UIView]!
@@ -281,6 +284,7 @@ class EvidenceSpeciesViewController: UIViewController, UINavigationControllerDel
         if let id = segue.identifier {
             switch id {
             case "embedInvestgationsSegue":
+                realmDataController.fetchExperiments()
                 if let ivc = segue.destination as? InvestigationsViewController, let relationship = self.relationship {
                     ivc.relationship = relationship
                 }

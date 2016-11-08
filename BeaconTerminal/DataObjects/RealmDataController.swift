@@ -96,6 +96,11 @@ class RealmDataController {
         }
     }
     
+    // MARK: Refresh experiments
+    
+    func fetchExperiments() {
+        self.queryNutella(withType: .getExperiments)
+    }
     
     // MARK: General Nutella queries
     
@@ -374,6 +379,10 @@ class RealmDataController {
                 
                 if let question = item["question"].string {
                     experiment.question = question
+                }
+                
+                if let reasoning = item["reasoning"].string {
+                    experiment.reasoning = reasoning
                 }
                 
                 if let results = item["results"].string {

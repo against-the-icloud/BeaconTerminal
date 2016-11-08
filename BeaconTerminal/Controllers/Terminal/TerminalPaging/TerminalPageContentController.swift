@@ -20,6 +20,7 @@ class TerminalPageContentController: UIViewController {
     var groupIndex: Int?
     var index: Int?
     var relationship: Relationship?
+   
     
     var relationshipType: RelationshipType?
 
@@ -29,6 +30,7 @@ class TerminalPageContentController: UIViewController {
     var attachments = [String]()
     var tags = [Int]()
     
+    @IBOutlet weak var investgationsView: UIImageView!
     @IBOutlet var images: [UIImageView]!
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var fromSpeciesImageView: UIImageView!
@@ -36,6 +38,7 @@ class TerminalPageContentController: UIViewController {
     @IBOutlet weak var toSpeciesImageView: UIImageView!
     @IBOutlet weak var groupIndexLabel: UILabel!
     
+    @IBOutlet weak var investigationNoteBox: UITextView!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -96,6 +99,13 @@ class TerminalPageContentController: UIViewController {
                     }
                 }
             }
+            
+            if let experimentId = relationship.experimentId {
+                updateInvestigation(withExperimentId: experimentId)
+                investgationsView.isHidden = false
+            } else {
+                investgationsView.isHidden = true
+            }
 
         } else if let speciesPreference = self.speciesPreference {
             
@@ -137,6 +147,34 @@ class TerminalPageContentController: UIViewController {
                 
             }
 
+        }
+    }
+    
+    func updateInvestigation(withExperimentId experimentId: String) {
+        if let experiment = realmDataController.getRealm().experimentsWithId(withId: experimentId) {
+            var noteText = ""
+            
+            if let question = experiment.question {
+                noteText.append("\nQuestion:\n\n\(question)\n")
+            }
+            
+            if let manipulations = experiment.manipulations {
+                noteText.append("\nManipulation(s):\n\n\(manipulations)\n")
+            }
+            
+            if let reasoning = experiment.reasoning {
+                noteText.append("\nReasoning:\n\n\(reasoning)\n")
+            }
+            
+            if let results = experiment.results {
+                noteText.append("\nResults:\n\n\(results)\n")
+            }
+            
+            if let conclusions = experiment.conclusions {
+                noteText.append("\nConclusions:\n\n\(conclusions)\n")
+            }
+            
+            investigationNoteBox.text = noteText
         }
     }
     

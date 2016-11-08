@@ -2161,7 +2161,7 @@
                                                                 <rect key="frame" x="0.0" y="484" width="594" height="147"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="z71-zH-5pg" userLabel="ButtonStackView">
-                                                                        <rect key="frame" x="227" y="43.5" width="140" height="60"/>
+                                                                        <rect key="frame" x="227" y="44" width="140" height="60"/>
                                                                         <subviews>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggZ-ye-N7j" userLabel="PhotoLibPhoto" customClass="FabButton" customModule="Material">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -2419,7 +2419,7 @@
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                         <connections>
-                                                                            <segue destination="9hg-ij-h05" kind="popoverPresentation" identifier="investigationSegue" popoverAnchorView="my7-xB-ykt" id="zKZ-5O-aJ9">
+                                                                            <segue destination="jhk-ev-wqZ" kind="popoverPresentation" identifier="investigationSegue" popoverAnchorView="my7-xB-ykt" id="iCf-MR-QRz">
                                                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                                                             </segue>
                                                                         </connections>
@@ -2625,24 +2625,24 @@
             </objects>
             <point key="canvasLocation" x="2411" y="3056"/>
         </scene>
-        <!--Investigation View Table View Controller-->
+        <!--QUESTIONS-->
         <scene sceneID="ahV-is-jjx">
             <objects>
-                <tableViewController id="9hg-ij-h05" customClass="InvestigationViewTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="investigationViewTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9hg-ij-h05" customClass="InvestigationViewTableViewController" customModule="BeaconTerminal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5SQ-oq-vhc">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                        <rect key="frame" x="0.0" y="44" width="350" height="362"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="investigationCell" textLabel="J6I-gf-L7E" style="IBUITableViewCellStyleDefault" id="q9L-ST-z4b">
-                                <rect key="frame" x="0.0" y="28" width="300" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="350" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q9L-ST-z4b" id="3bG-3y-TID">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="350" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J6I-gf-L7E">
-                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -2657,16 +2657,90 @@
                             <outlet property="delegate" destination="9hg-ij-h05" id="X3H-pf-5M6"/>
                         </connections>
                     </tableView>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gSj-Rh-bgN"/>
+                        <barButtonItem systemItem="done" id="UM1-LF-GwE">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="doneAction:" destination="9hg-ij-h05" id="cNg-Ax-VGo"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="QUESTIONS" id="dJF-cY-1rX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="BAh-Az-yCz">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="refreshAction:" destination="9hg-ij-h05" id="Dbc-mU-1rg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="300"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
+                    <connections>
+                        <outlet property="doneButton" destination="UM1-LF-GwE" id="zXj-xO-9Fz"/>
+                        <segue destination="Raq-Qx-PaD" kind="unwind" identifier="unwindToInvestigations" unwindAction="unwindToInvestigationsChooseExperiment:" id="iRa-bg-Lhb"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uO-Q6-z8D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Raq-Qx-PaD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2953" y="3171"/>
+            <point key="canvasLocation" x="2991" y="3210"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="V8b-6a-Cyx">
+            <objects>
+                <tableViewController id="maN-ZQ-MRm" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="SDM-4d-xqP">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fek-4G-Sgq">
+                                <rect key="frame" x="0.0" y="28" width="1366" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fek-4G-Sgq" id="Ldc-VJ-d7B">
+                                    <rect key="frame" x="0.0" y="0.0" width="1366" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="maN-ZQ-MRm" id="Cjs-uD-EBv"/>
+                            <outlet property="delegate" destination="maN-ZQ-MRm" id="g7Y-Ej-dGX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="ey6-m2-iia"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Hc-Uv-XdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4045" y="3113"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hqa-r8-wUn">
+            <objects>
+                <navigationController toolbarHidden="NO" id="jhk-ev-wqZ" sceneMemberID="viewController">
+                    <value key="contentSizeForViewInPopover" type="size" width="350" height="450"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="350" height="450"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="cl6-t6-Tur">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" id="fsl-rP-rwj">
+                        <rect key="frame" x="0.0" y="406" width="350" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="9hg-ij-h05" kind="relationship" relationship="rootViewController" id="b6N-pu-tNb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7mQ-ke-tig" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2816" y="3210"/>
         </scene>
     </scenes>
     <resources>
