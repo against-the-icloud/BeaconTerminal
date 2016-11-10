@@ -20,7 +20,13 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         super.viewDidLoad()
         
         // Create WKWebView in code, because IB cannot add a WKWebView directly
-        webView = WKWebView()
+        let preferences = WKPreferences()
+        preferences.javaScriptEnabled = true
+        preferences.javaScriptCanOpenWindowsAutomatically = true
+        let configuration = WKWebViewConfiguration()
+        configuration.preferences = preferences
+        
+        webView = WKWebView(frame:self.view.frame, configuration: configuration)
         view.addSubview(webView!)
       
         webView?.bindFrameToSuperviewBounds()
@@ -30,6 +36,15 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         webView?.uiDelegate = self
         webView?.navigationDelegate = self
         //loadURL()
+    }
+    
+    
+    func loadAddress() {
+        if self.src != nil {
+            guard let url = URL(string: src!) else {return}
+            let request = NSMutableURLRequest(url:url)
+            webView?.load(request as URLRequest)
+        }
     }
     
     func loadURL(withUrl src: String = "http://google.com") {
@@ -48,6 +63,72 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
             let request = NSMutableURLRequest(url:url)
             webView?.load(request as URLRequest)
         }
-       
     }
-}
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        LOG.debug("Did fail \(error)")
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        LOG.debug("Did did finish")
+
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.webView?.setNeedsLayout()
+    }
+    
+    
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping () -> Void) {
+        
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            completionHandler()
+        }))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (Bool) -> Void) {
+        
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alertController.modalPresentationStyle = .formSheet
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            completionHandler(true)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+            completionHandler(false)
+        }))
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (String?) -> Void) {
+        
+        let alertController = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
+        alertController.modalPresentationStyle = .formSheet
+        alertController.addTextField { (textField) in
+            textField.text = defaultText
+        }
+        
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            if let text = alertController.textFields?.first?.text {
+                completionHandler(text)
+            } else {
+                completionHandler(defaultText)
+            }
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
+            completionHandler(nil)
+        }))
+        
+        present(alertController, animated: true, completion: nil)
+    }}

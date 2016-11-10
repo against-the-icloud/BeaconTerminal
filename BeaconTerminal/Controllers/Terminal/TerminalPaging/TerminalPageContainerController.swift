@@ -224,19 +224,17 @@ class TerminalPageContainerController: UIPageViewController {
                     if let someRelationship = resultsArray[offsetIndex] as? Relationship, let speciesIndex = realmDataController.getRealm(withRealmType: RealmType.terminalDB).runtimeSpeciesIndex() {
                         
                         
-                        let speciesPageStoryboard = UIStoryboard(name: "SpeciesPages", bundle: nil)
-                        let speciesPageContentViewController = speciesPageStoryboard.instantiateViewController(withIdentifier: "evidenceSpeciesViewController") as! EvidenceSpeciesViewController
+                        let terminalPageStoryboard = UIStoryboard(name: "Terminal", bundle: nil)
+                        let terminalPageContentViewController = terminalPageStoryboard.instantiateViewController(withIdentifier: "terminalPageContentController") as! TerminalPageContentController
                         
-                        speciesPageContentViewController.index = index
+                        terminalPageContentViewController.index = index
                         
                         if let so = realmDataController.getRealm(withRealmType: RealmType.terminalDB).speciesObservations(withRelationshipId: someRelationship.id!) {
-                            speciesPageContentViewController.groupIndex = so.groupIndex
+                            terminalPageContentViewController.groupIndex = so.groupIndex
                         }
-                        speciesPageContentViewController.fromSpeciesIndex = speciesIndex
-                        speciesPageContentViewController.toSpeciesIndex = someRelationship.toSpecies?.index
-//                        speciesPageContentViewController.relationshipType = someRelationship.relationshipType
-                        speciesPageContentViewController.relationship = someRelationship
-                        return speciesPageContentViewController
+                        terminalPageContentViewController.fromSpeciesIndex = speciesIndex
+                        terminalPageContentViewController.relationship = someRelationship
+                        return terminalPageContentViewController
                     }
                     
                     
@@ -262,7 +260,6 @@ class TerminalPageContainerController: UIPageViewController {
         
         return nil
     }
-    
 //    func viewController(atIndex index: Int) -> UIViewController? {
 //        
 //        switch index {
@@ -359,7 +356,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
                 return self.viewController(atIndex: pageIndex)
             }
             
-        } else if let pageContent = viewController as? EvidenceSpeciesViewController {
+        } else if let pageContent = viewController as? TerminalPageContentController {
             pageIndex = pageContent.index!
             
             if (pageIndex == NSNotFound) {
@@ -392,7 +389,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
             if pageIndex >= 0 {
                 return self.viewController(atIndex: pageIndex)
             }
-        } else if let pageContent = viewController as? EvidenceSpeciesViewController {
+        } else if let pageContent = viewController as? TerminalPageContentController {
             pageIndex = pageContent.index!
             
             if (pageIndex == NSNotFound) {
@@ -406,7 +403,7 @@ extension TerminalPageContainerController: UIPageViewControllerDataSource, UIPag
                 
                 return self.viewController(atIndex: pageIndex)
             }
-        } 
+        }
         
         return nil
     }

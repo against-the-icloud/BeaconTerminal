@@ -120,6 +120,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                             webViewController.didMove(toParentViewController: self)
                             tabViews.append(webViewController.view)
                             tabControllers.append(webViewController)
+                            webViewController.loadAddress()
                         }
                     default:
                         print("")
@@ -424,7 +425,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     
                     tabView.fadeIn(toAlpha: 1.0) {_ in
                         if let wc = self.tabControllers[adjustedIndex] as? WebViewController {
-                            wc.reload()
+                            //wc.reload()
                         }
                     }
                 } else {
