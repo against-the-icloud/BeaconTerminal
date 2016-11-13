@@ -20,16 +20,14 @@ class TerminalPageContentController: UIViewController {
     var groupIndex: Int?
     var index: Int?
     var relationship: Relationship?
-   
-    
     var relationshipType: RelationshipType?
-
-
     var speciesPreference: SpeciesPreference?
 
     var attachments = [String]()
     var tags = [Int]()
     
+    @IBOutlet weak var fromSpeciesLabel: UILabel!
+    @IBOutlet weak var toSpeciesLabel: UILabel!
     @IBOutlet weak var investgationsView: UIImageView!
     @IBOutlet var images: [UIImageView]!
     @IBOutlet weak var noteTextView: UITextView!
@@ -37,8 +35,10 @@ class TerminalPageContentController: UIViewController {
     @IBOutlet weak var relationshipTypeLabel: UILabel!
     @IBOutlet weak var toSpeciesImageView: UIImageView!
     @IBOutlet weak var groupIndexLabel: UILabel!
+    @IBOutlet weak var topTabbar: ObservationsSegmentedControl!
     
-    @IBOutlet weak var investigationNoteBox: UITextView!
+    @IBOutlet weak var observationView: UIView!
+    @IBOutlet weak var investigationView: UIView!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -56,11 +56,16 @@ class TerminalPageContentController: UIViewController {
             im.tag = tag
         }
         
-        
+        topTabbar.initUI()
+        topTabbar.selectedSegmentIndex = 0
+        colorizeSelectedSegment()
         prepareTitlePanel()
     }
     
     func prepareTitlePanel() {
+        
+        toSpeciesLabel.text = ""
+        fromSpeciesLabel.text = ""
         
         if let groupIndex = self.groupIndex {
             groupIndexLabel.text = "TEAM \(groupIndex + 1)"
@@ -87,6 +92,15 @@ class TerminalPageContentController: UIViewController {
             
             noteTextView.text = relationship.note
             
+            if let fromSpecies = realmDataController.getRealm().speciesWithIndex(withIndex: fromSpeciesIndex) {
+                fromSpeciesLabel.text = fromSpecies.name
+            }
+            
+            if let toSpecies = realmDataController.getRealm().speciesWithIndex(withIndex: toSpeciesIndex) {
+                toSpeciesLabel.text = toSpecies.name
+            }
+            
+            
             if let attachments = relationship.attachments?.components(separatedBy: ",") {
                 self.attachments = attachments
                 
@@ -100,12 +114,12 @@ class TerminalPageContentController: UIViewController {
                 }
             }
             
-            if let experimentId = relationship.experimentId {
-                updateInvestigation(withExperimentId: experimentId)
-                investgationsView.isHidden = false
-            } else {
-                investgationsView.isHidden = true
-            }
+//            if relationship.experimentId != nil {
+//                //updateInvestigation(withExperimentId: experimentId)
+//                investgationsView.isHidden = false
+//            } else {
+//                investgationsView.isHidden = true
+//            }
 
         } else if let speciesPreference = self.speciesPreference {
             
@@ -116,6 +130,16 @@ class TerminalPageContentController: UIViewController {
             guard let habitatIndex = speciesPreference.habitat?.index else {
                 return
             }
+            
+            if let fromSpecies = realmDataController.getRealm().speciesWithIndex(withIndex: fromSpeciesIndex) {
+                fromSpeciesLabel.text = fromSpecies.name
+            }
+            
+            if let habitatName = speciesPreference.habitat?.name {
+                toSpeciesLabel.text = habitatName
+            }
+            
+            
             
             fromSpeciesImageView.image = RealmDataController.generateImageForSpecies(fromSpeciesIndex, isHighlighted: true)
             
@@ -150,37 +174,52 @@ class TerminalPageContentController: UIViewController {
         }
     }
     
-    func updateInvestigation(withExperimentId experimentId: String) {
-        if let experiment = realmDataController.getRealm().experimentsWithId(withId: experimentId) {
-            var noteText = ""
+    // MARK: Tab
+    
+    func colorizeSelectedSegment() {
+        let sortedViews = topTabbar.subviews.sorted( by: { $0.frame.origin.x < $1.frame.origin.x } )
+        
+        for (index, view) in sortedViews.enumerated() {
+            if index == 0 {
+                
+                view.backgroundColor = UIColor.white
+                
+                
+            } else {
+                
+                view.backgroundColor = #colorLiteral(red: 0.9467939734, green: 0.9468161464, blue: 0.9468042254, alpha: 1)
+                
+            }
+        }
+    }
+    @IBAction func changeTab(_ sender: UISegmentedControl) {
+        let selected =  sender.selectedSegmentIndex
+        
+        switch selected {
+        case 0:
+            observationView.isHidden = false
+            investigationView.isHidden = true
+        default:
             
-            if let question = experiment.question {
-                noteText.append("\nQuestion:\n\n\(question)\n")
+            if let tivc = self.childViewControllers[0] as? TerminalInvestigationPageController {
+                tivc.reloadInvestigations()
             }
             
-            if let manipulations = experiment.manipulations {
-                noteText.append("\nManipulation(s):\n\n\(manipulations)\n")
-            }
-            
-            if let reasoning = experiment.reasoning {
-                noteText.append("\nReasoning:\n\n\(reasoning)\n")
-            }
-            
-            if let results = experiment.results {
-                noteText.append("\nResults:\n\n\(results)\n")
-            }
-            
-            if let conclusions = experiment.conclusions {
-                noteText.append("\nConclusions:\n\n\(conclusions)\n")
-            }
-            
-            investigationNoteBox.text = noteText
+            observationView.isHidden = true
+            investigationView.isHidden = false
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier {
             switch id {
+            case "investigationTerminalSegue":
+                if let tivc = segue.destination as? TerminalInvestigationPageController {
+                    if let relationship = self.relationship, let experimentId =  relationship.experimentId {
+                            tivc.relationship = relationship
+                            tivc.experimentId = experimentId                    
+                    }
+                }
             case "imageSegue":
                 if let ivc = segue.destination as? ImageViewController, let tap = sender as? UIGestureRecognizer {
                     if let iv = tap.view as? UIImageView, let image = iv.image {

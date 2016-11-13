@@ -11,10 +11,10 @@ import UIKit
 import RealmSwift
 
 class InvestigationsViewController: UIViewController {
-  
-
+    
+    
     @IBOutlet weak var questionButton: UIButton!
-
+    
     @IBOutlet var images: [UIImageView]!
     @IBOutlet weak var noteTextView: UITextView!
     var selectedExperimentIndex = 0
@@ -43,7 +43,7 @@ class InvestigationsViewController: UIViewController {
         super.viewDidLoad()
         
         noteTextView.text = ""
-
+        
         for im in images {
             let tag = Randoms.randomInt()
             im.tag = tag
@@ -54,10 +54,10 @@ class InvestigationsViewController: UIViewController {
             
             self.prepareNotifications(withExperimentId: id)
             
-//            let r = realmDataController.getRealm()
-//            if let experiment = r.experimentsWithId(withId:id) {
-//                update(withExperiment: experiment)
-//            }
+            //            let r = realmDataController.getRealm()
+            //            if let experiment = r.experimentsWithId(withId:id) {
+            //                update(withExperiment: experiment)
+            //            }
         }
         
     }
@@ -65,28 +65,28 @@ class InvestigationsViewController: UIViewController {
     func prepareNotifications(withExperimentId experimentId: String) {
         
         experimentNotification = realmDataController.getRealm().objects(Experiment.self).filter("id = '\(experimentId)'").addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-                    
-                    guard let controller = self else { return }
-                    switch changes {
-                    case .initial(let experimentResults):
-                        
-                        if let exp = experimentResults.first {
-                          controller.update(withExperiment: exp)
-                        }
-                        break
-                    case .update(let experimentResults, let deletions, let insertions, let modifications):
-                        
-                        if let exp = experimentResults.first {
-                            controller.update(withExperiment: exp)
-                        }
-                        break
-                    case .error(let error):
-                        // An error occurred while opening the Realm file on the background worker thread
-                        fatalError("\(error)")
-                        break
-                    }
-                }
+            
+            guard let controller = self else { return }
+            switch changes {
+            case .initial(let experimentResults):
                 
+                if let exp = experimentResults.first {
+                    controller.update(withExperiment: exp)
+                }
+                break
+            case .update(let experimentResults, let deletions, let insertions, let modifications):
+                
+                if let exp = experimentResults.first {
+                    controller.update(withExperiment: exp)
+                }
+                break
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+        }
+        
         
         
     }
@@ -101,7 +101,7 @@ class InvestigationsViewController: UIViewController {
             try! r.write {
                 relationship.experimentId = id
                 relationship.experiment = experiment
-
+                
                 r.add(relationship, update: true)
             }
             
@@ -109,7 +109,7 @@ class InvestigationsViewController: UIViewController {
         
         if let experiment = self.experiment {
             
-            if let question = experiment.question {                
+            if let question = experiment.question {
                 self.questionButton.setTitle(question, for: [])
             }
             
@@ -119,10 +119,13 @@ class InvestigationsViewController: UIViewController {
                 
                 for (index, path) in self.attachments.enumerated() {
                     
-                    if let url = URL(string: path) {
-                        self.images[index].hnk_setImageFromURL(url)
-                        self.images[index].isUserInteractionEnabled = true
-                        self.images[index].backgroundColor = UIColor.clear
+                    if !path.contains("undefined") {
+                        
+                        if let url = URL(string: path) {
+                            self.images[index].hnk_setImageFromURL(url)
+                            self.images[index].isUserInteractionEnabled = true
+                            self.images[index].backgroundColor = UIColor.clear
+                        }
                     }
                 }
                 
@@ -156,7 +159,7 @@ class InvestigationsViewController: UIViewController {
             switch id {
             case "investigationSegue":
                 if let uinc = segue.destination as? UINavigationController, let tcvc = uinc.viewControllers.first as? InvestigationViewTableViewController {
-                
+                    
                     uinc.popoverPresentationController!.delegate = self
                     //controller.preferredContentSize = CGSize(width: 300, height: 300)
                     
@@ -195,7 +198,7 @@ class InvestigationsViewController: UIViewController {
     
     @IBAction func unwindToInvestigationsChooseExperiment(_ sender: UIStoryboardSegue) {
         
-        if let itc = sender.source as? InvestigationViewTableViewController {            
+        if let itc = sender.source as? InvestigationViewTableViewController {
             if let experiment = itc.experiment, let id = experiment.id {
                 self.experimentId = id
                 
@@ -209,7 +212,7 @@ class InvestigationsViewController: UIViewController {
             }
         }
     }
-
+    
     
     @IBAction func unwindToEvidenceDeleteSpecies(_ sender: UIStoryboardSegue) {
         

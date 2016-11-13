@@ -87,6 +87,7 @@
 		70DDD8D01D1639C200E3EA10 /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */; };
 		70E47EA81D32C5D3003CD6E2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */; };
 		70ECDCE91D7DB76F00C07CCA /* EvidenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */; };
+		70ED9E1E1DD4E2D100800D77 /* TerminalInvestigationPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70ED9E1D1DD4E2D100800D77 /* TerminalInvestigationPageController.swift */; };
 		70EF4FFA1CE6135200AC8AD5 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF4FF91CE6135200AC8AD5 /* Models.swift */; };
 		70F1B76E1D8C96200020E757 /* DefaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B76D1D8C96200020E757 /* DefaultViewController.swift */; };
 		70F1B7701D8C9B790020E757 /* LoginConditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */; };
@@ -223,6 +224,7 @@
 		70DDD8CF1D1639C200E3EA10 /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppNavigationController.swift; path = ../AppNavigationController.swift; sourceTree = "<group>"; };
 		70E47EA71D32C5D3003CD6E2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		70ECDCE81D7DB76F00C07CCA /* EvidenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvidenceViewController.swift; path = Terminal/EvidenceViewController.swift; sourceTree = "<group>"; };
+		70ED9E1D1DD4E2D100800D77 /* TerminalInvestigationPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TerminalInvestigationPageController.swift; path = Terminal/TerminalPaging/TerminalInvestigationPageController.swift; sourceTree = "<group>"; };
 		70EF4FF91CE6135200AC8AD5 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		70F1B76D1D8C96200020E757 /* DefaultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultViewController.swift; path = Login/DefaultViewController.swift; sourceTree = "<group>"; };
 		70F1B76F1D8C9B790020E757 /* LoginConditionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginConditionViewController.swift; path = Login/LoginConditionViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			children = (
 				7068B05A1DBD958100B0F790 /* TerminalPageContainerController.swift */,
 				7068B05C1DBD95AD00B0F790 /* TerminalPageContentController.swift */,
+				70ED9E1D1DD4E2D100800D77 /* TerminalInvestigationPageController.swift */,
 			);
 			name = TerminalPaging;
 			sourceTree = "<group>";
@@ -866,6 +869,7 @@
 				704288EB1D85EDB50020A5E6 /* ChooseSpeciesHeader.swift in Sources */,
 				70389A0B1D5E6ECE005DF200 /* BadgeUtil.swift in Sources */,
 				70F1B7701D8C9B790020E757 /* LoginConditionViewController.swift in Sources */,
+				70ED9E1E1DD4E2D100800D77 /* TerminalInvestigationPageController.swift in Sources */,
 				7031DB201D6610AE000DCC61 /* LoginSpeciesCell.swift in Sources */,
 				70B017E31DA5CE6C00B233AA /* CanvasView.swift in Sources */,
 				706723AB1D99A45D008B9DD1 /* ImmediateBeaconDetector.swift in Sources */,

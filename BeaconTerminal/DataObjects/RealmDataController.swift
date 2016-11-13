@@ -194,20 +194,32 @@ class RealmDataController {
                 
                 DispatchQueue.main.async(execute: block)
             }
-//        case .questions:
-//            if let nutella = nutella {
-//                let block = DispatchWorkItem {
-//                    
-//                    var dict = [String:String]()
-//                    dict[""] = ""
-//                    let json = JSON(dict)
-//                    let jsonObject: Any = json.object
-//                    nutella.net.asyncRequest("get_questions", message: jsonObject as AnyObject, requestName: "get_questions")
-//                }
-//                
-//                DispatchQueue.main.async(execute: block)
-//            }
-
+        case .getAllExperiments:
+            if let nutella = nutella {
+                let block = DispatchWorkItem {
+                    var dict = [String:String]()
+                    dict[""] = ""
+                    let json = JSON(dict)
+                    let jsonObject: Any = json.object
+                    nutella.net.asyncRequest("get_all_experiments", message: jsonObject as AnyObject, requestName: "get_all_experiments")
+                }
+                
+                DispatchQueue.main.async(execute: block)
+            }
+            //        case .questions:
+            //            if let nutella = nutella {
+            //                let block = DispatchWorkItem {
+            //
+            //                    var dict = [String:String]()
+            //                    dict[""] = ""
+            //                    let json = JSON(dict)
+            //                    let jsonObject: Any = json.object
+            //                    nutella.net.asyncRequest("get_questions", message: jsonObject as AnyObject, requestName: "get_questions")
+            //                }
+            //
+            //                DispatchQueue.main.async(execute: block)
+            //            }
+            
         default:
             break
         }
@@ -246,7 +258,7 @@ class RealmDataController {
                     DispatchQueue.main.async(execute: block)
                 }
             }
-               default:
+        default:
             break
         }
     }
@@ -316,7 +328,7 @@ class RealmDataController {
                 UserDefaults.standard.synchronize()
                 
                 for c in channelNames {
-                  
+                    
                     if let id = c["id"],
                         let name = c["name"], let channel = getRealm().channel(withId: id) {
                         try! getRealm().write {
@@ -329,10 +341,10 @@ class RealmDataController {
                 return
             case .getExperiments:
                 handleExperiments(withMessage: message)
+            case .getAllExperiments:
+                handleAllExperiments(withMessage: message)
             case .speciesNames:
                 parseModelSpeciesNames(withMessage: message)
-                return
-            case .getExperiments:
                 return
             default: break
             }
@@ -355,69 +367,115 @@ class RealmDataController {
         }
     }
     
+    // MARK: Experiments
+    
+    func handleAllExperiments(withMessage message: Any) {
+        let json = JSON(message)
+        guard let ecosystems = json["experiments"].array else {
+            return
+        }
+        
+        
+        
+        //for each ecosystem
+        for (_,ecosystem) in ecosystems.enumerated() {
+            
+            //for each investigation/experiment
+            
+            if let experiments = ecosystem.array {
+                
+                for(_, experiment) in experiments.enumerated()  {
+                    
+                    if let versions = experiment.array {
+                        
+                        if let lastVersion = versions.last {
+                            createExperiment(withJSON: lastVersion)
+
+                        }
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    
     func handleExperiments(withMessage message: Any) {
         let json = JSON(message)
         guard let all = json.array else {
             return
         }
-
+        
+        
+        
+        for (_,item) in all.enumerated() {
+            
+            createExperiment(withJSON: item)
+        }
+        
+        
+    }
+    
+    func createExperiment(withJSON item: JSON) {
         try! getRealm().write {
             
-
-            for (_,item) in all.enumerated() {
-                
-                let experiment = Experiment()
-
-                //strings
-                if let conclusions = item["conclusions"].string {
-                    experiment.conclusions = conclusions
-                }
-                
-                if let manipulations = item["manipulations"].string {
-                    experiment.manipulations = manipulations
-                }
-                
-                if let question = item["question"].string {
-                    experiment.question = question
-                }
-                
-                if let reasoning = item["reasoning"].string {
-                    experiment.reasoning = reasoning
-                }
-                
-                if let results = item["results"].string {
-                    experiment.results = results
-                }
-                
-                if let ecosystemIndex = item["ecosystem"].int, let ecosystem = getRealm().ecosystem(withIndex: ecosystemIndex) {
-                    experiment.ecosystem = ecosystem
-                } else if let ecosystemIndex = item["ecosystem"].string, let ecosystem = getRealm().ecosystem(withIndex: Int(ecosystemIndex)!) {
-                    experiment.ecosystem = ecosystem
-                }
-                
-                if let figures = item["figures"].array {
-                    
-                    var attachments = [String]()
-                    
-                    for(_,figure) in figures.enumerated() {
-                        
-                        if let attachment = figure.string {
-                            attachments.append(attachment)
-                        }
-                    }
-                    
-                    experiment.attachments = attachments.joined(separator: ",")
-                }
-                
-                if let index = experiment.ecosystem?.index, let question = experiment.question {
-                    let id = "\(index)-\(question)"
-                    experiment.id = id
-                }                
-                getRealm().add(experiment, update: true)
+            let experiment = Experiment()
+            
+            //strings
+            if let conclusions = item["conclusions"].string {
+                experiment.conclusions = conclusions
             }
             
+            if let manipulations = item["manipulations"].string {
+                experiment.manipulations = manipulations
+            }
+            
+            if let question = item["question"].string {
+                experiment.question = question
+            }
+            
+            if let reasoning = item["reasoning"].string {
+                experiment.reasoning = reasoning
+            }
+            
+            if let results = item["results"].string {
+                experiment.results = results
+            }
+            
+            if let ecosystemIndex = item["ecosystem"].int, let ecosystem = getRealm().ecosystem(withIndex: ecosystemIndex) {
+                experiment.ecosystem = ecosystem
+            } else if let ecosystemIndex = item["ecosystem"].string, let ecosystem = getRealm().ecosystem(withIndex: Int(ecosystemIndex)!) {
+                experiment.ecosystem = ecosystem
+            }
+            
+            if let figures = item["figures"].array {
+                
+                var attachments = [String]()
+                
+                for(_,figure) in figures.enumerated() {
+                    
+                    if let attachment = figure.string {
+                        attachments.append(attachment)
+                    }
+                }
+                
+                experiment.attachments = attachments.joined(separator: ",")
+            }
+            
+            if let index = experiment.ecosystem?.index, let question = experiment.question {
+                let id = "\(index)-\(question)"
+                experiment.id = id
+            }
+            getRealm().add(experiment, update: true)
         }
+        
     }
+    
     
     func handleChannelNames(withMessage message: Any) -> [[String:String]] {
         var allChannelNames = [[String:String]]()
@@ -435,7 +493,7 @@ class RealmDataController {
             if let name = item["name"].string {
                 channel["id"] = name
             }
-
+            
             if let pName = item["printName"].string {
                 channel["name"] = pName
             }
@@ -450,8 +508,8 @@ class RealmDataController {
     //src="http://ltg.evl.uic.edu:57880/wallcology/6BM/runs/species-notes/index.html?broker=ltg.evl.uic.edu&app_id=wallcology&run_id=6BM&TYPE=group&INSTANCE=2"
     func handleChannelList(withMessage message: Any) -> [[String:String]] {
         
-       //
-
+        //
+        
         
         var allChannels = [[String:String]]()
         //var channels = [String:String]()
@@ -460,7 +518,7 @@ class RealmDataController {
         guard let all = json.array else {
             //no speciesIndex
             return allChannels
-
+            
         }
         
         
@@ -473,12 +531,12 @@ class RealmDataController {
                 channel["name"] = name
                 
                 if let sectionName = UserDefaults.standard.value(forKey: "sectionName") as? String, let groupIndex = UserDefaults.standard.value(forKey: "groupIndex") as? Int {
-                
-                
-                let channelUrl = "http://\(CURRENT_HOST):57880/wallcology/\(sectionName)/runs/\(name)/index.html?broker=\(CURRENT_HOST)&app_id=wallcology&run_id=\(sectionName)&TYPE=group&INSTANCE=\(groupIndex)"
+                    
+                    
+                    let channelUrl = "http://\(CURRENT_HOST):57880/wallcology/\(sectionName)/runs/\(name)/index.html?broker=\(CURRENT_HOST)&app_id=wallcology&run_id=\(sectionName)&TYPE=group&INSTANCE=\(groupIndex)"
                     
                     channel["url"] = channelUrl
-                
+                    
                 }
                 
                 allChannels.append(channel)
@@ -1048,7 +1106,7 @@ class RealmDataController {
     }
     
     // MARK: LOG EVENT
-
+    
     
     // MARK: UPDATE RUNTIME
     
@@ -1110,7 +1168,7 @@ class RealmDataController {
                 
             } else {
                 let channel = Channel()
-
+                
                 if let i = id {
                     channel.id = i
                 }
@@ -1124,8 +1182,8 @@ class RealmDataController {
                 
                 getRealm().add(channel, update: false)
             }
-        
-         
+            
+            
             
         }
     }
@@ -1179,7 +1237,7 @@ class RealmDataController {
             let foundRelationship = getRealm(withRealmType: realmType).relationship(withSpeciesObservation: foundSO, withRelationshipType: relationship.relationshipType, forSpeciesIndex: toSpecies.index) {
             
             
-              LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"delete_relationship","relationshipId":relationship.id!,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":toSpecies.index,"sectionName":self.getRealm(withRealmType: realmType).runtimeSectionName()!])
+            LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"delete_relationship","relationshipId":relationship.id!,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":toSpecies.index,"sectionName":self.getRealm(withRealmType: realmType).runtimeSectionName()!])
             
             
             try! getRealm(withRealmType: realmType).write {
@@ -1218,7 +1276,7 @@ class RealmDataController {
         } else {
             speciesPreference.generateId()
             
-             id = speciesPreference.id!
+            id = speciesPreference.id!
             try! r.write {
                 r.add(speciesPreference, update: true)
                 foundSO.speciesPreferences.append(speciesPreference)
@@ -1227,7 +1285,7 @@ class RealmDataController {
             }
         }
         
-           LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"add_preference","preferenceId":id,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"habitatIndex":speciesPreference.habitat!.index,"sectionName":r.runtimeSectionName()!])
+        LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"add_preference","preferenceId":id,"soId":foundSO.id!,"groupIndex":foundSO.groupIndex,"habitatIndex":speciesPreference.habitat!.index,"sectionName":r.runtimeSectionName()!])
         
     }
     
@@ -1246,7 +1304,7 @@ class RealmDataController {
             return
         }
         
-     
+        
         
         var id = ""
         
@@ -1263,7 +1321,7 @@ class RealmDataController {
         } else {
             relationship.generateId()
             id = relationship.id!
-
+            
             try! r.write {
                 r.add(relationship, update: true)
                 foundSO.relationships.append(relationship)
@@ -1272,7 +1330,7 @@ class RealmDataController {
             }
         }
         
-          LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"add_relationship","relationshipId":id,"observationId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":relationship.toSpecies!.index,"sectionName":r.runtimeSectionName()!])
+        LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"add_relationship","relationshipId":id,"observationId":foundSO.id!,"groupIndex":foundSO.groupIndex,"speciesIndex":relationship.toSpecies!.index,"sectionName":r.runtimeSectionName()!])
     }
     
     func generateTestData(withRealmType realmType: RealmType = RealmType.defaultDB) {
@@ -1873,7 +1931,7 @@ extension RealmDataController {
     // MARK: Reporting Metrics
     
     func saveMetric(withEventName eventName: String, withProperties properties: [String:String]) {
-    
+        
     }
     
     func saveMetric(withEventName eventName: String) {

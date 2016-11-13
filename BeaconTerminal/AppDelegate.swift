@@ -18,6 +18,7 @@ let HOST = "local"
 let REMOTE = "ltg.evl.uic.edu"
 let LOCAL = "127.0.0.1"
 let LOCAL_IP = "10.0.1.6"
+let LOCAL_IP2 = "192.168.1.154"
 //let LOCAL_IP = "131.193.79.203"
 var CURRENT_HOST = REMOTE
 var SECTION_NAME = "default"
@@ -184,6 +185,7 @@ enum NutellaChannelType: String {
     case channelList = "channel_list"
     case channelNames = "channel_names"
     case getExperiments = "get_experiments"
+    case getAllExperiments = "get_all_experiments"
 }
 
 enum NutellaQueryType: String {
@@ -196,7 +198,7 @@ enum NutellaQueryType: String {
     case currentActivityAndRoom = "currentActivityAndRoom"
     case speciesNames = "speciesNames"
     case getExperiments = "get_experiments"
-
+    case getAllExperiments = "get_all_experiments"
 }
 
 
@@ -484,7 +486,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 realmDataController.queryNutella(withType: .speciesNames)
                 realmDataController.queryNutellaAllNotes(withType: .species, withRealmType: RealmType.terminalDB)
                 realmDataController.queryNutella(withType: .currentChannelNames)
-                realmDataController.queryNutella(withType: .getExperiments)
+                realmDataController.queryNutella(withType: .getAllExperiments)
             default: break
             }
         }
