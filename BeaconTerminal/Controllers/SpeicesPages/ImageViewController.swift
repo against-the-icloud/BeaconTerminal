@@ -12,6 +12,7 @@ import UIKit
 enum ImageControllerSourceType {
     case preferences
     case species
+    case investigation
 }
 
 class ImageViewController: UIViewController {
@@ -46,6 +47,8 @@ class ImageViewController: UIViewController {
             switch st {
             case .preferences:
                 break
+            case .investigation:
+                self.performSegue(withIdentifier: "unwindToEvidenceDeleteInvestigationSegue", sender: self)
             default:
                 self.performSegue(withIdentifier: "unwindToEvidenceDeleteSpeciesWithSegue", sender: self)
             }

@@ -1289,6 +1289,40 @@ class RealmDataController {
         
     }
     
+    func add(withExperiment experiment: Experiment,withRealmType realmType: RealmType = RealmType.defaultDB) {
+        //get all the observations for the context
+        
+        let r = getRealm(withRealmType: realmType)
+        
+   
+            
+            try! r.write {
+                r.add(experiment, update: true)
+            }
+    
+        var groupIndex = -1
+        var experimentId = "null"
+        
+        if let id = experiment.id {
+            experimentId = id
+        }
+        
+        if let gi = r.runtime()?.currentGroupIndex.value {
+            groupIndex = gi
+        }
+        
+        LOG.info( ["condition":getAppDelegate().checkApplicationState(), "activity":realmDataController.getActivity(),"timestamp": Date(),"event":"edit_experiment","experimentId":experimentId,"groupIndex":groupIndex,"sectionName":r.runtimeSectionName()!])
+        
+        
+        
+        exportExperiment(withExperiment: experiment)
+        
+        
+        
+        
+    }
+    
+    
     func add(withRelationship relationship: Relationship, withSpeciesIndex speciesIndex: Int, withRealmType realmType: RealmType = RealmType.defaultDB) {
         //get all the observations for the context
         
@@ -1343,7 +1377,39 @@ class RealmDataController {
         }
     }
     
+//    { ecosystem: 0,
+//    timestamp: 1479090865455,
+//    question: 'question 3',
+//    manipulations: 'lol',
+//    reasoning: 'lol',
+//    results: 'what ',
+//    figures:
+//    [ 'http://ltg.evl.uic.edu:57882/b06d9cffe1b074adf2219a7c787f1d88.png',
+//    'http://ltg.evl.uic.edu:57882/4928e36c1c00217e0264963de9e39bfb.png',
+//    'http://ltg.evl.uic.edu:57882/df52fb360c99397b4fbadb6d8a1fad9d.png' ],
+//    conclusions: 'what' }
     
+    func exportExperiment(withExperiment experiment:Experiment) {
+        
+        if let ecosystemIndex = experiment.ecosystem?.index {
+            
+            let figures = experiment.attachments?.components(separatedBy: ",") ?? []
+            let message = ["question":experiment.question!, "manipulations":experiment.manipulations!,"timestamp": Date(),"reasoning":experiment.reasoning!,"ecosystem":ecosystemIndex,"results":experiment.results!,"conclusions":experiment.conclusions!,"figures":figures] as [String : Any]
+            LOG.info("sending \(message)")
+            
+            if nutella != nil {
+                let block = DispatchWorkItem {
+                    let json = JSON(message)
+                    let jsonObject: Any = json.object
+                    nutella?.net.asyncRequest("update_experiment", message: jsonObject as AnyObject, requestName: "update_experiment")
+                }
+                DispatchQueue.main.async(execute: block)
+            }
+        }
+        
+        
+    
+    }
     
     func exportSection(withName name: String, andFilePath filePath: String, withRealmType realmType: RealmType = RealmType.defaultDB) {
         
@@ -1920,11 +1986,20 @@ extension RealmDataController {
         }
     }
     
+    func deleteExperiments(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        let r = getRealm(withRealmType: realmType)
+        
+        try! r.write {
+            r.delete(r.objects(Experiment.self))
+        }
+    }
+    
     func deleteAllUserData(withRealmType realmType: RealmType = RealmType.defaultDB) {
         
         let r = getRealm(withRealmType: realmType)
         
         try! r.write {
+            r.delete(r.objects(Experiment.self))
             r.delete(r.objects(Channel.self))
             r.delete(r.objects(Runtime.self))
             r.delete(r.objects(Section.self))

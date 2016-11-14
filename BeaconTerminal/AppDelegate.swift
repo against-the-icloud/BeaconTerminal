@@ -583,6 +583,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch checkApplicationState() {
         case .placeGroup:
             setDefaultRealm(withSectionName: sectionName)
+             realmDataController.deleteExperiments()
             realmDataController.deleteChannels()
             checkInitialization()
             let groupIndex = UserDefaults.standard.integer(forKey: "groupIndex")
@@ -590,6 +591,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         case .placeTerminal:
             setTerminalRealm(withSectionName: sectionName)
+            
             realmDataController.deleteAllConfigurationAndGroups(withRealmType: RealmType.terminalDB)
             realmDataController.deleteAllUserData(withRealmType: RealmType.terminalDB)
             //re-up
@@ -601,6 +603,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .objectGroup, .cloudGroup:
             setDefaultRealm(withSectionName: sectionName)
             //delete channels
+            realmDataController.deleteExperiments()
             realmDataController.deleteChannels()
             checkInitialization()
             let groupIndex = defaults.integer(forKey: "groupIndex")

@@ -86,9 +86,6 @@ class InvestigationsViewController: UIViewController {
                 break
             }
         }
-        
-        
-        
     }
     
     func update(withExperiment experiment: Experiment) {
@@ -257,5 +254,4 @@ extension InvestigationsViewController: UIPopoverPresentationControllerDelegate 
             //self.update(withExperiment: experiment)
         }
     }
-    
 }

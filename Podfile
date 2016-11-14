@@ -4,8 +4,8 @@ use_frameworks!
 target 'BeaconTerminal' do
     
     #ui pods
-    #pod 'Material'
-    pod 'Material', :git => 'https://github.com/CosmicMind/Material.git', :branch => 'master'
+    pod 'Material'
+    #pod 'Material', :git => 'https://github.com/CosmicMind/Material.git', :branch => 'master'
     #pod 'Realm', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
 	#pod 'RealmSwift', git: 'git@github.com:realm/realm-cocoa.git', branch: 'master', :submodules => true
     
@@ -18,12 +18,14 @@ target 'BeaconTerminal' do
     
     #state machinepod
     pod 'Transporter'
-    pod 'EstimoteSDK', :git => 'https://github.com/Estimote/iOS-SDK.git', :branch => 'master'
+    pod 'EstimoteSDK'
+    #pod 'EstimoteSDK', :git => 'https://github.com/Estimote/iOS-SDK.git', :branch => 'master'
     pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :branch => 'feature/swift-3'
     pod 'XCGLogger', '~> 4.0.0'
 
     #upload
-    pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift', :branch => 'master'
+    pod 'CryptoSwift'
+    #pod 'CryptoSwift', :git => 'https://github.com/krzyzanowskim/CryptoSwift', :branch => 'master'
     pod 'Alamofire', '~> 4.0'
 end
 

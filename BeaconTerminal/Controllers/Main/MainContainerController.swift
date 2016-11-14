@@ -106,7 +106,14 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     switch index {
                     case 1...10:
                         topTabbar.insertSegment(withTitle: id, at: adj_index, animated: true)
-                        createWebTab(WithId: id, withUrl: url)
+                        
+                        createWebTab(withId: id, withUrl: url)
+//                        
+//                        if id.lowercased() == "experiments" {
+//                            createExperimentsTab(withId: id)
+//                        } else {
+//                            createWebTab(withId: id, withUrl: url)
+//                        }
                     default:
                         print("")
                     }
@@ -115,7 +122,26 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
     }
     
-    func createWebTab(WithId id: String, withUrl url:String) {
+    func createExperimentsTab(withId id: String) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        realmDataController.updateChannel(withId: id, url: "", name: "")
+        
+        if let investigationController = storyboard.instantiateViewController(withIdentifier: "experimentsViewController") as? UIViewController {
+            self.addChildViewController(investigationController)
+            investigationController.view.frame = self.tabContainterView.frame
+            investigationController.view.isHidden = true
+            investigationController.view.alpha = 0.0
+            tabContainterView.addSubview(investigationController.view)
+            investigationController.didMove(toParentViewController: self)
+            tabViews.append(investigationController.view)
+            tabControllers.append(investigationController)
+        }
+        
+    }
+    
+    func createWebTab(withId id: String, withUrl url:String) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
@@ -131,7 +157,9 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
             webViewController.didMove(toParentViewController: self)
             tabViews.append(webViewController.view)
             tabControllers.append(webViewController)
+            
             webViewController.loadAddress()
+            
         }
 
     }
@@ -513,7 +541,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         switch id {
         case "speciesPageContainerController":
             break
-        case "terminalSegue": break
+        case "terminalSegue":
             break
         default:
             break
@@ -710,8 +738,9 @@ extension MainContainerController: UIImagePickerControllerDelegate {
             
         }
     }
-    
-    
 }
+
+
+
 
 
