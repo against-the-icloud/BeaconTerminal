@@ -333,7 +333,7 @@ class RealmDataController {
                         let name = c["name"], let channel = getRealm().channel(withId: id) {
                         try! getRealm().write {
                             channel.name = name
-                            getRealm().add(channel, update: true)
+                            getRealm().add(channel, update: true)                            
                         }
                     }
                 }
@@ -1148,7 +1148,6 @@ class RealmDataController {
                 getRealm(withRealmType: realmType).add(currentRuntime!, update: true)
             }
         }
-        
     }
     
     func updateChannel(withId id: String?, url: String?, name: String?) {
@@ -1166,6 +1165,8 @@ class RealmDataController {
                 
                 getRealm().add(channel, update: true)
                 
+                
+                
             } else {
                 let channel = Channel()
                 
@@ -1181,17 +1182,16 @@ class RealmDataController {
                 }
                 
                 getRealm().add(channel, update: false)
+
+//                if let rt = getRealm().runtime() {
+//                    rt.channels.append(channel)
+//                    getRealm().add(rt, update: true)
+//                }
             }
-            
-            
-            
         }
     }
     
-    
-    
     //MARK: UPDATE SPECIES OBSERVATION
-    
     
     func delete(withSpeciesPreference speciesPreference: SpeciesPreference, withSpeciesIndex speciesIndex: Int,withRealmType realmType: RealmType = RealmType.defaultDB) {
         
@@ -1912,11 +1912,20 @@ extension RealmDataController {
         }
     }
     
+    func deleteChannels(withRealmType realmType: RealmType = RealmType.defaultDB) {
+        let r = getRealm(withRealmType: realmType)
+        
+        try! r.write {
+            r.delete(r.objects(Channel.self))
+        }
+    }
+    
     func deleteAllUserData(withRealmType realmType: RealmType = RealmType.defaultDB) {
         
         let r = getRealm(withRealmType: realmType)
         
         try! r.write {
+            r.delete(r.objects(Channel.self))
             r.delete(r.objects(Runtime.self))
             r.delete(r.objects(Section.self))
             r.delete(r.objects(Member.self))

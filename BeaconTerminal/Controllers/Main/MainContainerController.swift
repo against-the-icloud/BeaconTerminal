@@ -81,53 +81,59 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     
     func prepareTabs() {
         
+        var adder = 0
+        
         realmDataController.updateChannel(withId: "species-notes", url: "", name: "Species Notes")
         
         topTabbar.setTitle("Species Notes", forSegmentAt: 0)
         topTabbar.selectedSegmentIndex = 0
         colorizeSelectedSegment()
         
+        switch getAppDelegate().checkApplicationState() {
+        case .objectGroup, .cloudGroup:
+            adder = 1
+        default:
+            break
+        }
+        
         if let channels = UserDefaults.standard.array(forKey: "channelList") {
             for (index,item) in channels.enumerated() {
                 if let c = item as? [String:String], let url = c["url"], let id = c["name"] {
                     
-                    let adjIndex = index
                     
-                    //if id != "species-notes" {
-                    switch index {
-                    case 0:
-                        break
-                    default:
-                        topTabbar.insertSegment(withTitle: id, at: index, animated: true)
-                    }
+                    let adj_index = index + adder
                     
                     switch index {
-                    case 0:
-                        break
                     case 1...10:
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        
-                        realmDataController.updateChannel(withId: id, url: url, name: "")
-                        
-                        
-                        if let webViewController = storyboard.instantiateViewController(withIdentifier: "webViewController") as? WebViewController {
-                            webViewController.src = url
-                            self.addChildViewController(webViewController)
-                            webViewController.view.frame = self.tabContainterView.frame
-                            webViewController.view.isHidden = true
-                            webViewController.view.alpha = 0.0
-                            tabContainterView.addSubview(webViewController.view)
-                            webViewController.didMove(toParentViewController: self)
-                            tabViews.append(webViewController.view)
-                            tabControllers.append(webViewController)
-                            webViewController.loadAddress()
-                        }
+                        topTabbar.insertSegment(withTitle: id, at: adj_index, animated: true)
+                        createWebTab(WithId: id, withUrl: url)
                     default:
                         print("")
                     }
                 }
             }
         }
+    }
+    
+    func createWebTab(WithId id: String, withUrl url:String) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        realmDataController.updateChannel(withId: id, url: url, name: "")
+        
+        if let webViewController = storyboard.instantiateViewController(withIdentifier: "webViewController") as? WebViewController {
+            webViewController.src = url
+            self.addChildViewController(webViewController)
+            webViewController.view.frame = self.tabContainterView.frame
+            webViewController.view.isHidden = true
+            webViewController.view.alpha = 0.0
+            tabContainterView.addSubview(webViewController.view)
+            webViewController.didMove(toParentViewController: self)
+            tabViews.append(webViewController.view)
+            tabControllers.append(webViewController)
+            webViewController.loadAddress()
+        }
+
     }
     
     func prepareToolMenu() {
@@ -343,15 +349,12 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                         for v in topTabbar.subviews {
                             v.backgroundColor = #colorLiteral(red: 0.01405510586, green: 0.6088837981, blue: 0.6111404896, alpha: 1)
                         }
-                        
-                       
-                        
+                                                
+                        let channels = realmDataController.getRealm().channels
                         
                         if TERMINAL_INDEX == -1 {
-                            
-                            if terminalRuntime.channels.isEmpty {
+                            if channels.count == 1 {
                                 TERMINAL_INDEX = 1
-
                             } else {
                                 TERMINAL_INDEX = topTabbar.numberOfSegments
 

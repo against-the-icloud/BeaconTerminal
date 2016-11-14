@@ -583,6 +583,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch checkApplicationState() {
         case .placeGroup:
             setDefaultRealm(withSectionName: sectionName)
+            realmDataController.deleteChannels()
             checkInitialization()
             let groupIndex = UserDefaults.standard.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
@@ -599,6 +600,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             break
         case .objectGroup, .cloudGroup:
             setDefaultRealm(withSectionName: sectionName)
+            //delete channels
+            realmDataController.deleteChannels()
             checkInitialization()
             let groupIndex = defaults.integer(forKey: "groupIndex")
             realmDataController.updateRuntime(withSectionName: sectionName, withSpeciesIndex: nil, withGroupIndex: groupIndex)
@@ -784,7 +787,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let sub_3 = "place_changes"
         
         nutella?.net.subscribe(sub_1)
-        
         // let sub_3 = "set_current_run"
         //nutella?.net.subscribe(sub_1)
         //var dict = [String:String]()
