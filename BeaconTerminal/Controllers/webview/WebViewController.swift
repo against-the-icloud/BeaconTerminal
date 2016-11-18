@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import Material
 
 class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
     
@@ -35,9 +36,26 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         
         webView?.uiDelegate = self
         webView?.navigationDelegate = self
-        //loadURL()
+        
+        
+        let addButton = FabButton()
+        addButton.image = Icon.icon("refresh")
+        addButton.backgroundColor = Color.blue.base
+        
+        
+        /// Menu bottom inset.
+        
+        let rightInset = UIScreen.main.bounds.width - (24 + 75)
+        
+     
+        addButton.frame = CGRect(x: rightInset, y: 24, width: 65, height: 65)
+        addButton.addTarget(self, action: #selector(reloadPage), for: .touchUpInside)
+        webView?.addSubview(addButton)
     }
     
+    internal func reloadPage(button: Any?) {
+        loadAddress()
+    }
     
     func loadAddress() {
         if self.src != nil {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C41b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11761" systemVersion="16C48b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -222,7 +222,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="750" height="500"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="izh-6g-oeE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="izh-6g-oeE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -555,7 +555,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="750" height="70"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="D27-Ow-RUX">
-                                                <rect key="frame" x="193" y="5" width="364" height="60"/>
+                                                <rect key="frame" x="193.5" y="5" width="363.5" height="60"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3cl-Pc-E92" userLabel="toSpecies">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -565,13 +565,13 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMPETES WITH " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OFN-9v-Ml5">
-                                                        <rect key="frame" x="70" y="0.0" width="224" height="60"/>
+                                                        <rect key="frame" x="70" y="0.0" width="223.5" height="60"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IJX-1I-xqu" userLabel="fromSpecies">
-                                                        <rect key="frame" x="304" y="0.0" width="60" height="60"/>
+                                                        <rect key="frame" x="303.5" y="0.0" width="60" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="IJX-1I-xqu" secondAttribute="height" multiplier="1:1" id="Fwj-KH-YFW"/>
                                                             <constraint firstAttribute="height" constant="60" id="cjT-Ma-jDw"/>
@@ -912,7 +912,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ieP-xY-bub">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieP-xY-bub">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -937,7 +937,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0Zo-C6-iwe" userLabel="MainStackView">
-                                <rect key="frame" x="136" y="0.0" width="62" height="62"/>
+                                <rect key="frame" x="100" y="0.0" width="134" height="62"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="species_02_0" translatesAutoresizingMaskIntoConstraints="NO" id="4E8-zT-OAW">
                                         <rect key="frame" x="0.0" y="0.0" width="62" height="62"/>
@@ -947,7 +947,7 @@
                                         </constraints>
                                     </imageView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbG-KK-AQv">
-                                        <rect key="frame" x="62" y="0.0" width="0.0" height="62"/>
+                                        <rect key="frame" x="72" y="0.0" width="62" height="62"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -999,7 +999,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r0z-mo-MZ2" userLabel="ProducerContainerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="252" height="768"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="252.5" height="768"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -1017,7 +1017,7 @@
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-G1-Hjk" userLabel="ConsumerContainerView">
-                                        <rect key="frame" x="257" y="0.0" width="253" height="768"/>
+                                        <rect key="frame" x="257.5" y="0.0" width="252" height="768"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -1035,7 +1035,7 @@
                                         </connections>
                                     </containerView>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c03-em-mzp" userLabel="CompetesContainerView">
-                                        <rect key="frame" x="515" y="0.0" width="252" height="768"/>
+                                        <rect key="frame" x="514.5" y="0.0" width="252.5" height="768"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">

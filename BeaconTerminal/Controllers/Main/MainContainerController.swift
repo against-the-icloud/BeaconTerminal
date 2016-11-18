@@ -22,13 +22,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
     @IBOutlet weak var topPanel: UIView!
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var tabContainterView: UIView!
-    
-    
-    
     @IBOutlet var beaconProfileImageViews: [UIImageView]!
-    
     @IBOutlet weak var beaconBarStatusLabel: UILabel!
-    
     
     var TERMINAL_INDEX = -1
     
@@ -173,18 +168,22 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                 case .CAMERA:
                     let item = prepareMenuItem(withTitle: "CAMERA",withImage: Icon.cm.photoCamera!)
                     item.button.addTarget(self, action: #selector(cameriaAction), for: .touchUpInside)
+                    item.button.tintColor = Color.white
                     toolMenuItems.append(item)
                 case .PHOTO_LIB:
                     let item = prepareMenuItem(withTitle: "PHOTO LIBRARY",withImage: Icon.cm.photoLibrary!)
                     item.button.addTarget(self, action: #selector(photoAlbumAction), for: .touchUpInside)
+                    item.button.tintColor = Color.white
                     toolMenuItems.append(item)
                 case .SCREENSHOT:
                     let item = prepareMenuItem(withTitle: "TAKE SCREENSHOT",withImage: UIImage(named: "ic_flash_on_white")!)
                     item.button.addTarget(self, action: #selector(screenShotAction), for: .touchUpInside)
+                    item.button.tintColor = Color.white
                     toolMenuItems.append(item)
                 case .SCANNER:
                     let item = prepareMenuItem(withTitle: "SCANNER", withImage: UIImage(named: "ic_wifi_white")!)
                     item.button.addTarget(self, action: #selector(scannerAction), for: .touchUpInside)
+                    item.button.tintColor = Color.white
                     toolMenuItems.append(item)
                 }
             }
@@ -342,9 +341,8 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         }
         
         if let groupIndex = realmDataController.getRealm().runtimeGroupIndex(), let sectionName = realmDataController.getRealm().runtimeSectionName(), let group = realmDataController.getRealm().group(withSectionName: sectionName, withGroupIndex: groupIndex), let _ = group.name {
-            //topTabbar.setTitle("SPECIES", forSegmentAt: 0)
+         
             groupLabel.text = "TEAM \(groupIndex + 1)"
-            
         }
         
         
