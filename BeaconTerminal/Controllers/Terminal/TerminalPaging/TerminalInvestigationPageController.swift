@@ -51,7 +51,7 @@ class TerminalInvestigationPageController: UIViewController {
         
         noteTextView.text = ""
         
-        if let relationship = self.relationship, let experimentId = self.relationship?.experimentId {
+        if let relationship = self.relationship, let experimentId = relationship.experimentId {
             
             if let experiment = realmDataController.getRealm().experimentsWithId(withId: experimentId) {
                 
