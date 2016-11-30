@@ -39,7 +39,8 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         
         
         let addButton = FabButton()
-        addButton.image = Icon.icon("refresh")
+        addButton.image = #imageLiteral(resourceName: "refresh")
+        addButton.tintColor = Color.white
         addButton.backgroundColor = Color.blue.base
         
         
@@ -48,7 +49,7 @@ class WebViewController: UIViewController,  WKUIDelegate, WKNavigationDelegate {
         let rightInset = UIScreen.main.bounds.width - (24 + 75)
         
      
-        addButton.frame = CGRect(x: rightInset, y: 24, width: 65, height: 65)
+        addButton.frame = CGRect(x: rightInset, y: 15, width: 65, height: 65)
         addButton.addTarget(self, action: #selector(reloadPage), for: .touchUpInside)
         webView?.addSubview(addButton)
     }
