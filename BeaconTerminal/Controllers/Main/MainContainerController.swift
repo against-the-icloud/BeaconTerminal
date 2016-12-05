@@ -88,6 +88,7 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
         case .objectGroup, .cloudGroup:
             adder = 1
         default:
+            adder = 1
             break
         }
         
@@ -99,6 +100,9 @@ class MainContainerController: UIViewController, UINavigationControllerDelegate 
                     let adj_index = index + adder
                     
                     switch index {
+                    case 0:
+                        topTabbar.insertSegment(withTitle: id, at: adj_index, animated: true)
+                        createWebTab(withId: id, withUrl: url)
                     case 1...10:
                         topTabbar.insertSegment(withTitle: id, at: adj_index, animated: true)
                         
